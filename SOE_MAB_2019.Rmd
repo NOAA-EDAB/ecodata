@@ -1,0 +1,72 @@
+---
+title: "State of the Ecosystem 2018-2019"
+subtitle: "Mid-Atlantic Bight"
+author: "Ecosystems Dynamics and Assessment Branch"
+date: "`r Sys.Date()`"
+output:
+  tufte::tufte_handout:
+    citation_package: natbib
+    latex_engine: xelatex
+  tufte::tufte_book:
+    citation_package: natbib
+    latex_engine: xelatex
+  tufte::tufte_html: default
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE,
+                      cache.extra = packageVersion('tufte'),
+                      cache = TRUE)
+options(htmltools.dir.version = FALSE)
+
+
+clean.dir <- "data" #output directory for cleaned data
+```
+
+# Introduction
+
+# Mid-Atlantic Bight Storminess
+
+```{r fig-main, fig.cap = "Averaged total wind speed in the Mid-Atlantic Bight by season.", fig.align = 'center', echo = F,fig.height=4}
+load(file.path(clean.dir, "wind_clean1.Rdata"))
+
+u <- wind_clean1 %>% 
+  filter(EPU == "MAB", Var == "uwnd") %>%
+  mutate(month = month(Time), year = year(Time))
+v <- wind_clean1 %>% 
+  filter(EPU == "MAB", Var == "vwnd")
+
+uv <- data.frame(u = u$Value,
+                 v = v$Value,
+                 total_wind_speed = sqrt(u$Value^2 + v$Value^2),
+                 month = u$month,
+                 year = u$year)
+
+uv_seasonal <- uv %>%
+  mutate(month, season = plyr::mapvalues(month, from = seq(1,12,1),
+                                         to = c(rep("Winter",3),
+                                                rep("Spring",3),
+                                                rep("Summer",3),
+                                                rep("Fall",3))))
+
+uv_summary <- uv_seasonal %>%
+  group_by(season, year) %>%
+  dplyr::summarise(mean=mean(total_wind_speed)) %>%
+  mutate(Time.end = year+1) %>%
+  dplyr::rename(Time = year)
+
+ggplot(data = uv_summary)+
+  geom_line(aes(x = Time, y = mean))+
+  facet_wrap(.~season, nrow = 2)+
+  ylab("Wind Speed (m/s)") +
+  theme_bw()+
+  theme(strip.background = element_blank()) 
+
+```
+
+

@@ -1,0 +1,38 @@
+---
+title: Processing Raw SOE Data
+author: Sean Hardison
+output_format: html_document
+---
+
+```{r}
+library(dplyr)
+library(stringr)
+library(tidyr)
+library(ggplot2)
+library(lubridate)
+library(DataPackageR)
+
+raw.dir <- "inst/extdata" #raw data directory
+clean.dir <- "data" #output directory for cleaned data
+
+```
+
+
+#### NCEP NARR surface wind; TKE; HLCY, monthly, 1979-2018, V1
+```{r}
+
+
+# Read in raw data
+d <- read.csv(file.path(raw.dir,"NCEP NARR surface wind; TKE; HLCY, monthly, 1979-2018, V1.csv"))
+
+# Processing steps
+wind_clean1 <- d  %>% gather(., Var, Value, GB.uwnd:MAB.tke) %>% #convert wide to long
+  dplyr::rename(Time = Month.Year) %>% #rename time variable
+  separate(Var, c("EPU","Var"),"\\.") %>% #separate out EPU from variable names
+  mutate(Time = as.Date(.$Time,Time, format = "%d-%b-%y"), #Convert to date format
+         Units = plyr::mapvalues(Var, from = unique(Var), to = c(rep("J/kg",2),"m^2/sec^2","J/kg"))) #Add units column
+
+save(wind_clean1, file = file.path(clean.dir,"wind_clean1.Rdata"))
+
+```
+

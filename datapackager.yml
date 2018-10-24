@@ -1,0 +1,7 @@
+configuration:
+  files:
+    process_raw.Rmd:
+      enabled: yes
+  objects: process_raw
+  render_root:
+    tmp: '419887'

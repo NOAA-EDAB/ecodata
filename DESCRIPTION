@@ -1,0 +1,27 @@
+Package: soe
+Title: What the Package Does (One Line, Title Case)
+Version: 1.0
+Authors@R: 
+    person(given = "Sean",
+           family = "Hardison",
+           role = c("aut", "cre"),
+           email = "sean.hardison@noaa.gov")
+Description: A data reporting package for the State of the Ecosystem project 2018-2019.
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+DataVersion: 0.1.0
+Roxygen: list(markdown = TRUE)
+Date: 2018-10-24
+Suggests: 
+    knitr,
+    rmarkdown,
+	dplyr,
+	stringr,
+	tidyr,
+	ggplot2,
+	lubridate,
+	DataPackageR,
+	tufte
+VignetteBuilder: knitr
+RoxygenNote: 6.1.0
