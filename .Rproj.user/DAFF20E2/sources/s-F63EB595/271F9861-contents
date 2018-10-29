@@ -1,0 +1,67 @@
+---
+title: Processing Raw SOE Data
+author: Sean Hardison
+output_format: html_document
+---
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.align='center')
+
+library(dplyr)
+library(stringr)
+library(tidyr)
+library(ggplot2)
+library(lubridate)
+library(DataPackageR)
+library(zoo)
+
+raw.dir <- "inst/extdata" #raw data directory
+clean.dir <- "data" #output directory for cleaned data
+
+```
+
+
+### NCEP NARR surface wind; TKE; HLCY, monthly, 1979-2018, V1
+
+#### General surface wind processing
+
+```{r general processing1, eval = FALSE}
+# Read in raw data
+d <- read.csv(file.path(raw.dir,"NCEP NARR surface wind; TKE; HLCY, monthly, 1979-2018, V1.csv"))
+
+# Processing steps for all wind speed data
+wind_clean1 <- d  %>% gather(., Var, Value, GB.uwnd:MAB.tke) %>% #convert wide to long
+  dplyr::rename(Time = Month.Year) %>% #rename time variable
+  separate(Var, c("EPU","Var"),"\\.") %>% #separate out EPU from variable names
+  mutate(Time = as.Date(.$Time,Time, format = "%d-%b-%y"), #Convert to date format
+         Units = plyr::mapvalues(Var, from = unique(Var), to = c(rep("J/kg",2),"m^2/sec^2","J/kg"))) #Add units column
+
+
+
+```
+
+#### Total wind speed
+
+```{r total wind speed, eval = FALSE}
+
+# Calculate total wind speed from u and v components
+total_wind_speed <- wind_clean1 %>% 
+  filter(Var == "uwnd"| Var == "vwnd") %>% #select variables
+  spread(., Var, Value) %>% #convert to wide for calculating tws
+  mutate(`total wind speed` = sqrt(uwnd^2 + vwnd^2)) %>%  #tws
+  select(-uwnd, -vwnd) %>% #start processing back to SOE format
+  gather(.,Var, Value, `total wind speed`) %>%  #convert to long
+  mutate(Time = as.yearmon(Time, "%m/%Y"), #convert to month-year for grouping by season
+         Time, season = plyr::mapvalues(month(Time), from = seq(1,12,1),
+                                         to = c(rep("winter",3),
+                                                rep("spring",3),
+                                                rep("summer",3),
+                                                rep("fall",3)))) %>% #add season grouping variable
+  unite(., Var, c(Var, season), sep = " ") #merge season into Var column
+
+save(total_wind_speed, file = 
+       file.path(clean.dir, "total_wind_speed.Rdata"))
+
+```
+

@@ -1,38 +1,184 @@
 ---
-title: Processing Raw SOE Data
+title: 'State of the Ecosystem: Indicator Processing'
 author: Sean Hardison
 output_format: html_document
 ---
 
-```{r}
+## Introduction
+The purpose of this file is to document State of the Ecosystem (SOE) indicator data processing. To update existing data sets, set the `save_clean` parameter in the Rmarkdown set-up chunk to `TRUE`. Raw data for these indicators are available in the file directory `soe/inst/extdata`, and libraries required to process indicator data sets are shown below.
+
+```{r, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.align='center')
+
+#Required libraries
 library(dplyr)
 library(stringr)
 library(tidyr)
 library(ggplot2)
 library(lubridate)
-library(DataPackageR)
+library(here)
+library(zoo)
+library(kableExtra)
 
-raw.dir <- "inst/extdata" #raw data directory
-clean.dir <- "data" #output directory for cleaned data
+raw.dir <- here("data-raw","inst","extdata") #raw data directory
+clean.dir <- here("data") #output directory for cleaned data
+
+save_clean <- TRUE
 
 ```
 
 
-#### NCEP NARR surface wind; TKE; HLCY, monthly, 1979-2018, V1
-```{r}
+## Data sets
+
+### Surface winds
+
+These data are sourced from the [NCEP North American Regional Reanalysis (NARR)](https://www.esrl.noaa.gov/psd/data/gridded/data.narr.monolevel.html), extending from January 1979 to September 2018. 
+
+```{r surface_winds_vars, echo = FALSE}
+
+fname <- "NCEP NARR surface wind; TKE; HLCY, monthly, 1979-2018, V1.csv"
+
+vars <- data.frame(Variable = c("Wind speed",
+                                "Wind direction",
+                                "Turbulent kinetic energy",
+                                "Storm relative helicity"),
+                   Name = c("uwnd",
+                            "vwnd",
+                            "tke",
+                            "hlcy"),
+                   Units = c("m sec^-1^",
+                             "°",
+                             "J kg^-1^",
+                             "m^2^sec^-2^"))
+
+kable(vars, caption = paste0('Variables in "',fname,'"'))%>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>%
+  column_spec(3, width = "5cm")
+```
 
 
+Variables included in these data are surface wind speed and direction (*uwnd* and *vwnd* respectively), surface turbulent kinetic energy (TKE), and storm relative helicity (HLCY). An indicator for total wind speed is calculated below as
+$$\textrm{TWS} = \sqrt{u^2 + v^2}$$.
+
+**Filename**: NCEP NARR surface wind; TKE; HLCY, monthly, 1979-2018, V1.csv  
+**Contributor**: Vincent Saba, (vincent.saba@noaa.gov)
+
+```{r surface_winds}
 # Read in raw data
 d <- read.csv(file.path(raw.dir,"NCEP NARR surface wind; TKE; HLCY, monthly, 1979-2018, V1.csv"))
 
-# Processing steps
+# Processing steps for all wind speed data
 wind_clean1 <- d  %>% gather(., Var, Value, GB.uwnd:MAB.tke) %>% #convert wide to long
   dplyr::rename(Time = Month.Year) %>% #rename time variable
   separate(Var, c("EPU","Var"),"\\.") %>% #separate out EPU from variable names
-  mutate(Time = as.Date(.$Time,Time, format = "%d-%b-%y"), #Convert to date format
-         Units = plyr::mapvalues(Var, from = unique(Var), to = c(rep("J/kg",2),"m^2/sec^2","J/kg"))) #Add units column
+  mutate(Time = as.yearmon(as.Date(.$Time,Time, format = "%d-%b-%y"), "%m/%Y"), #Convert to date format
+         Units = plyr::mapvalues(Var, from = unique(Var), to = c(rep("J/kg",2),"m^2/sec^2","J/kg")), #add units
+         Time, season = plyr::mapvalues(month(Time), from = seq(1,12,1), #Get season
+                                         to = c(rep("winter",3),
+                                                rep("spring",3),
+                                                rep("summer",3),
+                                                rep("fall",3)))) 
 
-save(wind_clean1, file = file.path(clean.dir,"wind_clean1.Rdata"))
+# Calculate total wind speed from u and v components
+total_wind_speed <- wind_clean1 %>% 
+  filter(Var == "uwnd"| Var == "vwnd") %>% #select variables
+  spread(., Var, Value) %>% #convert to wide for calculating tws
+  mutate(`total wind speed` = sqrt(uwnd^2 + vwnd^2)) %>%  #tws
+  select(-uwnd, -vwnd) %>% #start processing back to SOE format
+  gather(.,Var, Value, `total wind speed`) #convert to long
+
+wind_clean <- rbind(wind_clean1, total_wind_speed)
+wind_clean <- wind_clean %>% unite(., Var, c(Var, season), sep = " ") #merge season into Var column
+
+if (save_clean){
+save(wind_clean, file =
+       file.path(clean.dir, "wind_clean.Rdata"))
+}
 
 ```
+
+### Slopewater proportions
+
+Slopewater proportions give the percent total of water type observed in the deep Northeast Channel (150-200 m depth). 
+
+```{r slopewater_prop_vars, echo = FALSE}
+
+fname <- "slopewater_proportions.csv"
+
+vars <- data.frame(Variable = c("Warm Slope Water proportion",
+                                "Labrador Shelf Slope Water proportion"),
+                   Names = c("WSW",
+                             "LSLW"),
+                   Units = c("unitless",
+                             "unitless"))
+
+kable(vars, caption = paste0('Variables in "',fname,'"'))%>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>%
+  column_spec(2, width = "5cm")
+```
+
+Raw data fields correspond to year, water mass flavor (WSW = Warm Slope Water, LSLW = Labrador Slope Water), and proportion of total expressed as a percentage. 
+
+**Filename**: slopewater_proportions.csv  
+**Contributor**: Paula Fratantoni (paula.fratantoni@noaa.gov)
+
+```{r slopewater_proportions}
+d <- read.csv(file.path(raw.dir,"slopewater_proportions.csv"))
+
+slopewater <- d %>%
+  dplyr::rename(Time = year, Var = water.mass.flavor, Value = prop) %>% 
+  mutate(EPU = "all", Units = "unitless", Var2 = "proportion ne channel") %>% 
+  unite(.,Var,c(Var,Var2), sep = " ")
+  
+if (save_clean){
+save(slopewater, file =
+       file.path(clean.dir, "slopewater_proportions.Rdata"))
+}
+
+```
+ 
+### Ocean temperature (*in situ*)
+
+These data include *in situ* regional time series of both surface and bottom water temperatures on the Northeast Shelf. Raw data is split into four files by EPU (SS, GOM, GB, and MAB).
+
+```{r ocean_temp_insitu_vars, echo = FALSE}
+
+fname <- "Eco{EPU}_core_Ttopbot.csv"
+
+vars <- data.frame(Variable = c("SST anomaly",
+                                "Reference SST (1981-2010)",
+                                "Bottom temp. anomaly",
+                                "Reference BT (1981-2010)"),
+                   Names = c("Tsfc_anom",
+                             "Tsfc_ref",
+                             "Tbot_anom",
+                             "Tbot_ref"),
+                   Units = c("°C",
+                             "°C",
+                             "°C",
+                             "°C"))
+
+kable(vars, caption = paste0('Variables in "',fname,'"'))%>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>%
+  column_spec(2, width = "5cm")
+```
+
+**Filenames**: EcoSS_core_Ttopbot.csv, EcoGoM_core_Ttopbot.csv, EcoGB_core_Ttopbot.csv, EcoMAB_core_Ttopbot.csv  
+**Contributor**: Paula Fratantoni (paula.fratantoni@noaa.gov)
+
+```{r ocean_temperature}
+ss <- read.csv(file.path(raw.dir,"EcoSS_core_Ttopbot.csv")) %>% mutate(EPU = "SS")
+gom <- read.csv(file.path(raw.dir,"EcoGoM_core_Ttopbot.csv")) %>% mutate(EPU = "GOM")
+gb <- read.csv(file.path(raw.dir,"EcoGB_core_Ttopbot.csv")) %>% mutate(EPU = "GB")
+mab <- read.csv(file.path(raw.dir,"EcoMAB_core_Ttopbot.csv")) %>% mutate(EPU = "MAB")
+
+oce <- rbind(ss, gom, gb, mab) %>% #bind all
+  dplyr::rename(Time = decimal.year, Var = variable.name, Value = temperature) %>% #rename
+  mutate(Units = "degreesC", Time = format(date_decimal(Time), "%Y-%m-%d")) #add units
+
+
+```
+
+
 
