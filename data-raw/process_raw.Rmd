@@ -20,11 +20,25 @@ library(lubridate)
 library(here)
 library(zoo)
 library(kableExtra)
+library(sf)
+library(rgdal)
+library(raster)
+library(sp)
 
+#Data directories
 raw.dir <- here("data-raw","inst","extdata") #raw data directory
 clean.dir <- here("data") #output directory for cleaned data
+gis.dir <- here("data-raw","inst","extdata","gis")
+sample.dir <- here("data-raw","inst","extdata","sample")
 
-save_clean <- TRUE
+#CRS
+crs <- "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
+
+#Write output to file
+save_clean <- FALSE
+
+#Execute spatial processing (must be TRUE to write clean data to file). If FALSE, will load sample data from file for plotting example
+spatial_processing <- FALSE
 
 ```
 
@@ -85,7 +99,7 @@ total_wind_speed <- wind_clean1 %>%
   filter(Var == "uwnd"| Var == "vwnd") %>% #select variables
   spread(., Var, Value) %>% #convert to wide for calculating tws
   mutate(`total wind speed` = sqrt(uwnd^2 + vwnd^2)) %>%  #tws
-  select(-uwnd, -vwnd) %>% #start processing back to SOE format
+  dplyr::select(-uwnd, -vwnd) %>% #start processing back to SOE format
   gather(.,Var, Value, `total wind speed`) #convert to long
 
 wind_clean <- rbind(wind_clean1, total_wind_speed)
@@ -140,7 +154,7 @@ save(slopewater, file =
  
 ### Ocean temperature (*in situ*)
 
-These data include *in situ* regional time series of both surface and bottom water temperatures on the Northeast Shelf. Raw data is split into four files by EPU (SS, GOM, GB, and MAB).
+These data include *in situ* regional time series of both surface and bottom water temperatures on the Northeast Continental Shelf. Raw data is split into four files by EPU (SS, GOM, GB, and MAB).
 
 ```{r ocean_temp_insitu_vars, echo = FALSE}
 
@@ -173,12 +187,171 @@ gom <- read.csv(file.path(raw.dir,"EcoGoM_core_Ttopbot.csv")) %>% mutate(EPU = "
 gb <- read.csv(file.path(raw.dir,"EcoGB_core_Ttopbot.csv")) %>% mutate(EPU = "GB")
 mab <- read.csv(file.path(raw.dir,"EcoMAB_core_Ttopbot.csv")) %>% mutate(EPU = "MAB")
 
-oce <- rbind(ss, gom, gb, mab) %>% #bind all
+ocean_temp_insitu <- rbind(ss, gom, gb, mab) %>% #bind all
   dplyr::rename(Time = decimal.year, Var = variable.name, Value = temperature) %>% #rename
-  mutate(Units = "degreesC", Time = format(date_decimal(Time), "%Y-%m-%d")) #add units
+  mutate(Units = "degreesC", Time = format(date_decimal(Time), "%Y-%m-%d"),
+         Var, Var = plyr::mapvalues(Var, from = c("Tsfc_anom",
+                             "Tsfc_ref",
+                             "Tbot_anom",
+                             "Tbot_ref"),
+                             to = c("sst anomaly in situ",
+                                "reference sst in situ (1981-2010)",
+                                "bottom temp anomaly in situ",
+                                "reference bt in situ (1981-2010)"))) #Rename variables
+
+if (save_clean){
+save(ocean_temp_insitu, file =
+       file.path(clean.dir, "ocean_temp_insitu.Rdata"))
+}
+```
+
+### Ocean salinity (*in situ*)
+
+These data include *in situ* regional time series of both surface and bottom salinities on the Northeast Continental Shelf. Raw data is split into four files by EPU (SS, GOM, GB, and MAB).
+
+```{r ocean_salinity_insitu_vars, echo = FALSE}
+
+fname <- "Eco{EPU}_core_Stopbot.csv"
+
+vars <- data.frame(Variable = c("Surface salinity anomaly",
+                                "Reference surface salinity (1981-2010)",
+                                "Bottom salinity anomaly",
+                                "Reference bottom salinity (1981-2010)"),
+                   Names = c("Ssfc_anom",
+                             "Ssfc_ref",
+                             "Sbot_anom",
+                             "Sbot_ref"),
+                   Units = c("PSU",
+                             "PSU",
+                             "PSU",
+                             "PSU"))
+
+kable(vars, caption = paste0('Variables in "',fname,'"'))%>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>%
+  column_spec(2, width = "5cm")
+```
+
+**Filenames**: EcoSS_core_Stopbot.csv, EcoGoM_core_Stopbot.csv, EcoGB_core_Stopbot.csv, EcoMAB_core_Stopbot.csv  
+**Contributor**: Paula Fratantoni (paula.fratantoni@noaa.gov)
+
+```{r ocean_salinity}
+ss <- read.csv(file.path(raw.dir,"EcoSS_core_Stopbot.csv")) %>% mutate(EPU = "SS")
+gom <- read.csv(file.path(raw.dir,"EcoGoM_core_Stopbot.csv")) %>% mutate(EPU = "GOM")
+gb <- read.csv(file.path(raw.dir,"EcoGB_core_Stopbot.csv")) %>% mutate(EPU = "GB")
+mab <- read.csv(file.path(raw.dir,"EcoMAB_core_Stopbot.csv")) %>% mutate(EPU = "MAB")
+
+ocean_sal_insitu <- rbind(ss, gom, gb, mab) %>% #bind all
+  dplyr::rename(Time = decimal.year, Var = variable.name, Value = salinity) %>% #rename
+  mutate(Units = "PSU", Time = format(date_decimal(Time), "%Y-%m-%d"),
+         Var, Var = plyr::mapvalues(Var, from = c("Ssfc_anom",
+                             "Ssfc_ref",
+                             "Sbot_anom",
+                             "Sbot_ref"),
+                             to = c("surface salinity anomaly in situ",
+                                "reference surface salinity in situ (1981-2010)",
+                                "bottom salinity anomaly in situ",
+                                "reference bottom salinity in situ (1981-2010)"))) #Rename variables
+
+if (save_clean){
+save(ocean_sal_insitu, file =
+       file.path(clean.dir, "ocean_sal_insitu.Rdata"))
+}
+```
+
+### EcoMon Nutrient Data
+
+These data include nutrient data sampled on EcoMon cruises between 11/3/2009 - 10/19/2016.
+
+```{r EcoMon nutrients, message=FALSE, warning=FALSE}
+d <- read.csv(file.path(raw.dir,"EcoMon Nutrient Data Through June 2018.csv"), stringsAsFactors = FALSE)
+
+#Create data frame for mapping units to variable names
+mapping <- data.frame(Units = as.character(d[1,]),
+                      Var = as.character(names(d)))
+mapping[mapping$Units == "" | mapping$Units == "NA",]$Units <- NA
+
+#remove row with units
+d <- slice(d,-1)
+
+d1 <- d %>% 
+  mutate(Time = Date_UTC) %>% #create Time variable
+  dplyr::select(-Date_UTC,-Time_UTC) %>% #remove time, date
+  gather(., Var, Value, -Latitude, -Longitude, -Time) %>% #turn wide to long while retaining lat/lon
+  filter(!is.na(Value)) %>% #remove NA
+  left_join(., mapping, by = c("Var")) %>% #join units 
+  mutate(Longitude = as.numeric(Longitude),
+         Latitude = as.numeric(Latitude),
+         Time = mdy(Time)) %>% 
+  filter(Latitude > 32, Latitude<50)
+
+
+#Sanity check
+# t1 <- d1[d1$Var == "CTDOXYMOL" ,]$Value
+# t <-  d %>% slice(.,-1)
+# t <- as.character(t$CTDOXYMOL)
+# all(t == t1)
+
+#Read in EPU shapefile
+epu <- readOGR(file.path(gis.dir, "EPU_Extended.shp"), verbose = F) 
+epu <- as(epu, "sf") #convert to sf object
+
+if(spatial_processing){
+
+  #Test maps
+  #All EPUs
+  #ggplot() + geom_sf(data = epu)
+  
+  #Scotian shelf
+  # ss <- epu %>% filter(EPU == "SS")
+  # ggplot() + geom_sf(data = ss)
+  
+  #get latitude and longitude for creating SpatialPointsDataFrame
+  lat <-  as.numeric(d$Latitude)
+  lon <- as.numeric(d$Longitude)
+  coords <- data.frame(lon = lon,lat = lat)
+  
+  #create spdf
+  spdf <- SpatialPointsDataFrame(coords = coords, data = coords,
+                                 proj4string = CRS(crs))
+  #convert to sf
+  coords_sf <- st_as_sf(spdf) 
+  
+  #get intersection for mapping EPUs back to nutrient data
+  epu_intersect <- st_intersection(epu, coords_sf)
+  #plot(epu_intersect[epu_intersect$EPU == "MAB",])
+  
+  #Map back to nutrient data frame
+  epu_df <- data.frame(Longitude = epu_intersect$lon,
+                       Latitude = epu_intersect$lat,
+                       EPU = epu_intersect$EPU)
+  #join
+  NE_LME_nutrients <- d1 %>% 
+    left_join(.,epu_df, by = c("Latitude","Longitude"))
+  
+  #Select data for plotting 
+  Nitr <- NE_LME_nutrients %>% filter(Var == "NITRIT.NITRAT")
+  
+  #Back to SOE format
+  NE_LME_nutrients <- NE_LME_nutrients %>% dplyr::select(-Latitude, -Longitude)
+  
+  if (save_clean){
+    save(NE_LME_nutrients,file = file.path(clean.dir, "EcoMon_nutrients.Rdata"))
+  }
+
+} else {
+  load(file.path(sample.dir,"sample_nutrients.Rdata"))
+}
+
+#Confirm transformation
+ggplot() + 
+  geom_sf(data = epu) +
+  geom_point(data = Nitr, aes(x = Longitude, y = Latitude, color = EPU)) +
+  ggtitle("Mapping EcoMon Nutrient Data to EPU") +
+  theme_bw() 
+
+
 
 
 ```
-
 
 
