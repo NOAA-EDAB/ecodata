@@ -1,11 +1,11 @@
 ---
-title: 'State of the Ecosystem: Indicator Processing'
+title: 'State of the Ecosystem: Indicator Processing & Visualization'
 author: Sean Hardison
 output_format: html_document
 ---
 
 ## Introduction
-The purpose of this file is to document State of the Ecosystem (SOE) indicator data processing. To update existing data sets, set the `save_clean` parameter in the Rmarkdown set-up chunk to `TRUE`. Raw data for these indicators are available in the file directory `soe/inst/extdata`, and libraries required to process indicator data sets are shown below.
+The purpose of this file is to document State of the Ecosystem (SOE) indicator data processing. To update existing data sets, set the `save_clean` parameter in the Rmarkdown set-up chunk to `TRUE`. Raw data for these indicators are available in the file directory `extdata`, and libraries required to process indicator data sets are shown below.
 
 ```{r, message=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
@@ -26,10 +26,10 @@ library(raster)
 library(sp)
 
 #Data directories
-raw.dir <- here("data-raw","inst","extdata") #raw data directory
+raw.dir <- here("extdata") #raw data directory
 clean.dir <- here("data") #output directory for cleaned data
-gis.dir <- here("data-raw","inst","extdata","gis")
-sample.dir <- here("data-raw","inst","extdata","sample")
+gis.dir <- here("extdata","gis")
+sample.dir <- here("extdata","sample")
 
 #CRS
 crs <- "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
@@ -258,9 +258,14 @@ save(ocean_sal_insitu, file =
 }
 ```
 
-### EcoMon Nutrient Data
+### EcoMon Nutrient Data {.tabset .tabset-fade}
 
 These data include nutrient data sampled on EcoMon cruises between 11/3/2009 - 10/19/2016.
+
+**Filename**: EcoMon Nutrient Data Through June 2018.csv  
+**Contributor**: Chris Melrose (chris.melrose@noaa.gov)
+
+#### Processing
 
 ```{r EcoMon nutrients, message=FALSE, warning=FALSE}
 d <- read.csv(file.path(raw.dir,"EcoMon Nutrient Data Through June 2018.csv"), stringsAsFactors = FALSE)
@@ -341,17 +346,16 @@ if(spatial_processing){
 } else {
   load(file.path(sample.dir,"sample_nutrients.Rdata"))
 }
+```
 
+#### QA
+
+```{r ecomon_plotting1}
 #Confirm transformation
 ggplot() + 
   geom_sf(data = epu) +
   geom_point(data = Nitr, aes(x = Longitude, y = Latitude, color = EPU)) +
   ggtitle("Mapping EcoMon Nutrient Data to EPU") +
   theme_bw() 
-
-
-
-
 ```
-
 
