@@ -1,5 +1,5 @@
 Package: soe
-Title: What the Package Does (One Line, Title Case)
+Title: Documentation of Ecosystem Indicator Reporting
 Version: 1.0
 Authors@R: 
     person(given = "Sean",
@@ -10,7 +10,6 @@ Description: A data reporting package for the State of the Ecosystem project 201
 License: What license it uses
 Encoding: UTF-8
 LazyData: true
-DataVersion: 0.1.0
 Roxygen: list(markdown = TRUE)
 Date: 2018-10-24
 Suggests: 
