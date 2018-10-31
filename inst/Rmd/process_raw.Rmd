@@ -26,10 +26,10 @@ library(raster)
 library(sp)
 
 #Data directories
-raw.dir <- here("extdata") #raw data directory
+raw.dir <- here("inst","extdata") #raw data directory
 clean.dir <- here("data") #output directory for cleaned data
-gis.dir <- here("extdata","gis")
-sample.dir <- here("extdata","sample")
+gis.dir <- here("inst","extdata","gis")
+sample.dir <- here("inst","extdata","sample")
 
 #CRS
 crs <- "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
