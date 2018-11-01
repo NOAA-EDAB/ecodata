@@ -733,6 +733,7 @@ ammon <- NE_LME_nutrients %>%
   dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
   ggplot() +
   geom_line(aes(x = Time, y = Value, color = EPU)) +
+  geom_point(aes(x = Time, y = Value, color = EPU)) +
   ylab(expression("Ammonia ("*mu*"mol kg"^-1*")"))+
   ggtitle("Ammonia")+
   theme_bw()+
@@ -743,15 +744,15 @@ ammon <- NE_LME_nutrients %>%
 silcat <- NE_LME_nutrients %>% 
   filter(Var == "SILCAT", Value > 0, !is.na(EPU)) %>% 
   group_by(EPU, Time = year(Time)) %>% 
-  dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
+  dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>%
   ggplot() +
   geom_line(aes(x = Time, y = Value, color = EPU)) +
   ylab(expression("Silicates ("*mu*"mol kg"^-1*")"))+
-    ggtitle("Silicates")+
+  ggtitle("Silicates")+
   theme_bw()+
   guides(color= FALSE)
 
-cowplot::plot_grid(N, P, ammon , silcat)
+cowplot::plot_grid(N, P,ammon ,silcat)
 
 ```
 
