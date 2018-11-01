@@ -24,6 +24,7 @@ library(sf)
 library(rgdal)
 library(raster)
 library(sp)
+library(gridExtra)
 
 #Data directories
 raw.dir <- here("inst","extdata") #raw data directory
@@ -112,7 +113,7 @@ save(wind_clean, file =
 
 ```
 
-### Slopewater proportions
+### Slopewater proportions {.tabset .tabset-fade}
 
 Slopewater proportions give the percent total of water type observed in the deep Northeast Channel (150-200 m depth). 
 
@@ -137,6 +138,8 @@ Raw data fields correspond to year, water mass flavor (WSW = Warm Slope Water, L
 **Filename**: slopewater_proportions.csv  
 **Contributor**: Paula Fratantoni (paula.fratantoni@noaa.gov)
 
+#### Processing
+
 ```{r slopewater_proportions}
 d <- read.csv(file.path(raw.dir,"slopewater_proportions.csv"))
 
@@ -151,10 +154,29 @@ save(slopewater, file =
 }
 
 ```
- 
-### Ocean temperature (*in situ*)
 
-These data include *in situ* regional time series of both surface and bottom water temperatures on the Northeast Continental Shelf. Raw data is split into four files by EPU (SS, GOM, GB, and MAB).
+#### Visualization
+
+```{r slopewater_vis}
+slopewater %>% 
+  mutate(Var, Var = plyr::mapvalues(Var, from = c("WSW proportion ne channel",
+                                                  "LSLW proportion ne channel"),
+                                    to = c("WSW","LSLW"))) %>% 
+  dplyr::rename(Flavor  = Var) %>% 
+ggplot() +
+  geom_line(aes(x = Time, y = Value, color = Flavor))+
+  geom_point(aes(x = Time, y = Value, color = Flavor)) +
+  ylab("Percent of Total Slopewater") +
+  ggtitle("Slopewater Proportions in NE Channel")+
+  theme_bw()+
+  theme(strip.background = element_blank())
+
+```
+
+
+### Ocean temperature anomaly {.tabset .tabset-fade}
+
+These data include *in situ* regional time series of both surface and bottom water temperature anomalies on the Northeast Continental Shelf. Raw data is split into four files by EPU (SS, GOM, GB, and MAB).
 
 ```{r ocean_temp_insitu_vars, echo = FALSE}
 
@@ -168,18 +190,20 @@ vars <- data.frame(Variable = c("SST anomaly",
                              "Tsfc_ref",
                              "Tbot_anom",
                              "Tbot_ref"),
-                   Units = c("°C",
-                             "°C",
-                             "°C",
-                             "°C"))
+                   Units = c("?C",
+                             "?C",
+                             "?C",
+                             "?C"))
 
 kable(vars, caption = paste0('Variables in "',fname,'"'))%>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>%
-  column_spec(2, width = "5cm")
+  column_spec(3, width = "5cm")
 ```
 
 **Filenames**: EcoSS_core_Ttopbot.csv, EcoGoM_core_Ttopbot.csv, EcoGB_core_Ttopbot.csv, EcoMAB_core_Ttopbot.csv  
 **Contributor**: Paula Fratantoni (paula.fratantoni@noaa.gov)
+
+#### Processing
 
 ```{r ocean_temperature}
 ss <- read.csv(file.path(raw.dir,"EcoSS_core_Ttopbot.csv")) %>% mutate(EPU = "SS")
@@ -189,7 +213,7 @@ mab <- read.csv(file.path(raw.dir,"EcoMAB_core_Ttopbot.csv")) %>% mutate(EPU = "
 
 ocean_temp_insitu <- rbind(ss, gom, gb, mab) %>% #bind all
   dplyr::rename(Time = decimal.year, Var = variable.name, Value = temperature) %>% #rename
-  mutate(Units = "degreesC", Time = format(date_decimal(Time), "%Y-%m-%d"),
+  mutate(Units = "degreesC", Time = as.Date(format(date_decimal(Time), "%Y-%b-%d"), "%Y-%b-%d"),
          Var, Var = plyr::mapvalues(Var, from = c("Tsfc_anom",
                              "Tsfc_ref",
                              "Tbot_anom",
@@ -205,9 +229,42 @@ save(ocean_temp_insitu, file =
 }
 ```
 
-### Ocean salinity (*in situ*)
+#### Visualization
+```{r ocean_temp_vis, fig.height=7,fig.width=10}
 
-These data include *in situ* regional time series of both surface and bottom salinities on the Northeast Continental Shelf. Raw data is split into four files by EPU (SS, GOM, GB, and MAB).
+one <- ocean_temp_insitu %>%
+  filter(Var == "sst anomaly in situ") %>% 
+  group_by(Time = year(Time), EPU) %>% 
+  dplyr::summarise(Value = mean(Value)) %>% 
+ggplot2::ggplot() +
+  geom_line(aes(x = Time, y = Value)) +
+  geom_point(aes(x = Time, y = Value), size = 1) +
+  facet_grid(.~EPU) +
+  ylab(expression("Temp. Anomaly ("*degree*"C)")) +
+  ggtitle("SST") +
+  theme_bw()+
+  theme(strip.background = element_blank())
+
+two <- ocean_temp_insitu %>%
+ filter(Var == "bottom temp anomaly in situ") %>%
+ group_by(Time = year(Time), EPU) %>%
+ dplyr::summarise(Value = mean(Value)) %>% 
+ggplot2::ggplot() +
+  geom_line(aes(x = Time, y = Value)) +
+  geom_point(aes(x = Time, y = Value), size = 1) +
+  facet_grid(.~EPU) +
+  ylab(expression("Temp. Anomaly ("*degree*"C)")) +
+  ggtitle("Bottom temperature") +
+  theme_bw()+
+  theme(strip.background = element_blank())
+
+grid.arrange(one, two)
+```
+
+
+### Ocean salinity anomaly {.tabset .tabset-fade}
+
+These data include *in situ* regional time series of both surface and bottom salinity anomalies on the Northeast Continental Shelf. Raw data is split into four files by EPU (SS, GOM, GB, and MAB).
 
 ```{r ocean_salinity_insitu_vars, echo = FALSE}
 
@@ -234,6 +291,8 @@ kable(vars, caption = paste0('Variables in "',fname,'"'))%>%
 **Filenames**: EcoSS_core_Stopbot.csv, EcoGoM_core_Stopbot.csv, EcoGB_core_Stopbot.csv, EcoMAB_core_Stopbot.csv  
 **Contributor**: Paula Fratantoni (paula.fratantoni@noaa.gov)
 
+#### Processing
+
 ```{r ocean_salinity}
 ss <- read.csv(file.path(raw.dir,"EcoSS_core_Stopbot.csv")) %>% mutate(EPU = "SS")
 gom <- read.csv(file.path(raw.dir,"EcoGoM_core_Stopbot.csv")) %>% mutate(EPU = "GOM")
@@ -242,21 +301,112 @@ mab <- read.csv(file.path(raw.dir,"EcoMAB_core_Stopbot.csv")) %>% mutate(EPU = "
 
 ocean_sal_insitu <- rbind(ss, gom, gb, mab) %>% #bind all
   dplyr::rename(Time = decimal.year, Var = variable.name, Value = salinity) %>% #rename
-  mutate(Units = "PSU", Time = format(date_decimal(Time), "%Y-%m-%d"),
+  mutate(Units = "PSU", Time = as.Date(format(date_decimal(Time), "%Y-%b-%d"), "%Y-%b-%d"),
          Var, Var = plyr::mapvalues(Var, from = c("Ssfc_anom",
                              "Ssfc_ref",
                              "Sbot_anom",
                              "Sbot_ref"),
-                             to = c("surface salinity anomaly in situ",
-                                "reference surface salinity in situ (1981-2010)",
-                                "bottom salinity anomaly in situ",
-                                "reference bottom salinity in situ (1981-2010)"))) #Rename variables
-
+                     to = c("surface salinity anomaly in situ",
+                        "reference surface salinity in situ (1981-2010)",
+                        "bottom salinity anomaly in situ",
+                        "reference bottom salinity in situ (1981-2010)")))
 if (save_clean){
 save(ocean_sal_insitu, file =
        file.path(clean.dir, "ocean_sal_insitu.Rdata"))
 }
+
+#surface salinity
+
+#bottom salinity
+
+
 ```
+
+#### Visualization
+
+```{r salinity_vis, fig.width = 10, fig.height=7, warning  = FALSE, message = FALSE}
+
+one <- ocean_sal_insitu %>%
+  filter(Var == "surface salinity anomaly in situ") %>% 
+  group_by(Time = year(Time), EPU) %>% 
+  dplyr::summarise(Value = mean(Value)) %>% 
+ggplot2::ggplot() +
+  geom_line(aes(x = Time, y = Value)) +
+  geom_point(aes(x = Time, y = Value), size = 1) +
+  facet_grid(.~EPU) +
+  ylab("Salinity Anomaly (PSU)") +
+  ggtitle("Surface salinity") +
+  theme_bw()+
+  theme(strip.background = element_blank())
+
+two <- ocean_sal_insitu %>%
+ filter(Var == "bottom salinity anomaly in situ") %>%
+ group_by(Time = year(Time), EPU) %>%
+ dplyr::summarise(Value = mean(Value)) %>% 
+ggplot2::ggplot() +
+  geom_line(aes(x = Time, y = Value)) +
+  geom_point(aes(x = Time, y = Value), size = 1) +
+  facet_grid(.~EPU) +
+  ylab("Salinity Anomaly (PSU)") +
+  ggtitle("Bottom salinity") +
+  theme_bw()+
+  theme(strip.background = element_blank())
+
+grid.arrange(one, two)
+```
+
+
+### Stratification {.tabset .tabset-fade}
+
+These data are time series of average stratification (0-50 m depth) by EPU. 
+
+**Filename**: Strat50.csv
+**Contributor**: Paula Fratantoni (paula.fratantoni@noaa.gov)
+
+```{r stratification_vars, echo = FALSE}
+
+fname <- "Strat50.csv"
+
+vars <- data.frame(Variable = c("stratification"),
+                   Names = c("stratification"),
+                   Units = c("kg m ^-3^"))
+
+kable(vars, caption = paste0('Variables in "',fname,'"'))%>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>%
+  column_spec(2, width = "5cm")
+```
+
+#### Processing
+
+```{r stratification}
+
+strat <- read.csv(file.path(raw.dir, "Strat50.csv"), stringsAsFactors = FALSE)
+
+stratification <- strat %>% 
+  dplyr::rename(Time = time, Var = var, Value = stratification) %>% 
+  separate(., Var, c("Var","EPU"), sep = "_") %>% 
+  mutate(Var = "stratification (0-50 m)",
+         Units = "kg m^-3") 
+
+if (save_clean){
+  save(stratification, file = file.path(clean.dir, "stratification.Rdata"))
+}
+```
+
+#### Visualization
+
+```{r strat_vis, message=F, warning=F, fig.width = 10, fig.height = 3.25}
+
+ggplot(data =stratification)+
+  geom_line(aes(x = Time, y = Value)) +
+  geom_point(aes(x = Time, y = Value)) +
+  facet_grid(.~EPU) +
+  theme_bw() +
+  ylab(expression("Stratification (kg m"^-3*")")) +
+  theme(strip.background = element_blank())
+
+```
+
 
 ### EcoMon Nutrient Data {.tabset .tabset-fade}
 
@@ -358,4 +508,7 @@ ggplot() +
   ggtitle("Mapping EcoMon Nutrient Data to EPU") +
   theme_bw() 
 ```
+
+
+
 
