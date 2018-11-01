@@ -1,0 +1,329 @@
+---
+title: "Trend Assessment - Environmental/Lower Trophic Levels"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r message = FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.align='center')
+
+#Required libraries
+library(dplyr)
+library(stringr)
+library(tidyr)
+library(ggplot2)
+library(lubridate)
+library(here)
+library(zoo)
+library(kableExtra)
+library(sf)
+library(rgdal)
+library(raster)
+library(sp)
+library(gridExtra)
+library(corrplot)
+
+#Data directories
+raw.dir <- here("inst","extdata") #raw data directory
+clean.dir <- here("data") #output directory for cleaned data
+gis.dir <- here("inst","extdata","gis")
+sample.dir <- here("inst","extdata","sample")
+
+#CRS
+crs <- "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
+
+#Normalize
+get_dat <- function(field){
+  
+  time <- env[env$Var == field,]$Time
+  end = max(time)
+  time = time[1:which(time == end)]
+  var <- env[env$Var == field,]$Value
+  
+  if (all(is.na(as.numeric(var)))){
+    var <- NA
+  } else {
+
+    var <- var[1:length(time)]
+    var <- (var-mean(var, na.rm = TRUE))/sd(var, na.rm = TRUE)
+  }
+  
+  out <- data.frame(var = field,
+                    value = var,
+                    time = time)
+  return(out)
+}
+
+
+#Trend assessment
+
+fit_lm <- function(dat, ar, m, ARsd, trend, spec = FALSE){
+    dat <- dat %>% dplyr::filter(complete.cases(.))
+    
+    # Constant model (null model used to calculate 
+    # overall p-value)
+    constant_norm <-nlme::gls(series ~ 1, data = dat)
+    
+    #spec parameter specifies whether arima.sim incorporated AR(1) error process. When there is no 
+    #AR error in the time series, we switch the GLS models to all rely on a normal error generating process.
+    if (!spec){
+      constant_ar1 <-
+        try(nlme::gls(series ~ 1,
+                      data = dat,
+                      correlation = nlme::corAR1(form = ~time)))
+      if (class(constant_ar1) == "try-error"){
+        return(best_lm <- data.frame(model = NA,
+                                     aicc  = NA,
+                                     coefs..Intercept = NA,
+                                     coefs.time = NA,
+                                     coefs.time2 = NA,
+                                     pval = NA))
+      }
+      
+    } else {
+      constant_ar1 <-
+        try(nlme::gls(series ~ 1,
+                      data = dat))
+      if (class(constant_ar1) == "try-error"){
+        return(best_lm <- data.frame(model = NA,
+                                     aicc  = NA,
+                                     coefs..Intercept = NA,
+                                     coefs.time = NA,
+                                     coefs.time2 = NA,
+                                     pval = NA))
+      }
+    }
+    # Linear model with normal error
+    linear_norm <- nlme::gls(series ~ time, data = dat)
+    
+    # Linear model with AR1 error
+    if (!spec){
+      linear_ar1 <- 
+        try(nlme::gls(series ~ time, 
+                      data = dat,
+                      correlation = nlme::corAR1(form = ~time)))
+      if (class(linear_ar1) == "try-error"){
+        return(best_lm <- data.frame(model = NA,
+                                     aicc  = NA,
+                                     coefs..Intercept = NA,
+                                     coefs.time = NA,
+                                     coefs.time2 = NA,
+                                     pval = NA))
+        }
+      } else {
+        linear_ar1 <- 
+          try(nlme::gls(series ~ time, 
+                        data = dat))
+        if (class(linear_ar1) == "try-error"){
+          return(best_lm <- data.frame(model = NA,
+                                       aicc  = NA,
+                                       coefs..Intercept = NA,
+                                       coefs.time = NA,
+                                       coefs.time2 = NA,
+                                       pval = NA))
+      }
+    }
+    linear_phi <- linear_ar1$modelStruct$corStruct
+    linear_phi <-coef(linear_phi, unconstrained = FALSE)
+    
+    # Polynomial model with normal error
+    dat$time2 <- dat$time^2
+    poly_norm <- nlme::gls(series ~ time + time2, data = dat)
+
+    # Polynomial model with AR1 error
+    if (!spec){
+      poly_ar1 <-
+        try(nlme::gls(series ~ time + time2,
+                      data = dat,
+                      correlation = nlme::corAR1(form = ~time)))
+      if (class(poly_ar1) == "try-error"){
+        return(best_lm <- data.frame(model = NA,
+                                     aicc  = NA,
+                                     coefs..Intercept = NA,
+                                     coefs.time = NA,
+                                     coefs.time2 = NA,
+                                     pval = NA))
+
+      }
+    }else {
+      poly_ar1 <-
+        try(nlme::gls(series ~ time + time2,
+                      data = dat))
+      if (class(poly_ar1) == "try-error"){
+        return(best_lm <- data.frame(model = NA,
+                                     aicc  = NA,
+                                     coefs..Intercept = NA,
+                                     coefs.time = NA,
+                                     coefs.time2 = NA,
+                                     pval = NA))
+
+      }
+    }
+    poly_phi <- poly_ar1$modelStruct$corStruct
+    poly_phi <- coef(poly_phi, unconstrained = FALSE)
+    
+    # Calculate AICs for all models
+    df_aicc <-
+      data.frame(model = c("poly_norm",
+                           "poly_ar1",
+                           "linear_norm",
+                           "linear_ar1"),
+                 aicc  = c(AICc(poly_norm),
+                           AICc(poly_ar1),
+                           AICc(linear_norm),
+                           AICc(linear_ar1)),
+                 coefs = rbind(coef(poly_norm),
+                               coef(poly_ar1),
+                               c(coef(linear_norm), NA),
+                               c(coef(linear_ar1),  NA)),
+                 phi = c(0, 
+                         poly_phi,
+                         0,
+                         linear_phi),
+                 # Calculate overall signifiance (need to use
+                 # ML not REML for this)
+                 pval = c(anova(update(constant_norm, method = "ML"),
+                               update(poly_norm, method = "ML"))$`p-value`[2],
+                          anova(update(constant_ar1, method = "ML"),
+                                update(poly_ar1, method = "ML"))$`p-value`[2],
+                          anova(update(constant_norm, method = "ML"),
+                                update(linear_norm, method = "ML"))$`p-value`[2],
+                          anova(update(constant_ar1, method = "ML"),
+                                update(linear_ar1, method = "ML"))$`p-value`[2]))
+    
+    best_lm <-
+      df_aicc %>%
+      dplyr::filter(aicc == min(aicc))
+    if (nrow(best_lm) >1){
+      best_lm <- best_lm[1,]
+    }
+    phi <- best_lm$phi
+
+    
+    
+  if (best_lm$model == "poly_norm") {
+    model <- poly_norm
+  } else if (best_lm$model == "poly_ar1") {
+    model <- poly_ar1
+  } else if (best_lm$model == "linear_norm") {
+    model <- linear_norm
+  } else if (best_lm$model == "linear_ar1") {
+    model <- linear_ar1
+  }
+
+
+  return(list(best_lm = best_lm, 
+              model = model))
+}
+
+```
+
+
+```{r data_load}
+lapply(file.path(clean.dir,as.list(list.files(clean.dir))),load,environment())
+
+#aggregate to year
+nutrients <- NE_LME_nutrients %>% 
+  filter(Value > 0, !is.na(EPU)) %>% 
+  group_by(EPU, Time = year(Time), Var) %>% 
+  dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
+  as.data.frame()
+rm(NE_LME_nutrients)
+ocean_sal <- ocean_sal_insitu %>%
+ group_by(Time = year(Time), EPU, Var) %>%
+ dplyr::summarise(Value = mean(Value)) %>% 
+  as.data.frame()
+
+ocean_temp <- ocean_temp_insitu %>%
+ group_by(Time = year(Time), EPU, Var) %>%
+ dplyr::summarise(Value = mean(Value)) %>% 
+  as.data.frame()
+
+wind <- wind_clean %>%
+  mutate(Time = year(Time)) %>% #find year
+  group_by(Time, EPU, Var) %>% #group by season
+  dplyr::summarise(Value = mean(Value)) %>% 
+  as.data.frame()
+
+strat <- stratification %>%
+  dplyr::select(-Units) %>% 
+  mutate(Time = year(Time)) %>% 
+  as.data.frame()
+
+#Bind all
+env <- rbind(nutrients,
+              ocean_sal,
+              ocean_temp,
+              strat,
+              wind)
+env$Var <- paste(env$Var, env$EPU) #create unique Var column
+fields <- as.list(unique(env$Var)) #get fields for normalization
+
+
+```
+
+```{r plot_unique, message = FALSE, warning = FALSE}
+#Normalize
+norm_env <- lapply(fields, get_dat)
+norm_env <- do.call(rbind,norm_env)
+norm_env <- norm_env %>% dplyr::rename(Time = time, Var = var, Value = value)
+
+ggplot(data = norm_env) +
+  geom_line(aes(x = Time, y = Value, color = Var)) +
+  guides(color = FALSE) +
+  ylab("Normalized Value")+
+  theme_bw()+
+  ggtitle("Normalized ENV/LTL Time Series")
+```
+
+```{r MAB_corr, fig.width = 10, fig.height = 10}
+env_wide <- norm_env %>%
+  group_by(Var) %>% 
+  mutate(count = n()) %>% 
+  filter(count > 30, !str_detect(Var,"reference"), str_detect(Var,"MAB")) %>% 
+  dplyr::select(-count) %>%
+  spread(., Var, Value) 
+
+env_wide <- env_wide[complete.cases(env_wide),]
+
+env_cor <- cor(env_wide)
+corrplot(env_cor, diag = FALSE, order = "FPC",
+         tl.pos = "td", tl.cex = 0.5, method = "color", type = "upper")
+
+```
+
+
+```{r GB_corr, fig.width = 10, fig.height = 10}
+env_wide <- norm_env %>%
+  group_by(Var) %>% 
+  mutate(count = n()) %>% 
+  filter(count > 30, !str_detect(Var,"reference"), str_detect(Var,"GB")) %>% 
+  dplyr::select(-count) %>%
+  spread(., Var, Value) 
+
+env_wide <- env_wide[complete.cases(env_wide),]
+
+env_cor <- cor(env_wide)
+corrplot(env_cor, diag = FALSE, order = "FPC",
+         tl.pos = "td", tl.cex = 0.5, method = "color", type = "upper")
+
+```
+
+
+```{r GOM_corr, fig.width = 10, fig.height = 10}
+env_wide <- norm_env %>%
+  group_by(Var) %>% 
+  mutate(count = n()) %>% 
+  filter(count > 30, !str_detect(Var,"reference"), str_detect(Var,"GOM")) %>% 
+  dplyr::select(-count) %>%
+  spread(., Var, Value) 
+
+env_wide <- env_wide[complete.cases(env_wide),]
+
+env_cor <- cor(env_wide)
+corrplot(env_cor, diag = FALSE, order = "FPC",
+         tl.pos = "td", tl.cex = 0.5, method = "color", type = "upper")
+
+```
