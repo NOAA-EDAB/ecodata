@@ -593,7 +593,7 @@ ggplot(data =stratification)+
 ```
 
 
-### EcoMon Nutrient Data {.tabset .tabset-fade}
+### EcoMon Nutrient Data {.tabset}
 
 These data include nutrient data sampled on EcoMon cruises between 11/3/2009 - 10/19/2016.
 
@@ -684,6 +684,8 @@ if(spatial_processing){
   load(file.path(sample.dir,"sample_nutrients.Rdata"))
   load(file.path(clean.dir,"EcoMon_nutrients.Rdata"))
 }
+
+
 ```
 
 #### QA
@@ -698,7 +700,7 @@ ggplot() +
 ```
 
 
-#### Visualization
+#### Visualization 
 
 ```{r N nutrients}
 N <- NE_LME_nutrients %>% 
@@ -707,7 +709,7 @@ N <- NE_LME_nutrients %>%
   dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
   ggplot() +
   geom_line(aes(x = Time, y = Value, color = EPU)) +
-  ylab(expression("Nitrit+Nitrat (micromoles kg"^-1*")"))+
+  ylab(expression("Nitrit+Nitrat ("*mu*"mol kg"^-1*")"))+
   ggtitle("Nitrit+Nitrat")+
   theme_bw()+
   theme(strip.background = element_blank())+
@@ -719,7 +721,7 @@ P <- NE_LME_nutrients %>%
   dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
   ggplot() +
   geom_line(aes(x = Time, y = Value, color = EPU)) +
-  ylab(expression("Phosphate (micromoles kg"^-1*")"))+
+  ylab(expression("Phosphate ("*mu*"mol kg"^-1*")"))+
   ggtitle("Phosphate")+
   theme_bw()+
   theme(strip.background = element_blank())+
@@ -731,10 +733,9 @@ ammon <- NE_LME_nutrients %>%
   dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
   ggplot() +
   geom_line(aes(x = Time, y = Value, color = EPU)) +
-  ylab(expression("Ammonia (micromoles kg"^-1*")"))+
+  ylab(expression("Ammonia ("*mu*"mol kg"^-1*")"))+
   ggtitle("Ammonia")+
   theme_bw()+
-  theme(strip.background = element_blank())+
   theme(strip.background = element_blank(),legend.position = c(0.85, 0.6),
         legend.key = element_rect(color="transparent"),
         legend.background = element_rect(fill="transparent"))
@@ -745,7 +746,7 @@ silcat <- NE_LME_nutrients %>%
   dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
   ggplot() +
   geom_line(aes(x = Time, y = Value, color = EPU)) +
-  ylab(expression("Silicates (micromoles kg"^-1*")"))+
+  ylab(expression("Silicates ("*mu*"mol kg"^-1*")"))+
     ggtitle("Silicates")+
   theme_bw()+
   guides(color= FALSE)
