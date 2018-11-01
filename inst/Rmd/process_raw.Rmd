@@ -74,7 +74,7 @@ kable(vars, caption = paste0('Variables in "',fname,'"'))%>%
 
 
 Variables included in these data are surface wind speed and direction (*uwnd* and *vwnd* respectively), surface turbulent kinetic energy (TKE), and storm relative helicity (HLCY). An indicator for total wind speed is calculated below as
-$$\textrm{TWS} = \sqrt{u^2 + v^2}$$.
+$$\textrm{TWS} = \sqrt{u^2 + v^2}$$. Data are visualized seasonally (Fall = October, November, December; Winter = January, February, March; Spring = April, May, June; Summer = July, August, September).
 
 **Filename**: NCEP NARR surface wind; TKE; HLCY, monthly, 1979-2018, V1.csv  
 **Contributor**: Vincent Saba, (vincent.saba@noaa.gov)
@@ -598,7 +598,7 @@ ggplot(data =stratification)+
 These data include nutrient data sampled on EcoMon cruises between 11/3/2009 - 10/19/2016.
 
 **Filename**: EcoMon Nutrient Data Through June 2018.csv  
-**Contributor**: Chris Melrose (chris.melrose@noaa.gov)
+**Contributor**: Chris Melrose (chris.melrose@noaa.gov)  
 
 #### Processing
 
@@ -672,7 +672,9 @@ if(spatial_processing){
   Nitr <- NE_LME_nutrients %>% filter(Var == "NITRIT.NITRAT")
   
   #Back to SOE format
-  NE_LME_nutrients <- NE_LME_nutrients %>% dplyr::select(-Latitude, -Longitude)
+  NE_LME_nutrients <- NE_LME_nutrients %>%
+    dplyr::select(-Latitude, -Longitude) %>% 
+    mutate(Value = as.numeric(Value))
   
   if (save_clean){
     save(NE_LME_nutrients,file = file.path(clean.dir, "EcoMon_nutrients.Rdata"))
@@ -680,6 +682,7 @@ if(spatial_processing){
 
 } else {
   load(file.path(sample.dir,"sample_nutrients.Rdata"))
+  load(file.path(clean.dir,"EcoMon_nutrients.Rdata"))
 }
 ```
 
@@ -695,5 +698,60 @@ ggplot() +
 ```
 
 
+#### Visualization
+
+```{r N nutrients}
+N <- NE_LME_nutrients %>% 
+  filter(Var == "NITRIT.NITRAT", Value > 0, !is.na(EPU)) %>% 
+  group_by(EPU, Time = year(Time)) %>% 
+  dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value, color = EPU)) +
+  ylab(expression("Nitrit+Nitrat (micromoles kg"^-1*")"))+
+  ggtitle("Nitrit+Nitrat")+
+  theme_bw()+
+  theme(strip.background = element_blank())+
+  guides(colour=FALSE)
+
+P <- NE_LME_nutrients %>% 
+  filter(Var == "PHSPHT", Value > 0, !is.na(EPU)) %>% 
+  group_by(EPU, Time = year(Time)) %>% 
+  dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value, color = EPU)) +
+  ylab(expression("Phosphate (micromoles kg"^-1*")"))+
+  ggtitle("Phosphate")+
+  theme_bw()+
+  theme(strip.background = element_blank())+
+  guides(colour=FALSE)
+
+ammon <- NE_LME_nutrients %>% 
+  filter(Var == "AMMONIA", Value > 0, !is.na(EPU)) %>% 
+  group_by(EPU, Time = year(Time)) %>% 
+  dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value, color = EPU)) +
+  ylab(expression("Ammonia (micromoles kg"^-1*")"))+
+  ggtitle("Ammonia")+
+  theme_bw()+
+  theme(strip.background = element_blank())+
+  theme(strip.background = element_blank(),legend.position = c(0.85, 0.6),
+        legend.key = element_rect(color="transparent"),
+        legend.background = element_rect(fill="transparent"))
+
+silcat <- NE_LME_nutrients %>% 
+  filter(Var == "SILCAT", Value > 0, !is.na(EPU)) %>% 
+  group_by(EPU, Time = year(Time)) %>% 
+  dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value, color = EPU)) +
+  ylab(expression("Silicates (micromoles kg"^-1*")"))+
+    ggtitle("Silicates")+
+  theme_bw()+
+  guides(color= FALSE)
+
+cowplot::plot_grid(N, P, ammon , silcat)
+
+```
 
 
