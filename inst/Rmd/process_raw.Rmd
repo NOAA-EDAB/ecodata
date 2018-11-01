@@ -86,10 +86,10 @@ $$\textrm{TWS} = \sqrt{u^2 + v^2}$$. Data are visualized seasonally (Fall = Octo
 d <- read.csv(file.path(raw.dir,"NCEP NARR surface wind; TKE; HLCY, monthly, 1979-2018, V1.csv"))
 
 # Processing steps for all wind speed data
-wind_clean1 <- d  %>% gather(., Var, Value, GB.uwnd:MAB.tke) %>% #convert wide to long
+wind_clean2 <- d  %>% gather(., Var, Value, GB.uwnd:MAB.tke) %>% #convert wide to long
   dplyr::rename(Time = Month.Year) %>% #rename time variable
   separate(Var, c("EPU","Var"),"\\.") %>% #separate out EPU from variable names
-  mutate(Time = as.yearmon(as.Date(.$Time,Time, format = "%d-%b-%y"), "%m/%Y"), #Convert to date format
+  mutate(Time = as.yearmon(as.Date(.$Time, format = "%d-%b-%y"), "%m/%Y"), #Convert to date format
          Units = plyr::mapvalues(Var, from = unique(Var), to = c(rep("J/kg",2),"m^2/sec^2","J/kg")), #add units
          Time, season = plyr::mapvalues(month(Time), from = seq(1,12,1), #Get season
                                          to = c(rep("winter",3),
