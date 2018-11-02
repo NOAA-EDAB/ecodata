@@ -36,7 +36,7 @@ sample.dir <- here("inst","extdata","sample")
 crs <- "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 
 #Write output to file
-save_clean <- FALSE
+save_clean <- TRUE
 
 #Execute spatial processing (must be TRUE to write clean data to file). If FALSE, will load sample data from file for plotting example
 spatial_processing <- FALSE
@@ -86,16 +86,17 @@ $$\textrm{TWS} = \sqrt{u^2 + v^2}$$. Data are visualized seasonally (Fall = Octo
 d <- read.csv(file.path(raw.dir,"NCEP NARR surface wind; TKE; HLCY, monthly, 1979-2018, V1.csv"))
 
 # Processing steps for all wind speed data
-wind_clean2 <- d  %>% gather(., Var, Value, GB.uwnd:MAB.tke) %>% #convert wide to long
+wind_clean1 <- d  %>% gather(., Var, Value, GB.uwnd:MAB.tke) %>% #convert wide to long
   dplyr::rename(Time = Month.Year) %>% #rename time variable
   separate(Var, c("EPU","Var"),"\\.") %>% #separate out EPU from variable names
-  mutate(Time = as.yearmon(as.Date(.$Time, format = "%d-%b-%y"), "%m/%Y"), #Convert to date format
+    mutate(Time = dmy(.$Time), #Convert to date format
          Units = plyr::mapvalues(Var, from = unique(Var), to = c(rep("J/kg",2),"m^2/sec^2","J/kg")), #add units
          Time, season = plyr::mapvalues(month(Time), from = seq(1,12,1), #Get season
                                          to = c(rep("winter",3),
                                                 rep("spring",3),
                                                 rep("summer",3),
                                                 rep("fall",3)))) 
+
 
 # Calculate total wind speed from u and v components
 total_wind_speed <- wind_clean1 %>% 
@@ -331,8 +332,9 @@ d <- read.csv(file.path(raw.dir,"slopewater_proportions.csv"))
 slopewater <- d %>%
   dplyr::rename(Time = year, Var = water.mass.flavor, Value = prop) %>% 
   mutate(EPU = "all", Units = "unitless", Var2 = "proportion ne channel") %>% 
-  unite(.,Var,c(Var,Var2), sep = " ")
-  
+  unite(.,Var,c(Var,Var2), sep = " ") %>% 
+  mutate(Time = ymd(sprintf("%d-01-01",.$Time)))
+
 if (save_clean){
 save(slopewater, file =
        file.path(clean.dir, "slopewater_proportions.Rdata"))
@@ -571,7 +573,8 @@ stratification <- strat %>%
   dplyr::rename(Time = time, Var = var, Value = stratification) %>% 
   separate(., Var, c("Var","EPU"), sep = "_") %>% 
   mutate(Var = "stratification (0-50 m)",
-         Units = "kg m^-3") 
+         Units = "kg m^-3") %>% 
+  mutate(Time = ymd(sprintf("%d-01-01",.$Time)))
 
 if (save_clean){
   save(stratification, file = file.path(clean.dir, "stratification.Rdata"))

@@ -24,6 +24,7 @@ library(raster)
 library(sp)
 library(gridExtra)
 library(corrplot)
+library(tseries)
 
 #Data directories
 raw.dir <- here("inst","extdata") #raw data directory
@@ -36,186 +37,40 @@ crs <- "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 
 #Normalize
 get_dat <- function(field){
-  
   time <- env[env$Var == field,]$Time
   end = max(time)
   time = time[1:which(time == end)]
-  var <- env[env$Var == field,]$Value
+  Value <- env[env$Var == field,]$Value
   
-  if (all(is.na(as.numeric(var)))){
-    var <- NA
+  if (all(is.na(as.numeric(Value))) | sd(Value, na.rm = T) == 0){
+    Value <- NA
   } else {
-
-    var <- var[1:length(time)]
-    var <- (var-mean(var, na.rm = TRUE))/sd(var, na.rm = TRUE)
+    
+    Value <- Value[1:length(time)]
+    Value <- (Value-mean(Value, na.rm = TRUE))/sd(Value, na.rm = TRUE)
+    
+    #interpolate missing values
+    if (any(is.na(Value))){
+      Value <- approx(time, Value, n = length(Value))$y
+    }
+    
+    #fit 1st order differencing model  
+    mod <- arima(Value, order = c(0,1,0))
+    Value <- resid(mod)
+  
+    #test for stationarity with Augmented Dickey Fuller
+    adf <- suppressWarnings(adf.test(Value)$p.value)
+  
+    if (adf > 0.05){
+      warning("Series non-stationary")
+    }
+  
   }
   
   out <- data.frame(var = field,
-                    value = var,
+                    value = as.numeric(Value),
                     time = time)
   return(out)
-}
-
-
-#Trend assessment
-
-fit_lm <- function(dat, ar, m, ARsd, trend, spec = FALSE){
-    dat <- dat %>% dplyr::filter(complete.cases(.))
-    
-    # Constant model (null model used to calculate 
-    # overall p-value)
-    constant_norm <-nlme::gls(series ~ 1, data = dat)
-    
-    #spec parameter specifies whether arima.sim incorporated AR(1) error process. When there is no 
-    #AR error in the time series, we switch the GLS models to all rely on a normal error generating process.
-    if (!spec){
-      constant_ar1 <-
-        try(nlme::gls(series ~ 1,
-                      data = dat,
-                      correlation = nlme::corAR1(form = ~time)))
-      if (class(constant_ar1) == "try-error"){
-        return(best_lm <- data.frame(model = NA,
-                                     aicc  = NA,
-                                     coefs..Intercept = NA,
-                                     coefs.time = NA,
-                                     coefs.time2 = NA,
-                                     pval = NA))
-      }
-      
-    } else {
-      constant_ar1 <-
-        try(nlme::gls(series ~ 1,
-                      data = dat))
-      if (class(constant_ar1) == "try-error"){
-        return(best_lm <- data.frame(model = NA,
-                                     aicc  = NA,
-                                     coefs..Intercept = NA,
-                                     coefs.time = NA,
-                                     coefs.time2 = NA,
-                                     pval = NA))
-      }
-    }
-    # Linear model with normal error
-    linear_norm <- nlme::gls(series ~ time, data = dat)
-    
-    # Linear model with AR1 error
-    if (!spec){
-      linear_ar1 <- 
-        try(nlme::gls(series ~ time, 
-                      data = dat,
-                      correlation = nlme::corAR1(form = ~time)))
-      if (class(linear_ar1) == "try-error"){
-        return(best_lm <- data.frame(model = NA,
-                                     aicc  = NA,
-                                     coefs..Intercept = NA,
-                                     coefs.time = NA,
-                                     coefs.time2 = NA,
-                                     pval = NA))
-        }
-      } else {
-        linear_ar1 <- 
-          try(nlme::gls(series ~ time, 
-                        data = dat))
-        if (class(linear_ar1) == "try-error"){
-          return(best_lm <- data.frame(model = NA,
-                                       aicc  = NA,
-                                       coefs..Intercept = NA,
-                                       coefs.time = NA,
-                                       coefs.time2 = NA,
-                                       pval = NA))
-      }
-    }
-    linear_phi <- linear_ar1$modelStruct$corStruct
-    linear_phi <-coef(linear_phi, unconstrained = FALSE)
-    
-    # Polynomial model with normal error
-    dat$time2 <- dat$time^2
-    poly_norm <- nlme::gls(series ~ time + time2, data = dat)
-
-    # Polynomial model with AR1 error
-    if (!spec){
-      poly_ar1 <-
-        try(nlme::gls(series ~ time + time2,
-                      data = dat,
-                      correlation = nlme::corAR1(form = ~time)))
-      if (class(poly_ar1) == "try-error"){
-        return(best_lm <- data.frame(model = NA,
-                                     aicc  = NA,
-                                     coefs..Intercept = NA,
-                                     coefs.time = NA,
-                                     coefs.time2 = NA,
-                                     pval = NA))
-
-      }
-    }else {
-      poly_ar1 <-
-        try(nlme::gls(series ~ time + time2,
-                      data = dat))
-      if (class(poly_ar1) == "try-error"){
-        return(best_lm <- data.frame(model = NA,
-                                     aicc  = NA,
-                                     coefs..Intercept = NA,
-                                     coefs.time = NA,
-                                     coefs.time2 = NA,
-                                     pval = NA))
-
-      }
-    }
-    poly_phi <- poly_ar1$modelStruct$corStruct
-    poly_phi <- coef(poly_phi, unconstrained = FALSE)
-    
-    # Calculate AICs for all models
-    df_aicc <-
-      data.frame(model = c("poly_norm",
-                           "poly_ar1",
-                           "linear_norm",
-                           "linear_ar1"),
-                 aicc  = c(AICc(poly_norm),
-                           AICc(poly_ar1),
-                           AICc(linear_norm),
-                           AICc(linear_ar1)),
-                 coefs = rbind(coef(poly_norm),
-                               coef(poly_ar1),
-                               c(coef(linear_norm), NA),
-                               c(coef(linear_ar1),  NA)),
-                 phi = c(0, 
-                         poly_phi,
-                         0,
-                         linear_phi),
-                 # Calculate overall signifiance (need to use
-                 # ML not REML for this)
-                 pval = c(anova(update(constant_norm, method = "ML"),
-                               update(poly_norm, method = "ML"))$`p-value`[2],
-                          anova(update(constant_ar1, method = "ML"),
-                                update(poly_ar1, method = "ML"))$`p-value`[2],
-                          anova(update(constant_norm, method = "ML"),
-                                update(linear_norm, method = "ML"))$`p-value`[2],
-                          anova(update(constant_ar1, method = "ML"),
-                                update(linear_ar1, method = "ML"))$`p-value`[2]))
-    
-    best_lm <-
-      df_aicc %>%
-      dplyr::filter(aicc == min(aicc))
-    if (nrow(best_lm) >1){
-      best_lm <- best_lm[1,]
-    }
-    phi <- best_lm$phi
-
-    
-    
-  if (best_lm$model == "poly_norm") {
-    model <- poly_norm
-  } else if (best_lm$model == "poly_ar1") {
-    model <- poly_ar1
-  } else if (best_lm$model == "linear_norm") {
-    model <- linear_norm
-  } else if (best_lm$model == "linear_ar1") {
-    model <- linear_ar1
-  }
-
-
-  return(list(best_lm = best_lm, 
-              model = model))
 }
 
 ```
@@ -226,7 +81,8 @@ lapply(file.path(clean.dir,as.list(list.files(clean.dir))),load,environment())
 
 #aggregate to year
 nutrients <- NE_LME_nutrients %>% 
-  filter(Value > 0, !is.na(EPU)) %>% 
+  filter(Value > 0, !is.na(EPU), !Var %in% c("BTLNBR","CASTNO","Depth_sampling",
+                                             "Depth_station","STNNBR")) %>% 
   group_by(EPU, Time = year(Time), Var) %>% 
   dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
   as.data.frame()
