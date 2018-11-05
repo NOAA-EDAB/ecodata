@@ -1,13 +1,17 @@
 ---
 title: 'State of the Ecosystem: Indicator Processing & Visualization'
 author: Sean Hardison
-output_format: html_document
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_float: true
+    theme: lumen
 ---
 
 ## Introduction
-The purpose of this file is to document State of the Ecosystem (SOE) indicator data processing. To update existing data sets, set the `save_clean` parameter in the Rmarkdown set-up chunk to `TRUE`. Raw data for these indicators are available in the file directory `extdata`, and libraries required to process indicator data sets are shown below.
+The purpose of this report is to document State of the Ecosystem (SOE) indicator data processing. All R code used to process and visualize the following data sets is self-contained in the [Rmarkdown document](https://github.com/NOAA-EDAB/soe/blob/master/inst/Rmd/process_raw.Rmd) associated with this HTML file. To run and update data sets in this document, set the `save_clean` parameter in the set-up chunk to `TRUE`. Raw data for these indicators are available in the file directory `soe/inst/extdata`.
 
-```{r, message=FALSE}
+```{r, message=FALSE, echo = F}
 knitr::opts_chunk$set(echo = TRUE,
                       fig.align='center')
 
@@ -36,10 +40,10 @@ sample.dir <- here("inst","extdata","sample")
 crs <- "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 
 #Write output to file
-save_clean <- TRUE
+save_clean <- F
 
 #Execute spatial processing (must be TRUE to write clean data to file). If FALSE, will load sample data from file for plotting example
-spatial_processing <- FALSE
+spatial_processing <- F
 
 ```
 
@@ -107,7 +111,11 @@ total_wind_speed <- wind_clean1 %>%
   gather(.,Var, Value, `total wind speed`) #convert to long
 
 wind_clean <- rbind(wind_clean1, total_wind_speed)
-wind_clean <- wind_clean %>% unite(., Var, c(Var, season), sep = " ") #merge season into Var column
+wind_clean <- wind_clean %>%
+  unite(., Var, c(Var, season), sep = " ") %>% #merge season into Var column
+  group_by(Time = year(Time), EPU, Var, Units) %>% 
+  dplyr::summarise(Value = mean(Value)) %>% 
+  as.data.frame()
 
 if (save_clean){
 save(wind_clean, file =
@@ -118,13 +126,10 @@ save(wind_clean, file =
 
 #### MAB Total Wind Speed
 
-```{r wind_speed_vis}
+```{r wind_speed_vis, echo = FALSE}
 mab <- wind_clean %>%
   filter(str_detect(Var, "total wind speed"), EPU == "MAB") %>% #filter
   mutate(Var = word(Var, -1)) %>% 
-  mutate(Time = year(Time)) %>% #find year
-  group_by(Time, Var) %>% #group by season
-  dplyr::summarise(Value = mean(Value)) %>% #find mean
   ggplot()+ #plot
   geom_line(aes(x = Time, y = Value))+
   facet_wrap(.~Var, nrow = 2)+
@@ -138,14 +143,10 @@ mab
 
 #### GB Total Wind Speed
 
-```{r GB tws}
+```{r GB tws, echo = FALSE}
 gb <- wind_clean %>%
   filter(str_detect(Var, "total wind speed"), EPU == "GB") %>% #filter
   mutate(Var = word(Var, -1)) %>% 
-  mutate(Time = year(Time)) %>% #find year
-  group_by(Time, Var) %>% #group by season
-  dplyr::summarise(Value = mean(Value)) %>% #find mean
-  
   ggplot()+ #plot
   geom_line(aes(x = Time, y = Value))+
   facet_wrap(.~Var, nrow = 2)+
@@ -159,14 +160,10 @@ gb
 
 #### GOM Total Wind Speed
 
-```{r GOM tws}
+```{r GOM tws, echo = FALSE}
 gom <- wind_clean %>%
   filter(str_detect(Var, "total wind speed"), EPU == "GOM") %>% #filter
   mutate(Var = word(Var, -1)) %>% 
-  mutate(Time = year(Time)) %>% #find year
-  group_by(Time, Var) %>% #group by season
-  dplyr::summarise(Value = mean(Value)) %>% #find mean
-  
   ggplot()+ #plot
   geom_line(aes(x = Time, y = Value))+
   facet_wrap(.~Var, nrow = 2)+
@@ -180,13 +177,10 @@ gom
 
 #### MAB Helicity
 
-```{r MAB hel}
+```{r MAB hel, echo = FALSE}
 mab <- wind_clean %>%
   filter(str_detect(Var, "hcly"), EPU == "MAB") %>% #filter
   mutate(Var = word(Var, -1)) %>% 
-  mutate(Time = year(Time)) %>% #find year
-  group_by(Time, Var) %>% #group by season
-  dplyr::summarise(Value = mean(Value)) %>% #find mean
   ggplot()+ #plot
   geom_line(aes(x = Time, y = Value))+
   facet_wrap(.~Var, nrow = 2)+
@@ -200,13 +194,10 @@ mab
 
 #### GB Helicity
 
-```{r GB hel}
+```{r GB hel, echo = FALSE}
 gb <- wind_clean %>%
   filter(str_detect(Var, "hcly"), EPU == "GB") %>% #filter
   mutate(Var = word(Var, -1)) %>% 
-  mutate(Time = year(Time)) %>% #find year
-  group_by(Time, Var) %>% #group by season
-  dplyr::summarise(Value = mean(Value)) %>% #find mean
   ggplot()+ #plot
   geom_line(aes(x = Time, y = Value))+
   facet_wrap(.~Var, nrow = 2)+
@@ -220,13 +211,10 @@ gb
 
 #### GOM Helicity
 
-```{r GOM hel}
+```{r GOM hel, echo = FALSE}
 gom <- wind_clean %>%
   filter(str_detect(Var, "hcly"), EPU == "GOM") %>% #filter
   mutate(Var = word(Var, -1)) %>% 
-  mutate(Time = year(Time)) %>% #find year
-  group_by(Time, Var) %>% #group by season
-  dplyr::summarise(Value = mean(Value)) %>% #find mean
   ggplot()+ #plot
   geom_line(aes(x = Time, y = Value))+
   facet_wrap(.~Var, nrow = 2)+
@@ -240,13 +228,10 @@ gom
 
 #### MAB TKE
 
-```{r MAB tke}
+```{r MAB tke, echo = FALSE}
 mab <- wind_clean %>%
   filter(str_detect(Var, "tke"), EPU == "MAB") %>% #filter
   mutate(Var = word(Var, -1)) %>% 
-  mutate(Time = year(Time)) %>% #find year
-  group_by(Time, Var) %>% #group by season
-  dplyr::summarise(Value = mean(Value)) %>% #find mean
   ggplot()+ #plot
   geom_line(aes(x = Time, y = Value))+
   facet_wrap(.~Var, nrow = 2)+
@@ -260,13 +245,10 @@ mab
 
 #### GB TKE
 
-```{r GB tke}
+```{r GB tke, echo = FALSE}
 gb <- wind_clean %>%
   filter(str_detect(Var, "tke"), EPU == "GB") %>% #filter
   mutate(Var = word(Var, -1)) %>% 
-  mutate(Time = year(Time)) %>% #find year
-  group_by(Time, Var) %>% #group by season
-  dplyr::summarise(Value = mean(Value)) %>% #find mean
   ggplot()+ #plot
   geom_line(aes(x = Time, y = Value))+
   facet_wrap(.~Var, nrow = 2)+
@@ -281,13 +263,10 @@ gb
 
 #### GOM TKE
 
-```{r GOM tke}
+```{r GOM tke, echo = FALSE}
 gom <- wind_clean %>%
   filter(str_detect(Var, "tke"), EPU == "GOM") %>% #filter
   mutate(Var = word(Var, -1)) %>%
-  mutate(Time = year(Time)) %>% #find year
-  group_by(Time, Var) %>% #group by season
-  dplyr::summarise(Value = mean(Value)) %>% #find mean
   ggplot()+ #plot
   geom_line(aes(x = Time, y = Value))+
   facet_wrap(.~Var, nrow = 2)+
@@ -377,10 +356,10 @@ vars <- data.frame(Variable = c("SST anomaly",
                              "Tsfc_ref",
                              "Tbot_anom",
                              "Tbot_ref"),
-                   Units = c("?C",
-                             "?C",
-                             "?C",
-                             "?C"))
+                   Units = c("°C",
+                             "°C",
+                             "°C",
+                             "°C"))
 
 kable(vars, caption = paste0('Variables in "',fname,'"'))%>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>%
@@ -401,14 +380,17 @@ mab <- read.csv(file.path(raw.dir,"EcoMAB_core_Ttopbot.csv")) %>% mutate(EPU = "
 ocean_temp_insitu <- rbind(ss, gom, gb, mab) %>% #bind all
   dplyr::rename(Time = decimal.year, Var = variable.name, Value = temperature) %>% #rename
   mutate(Units = "degreesC", Time = as.Date(format(date_decimal(Time), "%Y-%b-%d"), "%Y-%b-%d"),
-         Var, Var = plyr::mapvalues(Var, from = c("Tsfc_anom",
+         Var, Var = plyr::mapvalues(Var, from = c("Tsfc_anom",#Rename variables
                              "Tsfc_ref",
                              "Tbot_anom",
                              "Tbot_ref"),
                              to = c("sst anomaly in situ",
                                 "reference sst in situ (1981-2010)",
                                 "bottom temp anomaly in situ",
-                                "reference bt in situ (1981-2010)"))) #Rename variables
+                                "reference bt in situ (1981-2010)"))) %>% 
+  group_by(Time = year(Time), EPU, Var, Units) %>%
+  dplyr::summarise(Value = mean(Value)) %>%
+  as.data.frame() 
 
 if (save_clean){
 save(ocean_temp_insitu, file =
@@ -417,12 +399,10 @@ save(ocean_temp_insitu, file =
 ```
 
 #### Visualization
-```{r ocean_temp_vis, fig.height=7,fig.width=10}
+```{r ocean_temp_vis, fig.height=7,fig.width=10, echo = FALSE}
 
 one <- ocean_temp_insitu %>%
   filter(Var == "sst anomaly in situ") %>% 
-  group_by(Time = year(Time), EPU) %>% 
-  dplyr::summarise(Value = mean(Value)) %>% 
 ggplot2::ggplot() +
   geom_line(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value), size = 1) +
@@ -434,8 +414,6 @@ ggplot2::ggplot() +
 
 two <- ocean_temp_insitu %>%
  filter(Var == "bottom temp anomaly in situ") %>%
- group_by(Time = year(Time), EPU) %>%
- dplyr::summarise(Value = mean(Value)) %>% 
 ggplot2::ggplot() +
   geom_line(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value), size = 1) +
@@ -496,27 +474,23 @@ ocean_sal_insitu <- rbind(ss, gom, gb, mab) %>% #bind all
                      to = c("surface salinity anomaly in situ",
                         "reference surface salinity in situ (1981-2010)",
                         "bottom salinity anomaly in situ",
-                        "reference bottom salinity in situ (1981-2010)")))
+                        "reference bottom salinity in situ (1981-2010)"))) %>% 
+  group_by(Time = year(Time), EPU, Var, Units) %>%
+  dplyr::summarise(Value = mean(Value)) %>%
+  as.data.frame()
+
 if (save_clean){
 save(ocean_sal_insitu, file =
        file.path(clean.dir, "ocean_sal_insitu.Rdata"))
 }
-
-#surface salinity
-
-#bottom salinity
-
-
 ```
 
 #### Visualization
 
-```{r salinity_vis, fig.width = 10, fig.height=7, warning  = FALSE, message = FALSE}
+```{r salinity_vis, fig.width = 10, fig.height=7, warning  = FALSE, message = FALSE, echo = FALSE}
 
 one <- ocean_sal_insitu %>%
   filter(Var == "surface salinity anomaly in situ") %>% 
-  group_by(Time = year(Time), EPU) %>% 
-  dplyr::summarise(Value = mean(Value)) %>% 
 ggplot2::ggplot() +
   geom_line(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value), size = 1) +
@@ -528,8 +502,6 @@ ggplot2::ggplot() +
 
 two <- ocean_sal_insitu %>%
  filter(Var == "bottom salinity anomaly in situ") %>%
- group_by(Time = year(Time), EPU) %>%
- dplyr::summarise(Value = mean(Value)) %>% 
 ggplot2::ggplot() +
   geom_line(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value), size = 1) +
@@ -583,7 +555,7 @@ if (save_clean){
 
 #### Visualization
 
-```{r strat_vis, message=F, warning=F, fig.width = 10, fig.height = 3.25}
+```{r strat_vis, message=F, warning=F, fig.width = 10, fig.height = 3.25, echo = F}
 
 ggplot(data =stratification)+
   geom_line(aes(x = Time, y = Value)) +
@@ -619,7 +591,7 @@ d <- slice(d,-1)
 d1 <- d %>% 
   mutate(Time = Date_UTC) %>% #create Time variable
   dplyr::select(-Date_UTC,-Time_UTC) %>% #remove time, date
-  gather(., Var, Value, -Latitude, -Longitude, -Time) %>% #turn wide to long while retaining lat/lon
+  gather(., Var, Value, -Latitude, -Longitude, -Time, -Depth_sampling, -Depth_station) %>% #turn wide to long while retaining lat/lon
   filter(!is.na(Value)) %>% #remove NA
   left_join(., mapping, by = c("Var")) %>% #join units 
   mutate(Longitude = as.numeric(Longitude),
@@ -674,26 +646,44 @@ if(spatial_processing){
   #Select data for plotting 
   Nitr <- NE_LME_nutrients %>% filter(Var == "NITRIT.NITRAT")
   
-  #Back to SOE format
+  #Back to SOE format and specify bottom, mid-water, or surface sampling
   NE_LME_nutrients <- NE_LME_nutrients %>%
     dplyr::select(-Latitude, -Longitude) %>% 
-    mutate(Value = as.numeric(Value))
+    mutate(Value = as.numeric(Value),
+           Depth_station = as.numeric(Depth_station),
+           Depth_sampling = as.numeric(Depth_sampling)) %>% 
+    mutate(bot_dif = Depth_station-Depth_sampling) %>% 
+    mutate(surf_bot = ifelse(bot_dif <= 10, "bottom",
+                           ifelse(bot_dif > 10 & Depth_sampling <= 5, "surface", "mid-water"))) %>% 
+    filter(Value > 0, !is.na(EPU), !Var %in% c("BTLNBR","CASTNO","Depth_sampling",
+                                             "Depth_station","STNNBR")) %>% 
+    mutate(Var = paste(Var, surf_bot)) %>% 
+    dplyr::select(Time, Var, Value, Units, EPU) %>% 
+    group_by(EPU, Time = year(Time), Var, Units) %>% 
+    dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
+    as.data.frame()
   
   if (save_clean){
     save(NE_LME_nutrients,file = file.path(clean.dir, "EcoMon_nutrients.Rdata"))
   }
 
-} else {
+  group_by(EPU, Time = year(Time), Var) %>% 
+  dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
+  as.data.frame()} else {
   load(file.path(sample.dir,"sample_nutrients.Rdata"))
   load(file.path(clean.dir,"EcoMon_nutrients.Rdata"))
 }
+
+
+
+
 
 
 ```
 
 #### QA
 
-```{r ecomon_plotting1}
+```{r ecomon_plotting1, echo = F}
 #Confirm transformation
 ggplot() + 
   geom_sf(data = epu) +
@@ -703,13 +693,12 @@ ggplot() +
 ```
 
 
-#### Visualization 
+#### Surface Nutrients
 
-```{r N nutrients}
+```{r surface_nutrients, echo = F}
+
 N <- NE_LME_nutrients %>% 
-  filter(Var == "NITRIT.NITRAT", Value > 0, !is.na(EPU)) %>% 
-  group_by(EPU, Time = year(Time)) %>% 
-  dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
+  filter(Var == "NITRIT.NITRAT surface") %>% 
   ggplot() +
   geom_line(aes(x = Time, y = Value, color = EPU)) +
   ylab(expression("Nitrit+Nitrat ("*mu*"mol kg"^-1*")"))+
@@ -719,9 +708,7 @@ N <- NE_LME_nutrients %>%
   guides(colour=FALSE)
 
 P <- NE_LME_nutrients %>% 
-  filter(Var == "PHSPHT", Value > 0, !is.na(EPU)) %>% 
-  group_by(EPU, Time = year(Time)) %>% 
-  dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
+  filter(Var == "PHSPHT surface") %>% 
   ggplot() +
   geom_line(aes(x = Time, y = Value, color = EPU)) +
   ylab(expression("Phosphate ("*mu*"mol kg"^-1*")"))+
@@ -731,12 +718,9 @@ P <- NE_LME_nutrients %>%
   guides(colour=FALSE)
 
 ammon <- NE_LME_nutrients %>% 
-  filter(Var == "AMMONIA", Value > 0, !is.na(EPU)) %>% 
-  group_by(EPU, Time = year(Time)) %>% 
-  dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
+  filter(Var == "AMMONIA surface") %>% 
   ggplot() +
   geom_line(aes(x = Time, y = Value, color = EPU)) +
-  geom_point(aes(x = Time, y = Value, color = EPU)) +
   ylab(expression("Ammonia ("*mu*"mol kg"^-1*")"))+
   ggtitle("Ammonia")+
   theme_bw()+
@@ -745,9 +729,55 @@ ammon <- NE_LME_nutrients %>%
         legend.background = element_rect(fill="transparent"))
 
 silcat <- NE_LME_nutrients %>% 
-  filter(Var == "SILCAT", Value > 0, !is.na(EPU)) %>% 
-  group_by(EPU, Time = year(Time)) %>% 
-  dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>%
+  filter(Var == "SILCAT surface") %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value, color = EPU)) +
+  ylab(expression("Silicates ("*mu*"mol kg"^-1*")"))+
+  ggtitle("Silicates")+
+  theme_bw()+
+  guides(color= FALSE)
+
+cowplot::plot_grid(N, P,ammon ,silcat)
+
+```
+
+#### Bottom Nutrients
+
+```{r bottom_nutrients, echo = F}
+
+N <- NE_LME_nutrients %>% 
+  filter(Var == "NITRIT.NITRAT bottom") %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value, color = EPU)) +
+  ylab(expression("Nitrit+Nitrat ("*mu*"mol kg"^-1*")"))+
+  ggtitle("Nitrit+Nitrat")+
+  theme_bw()+
+  theme(strip.background = element_blank())+
+  guides(colour=FALSE)
+
+P <- NE_LME_nutrients %>% 
+  filter(Var == "PHSPHT bottom") %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value, color = EPU)) +
+  ylab(expression("Phosphate ("*mu*"mol kg"^-1*")"))+
+  ggtitle("Phosphate")+
+  theme_bw()+
+  theme(strip.background = element_blank())+
+  guides(colour=FALSE)
+
+ammon <- NE_LME_nutrients %>% 
+  filter(Var == "AMMONIA bottom") %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value, color = EPU)) +
+  ylab(expression("Ammonia ("*mu*"mol kg"^-1*")"))+
+  ggtitle("Ammonia")+
+  theme_bw()+
+  theme(strip.background = element_blank(),legend.position = c(0.85, 0.6),
+        legend.key = element_rect(color="transparent"),
+        legend.background = element_rect(fill="transparent"))
+
+silcat <- NE_LME_nutrients %>% 
+  filter(Var == "SILCAT bottom") %>% 
   ggplot() +
   geom_line(aes(x = Time, y = Value, color = EPU)) +
   ylab(expression("Silicates ("*mu*"mol kg"^-1*")"))+

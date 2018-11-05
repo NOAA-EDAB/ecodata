@@ -81,8 +81,6 @@ lapply(file.path(clean.dir,as.list(list.files(clean.dir))),load,environment())
 
 #aggregate to year
 nutrients <- NE_LME_nutrients %>% 
-  filter(Value > 0, !is.na(EPU), !Var %in% c("BTLNBR","CASTNO","Depth_sampling",
-                                             "Depth_station","STNNBR")) %>% 
   group_by(EPU, Time = year(Time), Var) %>% 
   dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
   as.data.frame()
@@ -126,21 +124,23 @@ norm_env <- lapply(fields, get_dat)
 norm_env <- do.call(rbind,norm_env)
 norm_env <- norm_env %>% dplyr::rename(Time = time, Var = var, Value = value)
 
-ggplot(data = norm_env) +
-  geom_line(aes(x = Time, y = Value, color = Var)) +
-  guides(color = FALSE) +
-  ylab("Normalized Value")+
-  theme_bw()+
-  ggtitle("Normalized ENV/LTL Time Series")
+# ggplot(data = norm_env) +
+#   geom_line(aes(x = Time, y = Value, color = Var)) +
+#   guides(color = FALSE) +
+#   ylab("Normalized Value")+
+#   theme_bw()+
+#   ggtitle("Normalized ENV/LTL Time Series")
 ```
 
 ```{r MAB_corr, fig.width = 10, fig.height = 10}
 env_wide <- norm_env %>%
   group_by(Var) %>% 
   mutate(count = n()) %>% 
-  filter(count > 30, !str_detect(Var,"reference"), str_detect(Var,"MAB")) %>% 
+  filter(count > 20, !str_detect(Var,"reference"), str_detect(Var,"MAB")) %>% 
   dplyr::select(-count) %>%
   spread(., Var, Value) 
+
+names(env_wide) <- str_replace(names(env_wide), "MAB", "")
 
 env_wide <- env_wide[complete.cases(env_wide),]
 
@@ -148,38 +148,9 @@ env_cor <- cor(env_wide)
 corrplot(env_cor, diag = FALSE, order = "FPC",
          tl.pos = "td", tl.cex = 0.5, method = "color", type = "upper")
 
+t <- prcomp(env_wide)
+# heatmaply_cor(env_cor, margins = c(40, 40),
+#           k_col = 2, k_row = 2,
+#           limits = c(-1,1))
 ```
 
-
-```{r GB_corr, fig.width = 10, fig.height = 10}
-env_wide <- norm_env %>%
-  group_by(Var) %>% 
-  mutate(count = n()) %>% 
-  filter(count > 30, !str_detect(Var,"reference"), str_detect(Var,"GB")) %>% 
-  dplyr::select(-count) %>%
-  spread(., Var, Value) 
-
-env_wide <- env_wide[complete.cases(env_wide),]
-
-env_cor <- cor(env_wide)
-corrplot(env_cor, diag = FALSE, order = "FPC",
-         tl.pos = "td", tl.cex = 0.5, method = "color", type = "upper")
-
-```
-
-
-```{r GOM_corr, fig.width = 10, fig.height = 10}
-env_wide <- norm_env %>%
-  group_by(Var) %>% 
-  mutate(count = n()) %>% 
-  filter(count > 30, !str_detect(Var,"reference"), str_detect(Var,"GOM")) %>% 
-  dplyr::select(-count) %>%
-  spread(., Var, Value) 
-
-env_wide <- env_wide[complete.cases(env_wide),]
-
-env_cor <- cor(env_wide)
-corrplot(env_cor, diag = FALSE, order = "FPC",
-         tl.pos = "td", tl.cex = 0.5, method = "color", type = "upper")
-
-```

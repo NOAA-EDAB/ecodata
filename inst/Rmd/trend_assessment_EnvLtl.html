@@ -1717,7 +1717,7 @@ ggplot(data = norm_env) +
 <pre class="r"><code>env_wide &lt;- norm_env %&gt;%
   group_by(Var) %&gt;% 
   mutate(count = n()) %&gt;% 
-  filter(count &gt; 30, !str_detect(Var,&quot;reference&quot;), str_detect(Var,&quot;MAB&quot;)) %&gt;% 
+  filter(count &gt; 20, !str_detect(Var,&quot;reference&quot;), str_detect(Var,&quot;MAB&quot;)) %&gt;% 
   dplyr::select(-count) %&gt;%
   spread(., Var, Value) 
 
@@ -1730,7 +1730,7 @@ corrplot(env_cor, diag = FALSE, order = &quot;FPC&quot;,
 <pre class="r"><code>env_wide &lt;- norm_env %&gt;%
   group_by(Var) %&gt;% 
   mutate(count = n()) %&gt;% 
-  filter(count &gt; 30, !str_detect(Var,&quot;reference&quot;), str_detect(Var,&quot;GB&quot;)) %&gt;% 
+  filter(count &gt; 20, !str_detect(Var,&quot;reference&quot;), str_detect(Var,&quot;GB&quot;)) %&gt;% 
   dplyr::select(-count) %&gt;%
   spread(., Var, Value) 
 
@@ -1743,7 +1743,7 @@ corrplot(env_cor, diag = FALSE, order = &quot;FPC&quot;,
 <pre class="r"><code>env_wide &lt;- norm_env %&gt;%
   group_by(Var) %&gt;% 
   mutate(count = n()) %&gt;% 
-  filter(count &gt; 30, !str_detect(Var,&quot;reference&quot;), str_detect(Var,&quot;GOM&quot;)) %&gt;% 
+  filter(count &gt; 20, !str_detect(Var,&quot;reference&quot;), str_detect(Var,&quot;GOM&quot;)) %&gt;% 
   dplyr::select(-count) %&gt;%
   spread(., Var, Value) 
 
