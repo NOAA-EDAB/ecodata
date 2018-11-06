@@ -576,6 +576,7 @@ ggplot(data =stratification)+
 ### EcoMon nutrient data {.tabset}
 
 These data include nutrient concentrations, temperature, salinity, density, and dissolved oxygen data sampled via CTD profiles on Ecosystem Monitoring (EcoMon) cruises between 11/3/2009 - 10/19/2016. More metadata are available [here](https://www.nodc.noaa.gov/oads/data/0127524.xml).  
+</br>
 <div align="center">
 ```{r EcoMon_vars, echo = FALSE}
 
@@ -609,8 +610,8 @@ kable(vars,caption = paste0('Variables in "',fname,'"'))%>%
   column_spec(2, width = "5cm") %>% 
   scroll_box(height = "400px")
 ```
-</div>
-  
+</div>  
+</br>
 **Filename**: EcoMon Nutrient Data Through June 2018.csv  
 **Contributor**: Chris Melrose (chris.melrose@noaa.gov)  
 
@@ -827,6 +828,8 @@ cowplot::plot_grid(N, P,ammon ,silcat)
 
 ### North Atlantic Oscillation (NAO) {.tabset}
 
+North Atlantic Oscillation data were taken from the [NOAA NWS Climate Prediction Center](http://www.cpc.ncep.noaa.gov/data/teledoc/nao.shtml). These data show the monthly NAO index time series beginning in 1950 and ending in October 2018. The index is standardized to the 1981-2010 reference period. More information regarding the methodology involved in deriving the NAO and its significance is available [here](http://www.cpc.ncep.noaa.gov/data/teledoc/nao.shtml).
+
 #### Processing
 
 ```{r nao_index}
@@ -845,8 +848,13 @@ nao_annual <- d %>%
   group_by(YEAR) %>% 
   dplyr::summarise(Value = mean(INDEX),
                    Variance = var(INDEX)) %>% 
-  mutate(Var = "nao index", units = "unitless", EPU = "all") %>% 
+  mutate(Var = "nao index", Units = "unitless", EPU = "all") %>% 
   dplyr::rename(Time = YEAR)
+
+if (save_clean){
+  nao <- nao_annual %>% select(-Variance) 
+  save(nao, file = file.path(clean.dir, "nao_annual.Rdata"))
+}
 
 ```
 
@@ -894,6 +902,7 @@ get_dat <- function(field){
   end <- max(time)
   time <- time[1:which(time == end)]
   Value <- env[env$Var == field,]$Value
+  EPU <- unique(env[env$Var == field,]$EPU)
   
   if (all(is.na(as.numeric(Value))) | sd(Value, na.rm = T) == 0){
     Value <- NA #Assign as NA if not including
@@ -925,7 +934,8 @@ get_dat <- function(field){
   }
   out <- data.frame(var = field,
                     value = as.numeric(Value),
-                    time = time)
+                    time = time,
+                    EPU = EPU)
   return(out)
 }
 
@@ -935,7 +945,8 @@ env <- rbind(NE_LME_nutrients,
               ocean_temp_insitu,
               stratification,
               wind_clean,
-             slopewater)
+             slopewater,
+             nao)
 env$Var <- paste(env$Var, env$EPU) #create unique Var column
 fields <- as.list(unique(env$Var)) #get fields for normalization
 max_len <- 30
@@ -953,9 +964,9 @@ env_wide <- norm_env %>% #Clean up output
   mutate(count = n()) %>% 
   filter(count > max_len,
          !str_detect(Var,"reference"),
-         str_detect(Var,"MAB"),
+         EPU %in% c("MAB","all"),
          !is.na(Value)) %>% #select only data from MAB that has over 30 data points (interpolated or otherwise)
-  dplyr::select(-count) %>%
+  dplyr::select(-count, -EPU) %>%
   spread(., Var, Value) %>% 
   dplyr::select(-Time)
 
@@ -992,10 +1003,9 @@ env_wide <-  norm_env %>% #Clean up output
   mutate(count = n()) %>% 
   filter(count > max_len,
          !str_detect(Var,"reference"),
-         str_detect(Var,"GB"),
-         !is.na(Value),
-         Var != "Time") %>% #select only data from MAB that has over 30 data points (interpolated or otherwise)
-  dplyr::select(-count) %>%
+         EPU %in% c("GB","all"),
+         !is.na(Value)) %>% #select only data from GB that has over 30 data points (interpolated or otherwise)
+  dplyr::select(-count, -EPU) %>%
   spread(., Var, Value) %>% 
   dplyr::select(-Time)
 
@@ -1032,10 +1042,9 @@ env_wide <-  norm_env %>% #Clean up output
   mutate(count = n()) %>% 
   filter(count > max_len,
          !str_detect(Var,"reference"),
-         str_detect(Var,"GOM"),
-         !is.na(Value),
-         Var != "Time") %>% #select only data from MAB that has over 30 data points (interpolated or otherwise)
-  dplyr::select(-count) %>%
+         EPU %in% c("GOM","all"),
+         !is.na(Value)) %>% #select only data from GOM that has over 30 data points (interpolated or otherwise)
+  dplyr::select(-count, -EPU) %>%
   spread(., Var, Value) %>% 
   dplyr::select(-Time)
 
