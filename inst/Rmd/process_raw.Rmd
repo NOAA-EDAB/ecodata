@@ -791,13 +791,14 @@ cowplot::plot_grid(N, P,ammon ,silcat)
 
 ```
 
-## Synthesis {.tabset}
+## Synthesis {.tabset} 
+
+<!-- #CORMAT IS MISSING NE SLOPEWATER -->
 
 ```{r corrmat_functions, echo = F, warning=FALSE, message=FALSE}
 #load all clean data
 invisible(lapply(file.path(clean.dir,as.list(list.files(clean.dir))),load,environment()))
 
-field <- "stratification (0-50 m) SS"
 
 get_dat <- function(field){
   #Split out data
@@ -807,7 +808,7 @@ get_dat <- function(field){
   Value <- env[env$Var == field,]$Value
   
   if (all(is.na(as.numeric(Value))) | sd(Value, na.rm = T) == 0){
-    Value <- NA #Assign as NA is not including
+    Value <- NA #Assign as NA if not including
   } else {
     
     Value <- Value[1:length(time)]
@@ -824,6 +825,13 @@ get_dat <- function(field){
     if (adf > 0.05){ #if non-stationary take first difference and use residuals
       mod <- arima(Value, order = c(0,1,0))
       Value <- resid(mod)
+      
+      adf2 <- suppressWarnings(adf.test(Value)$p.value) #check again for stationarity
+      if (adf2 > 0.05){
+        Value <- NA #if still non-stationary, make NA for exclusion
+
+      }
+      
     }
     
   }
@@ -842,7 +850,7 @@ env <- rbind(NE_LME_nutrients,
              slopewater)
 env$Var <- paste(env$Var, env$EPU) #create unique Var column
 fields <- as.list(unique(env$Var)) #get fields for normalization
-
+max_len <- 30
 ```
 
 ### MAB Corr. Matrix 
@@ -855,9 +863,13 @@ env_wide <- norm_env %>% #Clean up output
   dplyr::rename(Time = time, Var = var, Value = value) %>% 
   group_by(Var) %>% 
   mutate(count = n()) %>% 
-  filter(count > 30, !str_detect(Var,"reference"), str_detect(Var,"MAB")) %>% #select only data from MAB that has over 30 data points (interpolated or otherwise)
+  filter(count > max_len,
+         !str_detect(Var,"reference"),
+         str_detect(Var,"MAB"),
+         !is.na(Value)) %>% #select only data from MAB that has over 30 data points (interpolated or otherwise)
   dplyr::select(-count) %>%
-  spread(., Var, Value) 
+  spread(., Var, Value) %>% 
+  dplyr::select(-Time)
 
 #Fix variable names for corrmap labeling
 names(env_wide) <- str_replace(names(env_wide), "MAB", "")
@@ -886,13 +898,18 @@ heatmaply(env_out,
 norm_env <- lapply(fields, get_dat) #apply normalization and differencing function
 norm_env <- do.call(rbind,norm_env) #convert list of dfs to single df
 
-env_wide <- norm_env %>% #Clean up output
+env_wide <-  norm_env %>% #Clean up output
   dplyr::rename(Time = time, Var = var, Value = value) %>% 
   group_by(Var) %>% 
   mutate(count = n()) %>% 
-  filter(count > 30, !str_detect(Var,"reference"), str_detect(Var,"GB")) %>% #select only data from GB that has over 30 data points (interpolated or otherwise)
+  filter(count > max_len,
+         !str_detect(Var,"reference"),
+         str_detect(Var,"GB"),
+         !is.na(Value),
+         Var != "Time") %>% #select only data from MAB that has over 30 data points (interpolated or otherwise)
   dplyr::select(-count) %>%
-  spread(., Var, Value) 
+  spread(., Var, Value) %>% 
+  dplyr::select(-Time)
 
 #Fix variable names for corrmap labeling
 names(env_wide) <- str_replace(names(env_wide), "GB", "")
@@ -915,19 +932,24 @@ heatmaply(env_out,
 
 ```
 
-### GB Corr. Matrix 
+### GOM Corr. Matrix 
 
 ```{r corrplot_GOM, fig.height= 8, fig.width = 10,echo = FALSE, warning=FALSE, message=FALSE}
 norm_env <- lapply(fields, get_dat) #apply normalization and differencing function
 norm_env <- do.call(rbind,norm_env) #convert list of dfs to single df
 
-env_wide <- norm_env %>% #Clean up output
+env_wide <-  norm_env %>% #Clean up output
   dplyr::rename(Time = time, Var = var, Value = value) %>% 
   group_by(Var) %>% 
   mutate(count = n()) %>% 
-  filter(count > 30, !str_detect(Var,"reference"), str_detect(Var,"GOM")) %>% #select only data from GOM that has over 30 data points (interpolated or otherwise)
+  filter(count > max_len,
+         !str_detect(Var,"reference"),
+         str_detect(Var,"GOM"),
+         !is.na(Value),
+         Var != "Time") %>% #select only data from MAB that has over 30 data points (interpolated or otherwise)
   dplyr::select(-count) %>%
-  spread(., Var, Value) 
+  spread(., Var, Value) %>% 
+  dplyr::select(-Time)
 
 #Fix variable names for corrmap labeling
 names(env_wide) <- str_replace(names(env_wide), "GOM", "")
@@ -949,3 +971,54 @@ heatmaply(env_out,
         hide_colorbar = TRUE)
 
 ```
+
+
+### Methods
+
+To create correlation matrices, we first developed a function (shown below) to normalize and assess each time series for stationarity using the Augmented Dickey Fuller (ADF) test. If a time series were found to be non-stationary, we applied a first-order differencing step before assessing for stationarity again. If upon the second ADF test the series was still shown to be non-stationarity, it was not included in further correlation analyses rather than applying higher order differencing. This step was taken to prevent over-differencing of series. To address bias introduced by small samples sizes, only time series with N > 30 were considered for correlation analyses. Group structure in correlation matrices was defined by the magnitude of the scaled and centered first principal component. 
+
+```{r corrmat_methods, eval = FALSE, echo = TRUE}
+
+#Normalization and differencing function
+
+get_dat <- function(field){
+  #Split out data
+  time <- env[env$Var == field,]$Time
+  end <- max(time)
+  time <- time[1:which(time == end)]
+  Value <- env[env$Var == field,]$Value
+  
+  if (all(is.na(as.numeric(Value))) | sd(Value, na.rm = T) == 0){
+    Value <- NA #Assign as NA if not including
+  } else {
+    
+    Value <- Value[1:length(time)]
+    Value <- (Value-mean(Value, na.rm = TRUE))/sd(Value, na.rm = TRUE) #normalize
+    
+    #interpolate missing values
+    if (any(is.na(Value))){
+      Value <- approx(time, Value, n = length(Value))$y
+    }
+    
+    #test for stationarity with Augmented Dickey Fuller
+    adf <- suppressWarnings(adf.test(Value)$p.value)
+    
+    if (adf > 0.05){ #if non-stationary take first difference and use residuals
+      mod <- arima(Value, order = c(0,1,0))
+      Value <- resid(mod)
+      
+      adf2 <- suppressWarnings(adf.test(Value)$p.value) #check again for stationarity
+      if (adf2 > 0.05){
+        Value <- NA #if still non-stationary, make NA for exclusion
+      }
+      
+    }
+    
+  }
+  out <- data.frame(var = field,
+                    value = as.numeric(Value),
+                    time = time)
+  return(out)
+}
+```
+
