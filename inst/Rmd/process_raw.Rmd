@@ -11,6 +11,16 @@ output:
 ## Introduction
 The purpose of this report is to document State of the Ecosystem (SOE) indicator data processing. All R code used to process and visualize the following data sets is self-contained in the [Rmarkdown document](https://github.com/NOAA-EDAB/soe/blob/master/inst/Rmd/process_raw.Rmd) associated with this HTML file. To run and update data sets in this document, set the `save_clean` parameter in the set-up chunk to `TRUE`. Raw data for these indicators are available in the file directory `soe/inst/extdata`.
 
+```{css}
+pre code, pre, code {
+  white-space: pre !important;
+  overflow-y: scroll !important;
+  word-break: keep-all !important;
+  word-wrap: initial !important;
+  max-height: 400px;
+}
+```
+
 ```{r, message=FALSE, echo = F}
 knitr::opts_chunk$set(echo = TRUE,
                       fig.align='center')
@@ -348,7 +358,7 @@ ggplot() +
 ```
 
 
-### Ocean temperature anomaly {.tabset .tabset-fade}
+### Ocean temperature anomaly (in situ) {.tabset .tabset-fade}
 
 These data include *in situ* regional time series of both surface and bottom water temperature anomalies on the Northeast Continental Shelf. Raw data is split into four files by EPU (SS, GOM, GB, and MAB).
 
@@ -407,6 +417,7 @@ save(ocean_temp_insitu, file =
 ```
 
 #### Visualization
+
 ```{r ocean_temp_vis, fig.height=7,fig.width=10, echo = FALSE}
 
 one <- ocean_temp_insitu %>%
@@ -435,7 +446,249 @@ grid.arrange(one, two)
 ```
 
 
-### Ocean salinity anomaly {.tabset .tabset-fade}
+### Ocean temperature (OI) {.tabset}
+
+These data show NE shelf surface and bottom temperatures estimated through an optimal interpolation procedure (see methods [here](https://noaa-edab.github.io/ECSA)). Spring and fall time series were standardized to April 3 and October 11 between the period of 1968-2017. The code below first creates a downsampled raster of each Ecological Production Unit. These downsampled EPU rasters are then used to mask SST and bottom temperature data, from which annual means are computed. This same approach is used to generate time series from EcoMon zooplankton sampling and optimally interpolated salinity data.
+
+**Filename**: temp_bottom_fall_spdf.Rdata, temp_bottom_spring_spdf.Rdata, temp_surface_fall_spdf.Rdata, temp_surface_spring_spdf.Rdata  
+**Contributor**: Kevin Friedland (kevin.friedland@noaa.gov)
+
+#### Processing
+
+*Raster manipulation & variable selection functions*
+
+```{r ocean_temp_oi_processing}
+
+#Read in EPU shapefile (will be downsampled to match raster resolution)
+epu <- readOGR(file.path(gis.dir, "EPU_Extended.shp"), verbose = F) 
+
+#Write function to build EPU rasters
+build_raster <- function(EPU){
+  
+  #Filter raster by EPU
+  epu <- epu[epu$EPU == EPU,]
+  
+  #Build empty raster
+  r1 <- raster::raster()
+  e <- raster::extent(-75.950, -65.450, 35.650, 44.650)
+  raster::extent(r1) <- e
+  
+  #fill with EPU polygon
+  r1 <- raster::rasterize(epu, r1, field = 1, fun = mean)
+  raster::crs(r1) <- NA
+  
+  #create raster to resample with
+  r2 <- raster::raster(nrow = 90, ncol = 105)
+  raster::extent(r2) <- e
+  raster::crs(r2) <- NA
+  
+  #Downsample high res EPU raster to match data
+  r.new <- raster::resample(r1, r2, method="bilinear")
+  r.new[is.finite(r.new)] <- 1 
+  
+  return(r.new)
+  
+}
+
+#Raster data
+mab_rast <- build_raster("MAB")
+gb_rast <- build_raster("GB")
+gom_rast <- build_raster("GOM")
+
+#Process ECSA data by EPU and create time series
+
+epu_env <- function(variable, type = NULL, season, genus = NULL, epu){
+  
+
+  if(!is.null(type) & !variable %in% c("salinity","temperature")){
+    stop('type only applicable for variables "salinity" and "temperature"
+         as type = "bottom" or type = "surface"')
+  } 
+  
+  if(!is.null(genus) & variable != "zooplankton"){
+    stop('genus only applicable for variable "zooplankton"')
+  } 
+  
+  #get compiled down-sampled raster of chosen strata from shapefile. 
+  epumask.raster <- get(paste0(tolower(epu),"_rast"))
+  
+  #get bottom temp data and find mean for stock area--------------------------------------
+  
+  indir <- here("inst","extdata","gridded")
+  
+  if (variable == "salinity"){
+    load(file.path(indir, paste0("sal_",type,"_",season,"_spdf.rdata")))
+  } else if (variable == "temperature"){
+    load(file.path(indir, paste0("temp_",type,"_",season,"_spdf.rdata")))
+  } else if (variable == "chlorophyll"){
+    load(file.path(indir, paste0("chl_",season,"_1997-2018.rdata")))
+  } else if (variable == "zooplankton"){
+    load(file.path(indir, paste0(genus,"_",season,"_zoo_1977-2016.rdata")))
+  }
+  
+
+    #create null df to fill with results
+    data = data.frame(array(NA,dim= c(raster::nlayers(ecsa_dat),5)))
+    
+    #loops through layers in raster brick
+    for(i in 1:raster::nlayers(ecsa_dat)){
+      #load raster by year
+      
+      #get file information from title
+      layer_id <- stringr::str_extract(names(ecsa_dat)[[i]], "\\d.*")
+      layer_id <- stringr::str_split(layer_id, "_")
+      data[i,1] <- layer_id[[1]][[1]]
+      data[i,2] <- layer_id[[1]][[2]]
+      data[i,3] <- layer_id[[1]][[3]]
+      
+      #trim to stock area
+      masked.raster = ecsa_dat[[i]]*epumask.raster
+      
+      #find mean BT of stock area
+      data[i,4] = raster::cellStats(masked.raster, stat='mean', na.rm=TRUE)
+      data[i,5] = raster::cellStats(masked.raster, stat = 'sd', na.rm=TRUE)
+      # 
+      # if (layer_id[[1]][[1]] == "1995"){
+      #   break
+      # }
+    }
+    x <- as.numeric(data$X1)
+    y.out <- data$X4
+    y.sd <- data$X5
+    
+    sd.low <- y.out - y.sd
+    sd.high <- y.out + y.sd
+    
+  # remove 
+  if (variable == "zooplankton"){
+    if (season == "spring"){
+      y.out[x %in% c(1989, 1990, 1991, 1994)] <- NA
+      sd.low[x %in% c(1989, 1990, 1991, 1994)] <- NA
+      sd.high[x %in% c(1989, 1990, 1991, 1994)] <- NA
+    } else if (season == "fall") {
+      y.out[x %in% c(1989, 1990, 1992)] <- NA
+      sd.low[x %in% c(1989, 1990, 1992)] <- NA
+      sd.high[x %in% c(1989, 1990, 1992)] <- NA
+    }
+  }
+  
+  if(variable == "chlorophyll"){
+    type <- ""
+  } else if (variable == "zooplankton"){
+    type <- genus
+    variable <- "zoo"
+  } 
+  
+  out <- data.frame(Var = paste(paste(type,variable),season),
+                    Time = as.numeric(x),
+                    Value = y.out,
+                    sd.low = sd.low,
+                    sd.high = sd.high,
+                    Season = season,
+                    epu = epu)
+  
+  out <- out[out$Time > 1968,]
+  return(out)
+  
+}
+
+```
+
+*Data pull & aggregation*
+
+```{r get_sst_data}
+
+#Bottom temperatures
+bt_fall_mab <- epu_env(variable = "temperature", type = "bottom", season = "fall", epu = "MAB")
+bt_spring_mab <- epu_env(variable = "temperature", type = "bottom", season = "spring", epu = "MAB")
+
+bt_fall_gb <- epu_env(variable = "temperature", type = "bottom", season = "fall", epu = "GB")
+bt_spring_gb <- epu_env(variable = "temperature", type = "bottom", season = "spring", epu = "GB")
+
+bt_fall_gom <- epu_env(variable = "temperature", type = "bottom", season = "fall", epu = "GOM")
+bt_spring_gom <- epu_env(variable = "temperature", type = "bottom", season = "spring", epu = "GOM")
+
+
+#Surface temperatures
+sst_fall_mab <- epu_env(variable = "temperature", type = "surface", season = "fall", epu = "MAB")
+sst_spring_mab <- epu_env(variable = "temperature", type = "surface", season = "spring", epu = "MAB")
+
+sst_fall_gb <- epu_env(variable = "temperature", type = "surface", season = "fall", epu = "GB")
+sst_spring_gb <- epu_env(variable = "temperature", type = "surface", season = "spring", epu = "GB")
+
+sst_fall_gom <- epu_env(variable = "temperature", type = "surface", season = "fall", epu = "GOM")
+sst_spring_gom <- epu_env(variable = "temperature", type = "surface", season = "spring", epu = "GOM")
+
+
+bottom_temp_oi <- rbind(bt_fall_mab,
+                       bt_spring_mab,
+                       bt_fall_gb,
+                       bt_spring_gb,
+                       bt_fall_gom,
+                       bt_spring_gom)
+
+surface_temp_oi <- rbind(sst_fall_mab,
+                       sst_spring_mab,
+                       sst_fall_gb,
+                       sst_spring_gb,
+                       sst_fall_gom,
+                       sst_spring_gom)
+
+#Start with annual mean, generating sampling uncertainty for this time series is possible
+bottom_temp_oi_annual <- bottom_temp_oi %>% 
+  group_by(epu, Time) %>% 
+  dplyr::summarise(Value = mean(Value)) %>% 
+  dplyr::rename(EPU = epu) %>% 
+  dplyr::mutate(Units = "degreesC", Var = "bottom temp OI") 
+  
+
+#Same thing for annual SST
+surface_temp_oi_annual <- surface_temp_oi %>% 
+  group_by(epu, Time) %>% 
+  dplyr::summarise(Value = mean(Value)) %>% 
+  dplyr::rename(EPU = epu) %>% 
+  dplyr::mutate(Units = "degreesC", Var = "surface temp OI")
+
+ocean_temp_oi <- rbind(bottom_temp_oi_annual, surface_temp_oi_annual)
+
+if (save_clean){
+  save(ocean_temp_oi,file =
+       file.path(clean.dir, "ocean_temp_oi.Rdata"))
+}
+
+```
+
+#### Visualization
+
+```{r ocean_temp_oi_vis, fig.height=7,fig.width=10, echo = FALSE}
+
+one <- ocean_temp_oi %>%
+  filter(Var == "surface temp OI") %>% 
+ggplot2::ggplot() +
+  geom_line(aes(x = Time, y = Value)) +
+  geom_point(aes(x = Time, y = Value), size = 1) +
+  facet_grid(.~EPU) +
+  ylab(expression("Temperature ("*degree*"C)")) +
+  ggtitle("SST") +
+  theme_bw()+
+  theme(strip.background = element_blank())
+
+two <- ocean_temp_oi %>%
+ filter(Var == "bottom temp OI") %>%
+ggplot2::ggplot() +
+  geom_line(aes(x = Time, y = Value)) +
+  geom_point(aes(x = Time, y = Value), size = 1) +
+  facet_grid(.~EPU) +
+  ylab(expression("Temperature ("*degree*"C)")) +
+  ggtitle("Bottom temperature") +
+  theme_bw()+
+  theme(strip.background = element_blank())
+
+grid.arrange(one, two)
+
+```
+
+### Ocean salinity anomaly (in situ) {.tabset .tabset-fade}
 
 These data include *in situ* regional time series of both surface and bottom salinity anomalies on the Northeast Continental Shelf. Raw data is split into four files by EPU (SS, GOM, GB, and MAB).
 
@@ -522,12 +775,113 @@ ggplot2::ggplot() +
 grid.arrange(one, two)
 ```
 
+### Ocean salinity (OI) {.tabset .tabset-fade}
+
+These data show optimally interpolated sea-surface and bottom salinities between 1992-2017 (methods for OI procedure are available [here](https://noaa-edab.github.io/ECSA/). Processing of these time series follows the same methods used to process optimally interpolated ocean temperatures. These data are presented as RasterStacks (i.e. one raster layer per year), which are then masked by EPU polygons for further analyses. Here we take the annual mean of masked raster layers to create a time series of OI observations. 
+
+**Filename**: sal_bottom_fall_spdf.Rdata, sal_bottom_spring_spdf.Rdata, sal_surface_fall_spdf.Rdata, sal_surface_spring_spdf.Rdata  
+**Contributor**: Kevin Friedland (kevin.friedland@noaa.gov)
+
+#### Processing
+
+```{r get_salOI_data}
+
+#Bottom salinities
+bsal_fall_mab <- epu_env(variable = "salinity", type = "bottom", season = "fall", epu = "MAB")
+bsal_spring_mab <- epu_env(variable = "salinity", type = "bottom", season = "spring", epu = "MAB")
+
+bsal_fall_gb <- epu_env(variable = "salinity", type = "bottom", season = "fall", epu = "GB")
+bsal_spring_gb <- epu_env(variable = "salinity", type = "bottom", season = "spring", epu = "GB")
+
+bsal_fall_gom <- epu_env(variable = "salinity", type = "bottom", season = "fall", epu = "GOM")
+bsal_spring_gom <- epu_env(variable = "salinity", type = "bottom", season = "spring", epu = "GOM")
+
+
+#Surface salinities
+ssal_fall_mab <- epu_env(variable = "salinity", type = "surface", season = "fall", epu = "MAB")
+ssal_spring_mab <- epu_env(variable = "salinity", type = "surface", season = "spring", epu = "MAB")
+
+ssal_fall_gb <- epu_env(variable = "salinity", type = "surface", season = "fall", epu = "GB")
+ssal_spring_gb <- epu_env(variable = "salinity", type = "surface", season = "spring", epu = "GB")
+
+ssal_fall_gom <- epu_env(variable = "salinity", type = "surface", season = "fall", epu = "GOM")
+ssal_spring_gom <- epu_env(variable = "salinity", type = "surface", season = "spring", epu = "GOM")
+
+
+bottom_sal_oi <- rbind(bsal_fall_mab,
+                       bsal_spring_mab,
+                       bsal_fall_gb,
+                       bsal_spring_gb,
+                       bsal_fall_gom,
+                       bsal_spring_gom)
+
+surface_sal_oi <- rbind(ssal_fall_mab,
+                       ssal_spring_mab,
+                       ssal_fall_gb,
+                       ssal_spring_gb,
+                       ssal_fall_gom,
+                       ssal_spring_gom)
+
+#Start with annual mean, generating sampling uncertainty for this time series is possible
+bottom_sal_oi_annual <- bottom_sal_oi %>% 
+  group_by(epu, Time) %>% 
+  dplyr::summarise(Value = mean(Value)) %>% 
+  dplyr::rename(EPU = epu) %>% 
+  dplyr::mutate(Units = "PSU", Var = "bottom sal OI") 
+  
+
+#Same thing for annual salinity
+surface_sal_oi_annual <- surface_sal_oi %>% 
+  group_by(epu, Time) %>% 
+  dplyr::summarise(Value = mean(Value)) %>% 
+  dplyr::rename(EPU = epu) %>% 
+  dplyr::mutate(Units = "PSU", Var = "surface sal OI")
+
+ocean_sal_oi <- rbind(bottom_sal_oi_annual, surface_sal_oi_annual)
+
+if (save_clean){
+  save(ocean_sal_oi,file =
+       file.path(clean.dir, "ocean_sal_oi.Rdata"))
+}
+
+```
+
+#### Visualization
+
+```{r ocean_sal_oi_vis, fig.height=7,fig.width=10, echo = FALSE}
+
+one <- ocean_sal_oi %>%
+  filter(Var == "surface sal OI") %>% 
+ggplot2::ggplot() +
+  geom_line(aes(x = Time, y = Value)) +
+  geom_point(aes(x = Time, y = Value), size = 1) +
+  facet_grid(.~EPU) +
+  ylab("Salinity (PSU)") +
+  ggtitle("Surface Salinity") +
+  theme_bw()+
+  theme(strip.background = element_blank())
+
+two <- ocean_sal_oi %>%
+ filter(Var == "bottom sal OI") %>%
+ggplot2::ggplot() +
+  geom_line(aes(x = Time, y = Value)) +
+  geom_point(aes(x = Time, y = Value), size = 1) +
+  facet_grid(.~EPU) +
+  ylab("Salinity (PSU)") +
+  ggtitle("Bottom Salinity") +
+  theme_bw()+
+  theme(strip.background = element_blank())
+
+grid.arrange(one, two)
+
+```
+
 
 ### Stratification {.tabset .tabset-fade}
 
 These data are time series of average stratification (0-50 m depth) by EPU. 
 
-**Filename**: Strat50.csv
+**Filename**: Strat50.csv  
 **Contributor**: Paula Fratantoni (paula.fratantoni@noaa.gov)
 
 ```{r stratification_vars, echo = FALSE}
@@ -712,11 +1066,6 @@ if(spatial_processing){
   load(file.path(sample.dir,"sample_nutrients.Rdata"))
   load(file.path(clean.dir,"EcoMon_nutrients.Rdata"))
 }
-
-
-
-
-
 
 ```
 
