@@ -1,0 +1,640 @@
+---
+title: 'State of the Ecosystem: Environmental Indicator Processing & Visualization'
+author: Ecosystems Dynamics and Assessment Branch
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_float: true
+    theme: lumen
+---
+
+## Introduction
+
+The purpose of this report is to document State of the Ecosystem (SOE) **lower trophic level** indicator data processing. All R code used to process and visualize the following data sets is self-contained in the [Rmarkdown document](https://github.com/NOAA-EDAB/soe/blob/master/inst/Rmd/process_raw.Rmd) associated with this HTML file. To run and update data sets in this document, set the `save_clean` parameter in the set-up chunk to `TRUE`. Raw data for these indicators are available in the file directory `soe/inst/extdata`.
+
+```{css, echo = FALSE}
+pre code, pre, code {
+  white-space: pre !important;
+  overflow-y: scroll !important;
+  word-break: keep-all !important;
+  word-wrap: initial !important;
+  max-height: 400px;
+}
+```
+
+```{r, message=FALSE, echo = F}
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.align='center')
+
+#Required libraries
+library(dplyr)
+library(stringr)
+library(tidyr)
+library(ggplot2)
+library(lubridate)
+library(here)
+library(zoo)
+library(kableExtra)
+library(sf)
+library(rgdal)
+library(raster)
+library(sp)
+library(gridExtra)
+library(htmlwidgets)
+library(corrplot)
+library(tseries)
+library(heatmaply)
+library(flexdashboard)
+#library(plotly)
+library(ggiraph)
+
+
+#Data directories
+raw.dir <- here("inst","extdata") #raw data directory
+clean.dir <- here("data") #output directory for cleaned data
+gis.dir <- here("inst","extdata","gis")
+sample.dir <- here("inst","extdata","sample")
+
+#CRS
+crs <- "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
+
+#Write output to file
+save_clean <- F
+
+#Execute spatial processing (must be TRUE to write clean data to file). If FALSE, will load sample data from file for plotting example
+spatial_processing <- F
+
+#Create interactive time series
+gg_int <- TRUE
+
+#Function for custom ggplot facet labels
+label <- function(variable,value){
+  return(facet_names[value])
+}
+
+```
+
+### EcoMon zooplankton data (OI) {.tabset .tabset-fade}
+
+These data show estimated zooplankton abundances on the NE Shelf derived from Ecosystem Monitoring Program (EcoMon) sampling. EcoMon conducts shelf-wide bimonthly surveys of the Northeast Large Marine Ecosystem, collecting zooplankton and ichthyoplankton to a depth of 200 m using paired Bongo samplers with 333 $\mu$m mesh netting. Zooplankton abundance data were interpolated across sampling locations using ordinary kriging to create a complete field. Here we present abundance time series for three species: *Centropages typicus*, *Temora longicornis*, and *Pseudocalanus* spp. These data are processed in a similar manner to optimally interpolated ocean temperature and salinity data sets. More information about the source data and processing methods used to derive these data sets can be found [here](https://noaa-edab.github.io/ECSA/#sec:methodszoo). 
+
+
+#### Processing
+
+*Function definitions & spatial processing*
+
+```{r zooplankton_oi_processing}
+
+#Read in EPU shapefile (will be downsampled to match raster resolution)
+epu <- readOGR(file.path(gis.dir, "EPU_Extended.shp"), verbose = F) 
+
+#Write function to build EPU rasters
+build_raster <- function(EPU){
+  
+  #Filter raster by EPU
+  epu <- epu[epu$EPU == EPU,]
+  
+  #Build empty raster
+  r1 <- raster::raster()
+  e <- raster::extent(-75.950, -65.450, 35.650, 44.650)
+  raster::extent(r1) <- e
+  
+  #fill with EPU polygon
+  r1 <- raster::rasterize(epu, r1, field = 1, fun = mean)
+  raster::crs(r1) <- NA
+  
+  #create raster to resample with
+  r2 <- raster::raster(nrow = 90, ncol = 105)
+  raster::extent(r2) <- e
+  raster::crs(r2) <- NA
+  
+  #Downsample high res EPU raster to match data
+  r.new <- raster::resample(r1, r2, method="bilinear")
+  r.new[is.finite(r.new)] <- 1 
+  
+  return(r.new)
+  
+}
+
+#Raster data
+mab_rast <- build_raster("MAB")
+gb_rast <- build_raster("GB")
+gom_rast <- build_raster("GOM")
+
+#Process ECSA data by EPU and create time series
+
+epu_env <- function(variable, type = NULL, season, genus = NULL, epu){
+  
+
+  if(!is.null(type) & !variable %in% c("salinity","temperature")){
+    stop('type only applicable for variables "salinity" and "temperature"
+         as type = "bottom" or type = "surface"')
+  } 
+  
+  if(!is.null(genus) & variable != "zooplankton"){
+    stop('genus only applicable for variable "zooplankton"')
+  } 
+  
+  #get compiled down-sampled raster of chosen strata from shapefile. 
+  epumask.raster <- get(paste0(tolower(epu),"_rast"))
+  
+  #get bottom temp data and find mean for stock area--------------------------------------
+  
+  indir <- here("inst","extdata","gridded")
+  
+  if (variable == "salinity"){
+    load(file.path(indir, paste0("sal_",type,"_",season,"_spdf.rdata")))
+  } else if (variable == "temperature"){
+    load(file.path(indir, paste0("temp_",type,"_",season,"_spdf.rdata")))
+  } else if (variable == "chlorophyll"){
+    load(file.path(indir, paste0("chl_",season,"_1997-2018.rdata")))
+  } else if (variable == "zooplankton"){
+    load(file.path(indir, paste0(genus,"_",season,"_zoo_1977-2016.rdata")))
+  }
+  
+
+    #create null df to fill with results
+    data = data.frame(array(NA,dim= c(raster::nlayers(ecsa_dat),5)))
+    
+    #loops through layers in raster brick
+    for(i in 1:raster::nlayers(ecsa_dat)){
+      #load raster by year
+      
+      #get file information from title
+      layer_id <- stringr::str_extract(names(ecsa_dat)[[i]], "\\d.*")
+      layer_id <- stringr::str_split(layer_id, "_")
+      data[i,1] <- layer_id[[1]][[1]]
+      data[i,2] <- layer_id[[1]][[2]]
+      data[i,3] <- layer_id[[1]][[3]]
+      
+      #trim to stock area
+      masked.raster = ecsa_dat[[i]]*epumask.raster
+      
+      #find mean BT of stock area
+      data[i,4] = raster::cellStats(masked.raster, stat='mean', na.rm=TRUE)
+      data[i,5] = raster::cellStats(masked.raster, stat = 'sd', na.rm=TRUE)
+      # 
+      # if (layer_id[[1]][[1]] == "1995"){
+      #   break
+      # }
+    }
+    x <- as.numeric(data$X1)
+    y.out <- data$X4
+    y.sd <- data$X5
+    
+    sd.low <- y.out - y.sd
+    sd.high <- y.out + y.sd
+    
+  # remove 
+  if (variable == "zooplankton"){
+    if (season == "spring"){
+      y.out[x %in% c(1989, 1990, 1991, 1994)] <- NA
+      sd.low[x %in% c(1989, 1990, 1991, 1994)] <- NA
+      sd.high[x %in% c(1989, 1990, 1991, 1994)] <- NA
+    } else if (season == "fall") {
+      y.out[x %in% c(1989, 1990, 1992)] <- NA
+      sd.low[x %in% c(1989, 1990, 1992)] <- NA
+      sd.high[x %in% c(1989, 1990, 1992)] <- NA
+    }
+  }
+  
+  if(variable == "chlorophyll"){
+    type <- ""
+  } else if (variable == "zooplankton"){
+    type <- genus
+    variable <- "zoo"
+  } 
+  
+  out <- data.frame(Var = paste(paste(type,variable),season),
+                    Time = as.numeric(x),
+                    Value = y.out,
+                    sd.low = sd.low,
+                    sd.high = sd.high,
+                    Season = season,
+                    epu = epu)
+  
+  out <- out[out$Time > 1968,]
+  return(out)
+  
+}
+
+```
+
+*Data pull & aggregation*
+
+```{r zoo_data_pull}
+#MAB---------------------------------------------------------------------------------------------------
+ctyp_fall_mab <- epu_env(variable = "zooplankton", genus = "centropages", season = "fall", epu = "MAB")
+ctyp_spring_mab <- epu_env(variable = "zooplankton", genus = "centropages", season = "spring", epu = "MAB")
+
+tlong_fall_mab <- epu_env(variable = "zooplankton", genus = "temora", season = "fall", epu = "MAB")
+tlong_spring_mab <- epu_env(variable = "zooplankton", genus = "temora", season = "spring", epu = "MAB")
+
+pseudo_fall_mab <- epu_env(variable = "zooplankton", genus = "pseudocalanus", season = "fall", epu = "MAB")
+pseudo_spring_mab <- epu_env(variable = "zooplankton", genus = "pseudocalanus", season = "spring", epu = "MAB")
+
+
+#GB---------------------------------------------------------------------------------------------------
+ctyp_fall_gb <- epu_env(variable = "zooplankton", genus = "centropages", season = "fall", epu = "GB")
+ctyp_spring_gb <- epu_env(variable = "zooplankton", genus = "centropages", season = "spring", epu = "GB")
+
+tlong_fall_gb <- epu_env(variable = "zooplankton", genus = "temora", season = "fall", epu = "GB")
+tlong_spring_gb <- epu_env(variable = "zooplankton", genus = "temora", season = "spring", epu = "GB")
+
+pseudo_fall_gb <- epu_env(variable = "zooplankton", genus = "pseudocalanus", season = "fall", epu = "GB")
+pseudo_spring_gb <- epu_env(variable = "zooplankton", genus = "pseudocalanus", season = "spring", epu = "GB")
+
+
+#GOM---------------------------------------------------------------------------------------------------
+ctyp_fall_gom <- epu_env(variable = "zooplankton", genus = "centropages", season = "fall", epu = "GOM")
+ctyp_spring_gom <- epu_env(variable = "zooplankton", genus = "centropages", season = "spring", epu = "GOM")
+
+tlong_fall_gom <- epu_env(variable = "zooplankton", genus = "temora", season = "fall", epu = "GOM")
+tlong_spring_gom <- epu_env(variable = "zooplankton", genus = "temora", season = "spring", epu = "GOM")
+
+pseudo_fall_gom <- epu_env(variable = "zooplankton", genus = "pseudocalanus", season = "fall", epu = "GOM")
+pseudo_spring_gom <- epu_env(variable = "zooplankton", genus = "pseudocalanus", season = "spring", epu = "GOM")
+
+
+```
+
+
+#### Mid-Atlantic Bight
+
+```{r mab_zoo_vis, echo = FALSE, warning = FALSE, message = FALSE}
+
+zoo <- rbind(ctyp_fall_mab, ctyp_spring_mab, tlong_fall_mab, tlong_spring_mab, pseudo_fall_mab, pseudo_spring_mab)
+
+xmin <- min(zoo$Time)
+
+facet_names <- list(
+  'centropages zoo spring'=expression(paste(italic("Centropages"), "spring")),
+  'centropages zoo fall'=expression(paste(italic("Centropages"), "fall")),
+  'temora zoo spring'=expression(paste(italic("Temora"), "spring")),
+  'temora zoo fall' = expression(paste(italic("Temora"), "fall")),
+  'temora zoo spring'=expression(paste(italic("Pseudocalanus"), "spring")),
+  'temora zoo fall' = expression(paste(italic("Pseudocalanus"), "fall")))
+
+
+zoo_plt <- ggplot(data = zoo, aes(x = Time, y = Value)) +
+    ylab(expression("Abundance log num m"^-3*"")) +
+    xlab("Year") +
+    xlim(xmin, NA) +
+    geom_line() +
+    {if(gg_int) geom_point_interactive(aes(tooltip = round(Value,3), data_id = Time))
+    else geom_point()}+
+    facet_wrap(Var ~ ., nrow = 3, ncol = 2, labeller = label) +
+    theme_bw() +
+    theme(strip.background = element_blank()) +
+    annotate("text", label = c("","","",
+                               "","",""), x = xmin, y = Inf, vjust = 1.5, size = 5)
+
+if (gg_int){
+  ggiraph(code = print(zoo_plt), width = 0.9, 
+         hover_css = "fill:red;r:3pt;")
+  } else {
+  zoo_plt
+  }
+
+
+```
+
+#### Georges Bank
+
+```{r gb_zoo_vis, echo = FALSE, warning = FALSE, message = FALSE}
+
+zoo <- rbind(ctyp_fall_gb, ctyp_spring_gb, tlong_fall_gb, tlong_spring_gb, pseudo_fall_gb, pseudo_spring_gb)
+
+xmin <- min(zoo$Time)
+
+zoo_plt <- ggplot(data = zoo, aes(x = Time, y = Value)) +
+    ylab(expression("Abundance log num m"^-3*"")) +
+    xlab("Year") +
+    xlim(xmin, NA) +
+    geom_line() +
+    {if(gg_int) geom_point_interactive(aes(tooltip = round(Value,3), data_id = Time))
+    else geom_point()}+
+    facet_wrap(Var ~ ., nrow = 3, ncol = 2, labeller = label) +
+    theme_bw() +
+    theme(strip.background = element_blank()) +
+    annotate("text", label = c("","","",
+                               "","",""), x = xmin, y = Inf, vjust = 1.5, size = 5)
+
+if (gg_int){
+  ggiraph(code = print(zoo_plt), width = 0.9, 
+         hover_css = "fill:red;r:3pt;")
+  } else {
+  zoo_plt
+  }
+
+```
+
+
+#### Gulf of Maine
+
+```{r gom_zoo_vis, echo = FALSE, warning=FALSE, message = FALSE}
+
+zoo <- rbind(ctyp_fall_gom, ctyp_spring_gom, tlong_fall_gom, tlong_spring_gom, pseudo_fall_gom, pseudo_spring_gom)
+
+xmin <- min(zoo$Time)
+
+zoo_plt <- ggplot(data = zoo, aes(x = Time, y = Value)) +
+    ylab(expression("Abundance log num m"^-3*"")) +
+    xlab("Year") +
+    xlim(xmin, NA) +
+    geom_line() +
+    {if(gg_int) geom_point_interactive(aes(tooltip = round(Value,3), data_id = Time))
+    else geom_point()}+
+    facet_wrap(Var ~ ., nrow = 3, ncol = 2, labeller = label) +
+    theme_bw() +
+    theme(strip.background = element_blank()) +
+    annotate("text", label = c("","","",
+                               "","",""), x = xmin, y = Inf, vjust = 1.5, size = 5)
+
+if (gg_int){
+  ggiraph(code = print(zoo_plt), width = 0.9, 
+         hover_css = "fill:red;r:3pt;")
+  } else {
+  zoo_plt
+  }
+
+```
+
+
+### EcoMon nutrient data {.tabset .tabset-fade}
+
+These data include nutrient concentrations, temperature, salinity, density, and dissolved oxygen data sampled via CTD profiles on Ecosystem Monitoring (EcoMon) cruises between 11/3/2009 - 10/19/2016. More metadata are available [here](https://www.nodc.noaa.gov/oads/data/0127524.xml).  
+</br>
+<div align="center">
+```{r EcoMon_vars, echo = FALSE}
+
+fname <- "EcoMon Nutrient Data Through June 2018.csv"
+
+vars <- data.frame(Variable = c("Cruise identifier","Cruise identifier","Station number",
+                                "CTD cast number","Sample bottle number","Sample date",
+                                "Sample time","Latitude","Longitude","Depth of station",
+                                "Depth of sample","Water pressure","Water temperature",
+                                "Water salinity","Potential density at surface pressure",
+                                "Dissolved oxygen","Silicic acid concentration",
+                                "Total nitrate and nitrite concentration","Ammonia concentration",
+                                "Phosphate concentration","Dissolved oxygen"),
+                   Names = c("EXPOCODE","Cruise_ID","STNNBR","CASTNO",
+                             "BTLNBR","Date_UTC","Time_UTC",
+                             "Latitude","Longitude","Depth_station",
+                             "Depth_sampling","CTDPRS","CTDTEMP",
+                             "CTDSAL","Sigma.Theta","CTDOXY",
+                             "SILCAT","NITRIT+NITRAT","AMMMONIA",
+                             "PHSPHT","CTDOXYMOL"),
+                   Units = c("","","",
+                             "","","MM/DD/YYYY",
+                             "hh:mm","decimal degrees","decimal degrees",
+                             "m","m","decibars","°C",
+                             "PSS-78","kg m^-3^","mg L^-1^",
+                             "$\\mu$M","$\\mu$M","$\\mu$M",
+                             "$\\mu$M","$\\mu$mol kg^-1^"))
+
+kable(vars,caption = paste0('Variables in "',fname,'"'))%>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>%
+  column_spec(2, width = "5cm") %>% 
+  scroll_box(height = "400px")
+```
+</div>  
+</br>
+**Filename**: EcoMon Nutrient Data Through June 2018.csv  
+**Contributor**: Chris Melrose (chris.melrose@noaa.gov)  
+
+#### Processing
+
+```{r EcoMon nutrients, message=FALSE, warning=FALSE}
+d <- read.csv(file.path(raw.dir,"EcoMon Nutrient Data Through June 2018.csv"), stringsAsFactors = FALSE)
+
+#Create data frame for mapping units to variable names
+mapping <- data.frame(Units = as.character(d[1,]),
+                      Var = as.character(names(d)))
+mapping[mapping$Units == "" | mapping$Units == "NA",]$Units <- NA
+
+#remove row with units
+d <- slice(d,-1)
+
+d1 <- d %>% 
+  mutate(Time = Date_UTC) %>% #create Time variable
+  dplyr::select(-Date_UTC,-Time_UTC) %>% #remove time, date
+  gather(., Var, Value, -Latitude, -Longitude, -Time, -Depth_sampling, -Depth_station) %>% #turn wide to long while retaining lat/lon
+  filter(!is.na(Value)) %>% #remove NA
+  left_join(., mapping, by = c("Var")) %>% #join units 
+  mutate(Longitude = as.numeric(Longitude),
+         Latitude = as.numeric(Latitude),
+         Time = mdy(Time)) %>% 
+  filter(Latitude > 32, Latitude<50)
+
+
+#Sanity check
+# t1 <- d1[d1$Var == "CTDOXYMOL" ,]$Value
+# t <-  d %>% slice(.,-1)
+# t <- as.character(t$CTDOXYMOL)
+# all(t == t1)
+
+#Read in EPU shapefile
+epu <- readOGR(file.path(gis.dir, "EPU_Extended.shp"), verbose = F) 
+epu <- as(epu, "sf") #convert to sf object
+
+if(spatial_processing){
+
+  #Test maps
+  #All EPUs
+  #ggplot() + geom_sf(data = epu)
+  
+  #Scotian shelf
+  # ss <- epu %>% filter(EPU == "SS")
+  # ggplot() + geom_sf(data = ss)
+  
+  #get latitude and longitude for creating SpatialPointsDataFrame
+  lat <-  as.numeric(d$Latitude)
+  lon <- as.numeric(d$Longitude)
+  coords <- data.frame(lon = lon,lat = lat)
+  
+  #create spdf
+  spdf <- SpatialPointsDataFrame(coords = coords, data = coords,
+                                 proj4string = CRS(crs))
+  #convert to sf
+  coords_sf <- st_as_sf(spdf) 
+  
+  #get intersection for mapping EPUs back to nutrient data
+  epu_intersect <- st_intersection(epu, coords_sf)
+  #plot(epu_intersect[epu_intersect$EPU == "MAB",])
+  
+  #Map back to nutrient data frame
+  epu_df <- data.frame(Longitude = epu_intersect$lon,
+                       Latitude = epu_intersect$lat,
+                       EPU = epu_intersect$EPU)
+  #join
+  NE_LME_nutrients <- d1 %>% 
+    left_join(.,epu_df, by = c("Latitude","Longitude"))
+  
+  #Select data for plotting 
+  Nitr <- NE_LME_nutrients %>% filter(Var == "NITRIT.NITRAT")
+  
+  #Back to SOE format and specify bottom, mid-water, or surface sampling
+  NE_LME_nutrients <- NE_LME_nutrients %>%
+    dplyr::select(-Latitude, -Longitude) %>% 
+    mutate(Value = as.numeric(Value),
+           Depth_station = as.numeric(Depth_station),
+           Depth_sampling = as.numeric(Depth_sampling)) %>% 
+    mutate(bot_dif = Depth_station-Depth_sampling) %>% 
+    mutate(surf_bot = ifelse(bot_dif <= 10, "bottom",
+                           ifelse(bot_dif > 10 & Depth_sampling <= 5, "surface", "mid-water"))) %>% 
+    filter(Value > 0, !is.na(EPU), !Var %in% c("BTLNBR","CASTNO","Depth_sampling",
+                                             "Depth_station","STNNBR")) %>% 
+    mutate(Var = paste(Var, surf_bot)) %>% 
+    dplyr::select(Time, Var, Value, Units, EPU) %>% 
+    group_by(EPU, Time = year(Time), Var, Units) %>% 
+    dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
+    as.data.frame()
+  
+  if (save_clean){
+    save(NE_LME_nutrients,file = file.path(clean.dir, "EcoMon_nutrients.Rdata"))
+  }
+} else {
+  load(file.path(sample.dir,"sample_nutrients.Rdata"))
+  load(file.path(clean.dir,"EcoMon_nutrients.Rdata"))
+}
+
+```
+
+#### QA
+
+```{r ecomon_plotting1, echo = F}
+#Confirm transformation
+ggplot() + 
+  geom_sf(data = epu) +
+  geom_point(data = Nitr, aes(x = Longitude, y = Latitude, color = EPU)) +
+  ggtitle("Mapping EcoMon Nutrient Data to EPU") +
+  theme_bw() 
+```
+
+
+#### Surface Nutrients
+
+```{r surface_nutrients, echo = F}
+
+N <- NE_LME_nutrients %>% 
+  filter(Var == "NITRIT.NITRAT surface") %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value, color = EPU)) +
+  {if(gg_int) geom_point_interactive(aes(tooltip = round(Value,3), data_id = Time,x = Time, y = Value, color = EPU))
+    else geom_point()}+
+  ylab(expression("Nitrit+Nitrat ("*mu*"mol kg"^-1*")"))+
+  ggtitle("Nitrit+Nitrat")+
+  theme_bw()+
+  theme(strip.background = element_blank())+
+  guides(colour=FALSE)
+
+P <- NE_LME_nutrients %>% 
+  filter(Var == "PHSPHT surface") %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value, color = EPU)) +
+  {if(gg_int) geom_point_interactive(aes(tooltip = round(Value,3), data_id = Time,x = Time, y = Value, color = EPU))
+    else geom_point()}+
+  ylab(expression("Phosphate ("*mu*"mol kg"^-1*")"))+
+  ggtitle("Phosphate")+
+  theme_bw()+
+  theme(strip.background = element_blank())+
+  guides(colour=FALSE)
+
+ammon <- NE_LME_nutrients %>% 
+  filter(Var == "AMMONIA surface") %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value, color = EPU)) +
+  {if(gg_int) geom_point_interactive(aes(tooltip = round(Value,3), data_id = Time,x = Time, y = Value, color = EPU))
+    else geom_point()}+
+  ylab(expression("Ammonia ("*mu*"mol kg"^-1*")"))+
+  ggtitle("Ammonia")+
+  theme_bw()+
+  theme(strip.background = element_blank(),legend.position = c(0.85, 0.6),
+        legend.key = element_rect(color="transparent"),
+        legend.background = element_rect(fill="transparent"))
+
+silcat <- NE_LME_nutrients %>% 
+  filter(Var == "SILCAT surface") %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value, color = EPU)) +
+  {if(gg_int) geom_point_interactive(aes(tooltip = round(Value,3), data_id = Time,x = Time, y = Value, color = EPU))
+    else geom_point()}+
+  ylab(expression("Silicates ("*mu*"mol kg"^-1*")"))+
+  ggtitle("Silicates")+
+  theme_bw()+
+  guides(color= FALSE)
+
+cow_nut <- cowplot::plot_grid(N, P,ammon ,silcat)
+
+if (gg_int){
+  ggiraph(code = print(cow_nut), width = 0.9, 
+         hover_css = "fill:red;r:3pt;")
+  } else {
+    cow_nut
+  }
+
+```
+
+#### Bottom Nutrients
+
+```{r bottom_nutrients, echo = F}
+
+N <- NE_LME_nutrients %>% 
+  filter(Var == "NITRIT.NITRAT bottom") %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value, color = EPU)) +
+  {if(gg_int) geom_point_interactive(aes(tooltip = round(Value,3), data_id = Time,x = Time, y = Value, color = EPU))
+    else geom_point()}+
+  ylab(expression("Nitrit+Nitrat ("*mu*"mol kg"^-1*")"))+
+  ggtitle("Nitrit+Nitrat")+
+  theme_bw()+
+  theme(strip.background = element_blank())+
+  guides(colour=FALSE)
+
+P <- NE_LME_nutrients %>% 
+  filter(Var == "PHSPHT bottom") %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value, color = EPU)) +
+  {if(gg_int) geom_point_interactive(aes(tooltip = round(Value,3), data_id = Time,x = Time, y = Value, color = EPU))
+    else geom_point()}+
+  ylab(expression("Phosphate ("*mu*"mol kg"^-1*")"))+
+  ggtitle("Phosphate")+
+  theme_bw()+
+  theme(strip.background = element_blank())+
+  guides(colour=FALSE)
+
+ammon <- NE_LME_nutrients %>% 
+  filter(Var == "AMMONIA bottom") %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value, color = EPU)) +
+  {if(gg_int) geom_point_interactive(aes(tooltip = round(Value,3), data_id = Time,x = Time, y = Value, color = EPU))
+    else geom_point()}+
+  ylab(expression("Ammonia ("*mu*"mol kg"^-1*")"))+
+  ggtitle("Ammonia")+
+  theme_bw()+
+  theme(strip.background = element_blank(),legend.position = c(0.85, 0.6),
+        legend.key = element_rect(color="transparent"),
+        legend.background = element_rect(fill="transparent"))
+
+silcat <- NE_LME_nutrients %>% 
+  filter(Var == "SILCAT bottom") %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value, color = EPU)) +
+  {if(gg_int) geom_point_interactive(aes(tooltip = round(Value,3), data_id = Time,x = Time, y = Value, color = EPU))
+    else geom_point()}+
+  ylab(expression("Silicates ("*mu*"mol kg"^-1*")"))+
+  ggtitle("Silicates")+
+  theme_bw()+
+  guides(color= FALSE)
+
+cow_nut <- cowplot::plot_grid(N, P,ammon ,silcat)
+
+if (gg_int){
+  ggiraph(code = print(cow_nut), width = 0.9, 
+         hover_css = "fill:red;r:3pt;")
+  } else {
+    cow_nut
+  }
+```
+

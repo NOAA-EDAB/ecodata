@@ -11,7 +11,7 @@ output:
 ## Introduction
 The purpose of this report is to document State of the Ecosystem (SOE) indicator data processing. All R code used to process and visualize the following data sets is self-contained in the [Rmarkdown document](https://github.com/NOAA-EDAB/soe/blob/master/inst/Rmd/process_raw.Rmd) associated with this HTML file. To run and update data sets in this document, set the `save_clean` parameter in the set-up chunk to `TRUE`. Raw data for these indicators are available in the file directory `soe/inst/extdata`.
 
-```{css}
+```{css, echo = FALSE}
 pre code, pre, code {
   white-space: pre !important;
   overflow-y: scroll !important;
@@ -358,7 +358,7 @@ ggplot() +
 ```
 
 
-### Ocean temperature anomaly (in situ) {.tabset .tabset-fade}
+### Ocean temperature anomaly {.tabset .tabset-fade}
 
 These data include *in situ* regional time series of both surface and bottom water temperature anomalies on the Northeast Continental Shelf. Raw data is split into four files by EPU (SS, GOM, GB, and MAB).
 
@@ -446,7 +446,7 @@ grid.arrange(one, two)
 ```
 
 
-### Ocean temperature (OI) {.tabset}
+### Ocean temperature {.tabset .tabset-fade}
 
 These data show NE shelf surface and bottom temperatures estimated through an optimal interpolation procedure (see methods [here](https://noaa-edab.github.io/ECSA)). Spring and fall time series were standardized to April 3 and October 11 between the period of 1968-2017. The code below first creates a downsampled raster of each Ecological Production Unit. These downsampled EPU rasters are then used to mask SST and bottom temperature data, from which annual means are computed. This same approach is used to generate time series from EcoMon zooplankton sampling and optimally interpolated salinity data.
 
@@ -688,7 +688,7 @@ grid.arrange(one, two)
 
 ```
 
-### Ocean salinity anomaly (in situ) {.tabset .tabset-fade}
+### Ocean salinity anomaly {.tabset .tabset-fade}
 
 These data include *in situ* regional time series of both surface and bottom salinity anomalies on the Northeast Continental Shelf. Raw data is split into four files by EPU (SS, GOM, GB, and MAB).
 
@@ -775,7 +775,7 @@ ggplot2::ggplot() +
 grid.arrange(one, two)
 ```
 
-### Ocean salinity (OI) {.tabset .tabset-fade}
+### Ocean salinity {.tabset .tabset-fade}
 
 These data show optimally interpolated sea-surface and bottom salinities between 1992-2017 (methods for OI procedure are available [here](https://noaa-edab.github.io/ECSA/). Processing of these time series follows the same methods used to process optimally interpolated ocean temperatures. These data are presented as RasterStacks (i.e. one raster layer per year), which are then masked by EPU polygons for further analyses. Here we take the annual mean of masked raster layers to create a time series of OI observations. 
 
@@ -928,8 +928,20 @@ ggplot(data =stratification)+
 
 ```
 
+### EcoMon zooplankton data {.tabset .tabset-fade}
 
-### EcoMon nutrient data {.tabset}
+These data show estimated zooplankton abundances on the NE Shelf derived from Ecosystem Monitoring Program (EcoMon) sampling. EcoMon conducts shelf-wide bimonthly surveys of the Northeast Large Marine Ecosystem, collecting zooplankton and ichthyoplankton to a depth of 200 m using paired Bongo samplers with 333 $\mu m$ mesh netting. Zooplankton abundance data were interpolated across sampling locations using ordinary kriging to create a complete field. Data for this indicator are processed in a similar manner to optimally interpolated ocean temperature and salinity data sets, making use of the function first defined in the [Ocean temperature *OI*][OI ocean temperature] processing section. More information about the source data and processing methods used in this data set can be found [here](https://noaa-edab.github.io/ECSA/#sec:methodszoo). 
+
+
+#### Processing
+
+Code goes here
+
+#### Visualization
+
+And here
+
+### EcoMon nutrient data {.tabset .tabset-fade}
 
 These data include nutrient concentrations, temperature, salinity, density, and dissolved oxygen data sampled via CTD profiles on Ecosystem Monitoring (EcoMon) cruises between 11/3/2009 - 10/19/2016. More metadata are available [here](https://www.nodc.noaa.gov/oads/data/0127524.xml).  
 </br>
@@ -1176,67 +1188,6 @@ silcat <- NE_LME_nutrients %>%
 cowplot::plot_grid(N, P,ammon ,silcat)
 
 ```
-
-### North Atlantic Oscillation (NAO) {.tabset}
-
-North Atlantic Oscillation data were taken from the [NOAA NWS Climate Prediction Center](http://www.cpc.ncep.noaa.gov/data/teledoc/nao.shtml). These data show the monthly NAO index time series beginning in 1950 and ending in October 2018. The index is standardized to the 1981-2010 reference period. More information regarding the methodology involved in deriving the NAO and its significance is available [here](http://www.cpc.ncep.noaa.gov/data/teledoc/nao.shtml).
-
-#### Processing
-
-```{r nao_index}
-d <- read.csv(file.path(raw.dir, "NAO_index_1950-Oct2018.csv")) %>% slice(.,-826:-825)
-
-#Three month running average
-nao_cpc <- d %>% 
-  mutate(Time = paste0(YEAR,":Q",rep(1:4, each = 3))) %>% 
-  group_by(Time) %>% 
-  dplyr::summarise(Value = mean(INDEX)) %>% 
-  mutate(Var = "nao index", units = "unitless", EPU = "all",
-         Time = yq(Time))
-
-#annual average
-nao_annual <- d %>% 
-  group_by(YEAR) %>% 
-  dplyr::summarise(Value = mean(INDEX),
-                   Variance = var(INDEX)) %>% 
-  mutate(Var = "nao index", Units = "unitless", EPU = "all") %>% 
-  dplyr::rename(Time = YEAR)
-
-if (save_clean){
-  nao <- nao_annual %>% select(-Variance) 
-  save(nao, file = file.path(clean.dir, "nao_annual.Rdata"))
-}
-
-```
-
-#### NAO index and index variance (Annual)
-
-```{r NAO_index, echo = FALSE, fig.height=8}
-ind_annual <- nao_annual %>% 
-  ggplot()+
-  geom_line(aes(x = Time, y = Value)) +
-  geom_hline(yintercept = 0, alpha = 0.25) +
-  ylab("NAO Index (Annual)") +
-  ylim(-2,2) +
-  theme_bw()
-
-ind_quarter <- nao_cpc %>% 
-  ggplot()+
-  geom_line(aes(x = Time, y = Value)) +
-  geom_hline(yintercept = 0, alpha = 0.25) +
-  ylab("NAO Index (Quarterly)") +
-  theme_bw()
-
-ind_var <- nao_annual %>% 
-  ggplot()+
-  geom_line(aes(x = Time, y = Variance)) +
-  ylab("NAO Index Variance (Annual)") +
-  theme_bw()
-
-cowplot::plot_grid(ind_quarter,ind_annual, ind_var, ncol = 1, align = "hv")
-```
-
-
 
 ## Synthesis  
 
