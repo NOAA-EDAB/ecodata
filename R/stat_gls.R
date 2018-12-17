@@ -25,9 +25,9 @@
 #'                   y = y)
 #'
 #'#Plot series with trend 
-#'ggplot(data = data) +
+#'ggplot2::ggplot(data = data) +
 #'   geom_line(aes(x = x, y = y)) +
-#'   stat_gls(aes(x = x, y = y),color = "orange")
+#'   stat_gls(aes(x = x, y = y, color = stat(col)))
 
 stat_gls <- function(mapping = NULL, data = NULL, geom = "line",
                     position = "identity", na.rm = FALSE, show.legend = NA, 

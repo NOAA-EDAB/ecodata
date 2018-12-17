@@ -2,6 +2,7 @@
 
 fitGLS <- ggplot2::ggproto("fitGLS", ggplot2::Stat, 
                            required_aes = c("x", "y"),
+                           default_aes = ggplot2::aes(color = stat(col[1])),
                            
                            compute_group = function(data, scales) {
                              `%>%` <- magrittr::`%>%`
@@ -105,13 +106,23 @@ fitGLS <- ggplot2::ggproto("fitGLS", ggplot2::Stat,
                                lm_pred <- AICcmodavg::predictSE(model, 
                                                                 newdata = newdata,
                                                                 se.fit = TRUE)
+                               
+                               if (lm_pred$fit[1] < lm_pred$fit[which.max(data$x)]){
+                                 col <- "orange"
+                               } else {
+                                 col <- "purple"
+                               }
+                               
                                out <- data.frame(x = newtime,
-                                                 y = lm_pred$fit)
-                               out
+                                                 y = lm_pred$fit,
+                                                 col = col)
                              } else {
                                out <- data.frame(x = NULL,
-                                                 y = NULL)
-                               out
+                                                 y = NULL,
+                                                 col = NULL)
+                               
                              }
+                             out
                            }
+
 )
