@@ -1,0 +1,232 @@
+---
+title: 'State of the Ecosystem: Macrofauna Indicator Processing & Visualization'
+author: Ecosystems Dynamics and Assessment Branch
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_float: true
+    theme: lumen
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+#Required libraries
+library(dplyr)
+library(stringr)
+library(tidyr)
+library(ggplot2)
+library(lubridate)
+library(here)
+library(zoo)
+library(kableExtra)
+library(sf)
+library(rgdal)
+library(raster)
+library(sp)
+library(gridExtra)
+library(htmlwidgets)
+library(tseries)
+library(plotly)
+
+#Data directories
+raw.dir <- here("inst","extdata") #raw data directory
+clean.dir <- here("data") #output directory for cleaned data
+gis.dir <- here("inst","extdata","gis")
+sample.dir <- here("inst","extdata","sample")
+
+#CRS
+crs <- "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
+
+#Write output to file
+save_clean <- F
+
+#Execute spatial processing (must be TRUE to write clean data to file). If FALSE, will load sample data from file for plotting example
+spatial_processing <- F
+
+```
+
+```{css, echo = FALSE}
+pre code, pre, code {
+  white-space: pre !important;
+  overflow-y: scroll !important;
+  word-break: keep-all !important;
+  word-wrap: initial !important;
+  max-height: 400px;
+}
+```
+
+## Introduction
+The purpose of this report is to document State of the Ecosystem (SOE) **macrofauna** indicator data processing. All R code used to process and visualize the following data sets is self-contained in the [Rmarkdown document](https://github.com/NOAA-EDAB/soe/blob/master/inst/Rmd/process_macrofauna.Rmd) associated with this HTML file. To run and update data sets in this document, set the `save_clean` parameter in the set-up chunk to `TRUE`. Raw data for these indicators are available in the file directory `soe/inst/extdata`.
+
+## Data sets
+
+### North Atlantic Right Whale Abundance {.tabset .tabset-fade}
+
+The North Atlantic right whale abundance estimates were taken from a published document (see Pace, Corkeron, and Kraus 2017), except for the most recent 2016 and 2017 estimates. Abundance estimates from 2016 and 2017 were taken from the 2016 NOAA marine mammal stock assessment (Hayes et al. 2017) and an unpublished 2017 stock assessment.
+
+#### Processing 
+
+```{r rw-abundance-processing}
+
+d <- read.csv(file.path(raw.dir,"RWabundance - ChrisNumbers.csv"))
+
+#Processing
+
+narw <- d %>% dplyr::select(-Parm) %>% 
+  gather(., Var, Value, -Year) %>% 
+  mutate(Units = "N",
+         EPU = "All",
+         Var = paste(Var, "right whale abundance")) %>% 
+  dplyr::rename(Time = Year)
+
+if (save_clean){
+save(narw, file =
+       file.path(clean.dir, "narw_abundance.Rdata"))
+}
+```
+
+
+#### NARW Abundance
+
+```{r rw-abundance-plotting, fig.align = 'center', echo = F}
+narw_wide <- narw %>%
+  spread(.,Var, Value)
+
+ggplot(data = narw_wide) +
+  geom_ribbon(aes(x = Time, ymin = `LCL right whale abundance`,
+                  ymax = `UCL right whale abundance`), fill = "grey70") + 
+  geom_line(aes(x = Time, y = `Median right whale abundance`)) +
+  geom_point(aes(x = Time, y = `Median right whale abundance`), size = 1) +
+  ylab("Abundance (N)") +
+  ggtitle("NARW Abundance") +
+  theme_bw()+
+  theme(strip.background = element_blank())
+```
+
+### Harbor Porpoise Bycatch {.tabset .tabset-fade}
+
+#### Processing
+
+Time series figure is 5-yr running mean for harbor porpoise bycatch estimates for the Northeast US across all fisheries. The map shows abundance estimates for harbor porpoise across the NE LME (sourced from [AMAPPS](https://www.nefsc.noaa.gov/AMAPPSviewer/)).
+
+```{r hp-bycatch-processing}
+
+#HP bycatch time series estimates------------------------------------------------------
+d <- read.csv(file.path(raw.dir,"1994-2017_5yr_hp_est.csv"))
+
+#Create confidence intervals (Thanks Chris)
+var1nnum <- log(1+d$CV^2)  
+c <- exp(1.96 * sqrt(var1nnum))
+d$up95ci <- d$EST * c
+d$lo95ci <- d$EST / c
+
+
+hp_bycatch <- d %>% dplyr::rename(Time = YEAR) %>% 
+  gather(., Var, Value, -Time) %>% 
+  mutate(Units = "N",
+         EPU = "All",
+         Var, Var = plyr::mapvalues(Var, from = c("EST","CV","PBR","up95ci","lo95ci"),
+                                    to = c("harbor porpoise bycatch estimate",
+                                           "harbor porpoise bycatch cv",
+                                           "harbor porpoise bycatch pbr",
+                                           "harbor porpoise bycatch up95ci",
+                                           "harbor porpoise bycatch lo95ci")))
+
+if (save_clean){
+save(hp_bycatch, file =
+       file.path(clean.dir, "hp_bycatch.Rdata"))
+}
+```
+
+
+```{r hp-abundance-processing}
+
+#HP abundance estimates processing----------------------------------------------------
+d <- read.csv(file.path(raw.dir,"Harbor_Porpoise - Fall AMAPPS.csv"), stringsAsFactors = F)
+
+
+hp_df <- d %>% 
+  filter(Mean_Abundance != "null", Season == "Fall") %>%  
+  mutate(Mean_Density = as.numeric(Mean_Density),
+         Mean_Abundance = as.numeric(Mean_Abundance)) 
+
+#Read in EPU shapefile
+epu <- readOGR(file.path(gis.dir, "EPU_Extended.shp"), verbose = F) 
+bbox <- epu@bbox
+epu <- as(epu, "sf") #convert to sf object
+
+#get latitude and longitude for creating SpatialPointsDataFrame
+lat <-  as.numeric(hp_df$Center_Lat)
+lon <- as.numeric(hp_df$Center_Lon)
+coords <- data.frame(Longitude = lon,
+                     Latitude = lat,
+                     Abundance = log(hp_df$Mean_Abundance),
+                     Density = hp_df$Mean_Density)
+  
+coords[is.infinite(coords$Abundance),] <- 0
+coords[is.infinite(coords$Density),] <- 0
+
+coordinates(coords) <- ~Longitude + Latitude
+coords@bbox <- bbox
+crs(coords) <- crs
+
+rast <- raster(ncol = 100, nrow = 100)
+extent(rast) <- extent(coords)
+abund <- rasterize(coords, rast, coords$Density, fun = mean)
+abund <- disaggregate(abund, 5, method='bilinear')
+
+abund <- as(abund, "SpatialPixelsDataFrame")
+abund <- as.data.frame(abund)
+m_df <- abund %>%
+  reshape2::melt(id = c("y","x")) %>%
+  dplyr::rename(lat = y, long = x)
+
+
+
+xmin = -72.83333
+xmax = -64.66667
+ymin = 41
+ymax = 45.5
+xlims <- c(xmin, xmax)
+ylims <- c(ymin, ymax)
+
+ne_countries <- rnaturalearth::ne_countries(scale = 10,
+                                            continent = "North America",
+                                            returnclass = "sf") %>%
+  sf::st_transform(crs = crs)
+
+ggplot() + 
+  geom_raster(data = m_df, aes(x = long, y = lat, fill = value)) +
+  guides(color = FALSE)+
+    scale_fill_gradient2(low = "blue",mid = "white",high = "red",
+                         midpoint = median(m_df$value)) +
+      geom_sf(data = ne_countries,aes(),inherit.aes = FALSE,
+        fill = "white",
+        color = "black",
+        size = 0.25) +
+   coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
+  theme_bw() 
+
+```
+
+
+#### HP Bycatch
+
+```{r hp-bycatch-plotting, fig.align='center', echo = F}
+hp_wide <- hp_bycatch %>% spread(., Var, Value)
+
+
+ggplot(data = hp_wide) + 
+  geom_ribbon(aes(x = Time, ymin = `harbor porpoise bycatch lo95ci`,
+                  ymax = `harbor porpoise bycatch up95ci`), fill = "grey70") +
+  geom_line(aes(x = Time, y = `harbor porpoise bycatch estimate`)) +
+  geom_point(aes(x = Time, y = `harbor porpoise bycatch estimate`)) +
+  ylab("Harbor Porpoise Bycatch") +
+  theme_bw()+
+  theme(strip.background = element_blank())
+
+```
+
+
+

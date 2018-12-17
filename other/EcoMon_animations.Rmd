@@ -1,0 +1,292 @@
+---
+title: "EcoMon Animations"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(gganimate)
+library(dplyr)
+library(ggplot2)
+library(sf)
+library(lubridate)
+library(here)
+library(raster)
+library(rgdal)
+library(spatstat)
+library(maptools)
+library(dismo)
+library(magrittr)
+library(gstat)
+
+
+clean.dir <- here("data") #output directory for cleaned data
+gis.dir <- here("inst","extdata","gis")
+raw.dir <- here("inst","extdata")
+
+```
+
+## Processing
+
+Load spatial data 
+
+```{r, echo = F}
+#CRS
+crs <- "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
+
+#Load
+epu <- readOGR(file.path(gis.dir, "EPU_NOESTUARIES.shp"), verbose = F) 
+
+#Select EPUs
+epu <- epu[epu$EPU == "GB" | epu$EPU == "GOM" | epu$EPU == "SS" ,] 
+crs(epu) <- crs
+```
+
+Summarize EcoMon data
+
+```{r, echo = T}
+
+#Load data
+load(file.path(raw.dir,"LME_nutrients_spatial.Rdata"))
+
+#Filter assign ID column
+nuts <- LME_nutrients_spatial %>%
+  mutate(ID = group_indices_(., .dots=c("Latitude", "Longitude")))
+
+#Pull out lat lon for merging later
+latlon <- nuts %>% dplyr::select(Latitude, Longitude, ID) %>% distinct() 
+
+#Process and summarise data---------------------------------------------------------------------
+EcoMon_sum <- nuts %>% 
+  filter(Value != -999, EPU %in% c("GB","GOM","SS")) %>% 
+  
+  #Create sample depth bins---------------------------------------------------------------------
+  mutate(Value = as.numeric(Value),
+         Depth_station = as.numeric(Depth_station),
+         Depth_sampling = as.numeric(Depth_sampling)) %>% 
+  mutate(bot_dif = Depth_station-Depth_sampling) %>% 
+  mutate(surf_bot = ifelse(bot_dif <= 10, "Bottom",
+                           ifelse(bot_dif > 10 & Depth_sampling <= 5, "Surface", "mid-water"))) %>%
+  
+  #Create seasonal bins-------------------------------------------------------------------------
+  filter(month(Time) %in% c(10,11,5,6)) %>% 
+  mutate(season = ifelse(month(Time) == 11 | month(Time) == 10, "Fall","Spring")) %>% 
+  
+  #Summarise------------------------------------------------------------------------------------
+  group_by(Year = year(Time),
+           season,
+           ID,
+           surf_bot,
+           Var) %>% 
+  dplyr::summarise(Value = mean(Value, na.rm = T)) %>% 
+  left_join(.,latlon,by = "ID") %>% 
+  as.data.frame()
+
+
+```
+
+
+These data are from the [Gulf of Maine Region Nutrient and Hydrographic Database](http://grampus.umeoce.maine.edu/nutrients/).
+
+
+```{r nut_database,echo = T}
+
+#Load data
+rebuck <- read.table(file.path(raw.dir,"RebuckGoMaineNutrients.txt"), fill = TRUE)
+rebuck2 <- read.table(file.path(raw.dir,"gomregion.txt"), fill = TRUE)
+
+#Give variable names----------------------------------------------------------------------------
+d <- rebuck %>% dplyr::rename(Month = V1,
+                     day = V2,
+                     Year = V3,
+                     Longitude = V4,
+                     Latitude = V5,
+                     bottom_depth = V6,
+                     sample_depth = V7,
+                     temp = V8,
+                     salinity = V9,
+                     NITRIT.NITRAT = V10,
+                     SILCAT = V11,
+                     PHSPHT = V12,
+                     chl = V13,
+                     poqf = V14,
+                     siqf = V15,
+                     nqf = V16) %>% 
+  mutate(ID = group_indices_(., .dots=c("Latitude", "Longitude"))) #Add indices for stations
+
+#Pull out sampling lat lon for merging later
+latlon <- d %>% dplyr::select(Latitude, Longitude, ID) %>% distinct() 
+
+rebuck_sum <- d %>%
+  #Select data----------------------------------------------------------------------------------
+  dplyr::select(Month, Year, Longitude, Latitude, ID,
+         bottom_depth, sample_depth, NITRIT.NITRAT, temp, salinity, SILCAT, PHSPHT, chl) %>% 
+  
+  #Create sample depth bins---------------------------------------------------------------------
+  mutate(bot_dif = bottom_depth-sample_depth) %>% 
+  mutate(surf_bot = ifelse(bot_dif <= 10, "Bottom",
+                           ifelse(bot_dif > 10 & sample_depth <= 5, "Surface", "mid-water"))) %>% 
+  
+  #Create seasonal bins-------------------------------------------------------------------------
+  filter(Month %in% c(10,11,5,6), 
+         Year %in% 2009:2018) %>% #Filter by season
+  mutate(season = ifelse(Month == 11 | Month == 10, "Fall","Spring")) %>% 
+  
+  #Wide to long---------------------------------------------------------------------------------
+  tidyr::gather(., Var, Value, -Latitude, -Longitude,
+                        -Year, -surf_bot, -ID,
+                        -Month, -season, -bottom_depth,
+                        -sample_depth, -bot_dif) %>% 
+  
+  #Summarise------------------------------------------------------------------------------------
+  group_by(Year,
+           season,
+           ID,
+           surf_bot,
+           Var) %>% 
+  dplyr::summarise(Value = mean(Value, na.rm = T))  %>% 
+  left_join(.,latlon,by = "ID") %>% 
+  as.data.frame()
+
+
+#Bind data frames
+nutrient <- rbind(EcoMon_sum, rebuck_sum)
+nutrient %<>% filter(surf_bot != "mid-water",
+                     !Var %in% c("BTLNBR","CASTNO","Cruise_ID",
+                                 "CTDPRS","EXPOCODE"),
+                     !is.na(Value)) 
+
+
+#Select a variable to loop through - future will loop through all
+
+loopvar <- "NITRIT.NITRAT"
+
+nutrient %<>% filter(Var == loopvar) 
+```
+
+
+
+```{r, spatial params}
+
+#create empty raster
+r1 <- raster::raster()
+e <- raster::extent(-70.83333, -65.66667, 40, 44.5)
+raster::extent(r1) <- e
+
+#fill with selected EPUs
+r1 <- raster::rasterize(epu, r1, field = 1, fun = mean)
+
+#ggplot parameters----------------------------------------------------------------
+
+xmin = -71.83333
+xmax = -64.66667
+ymin = 39
+ymax = 45.5
+xlims <- c(xmin, xmax)
+ylims <- c(ymin, ymax)
+
+ne_countries <- rnaturalearth::ne_countries(scale = 10,
+                                            continent = "North America",
+                                            returnclass = "sf") %>%
+  sf::st_transform(crs = crs)
+
+```
+
+## Build data.frame for animations 
+
+This could take a while
+
+```{r spatial processing}
+
+nmax <- 2
+ggout <- NULL
+for (i in 1:length(unique(nutrient$Year))){
+  
+  for (s in c("Spring", "Fall")){
+  
+    for (j in c("Surface","Bottom")){
+      
+      #Convert to SPDF for one year to experiment
+      print(unique(nutrient$Year)[i])
+      print(s)
+      print(j)
+
+      rsub_df <- nutrient %>% filter(Year == unique(nutrient$Year)[i],
+                                 surf_bot == j) %>%
+     # rsub_df <- nuts %>% filter(Year == 2016) %>%
+      ungroup() %>% 
+      dplyr::select(Latitude, Longitude, Value, season) %>% 
+      as.data.frame()
+      
+      if (s %in% rsub_df$season){
+      
+        rsub_df %<>% filter(season == s) 
+
+        rsub <- rsub_df
+        
+        coordinates(rsub) <- ~Longitude + Latitude
+        rsub@bbox <- epu@bbox
+        crs(rsub) <- crs
+      
+        #Nearest neighbor interpolation ------------------------------------------------
+        gs <- gstat(formula = Value~1, locations = rsub, nmax = nmax, set = list(idp = 0))
+        nn <- interpolate(r1, gs)
+        nnmsk <- mask(nn, r1)
+        
+        #Convert NN output for ggplot
+        r_spdf <- as(nnmsk, "SpatialPixelsDataFrame")
+        r_df <- as.data.frame(r_spdf)
+        m_df <- r_df %>%
+          reshape2::melt(id = c("y","x")) %>%
+          dplyr::rename(lat = y, long = x) %>%
+          dplyr::select(-variable)
+        
+        m_df$year <- unique(nutrient$Year)[i]
+        m_df$surf_bot <- j
+        m_df$season <- s
+        
+        assign('ggout',rbind(ggout,m_df))
+        
+      } else {
+        null_df <- data.frame(lat = NA,
+                              long = NA,
+                              value = NA,
+                              year = unique(nutrient$Year)[i],
+                              surf_bot = j,
+                              season = s)
+        print(null_df)
+        assign('ggout',rbind(ggout,null_df))
+      }
+    }
+  }
+}
+
+```
+
+## Plots
+
+This will most certainly take a while.
+
+```{r plotting code, fig.align = "center"}
+(a <- ggplot(data = ggout,aes(x = long, y = lat))+
+  geom_raster(aes(fill = value)) +
+  
+  facet_grid(season~surf_bot) +
+  geom_sf(data = ne_countries,aes(),inherit.aes = FALSE,
+        fill = "white",
+        color = "black",
+        size = 0.25) +
+
+  transition_states(year,
+                    transition_length = 3,
+                    state_length = 15) +
+    labs(title = 'Year: {closest_state}', x= 'Longitude', y  = 'Latitude',
+         fill = paste("Nitrate +\n Nitrite (\u03BCM)")) +
+    scale_fill_gradient2(low = "blue",mid = "white",high = "red",
+                         midpoint = median(ggout$value, na.rm=TRUE))+
+   coord_sf(crs = crs, xlim = xlims, ylim = ylims))#+
+
+#gganimate::animate(a, nframes = 300, width = 830, height = 749)
+
+```
+

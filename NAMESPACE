@@ -2,3 +2,4 @@
 
 export(open_processing)
 export(open_soe)
+export(stat_gls)

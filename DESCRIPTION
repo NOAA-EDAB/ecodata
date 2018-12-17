@@ -1,4 +1,4 @@
-Package: soe
+Package: soe.data
 Title: Documentation of Ecosystem Indicator Reporting
 Version: 1.0
 Authors@R: 
@@ -25,4 +25,4 @@ Suggests:
 	here,
 	zoo
 VignetteBuilder: knitr
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1

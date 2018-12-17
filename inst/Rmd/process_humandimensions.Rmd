@@ -1,0 +1,99 @@
+---
+title: 'State of the Ecosystem: Macrofauna Indicator Processing & Visualization'
+author: Ecosystems Dynamics and Assessment Branch
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_float: true
+    theme: lumen
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+#Required libraries
+library(dplyr)
+library(stringr)
+library(tidyr)
+library(ggplot2)
+library(lubridate)
+library(here)
+library(zoo)
+library(kableExtra)
+library(sf)
+library(rgdal)
+library(raster)
+library(sp)
+library(gridExtra)
+library(htmlwidgets)
+library(tseries)
+library(plotly)
+
+#Data directories
+raw.dir <- here("inst","extdata") #raw data directory
+clean.dir <- here("data") #output directory for cleaned data
+gis.dir <- here("inst","extdata","gis")
+sample.dir <- here("inst","extdata","sample")
+
+#CRS
+crs <- "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
+
+#Write output to file
+save_clean <- F
+
+#Execute spatial processing (must be TRUE to write clean data to file). If FALSE, will load sample data from file for plotting example
+spatial_processing <- F
+
+```
+
+```{css, echo = FALSE}
+pre code, pre, code {
+  white-space: pre !important;
+  overflow-y: scroll !important;
+  word-break: keep-all !important;
+  word-wrap: initial !important;
+  max-height: 400px;
+}
+```
+
+## Introduction
+The purpose of this report is to document State of the Ecosystem (SOE) **human dimensions** indicator data processing. All R code used to process and visualize the following data sets is self-contained in the [Rmarkdown document](https://github.com/NOAA-EDAB/soe/blob/master/inst/Rmd/process_humandimensions.Rmd) associated with this HTML file. To run and update data sets in this document, set the `save_clean` parameter in the set-up chunk to `TRUE`. Raw data for these indicators are available in the file directory `soe/inst/extdata`.
+
+## Data sets
+
+### Mid-Atlantic Aquaculture {.tabset .tabset-fade}
+
+New aquaculture data for the 2018-2019 Mid-Atlantic SOE were added directly from newly published reports. Here I download the existing data from the NEFSC ERDDAP server and add the newest values.
+
+```{r aquaculture-processing}
+
+#Download and process-----------------------------------------------------
+aqua_url <- "https://comet.nefsc.noaa.gov/erddap/tabledap/aquaculture_soe_v1.csv?Time,Value,Units,Var,EPU"
+
+d <- sprintf(aqua_url) %>% 
+  purrr::map(function(x) {readr::read_csv(url(x))}) %>% 
+  as.data.frame() %>% 
+  filter(!is.na(Value))
+
+va <- d %>%
+  filter(Var == "aquaculture VA oyster harvest N") %>% 
+  add_row(., Time = 2017,
+          Value = 38900000,
+          Var = "aquaculture VA oyster harvest N",
+          EPU = "MAB",
+          Units = "N")
+
+nj <- d %>%
+  filter(Var == "aquaculture NJ gear raised oysters sold") %>% 
+  add_row(., Time = 2016,
+          Value = 2029500,
+          Var = "aquaculture NJ gear raised oysters sold",
+          EPU = "MAB",
+          Units = "N")
+
+#MD data for 2017 is not available at this time
+
+
+
+```
+
