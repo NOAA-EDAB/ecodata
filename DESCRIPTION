@@ -1,4 +1,4 @@
-Package: soe.data
+Package: ecodata
 Title: Documentation of Ecosystem Indicator Reporting
 Version: 1.0
 Authors@R: 
@@ -20,7 +20,6 @@ Suggests:
 	tidyr,
 	ggplot2,
 	lubridate,
-	DataPackageR,
 	tufte,
 	here,
 	zoo
