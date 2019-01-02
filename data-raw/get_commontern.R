@@ -10,9 +10,10 @@
 # For example, "EER COTE Diet Amphipod" refers to the number of preyed upon amphipods observed at Eastern
 # Egg Rock in a given year. 
 
+library(dplyr)
+library(tidyr)
 
-
-get_commontern <- function(save = F){
+get_commontern <- function(save_clean = F){
   
   #Get raw data
   raw.dir <- here::here("inst","extdata")
@@ -20,17 +21,17 @@ get_commontern <- function(save = F){
   
   #Process
   cote <- d %>%
-    dplyr::filter(Island != "") %>% 
+    filter(Island != "") %>% 
     tidyr::gather(., Var, Value, -Year, -Species, -Island) %>%
-    dplyr::mutate(Species = ifelse(Var != "Productivity",
+    mutate(Species = ifelse(Var != "Productivity",
                                    paste(Species, "Diet"), "COTE")) %>% 
-    tidyr::unite(., "Var", c("Island", "Species", "Var"), sep = " ") %>% 
+    unite(., "Var", c("Island", "Species", "Var"), sep = " ") %>% 
     dplyr::rename(Time = Year) %>% 
-    dplyr::mutate(EPU = "GOM",
+    mutate(EPU = "GOM",
                   Units = ifelse(stringr::str_detect(Var, "Productivity"),
                                  "fledged chicks per nest","N")) 
   
-  if (save){
+  if (save_clean){
     clean.dir <- here::here("data")
     save(cote, file = file.path(clean.dir,"common_tern.rds"))
   } else {
