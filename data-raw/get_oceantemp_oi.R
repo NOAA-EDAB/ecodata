@@ -65,7 +65,8 @@ get_oceantemp_oi <- function(save_clean = F){
     group_by(epu, Time) %>% 
     dplyr::summarise(Value = mean(Value)) %>% 
     dplyr::rename(EPU = epu) %>% 
-    dplyr::mutate(Units = "degreesC", Var = "bottom temp OI") 
+    dplyr::mutate(Units = "degreesC", Var = "bottom temp OI") %>% 
+    as.data.frame()
   
   
   #Same thing for annual SST
@@ -73,7 +74,8 @@ get_oceantemp_oi <- function(save_clean = F){
     group_by(epu, Time) %>% 
     dplyr::summarise(Value = mean(Value)) %>% 
     dplyr::rename(EPU = epu) %>% 
-    dplyr::mutate(Units = "degreesC", Var = "surface temp OI")
+    dplyr::mutate(Units = "degreesC", Var = "surface temp OI") %>% 
+    as.data.frame()
   
   ocean_temp_oi <- rbind(bottom_temp_oi_annual, surface_temp_oi_annual)
   
@@ -85,4 +87,3 @@ get_oceantemp_oi <- function(save_clean = F){
   }
   
 }
-

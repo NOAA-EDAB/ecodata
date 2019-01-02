@@ -8,12 +8,12 @@ library(dplyr)
 library(tidyr)
 library(lubridate)
 
+#Get raw
+raw.dir <- here::here("inst","extdata") #input raw
+clean.dir <- here::here("data") #output clean
+
 get_oceantemp_insitu <- function(save_clean = F){
 
-  #Get raw
-  raw.dir <- here::here("inst","extdata") #input raw
-  clean.dir <- here::here("data") #output clean
-  
   ss <- read.csv(file.path(raw.dir,"EcoSS_core_Ttopbot.csv")) %>% mutate(EPU = "SS")
   gom <- read.csv(file.path(raw.dir,"EcoGoM_core_Ttopbot.csv")) %>% mutate(EPU = "GOM")
   gb <- read.csv(file.path(raw.dir,"EcoGB_core_Ttopbot.csv")) %>% mutate(EPU = "GB")
@@ -41,5 +41,4 @@ get_oceantemp_insitu <- function(save_clean = F){
     return(ocean_temp_insitu)
   }
 }
-
 
