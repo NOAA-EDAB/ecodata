@@ -65,7 +65,6 @@ get_oceansal_oi <- function(save_clean = F){
     dplyr::mutate(Units = "PSU", Var = "bottom sal OI") %>% 
     as.data.frame()
   
-  
   #Same thing for annual salinity
   surface_sal_oi_annual <- surface_sal_oi %>% 
     group_by(epu, Time) %>% 
