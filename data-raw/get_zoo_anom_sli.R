@@ -22,7 +22,8 @@ get_zoo_anom_sli <- function(save_clean = F){
                                to = c("pseudocalanus anomaly",
                                       "centropages anomaly",
                                       "calanus anomaly",
-                                      "small-large index"))) 
+                                      "small-large index")),
+         Units = "anomaly")
   
   if (save_clean){
     usethis::use_data(zoo_anom_sli, overwrite = T)
@@ -30,3 +31,4 @@ get_zoo_anom_sli <- function(save_clean = F){
     return(zoo_anom_sli)
   }
 }
+get_zoo_anom_sli(save_clean = T)
