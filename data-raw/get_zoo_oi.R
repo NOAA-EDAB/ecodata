@@ -89,7 +89,7 @@ get_zoo_oi <- function(save_clean = F){
   zoo_oi <- rbind(zoo_oi, sd.high, sd.low) %>% as.data.frame()
   
   if (save_clean){
-    save(zoo_oi, file = file.path(clean.dir, "ecomon_zoo_oi.Rds"))
+    usethis::use_data(zoo_oi, overwrite = T)
   } else {
     return(zoo_oi)
   }

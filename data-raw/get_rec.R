@@ -5,7 +5,6 @@ library(tidyr)
 library(stringr)
 
 raw.dir <- here::here("inst","extdata")
-clean.dir <- here::here("data")
 
 get_rec <- function(save_clean = F){
   
@@ -27,9 +26,8 @@ get_rec <- function(save_clean = F){
   recdat <- recdat %>% filter(!is.na(EPU))
   
   if (save_clean){
-    save(recdat, file = file.path(clean.dir, "recreational.Rds"))
+    usethis::use_data(recdat, overwrite = T)
   } else {
     return(recdat)
   }
 }
-

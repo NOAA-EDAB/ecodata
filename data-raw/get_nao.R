@@ -13,7 +13,6 @@ library(zoo)
 
 #Get raw
 raw.dir <- here::here("inst","extdata") #input raw
-clean.dir <- here::here("data") #output clean
 
 
 get_nao <- function(save_clean = F){
@@ -31,7 +30,7 @@ get_nao <- function(save_clean = F){
     as.data.frame()
 
   if (save_clean){
-    save(nao, file = file.path(clean.dir,"monthly_nao.Rds"))
+    usethis::use_data(nao, overwrite = T)
   } else {
     return(nao)
   }

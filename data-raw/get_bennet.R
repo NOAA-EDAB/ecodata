@@ -5,7 +5,6 @@ library(tidyr)
 library(magrittr)
 
 raw.dir <- here::here('inst','extdata')
-clean.dir <- here::here('data')
 
 get_bennet <- function(save_clean = F){
   
@@ -55,12 +54,12 @@ get_bennet <- function(save_clean = F){
     }
   }
   
-  bennet.pi.vi <- rbind(pi.vi, bennet)
+  bennet <- rbind(pi.vi, bennet)
   
   if (save_clean){
-    save(bennet.pi.vi, file = file.path(clean.dir, "bennet_indicator.Rds"))
+    usethis::use_data(bennet, overwrite = T)
   } else {
-    return(bennet.pi.vi)
+    return(bennet)
   }
   
 }

@@ -15,11 +15,11 @@ library(dplyr)
 library(tidyr)
 library(lubridate)
 
+#Get raw
+raw.dir <- here::here("inst","extdata") #input raw
+
 get_wind <- function(save_clean = F){
   
-  #Get raw
-  raw.dir <- here::here("inst","extdata") #input raw
-  clean.dir <- here::here("data") #output clean
   
   d <- read.csv(file.path(raw.dir,"NCEP NARR surface wind; TKE; HLCY, monthly, 1979-2018, V1.csv"))
   
@@ -51,12 +51,11 @@ get_wind <- function(save_clean = F){
     as.data.frame()
   
   if (save_clean){
-    save(wind, file =
-           file.path(clean.dir, "wind.Rds"))
+    usethis::use_data(wind, overwrite = T)
   } else {
     return(wind)
   }
   
 }
-
+get_wind(save_clean = T)
 

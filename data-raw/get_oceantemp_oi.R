@@ -77,13 +77,12 @@ get_oceantemp_oi <- function(save_clean = F){
     dplyr::mutate(Units = "degreesC", Var = "surface temp OI") %>% 
     as.data.frame()
   
-  ocean_temp_oi <- rbind(bottom_temp_oi_annual, surface_temp_oi_annual)
+  oceantemp_oi <- rbind(bottom_temp_oi_annual, surface_temp_oi_annual)
   
   if (save_clean){
-    save(ocean_temp_oi,file =
-           file.path(clean.dir, "ocean_temp_oi.Rds"))
+    usethis::use_data(oceantemp_oi, overwrite = T)
   } else {
-    return(ocean_temp_oi)
+    return(oceantemp_oi)
   }
   
 }

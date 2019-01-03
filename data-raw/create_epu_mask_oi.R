@@ -11,7 +11,6 @@ library(sf)
 # Directories
 gis.dir <- here::here("inst","extdata","gis") #shapefiles for clipping OI data
 raw.dir <- here::here("inst","extdata") #input raw
-clean.dir <- here::here("data") #output clean
 
 #First function to build EPU rasters
 create_epu_mask_oi <- function(EPU){

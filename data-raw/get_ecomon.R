@@ -107,8 +107,9 @@ get_ecomon <- function(save_clean = F){
     as.data.frame()
   
     if (save_clean){
-      save(ecomon, file = file.path(clean.dir, "ecomon_physical_chemical.Rds"))
+      usethis::use_data(ecomon, overwrite = T)
     } else {
       return(ecomon)
     }
 }
+

@@ -6,9 +6,9 @@
 library(dplyr)
 library(tidyr)
 
+raw.dir <- here::here("inst","extdata")
+
 get_stratification <- function(save_clean = F){
-  
-  raw.dir <- here::here("inst","extdata")
   
   strat <- read.csv(file.path(raw.dir, "Strat50.csv"), stringsAsFactors = FALSE)
   
@@ -19,7 +19,7 @@ get_stratification <- function(save_clean = F){
            Units = "kg m^-3")
   
   if (save_clean){
-    save(stratification, file = file.path(clean.dir, "stratification.Rds"))
+    usethis::use_data(stratification, overwrite = T)
   } else {
     return(stratification)
   }

@@ -10,11 +10,10 @@
 library(dplyr)
 library(tidyr)
 
+#Get raw
+raw.dir <- here::here("inst","extdata") #input raw
+
 get_slopewater <- function(save_clean = F){
-  
-  #Get raw
-  raw.dir <- here::here("inst","extdata") #input raw
-  clean.dir <- here::here("data") #output clean
   
   d <- read.csv(file.path(raw.dir,"slopewater_proportions.csv"))
   
@@ -25,8 +24,7 @@ get_slopewater <- function(save_clean = F){
     as.data.frame()
   
   if (save_clean){
-    save(slopewater, file =
-           file.path(clean.dir, "slopewater_proportions.Rds"))
+    usethis::use_data(slopewater, overwrite = T)
   } else {
     return(slopewater)
   }

@@ -8,7 +8,6 @@ library(dplyr)
 
 
 raw.dir <- here::here("inst","extdata")
-clean.dir <- here::here('data')
 
 get_comdat <- function(save_clean = F){
   
@@ -19,9 +18,9 @@ get_comdat <- function(save_clean = F){
     dplyr::select(-Source)
   
   if (save_clean){
-    save(commercial, file = file.path(clean.dir, "comdat.Rds"))
+    usethis::use_data(comdat, overwrite = T)
   } else {
-    return(commercial)
+    return(comdat)
   }
 
 }

@@ -10,7 +10,6 @@ library(lubridate)
 
 #Get raw
 raw.dir <- here::here("inst","extdata") #input raw
-clean.dir <- here::here("data") #output clean
 
 get_oceantemp_insitu <- function(save_clean = F){
 
@@ -19,7 +18,7 @@ get_oceantemp_insitu <- function(save_clean = F){
   gb <- read.csv(file.path(raw.dir,"EcoGB_core_Ttopbot.csv")) %>% mutate(EPU = "GB")
   mab <- read.csv(file.path(raw.dir,"EcoMAB_core_Ttopbot.csv")) %>% mutate(EPU = "MAB")
   
-  ocean_temp_insitu <- rbind(ss, gom, gb, mab) %>% #bind all
+  oceantemp_insitu <- rbind(ss, gom, gb, mab) %>% #bind all
     dplyr::rename(Time = decimal.year, Var = variable.name, Value = temperature) %>% #rename
     mutate(Units = "degreesC", Time = as.Date(format(date_decimal(Time), "%Y-%b-%d"), "%Y-%b-%d"),
            Var, Var = plyr::mapvalues(Var, from = c("Tsfc_anom",#Rename variables
@@ -35,10 +34,9 @@ get_oceantemp_insitu <- function(save_clean = F){
     as.data.frame() 
   
   if (save_clean){
-    save(ocean_temp_insitu, file =
-           file.path(clean.dir, "ocean_temp_insitu.Rds"))
+    usethis::use_data(oceantemp_insitu, overwrite = T)
   } else {
-    return(ocean_temp_insitu)
+    return(oceantemp_insitu)
   }
 }
 

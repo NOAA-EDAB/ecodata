@@ -18,7 +18,7 @@ get_harborporpoise <- function(save_clean = F){
   d$lo95ci <- d$EST / c
   
   
-  hp_bycatch <- d %>% dplyr::rename(Time = YEAR) %>% 
+  harborporpoise <- d %>% dplyr::rename(Time = YEAR) %>% 
     gather(., Var, Value, -Time) %>% 
     mutate(Units = "N",
            EPU = "All",
@@ -31,9 +31,8 @@ get_harborporpoise <- function(save_clean = F){
     as.data.frame()
   
   if (save_clean){
-    save(hp_bycatch, file =
-           file.path(clean.dir, "hp_bycatch.Rds"))
+    usethis::use_data(harborporpoise, overwrite = R)
   } else {
-    return(hp_bycatch)
+    return(harborporpoise)
   }
 }

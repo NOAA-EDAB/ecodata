@@ -73,13 +73,12 @@ get_oceansal_oi <- function(save_clean = F){
     dplyr::mutate(Units = "PSU", Var = "surface sal OI") %>% 
     as.data.frame()
   
-  ocean_sal_oi <- rbind(bottom_sal_oi_annual, surface_sal_oi_annual)
+  oceansal_oi <- rbind(bottom_sal_oi_annual, surface_sal_oi_annual)
   
   if (save_clean){
-    save(ocean_sal_oi,file =
-           file.path(clean.dir, "ocean_sal_oi.Rds"))
+    usethis::use_data(oceansal_oi, overwrite = T)
   } else {
-    return(ocean_sal_oi)
+    return(oceansal_oi)
   }
   
 }

@@ -13,14 +13,16 @@
 library(dplyr)
 library(tidyr)
 
+#Get raw data
+raw.dir <- here::here("inst","extdata")
+
+
 get_commontern <- function(save_clean = F){
-  
-  #Get raw data
-  raw.dir <- here::here("inst","extdata")
+
   d <- read.csv(file.path(raw.dir,"Audubon SRP Common Tern Data.csv"))
   
   #Process
-  cote <- d %>%
+  common_tern <- d %>%
     filter(Island != "") %>% 
     tidyr::gather(., Var, Value, -Year, -Species, -Island) %>%
     mutate(Species = ifelse(Var != "Productivity",
@@ -32,10 +34,10 @@ get_commontern <- function(save_clean = F){
                                  "fledged chicks per nest","N")) 
   
   if (save_clean){
-    clean.dir <- here::here("data")
-    save(cote, file = file.path(clean.dir,"common_tern.rds"))
+
+    usethis::use_data(common_tern, overwrite = T)
   } else {
-    return(cote)
+    return(common_tern)
   }
 }
 

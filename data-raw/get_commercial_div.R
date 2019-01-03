@@ -9,18 +9,17 @@ library(dplyr)
 library(tidyr)
 
 raw.dir <- here::here("inst","extdata")
-clean.dir <- here::here("data")
 
 get_commercial_div <- function(save_clean = F){
-  comm_div <- read.csv(file.path(raw.dir, "Commercial_Diversity_2018.csv")) %>%
+  commercial_div <- read.csv(file.path(raw.dir, "Commercial_Diversity_2018.csv")) %>%
     dplyr::select(-X, -Source) %>%
     dplyr::rename(EPU = Region) %>% 
     as.data.frame()
   
   if(save_clean){
-    save(comm_div, file = file.path(clean.dir, "commercial_diversity.Rds"))
+    usethis::use_data(commercial_div, overwrite = T)
   } else {
-    return(comm_div)
+    return(commercial_div)
   }
   
   
