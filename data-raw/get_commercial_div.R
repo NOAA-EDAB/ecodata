@@ -7,14 +7,17 @@
 
 library(dplyr)
 library(tidyr)
+library(stringr)
 
 raw.dir <- here::here("inst","extdata")
 
 get_commercial_div <- function(save_clean = F){
   commercial_div <- read.csv(file.path(raw.dir, "Commercial_Diversity_2018.csv")) %>%
     dplyr::select(-X, -Source) %>%
-    dplyr::rename(EPU = Region) %>% 
+    dplyr::rename(EPU = Region) %>%
     as.data.frame()
+  
+  commercial_div$Var <- str_replace(commercial_div$Var, "diveristy", "diversity")
   
   if(save_clean){
     usethis::use_data(commercial_div, overwrite = T)
