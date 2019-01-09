@@ -46,7 +46,8 @@
 raw.dir <- here::here("inst","extdata")
 
 get_species_groupings <- function(save_clean = F){
-  species_groupings <- read.csv(file.path(raw.dir,"species_groupings_V2.csv"))
+  species_groupings <- read.csv(file.path(raw.dir,"species_groupings_V2.csv"),
+                                stringsAsFactors = F)
   
   if (save_clean){
     usethis::use_data(species_groupings, overwrite = T)
