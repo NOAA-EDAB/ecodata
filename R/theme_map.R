@@ -1,6 +1,6 @@
-#' A ggplot2 theme for SOE map figures'
+#' A ggplot2 theme for SOE map figures
 #' 
-#' 
+#' @export
 #' 
 #' @examples
 #' 

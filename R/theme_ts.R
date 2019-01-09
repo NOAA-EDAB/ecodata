@@ -1,5 +1,7 @@
 #'A ggplot2 theme for SOE time series figures
 #'
+#' @export
+#'
 #' @examples
 #' m <- 0.1
 #' x <- 1:30
