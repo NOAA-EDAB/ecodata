@@ -14,6 +14,7 @@
 #'
 #'
 #'@examples
+#'library(ggplot2)
 #'
 #'#Generate series
 #'
@@ -25,7 +26,7 @@
 #'                   y = y)
 #'
 #'#Plot series with trend 
-#'ggplot2::ggplot(data = data) +
+#'ggplot(data = data) +
 #'   geom_line(aes(x = x, y = y)) +
 #'   stat_gls(aes(x = x, y = y, color = stat(col)))
 
