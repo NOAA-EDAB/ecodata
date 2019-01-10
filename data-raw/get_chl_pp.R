@@ -23,6 +23,8 @@ get_chl_pp <- function(save_clean = F){
   }
   
   chl_pp <- chl_pp %>%
+    mutate(ALGORITHM = word(str_replace(ALGORITHM, "_", " "))) %>% 
+    unite(.,VARIABLE, c("VARIABLE","SENSOR","ALGORITHM"), sep = " ") %>% 
     dplyr::select(TIME, UNITS, VARIABLE, VALUE, REGION) %>% 
     dplyr::rename(Time = TIME, Units = UNITS, Var = VARIABLE,
                   EPU = REGION, Value = VALUE)
