@@ -15,6 +15,8 @@ get_survdat <- function(save_clean = F){
     dplyr::rename(EPU = Region) %>% 
     dplyr::select(-Source)
   
+  nefsc_survey <- nefsc_survey[!duplicated(nefsc_survey[c(1,3,4,5),])]
+  
   if (save_clean){
     usethis::use_data(nefsc_survey, overwrite = T)
   } else {
@@ -22,5 +24,4 @@ get_survdat <- function(save_clean = F){
   }
   
 }
-
 
