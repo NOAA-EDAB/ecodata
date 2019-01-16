@@ -13,7 +13,8 @@ get_narw <- function(save_clean = F){
     gather(.,Var,Value,-Year) %>% 
     mutate(Var = tolower(paste("right whale abundance",Var)),
            Units =  "n",
-           EPU = "All")
+           EPU = "All") %>% 
+    dplyr::rename(Time = Year)
   
   if (save_clean){
     usethis::use_data(narw, overwrite = T)
