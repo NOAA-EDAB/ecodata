@@ -2,12 +2,12 @@
 % Please edit documentation in R/theme_map.R
 \name{theme_map}
 \alias{theme_map}
-\title{A ggplot2 theme for SOE map figures'}
+\title{A ggplot2 theme for SOE map figures}
 \usage{
 theme_map(...)
 }
 \description{
-A ggplot2 theme for SOE map figures'
+A ggplot2 theme for SOE map figures
 }
 \examples{
 
