@@ -1,6 +1,5 @@
 #Processing for North Atlantic Right Whale data
 
-
 #See full documentation for these data at https://noaa-edab.github.io/tech-memo/right-whale-abundance.html
 
 library(dplyr)
