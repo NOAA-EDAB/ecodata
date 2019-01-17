@@ -20,14 +20,14 @@ consult** the [technical documentation](https://noaa-edab.github.io/tech-memo/) 
 <img src="https://media.giphy.com/media/KVFf3gvG6z2JvHqY9y/giphy.gif"/>
 </p>
 
-## Using stat_gls()
+## Using geom_gls()
 
-Also included in this package is a "stat" extension of `ggplot2` for assessing trends in time series. This function fits four trend models to each 
+Also included in this package is a "geom" extension of `ggplot2` for assessing trends in time series. This function fits four trend models to each 
 series, uses AICc to select the best model fit, and then implements a likelihood-ratio test to determine if a trend is present. If a significant
-trend is present (*P* < 0.05), then the trend line is plotted with the series. More detailed information about this method is available
+trend is present (*P* < 0.05), then the trend line is plotted with the series. By default, a purple line color is assigned to negative trends and orange to positive trends. More detailed information about this method is available
 [here](https://noaa-edab.github.io/tech-memo/trend-analysis.html). 
 
-`stat_gls()` follows the same rules as other `ggplot` stats/geoms. For example,
+`geom_gls()` follows the same rules as other `ggplot` stats/geoms. For example,
 
 ```
 m <- 0.1
@@ -40,8 +40,7 @@ data <- data.frame(x = x,
 #Plot series with trend 
 ggplot2::ggplot(data = data) +
   geom_line(aes(x = x, y = y)) +
-  stat_gls(aes(x = x, y = y)) + 
-  guides(color = FALSE)
+  geom_gls(aes(x = x, y = y))
 ```
 
 produces 
