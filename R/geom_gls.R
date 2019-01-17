@@ -31,6 +31,7 @@
 #'   stat_gls(aes(x = x, y = y))
 
 geom_gls <- function(mapping = NULL, data = NULL, geom = "line",
+
                     position = "identity", na.rm = FALSE, show.legend = NA, 
                     inherit.aes = TRUE, ...) {
   ggplot2::layer(
