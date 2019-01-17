@@ -45,5 +45,5 @@ ggplot2::ggplot(data = data) +
 
 produces 
 
-![stat_gls](https://github.com/NOAA-EDAB/ecodata/blob/master/stat_gls.png?raw=true)
+![geom_gls](https://github.com/NOAA-EDAB/ecodata/blob/master/geom_gls.png)
 
