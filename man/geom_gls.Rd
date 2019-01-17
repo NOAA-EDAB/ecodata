@@ -38,5 +38,5 @@ data <- data.frame(x = x,
 #Plot series with trend 
 ggplot(data = data) +
   geom_line(aes(x = x, y = y)) +
-  stat_gls(aes(x = x, y = y))
+  geom_gls(aes(x = x, y = y))
 }
