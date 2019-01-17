@@ -1,18 +1,24 @@
 #A ggproto object defined for use in stat_gls()
 
-fitGLS <- ggplot2::ggproto("fitGLS", ggplot2::Stat, 
+fitGLS <- ggplot2::ggproto("fitGLS", ggplot2::Geom, 
                            required_aes = c("x", "y"),
-                           default_aes = ggplot2::aes(color = stat(col[1])),
                            
-                           compute_group = function(data, scales) {
+                           draw_key = draw_key_point,
+                           
+                           
+                           draw_panel = function(data, panel_params, coord) {
+                             
+                             coords <- coord$transform(data, panel_params)
+                             
                              `%>%` <- magrittr::`%>%`
+                             
                              constant_norm <-
                                nlme::gls(y ~ 1, 
-                                         data = data)
+                                         data = coords)
                              
                              constant_ar1 <-
                                try(nlme::gls(y ~ 1,
-                                             data = data,
+                                             data = coords,
                                              correlation = nlme::corAR1(form = ~x)))
                              if (class(constant_ar1) == "try-error"){
                                return(best_lm <- data.frame(model = NA,
@@ -26,12 +32,12 @@ fitGLS <- ggplot2::ggproto("fitGLS", ggplot2::Stat,
                              
                              
                              # Linear model with normal error
-                             linear_norm <- nlme::gls(y ~ x, data = data)
+                             linear_norm <- nlme::gls(y ~ x, data = coords)
                              
                              # Linear model with AR1 error
                              linear_ar1 <- 
                                try(nlme::gls(y ~ x, 
-                                             data = data,
+                                             data = coords,
                                              correlation = nlme::corAR1(form = ~x)))
                              if (class(linear_ar1) == "try-error"){
                                return(best_lm <- data.frame(model = NA,
@@ -44,13 +50,13 @@ fitGLS <- ggplot2::ggproto("fitGLS", ggplot2::Stat,
                              }
                              
                              # Polynomial model with normal error
-                             data$x2 <- data$x^2
-                             poly_norm <- nlme::gls(y ~ x + x2, data = data)
+                             coords$x2 <- coords$x^2
+                             poly_norm <- nlme::gls(y ~ x + x2, data = coords)
                              
                              # Polynomial model with AR1 error
                              poly_ar1 <-
                                try(nlme::gls(y ~ x + x2,
-                                             data = data,
+                                             data = coords,
                                              correlation = nlme::corAR1(form = ~x)))
                              if (class(poly_ar1) == "try-error"){
                                return(best_lm <- data.frame(model = NA,
@@ -87,7 +93,7 @@ fitGLS <- ggplot2::ggproto("fitGLS", ggplot2::Stat,
                                                          update(linear_ar1, method = "ML"))$`p-value`[2]))
                              
                              best_lm <- df_aicc %>%
-                               dplyr::filter(aicc == min(aicc))
+                               dplyr::filter(aicc == min(aicc)) #Select model with lowest AICc
                              
                              if (best_lm$model == "poly_norm") {
                                model <- poly_norm
@@ -100,29 +106,57 @@ fitGLS <- ggplot2::ggproto("fitGLS", ggplot2::Stat,
                              }
                              
                              if (best_lm$p < 0.05){
-                               newtime <- seq(min(data$x), max(data$x), length.out=length(data$x))
+                               newtime <- seq(min(coords$x), max(coords$x), length.out=length(coords$x))
                                newdata <- data.frame(x = newtime,
                                                      x2 = newtime^2)
                                lm_pred <- AICcmodavg::predictSE(model, 
                                                                 newdata = newdata,
-                                                                se.fit = TRUE)
+                                                                se.fit = TRUE) #Get BLUE
                                
-                               if (lm_pred$fit[1] < lm_pred$fit[which.max(data$x)]){
-                                 col <- "orange"
+                               #Select default color based on positive/negative trend
+                               if (lm_pred$fit[1] < lm_pred$fit[which.max(coords$x)]){
+                                 def_col <- "orange"
                                } else {
-                                 col <- "purple"
+                                 def_col <- "purple"
                                }
                                
-                               out <- data.frame(x = newtime,
-                                                 y = lm_pred$fit,
-                                                 col = col)
-                             } else {
-                               out <- data.frame(x = NULL,
-                                                 y = NULL,
-                                                 col = NULL)
+                               lm_pred$color <- def_col
                                
+                               grid::linesGrob(
+                                 coords$x, lm_pred$fit,
+                                 gp = grid::gpar(col = lm_pred$color)
+                               )
+                              
                              }
-                             out
-                           }
+                             
+                           },
+                           default_aes = ggplot2::aes()
 
 )
+
+
+geom_gls <- function(mapping = NULL, data = NULL, stat = "identity",
+                            position = "identity", na.rm = FALSE, show.legend = NA, 
+                            inherit.aes = TRUE, ...) {
+  layer(
+    geom = fitGLS, mapping = mapping,  data = data, stat = stat, 
+    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+    params = list(na.rm = na.rm, ...)
+  )
+}
+
+library(ggplot2)
+
+#Generate series
+
+m <- -0.1
+x <- 1:30
+y <-  m*x + rnorm(30, sd = 0.35)
+
+data <- data.frame(x = x,
+                  y = y)
+
+#Plot series with trend
+ggplot(data = data) +
+  geom_line(aes(x = x, y = y)) +
+  geom_gls(aes(x = x, y = y))
