@@ -23,7 +23,6 @@ theme_ts <- function(...){
     panel.background = element_blank(),
     panel.border = element_rect(colour = "black", fill=NA, size=0.75),
     legend.key = element_blank(),
-    axis.title = element_text(size = 10),
-    plot.margin = unit(c(0.1, 0, 0, 0), "cm")
+    axis.title = element_text(size = 10)
   )
 }
