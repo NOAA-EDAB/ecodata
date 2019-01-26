@@ -1,9 +1,9 @@
-#A ggproto object defined for use in stat_gls()
+#A ggproto object defined for use in geom_gls()
 
 fitGLS <- ggplot2::ggproto("fitGLS", ggplot2::Geom, 
                            required_aes = c("x", "y"),
                            
-                           draw_key = draw_key_point,
+                           draw_key = ggplot2::draw_key_point,
                            
                            
                            draw_panel = function(data, panel_params, coord) {
@@ -133,30 +133,3 @@ fitGLS <- ggplot2::ggproto("fitGLS", ggplot2::Geom,
                            default_aes = ggplot2::aes()
 
 )
-
-
-geom_gls <- function(mapping = NULL, data = NULL, stat = "identity",
-                            position = "identity", na.rm = FALSE, show.legend = NA, 
-                            inherit.aes = TRUE, ...) {
-  layer(
-    geom = fitGLS, mapping = mapping,  data = data, stat = stat, 
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-    params = list(na.rm = na.rm, ...)
-  )
-}
-
-library(ggplot2)
-
-#Generate series
-
-m <- -0.1
-x <- 1:30
-y <-  m*x + rnorm(30, sd = 0.35)
-
-data <- data.frame(x = x,
-                  y = y)
-
-#Plot series with trend
-ggplot(data = data) +
-  geom_line(aes(x = x, y = y)) +
-  geom_gls(aes(x = x, y = y))

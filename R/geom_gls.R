@@ -30,12 +30,11 @@
 #'   geom_line(aes(x = x, y = y)) +
 #'   geom_gls(aes(x = x, y = y))
 
-geom_gls <- function(mapping = NULL, data = NULL, geom = "line",
-
+geom_gls <- function(mapping = NULL, data = NULL, stat = "identity",
                     position = "identity", na.rm = FALSE, show.legend = NA, 
                     inherit.aes = TRUE, ...) {
   ggplot2::layer(
-    stat = ecodata:::fitGLS, data = data, mapping = mapping, geom = geom, 
+    geom = ecodata:::fitGLS, data = data, mapping = mapping, stat = stat, 
     position = position, show.legend = show.legend, inherit.aes = inherit.aes,
     params = list(na.rm = na.rm, ...)
   )
