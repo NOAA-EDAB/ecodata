@@ -30,8 +30,9 @@
 library(dplyr)
 library(tidyr)
 library(readxl)
+library(stringr)
 
-raw.dir <- here("inst","extdata")
+raw.dir <- here::here("inst","extdata")
 
 get_inshore_survdat <- function(save_clean = F){
   
@@ -46,17 +47,17 @@ get_inshore_survdat <- function(save_clean = F){
            Var = str_replace(Var, "_CI_"," CI "),
            Var = str_replace(Var, "Weight",""),
            Var = tolower(Var),
-           EPU = "NE")
+           EPU = "NE") %>% 
+    dplyr::select(-Survey)
   
   inshore_survdat_species <- read_excel(file.path(raw.dir, "MENH inshore trawl survey.xlsx"),
                         sheet = 2) %>% 
     mutate(Var = "Maine and NH inshore survey species")
   
   if (save_clean){
-    usethis::use_data(inshore_survdat, inshore_survdat_species)
+    usethis::use_data(inshore_survdat, inshore_survdat_species, overwrite = T)
   } else {
     return(list(inshore_survdat, inshore_survdat_species))
   }
   
 }
-
