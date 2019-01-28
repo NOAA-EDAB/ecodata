@@ -34,7 +34,7 @@ library(stringr)
 
 raw.dir <- here::here("inst","extdata")
 
-get_inshore_survey <- function(save_clean = F){
+get_ne_inshore_survey <- function(save_clean = F){
   
   ne_inshore_survey <- read_excel(file.path(raw.dir, "MENH inshore trawl survey.xlsx"),
                   sheet = 1) %>% 

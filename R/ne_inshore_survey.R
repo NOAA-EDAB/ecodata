@@ -30,4 +30,4 @@
 #' 
 #' Read more about inshore surveys at \url{https://wildlife.state.nh.us/marine/research.html} and 
 #' \url{https://www.maine.gov/dmr/science-research/projects/trawlsurvey/index.html}
-"inshore_survdat"
+"ne_inshore_survey"
