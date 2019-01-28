@@ -111,13 +111,7 @@ StatGLS <- ggplot2::ggproto("StatGLS",
                        lm_pred <- AICcmodavg::predictSE(model, 
                                                         newdata = newdata,
                                                         se.fit = TRUE) #Get BLUE
-                       
-                       #Select default color based on positive/negative trend
-                       if (lm_pred$fit[1] < lm_pred$fit[which.max(data$x)]){
-                         def_col <- "orange"
-                       } else {
-                         def_col <- "purple"
-                       }
+
                        data <- data.frame(x = data$x,
                                           y = lm_pred$fit)
                        return(data)
