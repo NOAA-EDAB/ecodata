@@ -1,8 +1,8 @@
-#' Maine and New Hampshire inshore state survey data
+#' New England inshore state survey data 
 #' 
-#' These data contain time series of inshore fishery-independent state survey data from Maine and New Hampshire. Time series are 
-#' grouped by State of the Ecosystem feeding guild. Species assignments within groupings are available through
-#' \code{inshore_survdat_species}.
+#' These data contain time series of inshore (within 12 miles) fishery-independent survey data collected by the Maine Department of Marine Resources
+#' and New Hampshire Fish & Game Department. Time series are grouped by State of the Ecosystem feeding guild. Species assignments 
+#' within groupings are available through \code{inshore_survdat_species}.
 #' 
 #' @format A data set containing 710 rows and 5 columns.
 #'  
@@ -27,4 +27,7 @@
 #' were divided by the total area of the survey (11699.831 km2) to provide the stratified mean biomass
 #' for each species group in each survey. The coefficient of variation, standard error, and 95%
 #' confidence intervals were also calculated for each species group and provided.
+#' 
+#' Read more about inshore surveys at \url{https://wildlife.state.nh.us/marine/research.html} and 
+#' \url{https://www.maine.gov/dmr/science-research/projects/trawlsurvey/index.html}
 "inshore_survdat"
