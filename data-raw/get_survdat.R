@@ -24,4 +24,3 @@ get_survdat <- function(save_clean = F){
   }
   
 }
-
