@@ -18,15 +18,16 @@ raw.dir <- here::here("inst","extdata") #input raw
 get_nao <- function(save_clean = F){
   
   nao <- read.table(file.path(raw.dir, "monthly_nao.txt")) %>% 
-    dplyr::rename(Time = V1, Month = V2, Value = V3) %>% 
+    dplyr::rename(Year = V1, Month = V2, Value = V3) %>% 
     # mutate(Quarter = plyr::mapvalues(Month, from = c(1:12),
     #                                  to = rep(c("Q1","Q2","Q3","Q4"), each = 3))) %>% 
     # group_by(Year, Quarter) %>% 
     # dplyr::summarise(Value = mean(Value))
     mutate(Units = "unitless", EPU = "All") %>% 
-    unite(.,"Time",c("Time","Month"), sep = "-") %>% 
-    mutate(Time = as.Date(as.yearmon(Time, "%Y-%m")),
-           Var = "north atlantic oscillation") %>% 
+    #unite(.,"Time",c("Time","Month"), sep = "-") %>% 
+    #mutate(Time = as.Date(as.yearmon(Time, "%Y-%m")),
+    #       Var = "north atlantic oscillation") %>%
+    mutate(Var = "north atlantic oscillation") %>% 
     as.data.frame()
 
   if (save_clean){
