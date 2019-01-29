@@ -1,0 +1,20 @@
+#' Commercial fisheries diversity
+#' 
+#' These data are time series of diversity metrics for commercial fisheries in the Northeast Large Marine Ecosystem, and 
+#' were drawn from a blend of VTR trip data, CFDBS prices, vessel characteristics from PERMIT databases, 
+#' and major VTR gear by permit. Here "MA" and "NE" refer to the Mid-Atlantic and New England regions respectively, and are 
+#' not derived by Ecological Production Unit. 
+#' 
+#' @format These data contain 132 rows and 5 columns.
+#' 
+#' \itemize{
+#'    \item Var: Specifies diversity metric or number of fleets, where fleet is defined by vessel length and gear type.
+#'    \item Value: Value of variable \code{Var}.
+#'    \item EPU: Specifies region data were drawn from. Either New England ("NE") or Mid-Atlantic ("MA").
+#'    \item Units: Units of variable \code{Var}.
+#'    \item Time: Year.
+#' }
+#' 
+#' @details More information, including full variable definitions for diversity metrics, are available
+#' at \url{https://noaa-edab.github.io/tech-memo/catch-and-fleet-diversity.html}.
+"commercial_div"
