@@ -4,7 +4,7 @@
 \alias{geom_gls}
 \title{A geom to fit a GLS model to a time series}
 \usage{
-geom_gls(mapping = NULL, data = NULL, geom = "line",
+geom_gls(mapping = NULL, data = NULL, stat = "GLS",
   position = "identity", na.rm = FALSE, show.legend = NA,
   inherit.aes = TRUE, ...)
 }
