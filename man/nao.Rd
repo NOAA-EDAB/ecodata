@@ -25,6 +25,6 @@ These data show the monthly NAO index time series beginning in 1950 and ending i
 \details{
 The index is standardized by the standard deviation of the 1950-2000 reference period. More
 information regarding the methodology involved in deriving the NAO and its significance is
-available at http://www.cpc.ncep.noaa.gov/data/teledoc/nao.shtml.
+available at \url{http://www.cpc.ncep.noaa.gov/data/teledoc/nao.shtml}.
 }
 \keyword{datasets}
