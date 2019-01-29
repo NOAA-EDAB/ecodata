@@ -34,6 +34,7 @@ library(tidyr)
 library(rgdal)
 library(raster)
 library(sf)
+library(lubridate)
 
 #Data directories
 raw.dir <- here::here("inst","extdata")
