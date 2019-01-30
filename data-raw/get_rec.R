@@ -8,15 +8,14 @@ raw.dir <- here::here("inst","extdata")
 
 get_rec <- function(save_clean = F){
   
-  files = list.files(raw.dir, pattern = "REC_HARVEST|Rec_participants|Rec_angler")
+  files = list.files(raw.dir, pattern = "REC_HARVEST|Rec_participants|Rec_angler|Rec_Species")
   for (i in 1:length(files)) assign(files[i], read.csv(file.path(raw.dir,files[i])))
   
   recdat <- NULL
   for (i in ls()){
-    if (stringr::str_detect(i, "REC_HARVEST|Rec_participants|Rec_angler")){
+    if (stringr::str_detect(i, "REC_|Rec_")){
       d <- get(i) %>%
-        dplyr::select(-X, -Source) %>% 
-        dplyr::rename(EPU = Region)
+        dplyr::select(Time, EPU = Region, Value, Units, Var)
       
       assign('recdat',rbind(recdat, d))
       
