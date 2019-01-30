@@ -14,11 +14,9 @@
 #'     \item Time: Year.
 #' }
 #' 
-#' @details 
-#' Indicator for total wind speed is calculated as TWS = sqrt(u^2 + v^2), where u = surface wind speed
+#' @details Indicator for total wind speed is calculated as TWS = sqrt(u^2 + v^2), where u = surface wind speed
 #' and v = surface wind direction. Seasons are defined as: Fall = October, November, December;
 #' Winter = January, February, March; Spring = April, May, June; Summer = July, August, September.
 #' 
-#' @source 
-#' \url{https://www.esrl.noaa.gov/psd/data/gridded/data.narr.monolevel.html}
+#' @source \url{https://www.esrl.noaa.gov/psd/data/gridded/data.narr.monolevel.html}
 "wind"
