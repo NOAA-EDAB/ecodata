@@ -57,5 +57,3 @@ get_wind <- function(save_clean = F){
   }
   
 }
-get_wind(save_clean = T)
-
