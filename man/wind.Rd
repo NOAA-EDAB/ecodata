@@ -21,6 +21,7 @@ wind
 }
 \description{
 These time series include mean surface wind speed and direction ("uwnd" and "vwnd" respectively),
+surface turbulent kinetic energy (TKE), storm relative helicity (HLCY), and total wind speed (TWS)
 in the Northeast Large Marine Ecosystem.
 }
 \details{
