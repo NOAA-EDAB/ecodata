@@ -9,20 +9,22 @@ library(reshape2)
 
 rast_prep <- function(r){
   r <- rotate(r) #Rotate
-  r <- crop(r, extent(-77,-66,35,45)) #Crop
+  r <- crop(r, extent(-77,-63,35,45)) #Crop
   return(r)
 }
 
-raw.dir <- here::here("inst","extdata","gridded")
+raw.dir <- "~/git/ecodata/inst/extdata/gridded"
 crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40
 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 
 
 #These data are large files that are not included among ecodata source files. They are accessible
 #here: https://www.esrl.noaa.gov/psd/data/gridded/data.noaa.oisst.v2.highres.html
-# sst.2018 <- rast_prep(stack(file.path(raw.dir, "sst.day.mean.2018.nc")))
-# ltm <- rast_prep(stack(file.path(raw.dir, "sst.day.mean.ltm.1982-2010.nc")))
+sst.2018 <- rast_prep(stack(file.path(raw.dir, "sst.day.mean.2018.nc")))
+ltm <- rast_prep(stack(file.path(raw.dir, "sst.day.mean.ltm.1982-2010.nc")))
 
+# save(sst.2018, file = "~/git/ecodata/inst/extdata/gridded/SST.2018.rdata")
+# save(sst.2018, file = "~/git/ecodata/inst/extdata/gridded/SST.LTM.rdata")
 
 winter.ltm <- ltm[[1:90]] 
 spring.ltm <- ltm[[91:181]]
@@ -38,8 +40,9 @@ fall.anom <- sst.2018[[274:365]] - fall.ltm
 rast_process <- function(r, season){
   r <- stackApply(r, indices = rep(1,nlayers(r)),mean) #Find mean anomaly
   crs(r) <- crs #Add SOE CRS
-  r <- disaggregate(r, 2) #interpolate step 1 - create higher res grid
-  r <- focal(r, w=matrix(1, 5, 5), mean) #interpolate step 2 - moving window 
+  r <- disaggregate(r, 5) #interpolate step 1 - create higher res grid
+  r <- focal(r, w=matrix(1,nrow=5,ncol=5), fun=mean,
+             na.rm=TRUE, pad=TRUE) #interpolate step 2 - moving window
   r <- as(r, "SpatialPointsDataFrame") #Convert to ggplot-able object
   r <- as.data.frame(r)
   r <- r %>%
@@ -59,13 +62,3 @@ seasonal_sst_anomaly <-
       rast_process(fall.anom, season = "Fall"))
 
 usethis::use_data(seasonal_sst_anomaly, overwrite = T)
-
-
-
-
-ggplot(data = sst_anomaly) +
-  geom_tile(aes(x = Longitude, y = Latitude, fill = value)) +
-  facet_wrap(Season~., ncol = 2)
-
-
-
