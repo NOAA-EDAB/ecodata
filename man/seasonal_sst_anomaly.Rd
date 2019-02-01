@@ -3,7 +3,7 @@
 \docType{data}
 \name{seasonal_sst_anomaly}
 \alias{seasonal_sst_anomaly}
-\title{Sea-surface temperature anomaly}
+\title{Sea-surface temperature anomaly (2018)}
 \format{Data set contains 15536 rows and 4 columns
 
 \itemize{
@@ -23,9 +23,8 @@ seasonal_sst_anomaly
 \description{
 Seasonally-averaged smoothed sea-surface temperature anomalies for the Northeast
 Continental Shelf; derived from the NOAA optimum interpolation SST
-high resolution data set (NOAA OISST V2). The data extend from 1981 to present,
-and provide a 0.25 x 0.25 global grid of SST measurements. The 1982-2010
-climatology to calculate anomalies.
+high resolution data set (NOAA OISST V2). The 1982-2010
+climatology was used to calculate anomalies.
 }
 \details{
 Seasons are defined as: Fall = October, November,
