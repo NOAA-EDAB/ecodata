@@ -30,7 +30,8 @@ damped during the period between 1854-1880 when collection was inconsistent
 the Northeast US Continental Shelf region (see Friedland and Hare 2007).
 }
 \references{
-Huang, Boyin, Peter W. Thorne, Viva F. Banzon, Tim Boyer, Gennady Chepurin, Jay H. Lawrimore, Matthew J. Menne, Thomas M. Smith, Russell S. Vose, and Huai Min Zhang. 2017. “Extended reconstructed Sea surface temperature, Version 5 (ERSSTv5): Upgrades, validations, and intercomparisons.” Journal of Climate 30 (20):8179–8205. https://doi.org/10.1175/JCLI-D-16-0836.1.
-Friedland, KD, and JA Hare. 2007. “Long-term trends and regime shifts in sea surface temperature on the continental shelf of the northeast United States.” Continental Shelf Research 27:2313–28.
+Huang, Boyin, Peter W. Thorne, Viva F. Banzon, Tim Boyer, Gennady Chepurin, Jay H. Lawrimore, Matthew J. Menne, Thomas M. Smith, Russell S. Vose, and Huai Min Zhang. 2017. “Extended reconstructed Sea surface temperature, Version 5 (ERSSTv5): Upgrades, validations, and intercomparisons.” \emph{Journal of Climate} 30 (20):8179–8205. https://doi.org/10.1175/JCLI-D-16-0836.1.
+
+Friedland, KD, and JA Hare. 2007. “Long-term trends and regime shifts in sea surface temperature on the continental shelf of the northeast United States.” \emph{Continental Shelf Research} 27:2313–28.
 }
 \keyword{datasets}
