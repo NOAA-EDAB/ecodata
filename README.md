@@ -45,5 +45,5 @@ ggplot2::ggplot(data = data,aes(x = x, y = y)) +
 
 produces 
 
-![geom_gls](https://github.com/NOAA-EDAB/ecodata/blob/master/geom_gls.png)
+![geom_gls](https://github.com/NOAA-EDAB/ecodata/blob/master/docs/geom_gls.png)
 
