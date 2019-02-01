@@ -94,7 +94,7 @@ label.size <- 5
 hjust.label <- 1.5
 letter_size <- 4
 feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
-x.shade.min <- 2008
+x.shade.min <- 2009
 x.shade.max <- 2018
 #Function for custom ggplot facet labels
 label <- function(variable,value){
@@ -102,7 +102,7 @@ label <- function(variable,value){
 }
 ```
 
-Trend lines are shown when slope is significantly different from 0 at the p < 0.05 level. An orange line signifies an overall positive trend, and purple signifies a negative trend. Note that in the final report we will only test for trend when N >= 30. However, I have relaxed that requirement for the purposes of this document so that trends are highlighted when N >= 20. **This means that some trends shown here will not be present in the final document**. Dashed lines represent mean values of time series unless the indicator is an anomaly, in which case the dashed line is equal to 0. Shaded regions indicate the past ten years. If there are no new data for 2018, the shaded region will still cover this time period.
+Trend lines are shown when slope is significantly different from 0 at the p < 0.05 level. An orange line signifies an overall positive trend, and purple signifies a negative trend. To minimize bias introduced by small sample size, no trend is fit when N < 30. Dashed lines represent mean values of time series unless the indicator is an anomaly, in which case the dashed line is equal to 0. Shaded regions indicate the past ten years. If there are no new data for 2018, the shaded region will still cover this time period.
 
 ## Mid-Atlantic Bight
 
