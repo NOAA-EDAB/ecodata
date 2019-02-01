@@ -112,6 +112,9 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 ```{r TWS, echo = F}
 
+data.dir <- here::here("data")
+load(file.path(data.dir,"wind.rda"))
+
 all_winds <- wind %>% 
   filter(str_detect(Var, "total wind speed|hcly|tke"),
          EPU == epu_abbr) %>% 
@@ -506,6 +509,37 @@ out_chl$Month <- factor(out_chl$Month, levels = month.abb)
           plot.margin = unit(c(0.1, 0, 0, 0), "cm")))
 
 ```
+
+### Chesapeake Bay Water Quality Attainment
+
+
+
+```{r cb-attainment,fig.width = 6, fig.asp = 0.55, fig.cap = "Water quality attainment in Chesapeake Bay following rolling three year assessment periods."}
+
+minlab <- seq(1985,2015,5)
+maxlab <- seq(1987,2017,5)
+
+
+
+ches_bay_wq %>% 
+  mutate(hline = mean(Value)) %>% 
+  ggplot(aes(x = Time, y = Value)) +
+       annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  geom_line() +
+  geom_point() +
+  geom_gls() +
+    ylab(expression("Estimated attainment, percent")) +
+  ggtitle("Chesapeake Bay Water Quality Attainment") +
+  scale_x_continuous(breaks = minlab,labels = paste0(minlab,"-",maxlab),expand = c(0.01, 0.01)) +
+    geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_ts()
+```
+
 
 ### Zooplankton {.tabset .tabset-fade}
 
@@ -1228,6 +1262,35 @@ gb_strat <- strat %>%
 gom_strat + gb_strat + plot_layout(ncol = 2)
 ```
 
+#### GOM Slope Water Proportions
+
+```{r wsw-prop, fig.width=5, fig.asp = 0.55}
+
+slopewater %>% 
+  mutate(Var, Var = plyr::mapvalues(Var, from = c("WSW proportion ne channel",
+                                                  "LSLW proportion ne channel"),
+                                    to = c("WSW","LSLW"))) %>% 
+  dplyr::rename(Flavor  = Var) %>% 
+  group_by(Flavor) %>% 
+  mutate(hline = mean(Value)) %>% 
+ggplot() +
+  geom_line(aes(x = Time, y = Value, color = Flavor))+
+  geom_point(aes(x = Time, y = Value, color = Flavor)) +
+  ylab("Percent of Total Slopewater") +
+  ggtitle("Slopewater Proportions in NE Channel")+
+    scale_x_continuous(expand = c(0.01, 0.01))+
+      geom_hline(aes(yintercept = hline,
+                     color = Flavor),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  theme_ts() +
+  theme(strip.text=element_text(hjust=0,
+                                face = "italic"))
+
+```
+
+
 ### Chlorophyll and Primary Productivity {.tabset .tabset-fade}
 
 #### Primary production
@@ -1538,6 +1601,88 @@ lt_sst %>%
            alpha = hline.alpha,
            linetype = hline.lty)+
   theme_facet() +
+  theme(strip.text=element_text(hjust=0,
+                                face = "italic"))
+```
+
+### NAO
+
+```{r NAO, fig.width = 8, fig.asp = .35}
+nao_ann <- ecodata::nao %>% 
+  group_by(Year) %>% 
+  dplyr::summarise(Mean = mean(Value),
+                   Variance = var(Value, na.rm = T)) %>% 
+  mutate(hline = 0,
+         hline.var = mean(Variance)) %>% 
+  dplyr::rename(Time = Year)
+
+
+nao_in <- nao_ann %>% 
+  ggplot(aes(x = Time, y = Mean)) +
+         annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  geom_gls() +
+  geom_line() +
+  geom_point() +
+  ylab("NAO Index") +
+  ggtitle("NAO Index") +
+    scale_x_continuous(expand = c(0.01, 0.01))+
+      geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  theme_ts() +
+  theme(strip.text=element_text(hjust=0,
+                                face = "italic"))
+
+nao_var <- nao_ann %>% 
+  ggplot(aes(x = Time, y = Variance)) +
+         annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  geom_gls() +
+  geom_line() +
+  geom_point() +
+  ylab("Annual Variance") +
+  ggtitle("NAO Index Variance") +
+    scale_x_continuous(expand = c(0.01, 0.01))+
+      geom_hline(aes(yintercept = hline.var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  theme_ts() +
+  theme(strip.text=element_text(hjust=0,
+                                face = "italic"))
+
+nao_in + nao_var + plot_layout(ncol = 2) &
+  theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
+```
+
+### GSI
+
+```{r GSI, fig.width = 5, fig.asp = 0.55}
+gsi %>% 
+  mutate(Year = floor(Time)) %>% 
+  group_by(Year) %>% 
+  dplyr::summarise(Value = mean(Value)) %>% 
+  mutate(hline = mean(Value)) %>% 
+  dplyr::rename(Time = Year) %>% 
+  ggplot(aes(x = Time, y = Value)) +
+         annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  geom_gls() +
+  geom_line() +
+  geom_point() +
+  ylab("GSI Index") +
+  ggtitle("Gulf Stream Index") +
+    scale_x_continuous(expand = c(0.01, 0.01))+
+      geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  theme_ts() +
   theme(strip.text=element_text(hjust=0,
                                 face = "italic"))
 ```
