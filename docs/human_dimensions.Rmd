@@ -1,0 +1,1397 @@
+---
+title: "Human Dimensions"
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_float: true
+    theme: lumen
+---
+
+```{r setup, include=FALSE}
+
+#Default Rmd options
+knitr::opts_chunk$set(echo = FALSE,
+                      message = FALSE,
+                      warning = FALSE,
+                      fig.align = 'center') #allows for inserting R code into captions
+
+#Plotting and data libraries
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(ecodata)
+library(here)
+library(kableExtra)
+library(ggrepel)
+library(stringr)
+library(patchwork)
+library(grid)
+
+#GIS libraries
+library(sf)
+library(rgdal)
+library(raster)
+library(rnaturalearth)
+
+
+#General inline text input for report
+
+#Council
+council <- "Mid-Atlantic Fishery Management Council"
+council_abbr <- "MAFMC"
+
+#Region identifiers
+epu <- "Mid-Atlantic Bight"
+epu_abbr <- "MAB"
+region <- "Mid-Atlantic"
+region_abbr <- "MA" #Some commercial data organized by "MA" or "NE" regions, not by EPU 
+
+
+```
+
+```{r GIS-setup}
+
+#CRS
+crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
+
+#Coastline shapefile
+coast <- ne_countries(scale = 10,
+                          continent = "North America",
+                          returnclass = "sf") %>%
+             sf::st_transform(crs = crs)
+
+#State polygons
+ne_states <- ne_states(country = "united states of america",
+                                      returnclass = "sf") %>%
+  sf::st_transform(crs = crs)
+
+#EPU shapefile
+epu_sf <- ecodata::epu_sf %>% 
+  filter(EPU %in% c("MAB","GB","GOM"))
+
+#Map line parameters
+map.lwd <- 0.4
+
+# Set lat/lon window for maps
+xmin = -77
+xmax = -65
+ymin = 36
+ymax = 45
+xlims <- c(xmin, xmax)
+ylims <- c(ymin, ymax)
+
+#Time series constants
+shade.alpha <- 0.3
+shade.fill <- "lightgrey"
+lwd <- 1
+pcex <- 2
+trend.alpha <- 0.5
+trend.size <- 2
+hline.size <- 1
+hline.alpha <- 0.35
+hline.lty <- "dashed"
+label.size <- 5
+hjust.label <- 1.5
+letter_size <- 4
+feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
+x.shade.min <- 2009
+x.shade.max <- 2018
+#Function for custom ggplot facet labels
+label <- function(variable,value){
+  return(facet_names[value])
+}
+```
+
+Trend lines are shown when slope is significantly different from 0 at the p < 0.05 level. An orange line signifies an overall positive trend, and purple signifies a negative trend. Note that in the final report we will only test for trend when N >= 30. However, I have relaxed that requirement for the purposes of this document so that trends are highlighted when N >= 20. **This means that some trends shown here will not be present in the final document**. Dashed lines represent mean values of time series unless the indicator is an anomaly, in which case the dashed line is equal to 0. Shaded regions indicate the past ten years. If there are no new data for 2018, the shaded region will still cover this time period.
+
+# Mid-Atlantic
+
+### Commercial fisheries  {.tabset .tabset-fade}
+
+#### Commercial landings
+
+```{r comm_landings,fig.height=8, warning=F, fig.width = 5, fig.cap = paste0(council_abbr," managed species landings (red) and total commercial landings (black) by feeding guild. \\label{comm-landings}")}
+#Get data for plotting
+
+#Managed landings
+managed_landings <- ecodata::comdat  %>%
+  filter(str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight")),
+         !str_detect(Var, "Other"),
+         Time >= 1986,
+         EPU == epu_abbr)
+
+#Total landings
+total_landings <- ecodata::comdat  %>%
+  filter(!str_detect(Var, "managed species"),
+         !str_detect(Var, "Other"),
+         str_detect(Var, "Landings"),
+         Time >= 1986,
+         EPU == epu_abbr)
+
+#Assign feeding guild column for plotting with ggplot
+landings <- rbind(managed_landings, total_landings) %>%
+  mutate(feeding.guild = str_extract(Var,paste(feeding.guilds, collapse = "|")),
+         grouping = factor(ifelse(str_detect(Var,council_abbr), "managed",
+                                  ifelse(str_detect(Var, "JOINT"), "joint","total"))),
+         Var = paste(word(feeding.guild), grouping)) %>% 
+  mutate(feeding.guild = factor(feeding.guild, levels = feeding.guilds))
+
+#Add JOINT landings to MANAGED landings and remove
+landings[landings$Var ==  "Piscivore managed",]$Value <- landings[landings$Var ==  "Piscivore managed",]$Value + landings[landings$Var ==  "Piscivore joint",]$Value
+landings <- landings %>%
+  filter(Var != "Piscivore joint")  %>% 
+  group_by(Var) %>% 
+  mutate(hline = mean(Value))
+  
+#Define constants for figure plot
+x.shade.max <- 2018
+x.shade.min <- 2009
+series.col <- c("indianred","black")
+
+
+#facet names for titles
+facet_names <- list("Apex predators" = expression("Apex predators"),
+                    "Piscivores" = expression("Piscivores"),
+                    "Planktivores" = expression("Planktivores"),
+                    "Benthivores" = expression("Benthivores"),
+                    "Benthos" = expression("Benthos"))
+
+ggplot(data = landings,aes(x = Time, y = Value, color = grouping)) +
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  
+  #Test for trend and add lines
+  geom_gls(aes(x = Time, y = Value,
+               group = Var)) +
+  
+  #Add time series
+  geom_line(size = lwd) +
+  geom_point(size = pcex) +
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  geom_hline(aes(yintercept = hline,
+                 color = grouping,
+                 size = grouping),
+             size = hline.size,
+             alpha = hline.alpha,
+             linetype = hline.lty)+
+
+  #Facet 
+  facet_wrap(feeding.guild~.,scales = "free_y", labeller = label, ncol = 1) +
+  
+  #Axis and theme
+  scale_y_continuous(labels = function(l){trans = l / 1000})+
+  scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  ylab(expression("Landings, 10"^3*"metric tons")) +
+  theme_facet() +
+  theme(strip.text=element_text(hjust=0))
+
+
+```
+
+```{r total-landings, fig.cap = paste0("Total commercial seafood landings (black) shown with ",region," managed seafood landings (red). \\label{total-landings}"), fig.width = 5, fig.asp = 0.45}
+total_landings_agg <- total_landings %>%
+  group_by(Time) %>%
+  dplyr::summarise(Value = sum(Value)) %>% 
+  mutate(Var = "Total",hline = mean(Value))
+managed_landings_agg <- managed_landings %>%
+  group_by(Time) %>%
+  dplyr::summarise(Value = sum(Value)) %>% 
+  mutate(Var = "Managed",hline = mean(Value))
+
+landings_agg <- rbind(total_landings_agg, managed_landings_agg)
+
+
+ggplot(data = landings_agg)+
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  geom_gls(aes(x = Time, y = Value,
+               group = Var),
+             alpha = trend.alpha, size = trend.size) +
+  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+
+  scale_y_continuous(labels = function(l){trans = l / 1000})+
+  scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ylab(expression("Landings (10"^3*"metric tons)")) +
+
+  geom_hline(aes(yintercept = hline,
+               
+               color = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+    theme_ts()
+
+```
+
+#### Commercial revenue 
+
+```{r bennet, fig.cap = paste0("Revenue change from the long-term mean in 2015 dollars (black), Price (PI), and Volume Indicators (VI) for commercial landings in the ",region,". \\label{bennet}"), fig.width = 6, fig.asp = 0.45}
+
+#Filter data into two dataframes for plotting
+indicators <- ecodata::bennet %>% 
+  filter(EPU == epu_abbr,
+         Var %in% c("VI EPU aggregate",
+                    "PI EPU aggregate")) %>% 
+  mutate(Var, Var = plyr::mapvalues(Var, from = c("VI EPU aggregate","PI EPU aggregate"),
+                                    to = c("Volume","Price")))
+
+revchange <- ecodata::bennet %>% 
+  filter(EPU == epu_abbr,
+         Var %in% c("REVCHANGE EPU aggregate"))
+
+#custom bar fill color (color-blind friendly)
+ind_fill <- c("#a6cee3", "#b2df8a")
+
+#limits
+y.lim <- c(-450,450)
+
+#plot
+ggplot(data = indicators)+
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf)+
+  
+  geom_bar(aes(x=Time, y= Value, fill = Var), stat="identity")+
+  scale_fill_manual(name = "Indicators", values = ind_fill) +
+  geom_line(data = revchange, aes(x = Time, y = Value, colour="$"))+
+  scale_colour_grey(name ="Revenue Change") +
+  ggtitle("Bennet Indicator")+
+  labs(y="Value $1,000,000 ($2015)") +
+  scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), limits = y.lim, expand = c(0.01, 0.01)) +
+  theme_ts() +
+  theme(title = element_text(size = 10))
+
+```
+
+```{r comm-revenue, fig.width = 5, fig.asp = 0.45, fig.cap = "Total revenue for the region (black) and revenue from MAFMC managed species (red). \\label{comm-rev}"}
+
+#Filtering and aggregation step
+rev_agg <- ecodata::comdat %>% 
+  filter(str_detect(Var, "Revenue"),
+         !str_detect(Var, "prop|Other|NEFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
+         EPU == epu_abbr,
+         Time >= 1986) %>% 
+  mutate(Status = ifelse(str_detect(Var, "Revenue weight"), 
+                         "Managed","Total")) %>% #Create groups for aggregation
+  group_by(Status, Time) %>% 
+  dplyr::summarise(Total = sum(Value)) %>% 
+  group_by(Status) %>% 
+  mutate(hline = mean(Total))
+
+series.col <- c("indianred","black")
+
+#Plotting
+ggplot(data = rev_agg) +
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf)+  
+  
+  #lines
+  geom_gls(aes(x = Time, y = Total,
+               group = Status),
+             alpha = trend.alpha, size = trend.size) +
+  geom_line(aes(x = Time, y = Total, color = Status), size = lwd) +
+  geom_point(aes(x = Time, y = Total, color = Status), size = pcex) +
+
+  #axes
+  scale_y_continuous(labels = function(l){trans = l / 1000000})+
+  scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+      scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ggtitle("Total revenue") +
+  ylab(expression("Revenue (10"^6*"USD)")) +
+  geom_hline(aes(yintercept = hline,
+               color = Status),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_ts()
+
+# rev_inline <- rev_agg %>% 
+#   dplyr::select(Status, Time, Total) %>% 
+#   spread(.,Status, Total) %>% 
+#   mutate(percent_managed = round(Managed/Total * 100)) %>% 
+#   filter(Time > latest_landings_data - 5, Time <= latest_landings_data) %>% 
+#   pull(percent_managed)
+# 
+# min_rev_perc <- min(rev_inline)
+# max_rev_perc <- max(rev_inline)
+```
+
+#### Commercial diversity
+
+```{r comm-div, fig.width = 5, fig.asp = .9,fig.cap = paste0("Fleet diversity and fleet count in the ",region,". \\label{comm-div}")}
+
+# 
+comm_div <- ecodata::commercial_div %>% 
+  filter(EPU == region_abbr) %>% 
+  group_by(Var) %>% 
+  mutate(hline = mean(Value))
+
+ylim_fc <- c(min(comm_div[comm_div$Var == "Fleet count",]$Value) - 10, max(comm_div[comm_div$Var == "Fleet count",]$Value) + 10 )
+ylim_fd <- c(0, max(comm_div[comm_div$Var == "Fleet diversity in revenue",]$Value) + 3 )
+# 
+# #Create dataframe for label locations
+# label_loc <- data.frame(xloc = min(comm_div$Time)+0.25,
+#                         yloc = c(ylim_fc[2]*0.95, ylim_fd[2]*0.95),
+#                         labels = LETTERS[1:2],
+#                         Var = c("Fleet count","Fleet diversity in revenue"))
+# 
+ series.col = c("black")
+
+
+fleet_count <- comm_div %>% 
+  filter(Var == "Fleet count") %>% 
+  ggplot() + 
+ #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  #label
+  # annotate("text", x = label_loc[label_loc$Var == "Fleet count",]$xloc,
+  #          y = label_loc[label_loc$Var == "Fleet count",]$yloc,
+  #          label = label_loc[label_loc$Var == "Fleet count",]$label,
+  #          size = letter_size) +
+
+  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+  ylim(ylim_fc)+
+scale_color_manual(values = series.col, aesthetics = "color")+
+  scale_x_continuous(expand = c(0.01, 0.01)) +
+  guides(color = FALSE) +
+  ggtitle("Fleet count") +
+  ylab(expression("Count (n)")) +
+  xlab("")+
+  geom_hline(aes(yintercept = hline,
+               color = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_ts()
+
+fleet_div <- comm_div %>% 
+  filter(Var == "Fleet diversity in revenue") %>% 
+  ggplot() + 
+ #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+    #label
+  # annotate("text", x = label_loc[label_loc$Var == "Fleet diversity in revenue",]$xloc,
+  #          y = label_loc[label_loc$Var == "Fleet diversity in revenue",]$yloc,
+  #          label = label_loc[label_loc$Var == "Fleet diversity in revenue",]$label,
+  #          size = letter_size) +
+
+  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+  ylim(ylim_fd)+
+  
+  scale_x_continuous(expand = c(0.01, 0.01)) +
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ggtitle("Fleet diversity") +
+  ylab(expression("Effective Shannon")) +
+  xlab("Time") +
+
+  geom_hline(aes(yintercept = hline,
+               color = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+ theme_ts()
+
+cowplot::plot_grid(fleet_count, fleet_div, ncol = 1, align = "hv") + 
+  theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
+
+```
+
+
+```{r spec-div, fig.width = 5, fig.asp = 0.45, fig.cap = paste0("Species revenue diversity in the ",region,". \\label{spec-div}")}
+comm_div %>% 
+  filter(Var == "Permit revenue species diversity") %>% 
+  ggplot() + 
+ #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  # geom_gls(aes(x = Time, y = Value,
+  #              group = Var),
+  #            alpha = trend.alpha, size = trend.size) +
+  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+
+  scale_x_continuous(expand = c(0.01, 0.01)) +
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ggtitle("Permit revenue species diversity") +
+  ylab(expression("Effective Shannon")) +
+  geom_hline(aes(yintercept = hline,
+               color = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+ theme_ts()
+```
+
+#### Oyster aquaculture
+
+```{r oyster-aqua, fig.width = 5, fig.asp = 0.45, fig.cap = "Oyster aquaculture production in terms of number of oysters sold from Virginia, Maryland, and New Jersey. \\label{oyster-aqua}"}
+
+aqua <- ecodata::aquaculture %>% 
+  group_by(Var) %>% 
+  mutate(hline = mean(Value)) %>%
+  ungroup() %>% 
+  mutate(Var = plyr::mapvalues(Var, from = c("md oyster harvest","nj oyster harvest","va oyster harvest"),
+                                                    to  = c("MD","NJ","VA"))) %>%
+  dplyr::rename(State = Var)
+
+aqua$State <- factor(aqua$State, levels = c("VA","MD","NJ"))
+
+
+ggplot() + 
+  geom_segment(aes(x=2005,xend=2017,y=mean(aquaculture[aquaculture$Var == "va oyster harvest",]$Value),
+                   yend=mean(aquaculture[aquaculture$Var == "va oyster harvest",]$Value)),
+               size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty,
+           color = "#1b9e77",
+           inherit.aes = F) +
+  geom_segment(aes(x=2012,xend=2016,y=mean(aquaculture[aquaculture$Var == "nj oyster harvest",]$Value),
+                   yend=mean(aquaculture[aquaculture$Var == "nj oyster harvest",]$Value)),
+               size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty,
+           color = "#d95f02",
+           inherit.aes = F) +
+  geom_segment(aes(x=2012,xend=2017,y=mean(aquaculture[aquaculture$Var == "md oyster harvest",]$Value),
+                   yend=mean(aquaculture[aquaculture$Var == "md oyster harvest",]$Value)),
+               size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty,
+           color = "#7570b3",
+           inherit.aes = F) +
+ #Highlight last ten years
+  geom_line(data = aqua, aes(x = Time, y = Value, color = State), size = lwd) +
+  geom_point(data = aqua,aes(x = Time, y = Value, color = State), size = pcex) +
+  scale_color_manual(values = c(VA = "#1b9e77", MD = "#7570b3",NJ = "#d95f02")) +
+  scale_x_continuous(breaks = seq(2005,2018,3),expand = c(0.01, 0.01)) +
+  scale_y_continuous(labels = function(l){trans = l / 1000000})+
+  ggtitle("Oyster harvest")+
+  ylab(expression("Oysters sold (10"^6*" n)")) +
+  xlab("")+
+  theme_ts()
+
+```
+
+### Recreational fisheries {.tabset .tabset-fade}
+
+#### Recreational landings
+
+```{r rec-landings, fig.cap = paste0("Total recreational seafood harvest in the ",region," region. \\label{rec-landings}"), fig.width = 5, fig.asp = 0.45}
+
+landings_rec <- ecodata::recdat %>% 
+  filter(EPU == region_abbr,
+         Var == "Recreational Seafood") %>% 
+  mutate(hline = mean(Value))
+
+series.col <- "black"
+
+ggplot(data = landings_rec)+
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  geom_gls(aes(x = Time, y = Value,
+               group = Var),
+             alpha = trend.alpha, size = trend.size) +
+  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+
+  scale_y_continuous(labels = function(l){trans = l / 1000000})+
+  scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ggtitle("Recreational seafood harvest") +
+  ylab(expression("Fish caught (10"^6*"n)")) +
+
+  geom_hline(aes(yintercept = hline,
+               
+               color = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_ts()
+
+```
+
+#### Recreational diversity
+
+```{r recdat, fig.width = 5, fig.asp = 1.7, fig.cap = paste0("Recreational effort, recreational effort diversity, number of recreational anglers, and diversity of recreational catch in the ",region,". \\label{recdat}")}
+recdat <- ecodata::recdat %>% 
+  filter(EPU == region_abbr) %>% 
+  group_by(Var) %>% 
+  mutate(hline = mean(Value))
+
+ylim_re <- c(2e7, 7e7)
+ylim_rd <- c(1.75,2.75)
+ylim_ra  <- c(1e6, 3.5e6)
+
+# #Create dataframe for label locations
+# label_loc <- data.frame(xloc = min(recdat$Time)+0.3,
+#                         yloc = c(ylim_re[2]*0.975,
+#                                  ylim_rd[2]*0.975,
+#                                  ylim_ra[2]*0.975),
+#                         labels = LETTERS[1:3],
+#                         Var = c("Recreational Effort",
+#                                 "Recreational fleet effort diversity across modes",
+#                                 "Recreational anglers"))
+
+series.col <- "black"
+# x.shade.min <- max(recdat$Time, na.rm = T) - 9
+# x.shade.max <- max(recdat$Time, na.rm = T)
+
+rec_effort <- recdat %>% 
+  filter(Var == "Recreational Effort") %>% 
+  ggplot() + 
+ #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  #label
+  # annotate("text", 
+  #          x = label_loc[label_loc$Var == "Recreational Effort",]$xloc,
+  #          y = label_loc[label_loc$Var == "Recreational Effort",]$yloc,
+  #          label = label_loc[label_loc$Var == "Recreational Effort",]$labels,
+  #          size = letter_size)+
+  geom_gls(aes(x = Time, y = Value,
+               group = Var),
+             alpha = trend.alpha, size = trend.size) +
+  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+  
+  scale_x_continuous(expand = c(0.01, 0.01)) +
+  scale_y_continuous(labels = function(l){trans = l / 1000000}, limits = ylim_re)+
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ggtitle("Recreational effort")+
+  ylab(expression("Days fished (10"^6*" N)")) +
+  xlab("")+
+  geom_hline(aes(yintercept = hline,
+               color = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_ts() 
+
+rec_div <- recdat %>% 
+  filter(Var == "Recreational fleet effort diversity across modes") %>% 
+  ggplot() + 
+ #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  # annotate("text", 
+  #          x = label_loc[label_loc$Var == "Recreational fleet effort diversity across modes",]$xloc,
+  #          y = label_loc[label_loc$Var == "Recreational fleet effort diversity across modes",]$yloc,
+  #          label = label_loc[label_loc$Var == "Recreational fleet effort diversity across modes",]$labels,
+  #          size = letter_size)+
+  geom_gls(aes(x = Time, y = Value,
+               group = Var),
+             alpha = trend.alpha, size = trend.size) +
+  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+  ylim(ylim_rd)+
+  scale_x_continuous(expand = c(0.01, 0.01)) +
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ggtitle("Rec. fleet effort diversity")+
+  ylab(expression("Effective Shannon")) +
+  xlab("")+
+  geom_hline(aes(yintercept = hline,
+               color = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_ts()
+
+
+rec_anglers <- recdat %>% 
+  filter(Var == "Recreational anglers") %>% 
+  ggplot() + 
+ #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+    # annotate("text", 
+    #        x = label_loc[label_loc$Var == "Recreational anglers",]$xloc,
+    #        y = label_loc[label_loc$Var == "Recreational anglers",]$yloc,
+    #        label = label_loc[label_loc$Var == "Recreational anglers",]$labels,
+    #        size = letter_size)+
+  geom_gls(aes(x = Time, y = Value,
+               group = Var),
+             alpha = trend.alpha, size = trend.size) +
+  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+  scale_x_continuous(expand = c(0.01, 0.01)) +
+  scale_y_continuous(labels = function(l){trans = l / 1000000}, limits = ylim_ra)+
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ggtitle("Recreational anglers") +
+  ylab(expression("Anglers (10"^6*" n)")) +
+  xlab("Time")+
+  geom_hline(aes(yintercept = hline,
+               color = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_ts()
+
+rec_div_catch <- recdat %>% 
+  filter(Var == "Recreational Diversity of Catch") %>% 
+  ggplot() + 
+ #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+    # annotate("text", 
+    #        x = label_loc[label_loc$Var == "Recreational anglers",]$xloc,
+    #        y = label_loc[label_loc$Var == "Recreational anglers",]$yloc,
+    #        label = label_loc[label_loc$Var == "Recreational anglers",]$labels,
+    #        size = letter_size)+
+  geom_gls(aes(x = Time, y = Value,
+               group = Var),
+             alpha = trend.alpha, size = trend.size) +
+  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+
+  scale_x_continuous(expand = c(0.01, 0.01)) +
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ggtitle("Rec. diversity of catch")+
+  ylab(expression("Effective Shannon")) +
+  xlab("Time")+
+  geom_hline(aes(yintercept = hline,
+               color = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_ts()
+
+
+cowplot::plot_grid(rec_effort, 
+                   rec_div, 
+                   rec_anglers, 
+                   rec_div_catch,
+                   ncol = 1, 
+                   align = "hv") +
+    theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
+```
+
+
+
+# New England
+
+### Commercial fisheries  {.tabset .tabset-fade}
+
+#### Commercial landings
+
+```{r New-England-constants}
+#Council
+council <- "New England Fishery Management Council"
+council_abbr <- "NEFMC"
+
+#Region identifiers
+epu <- "New England"
+epu_abbr <- c("GOM","GB")
+region <- "New England"
+region_abbr <- "NE" #Some commercial data organized by "MA" or "NE" regions, not by EPU 
+
+```
+
+
+```{r comm_landings-ne,warning=F, fig.width = 8, fig.height = 9,fig.cap = paste0(council_abbr," managed species landings (red) and total commercial landings (black) by feeding guild in Gulf of Maine (left) and Georges Bank (right). \\label{comm-landings}")}
+#Get data for plotting
+
+#Managed landings
+managed_landings <- ecodata::comdat  %>%
+  filter(str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight")),
+         !str_detect(Var, "Other"),
+         Time >= 1986,
+         EPU %in% epu_abbr)
+
+#Total landings
+total_landings <- ecodata::comdat  %>%
+  filter(!str_detect(Var, "managed species"),
+         !str_detect(Var, "Other"),
+         str_detect(Var, "Landings"),
+         Time >= 1986,
+         EPU %in% epu_abbr)
+
+#Assign feeding guild column for plotting with ggplot
+landings <- rbind(managed_landings, total_landings) %>%
+  mutate(feeding.guild = str_extract(Var,paste(feeding.guilds, collapse = "|")),
+         grouping = factor(ifelse(str_detect(Var,council_abbr), "managed",
+                                  ifelse(str_detect(Var, "JOINT"), "joint","total"))),
+         Var = paste(word(feeding.guild), grouping)) %>% 
+  mutate(feeding.guild = factor(feeding.guild, levels = feeding.guilds))
+
+#Add JOINT landings to MANAGED landings and remove
+landings[landings$Var ==  "Piscivore managed" & landings$EPU == "GOM",]$Value <- landings[landings$Var ==  "Piscivore managed" & landings$EPU == "GOM",]$Value + landings[landings$Var ==  "Piscivore joint" & landings$EPU == "GOM",]$Value
+
+landings[landings$Var ==  "Piscivore managed" & landings$EPU == "GB",]$Value <- landings[landings$Var ==  "Piscivore managed" & landings$EPU == "GB",]$Value + landings[landings$Var ==  "Piscivore joint" & landings$EPU == "GB",]$Value
+
+landings <- landings %>%
+  filter(Var != "Piscivore joint")  %>% 
+  group_by(Var, EPU) %>% 
+  mutate(hline = mean(Value))
+  
+series.col <- c("indianred","black")
+
+#Create dataframe for label locations
+label_loc <- landings %>%
+  group_by(feeding.guild) %>%
+  dplyr::summarise(yloc = max(Value)*0.95,
+                   xloc = min(Time)) %>% 
+  mutate(label = LETTERS[1:5])
+
+#facet names for titles
+facet_names <- list("Apex predators" = expression("Apex predators"),
+                    "Piscivores" = expression("Piscivores"),
+                    "Planktivores" = expression("Planktivores"),
+                    "Benthivores" = expression("Benthivores"),
+                    "Benthos" = expression("Benthos"))
+
+gom_landings <- landings %>% filter(EPU == "GOM") %>% 
+  ggplot(aes(x = Time, y = Value, color = grouping)) +
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  
+  #Test for trend and add lines
+  geom_gls(aes(x = Time, y = Value,
+               group = Var)) +
+  
+  #Add time series
+  geom_line(size = lwd) +
+  geom_point(size = pcex) +
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  geom_hline(aes(yintercept = hline,
+                 color = grouping,
+                 size = grouping),
+             size = hline.size,
+             alpha = hline.alpha,
+             linetype = hline.lty)+
+
+  #Facet 
+  facet_wrap(feeding.guild~.,scales = "free_y", labeller = label, ncol = 1) +
+  
+  #Axis and theme
+  scale_y_continuous(labels = function(l){trans = l / 1000})+
+  scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  ylab(expression("Landings, 10"^3*"metric tons")) +
+  theme_facet() +
+  theme(strip.text=element_text(hjust=0)) +
+  ggtitle("Gulf of Maine")
+
+gb_landings <- landings %>% filter(EPU == "GB") %>% 
+  ggplot(aes(x = Time, y = Value, color = grouping)) +
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  
+  #Test for trend and add lines
+  geom_gls(aes(x = Time, y = Value,
+               group = Var)) +
+  
+  #Add time series
+  geom_line(size = lwd) +
+  geom_point(size = pcex) +
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  geom_hline(aes(yintercept = hline,
+                 color = grouping,
+                 size = grouping),
+             size = hline.size,
+             alpha = hline.alpha,
+             linetype = hline.lty)+
+
+  #Facet 
+  facet_wrap(feeding.guild~.,scales = "free_y", labeller = label, ncol = 1) +
+  
+  #Axis and theme
+  scale_y_continuous(labels = function(l){trans = l / 1000})+
+  scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  ylab(expression("Landings, 10"^3*"metric tons")) +
+  theme_facet() +
+  theme(strip.text=element_text(hjust=0)) +
+  ggtitle("Georges Bank")
+
+cowplot::plot_grid(gom_landings, gb_landings, ncol = 2)
+
+```
+
+```{r total-landings-ne, fig.cap = paste0("Total commercial seafood landings (black) shown with NEFMC managed seafood landings (red) in Gulf of Maine (left) and Georges Bank (right). \\label{total-landings}"), fig.width = 8, fig.asp = 0.35}
+total_landings_agg <- total_landings %>%
+  group_by(EPU,Time) %>%
+  dplyr::summarise(Value = sum(Value)) %>% 
+  mutate(Var = "Total",hline = mean(Value))
+managed_landings_agg <- managed_landings %>%
+  group_by(EPU,Time) %>%
+  dplyr::summarise(Value = sum(Value)) %>% 
+  mutate(Var = "Managed",hline = mean(Value))
+
+landings_agg <- rbind(total_landings_agg, managed_landings_agg) 
+
+gom_total <- landings_agg %>% filter(EPU == "GOM") %>% 
+ggplot()+
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  geom_gls(aes(x = Time, y = Value,
+               group = Var),
+             alpha = trend.alpha, size = trend.size) +
+  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+
+  scale_y_continuous(labels = function(l){trans = l / 1000})+
+  scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ylab(expression("Landings (10"^3*"metric tons)")) +
+
+  geom_hline(aes(yintercept = hline,
+               
+               color = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+    theme_ts() +
+  ggtitle("Gulf of Maine")
+
+gb_total <- landings_agg %>% filter(EPU == "GB") %>% 
+ggplot()+
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  geom_gls(aes(x = Time, y = Value,
+               group = Var),
+             alpha = trend.alpha, size = trend.size) +
+  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+
+  scale_y_continuous(labels = function(l){trans = l / 1000})+
+  scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ylab(expression("Landings (10"^3*"metric tons)")) +
+
+  geom_hline(aes(yintercept = hline,
+               
+               color = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+    theme_ts() +
+  ggtitle("Georges Bank")
+
+cowplot::plot_grid(gom_total, gb_total, ncol = 2)
+
+```
+
+#### Commercial revenue
+
+```{r bennet-ne, fig.cap = paste0("Revenue change from the long-term mean in 2015 dollars (black), Price (PI), and Volume Indicators (VI) for commercial landings in Gulf of Maine (left) and Georges Bank. \\label{bennet}"), fig.height = 3, fig.width=8}
+
+#Filter data into two dataframes for plotting
+indicators <- ecodata::bennet %>% 
+  filter(EPU %in% epu_abbr,
+         Var %in% c("VI EPU aggregate",
+                    "PI EPU aggregate")) %>% 
+  mutate(Var, Var = plyr::mapvalues(Var, from = c("VI EPU aggregate","PI EPU aggregate"),
+                                    to = c("Volume","Price")))
+
+revchange <- ecodata::bennet %>% 
+  filter(EPU %in% epu_abbr,
+         Var %in% c("REVCHANGE EPU aggregate"))
+
+#custom bar fill color (color-blind friendly)
+ind_fill <- c("#a6cee3", "#b2df8a")
+
+#limits
+y.lim <- c(-350,350)
+
+#plot
+
+gom_bennet <- indicators %>% filter(EPU == "GOM") %>% 
+ggplot()+
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf)+
+  guides(color = F, fill = F)+
+  geom_bar(aes(x=Time, y= Value, fill = Var), stat="identity")+
+  scale_fill_manual(name = "Indicators", values = ind_fill) +
+  geom_line(data = revchange[revchange$EPU == "GOM",], aes(x = Time, y = Value, colour="$"))+
+  scale_colour_grey(name ="Revenue Change") +
+  ggtitle("Gulf of Maine")+
+  labs(y="Value $1,000,000 ($2015)") +
+  scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), limits = y.lim, expand = c(0.01, 0.01)) +
+  theme_ts() +
+  theme(title = element_text(size = 10))
+
+gb_bennet <- indicators %>% filter(EPU == "GB") %>% 
+ggplot()+
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf)+
+  
+  geom_bar(aes(x=Time, y= Value, fill = Var), stat="identity")+
+  scale_fill_manual(name = "Indicators", values = ind_fill) +
+  geom_line(data = revchange[revchange$EPU == "GB",], aes(x = Time, y = Value, colour="$"))+
+  scale_colour_grey(name ="Revenue Change") +
+  ggtitle("Georges Bank")+
+  labs(y="") +
+  scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), limits = y.lim, expand = c(0.01, 0.01)) +
+  theme_ts() +
+  theme(title = element_text(size = 10))
+
+cowplot::plot_grid(gom_bennet, gb_bennet, ncol = 2, rel_widths = c(0.7,1))
+
+```
+
+```{r comm-revenue-ne, fig.cap = "Total commercial revenue (black) and revenue from NEFMC managed species (red) in Gulf of Maine (left) and Georges Bank (right). \\label{comm-rev}", fig.width = 8, fig.asp = 0.35}
+
+#Filtering and aggregation step
+rev_agg <- ecodata::comdat %>% 
+  filter(str_detect(Var, "Revenue"),
+         !str_detect(Var, "prop|Other|MAFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
+         EPU %in% epu_abbr,
+         Time >= 1986) %>% 
+  mutate(Status = ifelse(str_detect(Var, "Revenue weight"), 
+                         "Managed","Total")) %>% #Create groups for aggregation
+  group_by(EPU,Status, Time) %>% 
+  dplyr::summarise(Total = sum(Value)) %>% 
+  group_by(EPU,Status) %>% 
+  mutate(hline = mean(Total))
+
+series.col <- c("indianred","black")
+
+#Plotting
+gom_rev_agg <- rev_agg %>% filter(EPU == "GOM") %>% 
+ggplot() +
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf)+  
+  
+  #lines
+  geom_gls(aes(x = Time, y = Total,
+               group = Status),
+             alpha = trend.alpha, size = trend.size) +
+  geom_line(aes(x = Time, y = Total, color = Status), size = lwd) +
+  geom_point(aes(x = Time, y = Total, color = Status), size = pcex) +
+
+  #axes
+  scale_y_continuous(labels = function(l){trans = l / 1000000})+
+  scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ylab(expression("Revenue (10"^6*"USD)")) +
+  geom_hline(aes(yintercept = hline,
+               color = Status),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_ts() +
+    ggtitle("Gulf of Maine")
+
+gb_rev_agg <- rev_agg %>% filter(EPU == "GB") %>% 
+ggplot() +
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf)+  
+  
+  #lines
+  geom_gls(aes(x = Time, y = Total,
+               group = Status),
+             alpha = trend.alpha, size = trend.size) +
+  geom_line(aes(x = Time, y = Total, color = Status), size = lwd) +
+  geom_point(aes(x = Time, y = Total, color = Status), size = pcex) +
+
+  #axes
+  scale_y_continuous(labels = function(l){trans = l / 1000000})+
+  scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ylab(expression("Revenue (10"^6*"USD)")) +
+  geom_hline(aes(yintercept = hline,
+               color = Status),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_ts() +
+    ggtitle("Georges Bank")
+
+cowplot::plot_grid(gom_rev_agg, gb_rev_agg, ncol = 2)
+
+# rev_inline <- rev_agg %>% 
+#   dplyr::select(Status, Time, Total) %>% 
+#   spread(.,Status, Total) %>% 
+#   group_by(EPU) %>% 
+#   mutate(percent_managed = round(Managed/Total * 100)) %>% 
+#   filter(Time > latest_landings_data - 5, Time <= latest_landings_data) %>% 
+#   pull(percent_managed)
+# 
+# min_rev_perc <- min(rev_inline)
+# max_rev_perc <- max(rev_inline)
+```
+
+#### Commercial diversity
+
+```{r comm-div-ne, fig.width = 5, fig.asp = .9, fig.cap = paste0("Fleet diversity and fleet count in ",region,". \\label{comm-div}")}
+comm_div <- ecodata::commercial_div %>% 
+  filter(EPU == region_abbr) %>% 
+  group_by(Var) %>% 
+  mutate(hline = mean(Value))
+
+ylim_fc <- c(min(comm_div[comm_div$Var == "Fleet count",]$Value) - 10, max(comm_div[comm_div$Var == "Fleet count",]$Value) + 10 )
+ylim_fd <- c(3, max(comm_div[comm_div$Var == "Fleet diversity in revenue",]$Value) + 3 )
+
+# #Create dataframe for label locations
+# label_loc <- data.frame(xloc = min(comm_div$Time)+0.25,
+#                         yloc = c(ylim_fc[2]*0.95, ylim_fd[2]*0.95),
+#                         labels = LETTERS[1:2],
+#                         Var = c("Fleet count","Fleet diversity in revenue"))
+
+series.col = c("black")
+
+fleet_count <- comm_div %>% 
+  filter(Var == "Fleet count") %>% 
+  ggplot() + 
+ #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  #label
+  # annotate("text", x = label_loc[label_loc$Var == "Fleet count",]$xloc,
+  #          y = label_loc[label_loc$Var == "Fleet count",]$yloc,
+  #          label = label_loc[label_loc$Var == "Fleet count",]$label,
+  #          size = letter_size) +
+  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+  ylim(ylim_fc)+
+  scale_x_continuous(expand = c(0.01, 0.01)) +
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ggtitle("Fleet count") +
+  ylab(expression("Count (n)")) +
+  xlab("")+
+  geom_hline(aes(yintercept = hline,
+               color = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_ts()
+
+fleet_div <- comm_div %>% 
+  filter(Var == "Fleet diversity in revenue") %>% 
+  ggplot() + 
+ #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  #label
+  # annotate("text", x = label_loc[label_loc$Var == "Fleet diversity in revenue",]$xloc,
+  #          y = label_loc[label_loc$Var == "Fleet diversity in revenue",]$yloc,
+  #          label = label_loc[label_loc$Var == "Fleet diversity in revenue",]$label,
+  #          size = letter_size) +
+  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+  ylim(ylim_fd)+
+  scale_x_continuous(expand = c(0.01, 0.01)) +
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ggtitle("Fleet diversity in revenue") +
+  ylab(expression("Effective Shannon")) +
+
+  geom_hline(aes(yintercept = hline,
+               color = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+ theme_ts()
+
+cowplot::plot_grid(fleet_count, fleet_div, ncol = 1, align = "hv") + 
+  theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
+
+```
+
+
+```{r spec-div-ne, fig.width = 5, fig.asp = 0.45, fig.cap = paste0("Species revenue diversity in ",region,". \\label{spec-div}")}
+comm_div %>% 
+  filter(Var == "Permit revenue species diversity") %>% 
+  ggplot() + 
+ #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  # geom_gls(aes(x = Time, y = Value,
+  #              group = Var),
+  #            alpha = trend.alpha, size = trend.size) +
+  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+
+  scale_x_continuous(expand = c(0.01, 0.01)) +
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ggtitle("Permit revenue species diversity")+
+  ylab(expression("Effective Shannon")) +
+  geom_hline(aes(yintercept = hline,
+               color = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+ theme_ts()
+```
+
+### Recreational fisheries {.tabset .tabset-fade}
+
+#### Recreational landings
+
+```{r rec-landings-ne, fig.cap = paste0("Total recreational seafood harvest in ",region,". \\label{rec-landings}"), fig.width = 5, fig.asp = 0.45}
+
+landings_rec <- ecodata::recdat %>% 
+  filter(EPU == region_abbr,
+         Var == "Recreational Seafood") %>% 
+  mutate(hline = mean(Value))
+
+series.col <- "black"
+
+ggplot(data = landings_rec)+
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  geom_gls(aes(x = Time, y = Value,
+               group = Var),
+             alpha = trend.alpha, size = trend.size) +
+  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+  ggtitle("NE Recreational seafood harvest")+
+  scale_y_continuous(labels = function(l){trans = l / 1000000})+
+  scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ylab(expression("Fish caught (10"^6*"n)")) +
+
+  geom_hline(aes(yintercept = hline,
+               
+               color = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_ts()
+
+```
+
+#### Recreational diversity
+
+```{r recdat-ne, fig.width = 5, fig.asp = 1.7, fig.cap = paste0("Recreational effort, recreational effort diversity, number of recreational anglers, and diverstiy of recreational catch in ",region,". \\label{recdat}")}
+recdat <- ecodata::recdat %>% 
+  filter(EPU == region_abbr) %>% 
+  group_by(Var) %>% 
+  mutate(hline = mean(Value))
+
+ylim_re <- c(5e6, 30e6)
+ylim_rd <- c(1.75,2.75)
+ylim_ra  <- c(0, 2e6)
+
+#Create dataframe for label locations
+# label_loc <- data.frame(xloc = min(recdat$Time)+0.3,
+#                         yloc = c(ylim_re[2]*0.975,
+#                                  ylim_rd[2]*0.975,
+#                                  ylim_ra[2]*0.975),
+#                         labels = LETTERS[1:3],
+#                         Var = c("Recreational Effort",
+#                                 "Recreational fleet effort diversity across modes",
+#                                 "Recreational anglers"))
+
+series.col <- "black"
+x.shade.min <- max(recdat$Time, na.rm = T) - 9
+x.shade.max <- max(recdat$Time, na.rm = T)
+
+series.col <- "black"
+
+rec_effort <- recdat %>% 
+  filter(Var == "Recreational Effort") %>% 
+  ggplot() + 
+ #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+    #label
+  # annotate("text", 
+  #          x = label_loc[label_loc$Var == "Recreational Effort",]$xloc,
+  #          y = label_loc[label_loc$Var == "Recreational Effort",]$yloc,
+  #          label = label_loc[label_loc$Var == "Recreational Effort",]$labels,
+  #          size = letter_size)+
+  geom_gls(aes(x = Time, y = Value,
+               group = Var),
+             alpha = trend.alpha, size = trend.size) +
+  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+
+  scale_x_continuous(expand = c(0.01, 0.01)) +
+  scale_y_continuous(labels = function(l){trans = l / 1000000}, limits = ylim_re)+
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ggtitle("Recreational effort") +
+  ylab(expression("Days fished (10"^6*" days)")) +
+  xlab("")+
+  geom_hline(aes(yintercept = hline,
+               color = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_ts() 
+
+rec_div <- recdat %>% 
+  filter(Var == "Recreational fleet effort diversity across modes") %>% 
+  ggplot() + 
+ #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+    #label
+  # annotate("text", 
+  #          x = label_loc[label_loc$Var == "Recreational fleet effort diversity across modes",]$xloc,
+  #          y = label_loc[label_loc$Var == "Recreational fleet effort diversity across modes",]$yloc,
+  #          label = label_loc[label_loc$Var == "Recreational fleet effort diversity across modes",]$labels,
+  #          size = letter_size)+
+  geom_gls(aes(x = Time, y = Value,
+               group = Var),
+             alpha = trend.alpha, size = trend.size) +
+  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+  ylim(ylim_rd)+
+  scale_x_continuous(expand = c(0.01, 0.01)) +
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ggtitle("Rec. fleet effort diversity")+
+  ylab(expression("Effective Shannon")) +
+  xlab("")+
+  geom_hline(aes(yintercept = hline,
+               color = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_ts()
+
+
+rec_anglers <- recdat %>% 
+  filter(Var == "Recreational anglers") %>% 
+  ggplot() + 
+ #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+    # annotate("text", 
+    #        x = label_loc[label_loc$Var == "Recreational anglers",]$xloc,
+    #        y = label_loc[label_loc$Var == "Recreational anglers",]$yloc,
+    #        label = label_loc[label_loc$Var == "Recreational anglers",]$labels,
+    #        size = letter_size)+
+  geom_gls(aes(x = Time, y = Value,
+               group = Var),
+             alpha = trend.alpha, size = trend.size) +
+  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+
+  scale_x_continuous(expand = c(0.01, 0.01)) +
+  scale_y_continuous(labels = function(l){trans = l / 1000000}, limits = ylim_ra)+
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ggtitle("Recreational anglers")+
+  ylab(expression("Anglers (10"^6*" n)")) +
+  xlab("Time")+
+  geom_hline(aes(yintercept = hline,
+               color = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_ts()
+
+rec_div_catch <- recdat %>% 
+  filter(Var == "Recreational Diversity of Catch") %>% 
+  ggplot() + 
+ #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+    # annotate("text", 
+    #        x = label_loc[label_loc$Var == "Recreational anglers",]$xloc,
+    #        y = label_loc[label_loc$Var == "Recreational anglers",]$yloc,
+    #        label = label_loc[label_loc$Var == "Recreational anglers",]$labels,
+    #        size = letter_size)+
+  geom_gls(aes(x = Time, y = Value,
+               group = Var),
+             alpha = trend.alpha, size = trend.size) +
+  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+
+  scale_x_continuous(expand = c(0.01, 0.01)) +
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  ggtitle("Rec. diversity of catch")+
+  ylab(expression("Effective Shannon")) +
+  xlab("Time")+
+  geom_hline(aes(yintercept = hline,
+               color = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_ts()
+
+
+cowplot::plot_grid(rec_effort, 
+                   rec_div, 
+                   rec_anglers, 
+                   rec_div_catch,
+                   ncol = 1, 
+                   align = "hv") +
+    theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
+```
+
