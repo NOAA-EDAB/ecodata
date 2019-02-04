@@ -26,6 +26,7 @@ library(ggrepel)
 library(stringr)
 library(patchwork)
 library(grid)
+library(ggiraph)
 
 #GIS libraries
 library(sf)
@@ -199,6 +200,76 @@ ggplot(data = total_surv, aes(x = Time, y = Value, color = Var)) +
   theme(strip.text=element_text(hjust=0))
 ```
 
+#### Proportion managed species in NEFSC BTS
+
+```{r mab-prop, fig.width = 8, fig.asp=0.9}
+prop <- ecodata::nefsc_survey %>% 
+  filter(Units == "proportion",
+         !str_detect(Var, "Other|other")) %>% 
+  mutate(council = ifelse(str_detect(Var, "NEFMC"),
+                          "NEMFC", ifelse(str_detect(Var, "MAFMC"),
+                                          "MAFMC", ifelse (str_detect(Var, "Non"),
+                                                           "Non","Joint"))),
+         feeding.guild = word(Var,1),
+         season = ifelse(str_detect(Var,"Spring"),
+                         "Spring",
+                         "Fall")) %>% 
+  unite(.,Var,c("feeding.guild","season"), sep = " ") %>% 
+  filter(!str_detect(Var,"Apex|Benthos")) %>%
+  mutate(Var2 = paste(council,Var),
+         tt = paste(council,round(Value,2))) %>% 
+
+    group_by(EPU,Var2) %>% 
+  mutate(hline = mean(Value,na.rm = T)) 
+
+
+prop$Var <- factor(prop$Var,levels = c("Piscivore Fall",
+                                                   "Piscivore Spring",
+                                                   "Benthivore Fall",
+                                                   "Benthivore Spring",
+                                                   "Planktivore Fall",
+                                                   "Planktivore Spring"))
+                                       # "Benthos Fall",
+                                       # "Benthos Spring"))
+# series.col <- rep("black",length(unique(prop$Var)))
+
+mab_prop <- 
+  prop %>% 
+    filter(EPU == "MAB") %>% 
+  dplyr::rename(Council = council) %>% 
+ggplot(aes(x = Time, y = Value, color = Council, group = Var2)) +
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+           xmin = x.shade.min , xmax = x.shade.max ,
+           ymin = -Inf, ymax = Inf) +
+  
+  #Add time series
+  geom_line(size = 0.5) +
+  geom_point_interactive(aes(tooltip = tt),size = 0.5) +
+#  guides(color = FALSE) +
+  geom_hline(aes(yintercept = hline,
+                 group = Var2,
+                 color = Council),
+             size = 0.5,
+             alpha = hline.alpha,
+             linetype = hline.lty)+
+  
+  #Facet 
+  facet_wrap(Var~., ncol = 2) +
+  
+  #Axis and theme
+  scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ylab(expression("Proportion of survey")) +
+  ggtitle("MAB") +
+  theme_facet()+
+  theme(strip.text=element_text(hjust=0))
+mab_prop <- girafe(ggobj = mab_prop)
+mab_prop <- girafe_options(mab_prop, opts_zoom(max = 5) )
+mab_prop
+```
+
+
 ### Condition factor
 
 ```{r mab-cf, fig.cap = "Condition factor for MAFMC managed species."}
@@ -206,6 +277,58 @@ image.dir <- here::here("docs")
 
 knitr::include_graphics(file.path(image.dir, "MAFMC_Fish_Condition_2019.jpg"))
 
+```
+
+### Larval diversity
+
+```{r mab-larval-div}
+ma_larv_div <- ecodata::ichthyo_diversity %>%
+  filter(EPU == "MAB",
+         str_detect(Var, "Ich Shannon")) %>%
+  mutate(Var = word(Var,1)) %>% 
+  group_by(Var) %>% 
+  mutate(hline = mean(Value, na.rm = T)) %>% 
+  ggplot(aes(x = Time, y = Value, group = Var)) +
+  geom_line() +
+  geom_point() +
+       annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggtitle("Mid-Atlantic larval diversity") +
+  ylab("Shannon Diversity") +
+  facet_wrap(Var~., ncol = 2, scales = "free_y") +
+  scale_x_continuous(expand = c(0.01, 0.01))+
+      geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  theme_facet() +
+  theme(strip.text=element_text(hjust=0))
+
+ma_spec_rich <- ecodata::ichthyo_diversity %>%
+  filter(EPU == "MAB",
+         str_detect(Var, "Species Caught")) %>%
+  mutate(Var = word(Var,1)) %>% 
+  group_by(Var) %>% 
+  mutate(hline = mean(Value, na.rm = T)) %>% 
+  ggplot(aes(x = Time, y = Value, group = Var)) +
+  geom_line() +
+  geom_point() +
+       annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggtitle("Mid-Atlantic larval species richness") +
+  ylab("Species richness") +
+  facet_wrap(Var~., ncol = 2, scales = "free_y") +
+  scale_x_continuous(expand = c(0.01, 0.01))+
+      geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  theme_facet() +
+  theme(strip.text=element_text(hjust=0))
+
+ ma_larv_div + ma_spec_rich + plot_layout(ncol = 1)
 ```
 
 
@@ -434,6 +557,83 @@ menh %>%
 
 ```
 
+#### Proportion managed species in NEFSC BTS
+
+```{r gom-survey-prop, fig.width=8, fig.asp = 0.9}
+
+gom_prop <- 
+  prop %>% 
+    filter(EPU == "GOM") %>% 
+  dplyr::rename(Council = council) %>% 
+ggplot(aes(x = Time, y = Value, color = Council, group = Var2)) +
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+           xmin = x.shade.min , xmax = x.shade.max ,
+           ymin = -Inf, ymax = Inf) +
+  
+  #Add time series
+  geom_line(size = 0.5) +
+  geom_point_interactive(aes(tooltip = tt),size = 0.5) +
+#  guides(color = FALSE) +
+  geom_hline(aes(yintercept = hline,
+                 group = Var2,
+                 color = Council),
+             size = 0.5,
+             alpha = hline.alpha,
+             linetype = hline.lty)+
+  
+  #Facet 
+  facet_wrap(Var~., ncol = 2) +
+  
+  #Axis and theme
+  scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ylab(expression("Proportion of survey")) +
+  ggtitle("GOM")+
+  theme_facet()+
+  theme(strip.text=element_text(hjust=0))
+gom_prop <- girafe(ggobj = gom_prop)
+gom_prop <- girafe_options(gom_prop, opts_zoom(max = 5) )
+gom_prop
+```
+
+```{r gb-prop, fig.width = 8, fig.asp=0.9}
+gb_prop <- 
+  prop %>% 
+    filter(EPU == "GB") %>% 
+  dplyr::rename(Council = council) %>% 
+ggplot(aes(x = Time, y = Value, color = Council, group = Var2)) +
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+           xmin = x.shade.min , xmax = x.shade.max ,
+           ymin = -Inf, ymax = Inf) +
+  
+  #Add time series
+  geom_line(size = 0.5) +
+  geom_point_interactive(aes(tooltip = tt),size = 0.5) +
+#  guides(color = FALSE) +
+  geom_hline(aes(yintercept = hline,
+                 group = Var2,
+                 color = Council),
+             size = 0.5,
+             alpha = hline.alpha,
+             linetype = hline.lty)+
+  
+  #Facet 
+  facet_wrap(Var~., ncol = 2) +
+  
+  #Axis and theme
+  scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ylab(expression("Proportion of survey")) +
+  ggtitle("GB")+
+  theme_facet()+
+  theme(strip.text=element_text(hjust=0))
+gb_prop <- girafe(ggobj = gb_prop)
+gb_prop <- girafe_options(gb_prop, opts_zoom(max = 5) )
+gb_prop
+```
+
 ### Condition factor
 
 ```{r ne-cf, fig.cap = "Condition factor for NEFMC and jointly managed species."}
@@ -442,6 +642,114 @@ image.dir <- here::here("docs")
 knitr::include_graphics(file.path(image.dir, "NEFMC_Fish_Condition_2019.jpg"))
 
 ```
+
+### Larval diversity {.tabset .tabset-fade}
+
+#### Gulf of Maine
+
+```{r gom-larval-div}
+gom_larv_div <- ecodata::ichthyo_diversity %>%
+  filter(EPU == "GOM",
+         str_detect(Var, "Ich Shannon")) %>%
+  mutate(Var = word(Var,1)) %>% 
+  group_by(Var) %>% 
+  mutate(hline = mean(Value, na.rm = T)) %>% 
+  ggplot(aes(x = Time, y = Value, group = Var)) +
+  geom_line() +
+  geom_point() +
+       annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggtitle("GOM larval diversity") +
+  ylab("Shannon Diversity") +
+  facet_wrap(Var~., ncol = 2, scales = "free_y") +
+  scale_x_continuous(expand = c(0.01, 0.01))+
+      geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  theme_facet() +
+  theme(strip.text=element_text(hjust=0))
+
+gom_spec_rich <- ecodata::ichthyo_diversity %>%
+  filter(EPU == "GOM",
+         str_detect(Var, "Species Caught")) %>%
+  mutate(Var = word(Var,1)) %>% 
+  group_by(Var) %>% 
+  mutate(hline = mean(Value, na.rm = T)) %>% 
+  ggplot(aes(x = Time, y = Value, group = Var)) +
+  geom_line() +
+  geom_point() +
+       annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggtitle("GOM larval species richness") +
+  ylab("Species richness") +
+  facet_wrap(Var~., ncol = 2, scales = "free_y") +
+  scale_x_continuous(expand = c(0.01, 0.01))+
+      geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  theme_facet() +
+  theme(strip.text=element_text(hjust=0))
+
+ gom_larv_div + gom_spec_rich + plot_layout(ncol = 1)
+```
+
+#### Georges Bank
+
+```{r gb-larval-div}
+gb_larv_div <- ecodata::ichthyo_diversity %>%
+  filter(EPU == "GB",
+         str_detect(Var, "Ich Shannon")) %>%
+  mutate(Var = word(Var,1)) %>% 
+  group_by(Var) %>% 
+  mutate(hline = mean(Value, na.rm = T)) %>% 
+  ggplot(aes(x = Time, y = Value, group = Var)) +
+  geom_line() +
+  geom_point() +
+       annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggtitle("GB larval diversity") +
+  ylab("Shannon Diversity") +
+  facet_wrap(Var~., ncol = 2, scales = "free_y") +
+  scale_x_continuous(expand = c(0.01, 0.01))+
+      geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  theme_facet() +
+  theme(strip.text=element_text(hjust=0))
+
+gb_spec_rich <- ecodata::ichthyo_diversity %>%
+  filter(EPU == "GB",
+         str_detect(Var, "Species Caught")) %>%
+  mutate(Var = word(Var,1)) %>% 
+  group_by(Var) %>% 
+  mutate(hline = mean(Value, na.rm = T)) %>% 
+  ggplot(aes(x = Time, y = Value, group = Var)) +
+  geom_line() +
+  geom_point() +
+       annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggtitle("GB larval species richness") +
+  ylab("Species richness") +
+  facet_wrap(Var~., ncol = 2, scales = "free_y") +
+  scale_x_continuous(expand = c(0.01, 0.01))+
+      geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  theme_facet() +
+  theme(strip.text=element_text(hjust=0))
+
+ gb_larv_div + gb_spec_rich + plot_layout(ncol = 1)
+```
+
+
 
 ## Shelfwide Indicators
 
@@ -505,6 +813,59 @@ ggplot() +
   theme(legend.position = c(0.4, 0.85), legend.background = element_rect(
     fill = "transparent"), legend.text = element_text(size = 10))
 
+```
+
+### Larval diversity
+
+
+```{r all-larval-div}
+all_larv_div <- ecodata::ichthyo_diversity %>%
+  filter(EPU == "All",
+         str_detect(Var, "Ich Shannon")) %>%
+  mutate(Var = word(Var,1)) %>% 
+  group_by(Var) %>% 
+  mutate(hline = mean(Value, na.rm = T)) %>% 
+  ggplot(aes(x = Time, y = Value, group = Var)) +
+  geom_line() +
+  geom_point() +
+       annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggtitle("NES larval diversity") +
+  ylab("Shannon Diversity") +
+  facet_wrap(Var~., ncol = 2, scales = "free_y") +
+  scale_x_continuous(expand = c(0.01, 0.01))+
+      geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  theme_facet() +
+  theme(strip.text=element_text(hjust=0))
+
+all_spec_rich <- ecodata::ichthyo_diversity %>%
+  filter(EPU == "All",
+         str_detect(Var, "Species Caught")) %>%
+  mutate(Var = word(Var,1)) %>% 
+  group_by(Var) %>% 
+  mutate(hline = mean(Value, na.rm = T)) %>% 
+  ggplot(aes(x = Time, y = Value, group = Var)) +
+  geom_line() +
+  geom_point() +
+       annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggtitle("NES larval species richness") +
+  ylab("Species richness") +
+  facet_wrap(Var~., ncol = 2, scales = "free_y") +
+  scale_x_continuous(expand = c(0.01, 0.01))+
+      geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  theme_facet() +
+  theme(strip.text=element_text(hjust=0))
+
+ all_larv_div + all_spec_rich + plot_layout(ncol = 1)
 ```
 
 ### Aggregate species distribution
