@@ -5,17 +5,21 @@ StatGLS <- ggplot2::ggproto("StatGLS",
                    compute_group = function(data, scales) {
                      
                      `%>%` <- magrittr::`%>%`
-                     data <- data %>% dplyr::arrange(x)
+                     data <- data %>% 
+                       dplyr::arrange(x) %>%
+                       #Fill in time steps if there are missing values
+                       tidyr::complete(x = full_seq(min(data$x):max(data$x),1)) 
                      
                      
                      #Model fitting -------------------------------------------------------
                      constant_norm <-
                        nlme::gls(y ~ 1, 
-                                 data = data)
+                                 data = data, na.action = na.omit)
                      constant_ar1 <-
                        try(nlme::gls(y ~ 1,
                                      data = data,
-                                     correlation = nlme::corAR1(form = ~x)))
+                                     correlation = nlme::corAR1(form = ~x),
+                           na.action = na.omit))
                      if (class(constant_ar1) == "try-error"){
                        return(best_lm <- data.frame(model = NA,
                                                     aicc  = NA,
@@ -28,13 +32,14 @@ StatGLS <- ggplot2::ggproto("StatGLS",
                      
                      
                      # Linear model with normal error
-                     linear_norm <- nlme::gls(y ~ x, data = data)
+                     linear_norm <- nlme::gls(y ~ x, data = data, na.action = na.omit)
                      
                      # Linear model with AR1 error
                      linear_ar1 <- 
                        try(nlme::gls(y ~ x, 
                                      data = data,
-                                     correlation = nlme::corAR1(form = ~x)))
+                                     correlation = nlme::corAR1(form = ~x),
+                                     na.action = na.omit))
                      if (class(linear_ar1) == "try-error"){
                        return(best_lm <- data.frame(model = NA,
                                                     aicc  = NA,
@@ -47,13 +52,14 @@ StatGLS <- ggplot2::ggproto("StatGLS",
                      
                      # Polynomial model with normal error
                      data$x2 <- data$x^2
-                     poly_norm <- nlme::gls(y ~ x + x2, data = data)
+                     poly_norm <- nlme::gls(y ~ x + x2, data = data, na.action = na.omit)
                      
                      # Polynomial model with AR1 error
                      poly_ar1 <-
                        try(nlme::gls(y ~ x + x2,
                                      data = data,
-                                     correlation = nlme::corAR1(form = ~x)))
+                                     correlation = nlme::corAR1(form = ~x),
+                                     na.action = na.omit))
                      if (class(poly_ar1) == "try-error"){
                        return(best_lm <- data.frame(model = NA,
                                                     aicc  = NA,
@@ -111,9 +117,9 @@ StatGLS <- ggplot2::ggproto("StatGLS",
                        lm_pred <- AICcmodavg::predictSE(model, 
                                                         newdata = newdata,
                                                         se.fit = TRUE) #Get BLUE
-
                        data <- data.frame(x = data$x,
                                           y = lm_pred$fit)
+                       
                        return(data)
                      } 
                    }
