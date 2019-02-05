@@ -840,28 +840,27 @@ diet_div <- ecodata::common_tern %>%
   dplyr::summarize(Value = mean(Value, na.rm = T),
                    sd = sd(Value, na.rm = T),
                    n = n()) %>%
-  mutate(Value = ifelse(n <= 3, NA, Value)) %>% 
   group_by(Var) %>% 
   mutate(hline = mean(Value, na.rm = T))
 
-evenness <- diet_div %>% 
-  filter(Var == "evenness") %>% 
-ggplot(aes(x = Time, y = Value)) +
-      annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line() +
-  geom_point() +
- # geom_gls() +
-  scale_x_continuous(expand = c(0.01, 0.01),limits = c(1992,2018)) +
-  ggtitle("Evenness")+
-  ylab(expression("Evenness")) +
-  xlab("")+
-  geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_ts() 
+# evenness <- diet_div %>% 
+#   filter(Var == "evenness") %>% 
+# ggplot(aes(x = Time, y = Value)) +
+#       annotate("rect", fill = shade.fill, alpha = shade.alpha,
+#       xmin = x.shade.min , xmax = x.shade.max,
+#       ymin = -Inf, ymax = Inf) +
+#   geom_line() +
+#   geom_point() +
+#  # geom_gls() +
+#   scale_x_continuous(expand = c(0.01, 0.01),limits = c(1992,2018)) +
+#   ggtitle("Evenness")+
+#   ylab(expression("Evenness")) +
+#   xlab("")+
+#   geom_hline(aes(yintercept = hline),
+#            size = hline.size,
+#            alpha = hline.alpha,
+#            linetype = hline.lty) +
+#   theme_ts() 
 
 shannon <- diet_div %>% 
   filter(Var == "shannon") %>% 
@@ -873,7 +872,7 @@ ggplot(aes(x = Time, y = Value)) +
   geom_point() +
   #geom_gls() +
   scale_x_continuous(expand = c(0.01, 0.01),limits = c(1992,2018)) +
-  ggtitle("Shannon Diversity")+
+  ggtitle("Common tern diet diversity")+
   ylab(expression("Shannon Diversity")) +
   xlab("")+
   geom_hline(aes(yintercept = hline),
@@ -882,7 +881,7 @@ ggplot(aes(x = Time, y = Value)) +
            linetype = hline.lty) +
   theme_ts() 
 
-evenness + shannon + plot_layout(ncol = 1)
+shannon 
 ```
 
 ```{r prey-frequencies, eval = F}
@@ -921,7 +920,6 @@ prey_freq <- ecodata::common_tern %>%
          !str_detect(Var, "Sum")) %>% 
     mutate(Island = word(Var, 1),
          Var = word(Var, 4)) %>%
-    filter(Time >= 1992) %>% 
     group_by(Var, Time) %>% 
     dplyr::summarise(Value = sum(Value, na.rm = T)) %>% 
     group_by(Time) %>% 
@@ -1037,7 +1035,7 @@ ggplot(aes(x = Time, y = Value, group = Island)) +
   geom_line() +
   geom_point() +
   guides(color = F)+
-  scale_x_continuous(expand = c(0.01, 0.01),limits = c(1992,2018)) +
+  scale_x_continuous(expand = c(0.01, 0.01)) +
   facet_wrap(Island~., scales = "free_y", nrow = 2)+
   ggtitle("Productivity")+
   ylab(expression("Fledged chicks per nest")) +
@@ -1051,8 +1049,21 @@ ggplot(aes(x = Time, y = Value, group = Island)) +
   theme(strip.text=element_text(hjust=0))
 
 
+
+
 ```
 
+```{r aggregate}
+ecodata::common_tern %>% 
+    filter(!str_detect(Var, "Diet|Sum"))  %>% 
+  mutate(Island = word(Var, 1),
+         Var = word(Var, 3),
+         Island = plyr::mapvalues(Island, from = c("EER","JI","MR","OGI","PINWR","SINWR","STI"),
+                                  to = c("Eastern Egg Rock", "Jenny Island", "Matinicus Rock", "Outer Green Island", "Pond Island", "Seal Island","Stratton Island"))) %>%
+  group_by(Island) %>% 
+  mutate(hline = mean(Value, na.rm = T)) 
+
+```
 
 
 ### Larval diversity
