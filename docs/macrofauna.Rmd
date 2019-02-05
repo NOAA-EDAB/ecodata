@@ -824,7 +824,7 @@ ggplot() +
 #### Common tern diet composition
 
 
-```{r tern-diet-diversity, fig.cap = "Evenness and Shannon diversity of common tern diets observed at seven different islands in Gulf of Maine. Diversity of common tern diets has been predominantly above the long-term mean since 2006.",fig.width = 5, fig.asp = 0.55}
+```{r tern-diet-diversity, fig.cap = "Shannon diversity of common tern diets observed at nesting sites in Gulf of Maine. Diversity of common tern diets has been predominantly above the long-term mean since 2006.",fig.width = 5, fig.asp = 0.55}
 
 diet_div <- ecodata::common_tern %>% 
   filter(str_detect(Var, "Diet"),
