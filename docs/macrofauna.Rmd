@@ -933,7 +933,7 @@ diet_freq_bar <- prey_freq %>%
   filter(Freq > 0.05) %>% 
   dplyr::rename(Prey = Var) %>% 
   ggplot(aes(x = Time, y = Freq, fill = Prey)) +
-  geom_bar_interactive(aes(tooltip = paste(Prey,round(Freq,2))),stat = "identity") +
+  geom_bar_interactive(aes(tooltip = paste(Prey,round(Freq,2),Time)),stat = "identity") +
   viridis::scale_fill_viridis(discrete = TRUE) +
   ggtitle("Prey frequency") +
   ylab("Frequency of occurrence") +
@@ -1017,6 +1017,43 @@ full_map <- islands +
 
 full_map
 ```
+
+#### Common tern productivity
+
+```{r productivity, fig.width = 8,fig.height = 4, fig.cap = "Productivity of common tern at different nesting sites in Gulf of Maine, where productivity is defined as the number of fledged chicks per nest."}
+
+ecodata::common_tern %>% 
+    filter(!str_detect(Var, "Diet|Sum"))  %>% 
+  mutate(Island = word(Var, 1),
+         Var = word(Var, 3),
+         Island = plyr::mapvalues(Island, from = c("EER","JI","MR","OGI","PINWR","SINWR","STI"),
+                                  to = c("Eastern Egg Rock", "Jenny Island", "Matinicus Rock", "Outer Green Island", "Pond Island", "Seal Island","Stratton Island"))) %>%
+  group_by(Island) %>% 
+  mutate(hline = mean(Value, na.rm = T)) %>% 
+ggplot(aes(x = Time, y = Value, group = Island)) +
+      annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  geom_line() +
+  geom_point() +
+  guides(color = F)+
+  scale_x_continuous(expand = c(0.01, 0.01),limits = c(1992,2018)) +
+  facet_wrap(Island~., scales = "free_y", nrow = 2)+
+  ggtitle("Productivity")+
+  ylab(expression("Fledged chicks per nest")) +
+  xlab("Time")+
+  geom_hline(aes(yintercept = hline,
+                 group = Island),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_facet() +
+  theme(strip.text=element_text(hjust=0))
+
+
+```
+
+
 
 ### Larval diversity
 
