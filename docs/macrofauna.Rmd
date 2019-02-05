@@ -27,6 +27,7 @@ library(stringr)
 library(patchwork)
 library(grid)
 library(ggiraph)
+library(vegan)
 
 #GIS libraries
 library(sf)
@@ -35,8 +36,10 @@ library(raster)
 library(rnaturalearth)
 
 
-#General inline text input for report
+#GIS directory
+gis.dir <- here::here("inst","extdata","gridded")
 
+#General inline text input for report
 #Council
 council <- "Mid-Atlantic Fishery Management Council"
 council_abbr <- "MAFMC"
@@ -65,6 +68,9 @@ coast <- ne_countries(scale = 10,
 ne_states <- ne_states(country = "united states of america",
                                       returnclass = "sf") %>%
   sf::st_transform(crs = crs)
+
+#high-res polygon of Maine
+new_england <- read_sf(gis.dir,"new_england")
 
 #EPU shapefile
 epu_sf <- ecodata::epu_sf %>% 
@@ -813,6 +819,203 @@ ggplot() +
   theme(legend.position = c(0.4, 0.85), legend.background = element_rect(
     fill = "transparent"), legend.text = element_text(size = 10))
 
+```
+
+#### Common tern diet composition
+
+
+```{r tern-diet-diversity, fig.cap = "Evenness and Shannon diversity of common tern diets observed at seven different islands in Gulf of Maine. Diversity of common tern diets has been predominantly above the long-term mean since 2006."}
+
+diet_div <- ecodata::common_tern %>% 
+  filter(str_detect(Var, "Diet"),
+         !str_detect(Var, "Sum")) %>% 
+  mutate(Island = word(Var, 1),
+         Var = word(Var, 4)) %>% 
+  group_by(Island, Time) %>%
+  dplyr::summarise(evenness = diversity(Value)/log(specnumber(Value)),
+                   shannon = diversity(Value),
+                   simpson = diversity(Value, index = "simpson")) %>% 
+  gather(.,Var,Value,-Island, -Time) %>% 
+  group_by(Var, Time) %>%
+  dplyr::summarize(Value = mean(Value, na.rm = T),
+                   sd = sd(Value, na.rm = T),
+                   n = n()) %>%
+  mutate(Value = ifelse(n <= 3, NA, Value)) %>% 
+  group_by(Var) %>% 
+  mutate(hline = mean(Value, na.rm = T))
+
+evenness <- diet_div %>% 
+  filter(Var == "evenness") %>% 
+ggplot(aes(x = Time, y = Value)) +
+      annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  geom_line() +
+  geom_point() +
+ # geom_gls() +
+  scale_x_continuous(expand = c(0.01, 0.01),limits = c(1992,2018)) +
+  ggtitle("Evenness")+
+  ylab(expression("Evenness")) +
+  xlab("")+
+  geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_ts() 
+
+shannon <- diet_div %>% 
+  filter(Var == "shannon") %>% 
+ggplot(aes(x = Time, y = Value)) +
+      annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  geom_line() +
+  geom_point() +
+  #geom_gls() +
+  scale_x_continuous(expand = c(0.01, 0.01),limits = c(1992,2018)) +
+  ggtitle("Shannon Diversity")+
+  ylab(expression("Shannon Diversity")) +
+  xlab("")+
+  geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_ts() 
+
+evenness + shannon + plot_layout(ncol = 1)
+```
+
+```{r prey-frequencies, eval = F}
+
+
+prey_freq %>% 
+  dplyr::rename(Prey = Var) %>% 
+ggplot(aes(x = Time, y = Freq, color = Prey)) +
+      annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  geom_line() +
+  geom_point() +
+  guides(color = F)+
+  scale_x_continuous(expand = c(0.01, 0.01),limits = c(1992,2018)) +
+  facet_wrap(Prey~., scales = "free_y")+
+  ggtitle("Common tern prey frequencies")+
+  ylab(expression("Freq. of occurrence")) +
+  xlab("")+
+  geom_hline(aes(yintercept = hline,
+                 color = Prey),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+  theme_facet() +
+  theme(strip.text=element_text(hjust=0))
+
+
+```
+
+
+```{r stacked-bar-prey-freq, fig.cap = "Prey frequencies in the diets of common tern observed at seven different islands in Gulf of Maine. Prey occurring in <5% of common tern diets were excluded for clarity.", fig.height = 4, fig.width = 8}
+
+prey_freq <- ecodata::common_tern %>% 
+  filter(str_detect(Var, "Diet"),
+         !str_detect(Var, "Sum")) %>% 
+    mutate(Island = word(Var, 1),
+         Var = word(Var, 4)) %>%
+    filter(Time >= 1992) %>% 
+    group_by(Var, Time) %>% 
+    dplyr::summarise(Value = sum(Value, na.rm = T)) %>% 
+    group_by(Time) %>% 
+    mutate(Freq = Value/sum(Value, na.rm = T)) %>% 
+    group_by(Var) %>% 
+  mutate(hline = mean(Freq, na.rm = T))
+
+diet_freq_bar <- prey_freq %>% 
+  filter(Freq > 0.05) %>% 
+  dplyr::rename(Prey = Var) %>% 
+  ggplot(aes(x = Time, y = Freq, fill = Prey)) +
+  geom_bar_interactive(aes(tooltip = paste(Prey,round(Freq,2))),stat = "identity") +
+  viridis::scale_fill_viridis(discrete = TRUE) +
+  ggtitle("Prey frequency") +
+  ylab("Frequency of occurrence") +
+  theme_ts()
+
+
+diet_freq_bar <- girafe(ggobj = diet_freq_bar)
+diet_freq_bar <- girafe_options(diet_freq_bar, opts_zoom(max = 5) )
+diet_freq_bar
+```
+
+#### Common tern sampling sites
+
+```{r common-tern, fig.cap = "Locations of the seven sampled common tern nesting sites in Gulf of Maine (EER = Eastern Egg Rock, JI = Jenny Island, MR = Matinicus Rock, OGI = Outer Green Island, PINWR = Pond Island National Wildlife Refuge, SINWR = Seal Island National Wildlife Refuge, STI = Stratton Island). "}
+# Set lat/lon window for maps
+xmin = -70.5
+xmax = -68.25
+ymin = 43
+ymax = 44.5
+xlims <- c(xmin, xmax)
+ylims <- c(ymin, ymax)
+
+
+island_loc <- data.frame(Island = c("EER","JI","MR","OGI",
+                                    "PINWR","SINWR","STI"),
+                         Latitude = c(43.861,43.764,43.785,43.650,
+                                      43.739,43.886,43.505),
+                         Longitude = c(-69.382,-69.909,-68.854,-70.124,
+                                       -69.771,-68.742,-70.312))
+
+islands <- ggplot() +
+  geom_sf(data = new_england, size = map.lwd) +
+  geom_point(data = island_loc, aes(x = Longitude, y = Latitude)) +
+  geom_label_repel(data = island_loc, aes(x = Longitude, y = Latitude,
+                                          label = Island), nudge_y  = -0.1) +
+  coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
+  theme_map() +
+  ggtitle("Common tern study sites") +
+  xlab("Longitude") +
+  ylab("Latitude") +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
+        legend.key = element_blank(),
+        axis.title = element_text(size = 11),
+        strip.background = element_blank(),
+        strip.text=element_text(hjust=0),
+        axis.text = element_text(size = 8))
+
+# inset_states <- new_england %>% filter(STATE_NAME %in% c("Maine",
+#                                                          "New Hampshire",
+#                                                          "Massachusetts"))
+
+
+# Set lat/lon window for maps
+xmin2 = -72
+xmax2 = -66.25
+ymin2 = 42.5
+ymax2 = 47.5
+xlims2 <- c(xmin2, xmax2)
+ylims2 <- c(ymin2, ymax2)
+
+NE <- ggplotGrob(
+ggplot()+
+  geom_sf(data = new_england, size = map.lwd) +
+  coord_sf(crs = crs, xlim = xlims2, ylim = ylims2) +
+  annotate("rect", xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, color = "black",
+           size = 0.1, fill = "transparent") +
+  theme_map() +
+  xlab("") +
+  ylab("") +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
+        legend.key = element_blank(),
+        axis.title = element_text(size = 11),
+        strip.background = element_blank(),
+        strip.text=element_text(hjust=0),
+        axis.text = element_blank())
+)
+
+full_map <- islands +
+  annotation_custom(grob = NE, xmin = -69, xmax = -68.25, ymin = 42.9, ymax = 43.6)
+
+
+full_map
 ```
 
 ### Larval diversity
