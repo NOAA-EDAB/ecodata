@@ -357,7 +357,7 @@ surf_sal_oi <- sal_oi %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   geom_line(aes(x = Time, y = Value)) +
-  geom_gls(aes(x = Time, y = Value)) +
+  #geom_gls(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value), size = 1) +
   ylab(expression("")) +
   ggtitle("Surface salinity (optimally interpolated)") +
@@ -407,7 +407,7 @@ bot_sal_oi <- sal_oi %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   geom_line(aes(x = Time, y = Value)) +
-  geom_gls(aes(x = Time, y = Value)) +
+ # geom_gls(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value), size = 1) +
   ylab(expression("")) +
   ggtitle("Bot. salinity (optimally interpolated)") +
@@ -440,7 +440,7 @@ strat %>%
       ymin = -Inf, ymax = Inf) +
   geom_line() +
   geom_point() +
-  geom_gls() +
+ # geom_gls() +
     ylab(expression("Stratification (kg m"^-3*")")) +
   ggtitle("Stratification") +
   scale_x_continuous(expand = c(0.01, 0.01)) +
@@ -464,15 +464,21 @@ out_pp <- ecodata::chl_pp %>%
   separate(.,Time, into = c("Year","Month"), sep = 4) %>% 
     mutate(Month = plyr::mapvalues(Month, from = c("01","02","03","04","05","06",
                                                    "07","08","09","10","11","12"),
-                                   to = c(month.abb)))
+                                   to = c(month.abb))) %>% 
+  group_by(Month) %>% 
+  mutate(hline = mean(Value))
 out_pp$Month <- factor(out_pp$Month, levels = month.abb)
 
 
 (pp_cci <- ggplot(out_pp) +
-    geom_gls(aes(x = Year, y = Value, group = Month))+
+   # geom_gls(aes(x = Year, y = Value, group = Month))+
     geom_point(aes(x = Year, y = Value, group = Month)) +
     geom_line(aes(x = Year, y = Value, group = Month)) +
     scale_x_discrete(name = "Time", breaks = seq(min(out_pp$Year),max(out_pp$Year),10)) +  
+        geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
     facet_wrap(Month~., ncol = 6) +
     ggtitle("Monthly median PPD (OC-CCI)") +
     ylab(expression("PP (gC m"^-2*" d"^-1*")")) +
@@ -484,22 +490,28 @@ out_pp$Month <- factor(out_pp$Month, levels = month.abb)
 
 #### Chlorophyll *a*
 
-```{r chl, fig.width = 8}
+```{r chl-monthly, fig.width = 8, eval = F}
 out_chl <- ecodata::chl_pp %>% 
   filter(EPU == epu_abbr,
          str_detect(Var, "MONTHLY_CHLOR_A_MEDIAN OC-CCI PAN")) %>% 
   separate(.,Time, into = c("Year","Month"), sep = 4) %>% 
     mutate(Month = plyr::mapvalues(Month, from = c("01","02","03","04","05","06",
                                                    "07","08","09","10","11","12"),
-                                   to = c(month.abb)))
+                                   to = c(month.abb)))%>% 
+  group_by(Month) %>% 
+  mutate(hline = mean(Value))
 out_chl$Month <- factor(out_chl$Month, levels = month.abb)
 
 
 (chl_cci <- ggplot(out_chl) +
-    geom_gls(aes(x = Year, y = Value, group = Month))+
+   # geom_gls(aes(x = Year, y = Value, group = Month))+
     geom_point(aes(x = Year, y = Value, group = Month)) +
     geom_line(aes(x = Year, y = Value, group = Month)) +
     scale_x_discrete(name = "Time", breaks = seq(min(out_chl$Year),max(out_chl$Year),10)) +  
+            geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
     facet_wrap(Month~., ncol = 6) +
     ggtitle("Monthly median CHL (OC-CCI)") +
     ylab(expression("CHL (mg m"^-3*")")) +
@@ -510,9 +522,84 @@ out_chl$Month <- factor(out_chl$Month, levels = month.abb)
 
 ```
 
+```{r mab-chl-weekly,fig.width = 6, fig.asp = 0.55, fig.cap = "Weekly chlorophyll concentrations in the Mid-Atlantic are shown for by the colored line for 2018. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
+
+interp_chl <- function(epu, int_step, year = 2018){
+  out <- ecodata::chl_pp %>% 
+          filter(str_detect(Var,"WEEKLY_CHLOR_A_MEDIAN MODIS-Aqua PAN"),
+                 EPU == epu) %>% 
+          separate(.,Time, c("Year","Week"),sep = 4) %>% 
+          filter(Year == year) %>% 
+          group_by(EPU) %>% 
+          mutate(Week = 1:length(Year))  %>% 
+          complete(Week = full_seq(1:52,1),
+                   nesting(Var))
+  
+  out_int <- data.frame(Value = approx(out$Week,
+                                            out$Value,
+                                            seq(1,max(out$Week),
+                                                length.out = length(out$Week)*int_step))$y,
+                             Time = seq(1,max(out$Week),length.out = length(out$Week)*int_step),
+                             Week = rep(1:52,each = int_step))
+  
+  ltm_out <- ecodata::chl_pp %>% 
+              filter(str_detect(Var,"WEEKLY_CHLOR_A_MEDIAN MODIS-Aqua PAN"),
+                     EPU == epu) %>% 
+              separate(.,Time, c("Year","Week"),sep = 4) %>% 
+              group_by(Week) %>% 
+              dplyr::summarise(LTM = mean(Value, na.rm = T),
+                               SD = sd(Value, na.rm = T)) %>% 
+              mutate(Week = 1:length(Week),
+                     sd.low = LTM - SD,
+                     sd.high = LTM + SD) 
+
+  ltm_out_int <- data.frame(LTM = approx(ltm_out$Week,
+                                              ltm_out$LTM,
+                                              seq(1,max(ltm_out$Week),
+                                                  length.out = length(ltm_out$Week)*int_step))$y,
+                           sd.high = approx(ltm_out$Week,
+                                              ltm_out$sd.high,
+                                              seq(1,max(ltm_out$Week),
+                                                  length.out = length(ltm_out$Week)*int_step))$y,
+                           sd.low = approx(ltm_out$Week,
+                                              ltm_out$sd.low,
+                                              seq(1,max(ltm_out$Week), 
+                                                  length.out = length(ltm_out$Week)*int_step))$y,
+                               Time = seq(1,max(out$Week),length.out = length(out$Week)*int_step),
+                               Week = rep(1:52,each = int_step)) %>%
+    left_join(.,out_int, by = c("Week","Time")) %>% 
+    mutate(status = ifelse(Value < sd.high & Value > sd.low, "near_mean",
+                           ifelse(Value > sd.high, "high",
+                                  ifelse(Value < sd.low,"low",NA))),
+           group = "chl")
+          
+  return(ltm_out_int)
+}
+
+
+MAB_chl <- interp_chl(epu = "MAB", int_step = 1000)
+
+ggplot(data = MAB_chl) +
+  geom_line(aes(x = Time, y = LTM)) +
+  geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high), 
+              alpha = 0.1,
+              fill = "grey1") +
+  geom_line(aes(x = Time, y = Value, color = status, group = group),
+            size = 1) +
+  ggtitle(expression("MAB chlorophyll"~italic(a)~"")) +
+  guides(color = F) +
+  xlab("")+
+  ylab(expression("CHL (mg m"^-3*")")) +
+  scale_x_continuous(breaks = seq(0,50,10),
+                   labels = c("January","March","May","July","October","December")) +
+  scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
+  theme_ts()
+
+```
+
+
+
 ### Chesapeake Bay Water Quality Attainment
-
-
 
 ```{r cb-attainment,fig.width = 6, fig.asp = 0.55, fig.cap = "Water quality attainment in Chesapeake Bay following rolling three year assessment periods."}
 
@@ -1302,19 +1389,26 @@ out_pp <- ecodata::chl_pp %>%
   separate(.,Time, into = c("Year","Month"), sep = 4) %>% 
     mutate(Month = plyr::mapvalues(Month, from = c("01","02","03","04","05","06",
                                                    "07","08","09","10","11","12"),
-                                   to = c(month.abb)))
+                                   to = c(month.abb))) %>% 
+  group_by(EPU, Month) %>% 
+  mutate(hline = mean(Value))
 out_pp$Month <- factor(out_pp$Month, levels = month.abb)
 
 pp_cci_gom <- out_pp %>% 
   filter(EPU == "GOM") %>% 
  ggplot() +
-    geom_gls(aes(x = Year, y = Value, group = Month))+
+   # geom_gls(aes(x = Year, y = Value, group = Month))+
     geom_point(aes(x = Year, y = Value, group = Month)) +
     geom_line(aes(x = Year, y = Value, group = Month)) +
     scale_x_discrete(name = "Time", breaks = seq(min(out_pp$Year),max(out_pp$Year),10)) +  
     facet_wrap(Month~., ncol = 6) +
     ggtitle("GOM Monthly median PPD (OC-CCI)") +
     ylab(expression("PP (gC m"^-2*" d"^-1*")")) +
+        geom_hline(aes(yintercept = hline,
+                     group = Month),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
     theme_facet() +
     theme(axis.text.x = element_text(angle=45, hjust = 1),
           panel.spacing = unit(1, "lines"),
@@ -1323,13 +1417,18 @@ pp_cci_gom <- out_pp %>%
  pp_cci_gb <-out_pp %>% 
   filter(EPU == "GB") %>% 
  ggplot() +
-    geom_gls(aes(x = Year, y = Value, group = Month))+
+   # geom_gls(aes(x = Year, y = Value, group = Month))+
     geom_point(aes(x = Year, y = Value, group = Month)) +
     geom_line(aes(x = Year, y = Value, group = Month)) +
     scale_x_discrete(name = "Time", breaks = seq(min(out_pp$Year),max(out_pp$Year),10)) +  
     facet_wrap(Month~., ncol = 6) +
     ggtitle("GB Monthly median PPD (OC-CCI)") +
     ylab(expression("PP (gC m"^-2*" d"^-1*")")) +
+        geom_hline(aes(yintercept = hline,
+                     group = Month),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
     theme_facet() +
     theme(axis.text.x = element_text(angle=45, hjust = 1),
           panel.spacing = unit(1, "lines"),
@@ -1341,7 +1440,52 @@ pp_cci_gom <- out_pp %>%
 
 #### Chlorophyll *a*
 
-```{r NE-chl, fig.width = 8, fig.height=8}
+```{r NE-chl-weekly,fig.width = 6, fig.asp = 1.1, fig.cap = "Weekly chlorophyll concentrations for 2018 in Gulf of Maine and Georges Bank are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
+
+GB_chl_weekly <- interp_chl(epu = "GB", int_step = 1000, year = 2018)
+
+GB_chl <- ggplot(data = GB_chl_weekly) +
+  geom_line(aes(x = Time, y = LTM)) +
+  geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high), 
+              alpha = 0.1,
+              fill = "grey1") +
+  geom_line(aes(x = Time, y = Value, color = status, group = group),
+            size = 1) +
+  ggtitle(expression("GB chlorophyll"~italic(a)~"")) +
+  guides(color = F) +
+  xlab("")+
+  ylab(expression("CHL (mg m"^-3*")")) +
+  scale_x_continuous(breaks = seq(0,50,10),
+                   labels = c("January","March","May","July","October","December")) +
+  scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
+  theme_ts()
+
+
+GOM_chl_weekly <- interp_chl(epu = "GOM", int_step = 1000, year = 2018)
+
+GOM_chl <- ggplot(data = GOM_chl_weekly) +
+  geom_line(aes(x = Time, y = LTM)) +
+  geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high), 
+              alpha = 0.1,
+              fill = "grey1") +
+  geom_line(aes(x = Time, y = Value, color = status, group = group),
+            size = 1) +
+  ggtitle(expression("GOM chlorophyll"~italic(a)~"")) +
+  guides(color = F) +
+  xlab("")+
+  ylab(expression("CHL (mg m"^-3*")")) +
+  scale_x_continuous(breaks = seq(0,50,10),
+                   labels = c("January","March","May","July","October","December")) +
+  scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
+  theme_ts()
+
+GOM_chl + GB_chl + plot_layout(ncol = 1) 
+
+```
+
+
+
+```{r NE-chl-monthly, fig.width = 8, fig.height=8, eval = F}
 out_chl <- ecodata::chl_pp %>% 
   filter(EPU %in% c("GOM","GB"),
          str_detect(Var, "MONTHLY_CHLOR_A_MEDIAN OC-CCI PAN")) %>% 
