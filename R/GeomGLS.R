@@ -18,6 +18,7 @@ GeomGLS <- ggplot2::ggproto("GeomGLS",
                      } else {
                        first_row$color <- "purple"
                      }
+                     
                      grid::linesGrob(
                        coords$x, coords$y, 
                        gp = grid::gpar(

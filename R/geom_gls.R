@@ -5,7 +5,10 @@
 #'
 #'@param data Input series to be analyzed. If NULL, data is inherited from previous layer or \code{ggplot} call.
 #'
-#'@param ... Other arguments may be passed to the stat, including fixed aesthetics (e.g. color = "orange").
+#'@param warn Conditional. If \code{TRUE}, a warning message will be returned when N < 30. 
+#'
+#'@param ... Other arguments may be passed to the stat, including fixed aesthetics.
+#'
 #'
 #'@export
 #'
@@ -32,10 +35,10 @@
 
 geom_gls <- function(mapping = NULL, data = NULL, stat = "GLS",
                      position = "identity", na.rm = FALSE, show.legend = NA, 
-                     inherit.aes = TRUE, ...) {
+                     inherit.aes = TRUE, warn = TRUE, ...) {
   layer(
     geom = ecodata:::GeomGLS, mapping = mapping, data = data, stat = stat, 
     position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-    params = list(na.rm = na.rm, ...)
+    params = list(na.rm = na.rm, warn = warn, ...)
   )
 }

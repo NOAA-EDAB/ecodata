@@ -1,8 +1,7 @@
 StatGLS <- ggplot2::ggproto("StatGLS",
                             ggplot2::Stat, 
                    required_aes = c("x", "y"),
-                   
-                   compute_group = function(data, scales) {
+                   compute_group = function(data, scales, warn) {
                      
                      `%>%` <- magrittr::`%>%`
                      data <- data %>% 
@@ -10,6 +9,10 @@ StatGLS <- ggplot2::ggproto("StatGLS",
                        #Fill in time steps if there are missing values
                        tidyr::complete(x = full_seq(min(data$x):max(data$x),1)) 
                      
+                     
+                     if (warn & nrow(data) < 30){
+                       message("N < 30")
+                     }
                      
                      #Model fitting -------------------------------------------------------
                      constant_norm <-
