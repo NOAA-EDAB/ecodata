@@ -1446,7 +1446,7 @@ GB_chl_weekly <- interp_chl(epu = "GB", int_step = 1000, year = 2018)
 
 GB_chl <- ggplot(data = GB_chl_weekly) +
   geom_line(aes(x = Time, y = LTM)) +
-  geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high), 
+  geom_ribbon(aes(x = Time, ymin = pmax(sd.low,0), ymax = sd.high), 
               alpha = 0.1,
               fill = "grey1") +
   geom_line(aes(x = Time, y = Value, color = status, group = group),
@@ -1739,7 +1739,7 @@ lt_sst %>%
   geom_point() +
   ylab("Temperature (°C)") +
   ggtitle("Long-term SST") +
-    scale_x_continuous(expand = c(0.01, 0.01))+
+    scale_x_continuous(expand = c(0.01, 0.01), breaks = seq(1840,2010,10))+
       geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
@@ -1819,7 +1819,7 @@ gsi %>%
   geom_gls() +
   geom_line() +
   geom_point() +
-  ylab("GSI Index") +
+  ylab("Gulf Stream position anomaly") +
   ggtitle("Gulf Stream Index") +
     scale_x_continuous(expand = c(0.01, 0.01))+
       geom_hline(aes(yintercept = hline),
