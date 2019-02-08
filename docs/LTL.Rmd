@@ -120,6 +120,8 @@ all_winds <- wind %>%
          EPU == epu_abbr) %>% 
   group_by(Var) %>% 
   mutate(hline = mean(Value, na.rm = T)) %>%
+  mutate(Value = Value - hline) %>% 
+  mutate(hline = 0) %>% 
    ungroup() %>% 
   mutate(Season = str_to_title(word(Var, -1))) 
  
@@ -139,14 +141,15 @@ all_winds$Season <- factor(all_winds$Season, levels = c("Winter",
   geom_line(aes(x = Time, y = Value))+
   geom_point(aes(x = Time, y = Value))+
   geom_gls(aes(x = Time, y = Value)) +
-  ylab("Wind Speed (m/s)") +
+  ylab("Wind speed anomaly (m/s)") +
   ggtitle("Total Wind Speed") +
     scale_x_continuous(expand = c(0.01, 0.01)) +
+    scale_y_continuous(limits = c(-2,2))+
     geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  facet_wrap(Season ~., ncol = 2, scales = "free_y")+
+  facet_wrap(Season ~., ncol = 2)+
   theme_facet() +
   theme(strip.text=element_text(hjust=0),
         plot.title = element_text(size = 12)))
@@ -524,62 +527,62 @@ out_chl$Month <- factor(out_chl$Month, levels = month.abb)
 
 ```{r mab-chl-weekly,fig.width = 6, fig.asp = 0.55, fig.cap = "Weekly chlorophyll concentrations in the Mid-Atlantic are shown for by the colored line for 2018. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
 
-interp_chl <- function(epu, int_step, year = 2018){
+interp_chl_pp <- function(epu, int_step, year = 2018, Variable){
   out <- ecodata::chl_pp %>% 
-          filter(str_detect(Var,"WEEKLY_CHLOR_A_MEDIAN MODIS-Aqua PAN"),
-                 EPU == epu) %>% 
-          separate(.,Time, c("Year","Week"),sep = 4) %>% 
-          filter(Year == year) %>% 
-          group_by(EPU) %>% 
-          mutate(Week = 1:length(Year))  %>% 
-          complete(Week = full_seq(1:52,1),
-                   nesting(Var))
+    filter(str_detect(Var,Variable),
+           EPU == epu) %>% 
+    separate(.,Time, c("Year","Week"),sep = 4) %>% 
+    filter(Year == year) %>% 
+    group_by(EPU) %>% 
+    mutate(Week = 1:length(Year))  %>% 
+    complete(Week = full_seq(1:52,1),
+             nesting(Var))
   
   out_int <- data.frame(Value = approx(out$Week,
-                                            out$Value,
-                                            seq(1,max(out$Week),
-                                                length.out = length(out$Week)*int_step))$y,
-                             Time = seq(1,max(out$Week),length.out = length(out$Week)*int_step),
-                             Week = rep(1:52,each = int_step))
+                                       out$Value,
+                                       seq(1,max(out$Week),
+                                           length.out = length(out$Week)*int_step))$y,
+                        Time = seq(1,max(out$Week),length.out = length(out$Week)*int_step),
+                        Week = rep(1:52,each = int_step))
   
   ltm_out <- ecodata::chl_pp %>% 
-              filter(str_detect(Var,"WEEKLY_CHLOR_A_MEDIAN MODIS-Aqua PAN"),
-                     EPU == epu) %>% 
-              separate(.,Time, c("Year","Week"),sep = 4) %>% 
-              group_by(Week) %>% 
-              dplyr::summarise(LTM = mean(Value, na.rm = T),
-                               SD = sd(Value, na.rm = T)) %>% 
-              mutate(Week = 1:length(Week),
-                     sd.low = LTM - SD,
-                     sd.high = LTM + SD) 
-
+    filter(str_detect(Var,Variable),
+           EPU == epu) %>% 
+    separate(.,Time, c("Year","Week"),sep = 4) %>% 
+    group_by(Week) %>% 
+    dplyr::summarise(LTM = mean(Value, na.rm = T),
+                     SD = sd(Value, na.rm = T)) %>% 
+    mutate(Week = 1:length(Week),
+           sd.low = LTM - SD,
+           sd.high = LTM + SD) 
+  
   ltm_out_int <- data.frame(LTM = approx(ltm_out$Week,
-                                              ltm_out$LTM,
-                                              seq(1,max(ltm_out$Week),
-                                                  length.out = length(ltm_out$Week)*int_step))$y,
-                           sd.high = approx(ltm_out$Week,
-                                              ltm_out$sd.high,
-                                              seq(1,max(ltm_out$Week),
-                                                  length.out = length(ltm_out$Week)*int_step))$y,
-                           sd.low = approx(ltm_out$Week,
-                                              ltm_out$sd.low,
-                                              seq(1,max(ltm_out$Week), 
-                                                  length.out = length(ltm_out$Week)*int_step))$y,
-                               Time = seq(1,max(out$Week),length.out = length(out$Week)*int_step),
-                               Week = rep(1:52,each = int_step)) %>%
+                                         ltm_out$LTM,
+                                         seq(1,max(ltm_out$Week),
+                                             length.out = length(ltm_out$Week)*int_step))$y,
+                            sd.high = approx(ltm_out$Week,
+                                             ltm_out$sd.high,
+                                             seq(1,max(ltm_out$Week),
+                                                 length.out = length(ltm_out$Week)*int_step))$y,
+                            sd.low = approx(ltm_out$Week,
+                                            ltm_out$sd.low,
+                                            seq(1,max(ltm_out$Week), 
+                                                length.out = length(ltm_out$Week)*int_step))$y,
+                            Time = seq(1,max(out$Week),length.out = length(out$Week)*int_step),
+                            Week = rep(1:52,each = int_step)) %>%
     left_join(.,out_int, by = c("Week","Time")) %>% 
     mutate(status = ifelse(Value < sd.high & Value > sd.low, "near_mean",
                            ifelse(Value > sd.high, "high",
                                   ifelse(Value < sd.low,"low",NA))),
-           group = "chl")
-          
+           group = "PLOT")
+  
   return(ltm_out_int)
 }
 
 
-MAB_chl <- interp_chl(epu = "MAB", int_step = 1000)
+MAB_chl <- interp_chl_pp(epu = "MAB", int_step = 1000,Variable = "WEEKLY_CHLOR_A_MEDIAN MODIS-Aqua PAN")
 
-ggplot(data = MAB_chl) +
+MAB_chl_weekly <- ggplot(data = MAB_chl) +
   geom_line(aes(x = Time, y = LTM)) +
   geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high), 
               alpha = 0.1,
@@ -594,6 +597,26 @@ ggplot(data = MAB_chl) +
                    labels = c("January","March","May","July","October","December")) +
   scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
   theme_ts()
+
+# MAB_pp <- interp_chl_pp(epu = "MAB", int_step = 1000,Variable =  "WEEKLY_PPD_MEDIAN OC-CCI BERENFELD")
+# 
+# MAB_pp_weekly <- ggplot(data = MAB_pp) +
+#   geom_line(aes(x = Time, y = LTM)) +
+#   geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high), 
+#               alpha = 0.1,
+#               fill = "grey1") +
+#   geom_line(aes(x = Time, y = Value, color = status, group = group),
+#             size = 1) +
+#   ggtitle(expression("MAB primary production")) +
+#   guides(color = F) +
+#   xlab("")+
+#   ylab(expression("PP (gC m"^-2*" d"^-1*")")) +
+#   scale_x_continuous(breaks = seq(0,50,10),
+#                    labels = c("January","March","May","July","October","December")) +
+#   scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
+#   theme_ts()
+
+MAB_chl_weekly
 
 ```
 
@@ -1353,14 +1376,17 @@ gom_strat + gb_strat + plot_layout(ncol = 2)
 
 ```{r wsw-prop, fig.width=5, fig.asp = 0.55}
 
-slopewater %>% 
+sw.df <- slopewater %>% 
   mutate(Var, Var = plyr::mapvalues(Var, from = c("WSW proportion ne channel",
                                                   "LSLW proportion ne channel"),
                                     to = c("WSW","LSLW"))) %>% 
   dplyr::rename(Flavor  = Var) %>% 
   group_by(Flavor) %>% 
-  mutate(hline = mean(Value)) %>% 
-ggplot() +
+  mutate(hline = mean(Value)) 
+
+sw.df$Flavor <- factor(sw.df$Flavor, levels = c("WSW","LSLW"))
+
+ggplot(data = sw.df) +
   geom_line(aes(x = Time, y = Value, color = Flavor))+
   geom_point(aes(x = Time, y = Value, color = Flavor)) +
   ylab("Percent of Total Slopewater") +
@@ -1442,7 +1468,7 @@ pp_cci_gom <- out_pp %>%
 
 ```{r NE-chl-weekly,fig.width = 6, fig.asp = 1.1, fig.cap = "Weekly chlorophyll concentrations for 2018 in Gulf of Maine and Georges Bank are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
 
-GB_chl_weekly <- interp_chl(epu = "GB", int_step = 1000, year = 2018)
+GB_chl_weekly <- interp_chl_pp(epu = "GB", int_step = 1000, year = 2018,Variable = "WEEKLY_CHLOR_A_MEDIAN MODIS-Aqua PAN")
 
 GB_chl <- ggplot(data = GB_chl_weekly) +
   geom_line(aes(x = Time, y = LTM)) +
@@ -1461,7 +1487,7 @@ GB_chl <- ggplot(data = GB_chl_weekly) +
   theme_ts()
 
 
-GOM_chl_weekly <- interp_chl(epu = "GOM", int_step = 1000, year = 2018)
+GOM_chl_weekly <- interp_chl_pp(epu = "GOM", int_step = 1000, year = 2018,Variable = "WEEKLY_CHLOR_A_MEDIAN MODIS-Aqua PAN")
 
 GOM_chl <- ggplot(data = GOM_chl_weekly) +
   geom_line(aes(x = Time, y = LTM)) +
@@ -1751,56 +1777,50 @@ lt_sst %>%
 
 ### NAO
 
-```{r NAO, fig.width = 8, fig.asp = .35}
-nao_ann <- ecodata::nao %>% 
-  group_by(Year) %>% 
-  dplyr::summarise(Mean = mean(Value),
-                   Variance = var(Value, na.rm = T)) %>% 
+```{r NAO, fig.cap = "Wintertime (Dec-Mar) differences of normalized sea level pressures between Lisbon and Stykkisholmur/Reykjavik, Iceland since 1864."}
+
+# [https://climatedataguide.ucar.edu/climate-data/hurrell-north-atlantic-oscillation-nao-index-station-based](source)
+# higher pressure in iceland, more negative index
+nao %>% 
   mutate(hline = 0,
-         hline.var = mean(Variance)) %>% 
-  dplyr::rename(Time = Year)
-
-
-nao_in <- nao_ann %>% 
-  ggplot(aes(x = Time, y = Mean)) +
+         status = ifelse(Value < 0, "negative","positive")) %>% 
+  ggplot(aes(x = Time, y = Value, fill = status)) +
          annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  geom_gls() +
-  geom_line() +
-  geom_point() +
+  geom_bar(stat = "identity") +
+  guides(fill = F)+
   ylab("NAO Index") +
   ggtitle("NAO Index") +
-    scale_x_continuous(expand = c(0.01, 0.01))+
+    scale_x_continuous(expand = c(0.01, 0.01), breaks = seq(1840,2010,10))+
       geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
+           alpha = hline.alpha)+
+  ylab(expression(Lisbon["n"]~-~Stykkisholmur/Reykjavik["n"]))+
   theme_ts() +
   theme(strip.text=element_text(hjust=0,
                                 face = "italic"))
 
-nao_var <- nao_ann %>% 
-  ggplot(aes(x = Time, y = Variance)) +
-         annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_gls() +
-  geom_line() +
-  geom_point() +
-  ylab("Annual Variance") +
-  ggtitle("NAO Index Variance") +
-    scale_x_continuous(expand = c(0.01, 0.01))+
-      geom_hline(aes(yintercept = hline.var),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
-
-nao_in + nao_var + plot_layout(ncol = 2) &
-  theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
+# nao_var <- nao_ann %>% 
+#   ggplot(aes(x = Time, y = Variance)) +
+#          annotate("rect", fill = shade.fill, alpha = shade.alpha,
+#       xmin = x.shade.min , xmax = x.shade.max,
+#       ymin = -Inf, ymax = Inf) +
+#   geom_gls() +
+#   geom_line() +
+#   geom_point() +
+#   ylab("Annual Variance") +
+#   ggtitle("NAO Index Variance") +
+#     scale_x_continuous(expand = c(0.01, 0.01))+
+#       geom_hline(aes(yintercept = hline.var),
+#            size = hline.size,
+#            alpha = hline.alpha,
+#            linetype = hline.lty)+
+#   theme_ts() +
+#   theme(strip.text=element_text(hjust=0,
+#                                 face = "italic"))
+# 
+# nao_in + nao_var + plot_layout(ncol = 2) &
+#   theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
 ```
 
 ### GSI
