@@ -7,7 +7,7 @@ StatGLS <- ggplot2::ggproto("StatGLS",
                      data <- data %>% 
                        dplyr::arrange(x) %>%
                        #Fill in time steps if there are missing values
-                       tidyr::complete(x = full_seq(min(data$x):max(data$x),1)) 
+                       tidyr::complete(x = tidyr::full_seq(min(data$x):max(data$x),1)) 
                      
                      
                      if (warn & nrow(data) < 30){
