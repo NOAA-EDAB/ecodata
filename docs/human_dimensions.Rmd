@@ -464,9 +464,9 @@ x.max <- 2.6
 #A dataframe that defines custom legend for stocks with unknown status
 
 unknown <- data.frame(text = c("Unknown Status", "Longfin",
-                              "Ilex", "N. Goosefish", "S. Goosefish"),
+                              "Illex", "N. Goosefish", "S. Goosefish"),
                     x = rep(0.9*x.max,5),
-                    y = seq(0.93*y.max,1.2,-.1))
+                    y = seq(0.93*y.max,1.4,-.1))
 
 
 #Plotting code
