@@ -458,7 +458,7 @@ stock_status <- ecodata::stock_status %>%
   filter(Council %in% c(council_abbr,"Both"))
 
 #Plot constants
-y.max <- 1.75
+y.max <- 2.0 #1.75 mackerel cut off F/Fmsy is 1.8
 x.max <- 2.6
 
 #A dataframe that defines custom legend for stocks with unknown status
