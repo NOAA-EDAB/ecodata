@@ -41,8 +41,7 @@ get_group_mean <- function(fname, epu_name){
                                       ifelse(day > 181 & day <= 273 & leap == "leap", "summer",
                                              ifelse(day > 273 & leap == "leap", "fall",NA))))))))) %>% 
     group_by(Time, leap, season) %>% 
-    mutate(index = paste(Time, season)) %>% 
-    pull(index)
+    mutate(index = paste(Time, season))
   
   if (any(is.na(year_split))){
     message("NA in year")
@@ -51,12 +50,19 @@ get_group_mean <- function(fname, epu_name){
   message(paste('Rotating',fname))
   raw1 <- rotate(raw)
   
-  message(paste('Finding mean'))
+  g1 <- year_split %>% 
+    filter(index %in% unique(.$index)[1:10]) %>% 
+    pull(index)
   
+  g2 <- year_split %>% 
+    filter(!index %in% unique(.$index)[1:10]) %>% 
+    pull(index)
+  
+  message(paste('Finding mean'))
   n <- nlayers(raw1)
-  g1 <- floor(n/2)
-  rawMean1 <- stackApply(raw1[[1:g1]], indices = year_split[1:g1], mean)
-  rawMean2 <- stackApply(raw1[[(g1+1):n]], indices = year_split[(g1+1):n], mean)
+  rawMean1 <- stackApply(raw1[[1:length(g1)]], indices = g1, mean)
+  rawMean2 <- stackApply(raw1[[(length(g1) + 1):n]], indices = g2, mean)
+  
   rawMean <- stack(rawMean1,rawMean2)
   
   message(paste('Masking to',epu_name))
@@ -93,7 +99,7 @@ for (e in epu_list){
 }
 
 seasonal_oisst <- rbind(MAB,GOM,GB) %>% 
-    mutate(Time = str_extract(year,"\\d{4}"),
+    mutate(Time = as.numeric(str_extract(year,"\\d{4}")),
            Var = paste(str_extract(year, "winter|spring|summer|fall"),"OI SST")) %>% 
     dplyr::select(-year,
                   Value = sst,
