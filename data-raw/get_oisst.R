@@ -91,3 +91,15 @@ for (e in epu_list){
     assign(e,rbind(get(e),get_group_mean(fname = fname[i], epu_name = e)))
   }
 }
+
+seasonal_oisst <- rbind(MAB,GOM,GB) %>% 
+    mutate(Time = str_extract(year,"\\d{4}"),
+           Var = paste(str_extract(year, "winter|spring|summer|fall"),"OI SST")) %>% 
+    dplyr::select(-year,
+                  Value = sst,
+                  EPU = epu) %>% 
+    mutate(Units = "degreesC")
+
+usethis::use_data(seasonal_oisst, overwrite = TRUE)
+  
+
