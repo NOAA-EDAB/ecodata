@@ -5,7 +5,7 @@
 #' high resolution data set (NOAA OISST V2). The 1982-2010
 #' climatology was used to calculate anomalies.
 #' 
-#' @format Data set contains 15536 rows and 4 columns
+#' @format Data set contains 204872 rows and 4 columns
 #' 
 #' \itemize{
 #'     \item Latitude
@@ -23,4 +23,4 @@
 #' 
 #' @source Source data for this indicator are available at
 #' \url{https://www.esrl.noaa.gov/psd/data/gridded/data.noaa.oisst.v2.highres.html}
-"seasonal_sst_anomaly"
+"seasonal_oisst_anom_gridded"

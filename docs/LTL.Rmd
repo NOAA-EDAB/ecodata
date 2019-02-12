@@ -233,7 +233,7 @@ ymin = 35.5
 ymax = 43
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
-sst <- seasonal_sst_anomaly 
+sst <- seasonal_oisst_anom_gridded 
 
 sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Spring",
@@ -277,15 +277,15 @@ winter_anom <-  ggplotGrob( seasonal_oisst_anom %>%
                               scale_x_continuous(expand = c(0.01, 0.01)) +
                               geom_hline(aes(yintercept = hline)) +
                               theme_ts()+
-                              theme(axis.title = element_text(size = 7, face = "bold"),
-                                    axis.text = element_text(size = 7, face = "bold"),
-                                    panel.background = element_rect(fill = "transparent"), # bg of the panel
-                                    plot.background = element_rect(fill = "transparent", color = NA), # bg of the plot
-                                    panel.grid.major = element_blank(), # get rid of major grid
-                                    panel.grid.minor = element_blank(), # get rid of minor grid
-                                    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
-                                    legend.box.background = element_rect(fill = "transparent"), # get rid of legend panel bg
-                                    legend.key = element_rect(fill = "transparent", colour = NA), # get rid of key legend fill, and of the surrounding
+                              theme(axis.title = element_text(size = 6),
+                                    axis.text = element_text(size = 6),
+                                    panel.background = element_rect(fill = "transparent"), 
+                                    plot.background = element_rect(fill = "transparent", color = NA), 
+                                    panel.grid.major = element_blank(),
+                                    panel.grid.minor = element_blank(), 
+                                    legend.background = element_rect(fill = "transparent"), 
+                                    legend.box.background = element_rect(fill = "transparent"), 
+                                    legend.key = element_rect(fill = "transparent", colour = NA), 
                                     axis.line = element_blank(),
                                     panel.border = element_blank())
 )
@@ -305,15 +305,15 @@ spring_anom <-  ggplotGrob( seasonal_oisst_anom %>%
                               scale_x_continuous(expand = c(0.01, 0.01)) +
                               geom_hline(aes(yintercept = hline)) +
                               theme_ts()+
-                              theme(axis.title = element_text(size = 7, face = "bold"),
-                                    axis.text = element_text(size = 7, face = "bold"),
-                                    panel.background = element_rect(fill = "transparent"), # bg of the panel
-                                    plot.background = element_rect(fill = "transparent", color = NA), # bg of the plot
-                                    panel.grid.major = element_blank(), # get rid of major grid
-                                    panel.grid.minor = element_blank(), # get rid of minor grid
-                                    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
-                                    legend.box.background = element_rect(fill = "transparent"), # get rid of legend panel bg
-                                    legend.key = element_rect(fill = "transparent", colour = NA), # get rid of key legend fill, and of the surrounding
+                              theme(axis.title = element_text(size = 6),
+                                    axis.text = element_text(size = 6),
+                                    panel.background = element_rect(fill = "transparent"), 
+                                    plot.background = element_rect(fill = "transparent", color = NA),
+                                    panel.grid.major = element_blank(),
+                                    panel.grid.minor = element_blank(), 
+                                    legend.background = element_rect(fill = "transparent"), 
+                                    legend.box.background = element_rect(fill = "transparent"), 
+                                    legend.key = element_rect(fill = "transparent", colour = NA), 
                                     axis.line = element_blank(),
                                     panel.border = element_blank())
 )
@@ -333,15 +333,15 @@ summer_anom <-  ggplotGrob( seasonal_oisst_anom %>%
                               scale_x_continuous(expand = c(0.01, 0.01)) +
                               geom_hline(aes(yintercept = hline)) +
                               theme_ts()+
-                              theme(axis.title = element_text(size = 7, face = "bold"),
-                                    axis.text = element_text(size = 7, face = "bold"),
-                                    panel.background = element_rect(fill = "transparent"), # bg of the panel
-                                    plot.background = element_rect(fill = "transparent", color = NA), # bg of the plot
-                                    panel.grid.major = element_blank(), # get rid of major grid
-                                    panel.grid.minor = element_blank(), # get rid of minor grid
-                                    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
-                                    legend.box.background = element_rect(fill = "transparent"), # get rid of legend panel bg
-                                    legend.key = element_rect(fill = "transparent", colour = NA), # get rid of key legend fill, and of the surrounding
+                              theme(axis.title = element_text(size = 6),
+                                    axis.text = element_text(size = 6),
+                                    panel.background = element_rect(fill = "transparent"),
+                                    plot.background = element_rect(fill = "transparent", color = NA),
+                                    panel.grid.major = element_blank(), 
+                                    panel.grid.minor = element_blank(), 
+                                    legend.background = element_rect(fill = "transparent"),
+                                    legend.box.background = element_rect(fill = "transparent"), 
+                                    legend.key = element_rect(fill = "transparent", colour = NA), 
                                     axis.line = element_blank(),
                                     panel.border = element_blank())
 )
@@ -361,44 +361,39 @@ fall_anom <-  ggplotGrob( seasonal_oisst_anom %>%
                             scale_x_continuous(expand = c(0.01, 0.01)) +
                             geom_hline(aes(yintercept = hline)) +
                             theme_ts()+
-                            theme(axis.title = element_text(size = 7, face = "bold"),
-                                  axis.text = element_text(size = 7, face = "bold"),
-                                  panel.background = element_rect(fill = "transparent"), # bg of the panel
-                                  plot.background = element_rect(fill = "transparent", color = NA), # bg of the plot
-                                  panel.grid.major = element_blank(), # get rid of major grid
-                                  panel.grid.minor = element_blank(), # get rid of minor grid
-                                  legend.background = element_rect(fill = "transparent"), # get rid of legend bg
-                                  legend.box.background = element_rect(fill = "transparent"), # get rid of legend panel bg
-                                  legend.key = element_rect(fill = "transparent", colour = NA), # get rid of key legend fill, and of the surrounding
+                            theme(axis.title = element_text(size = 6),
+                                  axis.text = element_text(size = 6),
+                                  panel.background = element_rect(fill = "transparent"), 
+                                  plot.background = element_rect(fill = "transparent", color = NA), 
+                                  panel.grid.major = element_blank(), 
+                                  panel.grid.minor = element_blank(), 
+                                  legend.background = element_rect(fill = "transparent"), 
+                                  legend.box.background = element_rect(fill = "transparent"),
+                                  legend.key = element_rect(fill = "transparent", colour = NA),
                                   axis.line = element_blank(),
                                   panel.border = element_blank())
 )
 
 sst_map + 
-  annotation_custom2(grob = winter_anom,  xmin=-82, xmax=-74,
-                     ymin=39, ymax=43, data = data.frame(Season = "Winter")) +
-  annotation_custom2(grob = spring_anom,  xmin=-82, xmax=-74,
-                     ymin=39, ymax=43, data = data.frame(Season = "Spring")) +
-  annotation_custom2(grob = summer_anom,  xmin=-82, xmax=-74,
-                     ymin=39, ymax=43, data = data.frame(Season = "Summer")) +
-  annotation_custom2(grob = fall_anom,  xmin=-82, xmax=-74,
-                     ymin=39, ymax=43, data = data.frame(Season = "Fall"))
+  annotation_custom2(grob = winter_anom,  xmin=-82, xmax=-73.75,
+                     ymin=39, ymax=43.5, data = data.frame(Season = "Winter")) +
+  annotation_custom2(grob = spring_anom,  xmin=-82, xmax=-73.75,
+                     ymin=39, ymax=43.5, data = data.frame(Season = "Spring")) +
+  annotation_custom2(grob = summer_anom,  xmin=-82, xmax=-73.75,
+                     ymin=39, ymax=43.5, data = data.frame(Season = "Summer")) +
+  annotation_custom2(grob = fall_anom,  xmin=-82, xmax=-73.75,
+                     ymin=39, ymax=43.5, data = data.frame(Season = "Fall"))
 
 ```
 
 #### Bottom temperature
 
-```{r MAB-bot-temp, fig.width = 8, fig.asp = .35}
+```{r MAB-bot-temp, fig.width = 6, fig.asp = .55}
 temp_anom <- oceantemp_insitu %>% 
   filter(EPU == epu_abbr) %>% 
   complete(Time = full_seq(min(oceantemp_insitu$Time):max(oceantemp_insitu$Time),1),
            nesting(Var)) %>% 
   mutate(hline = 0)
-
-temp_oi <- oceantemp_oi %>% 
-  filter(EPU == epu_abbr) %>%
-  group_by(Var) %>% 
-  mutate(hline = mean(Value))
 
 bot_temp_insitu <- temp_anom %>%
  filter(Var == "bottom temp anomaly in situ") %>%
@@ -421,29 +416,8 @@ ggplot2::ggplot() +
            linetype = hline.lty) +
  theme_ts()
 
-bot_temp_oi <- temp_oi %>%
-  filter(Var == "bottom temp OI") %>% 
-    ggplot()+ #plot
-     annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line(aes(x = Time, y = Value)) +
-  geom_gls(aes(x = Time, y = Value)) +
-  geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab(expression("")) +
-  ggtitle("Bottom temp. (OI)") +
-  scale_x_continuous(expand = c(0.01, 0.01)) +
-    geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
 
-bot_temp_insitu + bot_temp_oi +
-  plot_layout(ncol =  2) &
-  theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
+bot_temp_insitu 
 
 ```
 
@@ -1075,7 +1049,7 @@ ymin = 39
 ymax = 45
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
-sst <- seasonal_sst_anomaly 
+sst <- seasonal_oisst_anom_gridded 
 
 sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Spring",
@@ -1165,26 +1139,6 @@ bot_temp_insitu_gom <- temp_anom %>%
   theme(strip.text=element_text(hjust=0),
         plot.title = element_text(size = 12))
 
-bot_temp_oi_gom <- temp_oi %>%
-  filter(EPU == "GOM",
-         Var == "bottom temp OI") %>% 
-    ggplot()+ #plot
-     annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line(aes(x = Time, y = Value)) +
-  geom_gls(aes(x = Time, y = Value)) +
-  geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab(expression("")) +
-  ggtitle("GOM Bot. temp. (OI)") +
-  scale_x_continuous(expand = c(0.01, 0.01)) +
-    geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
 
 bot_temp_insitu_gb <- temp_anom %>%
   filter(EPU == "GB",
@@ -1207,30 +1161,11 @@ bot_temp_insitu_gb <- temp_anom %>%
   theme(strip.text=element_text(hjust=0),
         plot.title = element_text(size = 12))
 
-bot_temp_oi_gb <- temp_oi %>%
-  filter(EPU == "GB",
-         Var == "bottom temp OI") %>% 
-    ggplot()+ #plot
-     annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line(aes(x = Time, y = Value)) +
-  geom_gls(aes(x = Time, y = Value)) +
-  geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab(expression("")) +
-  ggtitle("GB Bot. temp. (OI)") +
-  scale_x_continuous(expand = c(0.01, 0.01)) +
-    geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
 
-bot_temp_insitu_gom + bot_temp_oi_gom +
- bot_temp_insitu_gb + bot_temp_oi_gb + 
-  plot_layout(ncol =  2) &
+
+bot_temp_insitu_gom +
+ bot_temp_insitu_gb + 
+  plot_layout(ncol =  1) &
   theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
 
 ```
@@ -1833,7 +1768,7 @@ gom_zoo + gb_zoo + plot_layout(ncol = 1)
 
 ```{r seasonal-sst, fig.height=8}
 
-sst <- seasonal_sst_anomaly 
+sst <- seasonal_oisst_anom_gridded 
 
 sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Spring",
