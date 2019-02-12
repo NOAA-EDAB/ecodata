@@ -275,6 +275,95 @@ mab_prop <- girafe_options(mab_prop, opts_zoom(max = 5) )
 mab_prop
 ```
 
+#### MAFMC Planktivores in NE
+
+```{r MAFMC-in-NE}
+raw.dir <- here::here("inst","extdata")
+load(file= file.path(raw.dir,"Survdat_proportions.Rdata"))
+
+mafmc_ne <- survey_proportions %>% 
+  distinct() %>% 
+  filter(EPU %in% c("GOM","GB"),
+         Fed_Managed == "MAFMC",
+         !str_detect(group,"Other")) %>% 
+  group_by(EPU, group, season, Time) %>% 
+  dplyr::summarise(Value = sum(Prop)) %>% 
+  unite(.,Var,c("group","season"), sep = " ") %>% 
+  group_by(EPU,Var) %>% 
+  mutate(hline = mean(Value)) %>% 
+  filter(str_detect(Var,"Planktivore")) %>% 
+  ungroup() %>% 
+  mutate(Var = paste(str_to_title(str_extract(Var, "fall|spring")),
+         "survey"))
+
+gom_mafmc_props <- mafmc_ne %>% 
+  filter(EPU == "GOM") %>% 
+ ggplot(aes(x = Time, y = Value, group = Var)) +
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max ,
+      ymin = -Inf, ymax = Inf) +
+  
+  #Add time series
+  geom_line(size = lwd-0.5) +
+  geom_point(size = pcex-0.5) +
+  # scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  geom_hline(aes(yintercept = hline,
+                 group = Var),
+             size = hline.size,
+             alpha = hline.alpha,
+             linetype = hline.lty)+
+
+  #Facet 
+  facet_wrap(Var~.,scales = "free_y", ncol = 2) +
+  ggtitle("MAFMC planktivores in Gulf of Maine")+
+  #Axis and theme
+  scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ylab(expression("Proportion of GOM survey")) +
+  theme_facet()+
+  theme(strip.text=element_text(hjust=0))
+
+gb_mafmc_props <- mafmc_ne %>% 
+  filter(EPU == "GB") %>% 
+ggplot(aes(x = Time, y = Value, group = Var)) +
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max ,
+      ymin = -Inf, ymax = Inf) +
+  
+  #Test for trend and add lines
+  # geom_gls(aes(x = Time, y = Value,
+  #              color = Var),
+  #            alpha = trend.alpha, size = trend.size) +
+  
+  #Add time series
+  geom_line(size = lwd-0.5) +
+  geom_point(size = pcex-0.5) +
+  # scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  geom_hline(aes(yintercept = hline,
+                 group = Var),
+             size = hline.size,
+             alpha = hline.alpha,
+             linetype = hline.lty)+
+
+  #Facet 
+  facet_wrap(Var~.,scales = "free_y", ncol = 2) +
+  ggtitle("MAFMC planktivores on Georges Bank")+
+  #Axis and theme
+  scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ylab("Proportion of GB survey") +
+  theme_facet()+
+  theme(strip.text=element_text(hjust=0))
+
+
+gom_mafmc_props + gb_mafmc_props + plot_layout(ncol = 1)
+
+```
+
 
 ### Condition factor
 
@@ -449,6 +538,58 @@ ggplot(aes(x = Time, y = Value, color = Var)) +
 gb_surv
 
 ```
+
+#### NEFMC Planktivores in MAB
+
+```{r NEFMC-in-MAB, fig.width = 7, fig.asp = 0.45}
+nefmc_ma <- survey_proportions %>% 
+  distinct() %>% 
+  filter(EPU %in% c("MAB"),
+         Fed_Managed == "NEFMC",
+         !str_detect(group,"Other")) %>% 
+  group_by(EPU, group, season, Time) %>% 
+  dplyr::summarise(Value = sum(Prop)) %>% 
+  unite(.,Var,c("group","season"), sep = " ") %>% 
+  group_by(EPU,Var) %>% 
+  mutate(hline = mean(Value)) %>% 
+  filter(str_detect(Var,"Benthivore")) %>% 
+  ungroup() %>% 
+  mutate(Var = paste(str_to_title(str_extract(Var, "fall|spring")),
+         "survey"))
+
+mab_nefmc_props <- nefmc_ma %>% 
+ ggplot(aes(x = Time, y = Value, group = Var)) +
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max ,
+      ymin = -Inf, ymax = Inf) +
+  
+  #Add time series
+  geom_line(size = lwd-0.5) +
+  geom_point(size = pcex-0.5) +
+  # scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  geom_hline(aes(yintercept = hline,
+                 group = Var),
+             size = hline.size,
+             alpha = hline.alpha,
+             linetype = hline.lty)+
+
+  #Facet 
+  facet_wrap(Var~.,scales = "free_y", ncol = 2) +
+  ggtitle("NEFMC benthivores in the Mid-Atlantic")+
+  #Axis and theme
+  scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ylab(expression("Proportion of MAB survey")) +
+  theme_facet()+
+  theme(strip.text=element_text(hjust=0))
+
+
+
+mab_nefmc_props
+```
+
 
 #### MA inshore survey
 
