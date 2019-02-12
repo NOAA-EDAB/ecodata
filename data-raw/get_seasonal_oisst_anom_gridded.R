@@ -9,7 +9,7 @@ library(reshape2)
 
 rast_prep <- function(r){
   r <- rotate(r) #Rotate
-  r <- crop(r, extent(-77,-63,35,45)) #Crop
+  r <- crop(r, extent(-77,-60,35,46)) #Crop
   return(r)
 }
 
@@ -55,10 +55,10 @@ rast_process <- function(r, season){
   return(r)
 }
 
-seasonal_sst_anomaly <- 
+seasonal_sst_anomaly_gridded <- 
   rbind(rast_process(winter.anom,season = "Winter"),
       rast_process(spring.anom,season = "Spring"),
       rast_process(summer.anom, season = "Summer"),
       rast_process(fall.anom, season = "Fall"))
 
-usethis::use_data(seasonal_sst_anomaly, overwrite = T)
+usethis::use_data(seasonal_sst_anomaly_gridded, overwrite = T)
