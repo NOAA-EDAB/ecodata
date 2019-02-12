@@ -539,7 +539,7 @@ gb_surv
 
 ```
 
-#### NEFMC Planktivores in MAB
+#### NEFMC Benthivores in MAB
 
 ```{r NEFMC-in-MAB, fig.width = 7, fig.asp = 0.45}
 nefmc_ma <- survey_proportions %>% 
