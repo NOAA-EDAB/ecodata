@@ -7,7 +7,7 @@
 #' @format A data set containing 710 rows and 5 columns.
 #'  
 #'  \itemize{
-#'      \item Var: Includes SOE species grouping, season that survey occurred (fall or spring), and variable calculated.
+#'       \item Var: Includes SOE species grouping, season that survey occurred (fall or spring), and variable calculated.
 #'       The specific variables included are stratified mean biomass with associated confidence intervals, coefficients of
 #'       variation, and standard errors.
 #'       \item Time: Year that survey occurred.

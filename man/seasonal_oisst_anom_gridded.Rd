@@ -4,7 +4,7 @@
 \name{seasonal_oisst_anom_gridded}
 \alias{seasonal_oisst_anom_gridded}
 \title{Sea-surface temperature anomaly (2018)}
-\format{Data set contains 15536 rows and 4 columns
+\format{Data set contains 204872 rows and 4 columns
 
 \itemize{
 \item Latitude
