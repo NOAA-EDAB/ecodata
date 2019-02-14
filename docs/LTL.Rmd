@@ -567,13 +567,14 @@ strat %>%
 ```{r PP-OCCI, fig.width=8}
 out_pp <- ecodata::chl_pp %>% 
   filter(EPU == epu_abbr,
-         str_detect(Var, "MONTHLY_PPD_MEDIAN OC-CCI BERENFELD")) %>% 
+         str_detect(Var, "MONTHLY_PPD_MEDIAN")) %>% 
   separate(.,Time, into = c("Year","Month"), sep = 4) %>% 
     mutate(Month = plyr::mapvalues(Month, from = c("01","02","03","04","05","06",
                                                    "07","08","09","10","11","12"),
                                    to = c(month.abb))) %>% 
   group_by(Month) %>% 
   mutate(hline = mean(Value))
+
 out_pp$Month <- factor(out_pp$Month, levels = month.abb)
 
 
@@ -587,7 +588,7 @@ out_pp$Month <- factor(out_pp$Month, levels = month.abb)
            alpha = hline.alpha,
            linetype = hline.lty) +
     facet_wrap(Month~., ncol = 6) +
-    ggtitle("Monthly median PPD (OC-CCI)") +
+    ggtitle("Monthly median PPD") +
     ylab(expression("PP (gC m"^-2*" d"^-1*")")) +
     theme_facet() +
     theme(axis.text.x = element_text(angle=45, hjust = 1),
@@ -595,12 +596,11 @@ out_pp$Month <- factor(out_pp$Month, levels = month.abb)
           plot.margin = unit(c(0.1, 0, 0, 0), "cm")))
 ```
 
-#### Chlorophyll *a*
 
-```{r chl-monthly, fig.width = 8, eval = F}
+```{r chl-monthly, eval = F}
 out_chl <- ecodata::chl_pp %>% 
   filter(EPU == epu_abbr,
-         str_detect(Var, "MONTHLY_CHLOR_A_MEDIAN OC-CCI PAN")) %>% 
+         str_detect(Var, "MONTHLY_CHLOR_A_MEDIAN")) %>% 
   separate(.,Time, into = c("Year","Month"), sep = 4) %>% 
     mutate(Month = plyr::mapvalues(Month, from = c("01","02","03","04","05","06",
                                                    "07","08","09","10","11","12"),
@@ -620,7 +620,7 @@ out_chl$Month <- factor(out_chl$Month, levels = month.abb)
            alpha = hline.alpha,
            linetype = hline.lty) +
     facet_wrap(Month~., ncol = 6) +
-    ggtitle("Monthly median CHL (OC-CCI)") +
+    ggtitle("Monthly median CHL") +
     ylab(expression("CHL (mg m"^-3*")")) +
     theme_facet() +
     theme(axis.text.x = element_text(angle=45, hjust = 1),
@@ -629,7 +629,10 @@ out_chl$Month <- factor(out_chl$Month, levels = month.abb)
 
 ```
 
-```{r mab-chl-weekly,fig.width = 6, fig.asp = 0.55, fig.cap = "Weekly chlorophyll concentrations in the Mid-Atlantic are shown for by the colored line for 2018. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
+
+#### Sesonal chlorophyll *a* & primary production
+
+```{r mab-chl-weekly,fig.cap = "Weekly chlorophyll concentrations and primary productivity in the Mid-Atlantic are shown for by the colored line for 2018. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
 
 interp_chl_pp <- function(epu, int_step, year = 2018, Variable){
   out <- ecodata::chl_pp %>% 
@@ -693,7 +696,7 @@ MAB_chl_weekly <- ggplot(data = MAB_chl) +
               fill = "grey1") +
   geom_line(aes(x = Time, y = Value, color = status, group = group),
             size = 1) +
-  ggtitle(expression("MAB chlorophyll"~italic(a)~"")) +
+  ggtitle(expression("Chlorophyll"~italic(a)~"")) +
   guides(color = F) +
   xlab("")+
   ylab(expression("CHL (mg m"^-3*")")) +
@@ -702,25 +705,25 @@ MAB_chl_weekly <- ggplot(data = MAB_chl) +
   scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
   theme_ts()
 
-# MAB_pp <- interp_chl_pp(epu = "MAB", int_step = 1000,Variable =  "WEEKLY_PPD_MEDIAN OC-CCI BERENFELD")
-# 
-# MAB_pp_weekly <- ggplot(data = MAB_pp) +
-#   geom_line(aes(x = Time, y = LTM)) +
-#   geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high), 
-#               alpha = 0.1,
-#               fill = "grey1") +
-#   geom_line(aes(x = Time, y = Value, color = status, group = group),
-#             size = 1) +
-#   ggtitle(expression("MAB primary production")) +
-#   guides(color = F) +
-#   xlab("")+
-#   ylab(expression("PP (gC m"^-2*" d"^-1*")")) +
-#   scale_x_continuous(breaks = seq(0,50,10),
-#                    labels = c("January","March","May","July","October","December")) +
-#   scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
-#   theme_ts()
+MAB_pp <- interp_chl_pp(epu = "MAB", int_step = 1000,Variable =  "WEEKLY_PPD_MEDIAN")
 
-MAB_chl_weekly
+MAB_pp_weekly <- ggplot(data = MAB_pp) +
+  geom_line(aes(x = Time, y = LTM)) +
+  geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high),
+              alpha = 0.1,
+              fill = "grey1") +
+  geom_line(aes(x = Time, y = Value, color = status, group = group),
+            size = 1) +
+  ggtitle(expression("Primary production")) +
+  guides(color = F) +
+  xlab("")+
+  ylab(expression("PP (gC m"^-2*" d"^-1*")")) +
+  scale_x_continuous(breaks = seq(0,50,10),
+                   labels = c("January","March","May","July","October","December")) +
+  scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
+  theme_ts()
+
+MAB_chl_weekly + MAB_pp_weekly + plot_layout(ncol = 1)
 
 ```
 
@@ -798,30 +801,56 @@ sli <- ecodata::zoo_anom_sli %>%
   mutate(hline = 0) 
 
 pp_anom <- ecodata::chl_pp %>% 
-  filter(str_detect(Var, "ANNUAL_PPD_RATIO_ANOMALY OC-CCI BERENFELD 1998_2017"),
+  filter(str_detect(Var, "ANNUAL_PPD_RATIO_ANOMALY"),
          EPU == "MAB") %>% 
-  mutate(hline = mean(Value)) %>% 
-  rbind(.,sli)
+  mutate(hline = 1,
+         Time = as.numeric(as.character(Time)),
+         Var = "ANNUAL_PPD_RATIO_ANOMALY")
 
-pp_anom %>% 
-  ggplot(aes(x = Time, y = Value, group = Var, color = Var)) +
+sli_plt <- sli %>% 
+  ggplot(aes(x = Time, y = Value, group = Var)) +
          annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   geom_line() +
   geom_point() +
   guides(color = F) +
+  xlab("")+
   ylab("Small-large abundance") +
   ggtitle("Small-large copepod abundance") +
     scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+
       geom_hline(aes(yintercept = hline,
-                     color = Var),
+                     group = Var),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+
-  theme_facet() +
+  theme_ts() +
   theme(strip.text=element_text(hjust=0,
                                 face = "italic"))
+
+pp_anom_plt <- pp_anom %>% 
+    ggplot(aes(x = Time, y = Value, group = Var)) +
+         annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  geom_line() +
+  geom_point() +
+  guides(color = F) +
+  ylab("Anomaly ratio") +
+  ggtitle("Primary production anomaly ratio") +
+    scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+
+    scale_y_continuous(limits = c(0.8,1.2)) +
+      geom_hline(aes(yintercept = hline,
+                     group = Var),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  theme_ts() +
+  theme(strip.text=element_text(hjust=0,
+                                face = "italic"))
+
+
+sli_plt + pp_anom_plt + plot_layout(ncol = 1) & theme(plot.margin = margin(t = 0))
 ```
 
 #### OI abundance
@@ -1460,7 +1489,7 @@ ggplot(data = sw.df) +
 ```{r NE-PP-OCCI, fig.width=8, fig.height = 8}
 out_pp <- ecodata::chl_pp %>% 
   filter(EPU %in% c("GOM","GB"),
-         str_detect(Var, "MONTHLY_PPD_MEDIAN OC-CCI BERENFELD")) %>% 
+         str_detect(Var, "MONTHLY_PPD_MEDIAN")) %>% 
   separate(.,Time, into = c("Year","Month"), sep = 4) %>% 
     mutate(Month = plyr::mapvalues(Month, from = c("01","02","03","04","05","06",
                                                    "07","08","09","10","11","12"),
@@ -1477,7 +1506,7 @@ pp_cci_gom <- out_pp %>%
     geom_line(aes(x = Year, y = Value, group = Month)) +
     scale_x_discrete(name = "Time", breaks = seq(min(out_pp$Year),max(out_pp$Year),10)) +  
     facet_wrap(Month~., ncol = 6) +
-    ggtitle("GOM Monthly median PPD (OC-CCI)") +
+    ggtitle("GOM Monthly median PPD") +
     ylab(expression("PP (gC m"^-2*" d"^-1*")")) +
         geom_hline(aes(yintercept = hline,
                      group = Month),
@@ -1497,7 +1526,7 @@ pp_cci_gom <- out_pp %>%
     geom_line(aes(x = Year, y = Value, group = Month)) +
     scale_x_discrete(name = "Time", breaks = seq(min(out_pp$Year),max(out_pp$Year),10)) +  
     facet_wrap(Month~., ncol = 6) +
-    ggtitle("GB Monthly median PPD (OC-CCI)") +
+    ggtitle("GB Monthly median PPD") +
     ylab(expression("PP (gC m"^-2*" d"^-1*")")) +
         geom_hline(aes(yintercept = hline,
                      group = Month),
@@ -1513,11 +1542,11 @@ pp_cci_gom <- out_pp %>%
  
 ```
 
-#### Chlorophyll *a*
+#### Sesonal chlorophyll *a* & primary production
 
-```{r NE-chl-weekly,fig.width = 6, fig.asp = 1.1, fig.cap = "Weekly chlorophyll concentrations for 2018 in Gulf of Maine and Georges Bank are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
+```{r NE-chl-weekly, fig.width = 8, fig.cap = "Weekly chlorophyll concentrations and primary productivity for 2018 in Gulf of Maine and Georges Bank are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
 
-GB_chl_weekly <- interp_chl_pp(epu = "GB", int_step = 1000, year = 2018,Variable = "WEEKLY_CHLOR_A_MEDIAN MODIS-Aqua PAN")
+GB_chl_weekly <- interp_chl_pp(epu = "GB", int_step = 1000, year = 2018,Variable = "WEEKLY_CHLOR_A_MEDIAN")
 
 GB_chl <- ggplot(data = GB_chl_weekly) +
   geom_line(aes(x = Time, y = LTM)) +
@@ -1529,14 +1558,14 @@ GB_chl <- ggplot(data = GB_chl_weekly) +
   ggtitle(expression("GB chlorophyll"~italic(a)~"")) +
   guides(color = F) +
   xlab("")+
-  ylab(expression("CHL (mg m"^-3*")")) +
+  ylab("") +
   scale_x_continuous(breaks = seq(0,50,10),
                    labels = c("January","March","May","July","October","December")) +
   scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
   theme_ts()
 
 
-GOM_chl_weekly <- interp_chl_pp(epu = "GOM", int_step = 1000, year = 2018,Variable = "WEEKLY_CHLOR_A_MEDIAN MODIS-Aqua PAN")
+GOM_chl_weekly <- interp_chl_pp(epu = "GOM", int_step = 1000, year = 2018,Variable = "WEEKLY_CHLOR_A_MEDIAN")
 
 GOM_chl <- ggplot(data = GOM_chl_weekly) +
   geom_line(aes(x = Time, y = LTM)) +
@@ -1554,7 +1583,45 @@ GOM_chl <- ggplot(data = GOM_chl_weekly) +
   scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
   theme_ts()
 
-GOM_chl + GB_chl + plot_layout(ncol = 1) 
+GB_ppd_weekly <- interp_chl_pp(epu = "GB", int_step = 1000, year = 2018,Variable = "WEEKLY_PPD_MEDIAN")
+
+GB_ppd <- ggplot(data = GB_ppd_weekly) +
+  geom_line(aes(x = Time, y = LTM)) +
+  geom_ribbon(aes(x = Time, ymin = pmax(sd.low,0), ymax = sd.high), 
+              alpha = 0.1,
+              fill = "grey1") +
+  geom_line(aes(x = Time, y = Value, color = status, group = group),
+            size = 1) +
+  ggtitle(expression("GB primary production")) +
+  guides(color = F) +
+  xlab("")+
+  ylab("") +
+  scale_x_continuous(breaks = seq(0,50,10),
+                   labels = c("January","March","May","July","October","December")) +
+  scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
+  theme_ts()
+
+
+GOM_ppd_weekly <- interp_chl_pp(epu = "GOM", int_step = 1000, year = 2018,Variable = "WEEKLY_PPD_MEDIAN")
+
+GOM_ppd <- ggplot(data = GOM_ppd_weekly) +
+  geom_line(aes(x = Time, y = LTM)) +
+  geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high), 
+              alpha = 0.1,
+              fill = "grey1") +
+  geom_line(aes(x = Time, y = Value, color = status, group = group),
+            size = 1) +
+  guides(color = F) +
+  xlab("")+
+  ggtitle(expression("GOM primary production")) +
+  scale_x_continuous(breaks = seq(0,50,10),
+                   labels = c("January","March","May","July","October","December")) +
+  ylab((expression("PP (gC m"^-2*" d"^-1*")"))) +
+  scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
+  theme_ts()
+
+
+GOM_chl + GB_chl + GOM_ppd + GB_ppd + plot_layout(ncol = 2) & theme(plot.margin = margin(r = 0.5))
 
 ```
 
@@ -1563,7 +1630,7 @@ GOM_chl + GB_chl + plot_layout(ncol = 1)
 ```{r NE-chl-monthly, fig.width = 8, fig.height=8, eval = F}
 out_chl <- ecodata::chl_pp %>% 
   filter(EPU %in% c("GOM","GB"),
-         str_detect(Var, "MONTHLY_CHLOR_A_MEDIAN OC-CCI PAN")) %>% 
+         str_detect(Var, "MONTHLY_CHLOR_A_MEDIAN")) %>% 
   separate(.,Time, into = c("Year","Month"), sep = 4) %>% 
     mutate(Month = plyr::mapvalues(Month, from = c("01","02","03","04","05","06",
                                                    "07","08","09","10","11","12"),
@@ -1670,48 +1737,60 @@ sli <- ecodata::zoo_anom_sli %>%
   filter(EPU %in% c("GOM","GB"),
          str_detect(Var, "small-large")) %>% 
   mutate(hline = 0) 
+sli$EPU <- factor(sli$EPU, levels = c("GOM","GB"))
 
-sli_gom <- sli %>% 
-  filter(EPU == "GOM") %>% 
+pp_anom <- ecodata::chl_pp %>% 
+  filter(str_detect(Var, "ANNUAL_PPD_RATIO_ANOMALY"),
+         EPU %in% c("GOM","GB")) %>% 
+  mutate(hline = 1,
+         Time = as.numeric(as.character(Time)),
+         Var = "ANNUAL_PPD_RATIO_ANOMALY")
+pp_anom$EPU <- factor(pp_anom$EPU, levels = c("GOM","GB"))
+
+sli_plt <- sli %>% 
   ggplot(aes(x = Time, y = Value, group = Var)) +
          annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  geom_gls() +
   geom_line() +
   geom_point() +
+  guides(color = F) +
+  facet_wrap(EPU~.,ncol = 2)+
+  xlab("")+
   ylab("Small-large abundance") +
-  ggtitle("GOM Small-large copepod abundance") +
-    scale_x_continuous(expand = c(0.01, 0.01))+
-      geom_hline(aes(yintercept = hline),
+  ggtitle("Small-large copepod abundance") +
+    scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+
+      geom_hline(aes(yintercept = hline,
+                     group = Var),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+
   theme_facet() +
-  theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+  theme(strip.text=element_text(hjust=0))
 
-sli_gb <- sli %>% 
-  filter(EPU == "GB") %>% 
-  ggplot(aes(x = Time, y = Value, group = Var)) +
+pp_anom_plt <- pp_anom %>% 
+    ggplot(aes(x = Time, y = Value, group = Var)) +
          annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  geom_gls() +
   geom_line() +
   geom_point() +
-  ylab("Small-large abundance") +
-  ggtitle("GB Small-large copepod abundance") +
-    scale_x_continuous(expand = c(0.01, 0.01))+
-      geom_hline(aes(yintercept = hline),
+  guides(color = F) +
+  ylab("Anomaly ratio") +
+  facet_wrap(EPU~.,ncol = 2)+
+  ggtitle("Primary production anomaly ratio") +
+    scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+
+    scale_y_continuous(limits = c(0.8,1.2)) +
+      geom_hline(aes(yintercept = hline,
+                     group = Var),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+
   theme_facet() +
-  theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+  theme(strip.text=element_text(hjust=0))
 
-sli_gom + sli_gb + plot_layout(ncol = 1)
+
+sli_plt + pp_anom_plt + plot_layout(ncol = 1) & theme(plot.margin = margin(t = 0))
 ```
 
 #### OI abundance
@@ -1767,7 +1846,13 @@ gom_zoo + gb_zoo + plot_layout(ncol = 1)
 ### Seasonal SST anomaly
 
 ```{r seasonal-sst, fig.height=8}
-
+# Set lat/lon window for maps
+xmin = -77
+xmax = -65
+ymin = 36
+ymax = 45
+xlims <- c(xmin, xmax)
+ylims <- c(ymin, ymax)
 sst <- seasonal_oisst_anom_gridded 
 
 sst$Season <- factor(sst$Season, levels = c("Winter",
