@@ -1,0 +1,20 @@
+#' Small fish per large fish biomass anomaly
+#' 
+#' These data represent estimates of recruitment success for species sampled
+#' in the NEFSC Bottom Trawl Survey. 
+#' 
+#' @format A data set containing 2381 rows and 5 columns.
+#' 
+#' \itemize{
+#'    \item Var: Common name of surveyed species. If data reflect the aggregated shelf-wide anomaly, then \code{NE LME} is included with the species name.
+#'    \item EPU: EPU where sampling occurred.
+#'    \item Time: Year.
+#'    \item Value: Small fish per large fish biomass anomaly.
+#'    \item Units: Units of variable \code{Var}.
+#' }
+#' 
+#' @details Detailed information regarding the derivation of this indicator are present at
+#' \url{https://noaa-edab.github.io/tech-memo/fish-productivity-indicator.html}.
+#' 
+#' @references Perretti, Charles T., et al. "Regime shifts in fish recruitment on the Northeast US Continental Shelf." \emph{Marine Ecology Progress Series} 574 (2017): 1-11.
+"recruitment_anomaly"
