@@ -634,23 +634,14 @@ out_chl$Month <- factor(out_chl$Month, levels = month.abb)
 
 ```{r mab-chl-weekly,fig.cap = "Weekly chlorophyll concentrations and primary productivity in the Mid-Atlantic are shown for by the colored line for 2018. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
 
-interp_chl_pp <- function(epu, int_step, year = 2018, Variable){
+interp_chl_pp <- function(epu, year = 2018, Variable){
   out <- ecodata::chl_pp %>% 
     filter(str_detect(Var,Variable),
            EPU == epu) %>% 
     separate(.,Time, c("Year","Week"),sep = 4) %>% 
     filter(Year == year) %>% 
     group_by(EPU) %>% 
-    mutate(Week = 1:length(Year))  %>% 
-    complete(Week = full_seq(1:52,1),
-             nesting(Var))
-  
-  out_int <- data.frame(Value = approx(out$Week,
-                                       out$Value,
-                                       seq(1,max(out$Week),
-                                           length.out = length(out$Week)*int_step))$y,
-                        Time = seq(1,max(out$Week),length.out = length(out$Week)*int_step),
-                        Week = rep(1:52,each = int_step))
+    mutate(Time = 1:length(Year))
   
   ltm_out <- ecodata::chl_pp %>% 
     filter(str_detect(Var,Variable),
@@ -659,67 +650,54 @@ interp_chl_pp <- function(epu, int_step, year = 2018, Variable){
     group_by(Week) %>% 
     dplyr::summarise(LTM = mean(Value, na.rm = T),
                      SD = sd(Value, na.rm = T)) %>% 
-    mutate(Week = 1:length(Week),
+    mutate(Time = 1:length(Week),
            sd.low = LTM - SD,
-           sd.high = LTM + SD) 
-  
-  ltm_out_int <- data.frame(LTM = approx(ltm_out$Week,
-                                         ltm_out$LTM,
-                                         seq(1,max(ltm_out$Week),
-                                             length.out = length(ltm_out$Week)*int_step))$y,
-                            sd.high = approx(ltm_out$Week,
-                                             ltm_out$sd.high,
-                                             seq(1,max(ltm_out$Week),
-                                                 length.out = length(ltm_out$Week)*int_step))$y,
-                            sd.low = approx(ltm_out$Week,
-                                            ltm_out$sd.low,
-                                            seq(1,max(ltm_out$Week), 
-                                                length.out = length(ltm_out$Week)*int_step))$y,
-                            Time = seq(1,max(out$Week),length.out = length(out$Week)*int_step),
-                            Week = rep(1:52,each = int_step)) %>%
-    left_join(.,out_int, by = c("Week","Time")) %>% 
+           sd.high = LTM + SD) %>% 
+    left_join(.,out, by = c("Time")) %>% 
     mutate(status = ifelse(Value < sd.high & Value > sd.low, "near_mean",
                            ifelse(Value > sd.high, "high",
                                   ifelse(Value < sd.low,"low",NA))),
            group = "PLOT")
   
-  return(ltm_out_int)
+  return(ltm_out)
 }
 
 
-MAB_chl <- interp_chl_pp(epu = "MAB", int_step = 1000,Variable = "WEEKLY_CHLOR_A_MEDIAN MODIS-Aqua PAN")
+MAB_chl <- interp_chl_pp(epu = "MAB", Variable = "WEEKLY_CHLOR_A_MEDIAN MODIS-Aqua PAN")
 
 MAB_chl_weekly <- ggplot(data = MAB_chl) +
   geom_line(aes(x = Time, y = LTM)) +
   geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high), 
               alpha = 0.1,
               fill = "grey1") +
-  geom_line(aes(x = Time, y = Value, color = status, group = group),
-            size = 1) +
+  geom_line(aes(x = Time, y = Value),
+            size = 1,color = "#33a02c") +
   ggtitle(expression("Chlorophyll"~italic(a)~"")) +
   guides(color = F) +
   xlab("")+
   ylab(expression("CHL (mg m"^-3*")")) +
-  scale_x_continuous(breaks = seq(0,50,10),
-                   labels = c("January","March","May","July","October","December")) +
+  scale_x_continuous(breaks = seq(1,52,10),
+                   labels = c("January","March","May","July","October","December"),
+                   expand = c(0.01,0.01)) +
   scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
   theme_ts()
 
-MAB_pp <- interp_chl_pp(epu = "MAB", int_step = 1000,Variable =  "WEEKLY_PPD_MEDIAN")
+MAB_pp <- interp_chl_pp(epu = "MAB", Variable =  "WEEKLY_PPD_MEDIAN")
 
 MAB_pp_weekly <- ggplot(data = MAB_pp) +
   geom_line(aes(x = Time, y = LTM)) +
   geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high),
               alpha = 0.1,
               fill = "grey1") +
-  geom_line(aes(x = Time, y = Value, color = status, group = group),
-            size = 1) +
+  geom_line(aes(x = Time, y = Value),
+            size = 1,color = "#33a02c") +
   ggtitle(expression("Primary production")) +
   guides(color = F) +
   xlab("")+
   ylab(expression("PP (gC m"^-2*" d"^-1*")")) +
-  scale_x_continuous(breaks = seq(0,50,10),
-                   labels = c("January","March","May","July","October","December")) +
+  scale_x_continuous(breaks = seq(1,52,10),
+                   labels = c("January","March","May","July","October","December"),
+                   expand = c(0.01,0.01)) +
   scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
   theme_ts()
 
@@ -1546,76 +1524,80 @@ pp_cci_gom <- out_pp %>%
 
 ```{r NE-chl-weekly, fig.width = 8, fig.cap = "Weekly chlorophyll concentrations and primary productivity for 2018 in Gulf of Maine and Georges Bank are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
 
-GB_chl_weekly <- interp_chl_pp(epu = "GB", int_step = 1000, year = 2018,Variable = "WEEKLY_CHLOR_A_MEDIAN")
+GB_chl_weekly <- interp_chl_pp(epu = "GB", year = 2018,Variable = "WEEKLY_CHLOR_A_MEDIAN")
 
 GB_chl <- ggplot(data = GB_chl_weekly) +
   geom_line(aes(x = Time, y = LTM)) +
   geom_ribbon(aes(x = Time, ymin = pmax(sd.low,0), ymax = sd.high), 
               alpha = 0.1,
               fill = "grey1") +
-  geom_line(aes(x = Time, y = Value, color = status, group = group),
-            size = 1) +
+  geom_line(aes(x = Time, y = Value),
+            size = 1,color = "#33a02c") +
   ggtitle(expression("GB chlorophyll"~italic(a)~"")) +
   guides(color = F) +
   xlab("")+
   ylab("") +
-  scale_x_continuous(breaks = seq(0,50,10),
-                   labels = c("January","March","May","July","October","December")) +
+  scale_x_continuous(breaks = seq(1,52,10),
+                   labels = c("January","March","May","July","October","December"),
+                   expand = c(0.01,0.01)) +
   scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
   theme_ts()
 
 
-GOM_chl_weekly <- interp_chl_pp(epu = "GOM", int_step = 1000, year = 2018,Variable = "WEEKLY_CHLOR_A_MEDIAN")
+GOM_chl_weekly <- interp_chl_pp(epu = "GOM", year = 2018,Variable = "WEEKLY_CHLOR_A_MEDIAN")
 
 GOM_chl <- ggplot(data = GOM_chl_weekly) +
   geom_line(aes(x = Time, y = LTM)) +
   geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high), 
               alpha = 0.1,
               fill = "grey1") +
-  geom_line(aes(x = Time, y = Value, color = status, group = group),
-            size = 1) +
+  geom_line(aes(x = Time, y = Value),
+            size = 1,color = "#33a02c") +
   ggtitle(expression("GOM chlorophyll"~italic(a)~"")) +
   guides(color = F) +
   xlab("")+
   ylab(expression("CHL (mg m"^-3*")")) +
-  scale_x_continuous(breaks = seq(0,50,10),
-                   labels = c("January","March","May","July","October","December")) +
+  scale_x_continuous(breaks = seq(1,52,10),
+                   labels = c("January","March","May","July","October","December"),
+                   expand = c(0.01,0.01)) +
   scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
   theme_ts()
 
-GB_ppd_weekly <- interp_chl_pp(epu = "GB", int_step = 1000, year = 2018,Variable = "WEEKLY_PPD_MEDIAN")
+GB_ppd_weekly <- interp_chl_pp(epu = "GB",  year = 2018,Variable = "WEEKLY_PPD_MEDIAN")
 
 GB_ppd <- ggplot(data = GB_ppd_weekly) +
   geom_line(aes(x = Time, y = LTM)) +
   geom_ribbon(aes(x = Time, ymin = pmax(sd.low,0), ymax = sd.high), 
               alpha = 0.1,
               fill = "grey1") +
-  geom_line(aes(x = Time, y = Value, color = status, group = group),
-            size = 1) +
+  geom_line(aes(x = Time, y = Value),
+            size = 1,color = "#33a02c") +
   ggtitle(expression("GB primary production")) +
   guides(color = F) +
   xlab("")+
   ylab("") +
-  scale_x_continuous(breaks = seq(0,50,10),
-                   labels = c("January","March","May","July","October","December")) +
+  scale_x_continuous(breaks = seq(1,52,10),
+                   labels = c("January","March","May","July","October","December"),
+                   expand = c(0.01,0.01)) +
   scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
   theme_ts()
 
 
-GOM_ppd_weekly <- interp_chl_pp(epu = "GOM", int_step = 1000, year = 2018,Variable = "WEEKLY_PPD_MEDIAN")
+GOM_ppd_weekly <- interp_chl_pp(epu = "GOM",  year = 2018,Variable = "WEEKLY_PPD_MEDIAN")
 
 GOM_ppd <- ggplot(data = GOM_ppd_weekly) +
   geom_line(aes(x = Time, y = LTM)) +
   geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high), 
               alpha = 0.1,
               fill = "grey1") +
-  geom_line(aes(x = Time, y = Value, color = status, group = group),
-            size = 1) +
+  geom_line(aes(x = Time, y = Value),
+            size = 1,color = "#33a02c") +
   guides(color = F) +
   xlab("")+
   ggtitle(expression("GOM primary production")) +
-  scale_x_continuous(breaks = seq(0,50,10),
-                   labels = c("January","March","May","July","October","December")) +
+  scale_x_continuous(breaks = seq(1,52,10),
+                   labels = c("January","March","May","July","October","December"),
+                   expand = c(0.01,0.01)) +
   ylab((expression("PP (gC m"^-2*" d"^-1*")"))) +
   scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
   theme_ts()
@@ -1859,6 +1841,7 @@ sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Spring",
                                             "Summer",
                                             "Fall"))
+epu_sf <- ecodata::epu_sf[ecodata::epu_sf$EPU != "SS",]
 
 ggplot() +
   geom_tile(data = sst, aes(x = Longitude, y = Latitude,                                             fill = Value)) +
