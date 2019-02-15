@@ -3,7 +3,7 @@
 #' These data represent estimates of recruitment success for species sampled
 #' in the NEFSC Bottom Trawl Survey. 
 #' 
-#' @format A data set containing 2381 rows and 5 columns.
+#' @format
 #' 
 #' \itemize{
 #'    \item Var: Common name of surveyed species. If data reflect the aggregated shelf-wide anomaly, then \code{NE LME} is included with the species name.
@@ -16,5 +16,8 @@
 #' @details Detailed information regarding the derivation of this indicator are present at
 #' \url{https://noaa-edab.github.io/tech-memo/fish-productivity-indicator.html}.
 #' 
-#' @references Perretti, Charles T., et al. "Regime shifts in fish recruitment on the Northeast US Continental Shelf." \emph{Marine Ecology Progress Series} 574 (2017): 1-11.
+#' @references
+#' Perretti, Charles T., et al. "Regime shifts in fish recruitment on the Northeast US Continental Shelf." \emph{Marine Ecology Progress Series} 574 (2017): 1-11.
+#' 
+#' Wigley, S. E., H. M. McBride, and N. J. McHugh. 2003. “Length-Weight Relationships for 74 Fish Species Collected During NEFSC Research Vessel Bottom Trawl Surveys, 1992-99.” NOAA Technical Memorandum 171. National Marine Fisheries Service.
 "productivity_anomaly"
