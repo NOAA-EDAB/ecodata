@@ -280,8 +280,6 @@ mab_prop
 #### MAFMC Planktivores in NE
 
 ```{r MAFMC-in-NE}
-raw.dir <- here::here("inst","extdata")
-load(file= file.path(raw.dir,"Survdat_proportions.Rdata"))
 
 mafmc_ne <- survey_proportions %>% 
   distinct() %>% 
