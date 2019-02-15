@@ -281,14 +281,14 @@ mab_prop
 
 ```{r MAFMC-in-NE}
 
-mafmc_ne <- survey_proportions %>% 
+mafmc_ne <- nefsc_survey_disaggregated %>% 
   distinct() %>% 
   filter(EPU %in% c("GOM","GB"),
-         Fed_Managed == "MAFMC",
-         !str_detect(group,"Other")) %>% 
-  group_by(EPU, group, season, Time) %>% 
-  dplyr::summarise(Value = sum(Prop)) %>% 
-  unite(.,Var,c("group","season"), sep = " ") %>% 
+         Management == "MAFMC",
+         !str_detect(`Feeding guild`,"Other")) %>% 
+  group_by(EPU, `Feeding guild`, Season, Time) %>% 
+  dplyr::summarise(Value = sum(Proportion)) %>% 
+  unite(.,Var,c("Feeding guild","Season"), sep = " ") %>% 
   group_by(EPU,Var) %>% 
   mutate(hline = mean(Value)) %>% 
   filter(str_detect(Var,"Planktivore")) %>% 
@@ -697,14 +697,14 @@ gb_surv
 #### NEFMC Benthivores in MAB
 
 ```{r NEFMC-in-MAB, fig.width = 7, fig.asp = 0.45}
-nefmc_ma <- survey_proportions %>% 
+nefmc_ma <- nefsc_survey_disaggregated %>% 
   distinct() %>% 
   filter(EPU %in% c("MAB"),
-         Fed_Managed == "NEFMC",
-         !str_detect(group,"Other")) %>% 
-  group_by(EPU, group, season, Time) %>% 
-  dplyr::summarise(Value = sum(Prop)) %>% 
-  unite(.,Var,c("group","season"), sep = " ") %>% 
+         Management == "NEFMC",
+         !str_detect(`Feeding guild`,"Other")) %>% 
+  group_by(EPU, `Feeding guild`, Season, Time) %>% 
+  dplyr::summarise(Value = sum(Proportion)) %>% 
+  unite(.,Var,c("Feeding guild","Season"), sep = " ") %>% 
   group_by(EPU,Var) %>% 
   mutate(hline = mean(Value)) %>% 
   filter(str_detect(Var,"Benthivore")) %>% 
