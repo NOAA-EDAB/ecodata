@@ -1,4 +1,6 @@
-# ecodata
+# ecodata <img src="https://github.com/NOAA-EDAB/ecodata/blob/master/ecodata_logo.png" align="right" width="120" /> 
+
+## Overview
 
 `ecodata` is an R data package developed by the Ecosystems Dynamics and Assessment Branch of the Northeast Fisheries Science Center
 for use in State of the Ecosystem (SOE) reporting. SOE reports are high-level overviews of ecosystem indicator status and trends occurring
