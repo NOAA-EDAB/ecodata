@@ -421,143 +421,143 @@ bot_temp_insitu
 
 ```
 
-### Ocean Salinity & Stratification {.tabset .tabset-fade}
+<!-- ### Ocean Salinity & Stratification {.tabset .tabset-fade} -->
 
-#### Surface salinity
+<!-- #### Surface salinity -->
 
-```{r MAB-surfsal, fig.width = 8, fig.asp = .35}
-sal_anom <- oceansal_insitu %>% 
-  filter(EPU == epu_abbr) %>% 
-  complete(Time = full_seq(min(oceansal_insitu$Time):max(oceansal_insitu$Time),1),
-           nesting(Var)) %>% 
-  mutate(hline = 0)
+<!-- ```{r MAB-surfsal, fig.width = 8, fig.asp = .35} -->
+<!-- sal_anom <- oceansal_insitu %>%  -->
+<!--   filter(EPU == epu_abbr) %>%  -->
+<!--   complete(Time = full_seq(min(oceansal_insitu$Time):max(oceansal_insitu$Time),1), -->
+<!--            nesting(Var)) %>%  -->
+<!--   mutate(hline = 0) -->
 
-surf_sal_insitu <- sal_anom %>%
-  filter(Var == "surface salinity anomaly in situ") %>% 
-    ggplot()+ #plot
-     annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line(aes(x = Time, y = Value)) +
-  geom_gls(aes(x = Time, y = Value)) +
-  geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab("Salinity (PSU)") +
-  ggtitle("Surface salinity anomaly (in situ)") +
-  scale_x_continuous(expand = c(0.01, 0.01)) +
-    geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
+<!-- surf_sal_insitu <- sal_anom %>% -->
+<!--   filter(Var == "surface salinity anomaly in situ") %>%  -->
+<!--     ggplot()+ #plot -->
+<!--      annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line(aes(x = Time, y = Value)) + -->
+<!--   geom_gls(aes(x = Time, y = Value)) + -->
+<!--   geom_point(aes(x = Time, y = Value), size = 1) + -->
+<!--   ylab("Salinity (PSU)") + -->
+<!--   ggtitle("Surface salinity anomaly (in situ)") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01)) + -->
+<!--     geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty) + -->
+<!--   theme_ts() + -->
+<!--   theme(strip.text=element_text(hjust=0), -->
+<!--         plot.title = element_text(size = 12)) -->
 
-sal_oi <- oceansal_oi %>% 
-  filter(EPU == epu_abbr) %>%
-  group_by(Var) %>% 
-  mutate(hline = mean(Value))
+<!-- sal_oi <- oceansal_oi %>%  -->
+<!--   filter(EPU == epu_abbr) %>% -->
+<!--   group_by(Var) %>%  -->
+<!--   mutate(hline = mean(Value)) -->
 
-surf_sal_oi <- sal_oi %>%
-  filter(Var == "surface sal OI") %>% 
-    ggplot()+ #plot
-     annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line(aes(x = Time, y = Value)) +
-  #geom_gls(aes(x = Time, y = Value)) +
-  geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab(expression("")) +
-  ggtitle("Surface salinity (optimally interpolated)") +
-  scale_x_continuous(expand = c(0.01, 0.01), limits = c(1977,2018)) +
-    geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
+<!-- surf_sal_oi <- sal_oi %>% -->
+<!--   filter(Var == "surface sal OI") %>%  -->
+<!--     ggplot()+ #plot -->
+<!--      annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line(aes(x = Time, y = Value)) + -->
+<!--   #geom_gls(aes(x = Time, y = Value)) + -->
+<!--   geom_point(aes(x = Time, y = Value), size = 1) + -->
+<!--   ylab(expression("")) + -->
+<!--   ggtitle("Surface salinity (optimally interpolated)") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01), limits = c(1977,2018)) + -->
+<!--     geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty) + -->
+<!--   theme_ts() + -->
+<!--   theme(strip.text=element_text(hjust=0), -->
+<!--         plot.title = element_text(size = 12)) -->
 
-surf_sal_insitu + surf_sal_oi +
-  plot_layout(ncol =  2) &
-  theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
+<!-- surf_sal_insitu + surf_sal_oi + -->
+<!--   plot_layout(ncol =  2) & -->
+<!--   theme(plot.margin = unit(c(0, 0, 0, 0), "cm")) -->
 
-```
+<!-- ``` -->
 
-#### Bottom salinity
+<!-- #### Bottom salinity -->
 
-```{r MAB-botsal, fig.width = 8, fig.asp = .35}
+<!-- ```{r MAB-botsal, fig.width = 8, fig.asp = .35} -->
 
-bot_sal_insitu <- sal_anom %>%
-  filter(Var == "bottom salinity anomaly in situ") %>% 
-    ggplot()+ #plot
-     annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line(aes(x = Time, y = Value)) +
-  geom_gls(aes(x = Time, y = Value)) +
-  geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab("Salinity (PSU)") +
-  ggtitle("Bot. salinity anomaly (in situ)") +
-  scale_x_continuous(expand = c(0.01, 0.01)) +
-    geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
+<!-- bot_sal_insitu <- sal_anom %>% -->
+<!--   filter(Var == "bottom salinity anomaly in situ") %>%  -->
+<!--     ggplot()+ #plot -->
+<!--      annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line(aes(x = Time, y = Value)) + -->
+<!--   geom_gls(aes(x = Time, y = Value)) + -->
+<!--   geom_point(aes(x = Time, y = Value), size = 1) + -->
+<!--   ylab("Salinity (PSU)") + -->
+<!--   ggtitle("Bot. salinity anomaly (in situ)") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01)) + -->
+<!--     geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty) + -->
+<!--   theme_ts() + -->
+<!--   theme(strip.text=element_text(hjust=0), -->
+<!--         plot.title = element_text(size = 12)) -->
 
-bot_sal_oi <- sal_oi %>%
-  filter(Var == "bottom sal OI") %>% 
-    ggplot()+ #plot
-     annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line(aes(x = Time, y = Value)) +
- # geom_gls(aes(x = Time, y = Value)) +
-  geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab(expression("")) +
-  ggtitle("Bot. salinity (optimally interpolated)") +
-  scale_x_continuous(expand = c(0.01, 0.01), limits = c(1977,2018)) +
-    geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
+<!-- bot_sal_oi <- sal_oi %>% -->
+<!--   filter(Var == "bottom sal OI") %>%  -->
+<!--     ggplot()+ #plot -->
+<!--      annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line(aes(x = Time, y = Value)) + -->
+<!--  # geom_gls(aes(x = Time, y = Value)) + -->
+<!--   geom_point(aes(x = Time, y = Value), size = 1) + -->
+<!--   ylab(expression("")) + -->
+<!--   ggtitle("Bot. salinity (optimally interpolated)") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01), limits = c(1977,2018)) + -->
+<!--     geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty) + -->
+<!--   theme_ts() + -->
+<!--   theme(strip.text=element_text(hjust=0), -->
+<!--         plot.title = element_text(size = 12)) -->
 
-bot_sal_insitu + bot_sal_oi +
-  plot_layout(ncol =  2) &
-  theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
+<!-- bot_sal_insitu + bot_sal_oi + -->
+<!--   plot_layout(ncol =  2) & -->
+<!--   theme(plot.margin = unit(c(0, 0, 0, 0), "cm")) -->
 
-```
+<!-- ``` -->
 
-#### Stratification
+<!-- #### Stratification -->
 
-```{r MAB-strat}
-strat <- ecodata::stratification %>% 
-  filter(EPU == epu_abbr) %>% 
-  mutate(hline = mean(Value, na.rm = T))
+<!-- ```{r MAB-strat} -->
+<!-- strat <- ecodata::stratification %>%  -->
+<!--   filter(EPU == epu_abbr) %>%  -->
+<!--   mutate(hline = mean(Value, na.rm = T)) -->
 
-strat %>% 
-  ggplot(aes(x = Time, y = Value)) +
-       annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line() +
-  geom_point() +
- # geom_gls() +
-    ylab(expression("Stratification (kg m"^-3*")")) +
-  ggtitle("Stratification") +
-  scale_x_continuous(expand = c(0.01, 0.01)) +
-    geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_ts() 
+<!-- strat %>%  -->
+<!--   ggplot(aes(x = Time, y = Value)) + -->
+<!--        annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line() + -->
+<!--   geom_point() + -->
+<!--  # geom_gls() + -->
+<!--     ylab(expression("Stratification (kg m"^-3*")")) + -->
+<!--   ggtitle("Stratification") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01)) + -->
+<!--     geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty) + -->
+<!--   theme_ts()  -->
 
-```
+<!-- ``` -->
 
 
 ### Chlorophyll and Primary Productivity {.tabset .tabset-fade}
@@ -1125,9 +1125,10 @@ ne_anom_plt
 #### Bottom temperature
 
 ```{r NE-bot-temp}
-bot_temp_insitu_gom <- temp_anom %>%
+bot_temp_insitu_gom <- oceantemp_insitu %>%
   filter(EPU == "GOM",
          Var == "bottom temp anomaly in situ") %>% 
+  mutate(hline = 0) %>% 
     ggplot()+ #plot
      annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
@@ -1135,8 +1136,8 @@ bot_temp_insitu_gom <- temp_anom %>%
   geom_line(aes(x = Time, y = Value)) +
   geom_gls(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab("Temperature (°C)") +
-  ggtitle("GOM Bot. temp. anomaly (in situ)") +
+  ylab("Temperature Anomaly (°C)") +
+  ggtitle("GOM Bottom Temperature Anomaly") +
   scale_x_continuous(expand = c(0.01, 0.01)) +
     geom_hline(aes(yintercept = hline),
            size = hline.size,
@@ -1147,9 +1148,10 @@ bot_temp_insitu_gom <- temp_anom %>%
         plot.title = element_text(size = 12))
 
 
-bot_temp_insitu_gb <- temp_anom %>%
+bot_temp_insitu_gb <- oceantemp_insitu %>%
   filter(EPU == "GB",
-         Var == "bottom temp anomaly in situ") %>% 
+         Var == "bottom temp anomaly in situ") %>%
+   mutate(hline = 0) %>% 
     ggplot()+ #plot
      annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
@@ -1157,8 +1159,8 @@ bot_temp_insitu_gb <- temp_anom %>%
   geom_line(aes(x = Time, y = Value)) +
   geom_gls(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab("Temperature (°C)") +
-  ggtitle("GB Bot. temp. anomaly (in situ)") +
+  ylab("Temperature Anomaly (°C)") +
+  ggtitle("GB Bottom Temperature Anomaly") +
   scale_x_continuous(expand = c(0.01, 0.01)) +
     geom_hline(aes(yintercept = hline),
            size = hline.size,
@@ -1177,256 +1179,256 @@ bot_temp_insitu_gom +
 
 ```
 
-### Ocean Salinity & Stratification {.tabset .tabset-fade}
+<!-- ### Ocean Salinity & Stratification {.tabset .tabset-fade} -->
 
-#### Surface salinity
+<!-- #### Surface salinity -->
 
-```{r NW-surfsal}
-sal_anom <- oceansal_insitu %>% 
-  filter(EPU %in% c("GOM","GB")) %>% 
-  complete(Time = full_seq(min(oceansal_insitu$Time):max(oceansal_insitu$Time),1),
-           nesting(Var)) %>% 
-  mutate(hline = 0)
+<!-- ```{r NW-surfsal} -->
+<!-- sal_anom <- oceansal_insitu %>%  -->
+<!--   filter(EPU %in% c("GOM","GB")) %>%  -->
+<!--   complete(Time = full_seq(min(oceansal_insitu$Time):max(oceansal_insitu$Time),1), -->
+<!--            nesting(Var)) %>%  -->
+<!--   mutate(hline = 0) -->
 
-surf_sal_insitu_gom <- sal_anom %>%
-  filter(Var == "surface salinity anomaly in situ",
-         EPU == "GOM") %>% 
-    ggplot()+ #plot
-     annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line(aes(x = Time, y = Value)) +
-  geom_gls(aes(x = Time, y = Value)) +
-  geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab("Salinity (PSU)") +
-  ggtitle("GOM Surface salinity anomaly (in situ)") +
-  scale_x_continuous(expand = c(0.01, 0.01)) +
-    geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
+<!-- surf_sal_insitu_gom <- sal_anom %>% -->
+<!--   filter(Var == "surface salinity anomaly in situ", -->
+<!--          EPU == "GOM") %>%  -->
+<!--     ggplot()+ #plot -->
+<!--      annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line(aes(x = Time, y = Value)) + -->
+<!--   geom_gls(aes(x = Time, y = Value)) + -->
+<!--   geom_point(aes(x = Time, y = Value), size = 1) + -->
+<!--   ylab("Salinity (PSU)") + -->
+<!--   ggtitle("GOM Surface salinity anomaly (in situ)") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01)) + -->
+<!--     geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty) + -->
+<!--   theme_ts() + -->
+<!--   theme(strip.text=element_text(hjust=0), -->
+<!--         plot.title = element_text(size = 12)) -->
 
-surf_sal_insitu_gb <- sal_anom %>%
-  filter(Var == "surface salinity anomaly in situ",
-         EPU == "GB") %>% 
-    ggplot()+ #plot
-     annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line(aes(x = Time, y = Value)) +
-  geom_gls(aes(x = Time, y = Value)) +
-  geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab("Salinity (PSU)") +
-  ggtitle("GB Surface salinity anomaly (in situ)") +
-  scale_x_continuous(expand = c(0.01, 0.01)) +
-    geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
+<!-- surf_sal_insitu_gb <- sal_anom %>% -->
+<!--   filter(Var == "surface salinity anomaly in situ", -->
+<!--          EPU == "GB") %>%  -->
+<!--     ggplot()+ #plot -->
+<!--      annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line(aes(x = Time, y = Value)) + -->
+<!--   geom_gls(aes(x = Time, y = Value)) + -->
+<!--   geom_point(aes(x = Time, y = Value), size = 1) + -->
+<!--   ylab("Salinity (PSU)") + -->
+<!--   ggtitle("GB Surface salinity anomaly (in situ)") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01)) + -->
+<!--     geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty) + -->
+<!--   theme_ts() + -->
+<!--   theme(strip.text=element_text(hjust=0), -->
+<!--         plot.title = element_text(size = 12)) -->
 
-sal_oi <- oceansal_oi %>% 
-  filter(EPU %in% c("GOM","GB")) %>%
-  group_by(EPU, Var) %>% 
-  mutate(hline = mean(Value))
+<!-- sal_oi <- oceansal_oi %>%  -->
+<!--   filter(EPU %in% c("GOM","GB")) %>% -->
+<!--   group_by(EPU, Var) %>%  -->
+<!--   mutate(hline = mean(Value)) -->
 
-surf_sal_oi_GOM <- sal_oi %>%
-  filter(Var == "surface sal OI",
-         EPU == "GOM") %>% 
-    ggplot()+ #plot
-     annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line(aes(x = Time, y = Value)) +
-  geom_gls(aes(x = Time, y = Value)) +
-  geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab(expression("")) +
-  ggtitle("GOM Surface salinity (OI)") +
-  scale_x_continuous(expand = c(0.01, 0.01), limits = c(1977,2018)) +
-    geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
+<!-- surf_sal_oi_GOM <- sal_oi %>% -->
+<!--   filter(Var == "surface sal OI", -->
+<!--          EPU == "GOM") %>%  -->
+<!--     ggplot()+ #plot -->
+<!--      annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line(aes(x = Time, y = Value)) + -->
+<!--   geom_gls(aes(x = Time, y = Value)) + -->
+<!--   geom_point(aes(x = Time, y = Value), size = 1) + -->
+<!--   ylab(expression("")) + -->
+<!--   ggtitle("GOM Surface salinity (OI)") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01), limits = c(1977,2018)) + -->
+<!--     geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty) + -->
+<!--   theme_ts() + -->
+<!--   theme(strip.text=element_text(hjust=0), -->
+<!--         plot.title = element_text(size = 12)) -->
 
-surf_sal_oi_GB <- sal_oi %>%
-  filter(Var == "surface sal OI",
-         EPU == "GB") %>% 
-    ggplot()+ #plot
-     annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line(aes(x = Time, y = Value)) +
-  geom_gls(aes(x = Time, y = Value)) +
-  geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab(expression("")) +
-  ggtitle("GB Surface salinity (OI)") +
-  scale_x_continuous(expand = c(0.01, 0.01), limits = c(1977,2018)) +
-    geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
-
-
-surf_sal_insitu_gom + surf_sal_oi_GOM +
-  surf_sal_insitu_gb + surf_sal_oi_GB +
-  plot_layout(ncol =  2) &
-  theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
-
-```
-
-#### Bottom salinity
-
-```{r NE-botsal}
-
-bot_sal_insitu_gom <- sal_anom %>%
-  filter(Var == "bottom salinity anomaly in situ",
-         EPU == "GOM") %>% 
-    ggplot()+ #plot
-     annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line(aes(x = Time, y = Value)) +
-  geom_gls(aes(x = Time, y = Value)) +
-  geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab("Salinity (PSU)") +
-  ggtitle("GOM Bot. salinity anomaly (in situ)") +
-  scale_x_continuous(expand = c(0.01, 0.01)) +
-    geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
-
-bot_sal_insitu_gb <- sal_anom %>%
-  filter(Var == "bottom salinity anomaly in situ",
-         EPU == "GB") %>% 
-    ggplot()+ #plot
-     annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line(aes(x = Time, y = Value)) +
-  geom_gls(aes(x = Time, y = Value)) +
-  geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab("Salinity (PSU)") +
-  ggtitle("GB Bot. salinity anomaly (in situ)") +
-  scale_x_continuous(expand = c(0.01, 0.01)) +
-    geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
-
-bot_sal_oi_GOM <- sal_oi %>%
-  filter(Var == "bottom sal OI",
-         EPU == "GOM") %>% 
-    ggplot()+ #plot
-     annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line(aes(x = Time, y = Value)) +
-  geom_gls(aes(x = Time, y = Value)) +
-  geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab(expression("")) +
-  ggtitle("GOM Bot. salinity (OI)") +
-  scale_x_continuous(expand = c(0.01, 0.01), limits = c(1977,2018)) +
-    geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
-
-bot_sal_oi_GB <- sal_oi %>%
-  filter(Var == "bottom sal OI",
-         EPU == "GB") %>% 
-    ggplot()+ #plot
-     annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line(aes(x = Time, y = Value)) +
-  geom_gls(aes(x = Time, y = Value)) +
-  geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab(expression("")) +
-  ggtitle("GB Bot. salinity (OI)") +
-  scale_x_continuous(expand = c(0.01, 0.01), limits = c(1977,2018)) +
-    geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
+<!-- surf_sal_oi_GB <- sal_oi %>% -->
+<!--   filter(Var == "surface sal OI", -->
+<!--          EPU == "GB") %>%  -->
+<!--     ggplot()+ #plot -->
+<!--      annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line(aes(x = Time, y = Value)) + -->
+<!--   geom_gls(aes(x = Time, y = Value)) + -->
+<!--   geom_point(aes(x = Time, y = Value), size = 1) + -->
+<!--   ylab(expression("")) + -->
+<!--   ggtitle("GB Surface salinity (OI)") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01), limits = c(1977,2018)) + -->
+<!--     geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty) + -->
+<!--   theme_ts() + -->
+<!--   theme(strip.text=element_text(hjust=0), -->
+<!--         plot.title = element_text(size = 12)) -->
 
 
-bot_sal_insitu_gom + bot_sal_oi_GOM +
-  bot_sal_insitu_gb + bot_sal_oi_GB +
-  plot_layout(ncol =  2) &
-  theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
+<!-- surf_sal_insitu_gom + surf_sal_oi_GOM + -->
+<!--   surf_sal_insitu_gb + surf_sal_oi_GB + -->
+<!--   plot_layout(ncol =  2) & -->
+<!--   theme(plot.margin = unit(c(0, 0, 0, 0), "cm")) -->
 
-```
+<!-- ``` -->
 
-#### Stratification
+<!-- #### Bottom salinity -->
 
-```{r NE-strat, fig.width = 8, fig.asp = .35}
-strat <- ecodata::stratification %>% 
-  filter(EPU %in% c("GOM","GB")) %>% 
-  group_by(EPU) %>% 
-  mutate(hline = mean(Value, na.rm = T))
+<!-- ```{r NE-botsal} -->
 
-gom_strat <- strat %>% 
-  filter(EPU == "GOM") %>% 
-  ggplot(aes(x = Time, y = Value)) +
-       annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line() +
-  geom_point() +
-  geom_gls() +
-    ylab(expression("Stratification (kg m"^-3*")")) +
-  ggtitle("GOM Stratification") +
-  scale_x_continuous(expand = c(0.01, 0.01)) +
-    geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_ts() 
+<!-- bot_sal_insitu_gom <- sal_anom %>% -->
+<!--   filter(Var == "bottom salinity anomaly in situ", -->
+<!--          EPU == "GOM") %>%  -->
+<!--     ggplot()+ #plot -->
+<!--      annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line(aes(x = Time, y = Value)) + -->
+<!--   geom_gls(aes(x = Time, y = Value)) + -->
+<!--   geom_point(aes(x = Time, y = Value), size = 1) + -->
+<!--   ylab("Salinity (PSU)") + -->
+<!--   ggtitle("GOM Bot. salinity anomaly (in situ)") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01)) + -->
+<!--     geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty) + -->
+<!--   theme_ts() + -->
+<!--   theme(strip.text=element_text(hjust=0), -->
+<!--         plot.title = element_text(size = 12)) -->
 
-gb_strat <- strat %>% 
-  filter(EPU == "GB") %>% 
-  ggplot(aes(x = Time, y = Value)) +
-       annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line() +
-  geom_point() +
-  geom_gls() +
-    ylab(expression("Stratification (kg m"^-3*")")) +
-  ggtitle("GB Stratification") +
-  scale_x_continuous(expand = c(0.01, 0.01)) +
-    geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_ts() 
+<!-- bot_sal_insitu_gb <- sal_anom %>% -->
+<!--   filter(Var == "bottom salinity anomaly in situ", -->
+<!--          EPU == "GB") %>%  -->
+<!--     ggplot()+ #plot -->
+<!--      annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line(aes(x = Time, y = Value)) + -->
+<!--   geom_gls(aes(x = Time, y = Value)) + -->
+<!--   geom_point(aes(x = Time, y = Value), size = 1) + -->
+<!--   ylab("Salinity (PSU)") + -->
+<!--   ggtitle("GB Bot. salinity anomaly (in situ)") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01)) + -->
+<!--     geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty) + -->
+<!--   theme_ts() + -->
+<!--   theme(strip.text=element_text(hjust=0), -->
+<!--         plot.title = element_text(size = 12)) -->
 
-gom_strat + gb_strat + plot_layout(ncol = 2)
-```
+<!-- bot_sal_oi_GOM <- sal_oi %>% -->
+<!--   filter(Var == "bottom sal OI", -->
+<!--          EPU == "GOM") %>%  -->
+<!--     ggplot()+ #plot -->
+<!--      annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line(aes(x = Time, y = Value)) + -->
+<!--   geom_gls(aes(x = Time, y = Value)) + -->
+<!--   geom_point(aes(x = Time, y = Value), size = 1) + -->
+<!--   ylab(expression("")) + -->
+<!--   ggtitle("GOM Bot. salinity (OI)") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01), limits = c(1977,2018)) + -->
+<!--     geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty) + -->
+<!--   theme_ts() + -->
+<!--   theme(strip.text=element_text(hjust=0), -->
+<!--         plot.title = element_text(size = 12)) -->
+
+<!-- bot_sal_oi_GB <- sal_oi %>% -->
+<!--   filter(Var == "bottom sal OI", -->
+<!--          EPU == "GB") %>%  -->
+<!--     ggplot()+ #plot -->
+<!--      annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line(aes(x = Time, y = Value)) + -->
+<!--   geom_gls(aes(x = Time, y = Value)) + -->
+<!--   geom_point(aes(x = Time, y = Value), size = 1) + -->
+<!--   ylab(expression("")) + -->
+<!--   ggtitle("GB Bot. salinity (OI)") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01), limits = c(1977,2018)) + -->
+<!--     geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty) + -->
+<!--   theme_ts() + -->
+<!--   theme(strip.text=element_text(hjust=0), -->
+<!--         plot.title = element_text(size = 12)) -->
+
+
+<!-- bot_sal_insitu_gom + bot_sal_oi_GOM + -->
+<!--   bot_sal_insitu_gb + bot_sal_oi_GB + -->
+<!--   plot_layout(ncol =  2) & -->
+<!--   theme(plot.margin = unit(c(0, 0, 0, 0), "cm")) -->
+
+<!-- ``` -->
+
+<!-- #### Stratification -->
+
+<!-- ```{r NE-strat, fig.width = 8, fig.asp = .35} -->
+<!-- strat <- ecodata::stratification %>%  -->
+<!--   filter(EPU %in% c("GOM","GB")) %>%  -->
+<!--   group_by(EPU) %>%  -->
+<!--   mutate(hline = mean(Value, na.rm = T)) -->
+
+<!-- gom_strat <- strat %>%  -->
+<!--   filter(EPU == "GOM") %>%  -->
+<!--   ggplot(aes(x = Time, y = Value)) + -->
+<!--        annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line() + -->
+<!--   geom_point() + -->
+<!--   geom_gls() + -->
+<!--     ylab(expression("Stratification (kg m"^-3*")")) + -->
+<!--   ggtitle("GOM Stratification") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01)) + -->
+<!--     geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty) + -->
+<!--   theme_ts()  -->
+
+<!-- gb_strat <- strat %>%  -->
+<!--   filter(EPU == "GB") %>%  -->
+<!--   ggplot(aes(x = Time, y = Value)) + -->
+<!--        annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line() + -->
+<!--   geom_point() + -->
+<!--   geom_gls() + -->
+<!--     ylab(expression("Stratification (kg m"^-3*")")) + -->
+<!--   ggtitle("GB Stratification") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01)) + -->
+<!--     geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty) + -->
+<!--   theme_ts()  -->
+
+<!-- gom_strat + gb_strat + plot_layout(ncol = 2) -->
+<!-- ``` -->
 
 #### GOM Slope Water Proportions
 
