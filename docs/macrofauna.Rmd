@@ -71,9 +71,6 @@ ne_states <- ne_states(country = "united states of america",
                                       returnclass = "sf") %>%
   sf::st_transform(crs = crs)
 
-#high-res polygon of Maine
-new_england <- read_sf(gis.dir,"new_england")
-
 #EPU shapefile
 epu_sf <- ecodata::epu_sf %>% 
   filter(EPU %in% c("MAB","GB","GOM"))
@@ -364,7 +361,7 @@ gom_mafmc_props + gb_mafmc_props + plot_layout(ncol = 1)
 
 ```
 
-### Recruitment anomaly
+### Productivity anomaly
 
 ```{r MAB-recruitment, fig.cap = "Small fish per large fish biomass anomaly in the Mid-Atlantic Bight.",fig.width = 8, fig.height = 5}
 
@@ -487,7 +484,7 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
   return(p)
 }
 
-bar_dat <- ecodata::recruitment_anomaly %>% 
+bar_dat <- ecodata::productivity_anomaly %>% 
   filter(EPU == "MAB")
 
 # mafmc <-plot_stackbarcpts_single(YEAR = bar_dat$Time,
