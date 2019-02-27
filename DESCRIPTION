@@ -1,13 +1,13 @@
 Package: ecodata
 Title: Documentation of Ecosystem Indicator Reporting
-Version: 1.0
+Version: 0.0.0.9000
 Authors@R: 
     person(given = "Sean",
            family = "Hardison",
            role = c("aut", "cre"),
            email = "sean.hardison@noaa.gov")
-Description: A data reporting package for the State of the Ecosystem project 2018-2019.
-License: What license it uses
+Description: A data package for reporting on Northeast Continental Shelf ecosystem status and trends.
+License: GPL-2 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
