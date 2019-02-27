@@ -14,7 +14,7 @@
 \item Season: Season; \code{fall} or \code{spring}.
 }}
 \source{
-\url{https://www.nefsc.noaa.gov/AMAPPSviewer/}
+Data were sourced from \url{https://www.nefsc.noaa.gov/AMAPPSviewer/} on 12/14/2018.
 }
 \usage{
 hp_density
