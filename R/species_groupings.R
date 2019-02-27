@@ -1,0 +1,36 @@
+#' Species groupings
+#' 
+#' Species groupings from a variety of NEFSC EDAB products are included in this data set.
+#' 
+#' @format 1023 rows and 12 columns
+#' 
+#' \itemize{
+#'     \item COMNAME: Common name of listed species.
+#'     \item SVSPP: NEFSC BTS database species codes.
+#'     \item ITISSPP: Integrated Taxonomic Information System (ITIS) species identifier.
+#'     \item NESPP3: Species codes used in CFDBS.
+#'     \item SCINAME: Scientific name of listed species.
+#'     \item Fed_managed: Management body. One of \code{NEFMC}, \code{MAFMC}, \code{JOINT} (MAFMC/NEFMC), or \code{NA}.
+#'     \item SOE_17: Feeding guild groupings used in 2017-2018 SOE reports.
+#'     \item EMAX: Groupings adapted from Link et al. 2006.
+#'     \item RPATH: Groupings from Rpath - the R version of the Ecopath with Ecosim model.
+#'     \item SOE_18: Feeding guild groupings used in 2018-2019 SOE reports.
+#'     \item Garrison_Link: Groupings adapted from Garrison and Link 2000.
+#'     \item NEIEA: Simplified feeding guilds for NE-IEA website.
+#' }
+#' 
+#' @details 
+#' More information about these species groupings may be found at \url{https://noaa-edab.github.io/tech-memo/aggroups.html}.
+#' 
+#' @references 
+#' Garrison, Lance P, and Jason S Link. 2000. “Dietary guild structure of the fish community in the Northeast United
+#' States continental shelf ecosystem.” \emph{Marine Ecology Progress Series} 202:231–40.
+#' 
+#' Link, Jason S, Carolyn A Griswold, Elizabeth T Methratta, and Jessie Gunnard. 2006. Documentation
+#' for the energy modeling and analysis exercise (EMAX). US Department of Commerce,
+#' National Oceanic and Atmospheric Administration.
+#' 
+#' Lucey, S. 2019. Rpath - the R version of the Ecopath with Ecosim model. US Department of Commerce,
+#' National Oceanic and Atmospheric Administration. \url{https://github.com/slucey/RpathDev}.
+#' 
+"species_groupings"
