@@ -44,14 +44,14 @@ get_wind <- function(save_clean = F){
     gather(.,Var, Value, `total wind speed`) #convert to long
   
   wind_clean <- rbind(wind_clean1, total_wind_speed)
-  wind <- wind_clean %>%
+  ne_wind <- wind_clean %>%
     unite(., Var, c(Var, season), sep = " ") %>% #merge season into Var column
     group_by(Time = year(Time), EPU, Var, Units) %>% 
     dplyr::summarise(Value = mean(Value)) %>% 
     as.data.frame()
   
   if (save_clean){
-    usethis::use_data(wind, overwrite = T)
+    usethis::use_data(ne_wind, overwrite = T)
   } else {
     return(wind)
   }
