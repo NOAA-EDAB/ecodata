@@ -112,10 +112,7 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 ```{r TWS, echo = F}
 
-data.dir <- here::here("data")
-load(file.path(data.dir,"wind.rda"))
-
-all_winds <- wind %>% 
+all_winds <-ne_wind%>% 
   filter(str_detect(Var, "total wind speed|hcly|tke"),
          EPU == epu_abbr) %>% 
   group_by(Var) %>% 
@@ -871,7 +868,7 @@ ggplot(aes(x = Time, y = Value, group = Var)) +
 
 ```{r NE-TWS, echo = F, fig.width=8, fig.height=8}
 
-all_winds <- wind %>% 
+all_winds <-ne_wind%>% 
   filter(str_detect(Var, "total wind speed|hcly|tke"),
          EPU %in% c("GOM","GB")) %>% 
   group_by(Var) %>% 
