@@ -1761,7 +1761,7 @@ pp_anom_plt <- pp_anom %>%
   facet_wrap(EPU~.,ncol = 2)+
   ggtitle("Primary production anomaly ratio") +
     scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+
-    scale_y_continuous(limits = c(0.8,1.2)) +
+    scale_y_continuous(limits = c(0.65,1.35)) +
       geom_hline(aes(yintercept = hline,
                      group = Var),
            size = hline.size,

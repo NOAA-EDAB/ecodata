@@ -4,17 +4,22 @@
 
 library(dplyr)
 library(tidyr)
+library(stringr)
 
 raw.dir <- here::here("inst","extdata")
 
 get_narw <- function(save_clean = F){
   narw <- read.csv(file.path(raw.dir, "narw_numbers.csv")) %>% 
-    dplyr::select(-Parm) %>%
-    gather(.,Var,Value,-Year) %>% 
+    gather(.,Var,Value,-YEAR) %>% 
     mutate(Var = tolower(paste("right whale abundance",Var)),
            Units =  "n",
            EPU = "All") %>% 
-    dplyr::rename(Time = Year)
+    mutate(Var = ifelse(str_detect(Var, "median"),
+                        "right whale abundance median",
+                        ifelse(str_detect(Var, "lcl"),
+                               "right whale abundance lcl",
+                               "right whale abundance ucl"))) %>% 
+    dplyr::rename(Time = YEAR)
   
   if (save_clean){
     usethis::use_data(narw, overwrite = T)
