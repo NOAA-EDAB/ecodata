@@ -7,8 +7,9 @@
 for use in State of the Ecosystem (SOE) reporting. SOE reports are high-level overviews of ecosystem indicator status and trends occurring
 on the Northeast Continental Shelf. Unless otherwise stated, data are representative of specific Ecological Production Units (EPUs), referring to 
 the Mid-Atlantic Bight (MAB), Georges Bank (GB), Gulf of Maine (GOM), and Scotian Shelf (SS). SOE reports are developed for US Fishery
-Management Councils (FMCs), and therefore indicator data for Scotian Shelf are included when available, but this is not always the case. **Please
-consult** the [technical documentation](https://noaa-edab.github.io/tech-memo/) of SOE indicators before using these data sets.
+Management Councils (FMCs), and therefore indicator data for Scotian Shelf are included when available, but this is not always the case. 
+
+### Please consult the [technical documentation](https://noaa-edab.github.io/tech-memo/) of SOE indicators before using data sets.
 
 ## Using this package
 
