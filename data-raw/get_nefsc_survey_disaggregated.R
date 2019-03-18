@@ -3,19 +3,19 @@
 #This script was adapted from code written by Sean Lucey at the NEFSC. Note that you 
 #will need the latest survdat file to get this to run successfully. 
 
-data.dir <- here::here("data")
+data.dir <- here::here("inst","extdata")
 #-------------------------------------------------------------------------
 #Required packages
 #devtools::install_github("slucey/RSurvey/Survdat")
 
 library(data.table); library(rgdal); library(Survdat)
-library(dplyr)
+library(dplyr);library(sf);library(tidyr)
 #-------------------------------------------------------------------------------
 
 #Load raw data and get "strata" aka EPUs here
 load(file.path(data.dir, 'Survdat.RData'))
 
-strata <- ecodata::epu_sf
+strata <- ecodata::epu_sf %>% as("Spatial")
 
 #Generate area table
 strat.area <- getarea(strata, 'EPU')
@@ -105,7 +105,15 @@ nefsc_survey_disaggregated <-
   dplyr::rename(Time = YEAR) %>% 
   as.data.frame() %>% 
   left_join(.,managed,by = c("comname") ) %>% 
-  distinct()
+  distinct() %>% 
+  complete(Time = full_seq(min(.$Time):max(.$Time),1),
+           nesting(EPU, Fed_Managed,season, group, comname, SVSPP)) %>% 
+  dplyr::rename(Management = Fed_Managed,
+                `Feeding guild` = group, 
+                Season = season,
+                Proportion = Prop)
+  
+usethis::use_data(nefsc_survey_disaggregated, overwrite = TRUE)
 
 # 
 # fall.agg   <- fall[,   sum(kg.per.tow), by = c('YEAR', 'EPU', 'group')]

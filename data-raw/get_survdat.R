@@ -8,19 +8,13 @@ library(tidyr)
 
 raw.dir <- here::here("inst","extdata")
 
-get_survdat <- function(save_clean = F){
-  load(file.path(raw.dir, "Aggregate_Survey_biomass_19.Rdata"))
+load(file.path(raw.dir, "Aggregate_Survey_biomass_19.Rdata"))
   
-  nefsc_survey <- survey %>% 
+nefsc_survey <- survey %>% 
     dplyr::rename(EPU = Region) %>% 
-    dplyr::select(-Source)
+    dplyr::select(-Source)  %>%
+    distinct() %>% 
+    complete(Time = full_seq(min(.$Time):max(.$Time),1),
+                                     nesting(EPU,Var))
   
-  nefsc_survey <- nefsc_survey[!duplicated(nefsc_survey[c(1,3,4,5),])]
-  
-  if (save_clean){
-    usethis::use_data(nefsc_survey, overwrite = T)
-  } else {
-    return(nefsc_survey)
-  }
-  
-}
+usethis::use_data(nefsc_survey, overwrite = T)
