@@ -13,5 +13,5 @@
 #'     \item Time: Survey year.
 #' }
 #' 
-#' @details More information available at \url{https://noaa-edab.github.io/tech-memo/aquaculture.html}
+#' @details More information available at \url{https://noaa-edab.github.io/tech-doc/aquaculture.html}
 "aquaculture"

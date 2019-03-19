@@ -14,6 +14,6 @@
 #'     \item EPU: Ecological Production Unit (EPU) from which data were drawn. 
 #' }
 #' 
-#' @details These data are documented in full at \url{https://noaa-edab.github.io/tech-memo/bennet-indicator.html}.
+#' @details These data are documented in full at \url{https://noaa-edab.github.io/tech-doc/bennet-indicator.html}.
 #' 
 "bennet"

@@ -20,7 +20,7 @@
 #' }
 #' 
 #' @details 
-#' More information about these species groupings may be found at \url{https://noaa-edab.github.io/tech-memo/aggroups.html}.
+#' More information about these species groupings may be found at \url{https://noaa-edab.github.io/tech-doc/aggroups.html}.
 #' 
 #' @references 
 #' Garrison, Lance P, and Jason S Link. 2000. “Dietary guild structure of the fish community in the Northeast United

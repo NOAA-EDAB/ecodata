@@ -24,6 +24,6 @@ stock_status
 Stock status for MAFMC and NEFMC managed species in New England and the Mid-Atlantic.
 }
 \details{
-More information about this data set may be found at \url{https://noaa-edab.github.io/tech-memo/stockstatus.html}.
+More information about this data set may be found at \url{https://noaa-edab.github.io/tech-doc/stockstatus.html}.
 }
 \keyword{datasets}

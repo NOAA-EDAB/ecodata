@@ -22,8 +22,8 @@ feeding guild structure includes Apex Predator, Piscivore, Planktivore, Benthivo
 Data is presented for both fall and spring bottom trawls surveys.
 }
 \details{
-More information regarding the NEFSC Bottom Trawl Survey is available at \url{https://noaa-edab.github.io/tech-memo/survdat.html},
-and further details about feeding guild structure are available at \url{https://noaa-edab.github.io/tech-memo/aggroups.html}.
+More information regarding the NEFSC Bottom Trawl Survey is available at \url{https://noaa-edab.github.io/tech-doc/survdat.html},
+and further details about feeding guild structure are available at \url{https://noaa-edab.github.io/tech-doc/aggroups.html}.
 }
 \references{
 Garrison, Lance P, and Jason S Link. 2000. “Dietary guild structure of the fish community in the Northeast United States continental shelf ecosystem.”

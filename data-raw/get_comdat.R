@@ -2,7 +2,7 @@
 
 
 # These data were derived from the Commercial Fisheries Database Biological Sample. More information about
-# these data are available at https://noaa-edab.github.io/tech-memo/comdat.html
+# these data are available at https://noaa-edab.github.io/tech-doc/comdat.html
 
 library(dplyr)
 

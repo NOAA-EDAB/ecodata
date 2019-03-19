@@ -21,6 +21,6 @@ These data contain time series of number of oysters sold in Maryland, Virginia, 
 from annual state- and university-sponsored surveys of shellfish farmers.
 }
 \details{
-More information available at \url{https://noaa-edab.github.io/tech-memo/aquaculture.html}
+More information available at \url{https://noaa-edab.github.io/tech-doc/aquaculture.html}
 }
 \keyword{datasets}

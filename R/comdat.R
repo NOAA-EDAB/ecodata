@@ -15,5 +15,5 @@
 #'     \item Time: Year. 
 #' }
 #' 
-#' @details These data are fully documented at \url{https://noaa-edab.github.io/tech-memo/comdat.html}.
+#' @details These data are fully documented at \url{https://noaa-edab.github.io/tech-doc/comdat.html}.
 "comdat"

@@ -22,10 +22,10 @@ chl_pp
 These data are time series of remotely sensed chlorophyll \emph{a} (CHL) and primary production (PP) data from the Northeast Continental Shelf.
 Included are median and anomaly CHL and PP estimates for Ecological Production Units, along with subsets for CHL and PP by
 phytoplankton size class. Data from multiple sensors (OC-CCI, SeaWiFS, MODIS-Aqua) and algorithms (see
-\url{https://noaa-edab.github.io/tech-memo/chl-pp.html}) are presented.
+\url{https://noaa-edab.github.io/tech-doc/chl-pp.html}) are presented.
 }
 \details{
-Methods used to calculate median and anomaly data are available at \url{https://noaa-edab.github.io/tech-memo/chl-pp.html}. Methods
+Methods used to calculate median and anomaly data are available at \url{https://noaa-edab.github.io/tech-doc/chl-pp.html}. Methods
 used to find phytoplankton size-class information are forthcoming.
 }
 \keyword{datasets}

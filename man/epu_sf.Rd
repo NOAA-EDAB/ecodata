@@ -17,6 +17,6 @@ Councils and is generally not considered in State of the Ecosystem Reports.
 }
 \details{
 More information about the delineation of Ecological Production Units can be found at
-\url{https://noaa-edab.github.io/tech-memo/epu.html}.
+\url{https://noaa-edab.github.io/tech-doc/epu.html}.
 }
 \keyword{datasets}
