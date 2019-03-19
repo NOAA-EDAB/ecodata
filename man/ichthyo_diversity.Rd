@@ -23,7 +23,7 @@ in this data set.
 }
 \details{
 \code{NaN} values were included in the data where there were too few sampling stations to be included in diversity calculations.
-More information about these data are available at \url{https://noaa-edab.github.io/tech-memo/ichthyoplankton-diversity.html}.
+More information about these data are available at \url{https://noaa-edab.github.io/tech-doc/ichthyoplankton-diversity.html}.
 }
 \references{
 Walsh, H. J., Richardson, D. E., Marancik, K. E., & Hare, J. A. (2015). Long-term changes in the distributions of larval and adult fish in the northeast US shelf ecosystem. \emph{PloS one}, 10(9), e0137382.

@@ -29,6 +29,6 @@ recreational seafood (number of fish caught), recreational anglers (number of an
 catch (effective Shannon index), and recreational fleet effort diversity across modes (effective Shannon index).
 
 More information about each of these indicators is available at
-\url{https://noaa-edab.github.io/tech-memo/recreational-fishing-indicators.html}.
+\url{https://noaa-edab.github.io/tech-doc/recreational-fishing-indicators.html}.
 }
 \keyword{datasets}

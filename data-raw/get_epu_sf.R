@@ -1,6 +1,6 @@
 # A function to process and make ecological production unit (EPU) shapefiles available in the ecodata package. 
 
-# Read more about the delineation of EPUs at https://noaa-edab.github.io/tech-memo/epu.html
+# Read more about the delineation of EPUs at https://noaa-edab.github.io/tech-doc/epu.html
 
 
 library(sf)

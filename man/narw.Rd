@@ -22,7 +22,7 @@ Data include abundance estimates for the North Atlantic right whale (NARW) provi
 Branch of the NEFSC. Abundance was estimated following the methodology of Pace et. al 2017.
 }
 \details{
-More information about these data may be found \url{https://noaa-github.io/tech-memo/right-whale-abundance.html}.
+More information about these data may be found \url{https://noaa-github.io/tech-doc/right-whale-abundance.html}.
 }
 \references{
 Pace, R. M., Corkeron, P. J., Krauss, S. D. (2017) State-space mark-recapture estimates reveal a recent decline in abundance of North Atlantic right whales.

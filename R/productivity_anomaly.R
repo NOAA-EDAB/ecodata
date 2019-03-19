@@ -14,7 +14,7 @@
 #' }
 #' 
 #' @details Detailed information regarding the derivation of this indicator are present at
-#' \url{https://noaa-edab.github.io/tech-memo/fish-productivity-indicator.html}.
+#' \url{https://noaa-edab.github.io/tech-doc/fish-productivity-indicator.html}.
 #' 
 #' @references
 #' Perretti, Charles T., et al. "Regime shifts in fish recruitment on the Northeast US Continental Shelf." \emph{Marine Ecology Progress Series} 574 (2017): 1-11.

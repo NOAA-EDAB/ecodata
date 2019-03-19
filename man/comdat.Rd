@@ -23,6 +23,6 @@ grouped by feeding guild and Ecological Production Unit (EPU). Data are presente
 all landings) fisheries, and were derived from the Commercial Fisheries Database Biological Sample (CFDBS).
 }
 \details{
-These data are fully documented at \url{https://noaa-edab.github.io/tech-memo/comdat.html}.
+These data are fully documented at \url{https://noaa-edab.github.io/tech-doc/comdat.html}.
 }
 \keyword{datasets}

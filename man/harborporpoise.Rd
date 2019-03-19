@@ -25,6 +25,6 @@ Reference Documents and marine mammal stock assessments.
 }
 \details{
 Links to source data, further data definitions, and extended methodology are available at
-\url{https://noaa-edab.github.io/tech-memo/harbor-porpoise-bycatch.html}
+\url{https://noaa-edab.github.io/tech-doc/harbor-porpoise-bycatch.html}
 }
 \keyword{datasets}

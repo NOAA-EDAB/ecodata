@@ -9,5 +9,5 @@
 #' @format This data set is a \code{sf} object with 4 features and 3 fields. 
 #' 
 #' @details More information about the delineation of Ecological Production Units can be found at 
-#' \url{https://noaa-edab.github.io/tech-memo/epu.html}.
+#' \url{https://noaa-edab.github.io/tech-doc/epu.html}.
 "epu_sf"
