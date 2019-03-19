@@ -17,6 +17,6 @@
 #' }
 #' 
 #' @details 
-#' More information about this data set may be found at \url{https://noaa-edab.github.io/tech-memo/stockstatus.html}.
+#' More information about this data set may be found at \url{https://noaa-edab.github.io/tech-doc/stockstatus.html}.
 #' 
 "stock_status"

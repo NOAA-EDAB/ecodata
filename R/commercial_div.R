@@ -16,5 +16,5 @@
 #' }
 #' 
 #' @details More information, including full variable definitions for diversity metrics, are available
-#' at \url{https://noaa-edab.github.io/tech-memo/catch-and-fleet-diversity.html}.
+#' at \url{https://noaa-edab.github.io/tech-doc/catch-and-fleet-diversity.html}.
 "commercial_div"

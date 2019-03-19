@@ -14,7 +14,7 @@
 #'     \item EPU: Ecological Production Unit (EPU).
 #' }
 #' 
-#' @details More information about these data may be found \url{https://noaa-github.io/tech-memo/right-whale-abundance.html}.
+#' @details More information about these data may be found \url{https://noaa-github.io/tech-doc/right-whale-abundance.html}.
 #' 
 #' @references 
 #' 

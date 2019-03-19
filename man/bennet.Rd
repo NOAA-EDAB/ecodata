@@ -22,6 +22,6 @@ along with their sum totals for each year and species groupings (i.e. the Bennet
 metric allows for examining the drivers of revenue change by Ecological Production Unit (EPU).
 }
 \details{
-These data are documented in full at \url{https://noaa-edab.github.io/tech-memo/bennet-indicator.html}.
+These data are documented in full at \url{https://noaa-edab.github.io/tech-doc/bennet-indicator.html}.
 }
 \keyword{datasets}

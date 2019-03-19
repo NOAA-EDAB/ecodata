@@ -25,5 +25,5 @@
 #' (MCD) level. Commercial fisheries data were pulled from the Commercial fisheries database (CFDBS).
 #' The recreational fishing information is publicly accessible through the Marine Recreational Information
 #' Program (MRIP). More information including processing and indicator derivation steps are available at
-#' \url{https://noaa-edab.github.io/tech-memo/fishery-reliance-and-social-vulnerability.html}.
+#' \url{https://noaa-edab.github.io/tech-doc/fishery-reliance-and-social-vulnerability.html}.
 "eng_rel"

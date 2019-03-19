@@ -1,6 +1,6 @@
 # Processing single-species stock mortality and biomass data
 
-# Read more about this data at https://noaa-edab.github.io/tech-memo/stockstatus.html
+# Read more about this data at https://noaa-edab.github.io/tech-doc/stockstatus.html
 
 library(dplyr)
 library(tidyr)

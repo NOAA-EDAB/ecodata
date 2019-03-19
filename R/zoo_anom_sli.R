@@ -20,7 +20,7 @@
 #' of \emph{Calanus finmarchicus}. This index tracks the overall dominance of the small bodied copepods
 #' relative to the largest copepod in the NEUS region, \emph{Calanus finmarchicus}.
 #' 
-#' More information about these indicators are available at \url{https://noaa-edab.github.io/tech-memo/zooabund.html}.
+#' More information about these indicators are available at \url{https://noaa-edab.github.io/tech-doc/zooabund.html}.
 #' 
 #' @references 
 #' Kane, Joseph. 2007. “Zooplankton abundance trends on Georges Bank, 1977-2004.” \emph{ICES Journal of Marine Science} 64 (5):909–19.

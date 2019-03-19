@@ -1,6 +1,6 @@
 # Commercial and recreational engagement and reliance
 
-#More information about these data are available at https://noaa-edab.github.io/tech-memo/fishery-reliance-and-social-vulnerability.html
+#More information about these data are available at https://noaa-edab.github.io/tech-doc/fishery-reliance-and-social-vulnerability.html
 
 library(dplyr)
 library(tidyr)
