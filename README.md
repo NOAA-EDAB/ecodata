@@ -9,7 +9,7 @@ on the Northeast Continental Shelf. Unless otherwise stated, data are representa
 the Mid-Atlantic Bight (MAB), Georges Bank (GB), Gulf of Maine (GOM), and Scotian Shelf (SS). SOE reports are developed for US Fishery
 Management Councils (FMCs), and therefore indicator data for Scotian Shelf are included when available, but this is not always the case. 
 
-### Please consult the [technical documentation](https://noaa-edab.github.io/tech-memo/) of SOE indicators before using data sets.
+### Please consult the [technical documentation](https://noaa-edab.github.io/tech-doc/) of SOE indicators before using data sets.
 
 ## Using this package
 
@@ -29,7 +29,7 @@ Management Councils (FMCs), and therefore indicator data for Scotian Shelf are i
 Also included in this package is a "geom" extension of `ggplot2` for assessing trends in time series. This function fits four trend models to each 
 series, uses AICc to select the best model fit, and then implements a likelihood-ratio test to determine if a trend is present. If a significant
 trend is present (*P* < 0.05), then the trend line is plotted with the series. By default, a purple line color is assigned to negative trends and orange to positive trends. More detailed information about this method is available
-[here](https://noaa-edab.github.io/tech-memo/trend-analysis.html). 
+[here](https://noaa-edab.github.io/tech-doc/trend-analysis.html). 
 
 `geom_gls()` follows the same rules as other `ggplot` stats/geoms. For example,
 
