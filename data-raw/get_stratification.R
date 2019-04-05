@@ -6,7 +6,7 @@
 library(dplyr)
 library(tidyr)
 
-raw.dir <- here::here("inst","extdata")
+raw.dir <- here::here("data-raw")
 
 get_stratification <- function(save_clean = F){
   

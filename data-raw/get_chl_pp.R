@@ -4,7 +4,7 @@ library(ggplot2)
 library(stringr)
 
 
-raw.dir <- here::here("inst","extdata")
+raw.dir <- here::here("data-raw")
 
 
 ppd <- read.csv(file.path(raw.dir,"SOE_V2019_2-NES_ECOREGIONS-PPD-STATS_ANOMS-SEAWIFS_MODIS.csv")) %>% 

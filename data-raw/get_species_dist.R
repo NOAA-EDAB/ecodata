@@ -3,7 +3,7 @@
 library(dplyr)
 library(tidyr)
 
-raw.dir <- here::here("inst","extdata")
+raw.dir <- here::here("data-raw")
 
 get_species_dist <- function(save_clean = F){
 

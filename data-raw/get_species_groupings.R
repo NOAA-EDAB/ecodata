@@ -43,7 +43,7 @@
 # More information about the NE-IEA program is available here:
 # http://integratedecosystemassessment.noaa.gov
 
-raw.dir <- here::here("inst","extdata")
+raw.dir <- here::here("data-raw")
 
 get_species_groupings <- function(save_clean = F){
   species_groupings <- read.csv(file.path(raw.dir,"species_groupings_V2.csv"),

@@ -3,7 +3,7 @@
 library(dplyr)
 library(tidyr)
 
-raw.dir <- here::here("inst","extdata")
+raw.dir <- here::here("data-raw")
 
 get_mass_survey <- function(save_clean){
   

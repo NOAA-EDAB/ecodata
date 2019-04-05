@@ -11,7 +11,7 @@ library(dplyr)
 library(tidyr)
 
 #Get raw
-raw.dir <- here::here("inst","extdata") #input raw
+raw.dir <- here::here("data-raw") #input raw
 
 get_slopewater <- function(save_clean = F){
   

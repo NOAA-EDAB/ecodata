@@ -4,7 +4,7 @@ library(dplyr)
 library(tidyr)
 library(stringr)
 
-raw.dir <- here::here("inst","extdata")
+raw.dir <- here::here("data-raw")
 
 get_rec <- function(save_clean = F){
   

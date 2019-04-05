@@ -32,7 +32,7 @@ library(tidyr)
 library(readxl)
 library(stringr)
 
-raw.dir <- here::here("inst","extdata")
+raw.dir <- here::here("data-raw")
 
 get_inshore_survey <- function(save_clean = F){
   

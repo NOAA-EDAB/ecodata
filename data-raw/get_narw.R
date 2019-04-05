@@ -6,7 +6,7 @@ library(dplyr)
 library(tidyr)
 library(stringr)
 
-raw.dir <- here::here("inst","extdata")
+raw.dir <- here::here("data-raw")
 
 get_narw <- function(save_clean = F){
   narw <- read.csv(file.path(raw.dir, "narw_numbers.csv")) %>% 

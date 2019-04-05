@@ -14,7 +14,7 @@ library(dplyr)
 library(tidyr)
 
 #Get raw data
-raw.dir <- here::here("inst","extdata")
+raw.dir <- here::here("data-raw")
 
 
 get_commontern <- function(save_clean = F){

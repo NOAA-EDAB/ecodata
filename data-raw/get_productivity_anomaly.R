@@ -4,7 +4,7 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 
-raw.dir <- here::here("inst","extdata")
+raw.dir <- here::here("data-raw")
 
 load(file.path(raw.dir,"dat_spec_rec_forSOE.Rdata"))
 load(file.path(raw.dir,"dat_spec_rec_epu_forSOE.Rdata"))

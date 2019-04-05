@@ -7,7 +7,7 @@
 library(dplyr)
 
 
-raw.dir <- here::here("inst","extdata")
+raw.dir <- here::here("data-raw")
 
 get_comdat <- function(save_clean = F){
   
