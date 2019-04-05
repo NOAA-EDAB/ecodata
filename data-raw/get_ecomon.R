@@ -37,7 +37,7 @@ library(sf)
 library(lubridate)
 
 #Data directories
-raw.dir <- here::here("inst","extdata")
+raw.dir <- here::here("data-raw")
 gis.dir <- here::here("inst","extdata","gis")
 
 #CRS

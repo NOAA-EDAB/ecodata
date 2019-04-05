@@ -5,7 +5,7 @@ library(tidyr)
 library(readxl)
 library(stringr)
 
-raw.dir <- here::here("inst","extdata")
+raw.dir <- here::here("data-raw")
 
 ichthyo_spec_counts <- read_excel(file.path(raw.dir,"NEFSCIchthyoplanktonSpeciesCount_v3_3.xlsx")) %>% 
   dplyr::select(-Source) %>% 

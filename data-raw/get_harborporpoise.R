@@ -5,7 +5,7 @@
 library(dplyr)
 library(tidyr)
 
-raw.dir <- here::here("inst","extdata")
+raw.dir <- here::here("data-raw")
 
 #HP bycatch time series estimates------------------------------------------------------
 get_harborporpoise <- function(save_clean = F){

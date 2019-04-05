@@ -7,7 +7,7 @@ library(dplyr)
 library(tidyr)
 library(lubridate)
 
-raw.dir <- here::here("inst","extdata")
+raw.dir <- here::here("data-raw")
 
 get_gsi <- function(save_clean = F){
 

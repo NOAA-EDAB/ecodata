@@ -8,7 +8,7 @@ library(tidyr)
 library(lubridate)
 
 #Get raw
-raw.dir <- here::here("inst","extdata") #input raw
+raw.dir <- here::here("data-raw") #input raw
 
 
 get_oceansal_insitu <- function(save_clean = F){

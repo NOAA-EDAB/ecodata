@@ -10,7 +10,7 @@
 library(dplyr)
 library(tidyr)
 
-raw.dir <- here::here("inst","extdata")
+raw.dir <- here::here("data-raw")
 
 get_aquaculture <- function(save_clean = F){
   aquaculture <- read.csv(file.path(raw.dir,"mab_oyster_harvest.csv"))

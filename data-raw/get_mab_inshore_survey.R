@@ -5,7 +5,7 @@ library(dplyr)
 library(stringr)
 library(tidyr)
 
-raw.dir <- here::here("inst","extdata")
+raw.dir <- here::here("data-raw")
 
 get_mab_inshore_survey <- function(save_clean = F){
   mab_inshore_survey <- read_excel(file.path(raw.dir,

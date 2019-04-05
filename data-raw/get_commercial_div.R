@@ -9,7 +9,7 @@ library(dplyr)
 library(tidyr)
 library(stringr)
 
-raw.dir <- here::here("inst","extdata")
+raw.dir <- here::here("data-raw")
 
 get_commercial_div <- function(save_clean = F){
   commercial_div <- read.csv(file.path(raw.dir, "Commercial_Diversity_2018.csv")) %>%

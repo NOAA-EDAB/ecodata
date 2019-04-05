@@ -4,7 +4,7 @@ library(dplyr)
 library(tidyr)
 
 
-raw.dir <- here::here("inst","extdata")
+raw.dir <- here::here("data-raw")
 
 get_ches_bay_wq <- function(save_clean =F){
   ches_bay_wq <- read.csv(file.path(raw.dir, "Attainment_indicator.csv")) %>% 

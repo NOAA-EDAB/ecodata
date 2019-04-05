@@ -3,7 +3,7 @@
 #This script was adapted from code written by Sean Lucey at the NEFSC. Note that you 
 #will need the latest survdat file to get this to run successfully. 
 
-data.dir <- here::here("inst","extdata")
+data.dir <- here::here("data-raw")
 #-------------------------------------------------------------------------
 #Required packages
 #devtools::install_github("slucey/RSurvey/Survdat")
