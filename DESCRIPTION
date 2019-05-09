@@ -15,14 +15,15 @@ Date: 2018-10-24
 Suggests: 
     knitr,
     rmarkdown,
-	dplyr,
-	stringr,
-	tidyr,
-	ggplot2,
-	lubridate,
-	tufte,
-	here,
-	usethis,
-	zoo
+    dplyr,
+    stringr,
+    tidyr,
+    lubridate,
+    tufte,
+    here,
+    usethis,
+    zoo
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
+Imports: 
+    ggplot2
