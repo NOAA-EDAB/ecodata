@@ -10,15 +10,16 @@ Description: A data package for reporting on Northeast Continental Shelf ecosyst
 License: CC0
 Encoding: UTF-8
 LazyData: true
+LazyLoad: Yes
 Roxygen: list(markdown = TRUE)
 Date: 2018-10-24
+Imports: ggplot2 
 Suggests: 
-    knitr,
-    rmarkdown,
+  knitr,
+  rmarkdown,
 	dplyr,
 	stringr,
 	tidyr,
-	ggplot2,
 	lubridate,
 	tufte,
 	here,
