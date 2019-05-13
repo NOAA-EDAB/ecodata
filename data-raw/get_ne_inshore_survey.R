@@ -55,7 +55,8 @@ get_ne_inshore_survey <- function(save_clean = F){
     mutate(Var = "Maine and NH inshore survey species")
   
   if (save_clean){
-    usethis::use_data(ne_inshore_survey, ne_inshore_survey_species, overwrite = T)
+    usethis::use_data(ne_inshore_survey, overwrite = T)
+    usethis::use_data(ne_inshore_survey_species, overwrite = T)
   } else {
     return(list(ne_inshore_survey, ne_inshore_survey_species))
   }
