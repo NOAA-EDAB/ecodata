@@ -1,5 +1,6 @@
 # Process North Atlantic Oscillation time series
-
+# Data grabbed from here https://climatedataguide.ucar.edu/climate-data/hurrell-north-atlantic-oscillation-nao-index-station-based
+# Download Data DJFM Station
 
 library(dplyr)
 library(tidyr)
@@ -11,13 +12,11 @@ raw.dir <- here::here("data-raw") #input raw
 
 
 get_nao <- function(save_clean = F){
-  
-  nao <- read.csv(file.path(raw.dir, "nao_station_djfm.csv")) %>% 
-    dplyr::rename(Time = Hurrell.Station.Based.DJFM.NAO.Index,
-                  Value = X) %>% 
+
+  nao <- read.csv(file.path(raw.dir, "NAO_index.csv")) %>%
     mutate(Var = "north atlantic oscillation",
            Units = "unitless",
-           EPU = "All") %>% 
+           EPU = "All") %>%
     as.data.frame()
 
   if (save_clean){
@@ -26,3 +25,4 @@ get_nao <- function(save_clean = F){
     return(nao)
   }
 }
+get_nao(save_clean = T)

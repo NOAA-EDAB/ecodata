@@ -2,33 +2,35 @@
 
 #More information about these data are available at https://noaa-edab.github.io/tech-doc/fishery-reliance-and-social-vulnerability.html
 
-library(dplyr)
-library(tidyr)
+library(tidyverse)
 
 
 raw.dir <- here::here("data-raw")
 
 get_eng_rel <- function(save_clean = F){
-  
-  ne <- read.csv(file.path(raw.dir,"Com_n_Rec_Indicators_New_England_121818.csv"))
-  mab <- read.csv(file.path(raw.dir,"Com_n_Rec_Indicators_Mid-Atlantic_121818.csv"))
-  
+
+  ne <- read.csv(file.path(raw.dir,"ComEng_NE.csv")) %>%
+    mutate(EPU = c("GOM"))
+  mab <- read.csv(file.path(raw.dir,"ComEng_MA.csv")) %>%
+    mutate(EPU = c("MAB"))
+
   #Process
   eng_rel <- rbind(ne,mab) %>%
-    dplyr::select(ComEng_NE16_ct, ComRel_NE16_ct,
-                  RecEng_NE16_ct, RecRel_NE16_ct,
-                  PRIMARY_LONGITUDE, PRIMARY_LATITUDE,
-                  REGION, STATEABBR) %>% 
-    mutate(ComEng_NE16_ct = factor(ComEng_NE16_ct))
-  
+    gather(key = "Time", value = "Value", X2004:X2018) %>%
+    rename(Var = Community) %>%
+    mutate(Units = c("unitless"),
+           Time = as.integer(gsub('[a-zA-Z]', '', eng_rel$Time))) %>%
+    dplyr::select(-c(X1.std))
+
+
   if (save_clean){
     usethis::use_data(eng_rel, overwrite = T)
   } else {
     return(eng_rel)
   }
-  
-}
 
+}
+get_eng_rel(save_clean = T)
 
 
 

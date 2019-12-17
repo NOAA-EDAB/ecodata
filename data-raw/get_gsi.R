@@ -11,15 +11,16 @@ raw.dir <- here::here("data-raw")
 
 get_gsi <- function(save_clean = F){
 
-  gsi <- read.csv(file.path(raw.dir, "GSI.csv")) %>% 
-    dplyr::rename(Time = Year, Value = GSI) %>% 
+  gsi <- read.csv(file.path(raw.dir, "GSI.csv")) %>%
+    dplyr::rename(Time = Month, Value = GSI) %>%
     mutate(Var = "gulf stream index",
            Units = "latitude anomaly",
            EPU = "All")
-  
+
   if (save_clean){
     usethis::use_data(gsi, overwrite = T)
   } else {
     return(gsi)
   }
 }
+get_gsi(save_clean = T)

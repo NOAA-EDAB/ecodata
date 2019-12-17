@@ -10,13 +10,13 @@ library(dplyr)
 raw.dir <- here::here("data-raw")
 
 get_comdat <- function(save_clean = F){
-  
-  load(file.path(raw.dir,"Commercial_data_pull_19.RData"))
-  
-  commercial <- commercial %>% 
-    dplyr::rename(EPU = Region) %>% 
+
+  load(file.path(raw.dir, "Commercial_data_pull.RData"))
+
+  comdat <- commercial %>%
+    dplyr::rename(EPU = Region) %>%
     dplyr::select(-Source)
-  
+
   if (save_clean){
     usethis::use_data(comdat, overwrite = T)
   } else {
@@ -24,6 +24,6 @@ get_comdat <- function(save_clean = F){
   }
 
 }
-
+get_comdat(save_clean = T)
 
 

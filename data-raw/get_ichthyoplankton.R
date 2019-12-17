@@ -1,4 +1,4 @@
-#Ichthyoplankton species counts, diversity, and abundance
+#Ichthyoplankton diversity
 
 library(dplyr)
 library(tidyr)
@@ -7,38 +7,24 @@ library(stringr)
 
 raw.dir <- here::here("data-raw")
 
-ichthyo_spec_counts <- read_excel(file.path(raw.dir,"NEFSCIchthyoplanktonSpeciesCount_v3_3.xlsx")) %>% 
-  dplyr::select(-Source) %>% 
-  dplyr::rename(Time = Year,
-                EPU = Region) %>% 
-  mutate(Var = paste(Season,str_replace_all(Var, "_", " ")),
-         EPU = ifelse(EPU == "all", "All", 
-                      EPU)) %>% 
-  dplyr::select(-Season) %>% 
-  mutate(Value  = as.numeric(Value))
 
-ichthyo_diversity <- read_excel(file.path(raw.dir,"NEFSCIchthyoplanktonDiversity_v3_3.xlsx")) %>% 
-  dplyr::select(-Source) %>% 
-  dplyr::rename(Time = Year,
-                EPU = Region) %>% 
-  mutate(Var = paste(Season,str_replace_all(Var, "_", " ")),
-         EPU = ifelse(EPU == "all", "All", 
-                      EPU)) %>% 
-  dplyr::select(-Season) %>% 
-  mutate(Value  = as.numeric(Value)) %>% 
-  rbind(.,ichthyo_spec_counts)
+get_ichthyo_diversity <- function(save_clean = F){
 
-usethis::use_data(ichthyo_diversity, overwrite = T)
+  ichthyo_diversity <- read_excel(file.path(raw.dir,"NEFSCIchthyoplankton_v3_6.xlsx")) %>%
+    dplyr::select(-Source) %>%
+    dplyr::rename(Time = Year,
+                  EPU = Region) %>%
+    mutate(Value  = as.numeric(Value))
 
-# ichthyo_abundance <- read_excel(file.path(raw.dir,"NEFSCIchthyoplanktonAbundance_v3_3.xlsx")) %>% 
-#   dplyr::select(-Source) %>% 
-#   dplyr::rename(Time = Year,
-#                 EPU = Region) %>% 
-#   mutate(Var = paste(Season,str_replace_all(Var, "_", " ")),
-#          EPU = ifelse(EPU == "all", "All", 
-#                       EPU)) %>% 
-#   tidyr::gather(.,Var,Value,-Time,-Season,-Var,-Units,-EPU) %>% 
-#   unite(.,Var, c("Season","Var"), sep = " ") %>% 
-#   mutate(Value  = as.numeric(Value))
-# 
-# usethis::use_data(ichthyo_abundance, overwrite = T)
+  if (save_clean){
+    usethis::use_data(ichthyo_diversity, overwrite = T)
+  } else {
+    return(ichthyo_diversity)
+  }
+}
+get_ichthyo_diversity(save_clean = T)
+
+
+
+
+

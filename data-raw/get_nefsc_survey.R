@@ -1,7 +1,7 @@
-#Set up for finding survey proportions
+ #Set up for finding survey proportions
 
-#This script was adapted from code written by Sean Lucey at the NEFSC. Note that you 
-#will need the latest survdat file to get this to run successfully. 
+#This script was adapted from code written by Sean Lucey at the NEFSC. Note that you
+#will need the latest survdat file to get this to run successfully.
 
 data.dir <- here::here("data-raw")
 #-------------------------------------------------------------------------
@@ -69,16 +69,16 @@ spring.sum[, kg.per.tow := V1 / ntows]
 spring.mean <- spring.sum[, list(YEAR, EPU, SVSPP, kg.per.tow)]
 
 #get species groupings
-groups <- ecodata::species_groupings %>% 
+groups <- ecodata::species_groupings %>%
   dplyr::select(group = SOE_18, SVSPP,
-                comname = COMNAME) %>% 
-  filter(!is.na(SVSPP)) %>% 
+                comname = COMNAME) %>%
+  filter(!is.na(SVSPP)) %>%
   as.data.table()
 
 #Aggregate by conceptual model groupings
-fall   <- merge(fall.mean,   unique(groups[, list(SVSPP, group, comname)]), 
+fall   <- merge(fall.mean,   unique(groups[, list(SVSPP, group, comname)]),
                 by = 'SVSPP', all.x = T)
-spring <- merge(spring.mean, unique(groups[, list(SVSPP, group, comname)]), 
+spring <- merge(spring.mean, unique(groups[, list(SVSPP, group, comname)]),
                 by = 'SVSPP', all.x = T)
 
 #Fix NA group to other
@@ -89,30 +89,30 @@ spring[is.na(group), group := 'Other']
 spring$season <- "spring"
 fall$season <- "fall"
 
-survey_biomass <- rbind(spring, fall) %>% 
+survey_biomass <- rbind(spring, fall) %>%
   filter(!is.na(SVSPP))
 
-managed <- ecodata::species_groupings %>% 
+managed <- ecodata::species_groupings %>%
   dplyr::select(comname = COMNAME, Fed_Managed)
 
-nefsc_survey_disaggregated <- 
-  survey_biomass %>%  
-  group_by(EPU, group, season, YEAR) %>% 
-  mutate(Total = sum(kg.per.tow)) %>% 
-  mutate(Prop = kg.per.tow/Total) %>% 
+nefsc_survey_disaggregated <-
+  survey_biomass %>%
+  group_by(EPU, group, season, YEAR) %>%
+  mutate(Total = sum(kg.per.tow)) %>%
+  mutate(Prop = kg.per.tow/Total) %>%
   filter(!group %in% c("Apex Predator","Other"),
-         EPU != "SS") %>% 
-  dplyr::rename(Time = YEAR) %>% 
-  as.data.frame() %>% 
-  left_join(.,managed,by = c("comname") ) %>% 
-  distinct() %>% 
+         EPU != "SS") %>%
+  dplyr::rename(Time = YEAR) %>%
+  as.data.frame() %>%
+  left_join(.,managed,by = c("comname") ) %>%
+  distinct() %>%
   complete(Time = full_seq(min(.$Time):max(.$Time),1),
-           nesting(EPU, Fed_Managed,season, group, comname, SVSPP)) %>% 
+           nesting(EPU, Fed_Managed,season, group, comname, SVSPP)) %>%
   dplyr::rename(Management = Fed_Managed,
-                `Feeding guild` = group, 
+                `Feeding guild` = group,
                 Season = season,
                 Proportion = Prop)
-  
+
 usethis::use_data(nefsc_survey_disaggregated, overwrite = TRUE)
 
 ## GET AGGREGATED SURVEY DATA--------------------------------------------------------
@@ -143,9 +143,9 @@ spring.tot <- mutate(spring.tot, Season = "Spring")
 agg_survey <- rbind(spring.tot, fall.tot)
 
 #Merge into one data set
-nefsc_survey <- agg_survey %>% 
-  dplyr::select(Time, EPU = Region, Var, Units, Value)  %>% 
-  distinct() %>% 
+nefsc_survey <- agg_survey %>%
+  dplyr::select(Time, EPU = Region, Var, Units, Value)  %>%
+  distinct() %>%
   complete(Time = full_seq(min(.$Time):max(.$Time),1),
            nesting(EPU,Var))
 
