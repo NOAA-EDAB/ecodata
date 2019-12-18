@@ -1540,6 +1540,33 @@ knitr::include_graphics(file.path(image.dir,"GB_Heatwave_timeseries.jpg"))
 
 ```
 
+### NERRs water quality 
+Megan worked up one station as an example will do the rest if we decide it will be included. (https://docs.google.com/document/d/1WFPJV7vvgXbDisLK24j75kzGbxkLU8-oiSWiCGYxKNk/edit)
+
+```{r NERRs-map, eval= T, echo = F, out.width = "80%"}
+image.dir <- here::here("docs")
+
+knitr::include_graphics(file.path(image.dir,"NERRs_Map.jpg"))
+```
+
+```{r NERRs-chla, eval= T, echo = F, out.width = "80%"}
+image.dir <- here::here("docs")
+
+knitr::include_graphics(file.path(image.dir,"NERRs_Chla.png"))
+```
+
+```{r NERRs-MP-DIN, eval= T, echo = F, out.width = "80%"}
+image.dir <- here::here("docs")
+
+knitr::include_graphics(file.path(image.dir,"NERRs_MP_DIN.png"))
+```
+
+```{r NERRs-MH-DIN, eval= T, echo = F, out.width = "80%"}
+image.dir <- here::here("docs")
+
+knitr::include_graphics(file.path(image.dir,"NERRs_MH_DIN.png"))
+```
+
 ## Shelfwide Indicators {.tabset .tabset-fade}
 
 ### Seasonal SST anomaly
@@ -1667,4 +1694,5 @@ gsi %>%
   theme(strip.text=element_text(hjust=0,
                                 face = "italic"))
 ```
+
 
