@@ -1,6 +1,7 @@
 # Process harbor porpoise bycatch estimates
 
-# Time series figure is 5-yr running mean for harbor porpoise bycatch estimates for the Northeast US across all fisheries.
+# Time series figure is 5-yr running mean for harbor porpoise bycatch estimates
+# for the Northeast US across all fisheries.
 
 library(dplyr)
 library(tidyr)
