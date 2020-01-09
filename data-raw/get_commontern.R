@@ -3,12 +3,13 @@
 # If save == TRUE, processed data are saved as a .Rds file to the data directory.
 
 # Function returns a processed data frame containing time series of productivity and diet
-# composition for common tern at different islands in southern Gulf of Maine. The first three letters
-# in the variable "Var" correspond to the island at which sampling occurred, with COTE referring to
-# Common Tern. If "Var" includes productivity, then "Value" is the average number of fledged chicks.
+# composition for common tern at different islands in southern Gulf of Maine. The first 
+# three letters in the variable "Var" correspond to the island at which sampling occurred, 
+# with COTE referring to Common Tern. If "Var" includes productivity, then "Value" is the
+# average number of fledged chicks.
 # Otherwise, if "Var" specifies diet, then  "Value"  is equal to the count of observed prey type.
-# For example, "EER COTE Diet Amphipod" refers to the number of preyed upon amphipods observed at Eastern
-# Egg Rock in a given year.
+# For example, "EER COTE Diet Amphipod" refers to the number of preyed upon amphipods 
+# observed at Eastern Egg Rock in a given year.
 
 library(dplyr)
 library(tidyr)
