@@ -1,7 +1,9 @@
 # Process ocean temperature anomaly data
 
-# These data include in situ regional time series of both surface and bottom water temperature anomalies
-# on the Northeast Continental Shelf. Raw data is split into four files by EPU (SS, GOM, GB, and MAB).
+# These data include in situ regional time series of 
+# both surface and bottom water temperature anomalies
+# on the Northeast Continental Shelf. Raw data is split 
+# into four files by EPU (SS, GOM, GB, and MAB).
 
 
 library(dplyr)
