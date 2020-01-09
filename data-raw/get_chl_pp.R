@@ -11,10 +11,14 @@ ppd <- read.csv(file.path(raw.dir,
                           "SOE_V2019_2-NES_ECOREGIONS-PPD-STATS_ANOMS-SEAWIFS_MODIS.csv")) %>% 
   mutate(ALGORITHM = word(str_replace(ALGORITHM, "_", " "))) %>%
   unite(.,VARIABLE, c("VARIABLE","SENSOR","ALGORITHM"), sep = " ") %>%
-  mutate(VARIABLE = ifelse(str_detect(FILENAME, "1998_2018"), paste(VARIABLE,"1998_2018"),
-                           ifelse(str_detect(FILENAME, "1998_2017"), paste(VARIABLE, "1998_2017"),
-                                  ifelse(str_detect(FILENAME, "1997_2018"), paste(VARIABLE, "1997_2018"),
-                                         ifelse(str_detect(FILENAME, "1997_2017"), paste(VARIABLE, "1997_2017"),
+  mutate(VARIABLE = ifelse(str_detect(FILENAME, "1998_2018"), 
+                           paste(VARIABLE,"1998_2018"),
+                           ifelse(str_detect(FILENAME, "1998_2017"), 
+                                  paste(VARIABLE, "1998_2017"),
+                                  ifelse(str_detect(FILENAME, "1997_2018"), 
+                                         paste(VARIABLE, "1997_2018"),
+                                         ifelse(str_detect(FILENAME, "1997_2017"), 
+                                                paste(VARIABLE, "1997_2017"),
                                                 VARIABLE))))) %>%
   dplyr::select(TIME, UNITS, VARIABLE, VALUE, REGION) %>%
   dplyr::rename(Time = TIME, Units = UNITS, Var = VARIABLE,
@@ -24,10 +28,14 @@ chl <- read.csv(file.path(raw.dir,
                           "SOE_V2019_2-NES_ECOREGIONS-CHLOR_A-STATS_ANOMS-SEAWIFS_MODIS.csv")) %>% 
   mutate(ALGORITHM = word(str_replace(ALGORITHM, "_", " "))) %>%
   unite(.,VARIABLE, c("VARIABLE","SENSOR","ALGORITHM"), sep = " ") %>%
-  mutate(VARIABLE = ifelse(str_detect(FILENAME, "1998_2018"), paste(VARIABLE,"1998_2018"),
-                           ifelse(str_detect(FILENAME, "1998_2017"), paste(VARIABLE, "1998_2017"),
-                                  ifelse(str_detect(FILENAME, "1997_2018"), paste(VARIABLE, "1997_2018"),
-                                         ifelse(str_detect(FILENAME, "1997_2017"), paste(VARIABLE, "1997_2017"),
+  mutate(VARIABLE = ifelse(str_detect(FILENAME, "1998_2018"), 
+                           paste(VARIABLE,"1998_2018"),
+                           ifelse(str_detect(FILENAME, "1998_2017"), 
+                                  paste(VARIABLE, "1998_2017"),
+                                  ifelse(str_detect(FILENAME, "1997_2018"), 
+                                         paste(VARIABLE, "1997_2018"),
+                                         ifelse(str_detect(FILENAME, "1997_2017"), 
+                                                paste(VARIABLE, "1997_2017"),
                                                 VARIABLE))))) %>%
   dplyr::select(TIME, UNITS, VARIABLE, VALUE, REGION) %>%
   dplyr::rename(Time = TIME, Units = UNITS, Var = VARIABLE,
