@@ -1,8 +1,11 @@
 # Process commercial diversity data
 
-# More information about these data are available at https://noaa-edab.github.io/tech-doc/catch-and-fleet-diversity.html.
-# Data are drawn from blend of VTR trip data, CFDBS prices, vessel characteristics from PERMIT databases,
-# and major VTR gear by permit. Here "MA" and "NE" refer to the Mid-Atlantic and New England regions respectively, and are
+# More information about these data are available at 
+# https://noaa-edab.github.io/tech-doc/catch-and-fleet-diversity.html.
+# Data are drawn from blend of VTR trip data, CFDBS prices, 
+# vessel characteristics from PERMIT databases,
+# and major VTR gear by permit. Here "MA" and "NE" refer to the
+# Mid-Atlantic and New England regions respectively, and are
 # not derived by EPU.
 
 library(dplyr)
