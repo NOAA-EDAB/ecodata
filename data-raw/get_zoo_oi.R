@@ -18,6 +18,9 @@
 
 library(tidyverse)
 
+<<<<<<< HEAD
+r.dir<-here::here("R")
+=======
 
 raw.dir <- here::here("data-raw")
 
@@ -45,6 +48,7 @@ get_zoo_abun_anom(save_clean = T)
 
 
 
+>>>>>>> 22d4e3f50bcec14c6ce42ecadd0f63f02ba6a098
 
 source(file.path(r.dir, "process_oi.R"))
 
@@ -52,7 +56,7 @@ if (!all(exists("mab_rast"),
          exists("gb_rast"),
          exists("gom_rast"))){
   message("Loading EPU rasters.")
-  source(file.path(r.dir, "create_epu_mask_oi.R"))
+  source(file.path(raw.dir, "create_epu_mask_oi.R"))
 } else {
   message("All EPU rasters exist; skipping load step.")
 }
@@ -164,3 +168,4 @@ get_zoo_oi <- function(save_clean = F){
   }
 
 }
+get_zoo_oi(save_clean = T)

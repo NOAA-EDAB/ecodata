@@ -1,0 +1,61 @@
+#devtools::install_github("robwschlegel/heatwaveR")
+library(heatwaveR)
+library(tidyverse)
+library(readxl)
+library(stringr)
+library(readr)
+
+raw.dir <- here::here("data-raw")
+
+
+get_marine_heatwave <- function(save_clean = F){
+
+  gom<-read_csv(file.path(raw.dir,"GOM_OISST - Vincent Saba - NOAA Federal.csv"),
+                 col_types = cols(temp = col_double(),t = col_date()))
+  gb<-read_csv(file.path(raw.dir,"GB_OISST - Vincent Saba - NOAA Federal.csv"),
+                col_types = cols(temp = col_double(),t = col_date()))
+  mab<-read_csv(file.path(raw.dir,"MAB_OISST - Vincent Saba - NOAA Federal.csv"),
+                col_types = cols(temp = col_double(),t = col_date()))
+  #GB
+  ts <- ts2clm(gb, climatologyPeriod = c("1982-01-01", "2010-12-31"))
+  gb.mhw <- detect_event(ts)
+  gb.hw<- gb.mhw$event %>%
+    dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative)%>%
+    mutate(EPU = "GB")
+  #GOM
+  ts <- ts2clm(gom, climatologyPeriod = c("1982-01-01", "2010-12-31"))
+  gom.mhw <- detect_event(ts)
+  gom.hw<- gom.mhw$event %>%
+    dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative) %>%
+    mutate(EPU = "GOM")
+  # MAB
+  ts <- ts2clm(mab, climatologyPeriod = c("1982-01-01", "2010-12-31"))
+  mab.mhw <- detect_event(ts)
+  mab.hw<- mab.mhw$event %>%
+    dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative) %>%
+    mutate(EPU = "MAB")
+  # Cumulative intensity
+  cum.intensity <- rbind(gb.hw, gom.hw, mab.hw) %>%
+    mutate(Time = as.numeric(format(as.Date(date_start, format="%Y-%m-%d"),"%Y"))) %>%
+    group_by(Time, EPU) %>%
+    summarise(Value = as.numeric(sum(intensity_cumulative))) %>%
+    mutate(Var = "cumulative intensity") %>%
+    ungroup
+  #Max intensity
+  max.intensity <- rbind(gb.hw, gom.hw, mab.hw) %>%
+    mutate(Time = as.numeric(format(as.Date(date_start, format="%Y-%m-%d"),"%Y")))  %>%
+    rename(Value = intensity_max) %>%
+    mutate(Var = "maximum intensity")%>%
+    dplyr::select(Time, EPU, Value, Var)
+
+  heatwave<- rbind(cum.intensity, max.intensity) %>%
+    mutate(Units = "degrees C",
+           Time = as.numeric(Time))
+
+  if (save_clean){
+    usethis::use_data(heatwave, overwrite = T)
+  } else {
+    return(heatwave)
+  }
+}
+get_marine_heatwave(save_clean = T)

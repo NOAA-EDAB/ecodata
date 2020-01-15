@@ -109,8 +109,6 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 ### Ocean Temperature {.tabset .tabset-fade}
 
 #### SST
-<p style="color:red">Not Updated</p>
-Kevin to deliver in mid Dec when data is posted. 
 
 ```{r MAB-SST-insitu, fig.width = 8, fig.height = 7}
 annotation_custom2 <- function (grob, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf, data) 
@@ -155,7 +153,7 @@ sst_map <-
   coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   facet_wrap(Season~.) +
   theme_map() +
-  ggtitle("SST anomaly (2018)") +
+  ggtitle("SST anomaly (2019)") +
   xlab("Longitude") +
   ylab("Latitude") +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
@@ -476,7 +474,7 @@ MAB_chl_weekly + MAB_pp_weekly + plot_layout(ncol = 1)
 
 
 ### Chesapeake Bay Water Quality Attainment
-<p style="color:red">No data delivered</p>
+<p style="color:red">No data delivered. Note from Jan 2 -  We are in the process of finalizing our assessment of Chesapeake bay water quality standards attainment for the latest assessment cycle (2016-2018). We may send you the data in a week or two.</p>
 
 ```{r cb-attainment,fig.width = 6, fig.asp = 0.55, fig.cap = "Water quality attainment in Chesapeake Bay following rolling three year assessment periods."}
 
@@ -507,7 +505,7 @@ ches_bay_wq %>%
 
 ### Chesepeake Bay Salinity Anomolies
 
-Narrative from Bruce Vogt - short write up on anomalies in salinity we saw this year following record breaking rain in 2018.  The low salinities impacted hypoxia, fish and oysters. 
+Write up on anomalies in salinity we saw in 2018,2019 following record breaking rain in 2018.  The low salinities impacted [hypoxia, fish and oysters](https://docs.google.com/document/d/19ikLWKQWiRSrjmQJ2F7EB_ZcieBMk6Ykf1RX_Gissao/edit). 
 
 ### Zooplankton {.tabset .tabset-fade}
 
@@ -544,6 +542,7 @@ zoo_abund %>%
 ```
 
 #### Small-large index
+<p style="color:red">PPD anom not updated.</p>
 
 ```{r MAB-sli}
 sli <- ecodata::zoo_sli_anom %>% 
@@ -605,6 +604,7 @@ sli_plt + pp_anom_plt + plot_layout(ncol = 1) & theme(plot.margin = margin(t = 0
 ```
 
 #### Zooplankton Diversity
+<p style="color:red">Data from Harvey only goes through 2017??.</p>
 ```{r MAB-zoo-abund1, fig.width = 8, fig.asp = .35}
 zoo_div <- ecodata::zoo_diversity %>% 
   filter(EPU == epu_abbr)
@@ -633,7 +633,7 @@ zoo_div %>%
 ```
 
 #### OI abundance
-<p style="color:red">Not Updated</p>
+<p style="color:red">Not Updated. Technical difficulties</p>
 ```{r MAB-oi-zoo, fig.width=8}
 facet_names <- list(
   'centropages spring'=expression(paste(italic("Centropages "), "spring")),
@@ -759,18 +759,6 @@ ecodata::cold_pool %>%
 ### Marine Heat Wave
 
 [Notes](https://docs.google.com/document/d/0B1lP7X3GP_hQLTlmU3hqLUMzVWcwS2U5R2oxTWNWb19tcmFz/edit)
-```{r MAB_heatwave, eval= T, echo = F}
-library(ggplot2)
-library(cowplot)
-library(magick)
-image.dir <- here::here("docs")
-
-
-p1 <- cowplot::ggdraw() + cowplot::draw_image(file.path(image.dir,"MAB_Heatwave_Cumul.jpg"))
-p2 <- cowplot::ggdraw() + cowplot::draw_image(file.path(image.dir,"MAB_Heatwave_Max.jpg"))
-
-cowplot::plot_grid(p1, p2)
-```
 
 ```{r MAB_heatwave1, eval= T, echo = F, out.width = "80%"}
 image.dir <- here::here("docs")
@@ -779,13 +767,66 @@ knitr::include_graphics(file.path(image.dir,"MAB_Heatwave_timeseries.jpg"))
 
 ```
 
+```{r heatwave_mab}
+
+cumu <- ecodata::heatwave %>% 
+  filter(EPU == epu_abbr,
+         Var == "cumulative intensity")
+hline <- mean(cumu$Value)
+cumu %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value)) +
+  geom_point(aes(x = Time, y = Value)) +
+  geom_gls(aes(x = Time, y = Value)) +
+  ylab("Cumulative intesity (degrees C x days)") +
+  ggtitle("Marine Heatwave Cumulative Intesity") +
+  scale_x_continuous(expand = c(0.01, 0.01))+
+  geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  theme_ts()+
+  theme(strip.text=element_text(hjust=0,
+                                face = "italic"))
+
+maxin <- ecodata::heatwave %>% 
+  filter(EPU == epu_abbr,
+         Var == "maximum intensity") %>% 
+  group_by(Time) %>% 
+  summarise(Value = max(Value)) %>% 
+  ungroup()
+hline <- mean(maxin$Value)
+maxin %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value)) +
+  geom_point(aes(x = Time, y = Value)) +
+  geom_gls(aes(x = Time, y = Value)) +
+  ylab("Maximum intesity (degrees C)") +
+  ggtitle("Marine Heatwave Maximum Intesity") +
+  scale_x_continuous(expand = c(0.01, 0.01))+
+  geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  theme_ts()+
+  theme(strip.text=element_text(hjust=0,
+                                face = "italic"))
+
+
+```
+
 ## Gulf of Maine & Georges Bank
 
 ### Ocean Temperature {.tabset .tabset-fade}
 
 #### SST 
-<p style="color:red">Not Updated</p>
-Kevin to deliver in mid Dec when data is posted. 
+ 
 
 ```{r NE-SST-insitu, fig.width=8, fig.height = 8}
 #EPU shapefile
@@ -821,7 +862,7 @@ sst_map <-
   coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   facet_wrap(Season~.) +
   theme_map() +
-  ggtitle("SST anomaly (2018)") +
+  ggtitle("SST anomaly (2019)") +
   xlab("Longitude") +
   ylab("Latitude") +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
@@ -1019,7 +1060,7 @@ pp_cci_gom <- out_pp %>%
 ```
 
 #### Sesonal chlorophyll *a* & primary production
-
+<p style="color:red">Not Updated</p>
 ```{r NE-chl-weekly, fig.width = 8, fig.cap = "Weekly chlorophyll concentrations and primary productivity for 2018 in Gulf of Maine and Georges Bank are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
 
 GB_chl_weekly <- interp_chl_pp(epu = "GB", year = 2018,Variable = "WEEKLY_CHLOR_A_MEDIAN")
@@ -1502,43 +1543,73 @@ gb_top + gb_middle + gb_bottom + plot_layout(ncol = 1) & theme(plot.margin = mar
 
 
 ### Marine Heat Wave
-#### GOM
+
 ```{r GOM_heatwave, eval= T, echo = F}
 
-image.dir <- here::here("docs")
+cumu <- ecodata::heatwave %>% 
+  filter(EPU != epu_abbr,
+         Var == "cumulative intensity")
+hline <- mean(cumu$Value)
+cumu %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value)) +
+  geom_point(aes(x = Time, y = Value)) +
+  geom_gls(aes(x = Time, y = Value)) +
+  ylab("Cumulative intesity (degrees C x days)") +
+  ggtitle("Marine Heatwave Cumulative Intensity") +
+  scale_x_continuous(expand = c(0.01, 0.01))+
+  geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  facet_wrap(~EPU) +
+  theme_ts()+
+  theme(strip.text=element_text(hjust=0,
+                                face = "italic"))
 
+maxin <- ecodata::heatwave %>% 
+  filter(EPU != epu_abbr,
+         Var == "maximum intensity") %>% 
+  group_by(Time, EPU) %>% 
+  summarise(Value = max(Value)) %>% 
+  ungroup()
+hline <- mean(maxin$Value)
+maxin %>% 
+  ggplot() +
+  geom_line(aes(x = Time, y = Value)) +
+  geom_point(aes(x = Time, y = Value)) +
+  geom_gls(aes(x = Time, y = Value)) +
+  ylab("Maximum intesity (degrees C)") +
+  ggtitle("Marine Heatwave Maximum Intensity") +
+  scale_x_continuous(expand = c(0.01, 0.01))+
+  geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  facet_wrap(~EPU) +
+  theme_ts()+
+  theme(strip.text=element_text(hjust=0,
+                                face = "italic"))
 
-p1 <- cowplot::ggdraw() + cowplot::draw_image(file.path(image.dir,"GOM_Heatwave_Cumul.jpg"))
-p2 <- cowplot::ggdraw() + cowplot::draw_image(file.path(image.dir,"GOM_Heatwave_Max.jpg"))
-
-cowplot::plot_grid(p1, p2)
 ```
 
-```{r GOM_heatwave1, eval= T, echo = F, out.width = "80%"}
-image.dir <- here::here("docs")
-
-knitr::include_graphics(file.path(image.dir,"GOM_Heatwave_timeseries.jpg"))
-
-```
-
-#### GB
-```{r GB_heatwave, eval= T, echo = F}
+```{r timesseries_heatwave, fig.cap="Georges Bank", eval= T, echo = F}
 
 image.dir <- here::here("docs")
-
-
-p1 <- cowplot::ggdraw() + cowplot::draw_image(file.path(image.dir,"GB_Heatwave_Cumul.jpg"))
-p2 <- cowplot::ggdraw() + cowplot::draw_image(file.path(image.dir,"GB_Heatwave_Max.jpg"))
-
-cowplot::plot_grid(p1, p2)
+cowplot::ggdraw() + cowplot::draw_image(file.path(image.dir,"GB_Heatwave_timeseries.jpg"))
 ```
+```{r timesseries_heatwave1, fig.cap = "Gulf of Maine", eval= T, echo = F}
 
-```{r GB_heatwave1, eval= T, echo = F, out.width = "80%"}
 image.dir <- here::here("docs")
-
-knitr::include_graphics(file.path(image.dir,"GB_Heatwave_timeseries.jpg"))
-
+cowplot::ggdraw() + cowplot::draw_image(file.path(image.dir,"GOM_Heatwave_timeseries.jpg"))
 ```
+
 
 ### NERRs water quality 
 Megan worked up one station as an example will do the rest if we decide it will be included. (https://docs.google.com/document/d/1WFPJV7vvgXbDisLK24j75kzGbxkLU8-oiSWiCGYxKNk/edit)
@@ -1555,22 +1626,23 @@ image.dir <- here::here("docs")
 knitr::include_graphics(file.path(image.dir,"NERRs_Chla.png"))
 ```
 
+<p style="color:red">Potentially possible to get map like this for DO, chl and nitrogen. </p>
 ```{r NERRs-MP-DIN, eval= T, echo = F, out.width = "80%"}
 image.dir <- here::here("docs")
 
-knitr::include_graphics(file.path(image.dir,"NERRs_MP_DIN.png"))
+knitr::include_graphics(file.path(image.dir,"nerrs_map.png"))
 ```
-
+<p style="color:red">I've asked for the total number of events per year.</p>
 ```{r NERRs-MH-DIN, eval= T, echo = F, out.width = "80%"}
 image.dir <- here::here("docs")
 
-knitr::include_graphics(file.path(image.dir,"NERRs_MH_DIN.png"))
+knitr::include_graphics(file.path(image.dir,"nerrs_DO.png"))
 ```
 
 ## Shelfwide Indicators {.tabset .tabset-fade}
 
 ### Seasonal SST anomaly
-<p style="color:red">Not Updated</p>
+
 ```{r seasonal-sst, fig.height=8}
 # Set lat/lon window for maps
 xmin = -77
@@ -1599,7 +1671,7 @@ ggplot() +
   coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   facet_wrap(Season~.) +
   theme_map() +
-  ggtitle("SST anomaly (2018)") +
+  ggtitle("SST anomaly (2019)") +
   xlab("Longitude") +
   ylab("Latitude") +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
@@ -1611,8 +1683,6 @@ ggplot() +
 ```
 
 ### Long-term SST
-<p style="color:red">Not Updated</p>
-Kevin to deliver in mid Dec when data is posted. 
 
 ```{r long-term-sst}
 lt_sst <- ecodata::long_term_sst %>% 
@@ -1641,29 +1711,29 @@ lt_sst %>%
 
 
 ### NAO
-
+<p style="color:red">Removed</p>
 ```{r NAO, fig.cap = "Wintertime (Dec-Mar) differences of normalized sea level pressures between Lisbon and Stykkisholmur/Reykjavik, Iceland since 1864."}
 
-# [https://climatedataguide.ucar.edu/climate-data/hurrell-north-atlantic-oscillation-nao-index-station-based](source)
-# higher pressure in iceland, more negative index
-nao %>% 
-  mutate(hline = 0,
-         status = ifelse(Value < 0, "negative","positive")) %>% 
-  ggplot(aes(x = Time, y = Value, fill = status)) +
-         annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_bar(stat = "identity") +
-  guides(fill = F)+
-  ylab("NAO Index") +
-  ggtitle("NAO Index") +
-    scale_x_continuous(expand = c(0.01, 0.01), breaks = seq(1840,2010,10))+
-      geom_hline(aes(yintercept = hline),
-           alpha = hline.alpha)+
-  ylab(expression(Lisbon["n"]~-~Stykkisholmur/Reykjavik["n"]))+
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+# # [https://climatedataguide.ucar.edu/climate-data/hurrell-north-atlantic-oscillation-nao-index-station-based](source)
+# # higher pressure in iceland, more negative index
+# nao %>% 
+#   mutate(hline = 0,
+#          status = ifelse(Value < 0, "negative","positive")) %>% 
+#   ggplot(aes(x = Time, y = Value, fill = status)) +
+#          annotate("rect", fill = shade.fill, alpha = shade.alpha,
+#       xmin = x.shade.min , xmax = x.shade.max,
+#       ymin = -Inf, ymax = Inf) +
+#   geom_bar(stat = "identity") +
+#   guides(fill = F)+
+#   ylab("NAO Index") +
+#   ggtitle("NAO Index") +
+#     scale_x_continuous(expand = c(0.01, 0.01), breaks = seq(1840,2010,10))+
+#       geom_hline(aes(yintercept = hline),
+#            alpha = hline.alpha)+
+#   ylab(expression(Lisbon["n"]~-~Stykkisholmur/Reykjavik["n"]))+
+#   theme_ts() +
+#   theme(strip.text=element_text(hjust=0,
+#                                 face = "italic"))
 
 ```
 

@@ -9,7 +9,7 @@ raw.dir <- here::here("data-raw")
 
 get_mab_inshore_survey <- function(save_clean = F){
   mab_inshore_survey <- read_excel(file.path(raw.dir,
-                                             "NEAMAP_SOE INDICES_2019.xlsx")) %>%
+                                             "NEAMAP_SOE INDICES_2019_final.xlsx")) %>%
      gather(.,Var,Value,-Year,-Season,-Category) %>%
      unite(., Var, c("Season","Category","Var"), sep = " ") %>%
      dplyr::rename(Time = Year) %>%

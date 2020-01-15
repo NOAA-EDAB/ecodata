@@ -1,0 +1,13 @@
+Golden Software Cartographic Reference Information : Version 2.00
+System Type : GCS
+System Identification : Geographic (lat/lon)|World Geodetic System 1984
+  Comment : System Identification strings are subject to change at any time.
+System POSC/EPSG Code : 4326
+Projection Method : Unprojected Lat/Long
+Datum Name : World Geodetic System 1984
+Datum GCS Token : DATUM_WGS84
+Datum Method : None
+Datum Ellipsoid Type : WGS 84
+Datum Ellipsoid GCS Token : ELLIPSOID_WGS_84
+Datum Ellipsoid Radius (meters) : 6378137
+Datum Ellipsoid Flattening : 0.00335281066474748

@@ -23,7 +23,7 @@ process_oi <- function(variable, type = NULL, season, genus = NULL, epu){
 
   #get bottom temp data and find mean for stock area--------------------------------------
 
-  indir <- here::here("inst","extdata","gridded")
+  indir <- here::here("data-raw","gridded")
 
   if (variable == "salinity"){
     load(file.path(indir, paste0("sal_",type,"_",season,"_spdf.rdata")))
