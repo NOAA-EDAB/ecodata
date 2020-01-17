@@ -633,7 +633,7 @@ zoo_div %>%
 ```
 
 #### OI abundance
-<p style="color:red">Not Updated. Technical difficulties</p>
+
 ```{r MAB-oi-zoo, fig.width=8}
 facet_names <- list(
   'centropages spring'=expression(paste(italic("Centropages "), "spring")),
@@ -1368,7 +1368,7 @@ gom_zoo_div + gb_zoo_div + plot_layout(ncol = 1)
 ```
 
 #### OI abundance
-<p style="color:red">Not Updated</p>
+
 ```{r NE-oi-zoo, fig.width=8, fig.height=7}
 facet_names <- list(
   'centropages spring'=expression(paste(italic("Centropages "), "spring")),

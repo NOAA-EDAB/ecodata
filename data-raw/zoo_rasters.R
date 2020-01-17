@@ -5,8 +5,7 @@ library(stringr)
 library(dplyr)
 
 ##Grab rasters from https://drive.google.com/drive/folders/114nR96d2gx6FDHciNa1dK3WLCrbrwqZH
-# grab 1_yr for both spring and fall
-# and collapse into rasterstack
+# grab 1_yr for both spring and fall and collapse into rasterstack
 
 #A function to collapse many RasterLayers (saved as .RData files) within a directory to a RasterStack
 collapse_into_stack <- function(folder_path){
@@ -47,18 +46,21 @@ loadRData <- function(fileName){
   get(ls()[ls() != "fileName"])
 }
 
-raw.dir <- "c:/users/kimberly.bastille/desktop/Zoo"
+raw.dir <- "c:/users/kimberly.bastille/desktop/Zoo1"
 
 #Zooplankton
-for (k in c("Spring","Fall")){
-  for (i in c("rasters_1yr")){
-    print(paste(k,i))
+for (k in c("spring","fall")){
+    for (m in c("centropages", "pseudocalanus", "temora")){
+    print(paste(k,m))
+      folder_path = file.path(raw.dir, k,m)
+
     # suppressMessages(
-    assign(paste0("zoo_",k,"_",i),
-           collapse_into_stack(folder_path = file.path(raw.dir, k,i)))
+    assign(paste0("ecsa_dat"),
+           collapse_into_stack(folder_path = file.path(raw.dir, k,m)))
     # )
-    save(list = paste0("zoo_",k,"_",i), file = file.path(raw.dir,paste0("zoo_",k,"_",i,".rdata")))
-  }
+    save(list = paste0("ecsa_dat"),
+         file = file.path(raw.dir,paste0(m,"_",k,"_zoo_1977-2017.rdata")))
+    }
 }
 
-save(file = data.dir, "gridded")
+#save(file = here::here("data-raw/gridded"))
