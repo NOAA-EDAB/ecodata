@@ -49,15 +49,11 @@ process_oi <- function(variable, type = NULL, season, genus = NULL, epu){
     #load raster by year
     print(i)
     #get file information from title
-    layer_id <- stringr::str_extract(names(ecsa_dat)[[i]], "\\d.*")
-    print(names(ecsa_dat)[[i]])
-    print(layer_id)
-    layer_id <- stringr::str_split(layer_id, "_")
-    #layer_id <- stringr::str_split(names(ecsa_dat)[[i]], "_")
-    print(layer_id)
-    data[i,1] <- layer_id[[1]][1]
-    data[i,2] <- layer_id[[1]][2]
-    data[i,3] <- layer_id[[1]][3]
+    #layer_id <- stringr::str_extract(names(ecsa_dat)[[i]], "\\d.*")
+    layer_id <- stringr::str_split(names(ecsa_dat)[[i]], "_")
+    data[i,1] <- layer_id[[1]][[1]]
+    data[i,2] <- layer_id[[1]][[2]]
+    data[i,3] <- layer_id[[1]][[3]]
 
     #trim to stock area
     masked.raster = ecsa_dat[[i]]*epumask.raster
@@ -65,13 +61,11 @@ process_oi <- function(variable, type = NULL, season, genus = NULL, epu){
     #find mean BT of stock area
     data[i,4] = raster::cellStats(masked.raster, stat='mean', na.rm=TRUE)
     data[i,5] = raster::cellStats(masked.raster, stat = 'sd', na.rm=TRUE)
-
     #
     # if (layer_id[[1]][[1]] == "1995"){
     #   break
     # }
   }
-
   x <- as.numeric(data$X1)
   y.out <- data$X4
   y.sd <- data$X5

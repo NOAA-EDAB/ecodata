@@ -33,75 +33,74 @@ get_zoo_oi <- function(save_clean = F){
 
   #MAB---------------------------------------------------------------------------------------------------
   ctyp_fall_mab <- process_oi(variable = "zooplankton",
-                              genus = "centropages",
+                              genus = "ctypZZ",
                               season = "fall", epu = "MAB")
   ctyp_spring_mab <- process_oi(variable = "zooplankton",
-                                genus = "centropages",
+                                genus = "ctypZZ",
                                 season = "spring", epu = "MAB")
 
   tlong_fall_mab <- process_oi(variable = "zooplankton",
-                               genus = "temora",
+                               genus = "tlong",
                                season = "fall", epu = "MAB")
   tlong_spring_mab <- process_oi(variable = "zooplankton",
-                                 genus = "temora",
+                                 genus = "tlong",
                                  season = "spring", epu = "MAB")
 
   pseudo_fall_mab <- process_oi(variable = "zooplankton",
-                                genus = "pseudocalanus",
+                                genus = "pseudo",
                                 season = "fall", epu = "MAB")
   pseudo_spring_mab <- process_oi(variable = "zooplankton",
-                                  genus = "pseudocalanus",
+                                  genus = "pseudo",
                                   season = "spring", epu = "MAB")
 
 
   #GB---------------------------------------------------------------------------------------------------
   ctyp_fall_gb <- process_oi(variable = "zooplankton",
-                             genus = "centropages",
+                             genus = "ctyp",
                              season = "fall", epu = "GB")
   ctyp_spring_gb <- process_oi(variable = "zooplankton",
-                               genus = "centropages",
+                               genus = "ctyp",
                                season = "spring", epu = "GB")
 
   tlong_fall_gb <- process_oi(variable = "zooplankton",
-                              genus = "temora",
-                              season = "fall", epu = "GB")
+                              genus = "tlong",
+                              season = "Fall", epu = "GB")
   tlong_spring_gb <- process_oi(variable = "zooplankton",
-                                genus = "temora",
+                                genus = "tlong",
                                 season = "spring", epu = "GB")
 
   pseudo_fall_gb <- process_oi(variable = "zooplankton",
-                               genus = "pseudocalanus",
+                               genus = "pseudo",
                                season = "fall", epu = "GB")
   pseudo_spring_gb <- process_oi(variable = "zooplankton",
-                                 genus = "pseudocalanus",
+                                 genus = "pseudo",
                                  season = "spring", epu = "GB")
 
 
   #GOM---------------------------------------------------------------------------------------------------
   ctyp_fall_gom <- process_oi(variable = "zooplankton",
-                              genus = "centropages",
+                              genus = "ctyp",
                               season = "fall", epu = "GOM")
   ctyp_spring_gom <- process_oi(variable = "zooplankton",
-                                genus = "centropages",
+                                genus = "ctyp",
                                 season = "spring", epu = "GOM")
 
   tlong_fall_gom <- process_oi(variable = "zooplankton",
-                               genus = "temora",
+                               genus = "tlong",
                                season = "fall", epu = "GOM")
   tlong_spring_gom <- process_oi(variable = "zooplankton",
-                                 genus = "temora",
+                                 genus = "tlong",
                                  season = "spring", epu = "GOM")
 
   pseudo_fall_gom <- process_oi(variable = "zooplankton",
-                                genus = "pseudocalanus",
+                                genus = "pseudo",
                                 season = "fall", epu = "GOM")
   pseudo_spring_gom <- process_oi(variable = "zooplankton",
-                                  genus = "pseudocalanus",
+                                  genus = "pseudo",
                                   season = "spring", epu = "GOM")
 
   #Bind all zoo output. Be sure to include any new species here
   zoo_oi <- NULL
-  print(ls())
   for (i in ls()){
     if (stringr::str_detect(i,"ctyp|tlong|pseudo")){
       assign("zoo_oi", rbind(zoo_oi, get(i)))

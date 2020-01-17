@@ -46,21 +46,19 @@ loadRData <- function(fileName){
   get(ls()[ls() != "fileName"])
 }
 
-raw.dir <- "c:/users/kimberly.bastille/desktop/Zoo1"
+raw.dir <- "c:/users/kimberly.bastille/desktop/zoo2020"
 
 #Zooplankton
 for (k in c("spring","fall")){
-    for (m in c("centropages", "pseudocalanus", "temora")){
-    print(paste(k,m))
-      folder_path = file.path(raw.dir, k,m)
-
+  for (m in c("ctyp", "pseudo", "tlong")){
     # suppressMessages(
     assign(paste0("ecsa_dat"),
-           collapse_into_stack(folder_path = file.path(raw.dir, k,m)))
+           collapse_into_stack(folder_path = file.path(raw.dir, k, m)))
     # )
     save(list = paste0("ecsa_dat"),
          file = file.path(raw.dir,paste0(m,"_",k,"_zoo_1977-2017.rdata")))
     }
-}
+  }
+
 
 #save(file = here::here("data-raw/gridded"))
