@@ -1634,6 +1634,24 @@ cowplot::plot_grid(rec_effort,
     theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
 ```
 
+### Primary production required
+
+[notes](https://drive.google.com/drive/folders/1_BNoAPvEaYQrdsi900175kcjpjmtcYzT)
+```{r ppr_comp90, eval = T, echo = F, fig.cap='', out.width='80%'}
+image.dir <- here::here("docs")
+
+knitr::include_graphics(file.path(image.dir, "composition-.90.png"))
+```
+
+```{r ppr_index, eval = T, echo = F, fig.cap='', out.width='80%'}
+knitr::include_graphics(file.path(image.dir, "ppr_index-0.90.png"))
+```
+
+```{r ppr_mtl, eval = T, echo = F, fig.cap='', out.width='80%'}
+knitr::include_graphics(file.path(image.dir, "mtl_index-0.90.png"))
+```
+
+
 # Shelfwide Indicators
 
 
@@ -1685,52 +1703,55 @@ knitr::include_graphics(file.path(image.dir, "wind_map.png"))
 
 ```
 
-```{r, eval = T, echo = F, fig.cap="Map of BOEM lease areas  as of feb 2019"}
-# 
-# library(sf)
-# library(raster)
-# library(ggspatial) 
-# crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0" 
-#  gis.dir <- here::here('data-raw','gis')
-# bathy<- raster(file.path(gis.dir, 'NES_bathymetry.tif'))
-# e <- c(-79,-69,34,43)
-# bathyMA <- crop(bathy,e)
-# bathy_df <- as.data.frame(bathyMA, xy = TRUE) 
-# 
-# brkcol <-  rgb(255, 0, 255, max = 255, alpha = 25, names = "blue50")
-# epu_shp <- st_read(file.path(gis.dir, "EPU_extended.shp"))
-# 
-# lease_s<-st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesSPoly.shp'))
-# lease_n<-st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesNPoly.shp'))
-# lease_m<-st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesMPoly.shp'))
-# prop_n<-st_read(file.path(gis.dir, 'BOEM lease areas/ne_proposed_leases_NPoly.shp'))
-# prop_m<-st_read(file.path(gis.dir, 'BOEM lease areas/ne_proposed_leases_MPoly.shp'))
-# 
-# st_crs(lease_s)<-crs
-# st_crs(lease_n)<-crs
-# st_crs(lease_m)<-crs
-# st_crs(prop_n)<-crs
-# st_crs(prop_m)<-crs
-# 
-# ggplot() +
-#   geom_raster( data = bathy_df, aes(x=x,y=y), fill = NES_bathymetry) +
-#   geom_sf(data = epu_shp, size = map.lwd, alpha = 0.5)+
-#   geom_sf(data = lease_s, size = map.lwd)+
-#   geom_sf(data = lease_n, size = map.lwd)+
-#   geom_sf(data = lease_m, size = map.lwd)+
-#   geom_sf(data = prop_n, size = map.lwd, color = "red")+
-#   geom_sf(data = prop_m, size = map.lwd, color = "red")+
-#   coord_sf(crs = crs, xlim = c(-77, -69), ylim = c(36,42))+
-#   geom_segment(aes(x = -74.6, y = 37.4, xend =-75.4, yend =38), colour = "blue")+
-#   geom_segment(aes(x = -71.1, y = 40.2, xend =-71.6, yend =41.1), colour = "blue")+
-#   annotation_scale(location = "br", width_hint = 0.4) + 
-#   theme_bw( ) + 
-#   ylab("")+
-#   xlab("")+
-#   ggtitle("BOEM lease areas")
-  
-```
+<!-- ```{r, eval = T, echo = F, fig.cap="Map of BOEM lease areas  as of feb 2019"} -->
 
+<!-- library(sf) -->
+<!-- library(raster) -->
+<!-- library(ggspatial) -->
+<!-- library(marmap) -->
+<!-- blues <- colorRampPalette(c("lightcyan","lightblue4")) -->
+<!-- crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0" -->
+<!-- gis.dir <- here::here('data-raw','gis') -->
+<!-- nesbath <- getNOAA.bathy(lon1 = -77, lon2 = -64, lat1 = 35, lat2 = 45, -->
+<!--               resolution = 5) -->
+
+<!-- brkcol <-  rgb(255, 0, 255, max = 255, alpha = 25, names = "blue50") -->
+<!-- epu_shp <- st_read(file.path(gis.dir, "EPU_extended.shp")) -->
+
+<!-- lease_s<-st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesSPoly.shp')) -->
+<!-- lease_n<-st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesNPoly.shp')) -->
+<!-- lease_m<-st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesMPoly.shp')) -->
+<!-- prop_n<-st_read(file.path(gis.dir, 'BOEM lease areas/ne_proposed_leases_NPoly.shp')) -->
+<!-- prop_m<-st_read(file.path(gis.dir, 'BOEM lease areas/ne_proposed_leases_MPoly.shp')) -->
+
+<!-- st_crs(lease_s)<-crs -->
+<!-- st_crs(lease_n)<-crs -->
+<!-- st_crs(lease_m)<-crs -->
+<!-- st_crs(prop_n)<-crs -->
+<!-- st_crs(prop_m)<-crs -->
+
+<!-- ggplot() + -->
+<!--   geom_raster( data = nesbath, aes(x=x,y=y), fill = blues) + -->
+<!--   #geom_sf(data = epu_shp, size = map.lwd, color = "grey")+ -->
+<!--   geom_sf(data = lease_s, size = map.lwd)+ -->
+<!--   geom_sf(data = lease_n, size = map.lwd)+ -->
+<!--   geom_sf(data = lease_m, size = map.lwd)+ -->
+<!--   geom_sf(data = prop_n, size = map.lwd, color = "red")+ -->
+<!--   geom_sf(data = prop_m, size = map.lwd, color = "red")+ -->
+<!--   coord_sf(crs = crs, xlim = c(-77, -69), ylim = c(36,42))+ -->
+<!--   geom_segment(aes(x = -74.6, y = 37.4, xend =-75.4, yend =38), colour = "blue")+ -->
+<!--   geom_segment(aes(x = -71.1, y = 40.2, xend =-71.6, yend =41.1), colour = "blue")+ -->
+<!--   annotation_scale(location = "br", width_hint = 0.4) + -->
+<!--   theme_bw( ) + -->
+<!--   ylab("")+ -->
+<!--   xlab("")+ -->
+<!--   ggtitle("BOEM lease areas") -->
+
+
+<!-- library(rnaturalearthhires) -->
+<!-- map("worldHires", xlim=c(-75.8,-65.7),ylim=c(35.9,44.4), fill=T,border="gray60",col="gray60", add=T) -->
+<!-- plot(nesbath,deep=-100, shallow=-100, step=1,add=T,lwd=2,col="gray40",lty=2) -->
+<!-- ``` -->
 
 
 
