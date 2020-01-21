@@ -654,7 +654,7 @@ mid
 --->
 
 ### Condition factor
-Still working on color scale - hopefully picking color scale that passes through gray/white
+
 ```{r mab-cf, fig.cap = "Condition factor for MAFMC managed species."}
 image.dir <- here::here("docs")
 
@@ -1490,7 +1490,6 @@ GB_prop
 ```
 
 ### Condition factor
-Still working on color scale - hopefully picking color scale that passes through gray/white
 
 #### GB
 ```{r gb-cf, fig.cap = "Condition factor for NEFMC and jointly managed species."}
@@ -1840,6 +1839,7 @@ Notes on upcoming indicators-
 Salmon ecosystem indicator - in the works but won't be ready for this SOE. 
 Seals - diet work underway but unpublished so don't want to include. but can reference generally in text. -  their diet appears to lean on non-commercial fish far more than commercially important species, we can try out some text and see what Kimbelry Murray feels comfortable with.
 
+[Starter text from Chris](https://docs.google.com/document/d/0B1lP7X3GP_hQSWRHV1NGWkFlc0VUNVNPcGJRalVUTEpUSjVz/edit?dls=true)
 
 #### NARW
 
