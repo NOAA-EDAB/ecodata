@@ -326,7 +326,6 @@ ggplot2::ggplot() +
 ### Chlorophyll and Primary Productivity {.tabset .tabset-fade}
 
 #### Primary production
-<p style="color:red">Not Updated</p>
 
 
 ```{r PP-OCCI, fig.width=8}
@@ -396,9 +395,8 @@ out_chl$Month <- factor(out_chl$Month, levels = month.abb)
 
 
 #### Sesonal chlorophyll *a* & primary production
-<p style="color:red">Not Updated</p>
 
-```{r mab-chl-weekly,fig.cap = "Weekly chlorophyll concentrations and primary productivity in the Mid-Atlantic are shown for by the colored line for 2018. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
+```{r mab-chl-weekly,fig.cap = "Weekly chlorophyll concentrations and primary productivity in the Mid-Atlantic are shown for by the colored line for 2019. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
 
 interp_chl_pp <- function(epu, year = 2018, Variable){
   out <- ecodata::chl_pp %>% 
@@ -542,7 +540,6 @@ zoo_abund %>%
 ```
 
 #### Small-large index
-<p style="color:red">PPD anom not updated.</p>
 
 ```{r MAB-sli}
 sli <- ecodata::zoo_sli_anom %>% 
@@ -1000,7 +997,7 @@ ggplot(data = sw.df) +
 
 
 ### Chlorophyll and Primary Productivity {.tabset .tabset-fade}
-<p style="color:red">Not Updated</p>
+
 #### Primary production
 
 ```{r NE-PP-OCCI, fig.width=8, fig.height = 8}
@@ -1060,8 +1057,8 @@ pp_cci_gom <- out_pp %>%
 ```
 
 #### Sesonal chlorophyll *a* & primary production
-<p style="color:red">Not Updated</p>
-```{r NE-chl-weekly, fig.width = 8, fig.cap = "Weekly chlorophyll concentrations and primary productivity for 2018 in Gulf of Maine and Georges Bank are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
+
+```{r NE-chl-weekly, fig.width = 8, fig.cap = "Weekly chlorophyll concentrations and primary productivity for 2019 in Gulf of Maine and Georges Bank are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
 
 GB_chl_weekly <- interp_chl_pp(epu = "GB", year = 2018,Variable = "WEEKLY_CHLOR_A_MEDIAN")
 
@@ -1253,7 +1250,6 @@ gom_zoo_abund + gb_zoo_abund + plot_layout(ncol = 1)
 
 #### Small-large index
  
-<p style="color:red">Primary production anom  -  Not Updated</p>
  
 ```{r NE-sli}
 sli <- ecodata::zoo_sli_anom %>% 
@@ -1611,33 +1607,6 @@ cowplot::ggdraw() + cowplot::draw_image(file.path(image.dir,"GOM_Heatwave_timese
 ```
 
 
-### NERRs water quality 
-Megan worked up one station as an example will do the rest if we decide it will be included. (https://docs.google.com/document/d/1WFPJV7vvgXbDisLK24j75kzGbxkLU8-oiSWiCGYxKNk/edit)
-
-```{r NERRs-map, eval= T, echo = F, out.width = "80%"}
-image.dir <- here::here("docs")
-
-knitr::include_graphics(file.path(image.dir,"NERRs_Map.jpg"))
-```
-
-```{r NERRs-chla, eval= T, echo = F, out.width = "80%"}
-image.dir <- here::here("docs")
-
-knitr::include_graphics(file.path(image.dir,"NERRs_Chla.png"))
-```
-
-<p style="color:red">Potentially possible to get map like this for DO, chl and nitrogen. </p>
-```{r NERRs-MP-DIN, eval= T, echo = F, out.width = "80%"}
-image.dir <- here::here("docs")
-
-knitr::include_graphics(file.path(image.dir,"nerrs_map.png"))
-```
-<p style="color:red">I've asked for the total number of events per year.</p>
-```{r NERRs-MH-DIN, eval= T, echo = F, out.width = "80%"}
-image.dir <- here::here("docs")
-
-knitr::include_graphics(file.path(image.dir,"nerrs_DO.png"))
-```
 
 ## Shelfwide Indicators {.tabset .tabset-fade}
 
@@ -1708,35 +1677,6 @@ lt_sst %>%
                                 face = "italic"))
 ```
 
-
-
-### NAO
-<p style="color:red">Removed</p>
-```{r NAO, fig.cap = "Wintertime (Dec-Mar) differences of normalized sea level pressures between Lisbon and Stykkisholmur/Reykjavik, Iceland since 1864."}
-
-# # [https://climatedataguide.ucar.edu/climate-data/hurrell-north-atlantic-oscillation-nao-index-station-based](source)
-# # higher pressure in iceland, more negative index
-# nao %>% 
-#   mutate(hline = 0,
-#          status = ifelse(Value < 0, "negative","positive")) %>% 
-#   ggplot(aes(x = Time, y = Value, fill = status)) +
-#          annotate("rect", fill = shade.fill, alpha = shade.alpha,
-#       xmin = x.shade.min , xmax = x.shade.max,
-#       ymin = -Inf, ymax = Inf) +
-#   geom_bar(stat = "identity") +
-#   guides(fill = F)+
-#   ylab("NAO Index") +
-#   ggtitle("NAO Index") +
-#     scale_x_continuous(expand = c(0.01, 0.01), breaks = seq(1840,2010,10))+
-#       geom_hline(aes(yintercept = hline),
-#            alpha = hline.alpha)+
-#   ylab(expression(Lisbon["n"]~-~Stykkisholmur/Reykjavik["n"]))+
-#   theme_ts() +
-#   theme(strip.text=element_text(hjust=0,
-#                                 face = "italic"))
-
-```
-
 ### GSI
 [Notes](https://drive.google.com/drive/u/0/folders/0B1lP7X3GP_hQfk00dFd6bTQ2cmJyQjlwQnFWQ0JMWF9ZOWhRckNvSTlxT2NHSEZRdjV1WVk)
 ```{r GSI, fig.width = 5, fig.asp = 0.55}
@@ -1765,4 +1705,18 @@ gsi %>%
                                 face = "italic"))
 ```
 
+### NERRs water quality 
+
+<p style="color:red">Potentially possible to get map like this for DO, chl and nitrogen. Not this year though. </p>
+```{r NERRs-MP-DIN, eval= T, echo = F, out.width = "80%"}
+image.dir <- here::here("docs")
+
+knitr::include_graphics(file.path(image.dir,"nerrs_map.png"))
+```
+<p style="color:red">I've asked for the total number of events per year.</p>
+```{r NERRs-MH-DIN, eval= T, echo = F, out.width = "80%"}
+image.dir <- here::here("docs")
+
+knitr::include_graphics(file.path(image.dir,"nerrs_DO.png"))
+```
 
