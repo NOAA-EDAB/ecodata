@@ -293,7 +293,7 @@ ggplot(data = landings_agg)+
 
 #### Commercial revenue 
 
-```{r bennet, fig.cap = paste0("Revenue change from the long-term mean in 2015 dollars (black), Price (PI), and Volume Indicators (VI) for commercial landings in the Mid-Atlantic Bight. \\label{bennet}"), fig.width = 6, fig.asp = 0.45}
+```{r bennet, fig.cap = paste0("Revenue change from the 2015 values in dollars (black), Price (PI), and Volume Indicators (VI) for commercial landings in the Mid-Atlantic Bight. \\label{bennet}"), fig.width = 6, fig.asp = 0.45}
 
 #Filter data into two dataframes for plotting
 
@@ -314,7 +314,7 @@ revchange <- ecodata::bennet %>%
 ind_fill <- c("#a6cee3", "#b2df8a")
 
 #limits
-y.lim <- c(-250,600)
+y.lim <- c(-450,600)
 
 #plot
 ggplot(data = indicators)+
@@ -563,55 +563,55 @@ ggplot(data = stock_status) +
 ```
 
 #### Oyster aquaculture
-Not updated - email sent 
-
-```{r oyster-aqua, fig.width = 5, fig.asp = 0.45, fig.cap = "Oyster aquaculture production in terms of number of oysters sold from Virginia, Maryland, and New Jersey. \\label{oyster-aqua}"}
-
-aqua <- ecodata::aquaculture %>% 
-  group_by(Var) %>% 
-  mutate(hline = mean(Value)) %>%
-  ungroup() %>% 
-  mutate(Var = plyr::mapvalues(Var, from = c("md oyster harvest","nj oyster harvest","va oyster harvest"),
-                                                    to  = c("MD","NJ","VA"))) %>%
-  dplyr::rename(State = Var)
-
-aqua$State <- factor(aqua$State, levels = c("VA","MD","NJ"))
 
 
-ggplot() + 
-  geom_segment(aes(x=2005,xend=2017,y=mean(aquaculture[aquaculture$Var == "va oyster harvest",]$Value),
-                   yend=mean(aquaculture[aquaculture$Var == "va oyster harvest",]$Value)),
-               size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty,
-           color = "#1b9e77",
-           inherit.aes = F) +
-  geom_segment(aes(x=2012,xend=2016,y=mean(aquaculture[aquaculture$Var == "nj oyster harvest",]$Value),
-                   yend=mean(aquaculture[aquaculture$Var == "nj oyster harvest",]$Value)),
-               size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty,
-           color = "#d95f02",
-           inherit.aes = F) +
-  geom_segment(aes(x=2012,xend=2017,y=mean(aquaculture[aquaculture$Var == "md oyster harvest",]$Value),
-                   yend=mean(aquaculture[aquaculture$Var == "md oyster harvest",]$Value)),
-               size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty,
-           color = "#7570b3",
-           inherit.aes = F) +
- #Highlight last ten years
-  geom_line(data = aqua, aes(x = Time, y = Value, color = State), size = lwd) +
-  geom_point(data = aqua,aes(x = Time, y = Value, color = State), size = pcex) +
-  scale_color_manual(values = c(VA = "#1b9e77", MD = "#7570b3",NJ = "#d95f02")) +
-  scale_x_continuous(breaks = seq(2005,2018,3),expand = c(0.01, 0.01)) +
-  scale_y_continuous(labels = function(l){trans = l / 1000000})+
-  ggtitle("Oyster harvest")+
-  ylab(expression("Oysters sold (10"^6*" n)")) +
-  xlab("")+
-  theme_ts()
+<!-- ```{r oyster-aqua, fig.width = 5, fig.asp = 0.45, fig.cap = "Oyster aquaculture production in terms of number of oysters sold from Virginia, Maryland, and New Jersey. \\label{oyster-aqua}"} -->
 
-```
+<!-- aqua <- ecodata::aquaculture %>%  -->
+<!--   group_by(Var) %>%  -->
+<!--   mutate(hline = mean(Value)) %>% -->
+<!--   ungroup() %>%  -->
+<!--   mutate(Var = plyr::mapvalues(Var, from = c("md oyster harvest","nj oyster harvest","va oyster harvest"), -->
+<!--                                                     to  = c("MD","NJ","VA"))) %>% -->
+<!--   dplyr::rename(State = Var) -->
+
+<!-- aqua$State <- factor(aqua$State, levels = c("VA","MD","NJ")) -->
+
+
+<!-- ggplot() +  -->
+<!--   geom_segment(aes(x=2005,xend=2017,y=mean(aquaculture[aquaculture$Var == "va oyster harvest",]$Value), -->
+<!--                    yend=mean(aquaculture[aquaculture$Var == "va oyster harvest",]$Value)), -->
+<!--                size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty, -->
+<!--            color = "#1b9e77", -->
+<!--            inherit.aes = F) + -->
+<!--   geom_segment(aes(x=2012,xend=2016,y=mean(aquaculture[aquaculture$Var == "nj oyster harvest",]$Value), -->
+<!--                    yend=mean(aquaculture[aquaculture$Var == "nj oyster harvest",]$Value)), -->
+<!--                size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty, -->
+<!--            color = "#d95f02", -->
+<!--            inherit.aes = F) + -->
+<!--   geom_segment(aes(x=2012,xend=2017,y=mean(aquaculture[aquaculture$Var == "md oyster harvest",]$Value), -->
+<!--                    yend=mean(aquaculture[aquaculture$Var == "md oyster harvest",]$Value)), -->
+<!--                size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty, -->
+<!--            color = "#7570b3", -->
+<!--            inherit.aes = F) + -->
+<!--  #Highlight last ten years -->
+<!--   geom_line(data = aqua, aes(x = Time, y = Value, color = State), size = lwd) + -->
+<!--   geom_point(data = aqua,aes(x = Time, y = Value, color = State), size = pcex) + -->
+<!--   scale_color_manual(values = c(VA = "#1b9e77", MD = "#7570b3",NJ = "#d95f02")) + -->
+<!--   scale_x_continuous(breaks = seq(2005,2018,3),expand = c(0.01, 0.01)) + -->
+<!--   scale_y_continuous(labels = function(l){trans = l / 1000000})+ -->
+<!--   ggtitle("Oyster harvest")+ -->
+<!--   ylab(expression("Oysters sold (10"^6*" n)")) + -->
+<!--   xlab("")+ -->
+<!--   theme_ts() -->
+
+<!-- ``` -->
 
 #### Engagement and reliance
 
@@ -1077,11 +1077,11 @@ cowplot::plot_grid(gom_total, gb_total, ncol = 2)
 
 indicators <- ecodata::bennet %>% 
   filter(!EPU == "MAB") %>% 
-  filter(stringr::str_detect(Var, pattern="Total"),
-         !Var == "Total Revenue Change - Bennet", 
+  filter(stringr::str_detect(Var, pattern="Benth"),
+         #!Var == "Total Revenue Change - Bennet", 
          !Time < 1985) %>% 
-  mutate(Var, Var = plyr::mapvalues(Var, from = c("Total Volume Index - Bennet","Total Price Index - Bennet"),
-                                    to = c("Volume","Price")))
+  mutate(Var, Var = plyr::mapvalues(Var, from = c("Benthos Value Index - Bennet","Benthos Price Index - Bennet","Benthivore Value Index - Bennet","Benthivore Price Index - Bennet"),
+                                    to = c("Benthos Volume","Benthos Price","Benthivore Volume","Benthivore Price")))
 
 
 revchange <- ecodata::bennet %>% 
@@ -1097,26 +1097,35 @@ y.lim <- c(-350,350)
 
 #plot
 
-gom_bennet <- indicators %>% filter(EPU == "GOM") %>% 
+gom_bennet <- indicators %>% 
+  filter(EPU == "GOM", 
+         stringr::str_detect(Var, pattern="Benthivore")) %>% 
 ggplot()+
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf)+
-  guides(color = F, fill = F)+
+  #guides(color = F, fill = F)+
   geom_bar(aes(x=Time, y= Value, fill = Var), stat="identity")+
-  scale_fill_manual(name = "Indicators", values = ind_fill) +
-  geom_line(data = revchange[revchange$EPU == "GOM",], aes(x = Time, y = Value))+
+  scale_fill_manual(name = "Indicators", values = ind_fill, guide = FALSE) +
+  geom_line(data = revchange[revchange$EPU == "GOM",], 
+            aes(x = Time, y = Value, colour = "$"))+
   scale_colour_grey(name ="Revenue Change") +
-  ggtitle("Gulf of Maine")+
+  ggtitle("Gulf of Maine Benthivore Component")+
   labs(y="Value $1,000,000 ($2015)") +
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
-  scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), limits = y.lim, expand = c(0.01, 0.01)) +
+  scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), limits = y.lim,
+                     expand = c(0.01, 0.01)) +
   theme_ts() +
-  theme(title = element_text(size = 10))
+  theme(title = element_text(size = 10))+
+  theme(legend.position="bottom", legend.direction = "horizontal",
+        legend.background = element_rect(fill = "transparent"), 
+        legend.title = element_blank(), legend.text = element_blank())
 
-gb_bennet <- indicators %>% filter(EPU == "GB") %>% 
+gb_bennet <- indicators %>% 
+  filter(EPU == "GB", 
+         stringr::str_detect(Var, pattern="Benthos")) %>% 
 ggplot()+
   
   #Highlight last ten years
@@ -1126,17 +1135,34 @@ ggplot()+
   
   geom_bar(aes(x=Time, y= Value, fill = Var), stat="identity")+
   scale_fill_manual(name = "Indicators", values = ind_fill) +
-  geom_line(data = revchange[revchange$EPU == "GB",], aes(x = Time, y = Value))+
+  geom_line(data = revchange[revchange$EPU == "GB",], 
+            aes(x = Time, y = Value, colour = "$"))+
   scale_colour_grey(name ="Revenue Change") +
-  ggtitle("Georges Bank")+
+  ggtitle("Georges Bank Benthos Component")+
   labs(y="") +
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), limits = y.lim, expand = c(0.01, 0.01)) +
   theme_ts() +
-  theme(title = element_text(size = 10))
+  theme(title = element_text(size = 10)) +
+  theme(legend.position="bottom", legend.direction = "horizontal",
+        legend.background = element_rect(fill = "transparent"), 
+        legend.title = element_text(size = 8), 
+        legend.text = element_text(size = 8)) +
+  guides(color = guide_legend(order = 1),
+         fill = guide_legend(order = 0))
 
-cowplot::plot_grid(gom_bennet, gb_bennet, ncol = 2, rel_widths = c(0.7,1))
+#cowplot::plot_grid(gom_bennet, gb_bennet, ncol = 2, rel_widths = c(0.7,1))
 
+g_legend<-function(a.gplot){
+  tmp <- ggplot_gtable(ggplot_build(a.gplot))
+  leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+  legend <- tmp$grobs[[leg]]
+  return(legend)}
+mylegend<-g_legend(gb_bennet)
+p3 <- gridExtra::grid.arrange(gridExtra::arrangeGrob(gom_bennet + theme(legend.position="none"),
+                         gb_bennet + theme(legend.position="none"),
+                         nrow=1),
+             mylegend, nrow=2,heights=c(6, 1))
 ```
 
 
@@ -1659,8 +1685,6 @@ knitr::include_graphics(file.path(image.dir, "mtl_index-0.90.png"))
 These are the five species most likely to occur in the lease areas. 
 ```{r wind_habitat_table, eval = T, echo = F, fig.cap='Color indicates trends through time.', out.width='80%'}
 image.dir <- here::here("docs")
-
-knitr::include_graphics(file.path(image.dir, "wind1.png"))
 
 knitr::include_graphics(file.path(image.dir, "wind2.png"))
 
