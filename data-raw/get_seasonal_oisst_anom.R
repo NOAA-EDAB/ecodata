@@ -1,4 +1,4 @@
-#Analysis of OISST V2 data to extract seasonal SST time series 
+#Analysis of OISST V2 data to extract seasonal SST time series
 
 library(dplyr)
 library(raster)
@@ -9,10 +9,11 @@ library(reshape2)
 library(ecodata)
 library(stringr)
 
-raw.dir <- here::here("inst","extdata","gridded","sst_data")
-ltm.dir <- here::here("inst","extdata","gridded")
 
-epu <- ecodata::epu_sf %>% 
+raw.dir <- here::here("data-raw","gridded","sst_data")
+ltm.dir <- here::here("data-raw","gridded")
+
+epu <- ecodata::epu_sf %>%
   filter(EPU != "SS")
 
 
@@ -23,30 +24,30 @@ seasonal_epu_ltm <- function(ltm, epu_name){
 }
 
 #Get long-term mean for anomaly calculation
-ltm <- stack(file.path(ltm.dir, "sst.day.mean.ltm.1982-2010.nc"))
+ltm <- stack(file.path(raw.dir, "sst.day.mean.ltm.1982-2010.nc"))
 ltm <- crop(ltm, extent(280,300,30,50))
 ltm <- rotate(ltm)
 
 winter.ltm <- ltm[[1:90]]
-winter.ltm <- stackApply(winter.ltm, indices = rep(1,nlayers(winter.ltm)),mean) 
+winter.ltm <- stackApply(winter.ltm, indices = rep(1,nlayers(winter.ltm)),mean)
 
 spring.ltm <- ltm[[91:181]]
-spring.ltm <- stackApply(spring.ltm, indices = rep(1,nlayers(spring.ltm)),mean) 
+spring.ltm <- stackApply(spring.ltm, indices = rep(1,nlayers(spring.ltm)),mean)
 
 summer.ltm <- ltm[[182:273]]
-summer.ltm <- stackApply(summer.ltm, indices = rep(1,nlayers(summer.ltm)),mean) 
+summer.ltm <- stackApply(summer.ltm, indices = rep(1,nlayers(summer.ltm)),mean)
 
 fall.ltm <- ltm[[274:365]]
-fall.ltm <- stackApply(fall.ltm, indices = rep(1,nlayers(fall.ltm)),mean) 
+fall.ltm <- stackApply(fall.ltm, indices = rep(1,nlayers(fall.ltm)),mean)
 
 
 #Function to get seasonal averages by year
 
 get_group_mean <- function(fname, epu_name, anom = T){
-  
+
   #Import raster data
   raw <- stack(file.path(raw.dir, fname))
-  
+
   crs(raw) <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 
   #Get layer index and map to year
@@ -55,56 +56,56 @@ get_group_mean <- function(fname, epu_name, anom = T){
   for (i in 1:nlayers(raw)){
     assign("year",rbind(year, data.frame(Time = str_extract(raw[[i]]@data@names,"\\d{4}"))))
   }
-  
-  year_split <- year %>% 
+
+  year_split <- year %>%
     group_by(Time) %>%
-      mutate(day = 1:n()) %>% 
-      mutate(leap = ifelse(n() == 365,"common","leap")) %>% 
-      group_by(leap) %>% 
+      mutate(day = 1:n()) %>%
+      mutate(leap = ifelse(n() == 365,"common","leap")) %>%
+      group_by(leap) %>%
         mutate(season = ifelse(day <= 90 & leap == "common", "winter",
                                ifelse(day > 90 & day <= 181 & leap == "common", "spring",
                                       ifelse(day > 181 & day <= 273 & leap == "common", "summer",
                                              ifelse(day > 273 & leap == "common", "fall",
-                                                    
+
                         ifelse(day <= 91 & leap == "leap", "winter",
                                ifelse(day > 91 & day <= 181 & leap == "leap", "spring",
                                       ifelse(day > 181 & day <= 273 & leap == "leap", "summer",
-                                             ifelse(day > 273 & leap == "leap", "fall",NA))))))))) %>% 
-    group_by(Time, leap, season) %>% 
+                                             ifelse(day > 273 & leap == "leap", "fall",NA))))))))) %>%
+    group_by(Time, leap, season) %>%
     mutate(index = paste(Time, season))
-  
+
   if (any(is.na(year_split))){
     message("NA in year")
   }
-  
+
   #Rotate from 0-360 to -180-180
   message(paste('Rotating',fname))
   raw1 <- rotate(raw)
-  
+
   #Split data on layer index - stackApply will break if there are too many layers
-  g1 <- year_split %>% 
-    filter(index %in% unique(.$index)[1:10]) %>% 
+  g1 <- year_split %>%
+    filter(index %in% unique(.$index)[1:10]) %>%
     pull(index)
-  
-  g2 <- year_split %>% 
-    filter(!index %in% unique(.$index)[1:10]) %>% 
+
+  g2 <- year_split %>%
+    filter(!index %in% unique(.$index)[1:10]) %>%
     pull(index)
-  
+
   #Apply and combine
   message(paste('Finding mean'))
   n <- nlayers(raw1)
   rawMean1 <- stackApply(raw1[[1:length(g1)]], indices = g1, mean)
   rawMean2 <- stackApply(raw1[[(length(g1) + 1):n]], indices = g2, mean)
   rawMean <- stack(rawMean1,rawMean2)
-  
+
   #Mask output to EPU
   message(paste('Masking to',epu_name))
   out <- mask(rawMean, epu[epu$EPU == epu_name,])
-  
+
   #Find seasonal anomaly
   mean_sst <- NULL
   for (i in 1:nlayers(out)){
-    
+
     if (anom){
       season <- str_extract(names(out[[i]]),"winter|spring|summer|fall")
       message(paste('Finding',season,'SST anomaly for',epu_name))
@@ -115,13 +116,13 @@ get_group_mean <- function(fname, epu_name, anom = T){
       sst <- mean(out[[i]]@data@values, na.rm = T)
       var <- "absolute"
     }
-    
+
     year = out@data@names[i]
     df <- data.frame(Value = sst,
                      year = year,
                      EPU = epu_name,
                      Var = var)
-    
+
     assign('mean_sst',rbind(mean_sst, df))
   }
   return(mean_sst)
@@ -144,12 +145,12 @@ for (e in epu_list){
 }
 
 #process output
-seasonal_oisst_anom <- rbind(MAB,GOM,GB) %>% 
+seasonal_oisst_anom <- rbind(MAB,GOM,GB) %>%
     mutate(Time = as.numeric(str_extract(year,"\\d{4}")),
-           Var = paste(str_extract(year, "winter|spring|summer|fall"),"OI SST Anomaly")) %>% 
-    dplyr::select(-year) %>% 
+           Var = paste(str_extract(year, "winter|spring|summer|fall"),"OI SST Anomaly")) %>%
+    dplyr::select(-year) %>%
     mutate(Units = "degreesC")
 
 usethis::use_data(seasonal_oisst_anom, overwrite = TRUE)
-  
+
 

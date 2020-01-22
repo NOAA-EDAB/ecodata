@@ -109,7 +109,7 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 ### Ocean Temperature {.tabset .tabset-fade}
 
 #### SST
-
+still working on time series update
 ```{r MAB-SST-insitu, fig.width = 8, fig.height = 7}
 annotation_custom2 <- function (grob, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf, data) 
 {
@@ -134,7 +134,7 @@ ymin = 35.5
 ymax = 43
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
-sst <- seasonal_oisst_anom_gridded 
+sst <- seasonal_sst_anomaly_gridded 
 
 sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Spring",
@@ -149,7 +149,7 @@ sst_map <-
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
-                       limits = c(-5,5)) +
+                       limits = c(-6,6)) +
   coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   facet_wrap(Season~.) +
   theme_map() +
@@ -351,7 +351,7 @@ out_pp$Month <- factor(out_pp$Month, levels = month.abb)
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-    facet_wrap(Month~., ncol = 6) +
+    facet_wrap(Month~., ncol = 12) +
     ggtitle("Monthly median PPD") +
     ylab(expression("PP (gC m"^-2*" d"^-1*")")) +
     theme_facet() +
@@ -383,7 +383,7 @@ out_chl$Month <- factor(out_chl$Month, levels = month.abb)
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-    facet_wrap(Month~., ncol = 6) +
+    facet_wrap(Month~., ncol = 12) +
     ggtitle("Monthly median CHL") +
     ylab(expression("CHL (mg m"^-3*")")) +
     theme_facet() +
@@ -398,7 +398,7 @@ out_chl$Month <- factor(out_chl$Month, levels = month.abb)
 
 ```{r mab-chl-weekly,fig.cap = "Weekly chlorophyll concentrations and primary productivity in the Mid-Atlantic are shown for by the colored line for 2019. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
 
-interp_chl_pp <- function(epu, year = 2018, Variable){
+interp_chl_pp <- function(epu, year = 2019, Variable){
   out <- ecodata::chl_pp %>% 
     filter(str_detect(Var,Variable),
            EPU == epu) %>% 
@@ -472,7 +472,7 @@ MAB_chl_weekly + MAB_pp_weekly + plot_layout(ncol = 1)
 
 
 ### Chesapeake Bay Water Quality Attainment
-<p style="color:red">No data delivered. Note from Jan 2 -  We are in the process of finalizing our assessment of Chesapeake bay water quality standards attainment for the latest assessment cycle (2016-2018). We may send you the data in a week or two.</p>
+<!-- <p style="color:red">No data delivered. Note from Jan 2 -  We are in the process of finalizing our assessment of Chesapeake bay water quality standards attainment for the latest assessment cycle (2016-2018). We may send you the data in a week or two.</p> -->
 
 ```{r cb-attainment,fig.width = 6, fig.asp = 0.55, fig.cap = "Water quality attainment in Chesapeake Bay following rolling three year assessment periods."}
 
@@ -601,7 +601,7 @@ sli_plt + pp_anom_plt + plot_layout(ncol = 1) & theme(plot.margin = margin(t = 0
 ```
 
 #### Zooplankton Diversity
-<p style="color:red">Data from Harvey only goes through 2017??.</p>
+
 ```{r MAB-zoo-abund1, fig.width = 8, fig.asp = .35}
 zoo_div <- ecodata::zoo_diversity %>% 
   filter(EPU == epu_abbr)
@@ -648,8 +648,8 @@ zoo_oi_mab <- ecodata::zoo_oi %>%
          Val2 = exp(Value)) %>% 
       group_by(Var) %>% 
   mutate(hline = mean(Val2, na.rm = T)) %>% 
-  separate(.,col = Var, into = c("Species","Season"), remove = F)
-
+  separate(.,col = Var, into = c("Species","Season"), remove = F) %>% 
+  mutate(Season = factor(Season, levels = c("spring", "fall")))
 
 
 top <- zoo_oi_mab %>%  
@@ -667,7 +667,7 @@ ggplot(aes(x = Time, y = Val2, group = Var)) +
   geom_line()+
   geom_point()+
   ylab("") +
-  facet_wrap(Var ~ ., ncol = 2, scales='free_x',labeller = label) +
+  facet_wrap(Season ~ ., ncol = 2, scales='free_x',labeller = label) +
   ggtitle("Zooplankton abundance (OI)") +
   scale_x_continuous(expand = c(0.01, 0.01))+
   scale_y_continuous(trans = "log10")+
@@ -692,7 +692,7 @@ ggplot(aes(x = Time, y = Val2, group = Var)) +
   geom_line()+
   geom_point()+
   ylab(expression("Abundance num m"^-3*"")) +
-  facet_wrap(Var ~ ., ncol = 2, scales='free_x',labeller = label) +
+  facet_wrap(Season ~ ., ncol = 2, scales='free_x',labeller = label) +
   scale_x_continuous(expand = c(0.01, 0.01))+
   scale_y_continuous(trans = "log10")+
   theme_facet() +
@@ -716,7 +716,7 @@ ggplot(aes(x = Time, y = Val2, group = Var)) +
   geom_line()+
   geom_point()+
     ylab("") +
-  facet_wrap(Var ~ ., ncol = 2,labeller = label) +
+  facet_wrap(Season ~ ., ncol = 2,labeller = label) +
   scale_x_continuous(breaks = seq(1980,2010,10),
                      expand = c(0.01, 0.01))+
 
@@ -823,7 +823,7 @@ maxin %>%
 ### Ocean Temperature {.tabset .tabset-fade}
 
 #### SST 
- 
+still working on updating the timeseries
 
 ```{r NE-SST-insitu, fig.width=8, fig.height = 8}
 #EPU shapefile
@@ -840,7 +840,7 @@ ymin = 39
 ymax = 45
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
-sst <- seasonal_oisst_anom_gridded 
+sst <- seasonal_sst_anomaly_gridded 
 
 sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Spring",
@@ -1019,7 +1019,7 @@ pp_cci_gom <- out_pp %>%
     geom_point(aes(x = Year, y = Value, group = Month)) +
     geom_line(aes(x = Year, y = Value, group = Month)) +
     scale_x_discrete(name = "Time", breaks = seq(min(out_pp$Year),max(out_pp$Year),10)) +  
-    facet_wrap(Month~., ncol = 6) +
+    facet_wrap(Month~., ncol = 12) +
     ggtitle("GOM Monthly median PPD") +
     ylab(expression("PP (gC m"^-2*" d"^-1*")")) +
         geom_hline(aes(yintercept = hline,
@@ -1039,7 +1039,7 @@ pp_cci_gom <- out_pp %>%
     geom_point(aes(x = Year, y = Value, group = Month)) +
     geom_line(aes(x = Year, y = Value, group = Month)) +
     scale_x_discrete(name = "Time", breaks = seq(min(out_pp$Year),max(out_pp$Year),10)) +  
-    facet_wrap(Month~., ncol = 6) +
+    facet_wrap(Month~., ncol = 12) +
     ggtitle("GB Monthly median PPD") +
     ylab(expression("PP (gC m"^-2*" d"^-1*")")) +
         geom_hline(aes(yintercept = hline,
@@ -1060,7 +1060,7 @@ pp_cci_gom <- out_pp %>%
 
 ```{r NE-chl-weekly, fig.width = 8, fig.cap = "Weekly chlorophyll concentrations and primary productivity for 2019 in Gulf of Maine and Georges Bank are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
 
-GB_chl_weekly <- interp_chl_pp(epu = "GB", year = 2018,Variable = "WEEKLY_CHLOR_A_MEDIAN")
+GB_chl_weekly <- interp_chl_pp(epu = "GB", year = 2019,Variable = "WEEKLY_CHLOR_A_MEDIAN")
 
 GB_chl <- ggplot(data = GB_chl_weekly) +
   geom_line(aes(x = Time, y = LTM)) +
@@ -1080,7 +1080,7 @@ GB_chl <- ggplot(data = GB_chl_weekly) +
   theme_ts()
 
 
-GOM_chl_weekly <- interp_chl_pp(epu = "GOM", year = 2018,Variable = "WEEKLY_CHLOR_A_MEDIAN")
+GOM_chl_weekly <- interp_chl_pp(epu = "GOM", year = 2019,Variable = "WEEKLY_CHLOR_A_MEDIAN")
 
 GOM_chl <- ggplot(data = GOM_chl_weekly) +
   geom_line(aes(x = Time, y = LTM)) +
@@ -1382,7 +1382,9 @@ zoo_oi_ne <- ecodata::zoo_oi %>%
       group_by(EPU, Var) %>% 
   mutate(hline = mean(Value, na.rm = T),
          Species = word(Var, 1),
-         Season = word(Var, 2))
+         Season = word(Var, 2)) %>% 
+  mutate(Season = factor(Season, levels = c("spring", "fall")))
+
 
 gom_top <- zoo_oi_ne %>%  
   filter(Species == "centropages", EPU == "GOM") %>% 
@@ -1399,7 +1401,7 @@ ggplot(aes(x = Time, y = Value, group = Var)) +
   geom_line()+
   geom_point()+
   ylab("") +
-  facet_wrap(Var ~ ., ncol = 2, scales='free_x', labeller = label) +
+  facet_wrap(Season ~ ., ncol = 2, scales='free_x', labeller = label) +
   ggtitle("GOM zooplankton abundance") +
   scale_x_continuous(expand = c(0.01, 0.01))+
   scale_y_continuous(trans = "log10")+
@@ -1424,7 +1426,7 @@ ggplot(aes(x = Time, y = Value, group = Var)) +
   geom_line()+
   geom_point()+
   ylab(expression("Abundance num m"^-3*"")) +
-  facet_wrap(Var ~ ., ncol = 2, scales='free_x',labeller = label) +
+  facet_wrap(Season ~ ., ncol = 2, scales='free_x',labeller = label) +
   scale_x_continuous(expand = c(0.01, 0.01))+
   scale_y_continuous(trans = "log10")+
   theme_facet() +
@@ -1448,7 +1450,7 @@ ggplot(aes(x = Time, y = Value, group = Var)) +
   geom_line()+
   geom_point()+
     ylab("") +
-  facet_wrap(Var ~ ., ncol = 2,labeller = label) +
+  facet_wrap(Season ~ ., ncol = 2,labeller = label) +
   scale_x_continuous(breaks = seq(1980,2010,10),
                      expand = c(0.01, 0.01))+
   scale_y_continuous(trans = "log10")+
@@ -1476,7 +1478,7 @@ ggplot(aes(x = Time, y = Value, group = Var)) +
   geom_line()+
   geom_point()+
   ylab("") +
-  facet_wrap(Var ~ ., ncol = 2, scales='free_x', labeller = label) +
+  facet_wrap(Season ~ ., ncol = 2, scales='free_x', labeller = label) +
   ggtitle("GB zooplankton abundance") +
   scale_x_continuous(expand = c(0.01, 0.01))+
   scale_y_continuous(trans = "log10")+
@@ -1501,7 +1503,7 @@ ggplot(aes(x = Time, y = Value, group = Var)) +
   geom_line()+
   geom_point()+
   ylab(expression("Abundance num m"^-3*"")) +
-  facet_wrap(Var ~ ., ncol = 2, scales='free_x',labeller = label) +
+  facet_wrap(Season ~ ., ncol = 2, scales='free_x',labeller = label) +
   scale_x_continuous(expand = c(0.01, 0.01))+
   scale_y_continuous(trans = "log10")+
   theme_facet() +
@@ -1525,7 +1527,7 @@ ggplot(aes(x = Time, y = Value, group = Var)) +
   geom_line()+
   geom_point()+
     ylab("") +
-  facet_wrap(Var ~ ., ncol = 2,labeller = label) +
+  facet_wrap(Season ~ ., ncol = 2,labeller = label) +
   scale_x_continuous(breaks = seq(1980,2010,10),
                      expand = c(0.01, 0.01))+
   scale_y_continuous(trans = "log10")+
@@ -1541,12 +1543,13 @@ gb_top + gb_middle + gb_bottom + plot_layout(ncol = 1) & theme(plot.margin = mar
 ### Marine Heat Wave
 
 ```{r GOM_heatwave, eval= T, echo = F}
-
 cumu <- ecodata::heatwave %>% 
   filter(EPU != epu_abbr,
          Var == "cumulative intensity")
 hline <- mean(cumu$Value)
-cumu %>% 
+
+# Cumulative intensity
+cumu  %>% 
   ggplot() +
   geom_line(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value)) +
@@ -1566,14 +1569,15 @@ cumu %>%
   theme(strip.text=element_text(hjust=0,
                                 face = "italic"))
 
-maxin <- ecodata::heatwave %>% 
+#Max intenstiy
+maxin <- ecodata::heatwave %>%
   filter(EPU != epu_abbr,
-         Var == "maximum intensity") %>% 
-  group_by(Time, EPU) %>% 
-  summarise(Value = max(Value)) %>% 
+         Var == "maximum intensity") %>%
+  group_by(Time, EPU) %>%
+  summarise(Value = max(Value)) %>%
   ungroup()
 hline <- mean(maxin$Value)
-maxin %>% 
+maxin %>%
   ggplot() +
   geom_line(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value)) +
@@ -1620,7 +1624,7 @@ ymin = 36
 ymax = 45
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
-sst <- seasonal_oisst_anom_gridded 
+sst <- seasonal_sst_anomaly_gridded 
 
 sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Spring",
@@ -1629,14 +1633,14 @@ sst$Season <- factor(sst$Season, levels = c("Winter",
 epu_sf <- ecodata::epu_sf[ecodata::epu_sf$EPU != "SS",]
 
 ggplot() +
-  geom_tile(data = sst, aes(x = Longitude, y = Latitude,                                             fill = Value)) +
+  geom_tile(data = sst, aes(x = Longitude, y = Latitude, fill = Value)) +
   geom_sf(data = coast, size = map.lwd) +
   geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) +
   scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
-                       limits = c(-5,5)) +
+                       limits = c(-6,6)) +
   coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   facet_wrap(Season~.) +
   theme_map() +
