@@ -497,8 +497,7 @@ gom_mafmc_props + gb_mafmc_props + plot_layout(ncol = 1)
 ```
 
 ### Productivity anomaly
-<p style="color:red">Not submitting for 2020.</p>
-<!---
+
 ```{r MAB-recruitment, fig.cap = "Small fish per large fish biomass anomaly in the Mid-Atlantic Bight.",fig.width = 8, fig.height = 5}
 
 #### Adjust plot properties -------------------------------
@@ -651,17 +650,37 @@ mid <- plot_stackbarcpts_single(YEAR = bar_dat$Time,
 
 mid
 ```
---->
+
 
 ### Condition factor
 
-```{r mab-cf, fig.cap = "Condition factor for MAFMC managed species."}
+```{r mab-cf, fig.cap = "Condition factor for species sampled in MAB."}
 image.dir <- here::here("docs")
 
 knitr::include_graphics(file.path(image.dir, "MABcondition_2019.jpg"))
 
 ```
+### Stomach Fullness
+```{r ma-stomachs, fig.cap= "Stomach Fullness Anomaly in New England." }
+fullness <- ecodata::stom_fullness %>%
+  group_by(Var, EPU) %>% ## Remove values with missing data
+  filter(n()> 10) %>% ## at least ten years of data
+  ungroup() %>% 
+  filter(EPU == "MAB") %>%
+  ggplot(aes(x = Time, y = Value)) +
+  geom_line() +
+  geom_point() +
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggtitle("Stomach fullness") +
+  ylab("Stomach fullness") +
+  facet_wrap(~Var)+
+  theme(strip.text=element_text(hjust=0))
 
+fullness
+
+```
 ### Larval diversity
 Potentially adding 2018 point in mid-Jan - ETA Jan 17
 ```{r mab-larval-div}
@@ -1494,10 +1513,50 @@ GB_prop <- girafe_options(GB_prop, opts_zoom(max = 5) )
 GB_prop
 ```
 
+### Productivity anomaly
+```{r NE-recruitment, fig.cap = "Small fish per large fish biomass anomaly in New England.",fig.width = 8, fig.height = 5}
+
+## GB
+bar_dat <- ecodata::productivity_anomaly %>% 
+  filter(EPU == "GB")
+
+gb <- plot_stackbarcpts_single(YEAR = bar_dat$Time,
+                         var2bar = bar_dat$Var,
+                         x = bar_dat$Value,
+                         titl = "Georges Bank",
+                         xlab = "",
+                         ylab = "Small fish per large fish biomass (anomaly)",
+                         height = 5.5,
+                         width = 9,
+                         filt = FALSE,
+                         label = "",
+                         y.text = 10,
+                         aggregate = TRUE)
+## GOM
+bar_dat <- ecodata::productivity_anomaly %>% 
+  filter(EPU == "GOM")
+
+gom <- plot_stackbarcpts_single(YEAR = bar_dat$Time,
+                         var2bar = bar_dat$Var,
+                         x = bar_dat$Value,
+                         titl = "Gulf of Maine",
+                         xlab = "",
+                         ylab = "Small fish per large fish biomass (anomaly)",
+                         height = 5.5,
+                         width = 9,
+                         filt = FALSE,
+                         label = "",
+                         y.text = 10,
+                         aggregate = TRUE)
+
+gom
+gb
+```
+
 ### Condition factor
 
 #### GB
-```{r gb-cf, fig.cap = "Condition factor for NEFMC and jointly managed species."}
+```{r gb-cf, fig.cap = "Condition factor for species sampled in GB."}
 image.dir <- here::here("docs")
 
 knitr::include_graphics(file.path(image.dir, "GBcondition_2019.jpg"))
@@ -1505,12 +1564,57 @@ knitr::include_graphics(file.path(image.dir, "GBcondition_2019.jpg"))
 ```
 
 #### GOM
-```{r gom-cf, fig.cap = "Condition factor for NEFMC and jointly managed species."}
+```{r gom-cf, fig.cap = "Condition factor for species sampled in the GOM."}
 image.dir <- here::here("docs")
 
 knitr::include_graphics(file.path(image.dir, "GOMcondition_2019.jpg"))
 
 ```
+### Stomach Fullness
+```{r ne-stomachs, fig.cap=" Stomach Fullness Anomaly in New England." }
+gb_fullness <- ecodata::stom_fullness %>%
+  group_by(Var, EPU) %>% ## Remove values with missing data
+  filter(n()> 10) %>% ## at least tens years
+  ungroup() %>% 
+  filter(EPU == "GB") %>%
+  ggplot(aes(x = Time, y = Value, color = Var)) +
+  geom_line() +
+  #geom_point() +
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggtitle("Stomach fullness") +
+  ylab("Stomach fullness") +
+  facet_wrap(~Var)+
+  theme(strip.text=element_text(hjust=0), 
+        legend.text = element_text(size = 6), 
+        axis.text.x = element_text(angle = 45))
+  
+
+gb_fullness
+
+gom_fullness <- ecodata::stom_fullness %>%
+  group_by(Var, EPU) %>% ## Remove values with missing data
+  filter(n()> 10) %>% ## at least tens years
+  ungroup() %>% 
+  filter(EPU == "GOM") %>%
+  ggplot(aes(x = Time, y = Value, color = Var)) +
+  geom_line() +
+  #geom_point() +
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggtitle("Stomach fullness") +
+  ylab("Stomach fullness") +
+  facet_wrap(~Var)+
+  theme(strip.text=element_text(hjust=0), 
+        legend.text = element_text(size = 6), 
+        axis.text.x = element_text(angle = 45))
+
+gom_fullness
+```
+
+
 ### Larval diversity {.tabset .tabset-fade}
 
 Potentially adding 2018 point in mid-Jan
@@ -1613,37 +1717,38 @@ ggplot(aes(x = Time, y = Value)) +
 
 shannon 
 ```
-<!---
-```{r prey-frequencies, eval = F}
+
+<!-- ```{r prey-frequencies, eval = F} -->
 
 
-prey_freq %>% 
-  dplyr::rename(Prey = Var) %>% 
-ggplot(aes(x = Time, y = Freq, color = Prey)) +
-      annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line() +
-  geom_point() +
-  guides(color = F)+
-  scale_x_continuous(expand = c(0.01, 0.01),limits = c(1992,2018)) +
-  facet_wrap(Prey~., scales = "free_y")+
-  ggtitle("Common tern prey frequencies")+
-  ylab(expression("Freq. of occurrence")) +
-  xlab("")+
-  geom_hline(aes(yintercept = hline,
-                 color = Prey),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  theme_facet() +
-  theme(strip.text=element_text(hjust=0))
+<!-- prey_freq %>%  -->
+<!--   dplyr::rename(Prey = Var) %>%  -->
+<!--   mutate() -->
+<!-- ggplot(aes(x = Time, y = Freq, color = Prey)) + -->
+<!--       annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line() + -->
+<!--   geom_point() + -->
+<!--   guides(color = F)+ -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01),limits = c(1992,2018)) + -->
+<!--   facet_wrap(Prey~., scales = "free_y")+ -->
+<!--   ggtitle("Common tern prey frequencies")+ -->
+<!--   ylab(expression("Freq. of occurrence")) + -->
+<!--   xlab("")+ -->
+<!--   geom_hline(aes(yintercept = hline, -->
+<!--                  color = Prey), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty) + -->
+<!--   theme_facet() + -->
+<!--   theme(strip.text=element_text(hjust=0)) -->
 
 
-```
---->
+<!-- ``` -->
 
-```{r stacked-bar-prey-freq, fig.cap = "Prey frequencies in the diets of common tern observed at seven different islands in Gulf of Maine. Prey occurring in <5% of common tern diets were excluded for clarity.", fig.height = 4, fig.width = 8}
+
+```{r stacked-bar-prey-freq, fig.cap = "Prey frequencies in the diets of common tern observed at seven different islands in Gulf of Maine.", fig.height = 4, fig.width = 8}
 
 prey_freq <- ecodata::common_tern %>% 
   filter(str_detect(Var, "Diet"),
@@ -1654,24 +1759,36 @@ prey_freq <- ecodata::common_tern %>%
     dplyr::summarise(Value = sum(Value, na.rm = T)) %>% 
     group_by(Time) %>% 
     mutate(Freq = Value/sum(Value, na.rm = T)) %>% 
-    group_by(Var) %>% 
-  mutate(hline = mean(Freq, na.rm = T))
+  ungroup()
 
-diet_freq_bar <- prey_freq %>% 
+prey_freq1 <- prey_freq %>% 
   filter(Freq > 0.05) %>% 
   dplyr::mutate(Prey = gsub("\\.", " ", Var)) %>% 
-  # dplyr::rename(Prey = Var) %>%
-  ggplot(aes(x = Time, y = Freq, fill = Prey)) +
-  geom_bar(stat = "identity") +
+  dplyr::mutate(Prey = gsub("Other Invertebrate", "Unknown Invertebrate", Prey))
+
+prey_freq2<- prey_freq %>% 
+  filter(Freq < 0.05) %>% 
+  mutate(Prey = c("<5% Occurance"))
+
+prey_freq3<-prey_freq1 %>% 
+  rbind(prey_freq2)
+ colors<- c("grey", "#a6cee3", "#1f78b4", "#b2df8a", 
+            "#33a02c", "#fb9a99", "#fdbf6f", 
+            "#ff7f00", "#cab2d6", "#6a3d9a")
+
+diet_freq_bar <-
+  ggplot() +
+  geom_bar(data = prey_freq3, 
+           aes(x = Time, y = Freq, fill = Prey), 
+           stat = "identity") +
   scale_x_continuous(expand = c(0.01, 0.01))+
-  scale_fill_manual(values = RColorBrewer::brewer.pal(10,"Paired")) +
+  scale_fill_manual(values = colors) +
   ggtitle("Prey composition") +
   ylab("Proportion of prey items") +
   theme_ts()
 
 diet_freq_bar
-# diet_plotly <- ggplotly(diet_freq_bar)
-# diet_plotly
+
 ```
 
 #### Common tern sampling sites
