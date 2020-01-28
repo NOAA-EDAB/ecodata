@@ -37,6 +37,20 @@ summer.anom <- sst.2019[[182:273]] - summer.ltm
 fall.anom <- sst.2019[[274:365]] - fall.ltm
 
 
+####  START HERE #######
+# test.single <- nc_open(file.path(raw.dir, "2012_2018_ne_sst.nc"))
+# test.stack <- stack(file.path(raw.dir, "2012_2018_ne_sst.nc"))
+# sst.winter <- (sst.2019[[1:90]])
+# sst.spring <- (sst.2019[[91:181]])
+# sst.summer <- (sst.2019[[182:273]])
+# sst.fall <- (sst.2019[[274:365]])
+# rast.to.nc<-ncvar_def()
+# test1<-nc_create(named, list(sst.winter, sst.spring, sst.summer, sst.fall))
+## Save this dataset as 2019_ne_sst.nc and then try to
+# run get_seasonal_oisst_anom.R. If that works build
+# package and then plot to see if 2019 shows in timeseries.
+# named<-"2019_ne_sst.nc"
+
 rast_process <- function(r, season){
   r <- stackApply(r, indices = rep(1,nlayers(r)),mean) #Find mean anomaly
   crs(r) <- crs #Add SOE CRS

@@ -1,4 +1,11 @@
 #Analysis of OISST V2 data to extract seasonal SST time series
+## Data gathered here
+# "https://www.esrl.noaa.gov/psd/cgi-bin/DataAccess.pl?DB_dataset=
+# NOAA+High-resolution+Blended+Analysis&DB_variable=Sea+Surface+
+# Temperature&DB_statistic=Mean&DB_tid=81047&DB_did=132&DB_vid=2423"
+# Spatial paraters
+#lat:Begin (36N), End: (46N)
+#lon:Begin (-77W), End: (-65W)
 
 library(dplyr)
 library(raster)

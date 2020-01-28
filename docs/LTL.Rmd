@@ -426,7 +426,6 @@ interp_chl_pp <- function(epu, year = 2019, Variable){
   return(ltm_out)
 }
 
-
 MAB_chl <- interp_chl_pp(epu = "MAB", Variable = "WEEKLY_CHLOR_A_MEDIAN MODIS-Aqua PAN")
 
 MAB_chl_weekly <- ggplot(data = MAB_chl) +
@@ -1061,8 +1060,10 @@ pp_cci_gom <- out_pp %>%
 ```{r NE-chl-weekly, fig.width = 8, fig.cap = "Weekly chlorophyll concentrations and primary productivity for 2019 in Gulf of Maine and Georges Bank are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
 
 GB_chl_weekly <- interp_chl_pp(epu = "GB", year = 2019,Variable = "WEEKLY_CHLOR_A_MEDIAN")
+GOM_chl_weekly <- interp_chl_pp(epu = "GOM", year = 2019,Variable = "WEEKLY_CHLOR_A_MEDIAN")
+ne_chl_weekly<-rbind(GB_chl_weekly, GOM_chl_weekly)
 
-GB_chl <- ggplot(data = GB_chl_weekly) +
+ne_chl <- ggplot(data = ne_chl_weekly) +
   geom_line(aes(x = Time, y = LTM)) +
   geom_ribbon(aes(x = Time, ymin = pmax(sd.low,0), ymax = sd.high), 
               alpha = 0.1,
@@ -1070,6 +1071,8 @@ GB_chl <- ggplot(data = GB_chl_weekly) +
   geom_line(aes(x = Time, y = Value),
             size = 1,color = "#33a02c") +
   ggtitle(expression("GB chlorophyll"~italic(a)~"")) +
+  ylim(c(0, 3))+
+  facet_wrap(EPU~., ncol = 2)+
   guides(color = F) +
   xlab("")+
   ylab("") +
@@ -1080,28 +1083,11 @@ GB_chl <- ggplot(data = GB_chl_weekly) +
   theme_ts()
 
 
-GOM_chl_weekly <- interp_chl_pp(epu = "GOM", year = 2019,Variable = "WEEKLY_CHLOR_A_MEDIAN")
+GB_ppd_weekly <- interp_chl_pp(epu = "GB",  year = 2019,Variable = "WEEKLY_PPD_MEDIAN")
+GOM_ppd_weekly <- interp_chl_pp(epu = "GOM",  year = 2019,Variable = "WEEKLY_PPD_MEDIAN")
+ne_ppd_weekly<-rbind(GB_ppd_weekly, GOM_ppd_weekly)
 
-GOM_chl <- ggplot(data = GOM_chl_weekly) +
-  geom_line(aes(x = Time, y = LTM)) +
-  geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high), 
-              alpha = 0.1,
-              fill = "grey1") +
-  geom_line(aes(x = Time, y = Value),
-            size = 1,color = "#33a02c") +
-  ggtitle(expression("GOM chlorophyll"~italic(a)~"")) +
-  guides(color = F) +
-  xlab("")+
-  ylab(expression("CHL (mg m"^-3*")")) +
-  scale_x_continuous(breaks = seq(1,52,10),
-                   labels = c("","","","","",""),
-                   expand = c(0.01,0.01)) +
-  scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
-  theme_ts()
-
-GB_ppd_weekly <- interp_chl_pp(epu = "GB",  year = 2018,Variable = "WEEKLY_PPD_MEDIAN")
-
-GB_ppd <- ggplot(data = GB_ppd_weekly) +
+ne_ppd <- ggplot(data = ne_ppd_weekly) +
   geom_line(aes(x = Time, y = LTM)) +
   geom_ribbon(aes(x = Time, ymin = pmax(sd.low,0), ymax = sd.high), 
               alpha = 0.1,
@@ -1110,6 +1096,7 @@ GB_ppd <- ggplot(data = GB_ppd_weekly) +
             size = 1,color = "#33a02c") +
   ggtitle(expression("GB primary production")) +
   guides(color = F) +
+  facet_wrap(EPU~., ncol = 2)+
   xlab("")+
   ylab("") +
   scale_x_continuous(breaks = seq(1,52,10),
@@ -1118,28 +1105,8 @@ GB_ppd <- ggplot(data = GB_ppd_weekly) +
   scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
   theme_ts()
 
-
-GOM_ppd_weekly <- interp_chl_pp(epu = "GOM",  year = 2018,Variable = "WEEKLY_PPD_MEDIAN")
-
-GOM_ppd <- ggplot(data = GOM_ppd_weekly) +
-  geom_line(aes(x = Time, y = LTM)) +
-  geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high), 
-              alpha = 0.1,
-              fill = "grey1") +
-  geom_line(aes(x = Time, y = Value),
-            size = 1,color = "#33a02c") +
-  guides(color = F) +
-  xlab("")+
-  ggtitle(expression("GOM primary production")) +
-  scale_x_continuous(breaks = seq(1,52,10),
-                   labels = c("Jan.","Mar.","May","July","Oct.","Dec."),
-                   expand = c(0.01,0.01)) +
-  ylab((expression("PP (gC m"^-2*" d"^-1*")"))) +
-  scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
-  theme_ts()
-
-
-GOM_chl + GB_chl + GOM_ppd + GB_ppd + plot_layout(ncol = 2) & theme(plot.margin = margin(r = 0.5))
+ne_ppd
+ne_chl
 
 ```
 
@@ -1708,6 +1675,34 @@ gsi %>%
   theme(strip.text=element_text(hjust=0,
                                 face = "italic"))
 ```
+
+### Warm Core Rings
+```{r warm-core-rings}
+upper.line<-ecodata::wcr %>%
+  filter(Time>2000) %>% 
+  mutate(hline = c(mean(Value)))
+lower.line<-ecodata::wcr%>%
+  filter(Time<2000) %>% 
+  mutate(hline = c(mean(Value)))
+wcr<- upper.line %>% 
+  rbind(lower.line)
+
+wcr %>% 
+  ggplot(aes(x = Time, y = Value))+
+  geom_point()+
+  geom_line()+
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ylab("Warm Core Ring Births")+
+  ggtitle("Warm Core Rings")+
+  theme_ts()+
+  geom_segment(data = upper.line, aes(x = min(Time), y = hline, 
+                                      xend = max(Time), yend = hline, color = "segment") )+
+  geom_segment(data = lower.line, aes(x = min(Time), y = hline, 
+                                      xend = max(Time), yend = hline, color = "segment") )
+```
+
 
 ### NERRs water quality 
 
