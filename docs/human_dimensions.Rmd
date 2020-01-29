@@ -532,8 +532,10 @@ x.max <- 2.6
 #A dataframe that defines custom legend for stocks with unknown status
 unknown <- data.frame(text = c("Unknown Status", "Longfin Squid",
                               "Shortfin Squid", "N. Goosefish", "S. Goosefish"),
-                    x = rep(0.9*x.max,5),
-                    y = seq(0.93*y.max,1.4,-.1))
+                    x = rep(0.9*x.max,5), y = seq(0.93*y.max,1.4,-.1))
+
+# Custom Color
+custom_color<- c("#56B4E9", "#009E73", "#0072B2")
 #Plotting code
 ggplot(data = stock_status) +
   geom_vline(xintercept = 1, linetype = "dotted")+
@@ -548,7 +550,7 @@ ggplot(data = stock_status) +
                       label = Code,
                       color = stock_status$score), 
                   show.legend = FALSE,nudge_y = 0.05, nudge_x = 0.05) +
-  scale_color_manual(values = c("orangered2","gold2", "green3"), #Change legend labels for clarity
+  scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
                      breaks = stock_status$score) +
   ylim(0,y.max) +
   xlim(0,x.max) +
@@ -657,7 +659,7 @@ eng %>% filter(EPU == "MAB") %>%
 ### Recreational fisheries {.tabset .tabset-fade}
 
 #### Recreational landings
-```{r rec-landings, fig.cap = paste0("Total recreational seafood harvest in the ",region," region. \\label{rec-landings}"), fig.width = 5, fig.asp = 0.45}
+```{r rec-landings, fig.cap = paste0("Total recreational landings in the ",region," region. \\label{rec-landings}"), fig.width = 5, fig.asp = 0.45}
 
 landings_rec <- ecodata::recdat %>% 
   filter(EPU == region_abbr,
@@ -1424,7 +1426,7 @@ ggplot(data = stock_status) +
   geom_text(data = all.df, aes(x = x, y = y, label = text),show.legend = FALSE, size = 3)+
   geom_text(data = b.df, aes(x = x, y = y, label = text),show.legend = FALSE, size = 3)+
   geom_text(data = f.df, aes(x = x, y = y, label = text),show.legend = FALSE, size = 3)+
-  scale_color_manual(values = c("orangered3","gold3", "green3"), #Change legend labels for clarity
+  scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
                      breaks = stock_status$score) +
   annotate("rect", xmin = 0.924*x.max,
            xmax = 1.08*x.max,
@@ -1450,26 +1452,26 @@ ggplot(data = stock_status) +
   guides(color = FALSE) +
   theme_ts()
 
-ggplot(data = stock_status) +
-  geom_vline(xintercept = 1, linetype = "dotted", color = "grey60")+
-  geom_vline(xintercept = 0.5, linetype = "dashed", color = "grey60")+
-  geom_hline(yintercept = 1, linetype = "dashed", color = "grey60") +
-  geom_point(aes(x = B.Bmsy,
-                 y = F.Fmsy,
-                 color = stock_status$score)) +
-   geom_text_repel(aes(x = B.Bmsy, #geom_text_repel auto-jitters text around points
-                      y = F.Fmsy,
-                      label = Code,
-                      color = stock_status$score), show.legend = FALSE,
-                   nudge_y = 0.05, nudge_x = 0.05) +
-  ylim(0,1.5)+
-  xlim(0, 3.5)+
-  scale_color_manual(values = c("orangered3","gold3", "green3"), #Change legend labels for clarity
-                     breaks = stock_status$score) +
-  xlab(expression(~B/B[msy])) +
-  ylab(expression(~F/F[msy])) +
-  guides(color = FALSE) +
-  theme_ts()
+# ggplot(data = stock_status) +
+#   geom_vline(xintercept = 1, linetype = "dotted", color = "grey60")+
+#   geom_vline(xintercept = 0.5, linetype = "dashed", color = "grey60")+
+#   geom_hline(yintercept = 1, linetype = "dashed", color = "grey60") +
+#   geom_point(aes(x = B.Bmsy,
+#                  y = F.Fmsy,
+#                  color = stock_status$score)) +
+#    geom_text_repel(aes(x = B.Bmsy, #geom_text_repel auto-jitters text around points
+#                       y = F.Fmsy,
+#                       label = Code,
+#                       color = stock_status$score), show.legend = FALSE,
+#                    nudge_y = 0.05, nudge_x = 0.05) +
+#   ylim(0,1.5)+
+#   xlim(0, 3.5)+
+#   scale_color_manual(values = c("orangered3","gold3", "green3"), #Change legend labels for clarity
+#                      breaks = stock_status$score) +
+#   xlab(expression(~B/B[msy])) +
+#   ylab(expression(~F/F[msy])) +
+#   guides(color = FALSE) +
+#   theme_ts()
 
 ```
 
@@ -1498,7 +1500,7 @@ eng %>% filter(EPU == "GOM") %>%
 
 #### Recreational landings
 
-```{r rec-landings-ne, fig.cap = paste0("Total recreational seafood harvest in ",region,". \\label{rec-landings}"), fig.width = 5, fig.asp = 0.45}
+```{r rec-landings-ne, fig.cap = paste0("Total recreational landings in ",region,". \\label{rec-landings}"), fig.width = 5, fig.asp = 0.45}
 
 landings_rec <- ecodata::recdat %>% 
   filter(EPU == region_abbr,
@@ -1694,38 +1696,53 @@ knitr::include_graphics(file.path(image.dir, "mtl_index-0.90.png"))
 These are the five species most likely to occur in the lease areas. 
 ```{r wind_habitat_table, eval = T, echo = F, fig.cap='Color indicates trends through time.', out.width='80%'}
 image.dir <- here::here("docs")
+raw.dir <- here::here("data-raw")
 
-knitr::include_graphics(file.path(image.dir, "wind2.png"))
+wind1 <- read.csv(file.path(raw.dir, "wind-occupancy-1.csv"))
 
-# raw.dir <- here::here("data-raw")
-# wind1 <- read.csv(file.path(raw.dir, "wind-occupancy-1.csv")) 
-# #wind2<-wind1 %>% 
-# #  mutate(
-# #row_spec(3:5, bold = T, color = "white", background = "#D7261E")
-# 
-# wind3<-wind1 %>% #mutate(Trend)
-# 
-#   mutate(Species =  cell_spec(Species, 
-#                               background = factor(wind1$Trend, c("pos","Neutral", "neg"),
-#                                                   c("green", "orange", "red"))))
-# 
-# wind3 %>% kable(format = "html") %>% 
-#   kable_styling("striped", "condensed")
-# 
-# color.me.red <- which(wind1$Trend == "neg")
-# color.me.yellow <-which(wind1$Trend == "Neutral")
-# color.me.green <-which(wind1$Trend == "pos") 
-# wind1<-wind1 %>% dplyr::select(Area, Season, Species)
-# 
-# 
-# wind1 %>% kable(format = "html") %>% 
-#   kable_styling("striped", "condensed") %>% 
-#   cell_spec(color.me.red, color = "red") %>% 
-#   cell_spec(color.me.yellow, color = "orange") %>% 
-#   cell_spec(color.me.green, color = "green") %>% 
-#   column_spec(1, bold = T, color = "black") %>% 
-#   column_spec(2, bold = T, color = "black") %>% 
-#   collapse_rows()
+wind1$trend<- ifelse(wind1$Trend == "pos", 
+                    '![](arrow_up.png)',
+                    ifelse(wind1$Trend == "neg",
+                    '![](arrow_down.png)', 
+                    '![](arrow_null.png)')) 
+
+
+wind2<-wind1 %>% dplyr::select(Area, Season, Species, trend)
+names<-c("Area", "Season", "Species", "trend")
+bnew<-c("Area.1", "Season.1", "Species.1", "trend.1")
+cnew<-c("Area.2", "Season.2", "Species.2", "trend.2")
+dnew<-c("Area.3", "Season.3", "Species.3", "trend.3")
+enew<-c("Area.4", "Season.4", "Species.4", "trend.4")
+
+a<-wind2 %>% filter(Area == "Existing-North") 
+b<-wind2 %>% filter(Area == "Proposed-North") %>% 
+  dplyr::rename_at(vars(names), ~ bnew)
+c<-wind2 %>% filter(Area == "Existing-Mid")%>% 
+  dplyr::rename_at(vars(names), ~ cnew)
+d<-wind2 %>% filter(Area == "Proposed-Mid")%>% 
+  dplyr::rename_at(vars(names), ~ dnew)
+e<-wind2 %>% filter(Area == "Existing-South")%>% 
+  dplyr::rename_at(vars(names), ~ enew)
+
+all<- a %>% cbind(b,c,d,e) %>% 
+  dplyr::select(2:4,7:8,11:12,15:16,19:20) %>% 
+  rename(Trend = trend, 
+         Species = Species.1, 
+         Trend = trend.1, 
+         Species = Species.2, 
+         Trend = trend.2, 
+         Species = Species.3, 
+         Trend = trend.3, 
+         Species = Species.4, 
+         Trend = trend.4 )
+  
+
+all %>% kable(format = "html") %>%
+  kable_styling("striped", "condensed", font_size = 9) %>%
+  collapse_rows(1) %>% 
+  add_header_above(c(" " = 1, "Existing - North" = 2, "Proposed - North" = 2, 
+                     "Existing - Mid" = 2, "Proposed - Mid" = 2, 
+                     "Existing - South" = 2)) 
 ```
 
 Working on updating map. 

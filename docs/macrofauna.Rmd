@@ -1989,7 +1989,7 @@ ecodata::narw %>%
   theme_ts()
 ```
 
-```{r NARW-calf-abundance, fig.width = 6, fig.asp = 0.55,fig.cap = "Estimated North Atlanic right whale calf abundance."}
+```{r NARW-calf-abundance, fig.width = 6, fig.asp = 0.55,fig.cap = "Number of North Atlantic right whale calf births, 1990 - 2019."}
 hline <- ecodata::narw %>% 
   filter(Var == "Calves") %>% 
   drop_na() %>% 
@@ -2004,13 +2004,13 @@ ecodata::narw %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   geom_line(aes(x = Time, y = Value), size = lwd-0.75) +
-  #geom_point(aes(x = Time, y = Value), size = pcex-0.75) +
+  geom_point(aes(x = Time, y = Value), size = pcex-0.75) +
   scale_x_continuous(expand = c(0.01, 0.01)) +
   #scale_color_manual(values = c("red", "black", "red"))+
   guides(color = FALSE) +
   ggtitle("NARW calf abundance") +
   ylab(expression("Abundance (n)")) +
-  xlab("Time")+
+  xlab("")+
   geom_hline(aes(yintercept = mean(Value)),
            color = "black",
            size = hline.size,
@@ -2060,7 +2060,8 @@ depth <- spec_dist %>%
   geom_line() +
   geom_point() +
   scale_x_continuous(expand = c(0.01, 0.01)) +
-  ggtitle("Depth")+
+  scale_y_reverse() +
+  ggtitle("Depth") +
   ylab(expression("Depth (m)")) +
   xlab("")+
   geom_hline(aes(yintercept = hline),
