@@ -2050,6 +2050,8 @@ asd <- spec_dist %>%
 
 depth <- spec_dist %>% 
   filter(Var == "depth") %>% 
+  mutate(Value = Value* -1, 
+         hline = mean(Value)) %>% 
   ggplot(aes(x = Time, y = Value,
                group = Var)) + 
  #Highlight last ten years
@@ -2060,7 +2062,6 @@ depth <- spec_dist %>%
   geom_line() +
   geom_point() +
   scale_x_continuous(expand = c(0.01, 0.01)) +
-  scale_y_reverse() +
   ggtitle("Depth") +
   ylab(expression("Depth (m)")) +
   xlab("")+
