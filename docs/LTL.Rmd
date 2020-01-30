@@ -8,7 +8,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-
+image.dir<- here::here("docs/images")
 #Default Rmd options
 knitr::opts_chunk$set(echo = FALSE,
                       message = FALSE,
@@ -175,6 +175,7 @@ winter_anom <-  ggplotGrob( seasonal_oisst_anom %>%
                               geom_point() +
                               geom_gls(alpha = trend.alpha + 0.25) +
                               ylab("SST anomaly (°C)")+
+                              xlab(element_blank())+
                               scale_x_continuous(expand = c(0.01, 0.01)) +
                               geom_hline(aes(yintercept = hline)) +
                               theme_ts()+
@@ -203,6 +204,7 @@ spring_anom <-  ggplotGrob( seasonal_oisst_anom %>%
                               geom_point() +
                               geom_gls(alpha = trend.alpha + 0.25) +
                               ylab("SST anomaly (°C)")+
+                              xlab(element_blank())+
                               scale_x_continuous(expand = c(0.01, 0.01)) +
                               geom_hline(aes(yintercept = hline)) +
                               theme_ts()+
@@ -231,6 +233,7 @@ summer_anom <-  ggplotGrob( seasonal_oisst_anom %>%
                               geom_point() +
                               geom_gls(alpha = trend.alpha + 0.25) +
                               ylab("SST anomaly (°C)")+
+                              xlab(element_blank())+
                               scale_x_continuous(expand = c(0.01, 0.01)) +
                               geom_hline(aes(yintercept = hline)) +
                               theme_ts()+
@@ -259,6 +262,7 @@ fall_anom <-  ggplotGrob( seasonal_oisst_anom %>%
                             geom_point() +
                             geom_gls(alpha = trend.alpha + 0.25) +
                             ylab("SST anomaly (°C)")+
+                            xlab(element_blank())+
                             scale_x_continuous(expand = c(0.01, 0.01)) +
                             geom_hline(aes(yintercept = hline)) +
                             theme_ts()+
@@ -307,6 +311,7 @@ ggplot2::ggplot() +
   geom_gls(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value), size = 1) +
   ylab("Temperature (°C)") +
+  xlab(element_blank())+
   ggtitle("Bottom temp. anomaly") +
   scale_x_continuous(expand = c(0.01, 0.01)) +
   theme_ts() +
@@ -342,11 +347,11 @@ out_pp <- ecodata::chl_pp %>%
 out_pp$Month <- factor(out_pp$Month, levels = month.abb)
 
 
-(pp_cci <- ggplot(out_pp) +
+pp_cci <- ggplot(out_pp) +
    # geom_gls(aes(x = Year, y = Value, group = Month))+
     geom_point(aes(x = Year, y = Value, group = Month)) +
     geom_line(aes(x = Year, y = Value, group = Month)) +
-    scale_x_discrete(name = "Time", breaks = seq(min(out_pp$Year),max(out_pp$Year),10)) +  
+    scale_x_discrete(name = "", breaks = seq(min(out_pp$Year),max(out_pp$Year),10)) +  
         geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
@@ -356,8 +361,9 @@ out_pp$Month <- factor(out_pp$Month, levels = month.abb)
     ylab(expression("PP (gC m"^-2*" d"^-1*")")) +
     theme_facet() +
     theme(axis.text.x = element_text(angle=45, hjust = 1),
-          panel.spacing = unit(1, "lines"),
-          plot.margin = unit(c(0.1, 0, 0, 0), "cm")))
+          panel.spacing = unit(0.5, "lines"),
+          plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
+pp_cci
 ```
 
 
@@ -374,11 +380,11 @@ out_chl <- ecodata::chl_pp %>%
 out_chl$Month <- factor(out_chl$Month, levels = month.abb)
 
 
-(chl_cci <- ggplot(out_chl) +
+chl_cci <- ggplot(out_chl) +
    # geom_gls(aes(x = Year, y = Value, group = Month))+
     geom_point(aes(x = Year, y = Value, group = Month)) +
     geom_line(aes(x = Year, y = Value, group = Month)) +
-    scale_x_discrete(name = "Time", breaks = seq(min(out_chl$Year),max(out_chl$Year),10)) +  
+    scale_x_discrete(name = "", breaks = seq(min(out_chl$Year),max(out_chl$Year),10)) +  
             geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
@@ -388,9 +394,9 @@ out_chl$Month <- factor(out_chl$Month, levels = month.abb)
     ylab(expression("CHL (mg m"^-3*")")) +
     theme_facet() +
     theme(axis.text.x = element_text(angle=45, hjust = 1),
-          panel.spacing = unit(1, "lines"),
-          plot.margin = unit(c(0.1, 0, 0, 0), "cm")))
-
+          panel.spacing = unit(.5, "lines"),
+          plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
+chl_cci
 ```
 
 
@@ -489,7 +495,8 @@ ches_bay_wq %>%
   geom_line() +
   geom_point() +
   geom_gls() +
-    ylab(expression("Estimated attainment, percent")) +
+  ylab(expression("Estimated attainment, percent")) +
+  xlab(element_blank())+
   ggtitle("Chesapeake Bay Water Quality Attainment") +
   scale_x_continuous(breaks = minlab,labels = paste0(minlab,"-",maxlab),expand = c(0.01, 0.01)) +
     geom_hline(aes(yintercept = hline),
@@ -524,6 +531,7 @@ zoo_abund %>%
   geom_line() +
   geom_point() +
   ylab("Abundance anomaly") +
+  xlab(element_blank())+
   ggtitle("Zooplankton abundance anomaly") +
   facet_wrap(Var~., ncol = 3) +
   scale_x_continuous(expand = c(0.01, 0.01))+
@@ -583,6 +591,7 @@ pp_anom_plt <- pp_anom %>%
   geom_point() +
   guides(color = F) +
   ylab("Anomaly ratio") +
+  xlab(element_blank())+
   ggtitle("Primary production anomaly ratio") +
     scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+
     scale_y_continuous(limits = c(0.8,1.2)) +
@@ -614,6 +623,7 @@ zoo_div %>%
   geom_line() +
   geom_point() +
   ylab("Shannon Diversity Index") +
+  xlab(element_blank())+
   ggtitle("Zooplankton Diversity") +
   facet_wrap(Var~., ncol = 3) +
   scale_x_continuous(expand = c(0.01, 0.01))+
@@ -715,6 +725,7 @@ ggplot(aes(x = Time, y = Val2, group = Var)) +
   geom_line()+
   geom_point()+
     ylab("") +
+  xlab(element_blank())+
   facet_wrap(Season ~ ., ncol = 2,labeller = label) +
   scale_x_continuous(breaks = seq(1980,2010,10),
                      expand = c(0.01, 0.01))+
@@ -748,7 +759,7 @@ ecodata::cold_pool %>%
      linetype = hline.lty)+
   ggtitle("Cold Pool Index")+
   ylab(expression("Cold Pool Temperature Anomaly (C) ")) +
-  xlab("Time")+
+  xlab("")+
   theme_ts()
 ```
 
@@ -757,7 +768,6 @@ ecodata::cold_pool %>%
 [Notes](https://docs.google.com/document/d/0B1lP7X3GP_hQLTlmU3hqLUMzVWcwS2U5R2oxTWNWb19tcmFz/edit)
 
 ```{r MAB_heatwave1, eval= T, echo = F, out.width = "80%"}
-image.dir <- here::here("docs")
 
 knitr::include_graphics(file.path(image.dir,"MAB_Heatwave_timeseries.jpg"))
 
@@ -775,6 +785,7 @@ cumu %>%
   geom_point(aes(x = Time, y = Value)) +
   geom_gls(aes(x = Time, y = Value)) +
   ylab("Cumulative intesity (degrees C x days)") +
+  xlab(element_blank())+
   ggtitle("Marine Heatwave Cumulative Intesity") +
   scale_x_continuous(expand = c(0.01, 0.01))+
   geom_hline(aes(yintercept = hline),
@@ -801,6 +812,7 @@ maxin %>%
   geom_point(aes(x = Time, y = Value)) +
   geom_gls(aes(x = Time, y = Value)) +
   ylab("Maximum intesity (degrees C)") +
+  xlab(element_blank())+
   ggtitle("Marine Heatwave Maximum Intesity") +
   scale_x_continuous(expand = c(0.01, 0.01))+
   geom_hline(aes(yintercept = hline),
@@ -822,7 +834,6 @@ maxin %>%
 ### Ocean Temperature {.tabset .tabset-fade}
 
 #### SST 
-still working on updating the timeseries
 
 ```{r NE-SST-insitu, fig.width=8, fig.height = 8}
 #EPU shapefile
@@ -890,6 +901,7 @@ ne_anom_plt <- ggplot(data = ne_anom,
   ylim(-2,3)+
   geom_gls() +
   ylab(expression("SST Anomaly (°C)")) +
+  xlab(element_blank())+
   ggtitle("Gulf of Maine & Georges Bank SST Anomaly") +
     scale_color_manual(values = c("black","indianred"))+
     scale_x_continuous(expand = c(0.01, 0.01)) +
@@ -920,6 +932,7 @@ bot_temp_insitu_gom <- oceantemp_insitu %>%
   geom_gls(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value), size = 1) +
   ylab("Temperature Anomaly (°C)") +
+  xlab(element_blank())+
   ggtitle("GOM Bottom Temperature Anomaly") +
   scale_x_continuous(expand = c(0.01, 0.01)) +
     geom_hline(aes(yintercept = hline),
@@ -943,6 +956,7 @@ bot_temp_insitu_gb <- oceantemp_insitu %>%
   geom_gls(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value), size = 1) +
   ylab("Temperature Anomaly (°C)") +
+  xlab(element_blank())+
   ggtitle("GB Bottom Temperature Anomaly") +
   scale_x_continuous(expand = c(0.01, 0.01)) +
     geom_hline(aes(yintercept = hline),
@@ -981,6 +995,7 @@ ggplot(data = sw.df) +
   geom_line(aes(x = Time, y = Value, color = Flavor))+
   geom_point(aes(x = Time, y = Value, color = Flavor)) +
   ylab("Percent of Total Slopewater") +
+  xlab(element_blank())+
   ggtitle("Slopewater Proportions in NE Channel")+
     scale_x_continuous(expand = c(0.01, 0.01))+
       geom_hline(aes(yintercept = hline,
@@ -1017,7 +1032,7 @@ pp_cci_gom <- out_pp %>%
    # geom_gls(aes(x = Year, y = Value, group = Month))+
     geom_point(aes(x = Year, y = Value, group = Month)) +
     geom_line(aes(x = Year, y = Value, group = Month)) +
-    scale_x_discrete(name = "Time", breaks = seq(min(out_pp$Year),max(out_pp$Year),10)) +  
+    scale_x_discrete(name = "", breaks = seq(min(out_pp$Year),max(out_pp$Year),10)) +  
     facet_wrap(Month~., ncol = 12) +
     ggtitle("GOM Monthly median PPD") +
     ylab(expression("PP (gC m"^-2*" d"^-1*")")) +
@@ -1037,7 +1052,7 @@ pp_cci_gom <- out_pp %>%
    # geom_gls(aes(x = Year, y = Value, group = Month))+
     geom_point(aes(x = Year, y = Value, group = Month)) +
     geom_line(aes(x = Year, y = Value, group = Month)) +
-    scale_x_discrete(name = "Time", breaks = seq(min(out_pp$Year),max(out_pp$Year),10)) +  
+    scale_x_discrete(name = "", breaks = seq(min(out_pp$Year),max(out_pp$Year),10)) +  
     facet_wrap(Month~., ncol = 12) +
     ggtitle("GB Monthly median PPD") +
     ylab(expression("PP (gC m"^-2*" d"^-1*")")) +
@@ -1077,7 +1092,7 @@ ne_chl <- ggplot(data = ne_chl_weekly) +
   xlab("")+
   ylab("") +
   scale_x_continuous(breaks = seq(1,52,10),
-                   labels = c("","","","","",""),
+                   labels = c("Jan.","Mar.","May","July","Oct.","Dec."),
                    expand = c(0.01,0.01)) +
   scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
   theme_ts()
@@ -1127,32 +1142,32 @@ chl_cci_gom <-
   out_chl %>% 
   filter(EPU == "GOM") %>% 
   ggplot() +
-    geom_gls(aes(x = Year, y = Value, group = Month))+
+    #geom_gls(aes(x = Year, y = Value, group = Month))+
     geom_point(aes(x = Year, y = Value, group = Month)) +
     geom_line(aes(x = Year, y = Value, group = Month)) +
-    scale_x_discrete(name = "Time", breaks = seq(min(out_chl$Year),max(out_chl$Year),10)) +  
-    facet_wrap(Month~., ncol = 6) +
+    scale_x_discrete(name = "", breaks = seq(min(out_chl$Year),max(out_chl$Year),10)) +  
+    facet_wrap(Month~., ncol = 12) +
     ggtitle("GOM Monthly median CHL (OC-CCI)") +
     ylab(expression("CHL (mg m"^-3*")")) +
     theme_facet() +
     theme(axis.text.x = element_text(angle=45, hjust = 1),
-          panel.spacing = unit(1, "lines"),
+          panel.spacing = unit(0.5, "lines"),
           plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
 
 chl_cci_gb <- 
   out_chl %>% 
   filter(EPU == "GB") %>% 
   ggplot() +
-    geom_gls(aes(x = Year, y = Value, group = Month))+
+    #geom_gls(aes(x = Year, y = Value, group = Month))+
     geom_point(aes(x = Year, y = Value, group = Month)) +
     geom_line(aes(x = Year, y = Value, group = Month)) +
-    scale_x_discrete(name = "Time", breaks = seq(min(out_chl$Year),max(out_chl$Year),10)) +  
-    facet_wrap(Month~., ncol = 6) +
+    scale_x_discrete(name = "", breaks = seq(min(out_chl$Year),max(out_chl$Year),10)) +  
+    facet_wrap(Month~., ncol = 12) +
     ggtitle("GB Monthly median CHL (OC-CCI)") +
     ylab(expression("CHL (mg m"^-3*")")) +
     theme_facet() +
     theme(axis.text.x = element_text(angle=45, hjust = 1),
-          panel.spacing = unit(1, "lines"),
+          panel.spacing = unit(0.5, "lines"),
           plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
 chl_cci_gom + chl_cci_gb + plot_layout(ncol = 1)
 
@@ -1179,6 +1194,7 @@ gom_zoo_abund <- zoo_abund %>%
   geom_line() +
   geom_point() +
   ylab("Abundance anomaly") +
+  xlab(element_blank())+
   ggtitle("GOM Zooplankton abundance anomaly") +
   facet_wrap(Var~., ncol = 3) +
   scale_x_continuous(expand = c(0.01, 0.01))+
@@ -1200,6 +1216,7 @@ gb_zoo_abund <- zoo_abund %>%
   geom_line() +
   geom_point() +
   ylab("Abundance anomaly") +
+  xlab(element_blank())+
   ggtitle("GB Zooplankton abundance anomaly") +
   facet_wrap(Var~., ncol = 3) +
   scale_x_continuous(expand = c(0.01, 0.01))+
@@ -1244,6 +1261,7 @@ sli_plt <- sli %>%
   facet_wrap(EPU~.,ncol = 2)+
   xlab("")+
   ylab("Small-large abundance") +
+  xlab(element_blank())+
   ggtitle("Small-large copepod abundance") +
     scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+
       geom_hline(aes(yintercept = hline,
@@ -1263,6 +1281,7 @@ pp_anom_plt <- pp_anom %>%
   geom_point() +
   guides(color = F) +
   ylab("Anomaly ratio") +
+  xlab(element_blank())+
   facet_wrap(EPU~.,ncol = 2)+
   ggtitle("Primary production anomaly ratio") +
     scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+
@@ -1294,6 +1313,7 @@ gom_zoo_div <- zoo_div %>%
   geom_line() +
   geom_point() +
   ylab("Shannon Diversity") +
+  xlab(element_blank())+
   ggtitle("GOM Zooplankton Diversity") +
   facet_wrap(Var~., ncol = 3) +
   scale_x_continuous(expand = c(0.01, 0.01))+
@@ -1315,6 +1335,7 @@ gb_zoo_div <- zoo_div %>%
   geom_line() +
   geom_point() +
   ylab("Shannon Diversity") +
+  xlab(element_blank())+
   ggtitle("GB Zooplankton Diversity") +
   facet_wrap(Var~., ncol = 3) +
   scale_x_continuous(expand = c(0.01, 0.01))+
@@ -1368,6 +1389,7 @@ ggplot(aes(x = Time, y = Value, group = Var)) +
   geom_line()+
   geom_point()+
   ylab("") +
+  xlab(element_blank())+
   facet_wrap(Season ~ ., ncol = 2, scales='free_x', labeller = label) +
   ggtitle("GOM zooplankton abundance") +
   scale_x_continuous(expand = c(0.01, 0.01))+
@@ -1470,6 +1492,7 @@ ggplot(aes(x = Time, y = Value, group = Var)) +
   geom_line()+
   geom_point()+
   ylab(expression("Abundance num m"^-3*"")) +
+  xlab(element_blank())+
   facet_wrap(Season ~ ., ncol = 2, scales='free_x',labeller = label) +
   scale_x_continuous(expand = c(0.01, 0.01))+
   scale_y_continuous(trans = "log10")+
@@ -1494,6 +1517,7 @@ ggplot(aes(x = Time, y = Value, group = Var)) +
   geom_line()+
   geom_point()+
     ylab("") +
+  xlab(element_blank())+
   facet_wrap(Season ~ ., ncol = 2,labeller = label) +
   scale_x_continuous(breaks = seq(1980,2010,10),
                      expand = c(0.01, 0.01))+
@@ -1522,6 +1546,7 @@ cumu  %>%
   geom_point(aes(x = Time, y = Value)) +
   geom_gls(aes(x = Time, y = Value)) +
   ylab("Cumulative intesity (degrees C x days)") +
+  xlab(element_blank())+
   ggtitle("Marine Heatwave Cumulative Intensity") +
   scale_x_continuous(expand = c(0.01, 0.01))+
   geom_hline(aes(yintercept = hline),
@@ -1550,6 +1575,7 @@ maxin %>%
   geom_point(aes(x = Time, y = Value)) +
   geom_gls(aes(x = Time, y = Value)) +
   ylab("Maximum intesity (degrees C)") +
+  xlab(element_blank())+
   ggtitle("Marine Heatwave Maximum Intensity") +
   scale_x_continuous(expand = c(0.01, 0.01))+
   geom_hline(aes(yintercept = hline),
@@ -1568,12 +1594,12 @@ maxin %>%
 
 ```{r timesseries_heatwave, fig.cap="Georges Bank", eval= T, echo = F}
 
-image.dir <- here::here("docs")
+
 cowplot::ggdraw() + cowplot::draw_image(file.path(image.dir,"GB_Heatwave_timeseries.jpg"))
 ```
+
 ```{r timesseries_heatwave1, fig.cap = "Gulf of Maine", eval= T, echo = F}
 
-image.dir <- here::here("docs")
 cowplot::ggdraw() + cowplot::draw_image(file.path(image.dir,"GOM_Heatwave_timeseries.jpg"))
 ```
 
@@ -1643,6 +1669,7 @@ lt_sst %>%
              alpha = hline.alpha,
            linetype = hline.lty)+
   ylab("Temperature (°C)") +
+  xlab(element_blank())+
   ggtitle("Long-term SST") +
   scale_x_continuous(expand = c(0.01, 0.01), breaks = seq(1840,2010,10))+
   theme_facet() +
@@ -1667,6 +1694,7 @@ gsi %>%
   geom_line() +
   geom_point() +
   ylab("Gulf Stream position anomaly") +
+  xlab(element_blank())+
   ggtitle("Gulf Stream Index") +
     scale_x_continuous(expand = c(0.01, 0.01))+
       geom_hline(aes(yintercept = hline),
@@ -1697,12 +1725,14 @@ wcr %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ylab("Warm Core Ring Births")+
+  xlab(element_blank())+
   ggtitle("Warm Core Rings")+
   theme_ts()+
   geom_segment(data = upper.line, aes(x = min(Time), y = hline, 
                                       xend = max(Time), yend = hline, color = "segment") )+
   geom_segment(data = lower.line, aes(x = min(Time), y = hline, 
-                                      xend = max(Time), yend = hline, color = "segment") )
+                                      xend = max(Time), yend = hline, color = "segment") )+
+  theme(legend.position = "none")
 ```
 
 
@@ -1710,13 +1740,11 @@ wcr %>%
 
 <p style="color:red">Potentially possible to get map like this for DO, chl and nitrogen. Not this year though. </p>
 ```{r NERRs-MP-DIN, eval= T, echo = F, out.width = "80%"}
-image.dir <- here::here("docs")
 
 knitr::include_graphics(file.path(image.dir,"nerrs_map.png"))
 ```
 <p style="color:red">I've asked for the total number of events per year.</p>
 ```{r NERRs-MH-DIN, eval= T, echo = F, out.width = "80%"}
-image.dir <- here::here("docs")
 
 knitr::include_graphics(file.path(image.dir,"nerrs_DO.png"))
 ```

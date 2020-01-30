@@ -9,7 +9,7 @@ output:
 
 ```{r setup, include=FALSE}
 #Image Directory
-image.dir <- here::here("image")
+image.dir <- here::here("docs/images")
 
 #Default Rmd options
 knitr::opts_chunk$set(echo = FALSE,
@@ -655,7 +655,6 @@ mid
 ### Condition factor
 
 ```{r mab-cf, fig.cap = "Condition factor for species sampled in MAB."}
-image.dir <- here::here("docs")
 
 knitr::include_graphics(file.path(image.dir, "MABcondition_2019.jpg"))
 
@@ -1557,7 +1556,7 @@ gb
 
 #### GB
 ```{r gb-cf, fig.cap = "Condition factor for species sampled in GB."}
-image.dir <- here::here("docs")
+
 
 knitr::include_graphics(file.path(image.dir, "GBcondition_2019.jpg"))
 
@@ -1565,7 +1564,7 @@ knitr::include_graphics(file.path(image.dir, "GBcondition_2019.jpg"))
 
 #### GOM
 ```{r gom-cf, fig.cap = "Condition factor for species sampled in the GOM."}
-image.dir <- here::here("docs")
+
 
 knitr::include_graphics(file.path(image.dir, "GOMcondition_2019.jpg"))
 

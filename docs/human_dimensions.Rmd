@@ -8,7 +8,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-
+image.dir<-here::here("docs/images")
 #Default Rmd options
 knitr::opts_chunk$set(echo = FALSE,
                       message = FALSE,
@@ -1675,7 +1675,6 @@ cowplot::plot_grid(rec_effort,
 
 [notes](https://drive.google.com/drive/folders/1_BNoAPvEaYQrdsi900175kcjpjmtcYzT)
 ```{r ppr_comp90, eval = T, echo = F, fig.cap='', out.width='80%'}
-image.dir <- here::here("docs")
 
 knitr::include_graphics(file.path(image.dir, "composition-.90.png"))
 ```
