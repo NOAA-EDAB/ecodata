@@ -513,29 +513,29 @@ Write up on anomalies in salinity we saw in 2018,2019 following record breaking 
 
 ### Zooplankton {.tabset .tabset-fade}
 
-#### Abundance anomaly
 
-```{r MAB-zoo-abund, fig.width = 8, fig.asp = .35}
-zoo_abund <- ecodata::zoo_abun_anom %>% 
+#### Euphausiids + Cnidarians
+```{r MAB-euph-cnid, fig.width = 8, fig.asp = .35}
+zoo_abund <- ecodata::zoo_strat_abun %>% 
   filter(EPU == epu_abbr,
-         !str_detect(Var, "small-large")) %>% 
-  mutate(hline = 0,
-         Var = str_to_title(str_remove(Var, "anomaly"))) 
+         !str_detect(Var, "Small|Large")) %>% 
+  group_by(Var, EPU) %>% 
+  mutate(hline = mean(Value)) 
 
 zoo_abund %>% 
-  ggplot(aes(x = Time, y = Value, group = Var)) +
-         annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  ggplot(aes(x = Time, y = Value)) +
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   geom_gls() +
   geom_line() +
   geom_point() +
-  ylab("Abundance anomaly") +
+  ylab("Stratified Abundance") +
   xlab(element_blank())+
-  ggtitle("Zooplankton abundance anomaly") +
+  ggtitle("Zooplankton abundance") +
   facet_wrap(Var~., ncol = 3) +
   scale_x_continuous(expand = c(0.01, 0.01))+
-      geom_hline(aes(yintercept = hline),
+  geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+
@@ -546,67 +546,135 @@ zoo_abund %>%
 
 ```
 
+
+#### Small and Large Calanoid stratified abundance
+```{r MAB-sm-lg, fig.width = 8, fig.asp = .35}
+zoo_abund <- ecodata::zoo_strat_abun %>% 
+  filter(EPU == epu_abbr,
+         str_detect(Var, "Small|Large")) %>% 
+  group_by(Var, EPU) %>% 
+  mutate(hline = mean(Value)) 
+
+zoo_abund %>% 
+  ggplot() +
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  geom_line(aes(x = Time, y = Value, color = Var)) +
+  geom_point(aes(x = Time, y = Value, color = Var)) +
+  geom_gls(aes(x = Time, y = Value, group = Var)) +
+  ylab("Stratified Abundance") +
+  xlab(element_blank())+
+  ggtitle("Zooplankton abundance") +
+  #facet_wrap(Var~., ncol = 3) +
+  scale_x_continuous(expand = c(0.01, 0.01))+
+  geom_hline(aes(yintercept = hline,
+           color = Var), 
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  theme_facet() +
+  theme(strip.text=element_text(hjust=0,
+                                face = "italic"))
+  
+
+```
+
+
+#### Abundance anomaly
+
+<!-- # ```{r MAB-zoo-abund, fig.width = 8, fig.asp = .35} -->
+<!-- # zoo_abund <- ecodata::zoo_abun_anom %>%  -->
+<!-- #   filter(EPU == epu_abbr, -->
+<!-- #          !str_detect(Var, "small-large")) %>%  -->
+<!-- #   mutate(hline = 0, -->
+<!-- #          Var = str_to_title(str_remove(Var, "anomaly")))  -->
+<!-- #  -->
+<!-- # zoo_abund %>%  -->
+<!-- #   ggplot(aes(x = Time, y = Value, group = Var)) + -->
+<!-- #          annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!-- #       xmin = x.shade.min , xmax = x.shade.max, -->
+<!-- #       ymin = -Inf, ymax = Inf) + -->
+<!-- #   geom_gls() + -->
+<!-- #   geom_line() + -->
+<!-- #   geom_point() + -->
+<!-- #   ylab("Abundance anomaly") + -->
+<!-- #   xlab(element_blank())+ -->
+<!-- #   ggtitle("Zooplankton abundance anomaly") + -->
+<!-- #   facet_wrap(Var~., ncol = 3) + -->
+<!-- #   scale_x_continuous(expand = c(0.01, 0.01))+ -->
+<!-- #       geom_hline(aes(yintercept = hline), -->
+<!-- #            size = hline.size, -->
+<!-- #            alpha = hline.alpha, -->
+<!-- #            linetype = hline.lty)+ -->
+<!-- #   theme_facet() + -->
+<!-- #   theme(strip.text=element_text(hjust=0, -->
+<!-- #                                 face = "italic")) -->
+<!-- #    -->
+<!-- #  -->
+<!-- # ``` -->
+
 #### Small-large index
 
-```{r MAB-sli}
-sli <- ecodata::zoo_sli_anom %>% 
-  filter(EPU == epu_abbr,
-         str_detect(Var, "Sm-Lg copepod anom")) %>% 
-  mutate(hline = 0) 
+<!-- ```{r MAB-sli} -->
+<!-- sli <- ecodata::zoo_sli_anom %>%  -->
+<!--   filter(EPU == epu_abbr, -->
+<!--          str_detect(Var, "Sm-Lg copepod anom")) %>%  -->
+<!--   mutate(hline = 0)  -->
 
-pp_anom <- ecodata::chl_pp %>% 
-  filter(str_detect(Var, "ANNUAL_PPD_RATIO_ANOMALY"),
-         EPU == "MAB") %>% 
-  mutate(hline = 1,
-         Time = as.numeric(as.character(Time)),
-         Var = "ANNUAL_PPD_RATIO_ANOMALY")
+<!-- pp_anom <- ecodata::chl_pp %>%  -->
+<!--   filter(str_detect(Var, "ANNUAL_PPD_RATIO_ANOMALY"), -->
+<!--          EPU == "MAB") %>%  -->
+<!--   mutate(hline = 1, -->
+<!--          Time = as.numeric(as.character(Time)), -->
+<!--          Var = "ANNUAL_PPD_RATIO_ANOMALY") -->
 
-sli_plt <- sli %>% 
-  ggplot(aes(x = Time, y = Value, group = Var)) +
-         annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line() +
-  geom_point() +
-  guides(color = F) +
-  xlab("")+
-  ylab("Small-large abundance") +
-  ggtitle("Small-large copepod abundance") +
-    scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+
-      geom_hline(aes(yintercept = hline,
-                     group = Var),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+<!-- sli_plt <- sli %>%  -->
+<!--   ggplot(aes(x = Time, y = Value, group = Var)) + -->
+<!--          annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line() + -->
+<!--   geom_point() + -->
+<!--   guides(color = F) + -->
+<!--   xlab("")+ -->
+<!--   ylab("Small-large abundance") + -->
+<!--   ggtitle("Small-large copepod abundance") + -->
+<!--     scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+ -->
+<!--       geom_hline(aes(yintercept = hline, -->
+<!--                      group = Var), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty)+ -->
+<!--   theme_ts() + -->
+<!--   theme(strip.text=element_text(hjust=0, -->
+<!--                                 face = "italic")) -->
 
-pp_anom_plt <- pp_anom %>% 
-    ggplot(aes(x = Time, y = Value, group = Var)) +
-         annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line() +
-  geom_point() +
-  guides(color = F) +
-  ylab("Anomaly ratio") +
-  xlab(element_blank())+
-  ggtitle("Primary production anomaly ratio") +
-    scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+
-    scale_y_continuous(limits = c(0.8,1.2)) +
-      geom_hline(aes(yintercept = hline,
-                     group = Var),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+<!-- pp_anom_plt <- pp_anom %>%  -->
+<!--     ggplot(aes(x = Time, y = Value, group = Var)) + -->
+<!--          annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line() + -->
+<!--   geom_point() + -->
+<!--   guides(color = F) + -->
+<!--   ylab("Anomaly ratio") + -->
+<!--   xlab(element_blank())+ -->
+<!--   ggtitle("Primary production anomaly ratio") + -->
+<!--     scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+ -->
+<!--     scale_y_continuous(limits = c(0.8,1.2)) + -->
+<!--       geom_hline(aes(yintercept = hline, -->
+<!--                      group = Var), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty)+ -->
+<!--   theme_ts() + -->
+<!--   theme(strip.text=element_text(hjust=0, -->
+<!--                                 face = "italic")) -->
 
 
-sli_plt + pp_anom_plt + plot_layout(ncol = 1) & theme(plot.margin = margin(t = 0))
-```
+<!-- sli_plt + pp_anom_plt + plot_layout(ncol = 1) & theme(plot.margin = margin(t = 0)) -->
+<!-- ``` -->
 
 #### Zooplankton Diversity
 
@@ -640,104 +708,104 @@ zoo_div %>%
 
 #### OI abundance
 
-```{r MAB-oi-zoo, fig.width=8}
-facet_names <- list(
-  'centropages spring'=expression(paste(italic("Centropages "), "spring")),
-  'centropages fall'=expression(paste(italic("Centropages "), "fall")),
-  'temora spring'=expression(paste(italic("Temora "), "spring")),
-  'temora fall' = expression(paste(italic("Temora "), "fall")),
-  'pseudocalanus spring'=expression(paste(italic("Pseudocalanus "), "spring")),
-  'pseudocalanus fall' = expression(paste(italic("Pseudocalanus "), "fall")))
+<!-- ```{r MAB-oi-zoo, fig.width=8} -->
+<!-- facet_names <- list( -->
+<!--   'centropages spring'=expression(paste(italic("Centropages "), "spring")), -->
+<!--   'centropages fall'=expression(paste(italic("Centropages "), "fall")), -->
+<!--   'temora spring'=expression(paste(italic("Temora "), "spring")), -->
+<!--   'temora fall' = expression(paste(italic("Temora "), "fall")), -->
+<!--   'pseudocalanus spring'=expression(paste(italic("Pseudocalanus "), "spring")), -->
+<!--   'pseudocalanus fall' = expression(paste(italic("Pseudocalanus "), "fall"))) -->
 
-zoo_oi_mab <- ecodata::zoo_oi %>% 
-  filter(!str_detect(Var,"SD"),
-         EPU == "MAB") %>% 
-  
-  mutate(Var = str_remove(Var, " zoo"),
-         Val2 = exp(Value)) %>% 
-      group_by(Var) %>% 
-  mutate(hline = mean(Val2, na.rm = T)) %>% 
-  separate(.,col = Var, into = c("Species","Season"), remove = F) %>% 
-  mutate(Season = factor(Season, levels = c("spring", "fall")))
+<!-- zoo_oi_mab <- ecodata::zoo_oi %>%  -->
+<!--   filter(!str_detect(Var,"SD"), -->
+<!--          EPU == "MAB") %>%  -->
+
+<!--   mutate(Var = str_remove(Var, " zoo"), -->
+<!--          Val2 = exp(Value)) %>%  -->
+<!--       group_by(Var) %>%  -->
+<!--   mutate(hline = mean(Val2, na.rm = T)) %>%  -->
+<!--   separate(.,col = Var, into = c("Species","Season"), remove = F) %>%  -->
+<!--   mutate(Season = factor(Season, levels = c("spring", "fall"))) -->
 
 
-top <- zoo_oi_mab %>%  
-  filter(Species == "centropages") %>% 
+<!-- top <- zoo_oi_mab %>%   -->
+<!--   filter(Species == "centropages") %>%  -->
 
-ggplot(aes(x = Time, y = Val2, group = Var)) +
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = 0, ymax = Inf) +
-  geom_hline(aes(yintercept = hline),
-     size = hline.size,
-     alpha = hline.alpha,
-     linetype = hline.lty)+
-  geom_gls() +
-  geom_line()+
-  geom_point()+
-  ylab("") +
-  facet_wrap(Season ~ ., ncol = 2, scales='free_x',labeller = label) +
-  ggtitle("Zooplankton abundance (OI)") +
-  scale_x_continuous(expand = c(0.01, 0.01))+
-  scale_y_continuous(trans = "log10")+
-  theme_facet() +
-    theme(strip.text=element_text(hjust=0,
-                                face = "italic"),
-          axis.title.x=element_blank(),
-        axis.text.x=element_blank(),
-        axis.ticks.x=element_blank())
+<!-- ggplot(aes(x = Time, y = Val2, group = Var)) + -->
+<!--   annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = 0, ymax = Inf) + -->
+<!--   geom_hline(aes(yintercept = hline), -->
+<!--      size = hline.size, -->
+<!--      alpha = hline.alpha, -->
+<!--      linetype = hline.lty)+ -->
+<!--   geom_gls() + -->
+<!--   geom_line()+ -->
+<!--   geom_point()+ -->
+<!--   ylab("") + -->
+<!--   facet_wrap(Season ~ ., ncol = 2, scales='free_x',labeller = label) + -->
+<!--   ggtitle("Zooplankton abundance (OI)") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01))+ -->
+<!--   scale_y_continuous(trans = "log10")+ -->
+<!--   theme_facet() + -->
+<!--     theme(strip.text=element_text(hjust=0, -->
+<!--                                 face = "italic"), -->
+<!--           axis.title.x=element_blank(), -->
+<!--         axis.text.x=element_blank(), -->
+<!--         axis.ticks.x=element_blank()) -->
 
-middle <- zoo_oi_mab %>%  
-  filter(Species == "pseudocalanus") %>% 
-ggplot(aes(x = Time, y = Val2, group = Var)) +
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = 0, ymax = Inf) +
-  geom_hline(aes(yintercept = hline),
-     size = hline.size,
-     alpha = hline.alpha,
-     linetype = hline.lty)+
-  geom_gls() +
-  geom_line()+
-  geom_point()+
-  ylab(expression("Abundance num m"^-3*"")) +
-  facet_wrap(Season ~ ., ncol = 2, scales='free_x',labeller = label) +
-  scale_x_continuous(expand = c(0.01, 0.01))+
-  scale_y_continuous(trans = "log10")+
-  theme_facet() +
-    theme(strip.text=element_text(hjust=0,
-                                face = "italic"),
-          axis.title.x=element_blank(),
-        axis.text.x=element_blank(),
-        axis.ticks.x=element_blank())
+<!-- middle <- zoo_oi_mab %>%   -->
+<!--   filter(Species == "pseudocalanus") %>%  -->
+<!-- ggplot(aes(x = Time, y = Val2, group = Var)) + -->
+<!--   annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = 0, ymax = Inf) + -->
+<!--   geom_hline(aes(yintercept = hline), -->
+<!--      size = hline.size, -->
+<!--      alpha = hline.alpha, -->
+<!--      linetype = hline.lty)+ -->
+<!--   geom_gls() + -->
+<!--   geom_line()+ -->
+<!--   geom_point()+ -->
+<!--   ylab(expression("Abundance num m"^-3*"")) + -->
+<!--   facet_wrap(Season ~ ., ncol = 2, scales='free_x',labeller = label) + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01))+ -->
+<!--   scale_y_continuous(trans = "log10")+ -->
+<!--   theme_facet() + -->
+<!--     theme(strip.text=element_text(hjust=0, -->
+<!--                                 face = "italic"), -->
+<!--           axis.title.x=element_blank(), -->
+<!--         axis.text.x=element_blank(), -->
+<!--         axis.ticks.x=element_blank()) -->
 
-bottom <- zoo_oi_mab %>%  
-  filter(Species == "temora") %>% 
-ggplot(aes(x = Time, y = Val2, group = Var)) +
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = 0, ymax = Inf) +
-  geom_hline(aes(yintercept = hline),
-     size = hline.size,
-     alpha = hline.alpha,
-     linetype = hline.lty)+
-    geom_gls() +
-  geom_line()+
-  geom_point()+
-    ylab("") +
-  xlab(element_blank())+
-  facet_wrap(Season ~ ., ncol = 2,labeller = label) +
-  scale_x_continuous(breaks = seq(1980,2010,10),
-                     expand = c(0.01, 0.01))+
+<!-- bottom <- zoo_oi_mab %>%   -->
+<!--   filter(Species == "temora") %>%  -->
+<!-- ggplot(aes(x = Time, y = Val2, group = Var)) + -->
+<!--   annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = 0, ymax = Inf) + -->
+<!--   geom_hline(aes(yintercept = hline), -->
+<!--      size = hline.size, -->
+<!--      alpha = hline.alpha, -->
+<!--      linetype = hline.lty)+ -->
+<!--     geom_gls() + -->
+<!--   geom_line()+ -->
+<!--   geom_point()+ -->
+<!--     ylab("") + -->
+<!--   xlab(element_blank())+ -->
+<!--   facet_wrap(Season ~ ., ncol = 2,labeller = label) + -->
+<!--   scale_x_continuous(breaks = seq(1980,2010,10), -->
+<!--                      expand = c(0.01, 0.01))+ -->
 
-  theme_facet() +
-    theme(strip.text=element_text(hjust=0,
-                                face = "italic")) +
-   scale_y_log10()
+<!--   theme_facet() + -->
+<!--     theme(strip.text=element_text(hjust=0, -->
+<!--                                 face = "italic")) + -->
+<!--    scale_y_log10() -->
 
-top + middle + bottom + plot_layout(ncol = 1) & theme(plot.margin = margin(0,0,0,0,"cm"))
+<!-- top + middle + bottom + plot_layout(ncol = 1) & theme(plot.margin = margin(0,0,0,0,"cm")) -->
 
-```
+<!-- ``` -->
 
 ### Cold Pool Index
 ```{r cold_pool, eval = T, echo = F}
@@ -1175,52 +1243,30 @@ chl_cci_gom + chl_cci_gb + plot_layout(ncol = 1)
 
 ### Zooplankton {.tabset .tabset-fade}
 
-#### Abundance anomaly
 
-```{r NE-zoo-abund}
-zoo_abund <- ecodata::zoo_sli_anom %>% 
-  filter(EPU %in% c("GOM","GB"),
-         !str_detect(Var, "small-large")) %>% 
-  mutate(hline = 0,
-         Var = str_to_title(str_remove(Var, "anomaly"))) 
+#### Euphausiids + Cnidarians
+```{r ne-euph-cnid, fig.width = 8}
+zoo_abund <- ecodata::zoo_strat_abun %>% 
+  filter(EPU %in% c("GOM", "GB"),
+         !str_detect(Var, "Small|Large")) %>% 
+  group_by(Var, EPU) %>% 
+  mutate(hline = mean(Value)) 
 
-gom_zoo_abund <- zoo_abund %>% 
+gom_zoo<-zoo_abund %>% 
   filter(EPU == "GOM") %>% 
-  ggplot(aes(x = Time, y = Value, group = Var)) +
-         annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  ggplot() +
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  geom_gls() +
-  geom_line() +
-  geom_point() +
-  ylab("Abundance anomaly") +
+  geom_gls(aes(x = Time, y = Value, group = Var)) +
+  geom_line(aes(x = Time, y = Value)) +
+  geom_point(aes(x = Time, y = Value)) +
+  ylab("") +
   xlab(element_blank())+
-  ggtitle("GOM Zooplankton abundance anomaly") +
+  ggtitle("GOM Zooplankton abundance") +
   facet_wrap(Var~., ncol = 3) +
   scale_x_continuous(expand = c(0.01, 0.01))+
-      geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
-  theme_facet() +
-  theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
-
-gb_zoo_abund <- zoo_abund %>% 
-  filter(EPU == "GB") %>% 
-  ggplot(aes(x = Time, y = Value, group = Var)) +
-         annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_gls() +
-  geom_line() +
-  geom_point() +
-  ylab("Abundance anomaly") +
-  xlab(element_blank())+
-  ggtitle("GB Zooplankton abundance anomaly") +
-  facet_wrap(Var~., ncol = 3) +
-  scale_x_continuous(expand = c(0.01, 0.01))+
-      geom_hline(aes(yintercept = hline),
+  geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+
@@ -1228,75 +1274,188 @@ gb_zoo_abund <- zoo_abund %>%
   theme(strip.text=element_text(hjust=0,
                                 face = "italic"))
   
-gom_zoo_abund + gb_zoo_abund + plot_layout(ncol = 1)
+gb_zoo<-zoo_abund %>% 
+  filter(EPU == "GB") %>% 
+  ggplot(aes(x = Time, y = Value)) +
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  geom_gls() +
+  geom_line() +
+  geom_point() +
+  ylab("Abundance estimate (n)") +
+  xlab(element_blank())+
+  ggtitle("GB Zooplankton abundance") +
+  facet_wrap(Var~., ncol = 3) +
+  scale_x_continuous(expand = c(0.01, 0.01))+
+  geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  theme_facet() +
+  theme(strip.text=element_text(hjust=0,
+                                face = "italic"))
+  
+cowplot::plot_grid(gb_zoo, gom_zoo, nrow = 2)
+```
+
+
+#### Small and Large Calanoid stratified abundance
+```{r ne-sm-lg, fig.width = 8, fig.asp = .35}
+zoo_abund <- ecodata::zoo_strat_abun %>% 
+  filter(EPU %in% c("GOM", "GB"),
+         str_detect(Var, "Small|Large")) %>% 
+  group_by(Var, EPU) %>% 
+  mutate(hline = mean(Value)) 
+
+zoo_abund %>% 
+  ggplot() +
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  geom_line(aes(x = Time, y = Value, color = Var)) +
+  geom_point(aes(x = Time, y = Value, color = Var)) +
+  geom_gls(aes(x = Time, y = Value, group = Var)) +
+  ylab("Abundance Estimate (n)") +
+  xlab(element_blank())+
+  ggtitle("Zooplankton abundance") +
+  facet_wrap(EPU~., ncol = 1, scales = "free") +
+  scale_x_continuous(expand = c(0.01, 0.01))+
+  geom_hline(aes(yintercept = hline,
+           color = Var), 
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  theme_facet() +
+  theme(strip.text=element_text(hjust=0,
+                                face = "italic"))
+  
 
 ```
+
+
+#### Abundance anomaly
+
+<!-- ```{r NE-zoo-abund} -->
+<!-- zoo_abund <- ecodata::zoo_sli_anom %>%  -->
+<!--   filter(EPU %in% c("GOM","GB"), -->
+<!--          !str_detect(Var, "small-large")) %>%  -->
+<!--   mutate(hline = 0, -->
+<!--          Var = str_to_title(str_remove(Var, "anomaly")))  -->
+
+<!-- gom_zoo_abund <- zoo_abund %>%  -->
+<!--   filter(EPU == "GOM") %>%  -->
+<!--   ggplot(aes(x = Time, y = Value, group = Var)) + -->
+<!--          annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_gls() + -->
+<!--   geom_line() + -->
+<!--   geom_point() + -->
+<!--   ylab("Abundance anomaly") + -->
+<!--   xlab(element_blank())+ -->
+<!--   ggtitle("GOM Zooplankton abundance anomaly") + -->
+<!--   facet_wrap(Var~., ncol = 3) + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01))+ -->
+<!--       geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty)+ -->
+<!--   theme_facet() + -->
+<!--   theme(strip.text=element_text(hjust=0, -->
+<!--                                 face = "italic")) -->
+
+<!-- gb_zoo_abund <- zoo_abund %>%  -->
+<!--   filter(EPU == "GB") %>%  -->
+<!--   ggplot(aes(x = Time, y = Value, group = Var)) + -->
+<!--          annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_gls() + -->
+<!--   geom_line() + -->
+<!--   geom_point() + -->
+<!--   ylab("Abundance anomaly") + -->
+<!--   xlab(element_blank())+ -->
+<!--   ggtitle("GB Zooplankton abundance anomaly") + -->
+<!--   facet_wrap(Var~., ncol = 3) + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01))+ -->
+<!--       geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty)+ -->
+<!--   theme_facet() + -->
+<!--   theme(strip.text=element_text(hjust=0, -->
+<!--                                 face = "italic")) -->
+
+<!-- gom_zoo_abund + gb_zoo_abund + plot_layout(ncol = 1) -->
+
+<!-- ``` -->
 
 #### Small-large index
  
- 
-```{r NE-sli}
-sli <- ecodata::zoo_sli_anom %>% 
-  filter(EPU %in% c("GOM","GB"),
-         str_detect(Var, "Sm-Lg copepod anom")) %>% 
-  mutate(hline = 0) 
-sli$EPU <- factor(sli$EPU, levels = c("GOM","GB"))
 
-pp_anom <- ecodata::chl_pp %>% 
-  filter(str_detect(Var, "ANNUAL_PPD_RATIO_ANOMALY"),
-         EPU %in% c("GOM","GB")) %>% 
-  mutate(hline = 1,
-         Time = as.numeric(as.character(Time)),
-         Var = "ANNUAL_PPD_RATIO_ANOMALY")
-pp_anom$EPU <- factor(pp_anom$EPU, levels = c("GOM","GB"))
+<!-- ```{r NE-sli} -->
+<!-- sli <- ecodata::zoo_sli_anom %>%  -->
+<!--   filter(EPU %in% c("GOM","GB"), -->
+<!--          str_detect(Var, "Sm-Lg copepod anom")) %>%  -->
+<!--   mutate(hline = 0)  -->
+<!-- sli$EPU <- factor(sli$EPU, levels = c("GOM","GB")) -->
 
-sli_plt <- sli %>% 
-  ggplot(aes(x = Time, y = Value, group = Var)) +
-         annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line() +
-  geom_point() +
-  guides(color = F) +
-  facet_wrap(EPU~.,ncol = 2)+
-  xlab("")+
-  ylab("Small-large abundance") +
-  xlab(element_blank())+
-  ggtitle("Small-large copepod abundance") +
-    scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+
-      geom_hline(aes(yintercept = hline,
-                     group = Var),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
-  theme_facet() +
-  theme(strip.text=element_text(hjust=0))
+<!-- pp_anom <- ecodata::chl_pp %>%  -->
+<!--   filter(str_detect(Var, "ANNUAL_PPD_RATIO_ANOMALY"), -->
+<!--          EPU %in% c("GOM","GB")) %>%  -->
+<!--   mutate(hline = 1, -->
+<!--          Time = as.numeric(as.character(Time)), -->
+<!--          Var = "ANNUAL_PPD_RATIO_ANOMALY") -->
+<!-- pp_anom$EPU <- factor(pp_anom$EPU, levels = c("GOM","GB")) -->
 
-pp_anom_plt <- pp_anom %>% 
-    ggplot(aes(x = Time, y = Value, group = Var)) +
-         annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line() +
-  geom_point() +
-  guides(color = F) +
-  ylab("Anomaly ratio") +
-  xlab(element_blank())+
-  facet_wrap(EPU~.,ncol = 2)+
-  ggtitle("Primary production anomaly ratio") +
-    scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+
-    scale_y_continuous(limits = c(0.65,1.35)) +
-      geom_hline(aes(yintercept = hline,
-                     group = Var),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
-  theme_facet() +
-  theme(strip.text=element_text(hjust=0))
+<!-- sli_plt <- sli %>%  -->
+<!--   ggplot(aes(x = Time, y = Value, group = Var)) + -->
+<!--          annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line() + -->
+<!--   geom_point() + -->
+<!--   guides(color = F) + -->
+<!--   facet_wrap(EPU~.,ncol = 2)+ -->
+<!--   xlab("")+ -->
+<!--   ylab("Small-large abundance") + -->
+<!--   xlab(element_blank())+ -->
+<!--   ggtitle("Small-large copepod abundance") + -->
+<!--     scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+ -->
+<!--       geom_hline(aes(yintercept = hline, -->
+<!--                      group = Var), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty)+ -->
+<!--   theme_facet() + -->
+<!--   theme(strip.text=element_text(hjust=0)) -->
+
+<!-- pp_anom_plt <- pp_anom %>%  -->
+<!--     ggplot(aes(x = Time, y = Value, group = Var)) + -->
+<!--          annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line() + -->
+<!--   geom_point() + -->
+<!--   guides(color = F) + -->
+<!--   ylab("Anomaly ratio") + -->
+<!--   xlab(element_blank())+ -->
+<!--   facet_wrap(EPU~.,ncol = 2)+ -->
+<!--   ggtitle("Primary production anomaly ratio") + -->
+<!--     scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+ -->
+<!--     scale_y_continuous(limits = c(0.65,1.35)) + -->
+<!--       geom_hline(aes(yintercept = hline, -->
+<!--                      group = Var), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty)+ -->
+<!--   theme_facet() + -->
+<!--   theme(strip.text=element_text(hjust=0)) -->
 
 
-sli_plt + pp_anom_plt + plot_layout(ncol = 1) & theme(plot.margin = margin(t = 0))
-```
+<!-- sli_plt + pp_anom_plt + plot_layout(ncol = 1) & theme(plot.margin = margin(t = 0)) -->
+<!-- ``` -->
 
 #### Zooplankton Diversity
 ```{r NE-zoo-div}
@@ -1353,182 +1512,182 @@ gom_zoo_div + gb_zoo_div + plot_layout(ncol = 1)
 
 #### OI abundance
 
-```{r NE-oi-zoo, fig.width=8, fig.height=7}
-facet_names <- list(
-  'centropages spring'=expression(paste(italic("Centropages "), "spring")),
-  'centropages fall'=expression(paste(italic("Centropages "), "fall")),
-  'temora spring'=expression(paste(italic("Temora "), "spring")),
-  'temora fall' = expression(paste(italic("Temora "), "fall")),
-  'pseudocalanus spring'=expression(paste(italic("Pseudocalanus "), "spring")),
-  'pseudocalanus fall' = expression(paste(italic("Pseudocalanus "), "fall")))
+<!-- ```{r NE-oi-zoo, fig.width=8, fig.height=7} -->
+<!-- facet_names <- list( -->
+<!--   'centropages spring'=expression(paste(italic("Centropages "), "spring")), -->
+<!--   'centropages fall'=expression(paste(italic("Centropages "), "fall")), -->
+<!--   'temora spring'=expression(paste(italic("Temora "), "spring")), -->
+<!--   'temora fall' = expression(paste(italic("Temora "), "fall")), -->
+<!--   'pseudocalanus spring'=expression(paste(italic("Pseudocalanus "), "spring")), -->
+<!--   'pseudocalanus fall' = expression(paste(italic("Pseudocalanus "), "fall"))) -->
 
-zoo_oi_ne <- ecodata::zoo_oi %>% 
-  filter(!str_detect(Var,"SD")) %>% 
-  mutate(Var  = str_replace(Var," zoo",""),
-         Value = exp(Value)) %>% 
-  filter(EPU %in% c("GOM","GB")) %>% 
-      group_by(EPU, Var) %>% 
-  mutate(hline = mean(Value, na.rm = T),
-         Species = word(Var, 1),
-         Season = word(Var, 2)) %>% 
-  mutate(Season = factor(Season, levels = c("spring", "fall")))
+<!-- zoo_oi_ne <- ecodata::zoo_oi %>%  -->
+<!--   filter(!str_detect(Var,"SD")) %>%  -->
+<!--   mutate(Var  = str_replace(Var," zoo",""), -->
+<!--          Value = exp(Value)) %>%  -->
+<!--   filter(EPU %in% c("GOM","GB")) %>%  -->
+<!--       group_by(EPU, Var) %>%  -->
+<!--   mutate(hline = mean(Value, na.rm = T), -->
+<!--          Species = word(Var, 1), -->
+<!--          Season = word(Var, 2)) %>%  -->
+<!--   mutate(Season = factor(Season, levels = c("spring", "fall"))) -->
 
 
-gom_top <- zoo_oi_ne %>%  
-  filter(Species == "centropages", EPU == "GOM") %>% 
+<!-- gom_top <- zoo_oi_ne %>%   -->
+<!--   filter(Species == "centropages", EPU == "GOM") %>%  -->
 
-ggplot(aes(x = Time, y = Value, group = Var)) +
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = 0, ymax = Inf) +
-  geom_hline(aes(yintercept = hline),
-     size = hline.size,
-     alpha = hline.alpha,
-     linetype = hline.lty)+
-  geom_gls() +
-  geom_line()+
-  geom_point()+
-  ylab("") +
-  xlab(element_blank())+
-  facet_wrap(Season ~ ., ncol = 2, scales='free_x', labeller = label) +
-  ggtitle("GOM zooplankton abundance") +
-  scale_x_continuous(expand = c(0.01, 0.01))+
-  scale_y_continuous(trans = "log10")+
-  theme_facet() +
-    theme(strip.text=element_text(hjust=0,
-                                face = "italic"),
-          axis.title.x=element_blank(),
-        axis.text.x=element_blank(),
-        axis.ticks.x=element_blank())
+<!-- ggplot(aes(x = Time, y = Value, group = Var)) + -->
+<!--   annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = 0, ymax = Inf) + -->
+<!--   geom_hline(aes(yintercept = hline), -->
+<!--      size = hline.size, -->
+<!--      alpha = hline.alpha, -->
+<!--      linetype = hline.lty)+ -->
+<!--   geom_gls() + -->
+<!--   geom_line()+ -->
+<!--   geom_point()+ -->
+<!--   ylab("") + -->
+<!--   xlab(element_blank())+ -->
+<!--   facet_wrap(Season ~ ., ncol = 2, scales='free_x', labeller = label) + -->
+<!--   ggtitle("GOM zooplankton abundance") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01))+ -->
+<!--   scale_y_continuous(trans = "log10")+ -->
+<!--   theme_facet() + -->
+<!--     theme(strip.text=element_text(hjust=0, -->
+<!--                                 face = "italic"), -->
+<!--           axis.title.x=element_blank(), -->
+<!--         axis.text.x=element_blank(), -->
+<!--         axis.ticks.x=element_blank()) -->
 
-gom_middle <- zoo_oi_ne %>%  
-  filter(Species == "pseudocalanus", EPU == "GOM") %>% 
-ggplot(aes(x = Time, y = Value, group = Var)) +
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = 0, ymax = Inf) +
-  geom_hline(aes(yintercept = hline),
-     size = hline.size,
-     alpha = hline.alpha,
-     linetype = hline.lty)+
-  geom_gls() +
-  geom_line()+
-  geom_point()+
-  ylab(expression("Abundance num m"^-3*"")) +
-  facet_wrap(Season ~ ., ncol = 2, scales='free_x',labeller = label) +
-  scale_x_continuous(expand = c(0.01, 0.01))+
-  scale_y_continuous(trans = "log10")+
-  theme_facet() +
-    theme(strip.text=element_text(hjust=0,
-                                face = "italic"),
-          axis.title.x=element_blank(),
-        axis.text.x=element_blank(),
-        axis.ticks.x=element_blank())
+<!-- gom_middle <- zoo_oi_ne %>%   -->
+<!--   filter(Species == "pseudocalanus", EPU == "GOM") %>%  -->
+<!-- ggplot(aes(x = Time, y = Value, group = Var)) + -->
+<!--   annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = 0, ymax = Inf) + -->
+<!--   geom_hline(aes(yintercept = hline), -->
+<!--      size = hline.size, -->
+<!--      alpha = hline.alpha, -->
+<!--      linetype = hline.lty)+ -->
+<!--   geom_gls() + -->
+<!--   geom_line()+ -->
+<!--   geom_point()+ -->
+<!--   ylab(expression("Abundance num m"^-3*"")) + -->
+<!--   facet_wrap(Season ~ ., ncol = 2, scales='free_x',labeller = label) + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01))+ -->
+<!--   scale_y_continuous(trans = "log10")+ -->
+<!--   theme_facet() + -->
+<!--     theme(strip.text=element_text(hjust=0, -->
+<!--                                 face = "italic"), -->
+<!--           axis.title.x=element_blank(), -->
+<!--         axis.text.x=element_blank(), -->
+<!--         axis.ticks.x=element_blank()) -->
 
-gom_bottom <- zoo_oi_ne %>%  
-  filter(Species == "temora", EPU == "GOM") %>% 
-ggplot(aes(x = Time, y = Value, group = Var)) +
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = 0, ymax = Inf) +
-  geom_hline(aes(yintercept = hline),
-     size = hline.size,
-     alpha = hline.alpha,
-     linetype = hline.lty)+
-    geom_gls() +
-  geom_line()+
-  geom_point()+
-    ylab("") +
-  facet_wrap(Season ~ ., ncol = 2,labeller = label) +
-  scale_x_continuous(breaks = seq(1980,2010,10),
-                     expand = c(0.01, 0.01))+
-  scale_y_continuous(trans = "log10")+
-  theme_facet() +
-    theme(strip.text=element_text(hjust=0,
-                                face = "italic")) 
+<!-- gom_bottom <- zoo_oi_ne %>%   -->
+<!--   filter(Species == "temora", EPU == "GOM") %>%  -->
+<!-- ggplot(aes(x = Time, y = Value, group = Var)) + -->
+<!--   annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = 0, ymax = Inf) + -->
+<!--   geom_hline(aes(yintercept = hline), -->
+<!--      size = hline.size, -->
+<!--      alpha = hline.alpha, -->
+<!--      linetype = hline.lty)+ -->
+<!--     geom_gls() + -->
+<!--   geom_line()+ -->
+<!--   geom_point()+ -->
+<!--     ylab("") + -->
+<!--   facet_wrap(Season ~ ., ncol = 2,labeller = label) + -->
+<!--   scale_x_continuous(breaks = seq(1980,2010,10), -->
+<!--                      expand = c(0.01, 0.01))+ -->
+<!--   scale_y_continuous(trans = "log10")+ -->
+<!--   theme_facet() + -->
+<!--     theme(strip.text=element_text(hjust=0, -->
+<!--                                 face = "italic"))  -->
 
-gom_top + gom_middle + gom_bottom + plot_layout(ncol = 1) & theme(plot.margin = margin(0,0,0,0,"cm"))
+<!-- gom_top + gom_middle + gom_bottom + plot_layout(ncol = 1) & theme(plot.margin = margin(0,0,0,0,"cm")) -->
 
-```
+<!-- ``` -->
 
-```{r GB-zoo-seasonal-abundance, fig.width = 8, fig.height = 7}
-gb_top <- zoo_oi_ne %>%  
-  filter(Species == "centropages", EPU == "GB") %>% 
+<!-- ```{r GB-zoo-seasonal-abundance, fig.width = 8, fig.height = 7} -->
+<!-- gb_top <- zoo_oi_ne %>%   -->
+<!--   filter(Species == "centropages", EPU == "GB") %>%  -->
 
-ggplot(aes(x = Time, y = Value, group = Var)) +
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = 0, ymax = Inf) +
-  geom_hline(aes(yintercept = hline),
-     size = hline.size,
-     alpha = hline.alpha,
-     linetype = hline.lty)+
-  geom_gls() +
-  geom_line()+
-  geom_point()+
-  ylab("") +
-  facet_wrap(Season ~ ., ncol = 2, scales='free_x', labeller = label) +
-  ggtitle("GB zooplankton abundance") +
-  scale_x_continuous(expand = c(0.01, 0.01))+
-  scale_y_continuous(trans = "log10")+
-  theme_facet() +
-    theme(strip.text=element_text(hjust=0,
-                                face = "italic"),
-          axis.title.x=element_blank(),
-        axis.text.x=element_blank(),
-        axis.ticks.x=element_blank())
+<!-- ggplot(aes(x = Time, y = Value, group = Var)) + -->
+<!--   annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = 0, ymax = Inf) + -->
+<!--   geom_hline(aes(yintercept = hline), -->
+<!--      size = hline.size, -->
+<!--      alpha = hline.alpha, -->
+<!--      linetype = hline.lty)+ -->
+<!--   geom_gls() + -->
+<!--   geom_line()+ -->
+<!--   geom_point()+ -->
+<!--   ylab("") + -->
+<!--   facet_wrap(Season ~ ., ncol = 2, scales='free_x', labeller = label) + -->
+<!--   ggtitle("GB zooplankton abundance") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01))+ -->
+<!--   scale_y_continuous(trans = "log10")+ -->
+<!--   theme_facet() + -->
+<!--     theme(strip.text=element_text(hjust=0, -->
+<!--                                 face = "italic"), -->
+<!--           axis.title.x=element_blank(), -->
+<!--         axis.text.x=element_blank(), -->
+<!--         axis.ticks.x=element_blank()) -->
 
-gb_middle <- zoo_oi_ne %>%  
-  filter(Species == "pseudocalanus", EPU == "GB") %>% 
-ggplot(aes(x = Time, y = Value, group = Var)) +
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = 0, ymax = Inf) +
-  geom_hline(aes(yintercept = hline),
-     size = hline.size,
-     alpha = hline.alpha,
-     linetype = hline.lty)+
-  geom_gls() +
-  geom_line()+
-  geom_point()+
-  ylab(expression("Abundance num m"^-3*"")) +
-  xlab(element_blank())+
-  facet_wrap(Season ~ ., ncol = 2, scales='free_x',labeller = label) +
-  scale_x_continuous(expand = c(0.01, 0.01))+
-  scale_y_continuous(trans = "log10")+
-  theme_facet() +
-    theme(strip.text=element_text(hjust=0,
-                                face = "italic"),
-          axis.title.x=element_blank(),
-        axis.text.x=element_blank(),
-        axis.ticks.x=element_blank())
+<!-- gb_middle <- zoo_oi_ne %>%   -->
+<!--   filter(Species == "pseudocalanus", EPU == "GB") %>%  -->
+<!-- ggplot(aes(x = Time, y = Value, group = Var)) + -->
+<!--   annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = 0, ymax = Inf) + -->
+<!--   geom_hline(aes(yintercept = hline), -->
+<!--      size = hline.size, -->
+<!--      alpha = hline.alpha, -->
+<!--      linetype = hline.lty)+ -->
+<!--   geom_gls() + -->
+<!--   geom_line()+ -->
+<!--   geom_point()+ -->
+<!--   ylab(expression("Abundance num m"^-3*"")) + -->
+<!--   xlab(element_blank())+ -->
+<!--   facet_wrap(Season ~ ., ncol = 2, scales='free_x',labeller = label) + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01))+ -->
+<!--   scale_y_continuous(trans = "log10")+ -->
+<!--   theme_facet() + -->
+<!--     theme(strip.text=element_text(hjust=0, -->
+<!--                                 face = "italic"), -->
+<!--           axis.title.x=element_blank(), -->
+<!--         axis.text.x=element_blank(), -->
+<!--         axis.ticks.x=element_blank()) -->
 
-gb_bottom <- zoo_oi_ne %>%  
-  filter(Species == "temora", EPU == "GB") %>% 
-ggplot(aes(x = Time, y = Value, group = Var)) +
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = 0, ymax = Inf) +
-  geom_hline(aes(yintercept = hline),
-     size = hline.size,
-     alpha = hline.alpha,
-     linetype = hline.lty)+
-    geom_gls() +
-  geom_line()+
-  geom_point()+
-    ylab("") +
-  xlab(element_blank())+
-  facet_wrap(Season ~ ., ncol = 2,labeller = label) +
-  scale_x_continuous(breaks = seq(1980,2010,10),
-                     expand = c(0.01, 0.01))+
-  scale_y_continuous(trans = "log10")+
-  theme_facet() +
-    theme(strip.text=element_text(hjust=0,
-                                face = "italic")) 
+<!-- gb_bottom <- zoo_oi_ne %>%   -->
+<!--   filter(Species == "temora", EPU == "GB") %>%  -->
+<!-- ggplot(aes(x = Time, y = Value, group = Var)) + -->
+<!--   annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = 0, ymax = Inf) + -->
+<!--   geom_hline(aes(yintercept = hline), -->
+<!--      size = hline.size, -->
+<!--      alpha = hline.alpha, -->
+<!--      linetype = hline.lty)+ -->
+<!--     geom_gls() + -->
+<!--   geom_line()+ -->
+<!--   geom_point()+ -->
+<!--     ylab("") + -->
+<!--   xlab(element_blank())+ -->
+<!--   facet_wrap(Season ~ ., ncol = 2,labeller = label) + -->
+<!--   scale_x_continuous(breaks = seq(1980,2010,10), -->
+<!--                      expand = c(0.01, 0.01))+ -->
+<!--   scale_y_continuous(trans = "log10")+ -->
+<!--   theme_facet() + -->
+<!--     theme(strip.text=element_text(hjust=0, -->
+<!--                                 face = "italic"))  -->
 
-gb_top + gb_middle + gb_bottom + plot_layout(ncol = 1) & theme(plot.margin = margin(0,0,0,0,"cm"))
+<!-- gb_top + gb_middle + gb_bottom + plot_layout(ncol = 1) & theme(plot.margin = margin(0,0,0,0,"cm")) -->
 
-```
+<!-- ``` -->
 
 
 ### Marine Heat Wave
@@ -1592,6 +1751,7 @@ maxin %>%
 
 ```
 
+
 ```{r timesseries_heatwave, fig.cap="Georges Bank", eval= T, echo = F}
 
 
@@ -1604,7 +1764,10 @@ cowplot::ggdraw() + cowplot::draw_image(file.path(image.dir,"GOM_Heatwave_timese
 ```
 
 
+```{r heatwave_map, fig.cap = "Gulf of Maine", eval= T, echo = F}
+knitr::include_graphics(file.path(image.dir,"SST_anom_Aug_23_2019.png"))
 
+```
 ## Shelfwide Indicators {.tabset .tabset-fade}
 
 ### Seasonal SST anomaly

@@ -828,7 +828,7 @@ cowplot::plot_grid(rec_effort,
 ```
 
 ### Primary Production Required
-```{r ppr-mab, fig.cap="Primary production required to support lanndings."}
+```{r ppr-mab, fig.cap="Primary production required to support the commercial landings. Included are the top species accounting for 80% of the landings in each year."}
 ecodata::ppr %>% 
   group_by(EPU) %>% 
   mutate(Value = Value*100, 
@@ -843,7 +843,7 @@ ecodata::ppr %>%
            linetype = hline.lty)+
   scale_x_continuous(expand = c(0.01, 0.01)) +
   ggtitle("Primary Production Required")+
-  ylab("% Total Primary Production Required")+
+  ylab("Proportion of Total Primary Production Required")+
   theme_ts()
 ```
 
@@ -1672,7 +1672,7 @@ cowplot::plot_grid(rec_effort,
 
 
 ### Primary Production Required
-```{r ppr-ne, fig.cap="Primary production required to support lanndings."}
+```{r ppr-ne, fig.cap="Primary production required to support the commercial landings. Included are the top species accounting for 80% of the landings in each year."}
 ecodata::ppr %>% 
   group_by(EPU) %>% 
   mutate(Value = Value*100, 
@@ -1688,7 +1688,7 @@ ecodata::ppr %>%
   scale_x_continuous(expand = c(0.01, 0.01)) +
   facet_wrap(~EPU)+
   ggtitle("Primary Production Required")+
-  ylab("% Total Primary Production Required")+
+  ylab("Proportion of Total Primary Production Required")+
   theme_ts()
 ```
 
