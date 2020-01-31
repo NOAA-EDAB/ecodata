@@ -547,10 +547,10 @@ ggplot(data = stock_status) +
                  color = score)) +
   geom_text_repel(aes(x = B.Bmsy, #geom_text_repel auto-jitters text around points
                       y = F.Fmsy,
-                      label = Code,
-                      color = stock_status$score), 
-                  show.legend = FALSE,nudge_y = 0.05, nudge_x = 0.05) +
-  scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
+                      label = Code, 
+                      color = score), 
+                  show.legend = FALSE, nudge_y = -0.01, nudge_x = 0.05) +
+  scale_color_brewer(palette = "Dark2",
                      breaks = stock_status$score) +
   ylim(0,y.max) +
   xlim(0,x.max) +
@@ -827,7 +827,25 @@ cowplot::plot_grid(rec_effort,
     theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
 ```
 
-
+### Primary Production Required
+```{r ppr-mab, fig.cap="Primary production required to support lanndings."}
+ecodata::ppr %>% 
+  group_by(EPU) %>% 
+  mutate(Value = Value*100, 
+         hline = mean(Value)) %>% 
+  filter(EPU == "MAB") %>% 
+  ggplot() +
+  geom_point(aes(x = Time, y = Value))+
+  geom_line(aes(x = Time, y = Value))+
+  geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  scale_x_continuous(expand = c(0.01, 0.01)) +
+  ggtitle("Primary Production Required")+
+  ylab("% Total Primary Production Required")+
+  theme_ts()
+```
 
 # New England
 
@@ -1420,7 +1438,7 @@ ggplot(data = stock_status) +
   geom_text_repel(aes(x = B.Bmsy, #geom_text_repel auto-jitters text around points
                       y = F.Fmsy,
                       label = Code,
-                      color = stock_status$score), show.legend = FALSE,nudge_y = 0.05, nudge_x = 0.05) +
+                      color = stock_status$score), show.legend = FALSE,nudge_y = -0.01, nudge_x = 0.05) +
   ylim(0,y.max) +
   xlim(0,x.max*1.1) +
   geom_text(data = all.df, aes(x = x, y = y, label = text),show.legend = FALSE, size = 3)+
@@ -1452,26 +1470,7 @@ ggplot(data = stock_status) +
   guides(color = FALSE) +
   theme_ts()
 
-# ggplot(data = stock_status) +
-#   geom_vline(xintercept = 1, linetype = "dotted", color = "grey60")+
-#   geom_vline(xintercept = 0.5, linetype = "dashed", color = "grey60")+
-#   geom_hline(yintercept = 1, linetype = "dashed", color = "grey60") +
-#   geom_point(aes(x = B.Bmsy,
-#                  y = F.Fmsy,
-#                  color = stock_status$score)) +
-#    geom_text_repel(aes(x = B.Bmsy, #geom_text_repel auto-jitters text around points
-#                       y = F.Fmsy,
-#                       label = Code,
-#                       color = stock_status$score), show.legend = FALSE,
-#                    nudge_y = 0.05, nudge_x = 0.05) +
-#   ylim(0,1.5)+
-#   xlim(0, 3.5)+
-#   scale_color_manual(values = c("orangered3","gold3", "green3"), #Change legend labels for clarity
-#                      breaks = stock_status$score) +
-#   xlab(expression(~B/B[msy])) +
-#   ylab(expression(~F/F[msy])) +
-#   guides(color = FALSE) +
-#   theme_ts()
+
 
 ```
 
@@ -1671,7 +1670,27 @@ cowplot::plot_grid(rec_effort,
     theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
 ```
 
-### Primary production required
+
+### Primary Production Required
+```{r ppr-ne, fig.cap="Primary production required to support lanndings."}
+ecodata::ppr %>% 
+  group_by(EPU) %>% 
+  mutate(Value = Value*100, 
+         hline = mean(Value)) %>% 
+  filter(EPU != "MAB") %>% 
+  ggplot() +
+  geom_point(aes(x = Time, y = Value))+
+  geom_line(aes(x = Time, y = Value))+
+  geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  scale_x_continuous(expand = c(0.01, 0.01)) +
+  facet_wrap(~EPU)+
+  ggtitle("Primary Production Required")+
+  ylab("% Total Primary Production Required")+
+  theme_ts()
+```
 
 [notes](https://drive.google.com/drive/folders/1_BNoAPvEaYQrdsi900175kcjpjmtcYzT)
 ```{r ppr_comp90, eval = T, echo = F, fig.cap='', out.width='80%'}

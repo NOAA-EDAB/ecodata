@@ -119,17 +119,36 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 #### NEFSC BTS & NEAMAP 
 
-```{r nefsc-biomass-mab, fig.cap = paste0("Fall (left) and spring (right) surveyed biomass in the Mid-Atlantic Bight. Data from the NEFSC Bottom Trawl Survey are shown in black, with NEAMAP shown in red. \\label{nefsc-biomass}"), fig.width=8, fig.asp = 0.75}
-total_surv <- nefsc_survey %>% 
-  filter(EPU == epu_abbr,
-         !str_detect(Var, "Other|Apex|managed"),
+```{r agg-bio, fig.cap = paste0("Spring (left) and fall (right) surveyed biomass in the Mid-Atlantic Bight. Data from the NEFSC Bottom Trawl Survey are shown in black, with NEAMAP shown in red. \\label{nefsc-biomass}"), fig.width=8, fig.asp = 0.75}
+agg<-ecodata::agg_bio %>% 
+  filter(!str_detect(Var, "Apex|inshore|offshore|managed")) %>% #remove unused datasets
+  separate(Var, c("feeding.guild", "season", "Biomass", "Var1"), sep = " ") %>% 
+  unite("Var", feeding.guild:season, sep = " ") %>% 
+  mutate(stat = recode(Var1, Index = "Mean", 
+                      Standard = "SD"))
+
+agg1<-agg %>% filter(stat == "Mean") %>% 
+  group_by(Time, EPU, Var) %>% 
+  spread(stat, Value)
+agg2<-agg %>% filter(stat == "SD", 
+                     !str_detect(Var, "NA")) %>% 
+  group_by(Time, EPU, Var) %>% 
+  spread(stat, Value)
+
+agg3<-agg1 %>% cbind(agg2) %>% 
+  dplyr::select(Time, Var, Units, Mean, SD) %>% 
+  group_by(Time, Var, EPU) %>% 
+  mutate(upper = Mean + SD, 
+         lower = Mean - SD)
+
+
+agg_bio<-agg3 %>% filter(EPU == epu_abbr,
          Time >= 1968) %>% 
-  group_by(Var) %>% 
-  mutate(hline = mean(Value, na.rm = T)) %>% 
-  ungroup() %>% 
-  mutate(Var = word(Var, 1,2))
-series.col <- rep("black",length(unique(total_surv$Var)))
-total_surv$Var <- factor(total_surv$Var,levels = c("Piscivore Spring",
+  group_by(Var, EPU) %>% 
+  mutate(hline = mean(Mean, na.rm = T)) %>% 
+  ungroup() 
+
+agg_bio$Var <- factor(agg_bio$Var,levels = c("Piscivore Spring",
                                                    "Piscivore Fall",
                                                     "Benthivore Spring",
                                                    "Benthivore Fall",
@@ -137,51 +156,44 @@ total_surv$Var <- factor(total_surv$Var,levels = c("Piscivore Spring",
                                                     "Planktivore Fall",
                                                     "Benthos Spring",
                                                    "Benthos Fall"))
-#Create dataframe for label locations
-label_loc <- total_surv %>%
-  group_by(Var) %>%
-  dplyr::summarise(yloc = max(Value)*0.95,
-                   xloc = min(Time)) %>% 
-  mutate(label = LETTERS[1:8])
-#facet names for titles
+series.col <- rep("black",length(unique(agg_bio$Var)))
 facet_names <- list("Piscivores" = expression("Piscivores"),
                     "Planktivores" = expression("Planktivores"),
                     "Benthivores" = expression("Benthivores"),
                     "Benthos" = expression("Benthos"))
-
 #Get NEAMAP
 neamap <- ecodata::mab_inshore_survey %>% 
-  mutate(season = str_to_title(word(Var),1),
-         feeding.guild = str_to_title(word(Var,2))) %>% 
-   filter(str_detect(Var, "index")) %>% 
- unite(.,Var,c("feeding.guild","season"), sep = " ") %>% 
   group_by(Var) %>% 
-  mutate(hline = mean(Value))
+  mutate(hline = mean(Value),
+         SD = Value * CV, #calculate SD from CV
+         upper = Value + SD, 
+         lower = Value - SD)
 
 neamap$Var <- factor(neamap$Var,levels = c("Piscivore Spring","Piscivore Fall",
                                            "Benthivore Spring", "Benthivore Fall",
-                                           "Planktivore Spring", "Planktivore Fall",                                           "Benthos Spring", "Benthos Fall"))
-
-###plot 1
+                                           "Planktivore Spring", "Planktivore Fall",  
+                                           "Benthos Spring", "Benthos Fall"))
+## Piscivore 
 neamap.1<-neamap %>% 
   filter(str_detect(Var,"Piscivore"))
-p1<-total_surv %>% 
+p1<-agg_bio %>% 
   filter(str_detect(Var,"Piscivore")) %>% 
-  ggplot( aes(x = Time, y = Value, color = Var)) +
+  ggplot(aes(x = Time, y = Mean)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max ,
       ymin = -Inf, ymax = Inf) +
-  
   #Test for trend and add lines
-  geom_gls(aes(x = Time, y = Value,
+  geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  
+
   #Add time series
   geom_line(size = lwd-0.5) +
   geom_point(size = pcex-0.5) +
+  geom_line(aes(x = Time, y = upper))+
+  geom_line(aes(x = Time, y = lower))+
   scale_color_manual(values = series.col, aesthetics = "color")+
   guides(color = FALSE) +
   geom_hline(aes(yintercept = hline,
@@ -189,92 +201,90 @@ p1<-total_surv %>%
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-  
-  #Add NEAMAP
-  geom_line(data = neamap.1, aes(x = Time, y = Value, color = Var),
-            size = lwd-0.5,
+  facet_wrap(Var~.,ncol = 2) +
+     #Add NEAMAP
+  geom_line(data = neamap.1, aes(x = Time, y = Value),
             color = "#ca0020")+
-  geom_point(data = neamap.1, aes(x = Time, y = Value, color = Var),
+  geom_point(data = neamap.1, aes(x = Time, y = Value),
              size = pcex-0.5,
              color = "#ca0020")+
-
-  #Facet 
-  facet_wrap(Var~.,ncol = 2) +
-  
+  geom_line(data = neamap.1, aes(x = Time, y = upper),color = "#ca0020")+
+  geom_line(data = neamap.1, aes(x = Time, y = lower), color = "#ca0020")+
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ylim(0, 1200)+
+  ylab(expression("Biomass (kg tow"^-1*")")) +
+  theme_facet()+
+  theme(strip.text=element_text(hjust=0), 
+        axis.title.x=element_blank())
+
+## Benthivore
+neamap.2<-neamap %>% 
+  filter(str_detect(Var,"Benthivore"))
+p2<-agg_bio %>% 
+  filter(str_detect(Var,"Benthivore")) %>% 
+  ggplot(aes(x = Time, y = Mean)) +
+  
+  #Highlight last ten years
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max ,
+      ymin = -Inf, ymax = Inf) +
+  #Test for trend and add lines
+  geom_gls(aes(x = Time, y = Mean,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
+  
+  #Add time series
+  geom_line(size = lwd-0.5) +
+  geom_point(size = pcex-0.5) +
+  geom_line(aes(x = Time, y = upper))+
+  geom_line(aes(x = Time, y = lower))+
+  scale_color_manual(values = series.col, aesthetics = "color")+
+  guides(color = FALSE) +
+  geom_hline(aes(yintercept = hline,
+                 group = Var),
+             size = hline.size,
+             alpha = hline.alpha,
+             linetype = hline.lty)+
+  facet_wrap(Var~.,ncol = 2) +
+       #Add NEAMAP
+  geom_line(data = neamap.2, aes(x = Time, y = Value),
+            color = "#ca0020")+
+  geom_point(data = neamap.2, aes(x = Time, y = Value),
+             size = pcex-0.5,
+             color = "#ca0020")+
+  geom_line(data = neamap.2, aes(x = Time, y = upper),color = "#ca0020")+
+  geom_line(data = neamap.2, aes(x = Time, y = lower), color = "#ca0020")+
+  #Axis and theme
+  scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ylim(0, 500)+
   ylab(expression("Biomass (kg tow"^-1*")")) +
   theme_facet()+
   theme(strip.text=element_text(hjust=0), 
         axis.title.x=element_blank())
 
 
-### plot 2
-neamap.2<-neamap %>% 
-  filter(str_detect(Var,"Benthivore"))
-p2<-total_surv %>% 
-  filter(str_detect(Var,"Benthivore")) %>% 
-  ggplot( aes(x = Time, y = Value, color = Var)) +
-  
-  #Highlight last ten years
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max ,
-      ymin = -Inf, ymax = Inf) +
-  
-  #Test for trend and add lines
-  geom_gls(aes(x = Time, y = Value,
-               color = Var),
-             alpha = trend.alpha, size = trend.size) +
-  
-  #Add time series
-  geom_line(size = lwd-0.5) +
-  geom_point(size = pcex-0.5) +
-  scale_color_manual(values = series.col, aesthetics = "color")+
-  guides(color = FALSE) +
-  geom_hline(aes(yintercept = hline,
-                 group = Var),
-             size = hline.size,
-             alpha = hline.alpha,
-             linetype = hline.lty)+
-  
-  #Add NEAMAP
-  geom_line(data = neamap.2, aes(x = Time, y = Value, color = Var),
-            size = lwd-0.5,
-            color = "#ca0020")+
-  geom_point(data = neamap.2, aes(x = Time, y = Value, color = Var),
-             size = pcex-0.5,
-             color = "#ca0020")+
-
-  #Facet 
-  facet_wrap(Var~.,ncol = 2) +
-  
-  #Axis and theme
-  scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
-  ylab(expression("Biomass (kg tow"^-1*")")) +
-  theme_facet()+
-  theme(strip.text=element_text(hjust=0),
-        axis.title.x=element_blank())
-
-#### plot 3
+### Planktivore
 neamap.3<-neamap %>% 
   filter(str_detect(Var,"Planktivore"))
-p3<-total_surv %>% 
+p3<-agg_bio %>% 
   filter(str_detect(Var,"Planktivore")) %>% 
-  ggplot( aes(x = Time, y = Value, color = Var)) +
+  ggplot(aes(x = Time, y = Mean)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max ,
       ymin = -Inf, ymax = Inf) +
-  
   #Test for trend and add lines
-  geom_gls(aes(x = Time, y = Value,
+  geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   
   #Add time series
   geom_line(size = lwd-0.5) +
   geom_point(size = pcex-0.5) +
+  geom_line(aes(x = Time, y = upper))+
+  geom_line(aes(x = Time, y = lower))+
   scale_color_manual(values = series.col, aesthetics = "color")+
   guides(color = FALSE) +
   geom_hline(aes(yintercept = hline,
@@ -282,45 +292,43 @@ p3<-total_surv %>%
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-  
-  #Add NEAMAP
-  geom_line(data = neamap.3, aes(x = Time, y = Value, color = Var),
-            size = lwd-0.5,
+  facet_wrap(Var~.,ncol = 2) +
+       #Add NEAMAP
+  geom_line(data = neamap.3, aes(x = Time, y = Value),
             color = "#ca0020")+
-  geom_point(data = neamap.3, aes(x = Time, y = Value, color = Var),
+  geom_point(data = neamap.3, aes(x = Time, y = Value),
              size = pcex-0.5,
              color = "#ca0020")+
-
-  #Facet 
-  facet_wrap(Var~.,ncol = 2) +
-  
+  geom_line(data = neamap.3, aes(x = Time, y = upper),color = "#ca0020")+
+  geom_line(data = neamap.3, aes(x = Time, y = lower), color = "#ca0020")+
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ylim(0, 600)+
   ylab(expression("Biomass (kg tow"^-1*")")) +
   theme_facet()+
-  theme(strip.text=element_text(hjust=0),
+  theme(strip.text=element_text(hjust=0), 
         axis.title.x=element_blank())
 
-### plot 4
+### Benthos
 neamap.4<-neamap %>% 
   filter(str_detect(Var,"Benthos"))
-p4<-total_surv %>% 
+p4<-agg_bio %>% 
   filter(str_detect(Var,"Benthos")) %>% 
-  ggplot( aes(x = Time, y = Value, color = Var)) +
+  ggplot(aes(x = Time, y = Mean)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max ,
       ymin = -Inf, ymax = Inf) +
-  
   #Test for trend and add lines
-  geom_gls(aes(x = Time, y = Value,
+  geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  
   #Add time series
   geom_line(size = lwd-0.5) +
   geom_point(size = pcex-0.5) +
+  geom_line(aes(x = Time, y = upper))+
+  geom_line(aes(x = Time, y = lower))+
   scale_color_manual(values = series.col, aesthetics = "color")+
   guides(color = FALSE) +
   geom_hline(aes(yintercept = hline,
@@ -328,23 +336,22 @@ p4<-total_surv %>%
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-  
-  #Add NEAMAP
-  geom_line(data = neamap.4, aes(x = Time, y = Value, color = Var),
-            size = lwd-0.5,
+  facet_wrap(Var~.,ncol = 2) +
+       #Add NEAMAP
+  geom_line(data = neamap.4, aes(x = Time, y = Value),
             color = "#ca0020")+
-  geom_point(data = neamap.4, aes(x = Time, y = Value, color = Var),
+  geom_point(data = neamap.4, aes(x = Time, y = Value),
              size = pcex-0.5,
              color = "#ca0020")+
-
-  #Facet 
-  facet_wrap(Var~.,ncol = 2) +
-  
+  geom_line(data = neamap.4, aes(x = Time, y = upper),color = "#ca0020")+
+  geom_line(data = neamap.4, aes(x = Time, y = lower), color = "#ca0020")+
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ylim(0, 75)+
   ylab(expression("Biomass (kg tow"^-1*")")) +
   theme_facet()+
-  theme(strip.text=element_text(hjust=0))
+  theme(strip.text=element_text(hjust=0), 
+        axis.title.x=element_blank())
 plot_grid(p1, p2, p3, p4, nrow=4)
 ```
 
@@ -766,20 +773,21 @@ bird %>%
 #### NEFSC BTS
 
 ```{r gom-biomass-ne, fig.cap = paste0("Fall (left) and spring (right) NEFSC surveyed biomass in the Gulf of Maine."), fig.width=8, fig.asp = 0.75}
-total_surv <- nefsc_survey %>% 
-  filter(EPU %in% c("GOM","GB"),
-         !str_detect(Var, "Other|Apex|managed"),
+agg_bio<-agg3 %>% filter(EPU %in% c("GOM","GB"),
          Time >= 1968) %>% 
-  group_by(EPU,Var) %>% 
-  mutate(hline = mean(Value, na.rm = T)) %>% 
-  ungroup() %>% 
-  mutate(Var = word(Var, 1,2))
-series.col <- rep("black",length(unique(total_surv$Var)))
-total_surv$Var <- factor(total_surv$Var,levels = c("Piscivore Spring","Piscivore Fall",
-                                                  "Benthivore Spring","Benthivore Fall",
-                                                  "Planktivore Spring", "Planktivore Fall",
-                                                  "Benthos Spring","Benthos Fall"))
+  group_by(Var, EPU) %>% 
+  mutate(hline = mean(Mean, na.rm = T)) %>% 
+  ungroup() 
 
+agg_bio$Var <- factor(agg_bio$Var,levels = c("Piscivore Spring",
+                                                   "Piscivore Fall",
+                                                    "Benthivore Spring",
+                                                   "Benthivore Fall",
+                                                    "Planktivore Spring",
+                                                    "Planktivore Fall",
+                                                    "Benthos Spring",
+                                                   "Benthos Fall"))
+series.col <- rep("black",length(unique(agg_bio$Var)))
 
 
 #facet names for titles
@@ -788,13 +796,13 @@ facet_names <- list("Piscivores" = expression("Piscivores"),
                     "Benthivores" = expression("Benthivores"),
                     "Benthos" = expression("Benthos"))
 
-gom_surv <- total_surv %>% 
+gom_surv <-agg_bio %>% 
   filter(EPU == "GOM") 
 
 #### Plot 1
 p1<-gom_surv %>% 
   filter(str_detect(Var, "Piscivore")) %>% 
-ggplot(aes(x = Time, y = Value, color = Var)) +
+ggplot(aes(x = Time, y = Mean, color = Var)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -802,7 +810,7 @@ ggplot(aes(x = Time, y = Value, color = Var)) +
       ymin = -Inf, ymax = Inf) +
   
   #Test for trend and add lines
-  geom_gls(aes(x = Time, y = Value,
+  geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   
@@ -816,12 +824,15 @@ ggplot(aes(x = Time, y = Value, color = Var)) +
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
+  geom_line(aes(x = Time, y = upper))+
+  geom_line(aes(x = Time, y = lower))+
 
   #Facet 
   facet_wrap(Var~., ncol = 2) +
   
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ylim(0, 4000)+
   ylab(expression("Biomass (kg tow"^-1*")")) +
   ggtitle("GOM NEFSC BTS") +
   theme_facet()+
@@ -831,7 +842,7 @@ ggplot(aes(x = Time, y = Value, color = Var)) +
 #### Plot 2 
 p2<-gom_surv %>% 
   filter(str_detect(Var, "Benthivore")) %>% 
-ggplot(aes(x = Time, y = Value, color = Var)) +
+ggplot(aes(x = Time, y = Mean, color = Var)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -839,7 +850,7 @@ ggplot(aes(x = Time, y = Value, color = Var)) +
       ymin = -Inf, ymax = Inf) +
   
   #Test for trend and add lines
-  geom_gls(aes(x = Time, y = Value,
+  geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   
@@ -853,7 +864,9 @@ ggplot(aes(x = Time, y = Value, color = Var)) +
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-
+  geom_line(aes(x = Time, y = upper))+
+  geom_line(aes(x = Time, y = lower))+
+  ylim(0, 500)+
   #Facet 
   facet_wrap(Var~., ncol = 2) +
   
@@ -867,7 +880,7 @@ ggplot(aes(x = Time, y = Value, color = Var)) +
 ## Plot 3
 p3<-gom_surv %>% 
   filter(str_detect(Var, "Planktivore")) %>% 
-ggplot(aes(x = Time, y = Value, color = Var)) +
+ggplot(aes(x = Time, y = Mean, color = Var)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -875,7 +888,7 @@ ggplot(aes(x = Time, y = Value, color = Var)) +
       ymin = -Inf, ymax = Inf) +
   
   #Test for trend and add lines
-  geom_gls(aes(x = Time, y = Value,
+  geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   
@@ -889,10 +902,11 @@ ggplot(aes(x = Time, y = Value, color = Var)) +
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-
+  geom_line(aes(x = Time, y = upper))+
+  geom_line(aes(x = Time, y = lower))+
   #Facet 
-  facet_wrap(Var~., ncol = 2) +
-  
+  facet_wrap(Var~., ncol = 2) +  
+  ylim(0, 700)+
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ylab(expression("Biomass (kg tow"^-1*")")) +
@@ -903,7 +917,7 @@ ggplot(aes(x = Time, y = Value, color = Var)) +
 ##Plot 4
 p4<-gom_surv %>% 
   filter(str_detect(Var, "Benthos")) %>% 
-ggplot(aes(x = Time, y = Value, color = Var)) +
+ggplot(aes(x = Time, y = Mean, color = Var)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -911,7 +925,7 @@ ggplot(aes(x = Time, y = Value, color = Var)) +
       ymin = -Inf, ymax = Inf) +
   
   #Test for trend and add lines
-  geom_gls(aes(x = Time, y = Value,
+  geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   
@@ -925,10 +939,11 @@ ggplot(aes(x = Time, y = Value, color = Var)) +
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-
+  geom_line(aes(x = Time, y = upper))+
+  geom_line(aes(x = Time, y = lower))+
   #Facet 
   facet_wrap(Var~., ncol = 2) +
-  
+  ylim(0, 30)+  
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   theme_facet()+
@@ -940,13 +955,13 @@ plot_grid(p1, p2, p3, p4, nrow=4)
 
 ```{r gb-biomass-ne, fig.cap = paste0("Fall (left) and spring (right) NEFSC surveyed biomass in Georges Bank."), fig.width=8, fig.asp = 0.75}
 
-gb_surv <- total_surv %>% 
+gb_surv <- agg_bio %>% 
   filter(EPU == "GB") 
 
 ## plot 1
 p1<- gb_surv %>% 
   filter(str_detect(Var, "Piscivore")) %>% 
-  ggplot(aes(x = Time, y = Value, color = Var)) +
+  ggplot(aes(x = Time, y = Mean, color = Var)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -954,7 +969,7 @@ p1<- gb_surv %>%
       ymin = -Inf, ymax = Inf) +
   
   #Test for trend and add lines
-  geom_gls(aes(x = Time, y = Value,
+  geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   
@@ -968,10 +983,11 @@ p1<- gb_surv %>%
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-
+  geom_line(aes(x = Time, y = upper))+
+  geom_line(aes(x = Time, y = lower))+
   #Facet 
   facet_wrap(Var~., ncol = 2) +
-  
+  ylim(0, 2500)+ 
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ylab(expression("Biomass (kg tow"^-1*")")) +
@@ -983,7 +999,7 @@ p1<- gb_surv %>%
 ## plot 2
 p2<- gb_surv %>% 
   filter(str_detect(Var, "Benthivore")) %>% 
-  ggplot(aes(x = Time, y = Value, color = Var)) +
+  ggplot(aes(x = Time, y = Mean, color = Var)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -991,7 +1007,7 @@ p2<- gb_surv %>%
       ymin = -Inf, ymax = Inf) +
   
   #Test for trend and add lines
-  geom_gls(aes(x = Time, y = Value,
+  geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   
@@ -1005,10 +1021,11 @@ p2<- gb_surv %>%
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-
+  geom_line(aes(x = Time, y = upper))+
+  geom_line(aes(x = Time, y = lower))+
   #Facet 
   facet_wrap(Var~., ncol = 2) +
-  
+  ylim(0, 1200)+
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ylab(expression("Biomass (kg tow"^-1*")")) +
@@ -1019,7 +1036,7 @@ p2<- gb_surv %>%
 ## plot 3
 p3<- gb_surv %>% 
   filter(str_detect(Var, "Planktivore")) %>% 
-  ggplot(aes(x = Time, y = Value, color = Var)) +
+  ggplot(aes(x = Time, y = Mean, color = Var)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -1027,7 +1044,7 @@ p3<- gb_surv %>%
       ymin = -Inf, ymax = Inf) +
   
   #Test for trend and add lines
-  geom_gls(aes(x = Time, y = Value,
+  geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   
@@ -1041,10 +1058,11 @@ p3<- gb_surv %>%
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-
+  geom_line(aes(x = Time, y = upper))+
+  geom_line(aes(x = Time, y = lower))+
   #Facet 
   facet_wrap(Var~., ncol = 2) +
-  
+  ylim(0, 350)+
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ylab(expression("Biomass (kg tow"^-1*")")) +
@@ -1055,7 +1073,7 @@ p3<- gb_surv %>%
 ## plot 4
 p4<- gb_surv %>% 
   filter(str_detect(Var, "Benthos")) %>% 
-  ggplot(aes(x = Time, y = Value, color = Var)) +
+  ggplot(aes(x = Time, y = Mean, color = Var)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -1063,7 +1081,7 @@ p4<- gb_surv %>%
       ymin = -Inf, ymax = Inf) +
   
   #Test for trend and add lines
-  geom_gls(aes(x = Time, y = Value,
+  geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   
@@ -1077,10 +1095,11 @@ p4<- gb_surv %>%
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-
+  geom_line(aes(x = Time, y = upper))+
+  geom_line(aes(x = Time, y = lower))+
   #Facet 
   facet_wrap(Var~., ncol = 2) +
-  
+  ylim(0, 150)+
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ylab(expression("Biomass (kg tow"^-1*")")) +
