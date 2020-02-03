@@ -518,6 +518,7 @@ comm_div %>%
 ```{r stock-status1, echo=FALSE, warning=F, fig.cap = paste0("Summary of single species status for MAMFC and jointly managed stocks, Goosefish and Dogfish jointly managed."), fig.width = 7.5, fig.asp = 0.5} 
 #Get data, spread for plotting, and filter
 stock_status <- ecodata::stock_status %>%
+  mutate(Code = recode(Code, "Dogfish" = "Sp. Dogfish" )) %>% 
   spread(.,Var,Value) %>% 
   filter(Council %in% c("MAFMC","Both")) %>% 
   group_by(Stock) %>% 
@@ -831,8 +832,7 @@ cowplot::plot_grid(rec_effort,
 ```{r ppr-mab, fig.cap="Primary production required to support the commercial landings. Included are the top species accounting for 80% of the landings in each year."}
 ecodata::ppr %>% 
   group_by(EPU) %>% 
-  mutate(Value = Value*100, 
-         hline = mean(Value)) %>% 
+  mutate(hline = mean(Value)) %>% 
   filter(EPU == "MAB") %>% 
   ggplot() +
   geom_point(aes(x = Time, y = Value))+
@@ -1396,6 +1396,7 @@ comm_div %>%
 ```{r NE-stock-status1, echo=FALSE, warning=F, fig.cap = paste0("Summary of single species status for NEFMC and jointly managed stocks. \\label{stock-status}"), fig.width = 8, fig.asp = 0.65}
 #Get data, spread for plotting, and filter
 stock_status <- ecodata::stock_status %>%
+  mutate(Code = recode(Code, "Dogfish" = "Sp. Dogfish" )) %>% 
   spread(.,Var,Value) %>% 
   filter(Council %in% c("NEFMC","Both")) %>% 
   group_by(Stock) %>% 
@@ -1675,8 +1676,7 @@ cowplot::plot_grid(rec_effort,
 ```{r ppr-ne, fig.cap="Primary production required to support the commercial landings. Included are the top species accounting for 80% of the landings in each year."}
 ecodata::ppr %>% 
   group_by(EPU) %>% 
-  mutate(Value = Value*100, 
-         hline = mean(Value)) %>% 
+  mutate(hline = mean(Value)) %>% 
   filter(EPU != "MAB") %>% 
   ggplot() +
   geom_point(aes(x = Time, y = Value))+

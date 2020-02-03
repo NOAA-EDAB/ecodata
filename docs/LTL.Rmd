@@ -844,44 +844,30 @@ knitr::include_graphics(file.path(image.dir,"MAB_Heatwave_timeseries.jpg"))
 ```{r heatwave_mab}
 
 cumu <- ecodata::heatwave %>% 
-  filter(EPU == epu_abbr,
-         Var == "cumulative intensity")
-hline <- mean(cumu$Value)
-cumu %>% 
-  ggplot() +
-  geom_line(aes(x = Time, y = Value)) +
-  geom_point(aes(x = Time, y = Value)) +
-  geom_gls(aes(x = Time, y = Value)) +
-  ylab("Cumulative intesity (degrees C x days)") +
-  xlab(element_blank())+
-  ggtitle("Marine Heatwave Cumulative Intesity") +
-  scale_x_continuous(expand = c(0.01, 0.01))+
-  geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  theme_ts()+
-  theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+  filter(Var == "cumulative intensity") %>% 
+  mutate(Var = recode(Var, "cumulative intensity" = "Cumulative Intensity (degree C x days)"))
 
 maxin <- ecodata::heatwave %>% 
-  filter(EPU == epu_abbr,
-         Var == "maximum intensity") %>% 
-  group_by(Time) %>% 
+  filter(Var == "maximum intensity") %>% 
+  group_by(Time, EPU, Var, Units) %>% 
   summarise(Value = max(Value)) %>% 
-  ungroup()
-hline <- mean(maxin$Value)
-maxin %>% 
+  ungroup() %>% 
+  mutate(Var = recode(Var, "maximum intensity" = "Maximum Intensity (degree C)"))
+
+hw<- cumu %>%
+  rbind(maxin) %>% 
+  group_by(Var, EPU) %>% 
+  mutate(hline = mean(Value))
+
+mab.hw<- hw %>% filter(EPU == epu_abbr)
+mab.hw %>% 
   ggplot() +
   geom_line(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value)) +
-  geom_gls(aes(x = Time, y = Value)) +
-  ylab("Maximum intesity (degrees C)") +
+  geom_gls(aes(x = Time, y = Value, group = Var)) +
+  ylab("") +
   xlab(element_blank())+
-  ggtitle("Marine Heatwave Maximum Intesity") +
+  ggtitle("Mid-Atlantic Marine Heatwave Intesity") +
   scale_x_continuous(expand = c(0.01, 0.01))+
   geom_hline(aes(yintercept = hline),
            size = hline.size,
@@ -890,10 +876,10 @@ maxin %>%
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
+  facet_wrap(~Var, scales = "free")+
   theme_ts()+
   theme(strip.text=element_text(hjust=0,
                                 face = "italic"))
-
 
 ```
 
@@ -1693,20 +1679,14 @@ gom_zoo_div + gb_zoo_div + plot_layout(ncol = 1)
 ### Marine Heat Wave
 
 ```{r GOM_heatwave, eval= T, echo = F}
-cumu <- ecodata::heatwave %>% 
-  filter(EPU != epu_abbr,
-         Var == "cumulative intensity")
-hline <- mean(cumu$Value)
-
-# Cumulative intensity
-cumu  %>% 
+gb.hw<-hw %>% filter(EPU == "GB") %>% 
   ggplot() +
   geom_line(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value)) +
   geom_gls(aes(x = Time, y = Value)) +
-  ylab("Cumulative intesity (degrees C x days)") +
+  ylab("") +
   xlab(element_blank())+
-  ggtitle("Marine Heatwave Cumulative Intensity") +
+  ggtitle("Georges Bank Marine Heatwave Intensity") +
   scale_x_continuous(expand = c(0.01, 0.01))+
   geom_hline(aes(yintercept = hline),
            size = hline.size,
@@ -1715,27 +1695,20 @@ cumu  %>%
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  facet_wrap(~EPU) +
+  facet_wrap(~Var, scales = "free") +
   theme_ts()+
   theme(strip.text=element_text(hjust=0,
                                 face = "italic"))
 
-#Max intenstiy
-maxin <- ecodata::heatwave %>%
-  filter(EPU != epu_abbr,
-         Var == "maximum intensity") %>%
-  group_by(Time, EPU) %>%
-  summarise(Value = max(Value)) %>%
-  ungroup()
-hline <- mean(maxin$Value)
-maxin %>%
+
+gom.hw<-hw %>% filter(EPU == "GOM") %>% 
   ggplot() +
   geom_line(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value)) +
   geom_gls(aes(x = Time, y = Value)) +
-  ylab("Maximum intesity (degrees C)") +
+  ylab("") +
   xlab(element_blank())+
-  ggtitle("Marine Heatwave Maximum Intensity") +
+  ggtitle("Gulf of Maine Marine Heatwave Intensity") +
   scale_x_continuous(expand = c(0.01, 0.01))+
   geom_hline(aes(yintercept = hline),
            size = hline.size,
@@ -1744,11 +1717,12 @@ maxin %>%
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  facet_wrap(~EPU) +
+  facet_wrap(~Var, scales = "free") +
   theme_ts()+
   theme(strip.text=element_text(hjust=0,
                                 face = "italic"))
-
+gb.hw
+gom.hw
 ```
 
 
