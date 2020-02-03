@@ -125,24 +125,15 @@ agg<-ecodata::agg_bio %>%
   separate(Var, c("feeding.guild", "season", "Biomass", "Var1"), sep = " ") %>% 
   unite("Var", feeding.guild:season, sep = " ") %>% 
   mutate(stat = recode(Var1, Index = "Mean", 
-                      Standard = "SD"))
-
-agg1<-agg %>% filter(stat == "Mean") %>% 
-  group_by(Time, EPU, Var) %>% 
-  spread(stat, Value)
-agg2<-agg %>% filter(stat == "SD", 
-                     !str_detect(Var, "NA")) %>% 
-  group_by(Time, EPU, Var) %>% 
-  spread(stat, Value)
-
-agg3<-agg1 %>% cbind(agg2) %>% 
-  dplyr::select(Time, Var, Units, Mean, SD) %>% 
-  group_by(Time, Var, EPU) %>% 
+                      Standard = "SD")) %>% 
+  dplyr::select(-Biomass, -Var1) %>% 
+  group_by(Var, Time, EPU) %>% 
+  spread(stat, Value) %>% 
   mutate(upper = Mean + SD, 
          lower = Mean - SD)
 
 
-agg_bio<-agg3 %>% filter(EPU == epu_abbr,
+agg_bio<-agg %>% filter(EPU == epu_abbr,
          Time >= 1968) %>% 
   group_by(Var, EPU) %>% 
   mutate(hline = mean(Mean, na.rm = T)) %>% 
@@ -190,10 +181,11 @@ p1<-agg_bio %>%
              alpha = trend.alpha, size = trend.size) +
 
   #Add time series
+  geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+              alpha = 0.5,
+              fill = "grey") +
   geom_line(size = lwd-0.5) +
   geom_point(size = pcex-0.5) +
-  geom_line(aes(x = Time, y = upper))+
-  geom_line(aes(x = Time, y = lower))+
   scale_color_manual(values = series.col, aesthetics = "color")+
   guides(color = FALSE) +
   geom_hline(aes(yintercept = hline,
@@ -235,10 +227,11 @@ p2<-agg_bio %>%
              alpha = trend.alpha, size = trend.size) +
   
   #Add time series
+  geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+              alpha = 0.5,
+              fill = "grey") +
   geom_line(size = lwd-0.5) +
   geom_point(size = pcex-0.5) +
-  geom_line(aes(x = Time, y = upper))+
-  geom_line(aes(x = Time, y = lower))+
   scale_color_manual(values = series.col, aesthetics = "color")+
   guides(color = FALSE) +
   geom_hline(aes(yintercept = hline,
@@ -281,10 +274,11 @@ p3<-agg_bio %>%
              alpha = trend.alpha, size = trend.size) +
   
   #Add time series
+  geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+              alpha = 0.5,
+              fill = "grey") +
   geom_line(size = lwd-0.5) +
   geom_point(size = pcex-0.5) +
-  geom_line(aes(x = Time, y = upper))+
-  geom_line(aes(x = Time, y = lower))+
   scale_color_manual(values = series.col, aesthetics = "color")+
   guides(color = FALSE) +
   geom_hline(aes(yintercept = hline,
@@ -325,10 +319,11 @@ p4<-agg_bio %>%
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   #Add time series
+  geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+              alpha = 0.5,
+              fill = "grey") + 
   geom_line(size = lwd-0.5) +
   geom_point(size = pcex-0.5) +
-  geom_line(aes(x = Time, y = upper))+
-  geom_line(aes(x = Time, y = lower))+
   scale_color_manual(values = series.col, aesthetics = "color")+
   guides(color = FALSE) +
   geom_hline(aes(yintercept = hline,
@@ -663,7 +658,7 @@ mid
 
 ```{r mab-cf, fig.cap = "Condition factor for species sampled in MAB."}
 
-knitr::include_graphics(file.path(image.dir, "MABcondition_2019.jpg"))
+knitr::include_graphics(file.path(image.dir, "MABcondition_2019_viridis_final.jpg"))
 
 ```
 ### Stomach Fullness
@@ -773,7 +768,7 @@ bird %>%
 #### NEFSC BTS
 
 ```{r gom-biomass-ne, fig.cap = paste0("Fall (left) and spring (right) NEFSC surveyed biomass in the Gulf of Maine."), fig.width=8, fig.asp = 0.75}
-agg_bio<-agg3 %>% filter(EPU %in% c("GOM","GB"),
+agg_bio<-agg %>% filter(EPU %in% c("GOM","GB"),
          Time >= 1968) %>% 
   group_by(Var, EPU) %>% 
   mutate(hline = mean(Mean, na.rm = T)) %>% 
@@ -802,7 +797,7 @@ gom_surv <-agg_bio %>%
 #### Plot 1
 p1<-gom_surv %>% 
   filter(str_detect(Var, "Piscivore")) %>% 
-ggplot(aes(x = Time, y = Mean, color = Var)) +
+ggplot(aes(x = Time, y = Mean)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -815,6 +810,9 @@ ggplot(aes(x = Time, y = Mean, color = Var)) +
              alpha = trend.alpha, size = trend.size) +
   
   #Add time series
+  geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+              alpha = 0.5,
+              fill = "grey") + 
   geom_line(size = lwd-0.5) +
   geom_point(size = pcex-0.5) +
   scale_color_manual(values = series.col, aesthetics = "color")+
@@ -824,8 +822,6 @@ ggplot(aes(x = Time, y = Mean, color = Var)) +
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-  geom_line(aes(x = Time, y = upper))+
-  geom_line(aes(x = Time, y = lower))+
 
   #Facet 
   facet_wrap(Var~., ncol = 2) +
@@ -842,7 +838,7 @@ ggplot(aes(x = Time, y = Mean, color = Var)) +
 #### Plot 2 
 p2<-gom_surv %>% 
   filter(str_detect(Var, "Benthivore")) %>% 
-ggplot(aes(x = Time, y = Mean, color = Var)) +
+ggplot(aes(x = Time, y = Mean)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -855,6 +851,9 @@ ggplot(aes(x = Time, y = Mean, color = Var)) +
              alpha = trend.alpha, size = trend.size) +
   
   #Add time series
+  geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+              alpha = 0.5,
+              fill = "grey") + 
   geom_line(size = lwd-0.5) +
   geom_point(size = pcex-0.5) +
   scale_color_manual(values = series.col, aesthetics = "color")+
@@ -864,8 +863,7 @@ ggplot(aes(x = Time, y = Mean, color = Var)) +
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-  geom_line(aes(x = Time, y = upper))+
-  geom_line(aes(x = Time, y = lower))+
+
   ylim(0, 500)+
   #Facet 
   facet_wrap(Var~., ncol = 2) +
@@ -880,7 +878,7 @@ ggplot(aes(x = Time, y = Mean, color = Var)) +
 ## Plot 3
 p3<-gom_surv %>% 
   filter(str_detect(Var, "Planktivore")) %>% 
-ggplot(aes(x = Time, y = Mean, color = Var)) +
+ggplot(aes(x = Time, y = Mean)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -893,6 +891,9 @@ ggplot(aes(x = Time, y = Mean, color = Var)) +
              alpha = trend.alpha, size = trend.size) +
   
   #Add time series
+  geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+              alpha = 0.5,
+              fill = "grey") + 
   geom_line(size = lwd-0.5) +
   geom_point(size = pcex-0.5) +
   scale_color_manual(values = series.col, aesthetics = "color")+
@@ -902,8 +903,7 @@ ggplot(aes(x = Time, y = Mean, color = Var)) +
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-  geom_line(aes(x = Time, y = upper))+
-  geom_line(aes(x = Time, y = lower))+
+
   #Facet 
   facet_wrap(Var~., ncol = 2) +  
   ylim(0, 700)+
@@ -917,7 +917,7 @@ ggplot(aes(x = Time, y = Mean, color = Var)) +
 ##Plot 4
 p4<-gom_surv %>% 
   filter(str_detect(Var, "Benthos")) %>% 
-ggplot(aes(x = Time, y = Mean, color = Var)) +
+ggplot(aes(x = Time, y = Mean)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -930,6 +930,9 @@ ggplot(aes(x = Time, y = Mean, color = Var)) +
              alpha = trend.alpha, size = trend.size) +
   
   #Add time series
+  geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+              alpha = 0.5,
+              fill = "grey") + 
   geom_line(size = lwd-0.5) +
   geom_point(size = pcex-0.5) +
   scale_color_manual(values = series.col, aesthetics = "color")+
@@ -939,8 +942,7 @@ ggplot(aes(x = Time, y = Mean, color = Var)) +
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-  geom_line(aes(x = Time, y = upper))+
-  geom_line(aes(x = Time, y = lower))+
+
   #Facet 
   facet_wrap(Var~., ncol = 2) +
   ylim(0, 30)+  
@@ -961,7 +963,7 @@ gb_surv <- agg_bio %>%
 ## plot 1
 p1<- gb_surv %>% 
   filter(str_detect(Var, "Piscivore")) %>% 
-  ggplot(aes(x = Time, y = Mean, color = Var)) +
+  ggplot(aes(x = Time, y = Mean)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -974,6 +976,9 @@ p1<- gb_surv %>%
              alpha = trend.alpha, size = trend.size) +
   
   #Add time series
+  geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+              alpha = 0.5,
+              fill = "grey") + 
   geom_line(size = lwd-0.5) +
   geom_point(size = pcex-0.5) +
   scale_color_manual(values = series.col, aesthetics = "color")+
@@ -983,8 +988,7 @@ p1<- gb_surv %>%
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-  geom_line(aes(x = Time, y = upper))+
-  geom_line(aes(x = Time, y = lower))+
+
   #Facet 
   facet_wrap(Var~., ncol = 2) +
   ylim(0, 2500)+ 
@@ -999,7 +1003,7 @@ p1<- gb_surv %>%
 ## plot 2
 p2<- gb_surv %>% 
   filter(str_detect(Var, "Benthivore")) %>% 
-  ggplot(aes(x = Time, y = Mean, color = Var)) +
+  ggplot(aes(x = Time, y = Mean)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -1012,6 +1016,9 @@ p2<- gb_surv %>%
              alpha = trend.alpha, size = trend.size) +
   
   #Add time series
+  geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+              alpha = 0.5,
+              fill = "grey") + 
   geom_line(size = lwd-0.5) +
   geom_point(size = pcex-0.5) +
   scale_color_manual(values = series.col, aesthetics = "color")+
@@ -1021,8 +1028,7 @@ p2<- gb_surv %>%
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-  geom_line(aes(x = Time, y = upper))+
-  geom_line(aes(x = Time, y = lower))+
+
   #Facet 
   facet_wrap(Var~., ncol = 2) +
   ylim(0, 1200)+
@@ -1036,7 +1042,7 @@ p2<- gb_surv %>%
 ## plot 3
 p3<- gb_surv %>% 
   filter(str_detect(Var, "Planktivore")) %>% 
-  ggplot(aes(x = Time, y = Mean, color = Var)) +
+  ggplot(aes(x = Time, y = Mean)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -1049,6 +1055,9 @@ p3<- gb_surv %>%
              alpha = trend.alpha, size = trend.size) +
   
   #Add time series
+  geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+              alpha = 0.5,
+              fill = "grey") +
   geom_line(size = lwd-0.5) +
   geom_point(size = pcex-0.5) +
   scale_color_manual(values = series.col, aesthetics = "color")+
@@ -1058,8 +1067,7 @@ p3<- gb_surv %>%
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-  geom_line(aes(x = Time, y = upper))+
-  geom_line(aes(x = Time, y = lower))+
+ 
   #Facet 
   facet_wrap(Var~., ncol = 2) +
   ylim(0, 350)+
@@ -1073,7 +1081,7 @@ p3<- gb_surv %>%
 ## plot 4
 p4<- gb_surv %>% 
   filter(str_detect(Var, "Benthos")) %>% 
-  ggplot(aes(x = Time, y = Mean, color = Var)) +
+  ggplot(aes(x = Time, y = Mean)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -1086,6 +1094,9 @@ p4<- gb_surv %>%
              alpha = trend.alpha, size = trend.size) +
   
   #Add time series
+    geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+              alpha = 0.5,
+              fill = "grey") + 
   geom_line(size = lwd-0.5) +
   geom_point(size = pcex-0.5) +
   scale_color_manual(values = series.col, aesthetics = "color")+
@@ -1095,8 +1106,7 @@ p4<- gb_surv %>%
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-  geom_line(aes(x = Time, y = upper))+
-  geom_line(aes(x = Time, y = lower))+
+
   #Facet 
   facet_wrap(Var~., ncol = 2) +
   ylim(0, 150)+
@@ -1170,13 +1180,15 @@ mab_nefmc_props
 ```{r MA-inshore, fig.width=8, fig.asp = 0.75, fig.cap = "Fall (left) and spring (right) surveyed biomass from the MA state inshore bottom trawl survey."}
 mass <- mass_inshore_survey %>% 
   filter(EPU == "GB",
-         Time>1980,
-         str_detect(Var, "Index")) %>% 
-  mutate(feeding.guild = word(Var, 1)) %>%
-  filter(!is.na(feeding.guild)) %>% 
-  unite(.,Var, c("feeding.guild","Season"),sep = " ") %>% 
+         Time>1980) %>% 
+  separate(Var, c("feeding.guild", "season", "biomass", "stat")) %>% 
+  unite(.,Var, c("feeding.guild","season"),sep = " ") %>% 
+  group_by(Time, Var) %>% 
+  spread(stat, Value) %>% 
+  mutate(upper = Index + SD, 
+         lower = Index - SD) %>% 
   group_by(Var) %>% 
-  mutate(hline = mean(Value))
+  mutate(hline = mean(Index))
 mass$Var <- factor(mass$Var,levels = c("Piscivore Spring","Piscivore Fall",
                                        "Benthivore Spring","Benthivore Fall",
                                        "Planktivore Spring","Planktivore Fall",
@@ -1185,7 +1197,7 @@ mass$Var <- factor(mass$Var,levels = c("Piscivore Spring","Piscivore Fall",
 p1<-mass %>% 
   filter(!is.na(Var), 
          str_detect(Var, "Piscivore")) %>% 
-  ggplot(aes(x = Time, y = Value)) +
+  ggplot(aes(x = Time, y = Index)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -1193,11 +1205,14 @@ p1<-mass %>%
       ymin = -Inf, ymax = Inf) +
   
   #Test for trend and add lines
-  geom_gls(aes(x = Time, y = Value,
+  geom_gls(aes(x = Time, y = Index,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   
   #Add time series
+    geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+              alpha = 0.5,
+              fill = "grey") + 
   geom_line(size = lwd-0.5) +
   geom_point(size = pcex-0.5) +
   guides(color = FALSE) +
@@ -1208,7 +1223,6 @@ p1<-mass %>%
              linetype = hline.lty)+
   #Facet 
   facet_wrap(Var~., ncol = 2) +
-  
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ylab(expression("Biomass (kg tow"^-1*")")) +
@@ -1221,7 +1235,7 @@ p1<-mass %>%
 p2<-mass %>% 
   filter(!is.na(Var), 
          str_detect(Var, "Benthivore")) %>% 
-  ggplot(aes(x = Time, y = Value)) +
+  ggplot(aes(x = Time, y = Index)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -1229,11 +1243,14 @@ p2<-mass %>%
       ymin = -Inf, ymax = Inf) +
   
   #Test for trend and add lines
-  geom_gls(aes(x = Time, y = Value,
+  geom_gls(aes(x = Time, y = Index,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   
   #Add time series
+  geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+              alpha = 0.5,
+              fill = "grey") + 
   geom_line(size = lwd-0.5) +
   geom_point(size = pcex-0.5) +
   guides(color = FALSE) +
@@ -1244,7 +1261,7 @@ p2<-mass %>%
              linetype = hline.lty)+
   #Facet 
   facet_wrap(Var~., ncol = 2) +
-  
+
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ylab(expression("Biomass (kg tow"^-1*")")) +
@@ -1256,7 +1273,7 @@ p2<-mass %>%
 p3<-mass %>% 
   filter(!is.na(Var), 
          str_detect(Var, "Planktivore")) %>% 
-  ggplot(aes(x = Time, y = Value)) +
+  ggplot(aes(x = Time, y = Index)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -1264,11 +1281,14 @@ p3<-mass %>%
       ymin = -Inf, ymax = Inf) +
   
   #Test for trend and add lines
-  geom_gls(aes(x = Time, y = Value,
+  geom_gls(aes(x = Time, y = Index,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   
   #Add time series
+  geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+              alpha = 0.5,
+              fill = "grey") + 
   geom_line(size = lwd-0.5) +
   geom_point(size = pcex-0.5) +
   guides(color = FALSE) +
@@ -1279,7 +1299,7 @@ p3<-mass %>%
              linetype = hline.lty)+
   #Facet 
   facet_wrap(Var~., ncol = 2) +
-  
+ 
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ylab(expression("Biomass (kg tow"^-1*")")) +
@@ -1291,7 +1311,7 @@ p3<-mass %>%
 p4<-mass %>% 
   filter(!is.na(Var), 
          str_detect(Var, "Benthos")) %>% 
-  ggplot(aes(x = Time, y = Value)) +
+  ggplot(aes(x = Time, y = Index)) +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -1299,11 +1319,14 @@ p4<-mass %>%
       ymin = -Inf, ymax = Inf) +
   
   #Test for trend and add lines
-  geom_gls(aes(x = Time, y = Value,
+  geom_gls(aes(x = Time, y = Index,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   
   #Add time series
+  geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+              alpha = 0.5,
+              fill = "grey") + 
   geom_line(size = lwd-0.5) +
   geom_point(size = pcex-0.5) +
   guides(color = FALSE) +
@@ -1314,7 +1337,7 @@ p4<-mass %>%
              linetype = hline.lty)+
   #Facet 
   facet_wrap(Var~., ncol = 2) +
-  
+ 
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ylab(expression("Biomass (kg tow"^-1*")")) +
@@ -1577,7 +1600,7 @@ gb
 ```{r gb-cf, fig.cap = "Condition factor for species sampled in GB."}
 
 
-knitr::include_graphics(file.path(image.dir, "GBcondition_2019.jpg"))
+knitr::include_graphics(file.path(image.dir, "GBcondition_2019_viridis_final.jpg"))
 
 ```
 
@@ -1585,7 +1608,7 @@ knitr::include_graphics(file.path(image.dir, "GBcondition_2019.jpg"))
 ```{r gom-cf, fig.cap = "Condition factor for species sampled in the GOM."}
 
 
-knitr::include_graphics(file.path(image.dir, "GOMcondition_2019.jpg"))
+knitr::include_graphics(file.path(image.dir, "GOMcondition_2019_viridis_final.jpg"))
 
 ```
 ### Stomach Fullness
