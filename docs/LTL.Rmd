@@ -1022,9 +1022,8 @@ bot_temp_insitu_gb <- oceantemp_insitu %>%
         plot.title = element_text(size = 12))
 
 
-
+bot_temp_insitu_gb +
 bot_temp_insitu_gom +
- bot_temp_insitu_gb + 
   plot_layout(ncol =  1) &
   theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
 
@@ -1120,7 +1119,7 @@ pp_cci_gom <- out_pp %>%
           panel.spacing = unit(1, "lines"),
           plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
  
- pp_cci_gom + pp_cci_gb + plot_layout(ncol = 1)
+ pp_cci_gb + pp_cci_gom + plot_layout(ncol = 1)
  
 ```
 
@@ -1223,7 +1222,7 @@ chl_cci_gb <-
     theme(axis.text.x = element_text(angle=45, hjust = 1),
           panel.spacing = unit(0.5, "lines"),
           plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
-chl_cci_gom + chl_cci_gb + plot_layout(ncol = 1)
+chl_cci_gb + chl_cci_gom + plot_layout(ncol = 1)
 
 ```
 
@@ -1492,7 +1491,7 @@ gb_zoo_div <- zoo_div %>%
   theme(strip.text=element_text(hjust=0,
                                 face = "italic"))
   
-gom_zoo_div + gb_zoo_div + plot_layout(ncol = 1)
+gb_zoo_div + gom_zoo_div + plot_layout(ncol = 1)
 
 ```
 
@@ -1742,6 +1741,7 @@ cowplot::ggdraw() + cowplot::draw_image(file.path(image.dir,"GOM_Heatwave_timese
 knitr::include_graphics(file.path(image.dir,"SST_anom_Aug_23_2019.png"))
 
 ```
+
 ## Shelfwide Indicators {.tabset .tabset-fade}
 
 ### Seasonal SST anomaly

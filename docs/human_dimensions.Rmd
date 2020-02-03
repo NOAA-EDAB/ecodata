@@ -835,6 +835,9 @@ ecodata::ppr %>%
   mutate(hline = mean(Value)) %>% 
   filter(EPU == "MAB") %>% 
   ggplot() +
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
   geom_point(aes(x = Time, y = Value))+
   geom_line(aes(x = Time, y = Value))+
   geom_hline(aes(yintercept = hline),
@@ -1016,7 +1019,7 @@ gb_landings <- landings %>% filter(EPU == "GB") %>%
   theme(strip.text=element_text(hjust=0)) +
   ggtitle("Georges Bank")
 
-plot_grid(apex_landings, gom_landings, gb_landings, ncol = 1, align = 'v', rel_heights = c(1,4,4))
+plot_grid(apex_landings, gb_landings, gom_landings, ncol = 1, align = 'v', rel_heights = c(1,4,4))
 
 ```
 
@@ -1088,13 +1091,13 @@ ggplot()+
     theme_ts() +
   ggtitle("Georges Bank")
 
-cowplot::plot_grid(gom_total, gb_total, ncol = 2)
+cowplot::plot_grid(gb_total, gom_total, ncol = 2)
 
 ```
 
 #### Commercial revenue
 
-```{r bennet-ne, fig.cap = paste0("Revenue change from the long-term mean in 2015 dollars (black), Price (PI), and Volume Indicators (VI) for commercial landings in Gulf of Maine (left) and Georges Bank. \\label{bennet}"), fig.height = 3, fig.width=8}
+```{r bennet-ne, fig.cap = paste0("Revenue change from the long-term mean in 2015 dollars (black), Price (PI), and Volume Indicators (VI) for commercial landings in Georges Bank (left) and Gulf of Maine. \\label{bennet}"), fig.height = 3, fig.width=8}
 
 #Filter data into two dataframes for plotting
 
@@ -1188,8 +1191,8 @@ g_legend<-function(a.gplot){
   legend <- tmp$grobs[[leg]]
   return(legend)}
 mylegend<-g_legend(gb_bennet)
-p3 <- gridExtra::grid.arrange(gridExtra::arrangeGrob(gom_bennet + theme(legend.position="none"),
-                         gb_bennet + theme(legend.position="none"),
+p3 <- gridExtra::grid.arrange(gridExtra::arrangeGrob(gb_bennet + theme(legend.position="none"),
+                         gom_bennet + theme(legend.position="none"),
                          nrow=1),
              mylegend, nrow=2,heights=c(6, 1))
 ```
@@ -1271,7 +1274,7 @@ ggplot() +
   theme_ts() +
     ggtitle("Georges Bank")
 
-cowplot::plot_grid(gom_rev_agg, gb_rev_agg, ncol = 2)
+cowplot::plot_grid(gb_rev_agg, gom_rev_agg, ncol = 2)
 
 # rev_inline <- rev_agg %>% 
 #   dplyr::select(Status, Time, Total) %>% 
@@ -1679,6 +1682,9 @@ ecodata::ppr %>%
   mutate(hline = mean(Value)) %>% 
   filter(EPU != "MAB") %>% 
   ggplot() +
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
   geom_point(aes(x = Time, y = Value))+
   geom_line(aes(x = Time, y = Value))+
   geom_hline(aes(yintercept = hline),
