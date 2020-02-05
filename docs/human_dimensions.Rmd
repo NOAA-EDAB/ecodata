@@ -1097,7 +1097,7 @@ cowplot::plot_grid(gb_total, gom_total, ncol = 2)
 
 #### Commercial revenue
 
-```{r bennet-ne, fig.cap = paste0("Revenue change from the long-term mean in 2015 dollars (black), Price (PI), and Volume Indicators (VI) for commercial landings in Georges Bank (left) and Gulf of Maine. \\label{bennet}"), fig.height = 3, fig.width=8}
+```{r bennet-ne, fig.cap = paste0("Revenue change from the long-term mean in 2015 dollars (black), Price (PI), and Volume Indicators (VI) for commercial landings in Georges Bank (left) and Gulf of Maine (right). \\label{bennet}"), fig.height = 3, fig.width=8}
 
 #Filter data into two dataframes for plotting
 
@@ -1198,7 +1198,7 @@ p3 <- gridExtra::grid.arrange(gridExtra::arrangeGrob(gb_bennet + theme(legend.po
 ```
 
 
-```{r comm-revenue-ne, fig.cap = "Total commercial revenue (black) and revenue from NEFMC managed species (red) in Gulf of Maine (left) and Georges Bank (right). \\label{comm-rev}", fig.width = 8, fig.asp = 0.35}
+```{r comm-revenue-ne, fig.cap = "Total commercial revenue (black) and revenue from NEFMC managed species (red) in Georges Bank (left) and Gulf of Maine (right). \\label{comm-rev}", fig.width = 8, fig.asp = 0.35}
 
 #Filtering and aggregation step
 rev_agg <- ecodata::comdat %>% 
@@ -1677,6 +1677,8 @@ cowplot::plot_grid(rec_effort,
 
 ### Primary Production Required
 ```{r ppr-ne, fig.cap="Primary production required to support the commercial landings. Included are the top species accounting for 80% of the landings in each year."}
+
+
 ecodata::ppr %>% 
   group_by(EPU) %>% 
   mutate(hline = mean(Value)) %>% 
@@ -1692,7 +1694,9 @@ ecodata::ppr %>%
            alpha = hline.alpha,
            linetype = hline.lty)+
   scale_x_continuous(expand = c(0.01, 0.01)) +
-  facet_wrap(~EPU)+
+  facet_wrap(. ~ EPU, labeller = 
+               labeller(EPU = c(GB = "Georges Bank", 
+                                GOM = "Gulf of Maine")))+
   ggtitle("Primary Production Required")+
   ylab("Proportion of Total Primary Production Required")+
   theme_ts()
@@ -1718,7 +1722,7 @@ knitr::include_graphics(file.path(image.dir, "mtl_index-0.90.png"))
 
 ### Wind Sites and Occurrence 
 These are the five species most likely to occur in the lease areas. 
-```{r wind_habitat_table, eval = T, echo = F, fig.cap='Color indicates trends through time.', out.width='80%'}
+```{r wind_habitat_table, eval = T, echo = F, fig.cap='', out.width='80%'}
 image.dir <- here::here("docs")
 raw.dir <- here::here("data-raw")
 
@@ -1770,7 +1774,7 @@ all %>% kable(format = "html") %>%
 ```
 
 
-```{r, eval = T, echo = F, fig.cap="Map of BOEM lease areas  as of feb 2019.", message=FALSE, results=FALSE}
+```{r, eval = T, echo = F, fig.cap="Map of BOEM existing (black) and proposed (red) lease areas as of February 2019.", message=FALSE, results=FALSE}
 library(rnaturalearthhires)
 library(sf)
 library(raster)
