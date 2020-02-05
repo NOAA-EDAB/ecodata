@@ -24,8 +24,6 @@ crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40
 sst.2019 <- rast_prep(stack(file.path(raw.dir, "sst.day.mean.2019.nc")))
 ltm <- rast_prep(stack(file.path(raw.dir, "sst.day.mean.ltm.1982-2010.nc")))
 
-# save(sst.2018, file = "~/git/ecodata/inst/extdata/gridded/SST.LTM.rdata")
-
 winter.ltm <- ltm[[1:90]]
 spring.ltm <- ltm[[91:181]]
 summer.ltm <- ltm[[182:273]]

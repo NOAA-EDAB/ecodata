@@ -2,6 +2,7 @@
 zoo_abund <- ecodata::zoo_strat_abun %>% 
   filter(EPU == epu_abbr,
          !str_detect(Var, "Small|Large")) %>% 
+  mutate(Value = Value/10^6) %>% 
   group_by(Var, EPU) %>% 
   mutate(hline = mean(Value)) 
 
@@ -13,7 +14,7 @@ zoo_abund %>%
   geom_gls() +
   geom_line() +
   geom_point() +
-  ylab("Stratified Abundance") +
+  ylab(expression("Stratified Abundance" (10^"6"))) +
   xlab(element_blank())+
   ggtitle("Zooplankton abundance") +
   facet_wrap(Var~., ncol = 3) +

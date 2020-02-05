@@ -55,7 +55,7 @@ p1<- gb_surv %>%
 
   #Facet 
   facet_wrap(Var~., ncol = 2) +
-  ylim(0, 2500)+ 
+ 
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ylab(expression("Biomass (kg tow"^-1*")")) +
@@ -95,7 +95,6 @@ p2<- gb_surv %>%
 
   #Facet 
   facet_wrap(Var~., ncol = 2) +
-  ylim(0, 1200)+
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ylab(expression("Biomass (kg tow"^-1*")")) +
@@ -134,7 +133,7 @@ p3<- gb_surv %>%
  
   #Facet 
   facet_wrap(Var~., ncol = 2) +
-  ylim(0, 350)+
+
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ylab(expression("Biomass (kg tow"^-1*")")) +
@@ -173,7 +172,7 @@ p4<- gb_surv %>%
 
   #Facet 
   facet_wrap(Var~., ncol = 2) +
-  ylim(0, 150)+
+
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ylab(expression("Biomass (kg tow"^-1*")")) +

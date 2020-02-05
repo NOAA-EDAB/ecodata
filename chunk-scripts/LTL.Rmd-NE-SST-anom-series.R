@@ -1,12 +1,12 @@
 
 ne_anom <- seasonal_oisst_anom %>% 
-  filter(EPU %in% c("GOM","GB")) %>% 
+  filter(EPU %in% c("GB","GOM")) %>% 
     mutate(hline = 0,
            Var = str_to_title(str_extract(Var,"winter|spring|summer|fall")))
 ne_anom$Var <- factor(ne_anom$Var, levels= c("Winter","Spring","Summer","Fall"))
 
 ne_anom_plt <- ggplot(data = ne_anom, 
-       aes(x = Time, y = Value, color = EPU, group = EPU))+ #plot
+       aes(x = Time, y = Value, color = EPU, group = EPU))+
      annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +

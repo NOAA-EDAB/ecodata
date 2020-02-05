@@ -7,20 +7,16 @@ sw.df <- slopewater %>%
   group_by(Flavor) %>% 
   mutate(hline = mean(Value)) 
 
-sw.df$Flavor <- factor(sw.df$Flavor, levels = c("WSW","LSLW"))
+sw.df$Origin <- factor(sw.df$Flavor, levels = c("WSW","LSLW"))
 
 ggplot(data = sw.df) +
-  geom_line(aes(x = Time, y = Value, color = Flavor))+
-  geom_point(aes(x = Time, y = Value, color = Flavor)) +
+  geom_line(aes(x = Time, y = Value, color = Origin))+
+  geom_point(aes(x = Time, y = Value, color = Origin)) +
   ylab("Percent of Total Slopewater") +
   xlab(element_blank())+
   ggtitle("Slopewater Proportions in NE Channel")+
-    scale_x_continuous(expand = c(0.01, 0.01))+
-      geom_hline(aes(yintercept = hline,
-                     color = Flavor),
-           size = hline.size,
-           alpha = hline.alpha,
+  scale_x_continuous(expand = c(0.01, 0.01))+
+  geom_hline(aes(yintercept = hline, color = Origin),
+           size = hline.size, alpha = hline.alpha,
            linetype = hline.lty)+
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+  theme_ts() 

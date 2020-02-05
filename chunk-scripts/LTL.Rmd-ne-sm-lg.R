@@ -1,5 +1,6 @@
 
 zoo_abund <- ecodata::zoo_strat_abun %>% 
+  mutate(Value = Value/10^8) %>% 
   filter(EPU %in% c("GOM", "GB"),
          str_detect(Var, "Small|Large")) %>% 
   group_by(Var, EPU) %>% 
@@ -12,10 +13,11 @@ zoo_abund %>%
       ymin = -Inf, ymax = Inf) +
   geom_line(aes(x = Time, y = Value, color = Var)) +
   geom_point(aes(x = Time, y = Value, color = Var)) +
+  scale_color_manual(values = c("#ca0020", "black"))+
   geom_gls(aes(x = Time, y = Value, group = Var)) +
-  ylab("Abundance Estimate (n)") +
+  ylab(expression("Stratified Abundance" (10^"8"))) +
   xlab(element_blank())+
-  ggtitle("Zooplankton abundance") +
+  ggtitle("Small and large calanoid abundance") +
   facet_wrap(EPU~., ncol = 1, scales = "free") +
   scale_x_continuous(expand = c(0.01, 0.01))+
   geom_hline(aes(yintercept = hline,
@@ -25,4 +27,5 @@ zoo_abund %>%
            linetype = hline.lty)+
   theme_facet() +
   theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+                                face = "italic"), 
+        legend.position = "none")

@@ -883,6 +883,51 @@ mab.hw %>%
   theme(strip.text=element_text(hjust=0,
                                 face = "italic"))
 
+```
+
+```{r mab-heatwave-max, fig.cap="Maximum intensity heatwave anomaly in the Mid-Atlantic Bight occuring on July 22, 2019."}
+#EPU shapefile
+epu_sf <- ecodata::epu_sf %>% 
+  filter(EPU %in% c("MAB"))
+
+#Map line parameters
+map.lwd <- 0.4
+
+# Set lat/lon window for maps
+xmin = -81
+xmax = -66
+ymin = 35.5
+ymax = 43
+xlims <- c(xmin, xmax)
+ylims <- c(ymin, ymax)
+hw <- ecodata::hw_anom_gridded %>% 
+  filter(EPU == "MAB")
+
+mab_map <- 
+  ggplot() +
+  geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
+  geom_sf(data = coast, size = map.lwd) +
+  geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) +
+  scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
+                       low = scales::muted("blue"),
+                       mid = "white",
+                       high = scales::muted("red"),
+                       limits = c(-5,7)) +
+  coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
+  #facet_wrap(Season~.) +
+  theme_map() +
+  ggtitle("MAB heatwave anomaly (July 22, 2019)") +
+  xlab("Longitude") +
+  ylab("Latitude") +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
+        legend.key = element_blank(),
+        axis.title = element_text(size = 11),
+        strip.background = element_blank(),
+        strip.text=element_text(hjust=0),
+        axis.text = element_text(size = 8))
+
+
+mab_map 
 
 ```
 
@@ -1681,6 +1726,22 @@ gb_zoo_div + gom_zoo_div + plot_layout(ncol = 1)
 ### Marine Heat Wave
 
 ```{r ne_heatwave, eval= T, echo = F, fig.cap="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Georges Bank and Gulf of Maine ."}
+cumu <- ecodata::heatwave %>% 
+  filter(Var == "cumulative intensity") %>% 
+  mutate(Var = recode(Var, "cumulative intensity" = "Cumulative Intensity (degree C x days)"))
+
+maxin <- ecodata::heatwave %>% 
+  filter(Var == "maximum intensity") %>% 
+  group_by(Time, EPU, Var, Units) %>% 
+  summarise(Value = max(Value)) %>% 
+  ungroup() %>% 
+  mutate(Var = recode(Var, "maximum intensity" = "Maximum Intensity (degree C)"))
+
+hw<- cumu %>%
+  rbind(maxin) %>% 
+  group_by(Var, EPU) %>% 
+  mutate(hline = mean(Value))
+
 gb.hw<-hw %>% filter(EPU == "GB") %>% 
   ggplot() +
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -1737,6 +1798,100 @@ knitr::include_graphics(file.path(image.dir,"GB_Heatwave_timeseries.jpg"))
 
 knitr::include_graphics(file.path(image.dir,"GOM_Heatwave_timeseries.jpg"))
 ```
+
+
+```{r gb-heatwave-max, fig.cap="Maximum intensity heatwave anomaly in Georges Bank occuring on August 23, 2019."}
+#EPU shapefile
+epu_sf <- ecodata::epu_sf %>% 
+  filter(EPU %in% c("GOM","GB"))
+
+#Map line parameters
+map.lwd <- 0.4
+
+# Set lat/lon window for maps
+xmin = -73
+xmax = -65
+ymin = 39
+ymax = 45
+xlims <- c(xmin, xmax)
+ylims <- c(ymin, ymax)
+hw <- ecodata::hw_anom_gridded %>% 
+  filter(EPU == "GB")
+
+gb_map <- 
+  ggplot() +
+  geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
+  geom_sf(data = coast, size = map.lwd) +
+  geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) +
+  scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
+                       low = scales::muted("blue"),
+                       mid = "white",
+                       high = scales::muted("red"),
+                       limits = c(-5,7)) +
+  coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
+  #facet_wrap(Season~.) +
+  theme_map() +
+  ggtitle("GB heatwave anomaly (Aug 23, 2019)") +
+  xlab("Longitude") +
+  ylab("Latitude") +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
+        legend.key = element_blank(),
+        axis.title = element_text(size = 11),
+        strip.background = element_blank(),
+        strip.text=element_text(hjust=0),
+        axis.text = element_text(size = 8))
+
+
+gb_map 
+
+```
+
+```{r gom-heatwave-max, fig.cap="Maximum intensity heatwave anomaly in Gulf of Maine occuring on August 1, 2019."}
+#EPU shapefile
+epu_sf <- ecodata::epu_sf %>% 
+  filter(EPU %in% c("GOM","GB"))
+
+#Map line parameters
+map.lwd <- 0.4
+
+# Set lat/lon window for maps
+xmin = -73
+xmax = -65
+ymin = 39
+ymax = 45
+xlims <- c(xmin, xmax)
+ylims <- c(ymin, ymax)
+hw <- ecodata::hw_anom_gridded %>% 
+  filter(EPU == "GOM")
+
+gom_map <- 
+  ggplot() +
+  geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
+  geom_sf(data = coast, size = map.lwd) +
+  geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) +
+  scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
+                       low = scales::muted("blue"),
+                       mid = "white",
+                       high = scales::muted("red"),
+                       limits = c(-5,7)) +
+  coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
+  #facet_wrap(Season~.) +
+  theme_map() +
+  ggtitle("GOM heatwave anomaly (Aug 1, 2019)") +
+  xlab("Longitude") +
+  ylab("Latitude") +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
+        legend.key = element_blank(),
+        axis.title = element_text(size = 11),
+        strip.background = element_blank(),
+        strip.text=element_text(hjust=0),
+        axis.text = element_text(size = 8))
+
+
+gom_map 
+
+```
+
 
 
 ```{r heatwave_map, fig.cap = "Gulf of Maine", eval= T, echo = F}

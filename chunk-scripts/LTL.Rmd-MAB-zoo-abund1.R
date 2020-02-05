@@ -20,5 +20,4 @@ zoo_div %>%
            alpha = hline.alpha,
            linetype = hline.lty)+
   theme_facet() +
-  theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+  theme(strip.text=element_blank())

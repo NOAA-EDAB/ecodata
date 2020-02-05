@@ -1,6 +1,6 @@
 
 agg<-ecodata::agg_bio %>% 
-  filter(!str_detect(Var, "Apex|inshore|offshore|managed")) %>% #remove unused datasets
+  filter(!str_detect(Var, "Apex|inshore|offshore|managed|NEFMC|MAFMC|JOINT|NA")) %>% #remove unused datasets
   separate(Var, c("feeding.guild", "season", "Biomass", "Var1"), sep = " ") %>% 
   unite("Var", feeding.guild:season, sep = " ") %>% 
   mutate(stat = recode(Var1, Index = "Mean", 
@@ -48,7 +48,7 @@ neamap.1<-neamap %>%
   filter(str_detect(Var,"Piscivore"))
 p1<-agg_bio %>% 
   filter(str_detect(Var,"Piscivore")) %>% 
-  ggplot(aes(x = Time, y = Mean)) +
+  ggplot() +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -63,8 +63,8 @@ p1<-agg_bio %>%
   geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
               alpha = 0.5,
               fill = "grey") +
-  geom_line(size = lwd-0.5) +
-  geom_point(size = pcex-0.5) +
+  geom_line(aes(x = Time, y = Mean),size = lwd-0.5) +
+  geom_point(aes(x = Time, y = Mean),size = pcex-0.5) +
   scale_color_manual(values = series.col, aesthetics = "color")+
   guides(color = FALSE) +
   geom_hline(aes(yintercept = hline,
@@ -74,16 +74,18 @@ p1<-agg_bio %>%
              linetype = hline.lty)+
   facet_wrap(Var~.,ncol = 2) +
      #Add NEAMAP
+    geom_ribbon(data = neamap.1, aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+              alpha = 0.5,
+              fill = "pink")+
   geom_line(data = neamap.1, aes(x = Time, y = Value),
             color = "#ca0020")+
   geom_point(data = neamap.1, aes(x = Time, y = Value),
              size = pcex-0.5,
              color = "#ca0020")+
-  geom_line(data = neamap.1, aes(x = Time, y = upper),color = "#ca0020")+
-  geom_line(data = neamap.1, aes(x = Time, y = lower), color = "#ca0020")+
+
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
-  ylim(0, 1200)+
+  #ylim(0, 1200)+
   ylab(expression("Biomass (kg tow"^-1*")")) +
   theme_facet()+
   theme(strip.text=element_text(hjust=0), 
@@ -94,7 +96,7 @@ neamap.2<-neamap %>%
   filter(str_detect(Var,"Benthivore"))
 p2<-agg_bio %>% 
   filter(str_detect(Var,"Benthivore")) %>% 
-  ggplot(aes(x = Time, y = Mean)) +
+  ggplot() +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -106,11 +108,11 @@ p2<-agg_bio %>%
              alpha = trend.alpha, size = trend.size) +
   
   #Add time series
-  geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+  geom_ribbon( aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
               alpha = 0.5,
               fill = "grey") +
-  geom_line(size = lwd-0.5) +
-  geom_point(size = pcex-0.5) +
+  geom_line(aes(x = Time, y = Mean),size = lwd-0.5) +
+  geom_point(aes(x = Time, y = Mean),size = pcex-0.5) +
   scale_color_manual(values = series.col, aesthetics = "color")+
   guides(color = FALSE) +
   geom_hline(aes(yintercept = hline,
@@ -120,16 +122,16 @@ p2<-agg_bio %>%
              linetype = hline.lty)+
   facet_wrap(Var~.,ncol = 2) +
        #Add NEAMAP
+  geom_ribbon(data = neamap.2, aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+              alpha = 0.5, fill = "pink")+
   geom_line(data = neamap.2, aes(x = Time, y = Value),
             color = "#ca0020")+
   geom_point(data = neamap.2, aes(x = Time, y = Value),
              size = pcex-0.5,
              color = "#ca0020")+
-  geom_line(data = neamap.2, aes(x = Time, y = upper),color = "#ca0020")+
-  geom_line(data = neamap.2, aes(x = Time, y = lower), color = "#ca0020")+
+
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
-  ylim(0, 500)+
   ylab(expression("Biomass (kg tow"^-1*")")) +
   theme_facet()+
   theme(strip.text=element_text(hjust=0), 
@@ -141,7 +143,7 @@ neamap.3<-neamap %>%
   filter(str_detect(Var,"Planktivore"))
 p3<-agg_bio %>% 
   filter(str_detect(Var,"Planktivore")) %>% 
-  ggplot(aes(x = Time, y = Mean)) +
+  ggplot() +
   
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -156,8 +158,8 @@ p3<-agg_bio %>%
   geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
               alpha = 0.5,
               fill = "grey") +
-  geom_line(size = lwd-0.5) +
-  geom_point(size = pcex-0.5) +
+  geom_line(aes(x = Time, y = Mean),size = lwd-0.5) +
+  geom_point(aes(x = Time, y = Mean),size = pcex-0.5) +
   scale_color_manual(values = series.col, aesthetics = "color")+
   guides(color = FALSE) +
   geom_hline(aes(yintercept = hline,
@@ -167,16 +169,17 @@ p3<-agg_bio %>%
              linetype = hline.lty)+
   facet_wrap(Var~.,ncol = 2) +
        #Add NEAMAP
+    geom_ribbon(data = neamap.3, aes(ymax = pmax(upper, 0), ymin = lower, x = Time), 
+                fill = "pink", alpha = 0.5) +
   geom_line(data = neamap.3, aes(x = Time, y = Value),
             color = "#ca0020")+
   geom_point(data = neamap.3, aes(x = Time, y = Value),
              size = pcex-0.5,
              color = "#ca0020")+
-  geom_line(data = neamap.3, aes(x = Time, y = upper),color = "#ca0020")+
-  geom_line(data = neamap.3, aes(x = Time, y = lower), color = "#ca0020")+
+
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
-  ylim(0, 600)+
+  #ylim(0, 600)+
   ylab(expression("Biomass (kg tow"^-1*")")) +
   theme_facet()+
   theme(strip.text=element_text(hjust=0), 
@@ -187,8 +190,8 @@ neamap.4<-neamap %>%
   filter(str_detect(Var,"Benthos"))
 p4<-agg_bio %>% 
   filter(str_detect(Var,"Benthos")) %>% 
-  ggplot(aes(x = Time, y = Mean)) +
-  
+  #ggplot(aes(x = Time, y = Mean)) +
+  ggplot() +
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max ,
@@ -198,11 +201,11 @@ p4<-agg_bio %>%
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   #Add time series
-  geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
+  geom_ribbon( aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
               alpha = 0.5,
               fill = "grey") + 
-  geom_line(size = lwd-0.5) +
-  geom_point(size = pcex-0.5) +
+  geom_line(aes(x = Time, y = Mean),size = lwd-0.5) +
+  geom_point(aes(x = Time, y = Mean), size = pcex-0.5) +
   scale_color_manual(values = series.col, aesthetics = "color")+
   guides(color = FALSE) +
   geom_hline(aes(yintercept = hline,
@@ -212,16 +215,16 @@ p4<-agg_bio %>%
              linetype = hline.lty)+
   facet_wrap(Var~.,ncol = 2) +
        #Add NEAMAP
+  geom_ribbon(data = neamap.4, aes(ymax = pmax(upper, 0), ymin = lower, x = Time),
+              fill = "pink", alpha = 0.5) +
   geom_line(data = neamap.4, aes(x = Time, y = Value),
             color = "#ca0020")+
   geom_point(data = neamap.4, aes(x = Time, y = Value),
              size = pcex-0.5,
              color = "#ca0020")+
-  geom_line(data = neamap.4, aes(x = Time, y = upper),color = "#ca0020")+
-  geom_line(data = neamap.4, aes(x = Time, y = lower), color = "#ca0020")+
-  #Axis and theme
+
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
-  ylim(0, 75)+
+
   ylab(expression("Biomass (kg tow"^-1*")")) +
   theme_facet()+
   theme(strip.text=element_text(hjust=0), 

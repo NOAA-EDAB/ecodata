@@ -14,7 +14,9 @@ ecodata::ppr %>%
            alpha = hline.alpha,
            linetype = hline.lty)+
   scale_x_continuous(expand = c(0.01, 0.01)) +
-  facet_wrap(~EPU)+
+  facet_wrap(. ~ EPU, labeller = 
+               labeller(EPU = c(GB = "Georges Bank", 
+                                GOM = "Gulf of Maine")))+
   ggtitle("Primary Production Required")+
   ylab("Proportion of Total Primary Production Required")+
   theme_ts()

@@ -36,7 +36,6 @@ ggplot(aes(x = Time, y = Mean)) +
   
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
-  ylim(0, 4000)+
   ylab(expression("Biomass (kg tow"^-1*")")) +
   ggtitle("GOM NEFSC BTS") +
   theme_facet()+
@@ -72,7 +71,6 @@ ggplot(aes(x = Time, y = Mean)) +
              alpha = hline.alpha,
              linetype = hline.lty)+
 
-  ylim(0, 500)+
   #Facet 
   facet_wrap(Var~., ncol = 2) +
   
@@ -114,7 +112,7 @@ ggplot(aes(x = Time, y = Mean)) +
 
   #Facet 
   facet_wrap(Var~., ncol = 2) +  
-  ylim(0, 700)+
+
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ylab(expression("Biomass (kg tow"^-1*")")) +
@@ -153,7 +151,7 @@ ggplot(aes(x = Time, y = Mean)) +
 
   #Facet 
   facet_wrap(Var~., ncol = 2) +
-  ylim(0, 30)+  
+ 
   #Axis and theme
   scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   theme_facet()+

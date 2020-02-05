@@ -29,7 +29,9 @@ blue_map <-
   ggplot() +
   geom_sf(data = coast, size = map.lwd) +
   geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) +
-  geom_point(data = blue, aes(x = Lon, y = Lat, color = Var))+
+  geom_point(data = blue, aes(x = Lon, y = Lat, color = Var, shape = Var))+
+  scale_shape_manual(values=c(3, 16, 17))+
+  scale_color_manual(values = c("black", "blue", "red"))+
   coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   theme_map() +
   ggtitle("Blue Runner Presence") +
@@ -41,6 +43,7 @@ blue_map <-
         strip.background = element_blank(),
         strip.text=element_text(hjust=0),
         axis.text = element_text(size = 8), 
-        legend.title = element_blank())
+        legend.title = element_blank(), 
+        legend.position = c(0.6, 0.2))
 
 blue_map
