@@ -7,7 +7,7 @@ raw.dir <- here::here("data-raw")
 
 get_agg_bio <- function(save_clean = F){
 
-  load(file.path(raw.dir, "Aggregate_Survey_biomass_20 (4).RData"))
+  load(file.path(raw.dir, "Aggregate_Survey_biomass_20 (5).RData"))
 
   agg_bio <- survey %>%
     rename(EPU = Region)
