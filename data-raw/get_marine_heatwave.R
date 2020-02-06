@@ -59,3 +59,14 @@ get_marine_heatwave <- function(save_clean = F){
   }
 }
 get_marine_heatwave(save_clean = T)
+
+
+
+
+
+# Plot from Vince https://drive.google.com/drive/u/0/folders/0B1lP7X3GP_hQfk00dFd6bTQ2cmJyQjlwQnFWQ0JMWF9ZOWhRckNvSTlxT2NHSEZRdjV1WVk
+#
+#  event_line(gb.mhw, spread = 200, metric = "intensity_cumulative",
+#            start_date = "2019-01-01", end_date = "2019-12-08") ## Plot this year
+#
+

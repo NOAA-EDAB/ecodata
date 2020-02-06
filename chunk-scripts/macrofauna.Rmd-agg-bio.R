@@ -8,8 +8,8 @@ agg<-ecodata::agg_bio %>%
   dplyr::select(-Biomass, -Var1) %>% 
   group_by(Var, Time, EPU) %>% 
   spread(stat, Value) %>% 
-  mutate(upper = Mean + SD, 
-         lower = Mean - SD)
+  mutate(upper = Mean + (2*SD), 
+         lower = Mean - (2*SD))
 
 
 agg_bio<-agg %>% filter(EPU == epu_abbr,
@@ -36,8 +36,8 @@ neamap <- ecodata::mab_inshore_survey %>%
   group_by(Var) %>% 
   mutate(hline = mean(Value),
          SD = Value * CV, #calculate SD from CV
-         upper = Value + SD, 
-         lower = Value - SD)
+         upper = Value + (2*SD), 
+         lower = Value - (2*SD))
 
 neamap$Var <- factor(neamap$Var,levels = c("Piscivore Spring","Piscivore Fall",
                                            "Benthivore Spring", "Benthivore Fall",

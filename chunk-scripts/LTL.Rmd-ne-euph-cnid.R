@@ -1,6 +1,6 @@
 
 zoo_abund <- ecodata::zoo_strat_abun %>% 
-  mutate(Value = Value/10^8) %>% 
+  mutate(Value = log10(Value+1)) %>% 
   filter(EPU %in% c("GOM", "GB"),
          !str_detect(Var, "Small|Large")) %>% 
   group_by(Var, EPU) %>% 
@@ -15,7 +15,7 @@ gom_zoo<-zoo_abund %>%
   geom_gls(aes(x = Time, y = Value, group = Var)) +
   geom_line(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value)) +
-  ylab(expression("Stratified Abundance" (10^"8"))) +
+  ylab(expression("Log Stratified Abundance")) +
   xlab(element_blank())+
   ggtitle("GOM Zooplankton abundance") +
   facet_wrap(Var~., ncol = 3) +
@@ -37,7 +37,7 @@ gb_zoo<-zoo_abund %>%
   geom_gls() +
   geom_line() +
   geom_point() +
-  ylab(expression("Stratified Abundance" (10^"8"))) +
+  ylab(expression("Log Stratified Abundance")) +
   xlab(element_blank())+
   ggtitle("GB Zooplankton abundance") +
   facet_wrap(Var~., ncol = 3) +

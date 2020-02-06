@@ -6,8 +6,8 @@ mass <- mass_inshore_survey %>%
   unite(.,Var, c("feeding.guild","season"),sep = " ") %>% 
   group_by(Time, Var) %>% 
   spread(stat, Value) %>% 
-  mutate(upper = Index + SD, 
-         lower = Index - SD) %>% 
+  mutate(upper = Index + (2*SD), 
+         lower = Index - (2*SD)) %>% 
   group_by(Var) %>% 
   mutate(hline = mean(Index))
 mass$Var <- factor(mass$Var,levels = c("Piscivore Spring","Piscivore Fall",
