@@ -7,14 +7,14 @@ apex$sp.group <- ifelse(grepl("Shark", apex$Var, ignore.case = T), "shark",
          ifelse(grepl("TUNA", apex$Var, ignore.case = T), "tuna", "swordfish"))
 
 apex<-apex %>% 
-  group_by(sp.group, Region, Time) %>% 
-  summarise(Value = sum(Value)) %>% 
-  mutate(Units = c("metric tons"),
+  dplyr::group_by(sp.group, Region, Time) %>% 
+  dplyr::summarise(Value = sum(Value)) %>% 
+  dplyr::mutate(Units = c("metric tons"),
          feeding.guild = factor(c("Apex Predator")),
          Value = (Value/2024.6)) %>% 
-    rename(EPU = Region, 
+  dplyr::rename(EPU = Region, 
            Var = sp.group) %>% 
-  mutate(grouping = factor(c("total")))
+  dplyr::mutate(grouping = factor(c("total")))
 
 
 #Define constants for figure plot
