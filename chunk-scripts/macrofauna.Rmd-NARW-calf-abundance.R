@@ -1,7 +1,7 @@
 
 ecodata::narw %>% 
-  filter(Var == "Calves") %>%
-  mutate(hline = mean(Value, na.rm = T)) %>% 
+  dplyr::filter(Var == "Calves") %>%
+  dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
   ggplot() +
 #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,

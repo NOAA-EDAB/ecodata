@@ -2016,10 +2016,10 @@ Seals - diet work underway but unpublished so don't want to include. but can ref
 #hline <- mean(narw[narw$Var == "right whale abundance median",]$Value)
 
 ecodata::narw %>% 
-  filter(Var != "Calves") %>% 
-  spread(Var, Value) %>% 
-  rename(Value = Median) %>% 
-  mutate(hline = mean(Value, na.rm = T)) %>% 
+  dplyr::filter(Var != "Calves") %>% 
+  tidyr::spread(Var, Value) %>% 
+  dplyr::rename(Value = Median) %>% 
+  dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
   ggplot() +
 #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -2044,8 +2044,8 @@ ecodata::narw %>%
 ```{r NARW-calf-abundance, fig.cap = "Number of North Atlantic right whale calf births, 1990 - 2019."}
 
 ecodata::narw %>% 
-  filter(Var == "Calves") %>%
-  mutate(hline = mean(Value, na.rm = T)) %>% 
+  dplyr::filter(Var == "Calves") %>%
+  dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
   ggplot() +
 #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,

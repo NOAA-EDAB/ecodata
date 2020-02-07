@@ -2,10 +2,10 @@
 #hline <- mean(narw[narw$Var == "right whale abundance median",]$Value)
 
 ecodata::narw %>% 
-  filter(Var != "Calves") %>% 
-  spread(Var, Value) %>% 
-  rename(Value = Median) %>% 
-  mutate(hline = mean(Value, na.rm = T)) %>% 
+  dplyr::filter(Var != "Calves") %>% 
+  tidyr::spread(Var, Value) %>% 
+  dplyr::rename(Value = Median) %>% 
+  dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
   ggplot() +
 #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
