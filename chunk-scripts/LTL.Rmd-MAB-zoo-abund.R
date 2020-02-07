@@ -12,11 +12,13 @@ ecodata::zoo_abund%>%
    geom_point() +
    ylab("Abundance anomaly") +
    xlab(element_blank())+
-   ggtitle("Zooplankton abundance anomaly") +
+   ggtitle("Small and large-bodied copepod abundance anomaly") +
    scale_x_continuous(expand = c(0.01, 0.01))+
        geom_hline(aes(yintercept = hline),
             size = hline.size,
             alpha = hline.alpha,
             linetype = hline.lty)+
+  theme_ts()+
    theme(strip.text=element_text(hjust=0,
-                                 face = "italic"))
+                                 face = "italic"), 
+         legend.title = element_blank())

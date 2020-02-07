@@ -68,4 +68,4 @@ dtc <- spec_dist %>%
            linetype = hline.lty) +
   theme_ts() 
 
-asd + depth + dtc + plot_layout(ncol = 1) 
+asd + depth + plot_layout(ncol = 1) 

@@ -4,10 +4,11 @@ blue<-ecodata::blue_runner %>%
   spread(., Pos, Value) %>% 
   rename(Lat = at, 
          Lon = on) %>% 
-  mutate(Var = recode(Var, 
-                      "Positive Blue Runner Tows 2001 - 2010 - " = "2001-2010", 
+  mutate(Var = recode(Var,
                       "Positive Blue Runner Tows before 2001 - " = "Prior to 2000",
+                      "Positive Blue Runner Tows 2001 - 2010 - " = "2001-2010", 
                       "Positive Blue Runner Tows since 2010 - " = "Since 2010"))
+blue$Var <- factor(blue$Var, levels = c("Prior to 2000", "2001-2010", "Since 2010"))
   
 #EPU shapefile
 epu_sf <- ecodata::epu_sf %>% 
@@ -30,8 +31,8 @@ blue_map <-
   geom_sf(data = coast, size = map.lwd) +
   geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) +
   geom_point(data = blue, aes(x = Lon, y = Lat, color = Var, shape = Var))+
-  scale_shape_manual(values=c(3, 16, 17))+
-  scale_color_manual(values = c("black", "blue", "red"))+
+  scale_shape_manual(values=c(16, 3, 17))+
+  scale_color_manual(values = c("blue", "black", "red"))+
   coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   theme_map() +
   ggtitle("Blue Runner Presence") +
@@ -44,6 +45,6 @@ blue_map <-
         strip.text=element_text(hjust=0),
         axis.text = element_text(size = 8), 
         legend.title = element_blank(), 
-        legend.position = c(0.6, 0.2))
+        legend.position = c(0.6, 0.15))
 
 blue_map
