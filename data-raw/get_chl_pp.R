@@ -25,7 +25,7 @@ ppd <- read.csv(file.path(raw.dir,
                 EPU = REGION, Value = VALUE)
 
 chl <- read.csv(file.path(raw.dir,
-                          "SOE_V2020_2-NES_EPU_NOESTUARIES-CHLOR_A-PAN-STATS_ANOMS-SEAWIFS_MODIS.csv")) %>%
+                          "SOE_V2020_2-NES_EPU_NOESTUARIES-CHLOR_A-PAN-STATS_ANOMS-SEAWIFS_MODIS-V2.csv")) %>%
   mutate(ALGORITHM = word(str_replace(ALGORITHM, "_", " "))) %>%
   unite(.,VARIABLE, c("VARIABLE","SENSOR","ALGORITHM"), sep = " ") %>%
   mutate(VARIABLE = ifelse(str_detect(FILENAME, "1998_2019"),
