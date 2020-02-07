@@ -1,19 +1,19 @@
 
 cumu <- ecodata::heatwave %>% 
   filter(Var == "cumulative intensity") %>% 
-  mutate(Var = recode(Var, "cumulative intensity" = "Cumulative Intensity (degree C x days)"))
+  mutate(Var = dplyr::recode(Var, "cumulative intensity" = "Cumulative Intensity (degree C x days)"))
 
 maxin <- ecodata::heatwave %>% 
-  filter(Var == "maximum intensity") %>% 
-  group_by(Time, EPU, Var, Units) %>% 
-  summarise(Value = max(Value)) %>% 
-  ungroup() %>% 
-  mutate(Var = recode(Var, "maximum intensity" = "Maximum Intensity (degree C)"))
+  dplyr::filter(Var == "maximum intensity") %>% 
+  dplyr::group_by(Time, EPU, Var, Units) %>% 
+  dplyr::summarise(Value = max(Value)) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity" = "Maximum Intensity (degree C)"))
 
 hw<- cumu %>%
   rbind(maxin) %>% 
-  group_by(Var, EPU) %>% 
-  mutate(hline = mean(Value))
+  dplyr::group_by(Var, EPU) %>% 
+  dplyr::mutate(hline = mean(Value))
 
 mab.hw<- hw %>% filter(EPU == epu_abbr)
 mab.hw %>% 
