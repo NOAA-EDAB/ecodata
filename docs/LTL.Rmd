@@ -110,7 +110,7 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 #### SST
 
-```{r MAB-SST-insitu, fig.width = 8, fig.height = 7, fig.cap="MAB seasonal sea surface temperature time series overlaid onto 2019 seasonal spatial anomalies."}
+```{r MAB-SST-insitu, fig.cap="MAB seasonal sea surface temperature time series overlaid onto 2019 seasonal spatial anomalies."}
 annotation_custom2 <- function (grob, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf, data) 
 {
   layer(data = data, stat = StatIdentity, position = PositionIdentity, 
@@ -511,7 +511,7 @@ ches_bay_wq %>%
 
 Write up on anomalies in salinity we saw in 2018,2019 following record breaking rain in 2018.  The low salinities impacted [hypoxia, fish and oysters](https://docs.google.com/document/d/19ikLWKQWiRSrjmQJ2F7EB_ZcieBMk6Ykf1RX_Gissao/edit). 
 
-```{r cb-sal, fig.cap = "Salinity in Chesapeake Bay during 2018 (blue) and 2019 (red) compared to the longterm average (black). "}
+```{r cb-sal, fig.cap = "Salinity in Chesapeake Bay throughout 2018 (blue) and 2019 (red)  as well as the daily average 2008-2019 (black). "}
 
 ches_sal<-ecodata::ch_bay_sal %>% 
   filter(!Var == "UTCTime") %>% 
@@ -535,7 +535,7 @@ ches_sal %>%
 
 
 #### Euphausiids + Cnidarians
-```{r MAB-euph-cnid, fig.width = 8, fig.asp = .35, fig.cap="Stratified abundance of cnidarians and euphausiids in Mid-Atlantic Bight."}
+```{r MAB-euph-cnid, fig.cap="Stratified abundance of cnidarians and euphausiids in Mid-Atlantic Bight."}
 zoo_abund <- ecodata::zoo_strat_abun %>% 
   filter(EPU == epu_abbr,
          !str_detect(Var, "Small|Large")) %>% 
@@ -569,44 +569,45 @@ zoo_abund %>%
 
 
 #### Small and Large Calanoid stratified abundance
-```{r MAB-sm-lg, fig.width = 8, fig.asp = .35, fig.cap= "Large (red) and small (black) calanoid zooplankton abundance in the Mid-Atlantic Bight."}
-zoo_abund <- ecodata::zoo_strat_abun %>% 
-  filter(EPU == epu_abbr,
-         str_detect(Var, "Small|Large")) %>% 
-  mutate(Value = Value/10^8) %>% 
-  group_by(Var, EPU) %>% 
-  mutate(hline = mean(Value)) 
 
-zoo_abund %>% 
-  ggplot() +
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line(aes(x = Time, y = Value, color = Var)) +
-  geom_point(aes(x = Time, y = Value, color = Var)) +
-  geom_gls(aes(x = Time, y = Value, group = Var)) +
-  scale_color_manual(values = c("#ca0020", "black"))+
-  ylab(expression("Stratified Abundance" (10^"8"))) +
-  xlab(element_blank())+
-  ggtitle("Small and large calanoid abundance") +
-  scale_x_continuous(expand = c(0.01, 0.01))+
-  geom_hline(aes(yintercept = hline,
-           color = Var), 
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
-  theme_facet() +
-  theme(strip.text=element_text(hjust=0,
-                                face = "italic"),
-        legend.position = "none")
-  
+<!-- ```{r MAB-sm-lg, fig.cap= "Large (red) and small (black) copepod zooplankton abundance in the Mid-Atlantic Bight."} -->
+<!-- zoo_abund <- ecodata::zoo_strat_abun %>%  -->
+<!--   filter(EPU == epu_abbr, -->
+<!--          str_detect(Var, "Small|Large")) %>%  -->
+<!--   mutate(Value = Value/10^8) %>%  -->
+<!--   group_by(Var, EPU) %>%  -->
+<!--   mutate(hline = mean(Value))  -->
 
-```
+<!-- zoo_abund %>%  -->
+<!--   ggplot() + -->
+<!--   annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line(aes(x = Time, y = Value, color = Var)) + -->
+<!--   geom_point(aes(x = Time, y = Value, color = Var)) + -->
+<!--   geom_gls(aes(x = Time, y = Value, group = Var)) + -->
+<!--   scale_color_manual(values = c("#ca0020", "black"))+ -->
+<!--   ylab(expression("Stratified Abundance" (10^"8"))) + -->
+<!--   xlab(element_blank())+ -->
+<!--   ggtitle("Small and large copepod abundance") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01))+ -->
+<!--   geom_hline(aes(yintercept = hline, -->
+<!--            color = Var),  -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty)+ -->
+<!--   theme_facet() + -->
+<!--   theme(strip.text=element_text(hjust=0, -->
+<!--                                 face = "italic"), -->
+<!--         legend.position = "none") -->
+
+
+<!-- ``` -->
 
 
 #### Abundance anomaly
 
-```{r MAB-zoo-abund, fig.width = 8, fig.asp = .35}
+```{r MAB-zoo-abund,  fig.cap= "Large (red) and small-bodied (blue) copepod abundance in the Mid-Atlantic Bight." }
 ecodata::zoo_abund%>%
    filter(EPU == epu_abbr) %>%
    group_by(Time) %>% 
@@ -620,7 +621,7 @@ ecodata::zoo_abund%>%
    geom_point() +
    ylab("Abundance anomaly") +
    xlab(element_blank())+
-   ggtitle("Small and large calanoid abundance anomaly") +
+   ggtitle("Small and large copepod abundance anomaly") +
    scale_x_continuous(expand = c(0.01, 0.01))+
        geom_hline(aes(yintercept = hline),
             size = hline.size,
@@ -827,7 +828,7 @@ zoo_div %>%
 <!-- ``` -->
 
 ### Cold Pool Index
-```{r cold_pool, eval = T, echo = F, fig.cap="Cold pool temperature anomaly." }
+```{r cold_pool, eval = T, echo = F, fig.cap="Cold pool index - mean bottom temperature anomaly for Sept-Oct in the MAB." }
 
 ecodata::cold_pool %>% 
     mutate(hline = mean(Value, na.rm = T)) %>% 
@@ -854,7 +855,7 @@ ecodata::cold_pool %>%
 
 [Notes](https://docs.google.com/document/d/0B1lP7X3GP_hQLTlmU3hqLUMzVWcwS2U5R2oxTWNWb19tcmFz/edit)
 
-```{r MAB_heatwave1, eval= T, echo = F, out.width = "80%"}
+```{r MAB_heatwave1, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Mid-Atlantic occuring in 2019."}
 
 knitr::include_graphics(file.path(image.dir,"MAB_Heatwave_timeseries.jpg"))
 
@@ -1348,45 +1349,46 @@ cowplot::plot_grid(gb_zoo, gom_zoo, nrow = 2)
 
 
 #### Small and Large Calanoid stratified abundance
-```{r ne-sm-lg, fig.width = 8, fig.asp = .35, fig.cap= "Large (red) and small (black) calanoid zooplankton abundance in New England."}
-zoo_abund <- ecodata::zoo_strat_abun %>% 
-  mutate(Value = Value/10^8) %>% 
-  filter(EPU %in% c("GOM", "GB"),
-         str_detect(Var, "Small|Large")) %>% 
-  group_by(Var, EPU) %>% 
-  mutate(hline = mean(Value)) 
 
-zoo_abund %>% 
-  ggplot() +
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  geom_line(aes(x = Time, y = Value, color = Var)) +
-  geom_point(aes(x = Time, y = Value, color = Var)) +
-  scale_color_manual(values = c("#ca0020", "black"))+
-  geom_gls(aes(x = Time, y = Value, group = Var)) +
-  ylab(expression("Stratified Abundance" (10^"8"))) +
-  xlab(element_blank())+
-  ggtitle("Small and large calanoid abundance") +
-  facet_wrap(EPU~., ncol = 1, scales = "free") +
-  scale_x_continuous(expand = c(0.01, 0.01))+
-  geom_hline(aes(yintercept = hline,
-           color = Var), 
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
-  theme_facet() +
-  theme(strip.text=element_text(hjust=0,
-                                face = "italic"), 
-        legend.position = "none")
-  
+<!-- ```{r ne-sm-lg, fig.width = 8, fig.asp = .35, fig.cap= "Large (red) and small (black) calanoid zooplankton abundance in New England."} -->
+<!-- zoo_abund <- ecodata::zoo_strat_abun %>%  -->
+<!--   mutate(Value = Value/10^8) %>%  -->
+<!--   filter(EPU %in% c("GOM", "GB"), -->
+<!--          str_detect(Var, "Small|Large")) %>%  -->
+<!--   group_by(Var, EPU) %>%  -->
+<!--   mutate(hline = mean(Value))  -->
 
-```
+<!-- zoo_abund %>%  -->
+<!--   ggplot() + -->
+<!--   annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   geom_line(aes(x = Time, y = Value, color = Var)) + -->
+<!--   geom_point(aes(x = Time, y = Value, color = Var)) + -->
+<!--   scale_color_manual(values = c("#ca0020", "black"))+ -->
+<!--   geom_gls(aes(x = Time, y = Value, group = Var)) + -->
+<!--   ylab(expression("Stratified Abundance" (10^"8"))) + -->
+<!--   xlab(element_blank())+ -->
+<!--   ggtitle("Small and large calanoid abundance") + -->
+<!--   facet_wrap(EPU~., ncol = 1, scales = "free") + -->
+<!--   scale_x_continuous(expand = c(0.01, 0.01))+ -->
+<!--   geom_hline(aes(yintercept = hline, -->
+<!--            color = Var),  -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty)+ -->
+<!--   theme_facet() + -->
+<!--   theme(strip.text=element_text(hjust=0, -->
+<!--                                 face = "italic"),  -->
+<!--         legend.position = "none") -->
+
+
+<!-- ``` -->
 
 
 #### Abundance anomaly
 
-```{r NE-zoo-abund}
+```{r NE-zoo-abund, fig.cap= "Large (red) and small (blue) copepod zooplankton abundance in New England."}
 ecodata::zoo_abund %>%
   filter(EPU %in% c("GOM","GB")) %>%
   mutate(hline = 0) %>% 
@@ -1399,7 +1401,7 @@ ecodata::zoo_abund %>%
   geom_point() +
   ylab("Abundance anomaly") +
   xlab(element_blank())+
-  ggtitle("Small and large calanoid abundance anomaly") +
+  ggtitle("Small and large copepod abundance anomaly") +
   facet_wrap(EPU~., nrow = 2) +
   scale_x_continuous(expand = c(0.01, 0.01))+
       geom_hline(aes(yintercept = hline),

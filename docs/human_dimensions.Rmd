@@ -111,7 +111,7 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 ### Commercial fisheries  {.tabset .tabset-fade}
 
 #### Commercial landings
-```{r comm_landings,fig.height=8, warning=F, fig.width = 5, fig.cap = paste0(council_abbr," managed species landings (red) and total commercial landings (black) by feeding guild. \\label{comm-landings}")}
+```{r comm_landings, warning=F, , fig.cap = paste0(council_abbr," managed species landings (red) and total commercial landings (black) by feeding guild. \\label{comm-landings}")}
 #Get data for plotting
 ## Apex pred
 apex<-ecodata::hms_landings_weight
@@ -250,7 +250,7 @@ plot_grid(p1, p2, ncol = 1, align = 'v', rel_heights = c(1,4))
 ``` 
 
 
-```{r total-landings, fig.cap = paste0("Total commercial seafood landings (black) shown with ",region," managed seafood landings (red). \\label{total-landings}"), fig.width = 5, fig.asp = 0.45}
+```{r total-landings, fig.cap = paste0("Total commercial seafood landings (black) shown with ",region," managed seafood landings (red). \\label{total-landings}")}
 total_landings_agg <- total_landings %>%
   group_by(Time) %>%
   dplyr::summarise(Value = sum(Value)) %>% 
@@ -293,7 +293,7 @@ ggplot(data = landings_agg)+
 
 #### Commercial revenue 
 
-```{r bennet, fig.cap = paste0("Revenue change from the 2015 values in dollars (black), Price (PI), and Volume Indicators (VI) for commercial landings in the Mid-Atlantic Bight. \\label{bennet}"), fig.width = 6, fig.asp = 0.45}
+```{r bennet, fig.cap = paste0("Revenue change from the 2015 values in dollars (black), Price (PI), and Volume Indicators (VI) for commercial landings in the Mid-Atlantic Bight. \\label{bennet}")}
 
 #Filter data into two dataframes for plotting
 
@@ -341,7 +341,7 @@ ggplot(data = indicators)+
 ```
 
 
-```{r comm-revenue, fig.width = 5, fig.asp = 0.45, fig.cap = "Total revenue for the region (black) and revenue from MAFMC managed species (red). \\label{comm-rev}"}
+```{r comm-revenue,  fig.cap = "Total revenue for the region (black) and revenue from MAFMC managed species (red). \\label{comm-rev}"}
 
 #Filtering and aggregation step
 rev_agg <- ecodata::comdat %>% 
@@ -400,7 +400,7 @@ ggplot(data = rev_agg) +
 
 #### Commercial diversity
 
-```{r comm-div, fig.width = 5, fig.asp = .9,fig.cap = paste0("Fleet diversity and fleet count in the ",region,". \\label{comm-div}")}
+```{r comm-div, fig.cap = paste0("Fleet diversity and fleet count in the ",region,". \\label{comm-div}")}
 
 # 
 comm_div <- ecodata::commercial_div %>% 
@@ -486,7 +486,7 @@ cowplot::plot_grid(fleet_count, fleet_div, ncol = 1, align = "hv") +
 ```
 
 
-```{r spec-div, fig.width = 5, fig.asp = 0.45, fig.cap = paste0("Species revenue diversity in the ",region,". \\label{spec-div}")}
+```{r spec-div,  fig.cap = paste0("Species revenue diversity in the ",region,". \\label{spec-div}")}
 comm_div %>% 
   filter(Var == "Permit revenue species diversity") %>% 
   ggplot() + 
@@ -515,7 +515,7 @@ comm_div %>%
 
 #### Stock status
 
-```{r stock-status1, echo=FALSE, warning=F, fig.cap = paste0("Summary of single species status for MAMFC and jointly managed stocks, Goosefish and Dogfish jointly managed."), fig.width = 7.5, fig.asp = 0.5} 
+```{r stock-status1, echo=FALSE, warning=F, fig.cap = paste0("Summary of single species status for MAMFC and jointly managed stocks, Goosefish and Dogfish jointly managed.")} 
 #Get data, spread for plotting, and filter
 stock_status <- ecodata::stock_status %>%
   mutate(Code = recode(Code, "Dogfish" = "Sp. Dogfish" )) %>% 
@@ -621,7 +621,7 @@ ggplot(data = stock_status) +
 
 #### Engagement and reliance
 
-```{r MAB-comm-eng, fig.height = 8, fig.cap="Proportion of communities considered highly engaged (engagaement >1)."}
+```{r MAB-comm-eng,  fig.cap="Proportion of communities considered highly engaged (engagaement >1)."}
 eng<-ecodata::eng_rel
 eng$State <- sub(".*\\s+", "", eng[,1])
 
@@ -660,7 +660,7 @@ eng %>% filter(EPU == "MAB") %>%
 ### Recreational fisheries {.tabset .tabset-fade}
 
 #### Recreational landings
-```{r rec-landings, fig.cap = paste0("Total recreational landings in the ",region," region. \\label{rec-landings}"), fig.width = 5, fig.asp = 0.45}
+```{r rec-landings, fig.cap = paste0("Total recreational landings in the ",region," region. \\label{rec-landings}")}
 
 landings_rec <- ecodata::recdat %>% 
   filter(EPU == region_abbr,
@@ -700,7 +700,7 @@ ggplot(data = landings_rec)+
 
 #### Recreational diversity
 
-```{r recdat, fig.width = 5, fig.asp = 1.7, fig.cap = paste0("Recreational effort, recreational effort diversity, number of recreational anglers, and diversity of recreational catch in the ",region,". \\label{recdat}")}
+```{r recdat,fig.cap = paste0("Recreational effort, recreational effort diversity, number of recreational anglers, and diversity of recreational catch in the ",region,". \\label{recdat}")}
 recdat <- ecodata::recdat %>% 
   filter(EPU == region_abbr) %>% 
   group_by(Var) %>% 
@@ -870,7 +870,7 @@ region_abbr <- "NE" #Some commercial data organized by "MA" or "NE" regions, not
 ```
 
 
-```{r comm_landings-ne, warning=F, fig.width = 5, fig.height = 10,fig.cap = "NEFMC managed species landings (red) and total commercial landings (black) by feeding guild in Gulf of Maine (left) and Georges Bank (right)."}
+```{r comm_landings-ne, warning=F,fig.cap = "NEFMC managed species landings (red) and total commercial landings (black) by feeding guild in Gulf of Maine (left) and Georges Bank (right)."}
 
 ##Plot
 apex_landings<-apex %>% 
@@ -1023,7 +1023,7 @@ plot_grid(apex_landings, gb_landings, gom_landings, ncol = 1, align = 'v', rel_h
 
 ```
 
-```{r total-landings-ne, fig.cap = paste0("Total commercial seafood landings (black) shown with NEFMC managed seafood landings (red) in Gulf of Maine (left) and Georges Bank (right). \\label{total-landings}"), fig.width = 8, fig.asp = 0.35}
+```{r total-landings-ne, fig.cap = paste0("Total commercial seafood landings (black) shown with NEFMC managed seafood landings (red) in Gulf of Maine (left) and Georges Bank (right). \\label{total-landings}")}
 total_landings_agg <- total_landings %>%
   group_by(EPU,Time) %>%
   dplyr::summarise(Value = sum(Value)) %>% 
@@ -1097,7 +1097,7 @@ cowplot::plot_grid(gb_total, gom_total, ncol = 2)
 
 #### Commercial revenue
 
-```{r bennet-ne, fig.cap = paste0("Revenue change from the long-term mean in 2015 dollars (black), Price (PI), and Volume Indicators (VI) for commercial landings in Georges Bank (left) and Gulf of Maine (right). \\label{bennet}"), fig.height = 3, fig.width=8}
+```{r bennet-ne, fig.cap = paste0("Revenue change from the long-term mean in 2015 dollars (black), Price (PI), and Volume Indicators (VI) for commercial landings in Georges Bank (left) and Gulf of Maine (right). \\label{bennet}")}
 
 #Filter data into two dataframes for plotting
 
@@ -1198,7 +1198,7 @@ p3 <- gridExtra::grid.arrange(gridExtra::arrangeGrob(gb_bennet + theme(legend.po
 ```
 
 
-```{r comm-revenue-ne, fig.cap = "Total commercial revenue (black) and revenue from NEFMC managed species (red) in Georges Bank (left) and Gulf of Maine (right). \\label{comm-rev}", fig.width = 8, fig.asp = 0.35}
+```{r comm-revenue-ne, fig.cap = "Total commercial revenue (black) and revenue from NEFMC managed species (red) in Georges Bank (left) and Gulf of Maine (right). \\label{comm-rev}"}
 
 #Filtering and aggregation step
 rev_agg <- ecodata::comdat %>% 
@@ -1290,7 +1290,7 @@ cowplot::plot_grid(gb_rev_agg, gom_rev_agg, ncol = 2)
 
 #### Commercial diversity
 
-```{r comm-div-ne, fig.width = 5, fig.asp = .9, fig.cap = paste0("Fleet diversity and fleet count in ",region,". \\label{comm-div}")}
+```{r comm-div-ne,  fig.cap = paste0("Fleet diversity and fleet count in ",region,". \\label{comm-div}")}
 comm_div <- ecodata::commercial_div %>% 
   filter(EPU == region_abbr) %>% 
   group_by(Var) %>% 
@@ -1368,7 +1368,7 @@ cowplot::plot_grid(fleet_count, fleet_div, ncol = 1, align = "hv") +
 
 ```
 
-```{r spec-div-ne, fig.width = 5, fig.asp = 0.45, fig.cap = paste0("Species revenue diversity in ",region,". \\label{spec-div}")}
+```{r spec-div-ne,  fig.cap = paste0("Species revenue diversity in ",region,". \\label{spec-div}")}
 comm_div %>% 
   filter(Var == "Permit revenue species diversity") %>% 
   ggplot() + 
@@ -1396,7 +1396,7 @@ comm_div %>%
 ```
 
 #### Stock status
-```{r NE-stock-status1, echo=FALSE, warning=F, fig.cap = paste0("Summary of single species status for NEFMC and jointly managed stocks. \\label{stock-status}"), fig.width = 8, fig.asp = 0.65}
+```{r NE-stock-status1, echo=FALSE, warning=F, fig.cap = paste0("Summary of single species status for NEFMC and jointly managed stocks. \\label{stock-status}")}
 #Get data, spread for plotting, and filter
 stock_status <- ecodata::stock_status %>%
   mutate(Code = recode(Code, "Dogfish" = "Sp. Dogfish" )) %>% 
@@ -1503,7 +1503,7 @@ eng %>% filter(EPU == "GOM") %>%
 
 #### Recreational landings
 
-```{r rec-landings-ne, fig.cap = paste0("Total recreational landings in ",region,". \\label{rec-landings}"), fig.width = 5, fig.asp = 0.45}
+```{r rec-landings-ne, fig.cap = paste0("Total recreational landings in ",region,". \\label{rec-landings}")}
 
 landings_rec <- ecodata::recdat %>% 
   filter(EPU == region_abbr,
@@ -1542,7 +1542,7 @@ ggplot(data = landings_rec)+
 
 #### Recreational diversity
 
-```{r recdat-ne, fig.width = 5, fig.asp = 1.7, fig.cap = paste0("Recreational effort, recreational effort diversity, number of recreational anglers, and diverstiy of recreational catch in ",region,". \\label{recdat}")}
+```{r recdat-ne,  fig.cap = paste0("Recreational effort, recreational effort diversity, number of recreational anglers, and diverstiy of recreational catch in ",region,". \\label{recdat}")}
 recdat <- ecodata::recdat %>% 
   filter(EPU == region_abbr) %>% 
   group_by(Var) %>% 

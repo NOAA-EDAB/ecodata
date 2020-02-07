@@ -119,7 +119,7 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 #### NEFSC BTS & NEAMAP 
 
-```{r agg-bio, fig.cap = paste0("Spring (left) and fall (right) surveyed biomass in the Mid-Atlantic Bight. Data from the NEFSC Bottom Trawl Survey are shown in black, with NEAMAP shown in red. \\label{nefsc-biomass}"), fig.width=8, fig.asp = 0.75}
+```{r agg-bio, fig.cap = paste0("Spring (left) and fall (right) surveyed biomass in the Mid-Atlantic Bight. Data from the NEFSC Bottom Trawl Survey are shown in black, with NEAMAP shown in red. \\label{nefsc-biomass}")}
 agg<-ecodata::agg_bio %>% 
   filter(!str_detect(Var, "Apex|inshore|offshore|managed|NEFMC|MAFMC|JOINT|NA")) %>% #remove unused datasets
   separate(Var, c("feeding.guild", "season", "Biomass", "Var1"), sep = " ") %>% 
@@ -355,7 +355,7 @@ plot_grid(p1, p2, p3, p4, nrow=4)
 
 #### Proportion managed species in NEFSC BTS
 
-```{r mab-prop, fig.width = 8, fig.asp=0.9}
+```{r mab-prop}
 prop <- ecodata::nefsc_survey_disaggregated %>% 
   filter(!str_detect(`Feeding guild`, "Other|other"),
          !is.na(Proportion)) %>% #remove "other"
@@ -503,7 +503,7 @@ gom_mafmc_props + gb_mafmc_props + plot_layout(ncol = 1)
 
 ### Productivity anomaly
 
-```{r MAB-recruitment, fig.cap = "Small fish per large fish biomass anomaly in the Mid-Atlantic Bight.",fig.width = 8, fig.height = 5}
+```{r MAB-recruitment, fig.cap = "Small fish per large fish biomass anomaly in the Mid-Atlantic Bight."}
 
 #### Adjust plot properties -------------------------------
 adjustAxes <- 
@@ -720,7 +720,7 @@ ma_larv_div
 Values gathered from https://ccbbirds.org/wp-content/uploads/CCBTR-19-06_Colonial-waterbirds-in-coastal-Virginia-2018.pdf
 Recommended Citation - 
 Watts, B. D., B. J. Paxton, R. Boettcher, and A. L. Wilke. 2019. Status and distribution of colonial waterbirds in coastal Virginia: 2018 breeding season. Center for Conservation Biology Technical Report Series, CCBTR-19-06. College of William and Mary & Virginia Commonwealth University, Williamsburg, VA. 28 pp
-```{r VA-cote, fig.cap = "Estimated number of breeding pairs in Virginia barier island/lagoon system. Values fom ",fig.width = 5, fig.asp = 0.55 }
+```{r VA-cote, fig.cap = "Estimated number of breeding pairs in Virginia barrier island/lagoon system. "}
 raw.dir<-here::here("data-raw")
 bird<- read.csv(file.path(raw.dir, "mab_bird.csv")) %>% 
   mutate(hline = mean(Value))
@@ -772,7 +772,7 @@ bird %>%
 
 #### NEFSC BTS
 
-```{r gb-biomass-ne, fig.cap = paste0("Spring (left) and fall (right) NEFSC surveyed biomass in Georges Bank."), fig.width=8, fig.asp = 0.75}
+```{r gb-biomass-ne, fig.cap = paste0("Spring (left) and fall (right) NEFSC surveyed biomass in Georges Bank.")}
 agg_bio<-agg %>% filter(EPU %in% c("GOM","GB"),
          Time >= 1968) %>% 
   group_by(Var, EPU) %>% 
@@ -957,7 +957,7 @@ plot_grid(p1, p2, p3, p4, nrow=4)
 ```
 
 
-```{r gom-biomass-ne, fig.cap = paste0("Spring (left) and fall (right) NEFSC surveyed biomass in the Gulf of Maine."), fig.width=8, fig.asp = 0.75}
+```{r gom-biomass-ne, fig.cap = paste0("Spring (left) and fall (right) NEFSC surveyed biomass in the Gulf of Maine.")}
 
 gom_surv <-agg_bio %>% 
   filter(EPU == "GOM") 
@@ -1123,7 +1123,7 @@ plot_grid(p1, p2, p3, p4, nrow=4)
 
 #### NEFMC Benthivores in MAB
 
-```{r NEFMC-in-MAB, fig.width = 7, fig.asp = 0.45}
+```{r NEFMC-in-MAB}
 nefmc_ma <- nefsc_survey_disaggregated %>% 
   # distinct() %>% 
   filter(EPU %in% c("MAB"),
@@ -1178,7 +1178,7 @@ mab_nefmc_props
 
 #### MA inshore survey
 
-```{r MA-inshore, fig.width=8, fig.asp = 0.75, fig.cap = "Spring (left) and fall (right) surveyed biomass from the Massachusetts state inshore bottom trawl survey."}
+```{r MA-inshore, fig.cap = "Spring (left) and fall (right) surveyed biomass from the Massachusetts state inshore bottom trawl survey."}
 mass <- mass_inshore_survey %>% 
   filter(EPU == "GB",
          Time>1980) %>% 
@@ -1350,7 +1350,7 @@ plot_grid(p1, p2, p3, p4, nrow = 4)
 
 #### ME/NH inshore survey
 
-```{r menh-survey,fig.width=8, fig.asp = 0.75, fig.cap = "Spring (left) and fall (right) surveyed biomass from the ME/NH state inshore bottom trawl survey."}
+```{r menh-survey, fig.cap = "Spring (left) and fall (right) surveyed biomass from the ME/NH state inshore bottom trawl survey."}
 
 menh <- ecodata::ne_inshore_survey %>% 
   group_by(Var) %>% 
@@ -1482,7 +1482,7 @@ plot_grid(p1, p2, p3, p4, nrow = 4)
 
 #### Proportion managed species in NEFSC BTS
 
-```{r gb-prop, fig.width = 8, fig.asp=0.9}
+```{r gb-prop}
 GB_prop <- 
   prop %>% 
     filter(EPU == "GB") %>% 
@@ -1518,7 +1518,7 @@ GB_prop <- girafe_options(GB_prop, opts_zoom(max = 5) )
 GB_prop
 ```
 
-```{r gom-survey-prop, fig.width=8, fig.asp = 0.9}
+```{r gom-survey-prop}
 
 GOM_prop <- 
   prop %>% 
@@ -1558,7 +1558,7 @@ GOM_prop
 
 
 ### Productivity anomaly
-```{r GB-productivity, fig.cap = "Small fish per large fish biomass anomaly in Georges Bank.",fig.width = 8, fig.height = 5}
+```{r GB-productivity, fig.cap = "Small fish per large fish biomass anomaly in Georges Bank."}
 
 ## GB
 bar_dat <- ecodata::productivity_anomaly %>% 
@@ -1580,7 +1580,7 @@ gb <- plot_stackbarcpts_single(YEAR = bar_dat$Time,
 gb
 ```
 
-```{r GOM-productivity, fig.cap = "Small fish per large fish biomass anomaly in the Gulf of Maine.",fig.width = 8, fig.height = 5}
+```{r GOM-productivity, fig.cap = "Small fish per large fish biomass anomaly in the Gulf of Maine."}
 
 ## GOM
 bar_dat <- ecodata::productivity_anomaly %>% 
@@ -1795,7 +1795,7 @@ shannon
 <!-- ``` -->
 
 
-```{r stacked-bar-prey-freq, fig.cap = "Prey frequencies in the diets of common tern observed at seven different islands in Gulf of Maine.", fig.height = 4, fig.width = 8}
+```{r stacked-bar-prey-freq, fig.cap = "Prey frequencies in the diets of common tern observed at seven different islands in Gulf of Maine."}
 
 prey_freq <- ecodata::common_tern %>% 
   filter(str_detect(Var, "Diet"),
@@ -1951,7 +1951,7 @@ ggplot(aes(x = Time, y = Value, group = Island)) +
 ```
 --->
 
-```{r aggregate-prod, fig.cap = "Mean common tern productivity at nesting sites in Gulf of Maine. Error bars show +/- 1 SE of the mean.",fig.width = 5, fig.asp = 0.55 }
+```{r aggregate-prod, fig.cap = "Mean common tern productivity at nesting sites in Gulf of Maine. Error bars show +/- 1 SE of the mean."}
 aggregate_prod <- ecodata::common_tern %>% 
     filter(!str_detect(Var, "Diet|Sum"))  %>% 
   mutate(Island = word(Var, 1),
@@ -2012,7 +2012,7 @@ Seals - diet work underway but unpublished so don't want to include. but can ref
 
 #### NARW
 
-```{r NARW-abundance, fig.width = 6, fig.asp = 0.55,fig.cap = "Estimated North Atlanic right whale abundance on the Northeast Shelf."}
+```{r NARW-abundance, fig.cap = "Estimated North Atlanic right whale abundance on the Northeast Shelf."}
 #hline <- mean(narw[narw$Var == "right whale abundance median",]$Value)
 
 ecodata::narw %>% 
@@ -2041,7 +2041,7 @@ ecodata::narw %>%
   theme_ts()
 ```
 
-```{r NARW-calf-abundance, fig.width = 6, fig.asp = 0.55,fig.cap = "Number of North Atlantic right whale calf births, 1990 - 2019."}
+```{r NARW-calf-abundance, fig.cap = "Number of North Atlantic right whale calf births, 1990 - 2019."}
 
 ecodata::narw %>% 
   filter(Var == "Calves") %>%
@@ -2068,7 +2068,7 @@ ecodata::narw %>%
 
 ### Aggregate species distribution
 
-```{r spec-dist,fig.width = 5, fig.asp = 1.25, fig.cap = "Aggregate species distribution metrics for species in the Northeast Large Marine Ecosystem."}
+```{r spec-dist, fig.cap = "Aggregate species distribution metrics for species in the Northeast Large Marine Ecosystem."}
 
 spec_dist <- ecodata::species_dist %>% 
   group_by(Var) %>% 
@@ -2139,7 +2139,7 @@ dtc <- spec_dist %>%
            linetype = hline.lty) +
   theme_ts() 
 
-asd + depth + dtc + plot_layout(ncol = 1) 
+asd + depth + plot_layout(ncol = 1) 
 
 ```
 
@@ -2177,10 +2177,11 @@ blue<-ecodata::blue_runner %>%
   spread(., Pos, Value) %>% 
   rename(Lat = at, 
          Lon = on) %>% 
-  mutate(Var = recode(Var, 
-                      "Positive Blue Runner Tows 2001 - 2010 - " = "2001-2010", 
+  mutate(Var = recode(Var,
                       "Positive Blue Runner Tows before 2001 - " = "Prior to 2000",
+                      "Positive Blue Runner Tows 2001 - 2010 - " = "2001-2010", 
                       "Positive Blue Runner Tows since 2010 - " = "Since 2010"))
+blue$Var <- factor(blue$Var, levels = c("Prior to 2000", "2001-2010", "Since 2010"))
   
 #EPU shapefile
 epu_sf <- ecodata::epu_sf %>% 
@@ -2203,8 +2204,8 @@ blue_map <-
   geom_sf(data = coast, size = map.lwd) +
   geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) +
   geom_point(data = blue, aes(x = Lon, y = Lat, color = Var, shape = Var))+
-  scale_shape_manual(values=c(3, 16, 17))+
-  scale_color_manual(values = c("black", "blue", "red"))+
+  scale_shape_manual(values=c(16, 3, 17))+
+  scale_color_manual(values = c("blue", "black", "red"))+
   coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   theme_map() +
   ggtitle("Blue Runner Presence") +
@@ -2217,7 +2218,7 @@ blue_map <-
         strip.text=element_text(hjust=0),
         axis.text = element_text(size = 8), 
         legend.title = element_blank(), 
-        legend.position = c(0.6, 0.2))
+        legend.position = c(0.6, 0.15))
 
 blue_map
 ```
