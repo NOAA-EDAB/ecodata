@@ -20,3 +20,4 @@ get_long_term_sst <- function(save_clean = F){
   }
 
 }
+get_long_term_sst(save_clean = T)

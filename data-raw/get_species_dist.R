@@ -27,3 +27,4 @@ get_species_dist <- function(save_clean = F){
     return(species_dist)
   }
 }
+get_species_dist(save_clean = T)

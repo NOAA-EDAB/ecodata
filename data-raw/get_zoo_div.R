@@ -5,10 +5,10 @@ library(stringr)
 
 raw.dir <- here::here("data-raw")
 
-
+### Zooplankton Diversity
 get_zoo_diversity <- function(save_clean = F){
 
-  zoo_diversity <- read_excel(file.path(raw.dir,"NEFSCZooplankton_v3_6b.xlsx")) %>%
+  zoo_diversity <- read_excel(file.path(raw.dir,"NEFSCZooplankton_v3_6b_v2018.xlsx"), sheet = "Diversity") %>%
     dplyr::select(-Source) %>%
     dplyr::rename(Time = Year,
                   EPU = Region) %>%
@@ -21,3 +21,6 @@ get_zoo_diversity <- function(save_clean = F){
   }
 }
 get_zoo_diversity(save_clean = T)
+
+
+

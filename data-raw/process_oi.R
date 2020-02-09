@@ -23,29 +23,34 @@ process_oi <- function(variable, type = NULL, season, genus = NULL, epu){
 
   #get bottom temp data and find mean for stock area--------------------------------------
 
-  indir <- here::here("inst","extdata","gridded")
+  indir <- here::here("data-raw","gridded")
 
-  if (variable == "salinity"){
-    load(file.path(indir, paste0("sal_",type,"_",season,"_spdf.rdata")))
-  } else if (variable == "temperature"){
-    load(file.path(indir, paste0("temp_",type,"_",season,"_spdf.rdata")))
-  } else if (variable == "chlorophyll"){
-    load(file.path(indir, paste0("chl_",season,"_1997-2018.rdata")))
-  } else if (variable == "zooplankton"){
-    load(file.path(indir, paste0(genus,"_",season,"_zoo_1977-2016.rdata")))
+  if(variable == "zooplankton"){
+    load(file.path(indir, paste0(genus,"_",season,"_zoo_1977-2017.rdata")))
   }
+
+  # if (variable == "salinity"){
+  #   load(file.path(indir, paste0("sal_",type,"_",season,"_spdf.rdata")))
+  # } else if (variable == "temperature"){
+  #   load(file.path(indir, paste0("temp_",type,"_",season,"_spdf.rdata")))
+  # } else if (variable == "chlorophyll"){
+  #   load(file.path(indir, paste0("chl_",season,"_1997-2018.rdata")))
+  # } else if (variable == "zooplankton"){
+  #   load(file.path(indir, paste0(genus,"_",season,"_zoo_1977-2017.rdata")))
+  # }
 
 
   #create null df to fill with results
   data = data.frame(array(NA,dim= c(raster::nlayers(ecsa_dat),5)))
+  #data = data.frame(array(NA,dim= c(raster::nlayers(str_detect(ecsa_dat),5))))
 
   #loops through layers in raster brick
   for(i in 1:raster::nlayers(ecsa_dat)){
     #load raster by year
-
+    print(i)
     #get file information from title
-    layer_id <- stringr::str_extract(names(ecsa_dat)[[i]], "\\d.*")
-    layer_id <- stringr::str_split(layer_id, "_")
+    #layer_id <- stringr::str_extract(names(ecsa_dat)[[i]], "\\d.*")
+    layer_id <- stringr::str_split(names(ecsa_dat)[[i]], "_")
     data[i,1] <- layer_id[[1]][[1]]
     data[i,2] <- layer_id[[1]][[2]]
     data[i,3] <- layer_id[[1]][[3]]
@@ -70,11 +75,11 @@ process_oi <- function(variable, type = NULL, season, genus = NULL, epu){
 
   # remove
   if (variable == "zooplankton"){
-    if (season == "spring"){
+    if (season == "Spring"){
       y.out[x %in% c(1989, 1990, 1991, 1994)] <- NA
       sd.low[x %in% c(1989, 1990, 1991, 1994)] <- NA
       sd.high[x %in% c(1989, 1990, 1991, 1994)] <- NA
-    } else if (season == "fall") {
+    } else if (season == "Fall") {
       y.out[x %in% c(1989, 1990, 1992)] <- NA
       sd.low[x %in% c(1989, 1990, 1992)] <- NA
       sd.high[x %in% c(1989, 1990, 1992)] <- NA

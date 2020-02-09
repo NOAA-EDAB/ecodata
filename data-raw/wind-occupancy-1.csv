@@ -1,0 +1,51 @@
+Season,Species,Mean,Trend,Area
+Spring,Little Skate,0.778,pos,Existing-North
+Spring,Atlantic Herring,0.704,neg,Existing-North
+Spring,Windowpane,0.657,pos,Existing-North
+Spring,Winter Skate,0.638,pos,Existing-North
+Spring,Longhorn Sculpin,0.633,pos,Existing-North
+Fall,Butterfish,0.728,pos,Existing-North
+Fall,Longfin Squid,0.698,pos,Existing-North
+Fall,Summer Flounder,0.693,pos,Existing-North
+Fall,Winter Flounder,0.679,neg,Existing-North
+Fall,Spiny Dogfish,0.678,neg,Existing-North
+Spring,Atlantic Herring,0.782,Neutral,Proposed-North
+Spring,Little Skate,0.752,pos,Proposed-North
+Spring,Longhorn Sculpin,0.696,pos,Proposed-North
+Spring,Windowpane,0.676,pos,Proposed-North
+Spring,Alewife,0.657,neg,Proposed-North
+Fall,Butterfish,0.731,pos,Proposed-North
+Fall,Fourspot Flounder,0.725,Neutral,Proposed-North
+Fall,Longhorn Sculpin,0.703,neg,Proposed-North
+Fall,Summer Flounder,0.68,pos,Proposed-North
+Fall,Spiny Dogfish,0.668,neg,Proposed-North
+Spring,Little Skate,0.797,pos,Existing-Mid
+Spring,Atlantic Herring,0.708,neg,Existing-Mid
+Spring,Spiny Dogfish,0.61,pos,Existing-Mid
+Spring,Windowpane,0.512,pos,Existing-Mid
+Spring,Winter Skate,0.506,pos,Existing-Mid
+Fall,Summer Flounder,0.804,pos,Existing-Mid
+Fall,Longfin Squid,0.72,pos,Existing-Mid
+Fall,Butterfish,0.666,pos,Existing-Mid
+Fall,Smooth Dogfish,0.646,pos,Existing-Mid
+Fall,Windowpane,0.589,pos,Existing-Mid
+Spring,Spiny Dogfish,0.795,pos,Proposed-Mid
+Spring,Atlantic Herring,0.771,neg,Proposed-Mid
+Spring,Little Skate,0.767,pos,Proposed-Mid
+Spring,Alewife,0.591,neg,Proposed-Mid
+Spring,Silver Hake,0.569,pos,Proposed-Mid
+Fall,Longhorn Sculpin,0.723,pos,Proposed-Mid
+Fall,Little Skate,0.624,pos,Proposed-Mid
+Fall,Butterfish,0.613,pos,Proposed-Mid
+Fall,Sea Scallop,0.579,pos,Proposed-Mid
+Fall,Fourspot Flounder,0.565,pos,Proposed-Mid
+Spring,Spiny Dogfish,0.918,pos,Existing-South
+Spring,Longfin Squid,0.765,pos,Existing-South
+Spring,Summer Flounder,0.716,pos,Existing-South
+Spring,Clearnose Skate,0.682,pos,Existing-South
+Spring,Spotted Hake,0.578,pos,Existing-South
+Fall,Longfin Squid,0.681,neg,Existing-South
+Fall,Northern Searobin,0.549,pos,Existing-South
+Fall,Clearnose Skate,0.539,pos,Existing-South
+Fall,Butterfish,0.479,pos,Existing-South
+Fall,Spiny Dogfish/Spotted Hake,0.424,pos,Existing-South
