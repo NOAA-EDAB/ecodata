@@ -20,8 +20,8 @@ Management Councils (FMCs), and therefore indicator data for Scotian Shelf are i
 
 1.  All derived data sets are available once the package has been loaded into the environment. View available data sets using the syntax `ecodata::...`
 
-<p align="center"> 
-<img src="https://media.giphy.com/media/KVFf3gvG6z2JvHqY9y/giphy.gif"/>
+<p align="center" width="645"> 
+<img src="https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/ecodataHelp.gif">
 </p>
 
 ## Using geom_gls()
