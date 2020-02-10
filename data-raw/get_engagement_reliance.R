@@ -3,30 +3,28 @@
 #More information about these data are available at https://noaa-edab.github.io/tech-doc/fishery-reliance-and-social-vulnerability.html
 
 library(tidyverse)
+library(readxl)
 
 
 raw.dir <- here::here("data-raw")
 
 get_eng_rel <- function(save_clean = F){
 
-  ne <- read.csv(file.path(raw.dir,"ComEng_NE.csv")) %>%
-    mutate(EPU = c("GOM"))
-  mab <- read.csv(file.path(raw.dir,"ComEng_MA.csv")) %>%
-    mutate(EPU = c("MAB"))
+  d <-read_excel(file.path(raw.dir, "ComEng Scores 2004-2018 for SOE 2020 Report 021020.xlsx"))
 
   #Process
-  eng_rel <- rbind(ne,mab) %>%
-    gather(key = "Time", value = "Value", X2004:X2018) %>%
-    rename(Var = Community) %>%
-    mutate(Units = c("unitless"),
-           Time = as.integer(gsub('[a-zA-Z]', '', eng_rel$Time))) %>%
-    dplyr::select(-c(X1.std))
-
+  engagement <- d %>%
+    dplyr::rename(EPU = Region,
+                  "%med.high.scores" = "Average Scores for Medium High Communities  (n=49)") %>%
+    tidyr::pivot_longer(cols = starts_with("%"), names_to = "Var", values_to = "Value") %>%
+    dplyr::mutate(Var = recode(Var, "%med.high.scores" = "med.high.scores")) %>%
+    dplyr::select(EPU, Time, Var, Value) %>%
+    dplyr::mutate(Units = "unitless")
 
   if (save_clean){
-    usethis::use_data(eng_rel, overwrite = T)
+    usethis::use_data(engagement, overwrite = T)
   } else {
-    return(eng_rel)
+    return(engagement)
   }
 
 }
