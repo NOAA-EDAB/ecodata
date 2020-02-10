@@ -34,12 +34,14 @@ spring.anom <- sst.2019[[91:181]] - spring.ltm
 summer.anom <- sst.2019[[182:273]] - summer.ltm
 fall.anom <- sst.2019[[274:365]] - fall.ltm
 
+
 rast_process <- function(r, season){
   r <- stackApply(r, indices = rep(1,nlayers(r)),mean) #Find mean anomaly
   crs(r) <- crs #Add SOE CRS
-  r <- disaggregate(r, 5) #interpolate step 1 - create higher res grid
-  r <- focal(r, w=matrix(1,nrow=5,ncol=5), fun=mean,
-             na.rm=TRUE, pad=TRUE) #interpolate step 2 - moving window
+  ### Remove smoothing steps due to "over smoothing'
+  #r <- disaggregate(r, 5) #interpolate step 1 - create higher res grid
+  #r <- focal(r, w=matrix(1,nrow=5,ncol=5), fun=mean,
+  #           na.rm=TRUE, pad=TRUE) #interpolate step 2 - moving window
   r <- as(r, "SpatialPointsDataFrame") #Convert to ggplot-able object
   r <- as.data.frame(r)
   r <- r %>%
@@ -57,5 +59,5 @@ seasonal_sst_anomaly_gridded <-
       rast_process(spring.anom,season = "Spring"),
       rast_process(summer.anom, season = "Summer"),
       rast_process(fall.anom, season = "Fall"))
-
 usethis::use_data(seasonal_sst_anomaly_gridded, overwrite = T)
+
