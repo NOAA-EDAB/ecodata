@@ -1,6 +1,6 @@
 
 raw.dir<-here::here("data-raw")
-bird<- read.csv(file.path(raw.dir, "mab_bird.csv")) %>% 
+bird<- ecodata::seabird_MAB %>% 
   mutate(hline = mean(Value))
 
 
