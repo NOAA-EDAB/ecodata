@@ -1,8 +1,7 @@
 
-image.dir <- here::here("docs")
-raw.dir <- here::here("data-raw")
+image.dir <- here::here("https://github.com/NOAA-EDAB/ecodata/tree/master/docs")
 
-wind1 <- read.csv(file.path(raw.dir, "wind-occupancy-1.csv"))
+wind1 <- ecodata::wind_occupancy
 
 wind1$trend<- ifelse(wind1$Trend == "pos", 
                     '![](arrow_up.png)',

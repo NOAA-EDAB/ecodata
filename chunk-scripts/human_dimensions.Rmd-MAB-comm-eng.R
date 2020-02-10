@@ -1,33 +1,40 @@
 
-eng<-ecodata::eng_rel
-eng$State <- sub(".*\\s+", "", eng[,1])
-
-eng<-eng %>% 
-  mutate(score= case_when(
-    (Value > 1) ~ "a",  
-    (Value < 1) ~ "b")) %>% 
-  group_by(Time, EPU) %>% 
-  summarise(propa = trunc(length(which(score == "a"))/(length(score))*100), 
-            propb = 100 - propa) %>% 
-  gather(., "engagement.proportion", "val", 3:4)
-  
-eng$engagement.proportion <-  factor(eng$engagement.proportion, levels = c("propb","propa"),
-                              labels = c("Proportion of communites <1","Propotion of ocmmunities >1"))
-eng<- eng %>% 
-  group_by(Time, EPU) %>% 
-  mutate(pos = cumsum(val) - (0.5 * val))
-
-eng %>% filter(EPU == "MAB") %>% 
+eng<-ecodata::engagement %>% 
+  filter(!Var == "med.high.scores")
+eng$Var <- factor(eng$Var, levels = c("%High","%Medium High","%Moderate", "%Low"))
+eng %>% filter(EPU == "MA") %>% 
   ggplot()+
-    geom_bar(aes(x = Time, y = val, 
-                 fill = engagement.proportion), 
-             stat = "identity")+
-  #scale_y_continuous(labels = val(suffix = "%", prefix = "")) +
-  geom_text(aes(x = Time, y = pos,
-                label = paste0(val,"%")), size=4) +
+   #ylim(0.8, NA)+
+  geom_bar(aes(x = Time, y = Value, 
+               fill = Var), 
+           stat = "identity")+
+  #scale_y_continuous(labels = Value(suffix = "%", prefix = "")) +
+  #geom_text(aes(x = Time, y = Value,
+  #             label = paste0(Value,"%")), size=4) +
   theme(legend.position="bottom", legend.direction="horizontal",
         legend.title = element_blank())+
-    xlab("Time") +
-    ylab("Commercial engagement")+
-    ggtitle("Commercial Engagement")+
-    theme_ts()
+  coord_cartesian(ylim=c(0.85,1))+
+  xlab("Time") +
+  ylab("% Communities in each category (Low to High)")+
+  ggtitle("Commercial Engagement")+
+  theme_ts()
+
+
+ecodata::engagement %>% 
+  filter(Var == "med.high.scores", 
+         EPU == "MA") %>% 
+  mutate(hline = mean(Value)) %>% 
+  ggplot()+
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  geom_line(aes(x = Time, y = Value), size = lwd) +
+  geom_point(aes(x = Time, y = Value), size = pcex) +
+  scale_x_continuous(expand = c(0.01, 0.01)) +
+  ggtitle("Medium-High communities ") +
+  ylab(expression("Average score for Med High communities")) +
+  geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty) +
+ theme_ts()
