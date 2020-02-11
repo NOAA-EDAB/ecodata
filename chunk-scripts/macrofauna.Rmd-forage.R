@@ -1,6 +1,6 @@
 
 d<-ecodata::energy_density %>% 
-    rename("Mean ED (SD)" = "Mean.ED..SD.", 
+    dplyr::rename("Mean ED (SD)" = "Mean.ED..SD.", 
            "N" = "n",
            "Mean ED (SD)" = "Mean.ED..SD..1", 
            "N" = "n.1", 
