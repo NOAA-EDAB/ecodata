@@ -12,7 +12,7 @@
 # hierarchical, with different positions in the identifier referring to higher
 # or lower taxonomic levels.  More information about the SVDBS, CFDBS, and ITIS
 # species codes are available in the links provided below.
-# 
+#
 # The column variable "Fed.managed" refers to the species' management body
 # (limited to NEFMC, MAFMC, or jointly managed species ("JOINT")). Group names
 # listed under columns containing "SOE" are species groupings that were used in
@@ -23,8 +23,8 @@
 # al. (2006). These groupings are refined annually for more effective reporting
 # and differ slightly between years. The columns "EMAX" and "Garrison.Link"
 # refer to the species groupings presented in Link et al. (2006) and Garrison
-# and Link (2000) respectively. 
-# 
+# and Link (2000) respectively.
+#
 # Species groupings listed in the "NEIEA" column were developed for
 # presentation on the Northeast Integrated Ecosystem Assessment (NE-IEA)
 # website. These groupings are based on EMAX groupings, but were adjusted based
@@ -32,23 +32,24 @@
 # components in the NE-LME (i.e. those components with the largest potential
 # for perturbing ecosystem dynamics). NE-IEA groupings were further simplified
 # to allow for effective communication through the NE-IEA website.
-# 
+#
 # See the following links for more information regarding the NEFSC ESB Bottom
 # Trawl Survey, CFDBS, and ITIS:
 # https://www.itis.gov/
 # https://inport.nmfs.noaa.gov/inport/item/22561
 # https://inport.nmfs.noaa.gov/inport/item/22560
-# https://inport.nmfs.noaa.gov/inport/item/27401		
-# 
+# https://inport.nmfs.noaa.gov/inport/item/27401
+#
 # More information about the NE-IEA program is available here:
 # http://integratedecosystemassessment.noaa.gov
 
 raw.dir <- here::here("data-raw")
 
 get_species_groupings <- function(save_clean = F){
-  species_groupings <- read.csv(file.path(raw.dir,"species_groupings_V2.csv"),
-                                stringsAsFactors = F)
-  
+
+  load(file.path(raw.dir, "SOE_species_list.Rdata"))
+  species_groupings <- species
+
   if (save_clean){
     usethis::use_data(species_groupings, overwrite = T)
   } else {
@@ -56,5 +57,5 @@ get_species_groupings <- function(save_clean = F){
   }
 }
 
-
+get_species_groupings(save_clean = T)
 

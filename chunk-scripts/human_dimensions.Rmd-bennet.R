@@ -29,7 +29,7 @@ ggplot()+
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf)+
-  geom_bar(data = indicators, aes(x=Time, y= Value, fill = Var), stat="identity")+
+  geom_bar(data = indicators, aes(x = Time, y = Value, fill = Var), stat="identity")+
   scale_fill_manual(name = "Indicators", values = ind_fill) +
   geom_line(data = revchange, aes(x = Time, y = Value, colour="$"))+
   #geom_line(data = indicators, aes(x = Time, y = New, color = "blue"))+
