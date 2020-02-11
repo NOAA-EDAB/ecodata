@@ -298,18 +298,19 @@ ggplot(data = landings_agg)+
 #Filter data into two dataframes for plotting
 
 indicators <- ecodata::bennet %>% 
-  filter(EPU == epu_abbr) %>% 
-  filter(stringr::str_detect(Var, pattern="Total"),
+  dplyr::filter(EPU == epu_abbr) %>% 
+  dplyr::filter(stringr::str_detect(Var, pattern="Total"),
          !Var == "Total Revenue Change - Bennet", 
          !Time < 1985) %>% 
-  mutate(Var, Var = plyr::mapvalues(Var, from = c("Total Volume Index - Bennet","Total Price Index - Bennet"),
-                                    to = c("Volume","Price"))) %>% 
-  group_by(Time) %>% 
-  mutate(New = sum(Value))
-
+  dplyr::mutate(Var, Var = plyr::mapvalues(Var, 
+                                      from = c("Total Volume Index - Bennet",
+                                               "Total Price Index - Bennet"),
+                                      to = c("Volume","Price"))) %>% 
+  dplyr::group_by(Time) %>% 
+  dplyr::mutate(New = sum(Value))
 
 revchange <- ecodata::bennet %>% 
-  filter(EPU == "MAB",
+  dplyr::filter(EPU == "MAB",
          Var %in% c("Total Revenue Change - Bennet"),
          !Time<1985)
 #custom bar fill color (color-blind friendly)
@@ -320,12 +321,10 @@ y.lim <- c(-450,600)
 
 #plot
 ggplot(data = indicators)+
-  
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf)+
-
   geom_bar(data = indicators, aes(x=Time, y= Value, fill = Var), stat="identity")+
   scale_fill_manual(name = "Indicators", values = ind_fill) +
   geom_line(data = revchange, aes(x = Time, y = Value, colour="$"))+
