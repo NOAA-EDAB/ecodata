@@ -24,7 +24,7 @@ ind_fill <- c("#a6cee3", "#b2df8a")
 y.lim <- c(-450,600)
 
 #plot
-ggplot(data = indicators)+
+ggplot()+
   #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
