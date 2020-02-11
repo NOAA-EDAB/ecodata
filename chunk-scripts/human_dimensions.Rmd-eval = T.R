@@ -35,6 +35,9 @@ ggplot() +
   coord_sf(crs = crs, xlim = c(-77, -69), ylim = c(36,42))+
   geom_segment(aes(x = -74.6, y = 37.4, xend =-75.4, yend =38), colour = "blue4")+
   geom_segment(aes(x = -71.1, y = 40.2, xend =-71.6, yend =41.1), colour = "blue4")+
+  annotate("text", x = -74.9, y = 37, label = "S")+
+  annotate("text", x = -73.5, y = 38.7, label = "M")+
+  annotate("text", x = -70.5, y = 40.2, label = "N")+
   annotation_scale(location = "br", width_hint = 0.4) +
   theme_bw( ) +
   ylab("")+
