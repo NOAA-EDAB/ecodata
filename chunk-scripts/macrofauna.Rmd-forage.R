@@ -1,6 +1,5 @@
 
-raw.dir <- here::here("data-raw")
-d<-read.csv(file.path(raw.dir, "forage.csv")) %>% 
+d<-ecodata::energy_density %>% 
     rename("Mean ED (SD)" = "Mean.ED..SD.", 
            "N" = "n",
            "Mean ED (SD)" = "Mean.ED..SD..1", 

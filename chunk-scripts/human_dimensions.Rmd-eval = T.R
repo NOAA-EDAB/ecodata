@@ -6,7 +6,7 @@ library(ggspatial)
 library(marmap)
 
 crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
-gis.dir <- here::here()
+gis.dir <- here::here("data-raw/gis")
 nesbath <- fortify.bathy(getNOAA.bathy(lon1 = -77, lon2 = -65, lat1 = 35, lat2 = 45,
               resolution = 5))
 

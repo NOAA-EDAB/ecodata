@@ -1,6 +1,4 @@
 
-image.dir <- here::here("https://github.com/NOAA-EDAB/ecodata/tree/master/docs")
-
 wind1 <- ecodata::wind_occupancy
 
 wind1$trend<- ifelse(wind1$Trend == "pos", 
