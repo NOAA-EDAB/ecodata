@@ -6,10 +6,8 @@ indicators <- ecodata::bennet %>%
   dplyr::filter(stringr::str_detect(Var, pattern="Total"),
          !Var == "Total Revenue Change - Bennet", 
          !Time < 1985) %>% 
-  dplyr::mutate(Var, Var = plyr::mapvalues(Var, 
-                                      from = c("Total Volume Index - Bennet",
-                                               "Total Price Index - Bennet"),
-                                      to = c("Volume","Price"))) %>% 
+  dplyr::mutate(Var, Var = plyr::mapvalues(Var, from = c("Total Volume Index - Bennet", "Total Price Index - Bennet"),
+                                           to = c("Volume","Price"))) %>% 
   dplyr::group_by(Time) %>% 
   dplyr::mutate(New = sum(Value))
 
@@ -31,8 +29,7 @@ ggplot()+
       ymin = -Inf, ymax = Inf)+
   geom_bar(data = indicators, aes(x = Time, y = Value, fill = Var), stat="identity")+
   scale_fill_manual(name = "Indicators", values = ind_fill) +
-  geom_line(data = revchange, aes(x = Time, y = Value, colour="$"))+
-  #geom_line(data = indicators, aes(x = Time, y = New, color = "blue"))+
+  geom_line(data = revchange, aes(x = Time, y = Value, color = "$"))+
   scale_colour_grey(name ="Revenue Change") +
   ggtitle("Bennet Indicator")+
   labs(y="Value $1,000,000 ($2015)") +

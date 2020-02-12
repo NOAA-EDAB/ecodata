@@ -18,5 +18,5 @@ ecodata::ppr %>%
                labeller(EPU = c(GB = "Georges Bank", 
                                 GOM = "Gulf of Maine")))+
   ggtitle("Primary Production Required")+
-  ylab("Proportion of Total Primary Production Required")+
+  ylab("Proportion of Total PPD")+
   theme_ts()

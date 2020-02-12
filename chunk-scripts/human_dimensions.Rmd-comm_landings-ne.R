@@ -106,7 +106,7 @@ gom_landings<- landings %>%
   #Axis and theme
   scale_y_continuous(labels = function(l){trans = l / 1000})+
   scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
-  ylab(expression("Landings, 10"^3*"metric tons")) +
+  ylab(expression("Landings (10"^3*"metric tons)")) +
   theme_facet() +
   theme(strip.text=element_text(hjust=0))+
   ggtitle("Gulf of Maine")
@@ -141,7 +141,7 @@ gb_landings <- landings %>% filter(EPU == "GB") %>%
   #Axis and theme
   scale_y_continuous(labels = function(l){trans = l / 1000})+
   scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
-  ylab(expression("Landings, 10"^3*"metric tons")) +
+  ylab(expression("Landings (10"^3*"metric tons)")) +
   theme_facet() +
   theme(strip.text=element_text(hjust=0)) +
   ggtitle("Georges Bank")

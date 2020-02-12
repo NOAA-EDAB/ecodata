@@ -15,5 +15,5 @@ ecodata::ppr %>%
            linetype = hline.lty)+
   scale_x_continuous(expand = c(0.01, 0.01)) +
   ggtitle("Primary Production Required")+
-  ylab("Proportion of Total Primary Production Required")+
+  ylab("Proportion of Total PPD ")+
   theme_ts()

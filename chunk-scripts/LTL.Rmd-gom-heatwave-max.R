@@ -1,6 +1,6 @@
 
 #EPU shapefile
-epu_sf <- ecodata::epu_sf %>% 
+ne_epu_sf <- ecodata::epu_sf %>% 
   filter(EPU %in% c("GOM","GB"))
 
 #Map line parameters
@@ -20,7 +20,7 @@ gom_map <-
   ggplot() +
   geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
   geom_sf(data = coast, size = map.lwd) +
-  geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) +
+  geom_sf(data = ne_epu_sf, fill = "transparent", size = map.lwd) +
   scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
                        low = scales::muted("blue"),
                        mid = "white",

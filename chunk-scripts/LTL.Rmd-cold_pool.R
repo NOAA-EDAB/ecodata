@@ -15,6 +15,6 @@ ecodata::cold_pool %>%
      alpha = hline.alpha,
      linetype = hline.lty)+
   ggtitle("Cold Pool Index")+
-  ylab(expression("Cold Pool Temperature Anomaly (C) ")) +
+  ylab(expression("Cold Pool Temp Anomaly (C) ")) +
   xlab("")+
   theme_ts()

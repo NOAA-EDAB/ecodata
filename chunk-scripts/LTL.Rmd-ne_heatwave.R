@@ -35,7 +35,8 @@ gb.hw<-hw %>% filter(EPU == "GB") %>%
   facet_wrap(~Var, scales = "free") +
   theme_ts()+
   theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+                                face = "italic"), 
+        axis.title.y = element_text(angle = 90))
 
 
 gom.hw<-hw %>% filter(EPU == "GOM") %>% 
@@ -57,5 +58,6 @@ gom.hw<-hw %>% filter(EPU == "GOM") %>%
   facet_wrap(~Var, scales = "free") +
   theme_ts()+
   theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+                                face = "italic"), 
+        axis.title.y = element_text(angle = 90))
 cowplot::plot_grid(gb.hw,gom.hw, nrow = 2)

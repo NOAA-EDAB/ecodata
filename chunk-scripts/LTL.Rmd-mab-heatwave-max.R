@@ -1,6 +1,6 @@
 
 #EPU shapefile
-epu_sf <- ecodata::epu_sf %>% 
+mab_epu_sf <- ecodata::epu_sf %>% 
   filter(EPU %in% c("MAB"))
 
 #Map line parameters
@@ -20,7 +20,7 @@ mab_map <-
   ggplot() +
   geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
   geom_sf(data = coast, size = map.lwd) +
-  geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) +
+  geom_sf(data = mab_epu_sf, fill = "transparent", size = map.lwd) +
   scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
                        low = scales::muted("blue"),
                        mid = "white",
@@ -37,7 +37,8 @@ mab_map <-
         axis.title = element_text(size = 11),
         strip.background = element_blank(),
         strip.text=element_text(hjust=0),
-        axis.text = element_text(size = 8))
+        axis.text = element_text(size = 8),
+        axis.title.y = element_text(angle = 90))
 
 
 mab_map 
