@@ -240,7 +240,7 @@ p2<- landings %>%
   #Axis and theme
   scale_y_continuous(labels = function(l){trans = l / 1000})+
   scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
-  ylab(expression("Landings, 10"^3*"metric tons")) +
+  ylab(expression("Landings (10"^3*"metric tons)")) +
   theme_facet() +
   theme(strip.text=element_text(hjust=0))
 
@@ -302,10 +302,8 @@ indicators <- ecodata::bennet %>%
   dplyr::filter(stringr::str_detect(Var, pattern="Total"),
          !Var == "Total Revenue Change - Bennet", 
          !Time < 1985) %>% 
-  dplyr::mutate(Var, Var = plyr::mapvalues(Var, 
-                                      from = c("Total Volume Index - Bennet",
-                                               "Total Price Index - Bennet"),
-                                      to = c("Volume","Price"))) %>% 
+  dplyr::mutate(Var, Var = plyr::mapvalues(Var, from = c("Total Volume Index - Bennet", "Total Price Index - Bennet"),
+                                           to = c("Volume","Price"))) %>% 
   dplyr::group_by(Time) %>% 
   dplyr::mutate(New = sum(Value))
 
@@ -327,8 +325,7 @@ ggplot()+
       ymin = -Inf, ymax = Inf)+
   geom_bar(data = indicators, aes(x = Time, y = Value, fill = Var), stat="identity")+
   scale_fill_manual(name = "Indicators", values = ind_fill) +
-  geom_line(data = revchange, aes(x = Time, y = Value, colour="$"))+
-  #geom_line(data = indicators, aes(x = Time, y = New, color = "blue"))+
+  geom_line(data = revchange, aes(x = Time, y = Value, color = "$"))+
   scale_colour_grey(name ="Revenue Change") +
   ggtitle("Bennet Indicator")+
   labs(y="Value $1,000,000 ($2015)") +
@@ -852,7 +849,7 @@ ecodata::ppr %>%
            linetype = hline.lty)+
   scale_x_continuous(expand = c(0.01, 0.01)) +
   ggtitle("Primary Production Required")+
-  ylab("Proportion of Total Primary Production Required")+
+  ylab("Proportion of Total PPD ")+
   theme_ts()
 ```
 
@@ -985,7 +982,7 @@ gom_landings<- landings %>%
   #Axis and theme
   scale_y_continuous(labels = function(l){trans = l / 1000})+
   scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
-  ylab(expression("Landings, 10"^3*"metric tons")) +
+  ylab(expression("Landings (10"^3*"metric tons)")) +
   theme_facet() +
   theme(strip.text=element_text(hjust=0))+
   ggtitle("Gulf of Maine")
@@ -1020,7 +1017,7 @@ gb_landings <- landings %>% filter(EPU == "GB") %>%
   #Axis and theme
   scale_y_continuous(labels = function(l){trans = l / 1000})+
   scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
-  ylab(expression("Landings, 10"^3*"metric tons")) +
+  ylab(expression("Landings (10"^3*"metric tons)")) +
   theme_facet() +
   theme(strip.text=element_text(hjust=0)) +
   ggtitle("Georges Bank")
@@ -1729,7 +1726,7 @@ ecodata::ppr %>%
                labeller(EPU = c(GB = "Georges Bank", 
                                 GOM = "Gulf of Maine")))+
   ggtitle("Primary Production Required")+
-  ylab("Proportion of Total Primary Production Required")+
+  ylab("Proportion of Total PPD")+
   theme_ts()
 ```
 
