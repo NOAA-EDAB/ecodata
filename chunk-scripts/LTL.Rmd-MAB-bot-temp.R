@@ -1,12 +1,12 @@
 
 temp_anom <- ecodata::oceantemp_insitu %>% 
-  filter(EPU == epu_abbr) %>% 
-  complete(Time = full_seq(min(oceantemp_insitu$Time):max(oceantemp_insitu$Time),1),
-           nesting(Var)) %>% 
-  mutate(hline = 0)
+  dplyr::filter(EPU == epu_abbr) %>% 
+  tidyr::complete(Time = tidyr::full_seq(min(oceantemp_insitu$Time):max(oceantemp_insitu$Time),1),
+           tidyr::nesting(Var)) %>% 
+  dplyr::mutate(hline = 0)
 
 temp_anom %>%
- filter(Var == "bottom temp anomaly in situ") %>%
+ dplyr::filter(Var == "bottom temp anomaly in situ") %>%
 ggplot2::ggplot() +
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
