@@ -26,7 +26,7 @@ case.
 ## Using this package
 
 1.  Use the command
-    `devtools::install_github("noaa-edab/ecodata",build_vignettes=TRUE)`
+    `remotes::install_github("noaa-edab/ecodata",build_vignettes=TRUE)`
     to install the package.
 2.  Load the package into your environment with `library(ecodata)`
 
