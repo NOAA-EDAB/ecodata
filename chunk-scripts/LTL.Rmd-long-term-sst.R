@@ -16,7 +16,7 @@ lt_sst %>%
              size = hline.size,
              alpha = hline.alpha,
            linetype = hline.lty)+
-  ylab("Temperature (°C)") +
+  ylab("Temperature (C)") +
   xlab(element_blank())+
   ggtitle("Long-term SST") +
   scale_x_continuous(expand = c(0.01, 0.01), breaks = seq(1840,2010,10))+
