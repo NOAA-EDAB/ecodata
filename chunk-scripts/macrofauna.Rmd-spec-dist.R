@@ -1,10 +1,10 @@
 
 spec_dist <- ecodata::species_dist %>% 
-  group_by(Var) %>% 
-  mutate(hline = mean(Value))
+  dplyr::group_by(Var) %>% 
+  dplyr::mutate(hline = mean(Value))
 
 asd <- spec_dist %>% 
-  filter(Var == "along-shelf distance") %>% 
+  dplyr::filter(Var == "along-shelf distance") %>% 
   ggplot(aes(x = Time, y = Value,
                group = Var)) + 
  #Highlight last ten years
