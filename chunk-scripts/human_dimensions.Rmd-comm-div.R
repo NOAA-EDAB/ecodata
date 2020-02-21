@@ -1,9 +1,9 @@
 
 # 
 comm_div <- ecodata::commercial_div %>% 
-  filter(EPU == region_abbr) %>% 
-  group_by(Var) %>% 
-  mutate(hline = mean(Value))
+  dplyr::filter(EPU == region_abbr) %>% 
+  dplyr::group_by(Var) %>% 
+  dplyr::mutate(hline = mean(Value))
 
 ylim_fc <- c(min(comm_div[comm_div$Var == "Fleet count",]$Value) - 10, max(comm_div[comm_div$Var == "Fleet count",]$Value) + 10 )
 ylim_fd <- c(0, max(comm_div[comm_div$Var == "Fleet diversity in revenue",]$Value) + 3 )
@@ -18,7 +18,7 @@ ylim_fd <- c(0, max(comm_div[comm_div$Var == "Fleet diversity in revenue",]$Valu
 
 
 fleet_count <- comm_div %>% 
-  filter(Var == "Fleet count") %>% 
+  dplyr::filter(Var == "Fleet count") %>% 
   ggplot() + 
  #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -47,7 +47,7 @@ scale_color_manual(values = series.col, aesthetics = "color")+
   theme_ts()
 
 fleet_div <- comm_div %>% 
-  filter(Var == "Fleet diversity in revenue") %>% 
+  dplyr::filter(Var == "Fleet diversity in revenue") %>% 
   ggplot() + 
  #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,

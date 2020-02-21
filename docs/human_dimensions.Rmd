@@ -400,9 +400,9 @@ ggplot(data = rev_agg) +
 
 # 
 comm_div <- ecodata::commercial_div %>% 
-  filter(EPU == region_abbr) %>% 
-  group_by(Var) %>% 
-  mutate(hline = mean(Value))
+  dplyr::filter(EPU == region_abbr) %>% 
+  dplyr::group_by(Var) %>% 
+  dplyr::mutate(hline = mean(Value))
 
 ylim_fc <- c(min(comm_div[comm_div$Var == "Fleet count",]$Value) - 10, max(comm_div[comm_div$Var == "Fleet count",]$Value) + 10 )
 ylim_fd <- c(0, max(comm_div[comm_div$Var == "Fleet diversity in revenue",]$Value) + 3 )
@@ -417,7 +417,7 @@ ylim_fd <- c(0, max(comm_div[comm_div$Var == "Fleet diversity in revenue",]$Valu
 
 
 fleet_count <- comm_div %>% 
-  filter(Var == "Fleet count") %>% 
+  dplyr::filter(Var == "Fleet count") %>% 
   ggplot() + 
  #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -446,7 +446,7 @@ scale_color_manual(values = series.col, aesthetics = "color")+
   theme_ts()
 
 fleet_div <- comm_div %>% 
-  filter(Var == "Fleet diversity in revenue") %>% 
+  dplyr::filter(Var == "Fleet diversity in revenue") %>% 
   ggplot() + 
  #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -705,9 +705,9 @@ ggplot(data = landings_rec)+
 
 ```{r recdat,fig.cap = paste0("Recreational effort, recreational effort diversity, number of recreational anglers, and diversity of recreational catch in the ",region,". \\label{recdat}")}
 recdat <- ecodata::recdat %>% 
-  filter(EPU == region_abbr) %>% 
-  group_by(Var) %>% 
-  mutate(hline = mean(Value))
+  dplyr::filter(EPU == region_abbr) %>% 
+  dplyr::group_by(Var) %>% 
+  dplyr::mutate(hline = mean(Value))
 
 ylim_re <- c(2e7, 7e7)
 ylim_rd <- c(1.75,2.75)
@@ -728,7 +728,7 @@ series.col <- "black"
 # x.shade.max <- max(recdat$Time, na.rm = T)
 
 rec_effort <- recdat %>% 
-  filter(Var == "Recreational Effort") %>% 
+  dplyr::filter(Var == "Recreational Effort") %>% 
   ggplot() + 
  #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -761,7 +761,7 @@ rec_effort <- recdat %>%
   theme_ts() 
 
 rec_div <- recdat %>% 
-  filter(Var == "Recreational fleet effort diversity across modes") %>% 
+  dplyr::filter(Var == "Recreational fleet effort diversity across modes") %>% 
   ggplot() + 
  #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -792,7 +792,7 @@ rec_div <- recdat %>%
   theme_ts()
 
 rec_div_catch <- recdat %>% 
-  filter(Var == "Recreational Diversity of Catch") %>% 
+  dplyr::filter(Var == "Recreational Diversity of Catch") %>% 
   ggplot() + 
  #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,

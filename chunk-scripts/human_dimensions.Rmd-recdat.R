@@ -1,8 +1,8 @@
 
 recdat <- ecodata::recdat %>% 
-  filter(EPU == region_abbr) %>% 
-  group_by(Var) %>% 
-  mutate(hline = mean(Value))
+  dplyr::filter(EPU == region_abbr) %>% 
+  dplyr::group_by(Var) %>% 
+  dplyr::mutate(hline = mean(Value))
 
 ylim_re <- c(2e7, 7e7)
 ylim_rd <- c(1.75,2.75)
@@ -23,7 +23,7 @@ series.col <- "black"
 # x.shade.max <- max(recdat$Time, na.rm = T)
 
 rec_effort <- recdat %>% 
-  filter(Var == "Recreational Effort") %>% 
+  dplyr::filter(Var == "Recreational Effort") %>% 
   ggplot() + 
  #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -56,7 +56,7 @@ rec_effort <- recdat %>%
   theme_ts() 
 
 rec_div <- recdat %>% 
-  filter(Var == "Recreational fleet effort diversity across modes") %>% 
+  dplyr::filter(Var == "Recreational fleet effort diversity across modes") %>% 
   ggplot() + 
  #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -87,7 +87,7 @@ rec_div <- recdat %>%
   theme_ts()
 
 rec_div_catch <- recdat %>% 
-  filter(Var == "Recreational Diversity of Catch") %>% 
+  dplyr::filter(Var == "Recreational Diversity of Catch") %>% 
   ggplot() + 
  #Highlight last ten years
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
