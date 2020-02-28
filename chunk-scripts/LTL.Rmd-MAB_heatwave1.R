@@ -1,2 +1,2 @@
 
-knitr::include_graphics(file.path(image.dir,"MAB_heatwave.jpeg"))
+knitr::include_graphics(file.path(image.dir,"mab_heatwave.jpeg"))

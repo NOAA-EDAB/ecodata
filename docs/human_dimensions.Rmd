@@ -8,7 +8,9 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-image.dir<-here::here("docs/images")
+# Image Directory
+image.dir <- here::here("docs/images")
+
 #Default Rmd options
 knitr::opts_chunk$set(echo = FALSE,
                       message = FALSE,
@@ -106,11 +108,12 @@ label <- function(variable,value){
 
 Trend lines are shown when slope is significantly different from 0 at the p < 0.05 level. An orange line signifies an overall positive trend, and purple signifies a negative trend. To minimize bias introduced by small sample size, no trend is fit when N < 30. Dashed lines represent mean values of time series unless the indicator is an anomaly, in which case the dashed line is equal to 0. Shaded regions indicate the past ten years. If there are no new data for 2018, the shaded region will still cover this time period.
 
-# Mid-Atlantic
+## Mid-Atlantic
 
-### Commercial fisheries  {.tabset .tabset-fade}
+### Commercial {.tabset .tabset-fade}
 
 #### Commercial landings
+
 ```{r comm_landings, warning=F, , fig.cap = paste0(council_abbr," managed species landings (red) and total commercial landings (black) by feeding guild. \\label{comm-landings}")}
 #Get data for plotting
 ## Apex pred
@@ -566,7 +569,6 @@ ggplot(data = stock_status) +
 
 #### Oyster aquaculture
 
-
 ```{r oyster-aqua, fig.width = 5, fig.asp = 0.45, fig.cap = "Oyster aquaculture production in terms of number of oysters sold from Virginia, Maryland, and New Jersey. \\label{oyster-aqua}"}
 
 aqua <- ecodata::aquaculture %>%
@@ -832,6 +834,7 @@ cowplot::plot_grid(rec_effort,
 ```
 
 ### Primary Production Required
+
 ```{r ppr-mab, fig.cap="Primary production required to support the commercial landings. Included are the top species accounting for 80% of the landings in each year."}
 ecodata::ppr %>% 
   group_by(EPU) %>% 
@@ -853,7 +856,7 @@ ecodata::ppr %>%
   theme_ts()
 ```
 
-# New England
+## New England
 
 ### Commercial fisheries  {.tabset .tabset-fade}
 
@@ -1399,6 +1402,7 @@ comm_div %>%
 ```
 
 #### Stock status
+
 ```{r NE-stock-status1, echo=FALSE, warning=F, fig.cap = paste0("Summary of single species status for NEFMC and jointly managed stocks. \\label{stock-status}")}
 #Get data, spread for plotting, and filter
 stock_status <- ecodata::stock_status %>%
@@ -1704,6 +1708,7 @@ cowplot::plot_grid(rec_effort,
 
 
 ### Primary Production Required
+
 ```{r ppr-ne, fig.cap="Primary production required to support the commercial landings. Included are the top species accounting for 80% of the landings in each year."}
 
 
@@ -1745,11 +1750,12 @@ knitr::include_graphics(file.path(image.dir, "mtl_index-0.90.png"))
 ```
 
 
-# Shelfwide Indicators
+## Shelfwide Indicators
 
 
 ### Wind Sites and Occurrence 
 These are the five species most likely to occur in the lease areas. 
+
 ```{r wind_habitat_table, eval = T, echo = F, fig.cap='', out.width='80%'}
 wind1 <- ecodata::wind_occupancy
 wind1$trend<- ifelse(wind1$Trend == "pos", 

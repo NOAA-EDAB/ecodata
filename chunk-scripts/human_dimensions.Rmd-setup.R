@@ -1,5 +1,7 @@
 
-image.dir<-here::here("docs/images")
+# Image Directory
+image.dir <- here::here("docs/images")
+
 #Default Rmd options
 knitr::opts_chunk$set(echo = FALSE,
                       message = FALSE,

@@ -140,6 +140,7 @@ sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Spring",
                                             "Summer",
                                             "Fall"))
+sst<- sst %>% mutate(Value = replace(Value, Value > 4, 4))
 sst_map <- 
   ggplot() +
   geom_tile(data = sst, aes(x = Longitude, y = Latitude,fill = Value)) +
@@ -149,7 +150,8 @@ sst_map <-
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
-                       limits = c(-6,6)) +
+                       limits = c(-4,4),
+                       labels = c("<-4", "-2", "0", "2", ">4")) +
   coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   facet_wrap(Season~.) +
   theme_map() +
@@ -858,7 +860,7 @@ ecodata::cold_pool %>%
 
 ```{r MAB_heatwave1, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Mid-Atlantic occuring in 2019."}
 
-knitr::include_graphics(file.path(image.dir,"MAB_heatwave.jpeg"))
+knitr::include_graphics(file.path(image.dir,"mab_heatwave.jpeg"))
 
 ```
 
@@ -978,6 +980,8 @@ sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Spring",
                                             "Summer",
                                             "Fall"))
+
+sst<- sst %>% mutate(Value = replace(Value, Value > 4, 4))
 sst_map <- 
   ggplot() +
   geom_tile(data = sst, aes(x = Longitude, y = Latitude,fill = Value)) +
@@ -987,7 +991,8 @@ sst_map <-
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
-                       limits = c(-5,5)) +
+                       limits = c(-4,4), 
+                       labels = c("<-4", "-2", "0", "2", ">4")) +
   coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   facet_wrap(Season~.) +
   theme_map() +
@@ -1788,12 +1793,12 @@ cowplot::plot_grid(gb.hw,gom.hw, nrow = 2)
 
 ```{r timesseries_heatwave, fig.cap="Georges Bank", eval= T, echo = F}
 
-knitr::include_graphics(file.path(image.dir,"GB_heatwave.jpeg"))
+knitr::include_graphics(file.path(image.dir,"gb_heatwave.jpeg"))
 ```
 
 ```{r timesseries_heatwave1, fig.cap = "Gulf of Maine", eval= T, echo = F}
 
-knitr::include_graphics(file.path(image.dir,"GOM_heatwave.jpeg"))
+knitr::include_graphics(file.path(image.dir,"gom_heatwave.jpeg"))
 ```
 
 

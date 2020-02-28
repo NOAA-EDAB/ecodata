@@ -19,6 +19,8 @@ sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Spring",
                                             "Summer",
                                             "Fall"))
+
+sst<- sst %>% mutate(Value = replace(Value, Value > 4, 4))
 sst_map <- 
   ggplot() +
   geom_tile(data = sst, aes(x = Longitude, y = Latitude,fill = Value)) +
@@ -28,7 +30,8 @@ sst_map <-
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
-                       limits = c(-5,5)) +
+                       limits = c(-4,4), 
+                       labels = c("<-4", "-2", "0", "2", ">4")) +
   coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   facet_wrap(Season~.) +
   theme_map() +

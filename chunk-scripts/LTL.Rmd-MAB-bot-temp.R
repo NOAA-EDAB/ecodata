@@ -14,7 +14,7 @@ ggplot2::ggplot() +
   geom_line(aes(x = Time, y = Value)) +
   geom_gls(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab("Temperature (C)") +
+  ylab("Temperature (°C)") +
   xlab(element_blank())+
   ggtitle("Bottom temp. anomaly") +
   scale_x_continuous(expand = c(0.01, 0.01)) +
