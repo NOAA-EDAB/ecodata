@@ -1102,6 +1102,9 @@ ggplot(aes(x = Time, y = Mean)) +
 plot_grid(p1, p2, p3, p4, nrow=4)
 ```
 
+#### NEFSC Survey location map
+
+
 #### NEFMC Benthivores in MAB
 
 ```{r NEFMC-in-MAB}
