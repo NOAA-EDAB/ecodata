@@ -55,15 +55,15 @@ region_abbr <- "MA" #Some commercial data organized by "MA" or "NE" regions, not
 crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 
 #Coastline shapefile
-coast <- ne_countries(scale = 10,
-                          continent = "North America",
-                          returnclass = "sf") %>%
-             sf::st_transform(crs = crs)
+#coast <- ne_countries(scale = 10,
+#                          continent = "North America",
+#                          returnclass = "sf") %>%
+#             sf::st_transform(crs = crs)
 
 #State polygons
-ne_states <- ne_states(country = "united states of america",
-                                      returnclass = "sf") %>%
-  sf::st_transform(crs = crs)
+#ne_states <- ne_states(country = "united states of america",
+#                                      returnclass = "sf") %>%
+#  sf::st_transform(crs = crs)
 
 #EPU shapefile
 epu_sf <- ecodata::epu_sf %>% 
@@ -144,7 +144,7 @@ sst<- sst %>% mutate(Value = replace(Value, Value > 4, 4))
 sst_map <- 
   ggplot() +
   geom_tile(data = sst, aes(x = Longitude, y = Latitude,fill = Value)) +
-  geom_sf(data = coast, size = map.lwd) +
+  geom_sf(data = ecodata::coast, size = map.lwd) +
   geom_sf(data = mab_epu_sf, fill = "transparent", size = map.lwd) +
   scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
                        low = scales::muted("blue"),
@@ -927,7 +927,7 @@ hw <- ecodata::hw_anom_gridded %>%
 mab_map <- 
   ggplot() +
   geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
-  geom_sf(data = coast, size = map.lwd) +
+  geom_sf(data = ecodata::coast, size = map.lwd) +
   geom_sf(data = mab_epu_sf, fill = "transparent", size = map.lwd) +
   scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
                        low = scales::muted("blue"),
@@ -985,9 +985,9 @@ sst<- sst %>% mutate(Value = replace(Value, Value > 4, 4))
 sst_map <- 
   ggplot() +
   geom_tile(data = sst, aes(x = Longitude, y = Latitude,fill = Value)) +
-  geom_sf(data = coast, size = map.lwd) +
+  geom_sf(data = ecodata::coast, size = map.lwd) +
   geom_sf(data = ne_epu_sf, fill = "transparent", size = map.lwd) +
-  scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
+  scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
@@ -1824,7 +1824,7 @@ hw <- ecodata::hw_anom_gridded %>%
 gb_map <- 
   ggplot() +
   geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
-  geom_sf(data = coast, size = map.lwd) +
+  geom_sf(data = ecodata::coast, size = map.lwd) +
   geom_sf(data = ne_epu_sf, fill = "transparent", size = map.lwd) +
   scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
                        low = scales::muted("blue"),
@@ -1872,7 +1872,7 @@ hw <- ecodata::hw_anom_gridded %>%
 gom_map <- 
   ggplot() +
   geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
-  geom_sf(data = coast, size = map.lwd) +
+  geom_sf(data = ecodata::coast, size = map.lwd) +
   geom_sf(data = ne_epu_sf, fill = "transparent", size = map.lwd) +
   scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
                        low = scales::muted("blue"),
@@ -1926,7 +1926,7 @@ epu_sf <- ecodata::epu_sf[ecodata::epu_sf$EPU != "SS",]
 
 ggplot() +
   geom_tile(data = sst, aes(x = Longitude, y = Latitude, fill = Value)) +
-  geom_sf(data = coast, size = map.lwd) +
+  geom_sf(data = ecodata::coast, size = map.lwd) +
   geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) +
   scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
                        low = scales::muted("blue"),

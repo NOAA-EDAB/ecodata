@@ -38,7 +38,7 @@ library(cowplot)
 library(sf)
 library(rgdal)
 library(raster)
-library(rnaturalearth)
+#library(rnaturalearth)
 
 
 #GIS directory
@@ -64,15 +64,15 @@ region_abbr <- "MA" #Some commercial data organized by "MA" or "NE" regions, not
 crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 
 #Coastline shapefile
-coast <- ne_countries(scale = 10,
-                          continent = "North America",
-                          returnclass = "sf") %>%
-             sf::st_transform(crs = crs)
-
-#State polygons
-ne_states <- ne_states(country = "united states of america",
-                                      returnclass = "sf") %>%
-  sf::st_transform(crs = crs)
+# coast <- ne_countries(scale = 10,
+#                           continent = "North America",
+#                           returnclass = "sf") %>%
+#              sf::st_transform(crs = crs)
+# 
+# #State polygons
+# ne_states <- ne_states(country = "united states of america",
+#                                       returnclass = "sf") %>%
+#   sf::st_transform(crs = crs)
 
 #EPU shapefile
 epu_sf <- ecodata::epu_sf %>% 
@@ -2171,7 +2171,7 @@ ylims <- c(ymin, ymax)
 ## Map plotting blue runner
 blue_map <- 
   ggplot() +
-  geom_sf(data = coast, size = map.lwd) +
+  geom_sf(data = ecodata::coast, size = map.lwd) +
   geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) +
   geom_point(data = blue, aes(x = Lon, y = Lat, color = Var, shape = Var))+
   scale_shape_manual(values=c(16, 3, 17))+

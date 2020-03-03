@@ -19,7 +19,7 @@ hw <- ecodata::hw_anom_gridded %>%
 gom_map <- 
   ggplot() +
   geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
-  geom_sf(data = coast, size = map.lwd) +
+  geom_sf(data = ecodata::coast, size = map.lwd) +
   geom_sf(data = ne_epu_sf, fill = "transparent", size = map.lwd) +
   scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
                        low = scales::muted("blue"),

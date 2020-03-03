@@ -28,7 +28,7 @@ ylims <- c(ymin, ymax)
 ## Map plotting blue runner
 blue_map <- 
   ggplot() +
-  geom_sf(data = coast, size = map.lwd) +
+  geom_sf(data = ecodata::coast, size = map.lwd) +
   geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) +
   geom_point(data = blue, aes(x = Lon, y = Lat, color = Var, shape = Var))+
   scale_shape_manual(values=c(16, 3, 17))+

@@ -24,9 +24,9 @@ sst<- sst %>% mutate(Value = replace(Value, Value > 4, 4))
 sst_map <- 
   ggplot() +
   geom_tile(data = sst, aes(x = Longitude, y = Latitude,fill = Value)) +
-  geom_sf(data = coast, size = map.lwd) +
+  geom_sf(data = ecodata::coast, size = map.lwd) +
   geom_sf(data = ne_epu_sf, fill = "transparent", size = map.lwd) +
-  scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
+  scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
