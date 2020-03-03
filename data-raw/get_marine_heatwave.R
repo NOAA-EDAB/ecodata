@@ -70,3 +70,24 @@ get_marine_heatwave(save_clean = T)
 #            start_date = "2019-01-01", end_date = "2019-12-08") ## Plot the year
 #
 #
+
+
+##########################    Plotting for SOE   ######################
+# mhw<- gom.mhw$clim ## coming from above, detect_event() from heatwaveR
+#
+# mhw.max.year <- mhw[13515:13857,]## days in 2019 data set only went to dec 9, 2019
+#
+# mhw.max.year %>%
+#   ggplot( aes(x = t, y = temp))+
+#   geom_flame(aes(y2 = thresh))+ #heatwaveR function
+#   geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
+#   geom_line(aes(x = t, y = thresh, color = "c"), size = 1)+
+#   geom_line(aes(x = t, y = temp, color = "b"))+
+#   scale_colour_manual(values = c("turquoise4", "sienna3", "black"),
+#                       labels = c("Climatology","Temperature", "Threshold"))+
+#   ylab("Temperature (C)")+
+#   xlab(element_blank())+
+#   scale_x_date(date_labels = "%b", breaks = "1 month")+
+#   theme_bw()+
+#   theme(legend.title = element_blank(),
+#         legend.position=c(0.2, 0.8))

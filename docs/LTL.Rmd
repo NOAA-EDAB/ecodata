@@ -1723,8 +1723,20 @@ gb_zoo_div + gom_zoo_div + plot_layout(ncol = 1)
 <!-- ``` -->
 
 
-### Marine Heat Wave
+### Marine Heat Wave {.tabset .tabset-fade}
 
+#### Monthly time series
+```{r timesseries_heatwave, fig.cap="Georges Bank", eval= T, echo = F}
+
+knitr::include_graphics(file.path(image.dir,"gb_heatwave.jpeg"))
+```
+
+```{r timesseries_heatwave1, fig.cap = "Gulf of Maine", eval= T, echo = F}
+
+knitr::include_graphics(file.path(image.dir,"gom_heatwave.jpeg"))
+```
+
+#### Yearly timeseries
 ```{r ne_heatwave, eval= T, echo = F, fig.cap="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Georges Bank and Gulf of Maine ."}
 cumu <- ecodata::heatwave %>% 
   filter(Var == "cumulative intensity") %>% 
@@ -1791,17 +1803,6 @@ cowplot::plot_grid(gb.hw,gom.hw, nrow = 2)
 ```
 
 
-```{r timesseries_heatwave, fig.cap="Georges Bank", eval= T, echo = F}
-
-knitr::include_graphics(file.path(image.dir,"gb_heatwave.jpeg"))
-```
-
-```{r timesseries_heatwave1, fig.cap = "Gulf of Maine", eval= T, echo = F}
-
-knitr::include_graphics(file.path(image.dir,"gom_heatwave.jpeg"))
-```
-
-
 ```{r gb-heatwave-max, fig.cap="Maximum intensity heatwave anomaly in Georges Bank occuring on August 23, 2019."}
 #EPU shapefile
 ne_epu_sf <- ecodata::epu_sf %>% 
@@ -1847,6 +1848,8 @@ gb_map <-
 gb_map 
 
 ```
+
+#### Maps
 
 ```{r gom-heatwave-max, fig.cap="Maximum intensity heatwave anomaly in Gulf of Maine occuring on August 1, 2019."}
 #EPU shapefile

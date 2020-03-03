@@ -876,7 +876,7 @@ region_abbr <- "NE" #Some commercial data organized by "MA" or "NE" regions, not
 ```
 
 
-```{r comm_landings-ne, warning=F,fig.cap = "NEFMC managed species landings (red) and total commercial landings (black) by feeding guild in Gulf of Maine (left) and Georges Bank (right)."}
+```{r comm_landings-ne, warning=F,fig.width = 8, fig.asp = 0.25, fig.cap = "NEFMC managed species landings (red) and total commercial landings (black) by feeding guild in Gulf of Maine (left) and Georges Bank (right)."}
 
 ##Plot
 apex_landings<-apex %>% 

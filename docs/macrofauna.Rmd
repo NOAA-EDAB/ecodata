@@ -1648,9 +1648,6 @@ gom_fullness
 
 ### Larval diversity {.tabset .tabset-fade}
 
-Potentially adding 2018 point in mid-Jan
-
-#### Gulf of Maine
 
 ```{r gom-larval-div}
 gom_larv_div <- ecodata::ichthyo_diversity %>%
@@ -1982,9 +1979,9 @@ aggregate_prod %>%
 
 
 
-## Shelfwide Indicators
+## Shelfwide Indicators{.tabset .tabset-fade}
 
-### Protected species {.tabset .tabset-fade}
+### Protected species 
 
 Harbor porpoise bycatch continues to be quite low and has been low for a number of years now, so I don't think it is important to include anymore. At one point we had discussed putting in representative figures of marine mammal distribution available on a NEFSC website, but perhaps just mentioning the [link somewhere](https://www.nefsc.noaa.gov/AMAPPSviewer/) on the page would be better.
 
@@ -1994,7 +1991,6 @@ Seals - diet work underway but unpublished so don't want to include. but can ref
 
 [Starter text from Chris](https://docs.google.com/document/d/0B1lP7X3GP_hQSWRHV1NGWkFlc0VUNVNPcGJRalVUTEpUSjVz/edit?dls=true)
 
-#### NARW
 
 ```{r NARW-abundance, fig.cap = "Estimated North Atlanic right whale abundance on the Northeast Shelf."}
 #hline <- mean(narw[narw$Var == "right whale abundance median",]$Value)
