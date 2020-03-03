@@ -146,7 +146,7 @@ sst_map <-
   geom_tile(data = sst, aes(x = Longitude, y = Latitude,fill = Value)) +
   geom_sf(data = ecodata::coast, size = map.lwd) +
   geom_sf(data = mab_epu_sf, fill = "transparent", size = map.lwd) +
-  scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
+  scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
@@ -177,7 +177,7 @@ winter_anom <-  ggplotGrob( seasonal_oisst_anom %>%
                               geom_line() +
                               geom_point() +
                               geom_gls(alpha = trend.alpha + 0.25) +
-                              ylab("SST anomaly (°C)")+
+                              ylab("SST anomaly (C)")+
                               xlab(element_blank())+
                               scale_x_continuous(expand = c(0.01, 0.01)) +
                               geom_hline(aes(yintercept = hline)) +
@@ -206,7 +206,7 @@ spring_anom <-  ggplotGrob( seasonal_oisst_anom %>%
                               geom_line() +
                               geom_point() +
                               geom_gls(alpha = trend.alpha + 0.25) +
-                              ylab("SST anomaly (°C)")+
+                              ylab("SST anomaly (C)")+
                               xlab(element_blank())+
                               scale_x_continuous(expand = c(0.01, 0.01)) +
                               geom_hline(aes(yintercept = hline)) +
@@ -235,7 +235,7 @@ summer_anom <-  ggplotGrob( seasonal_oisst_anom %>%
                               geom_line() +
                               geom_point() +
                               geom_gls(alpha = trend.alpha + 0.25) +
-                              ylab("SST anomaly (°C)")+
+                              ylab("SST anomaly (C)")+
                               xlab(element_blank())+
                               scale_x_continuous(expand = c(0.01, 0.01)) +
                               geom_hline(aes(yintercept = hline)) +
@@ -264,7 +264,7 @@ fall_anom <-  ggplotGrob( seasonal_oisst_anom %>%
                             geom_line() +
                             geom_point() +
                             geom_gls(alpha = trend.alpha + 0.25) +
-                            ylab("SST anomaly (°C)")+
+                            ylab("SST anomaly (C)")+
                             xlab(element_blank())+
                             scale_x_continuous(expand = c(0.01, 0.01)) +
                             geom_hline(aes(yintercept = hline)) +
@@ -929,7 +929,7 @@ mab_map <-
   geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
   geom_sf(data = ecodata::coast, size = map.lwd) +
   geom_sf(data = mab_epu_sf, fill = "transparent", size = map.lwd) +
-  scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
+  scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
@@ -1028,7 +1028,7 @@ ne_anom_plt <- ggplot(data = ne_anom,
   geom_point()+
   ylim(-2,3)+
   geom_gls() +
-  ylab(expression("SST Anomaly (°C)")) +
+  ylab(expression("SST Anomaly (C)")) +
   xlab(element_blank())+
   ggtitle("Gulf of Maine & Georges Bank SST Anomaly") +
     scale_color_manual(values = c("black","indianred"))+
@@ -1059,7 +1059,7 @@ bot_temp_insitu_gom <- oceantemp_insitu %>%
   geom_line(aes(x = Time, y = Value)) +
   geom_gls(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab("Temperature Anomaly (°C)") +
+  ylab("Temperature Anomaly (C)") +
   xlab(element_blank())+
   ggtitle("GOM Bottom Temperature Anomaly") +
   scale_x_continuous(expand = c(0.01, 0.01)) +
@@ -1083,7 +1083,7 @@ bot_temp_insitu_gb <- oceantemp_insitu %>%
   geom_line(aes(x = Time, y = Value)) +
   geom_gls(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab("Temperature Anomaly (°C)") +
+  ylab("Temperature Anomaly (C)") +
   xlab(element_blank())+
   ggtitle("GB Bottom Temperature Anomaly") +
   scale_x_continuous(expand = c(0.01, 0.01)) +
@@ -1826,7 +1826,7 @@ gb_map <-
   geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
   geom_sf(data = ecodata::coast, size = map.lwd) +
   geom_sf(data = ne_epu_sf, fill = "transparent", size = map.lwd) +
-  scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
+  scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
@@ -1874,7 +1874,7 @@ gom_map <-
   geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
   geom_sf(data = ecodata::coast, size = map.lwd) +
   geom_sf(data = ne_epu_sf, fill = "transparent", size = map.lwd) +
-  scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
+  scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
@@ -1928,7 +1928,7 @@ ggplot() +
   geom_tile(data = sst, aes(x = Longitude, y = Latitude, fill = Value)) +
   geom_sf(data = ecodata::coast, size = map.lwd) +
   geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) +
-  scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
+  scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),

@@ -10,7 +10,7 @@ bot_temp_insitu_gom <- oceantemp_insitu %>%
   geom_line(aes(x = Time, y = Value)) +
   geom_gls(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab("Temperature Anomaly (°C)") +
+  ylab("Temperature Anomaly (C)") +
   xlab(element_blank())+
   ggtitle("GOM Bottom Temperature Anomaly") +
   scale_x_continuous(expand = c(0.01, 0.01)) +
@@ -34,7 +34,7 @@ bot_temp_insitu_gb <- oceantemp_insitu %>%
   geom_line(aes(x = Time, y = Value)) +
   geom_gls(aes(x = Time, y = Value)) +
   geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab("Temperature Anomaly (°C)") +
+  ylab("Temperature Anomaly (C)") +
   xlab(element_blank())+
   ggtitle("GB Bottom Temperature Anomaly") +
   scale_x_continuous(expand = c(0.01, 0.01)) +

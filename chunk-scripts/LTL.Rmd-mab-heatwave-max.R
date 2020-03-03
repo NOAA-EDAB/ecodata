@@ -21,7 +21,7 @@ mab_map <-
   geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
   geom_sf(data = ecodata::coast, size = map.lwd) +
   geom_sf(data = mab_epu_sf, fill = "transparent", size = map.lwd) +
-  scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
+  scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),

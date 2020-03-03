@@ -14,7 +14,7 @@ ne_anom_plt <- ggplot(data = ne_anom,
   geom_point()+
   ylim(-2,3)+
   geom_gls() +
-  ylab(expression("SST Anomaly (°C)")) +
+  ylab(expression("SST Anomaly (C)")) +
   xlab(element_blank())+
   ggtitle("Gulf of Maine & Georges Bank SST Anomaly") +
     scale_color_manual(values = c("black","indianred"))+

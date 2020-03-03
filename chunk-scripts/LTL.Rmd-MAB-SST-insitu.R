@@ -34,7 +34,7 @@ sst_map <-
   geom_tile(data = sst, aes(x = Longitude, y = Latitude,fill = Value)) +
   geom_sf(data = ecodata::coast, size = map.lwd) +
   geom_sf(data = mab_epu_sf, fill = "transparent", size = map.lwd) +
-  scale_fill_gradient2(name = "Temp.\nAnomaly (°C)",
+  scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
@@ -65,7 +65,7 @@ winter_anom <-  ggplotGrob( seasonal_oisst_anom %>%
                               geom_line() +
                               geom_point() +
                               geom_gls(alpha = trend.alpha + 0.25) +
-                              ylab("SST anomaly (°C)")+
+                              ylab("SST anomaly (C)")+
                               xlab(element_blank())+
                               scale_x_continuous(expand = c(0.01, 0.01)) +
                               geom_hline(aes(yintercept = hline)) +
@@ -94,7 +94,7 @@ spring_anom <-  ggplotGrob( seasonal_oisst_anom %>%
                               geom_line() +
                               geom_point() +
                               geom_gls(alpha = trend.alpha + 0.25) +
-                              ylab("SST anomaly (°C)")+
+                              ylab("SST anomaly (C)")+
                               xlab(element_blank())+
                               scale_x_continuous(expand = c(0.01, 0.01)) +
                               geom_hline(aes(yintercept = hline)) +
@@ -123,7 +123,7 @@ summer_anom <-  ggplotGrob( seasonal_oisst_anom %>%
                               geom_line() +
                               geom_point() +
                               geom_gls(alpha = trend.alpha + 0.25) +
-                              ylab("SST anomaly (°C)")+
+                              ylab("SST anomaly (C)")+
                               xlab(element_blank())+
                               scale_x_continuous(expand = c(0.01, 0.01)) +
                               geom_hline(aes(yintercept = hline)) +
@@ -152,7 +152,7 @@ fall_anom <-  ggplotGrob( seasonal_oisst_anom %>%
                             geom_line() +
                             geom_point() +
                             geom_gls(alpha = trend.alpha + 0.25) +
-                            ylab("SST anomaly (°C)")+
+                            ylab("SST anomaly (C)")+
                             xlab(element_blank())+
                             scale_x_continuous(expand = c(0.01, 0.01)) +
                             geom_hline(aes(yintercept = hline)) +
