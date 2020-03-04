@@ -2145,7 +2145,7 @@ kable(d, caption = "Forage fish energy content",col.names = colNames) %>%
 blue<-ecodata::blue_runner %>% 
   separate(Var, c("Var", "Pos"), "L") %>% 
   spread(., Pos, Value) %>% 
-  rename(Lat = at, 
+  dplyr::rename(Lat = at, 
          Lon = on) %>% 
   mutate(Var = recode(Var,
                       "Positive Blue Runner Tows before 2001 - " = "Prior to 2000",

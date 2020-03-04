@@ -1,7 +1,7 @@
 
 # Image Directory
 image.dir <- here::here("docs/images")
-
+gis.dir <- here::here("data-raw/gis")
 #Default Rmd options
 knitr::opts_chunk$set(echo = FALSE,
                       message = FALSE,
@@ -25,7 +25,8 @@ library(cowplot)
 library(sf)
 library(rgdal)
 library(raster)
-library(rnaturalearth)
+library(ggspatial)
+library(marmap)
 
 
 #General inline text input for report

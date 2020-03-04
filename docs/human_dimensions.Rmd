@@ -10,7 +10,7 @@ output:
 ```{r setup, include=FALSE}
 # Image Directory
 image.dir <- here::here("docs/images")
-
+gis.dir <- here::here("data-raw/gis")
 #Default Rmd options
 knitr::opts_chunk$set(echo = FALSE,
                       message = FALSE,
@@ -34,7 +34,8 @@ library(cowplot)
 library(sf)
 library(rgdal)
 library(raster)
-library(rnaturalearth)
+library(ggspatial)
+library(marmap)
 
 
 #General inline text input for report
@@ -1792,29 +1793,23 @@ kable(all, escape = FALSE,
 ```
 
 
-```{r, eval = T, echo = F, fig.cap="Map of BOEM existing (black) and proposed (red) lease areas as of February 2019.", message=FALSE, results=FALSE}
-library(rnaturalearthhires)
-library(sf)
-library(raster)
-library(ggspatial)
-library(marmap)
+```{r wind-map, eval = T, echo = F, fig.cap="Map of BOEM existing (black) and proposed (red) lease areas as of February 2019.", message=FALSE, results=FALSE}
 
-crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
-gis.dir <- here::here("data-raw/gis")
-nesbath <- fortify.bathy(getNOAA.bathy(lon1 = -77, lon2 = -65, lat1 = 35, lat2 = 45,
+
+nesbath <- marmap::fortify.bathy(marmap::getNOAA.bathy(lon1 = -77, lon2 = -65, lat1 = 35, lat2 = 45,
               resolution = 5))
 
-lease_s<-st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesSPoly.shp'))
-lease_n<-st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesNPoly.shp'))
-lease_m<-st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesMPoly.shp'))
-prop_n<-st_read(file.path(gis.dir, 'BOEM lease areas/ne_proposed_leases_NPoly.shp'))
-prop_m<-st_read(file.path(gis.dir, 'BOEM lease areas/ne_proposed_leases_MPoly.shp'))
+lease_s<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesSPoly.shp'))
+lease_n<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesNPoly.shp'))
+lease_m<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesMPoly.shp'))
+prop_n<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_proposed_leases_NPoly.shp'))
+prop_m<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_proposed_leases_MPoly.shp'))
 
-invisible(st_crs(lease_s)<-crs)
-invisible(st_crs(lease_n)<-crs)
-invisible(st_crs(lease_m)<-crs)
-invisible(st_crs(prop_n)<-crs)
-invisible(st_crs(prop_m)<-crs)
+invisible(sf::st_crs(lease_s)<-crs)
+invisible(sf::st_crs(lease_n)<-crs)
+invisible(sf::st_crs(lease_m)<-crs)
+invisible(sf::st_crs(prop_n)<-crs)
+invisible(sf::st_crs(prop_m)<-crs)
 
 ggplot() +
   geom_raster(data = nesbath, aes(x=x,y=y, fill = z)) +
