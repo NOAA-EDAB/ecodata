@@ -22,8 +22,6 @@ library(grid)
 library(sf)
 library(rgdal)
 library(raster)
-library(rnaturalearth)
-
 
 #General inline text input for report
 

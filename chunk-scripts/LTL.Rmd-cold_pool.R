@@ -1,20 +1,20 @@
 
 ecodata::cold_pool %>% 
-    mutate(hline = mean(Value, na.rm = T)) %>% 
-  ggplot() + 
+    dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
+  ggplot2::ggplot() + 
  #Highlight last ten years
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -3, ymax = 3) +
-  geom_gls(aes(x = Time, y = Value),
+  ecodata::geom_gls(aes(x = Time, y = Value),
              alpha = trend.alpha, size = trend.size) +
-  geom_line(aes(x = Time, y = Value), size = lwd) +
-  geom_point(aes(x = Time, y = Value), size = pcex) +
-    geom_hline(aes(yintercept = hline),
+  ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
+  ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
+  ggplot2::geom_hline(aes(yintercept = hline),
      size = hline.size,
      alpha = hline.alpha,
      linetype = hline.lty)+
-  ggtitle("Cold Pool Index")+
-  ylab(expression("Cold Pool Temp Anomaly (C) ")) +
-  xlab("")+
-  theme_ts()
+  ggplot2::ggtitle("Cold Pool Index")+
+  ggplot2::ylab(expression("Cold Pool Temp Anomaly (C) ")) +
+  ggplot2::xlab("")+
+  ecodata::theme_ts()

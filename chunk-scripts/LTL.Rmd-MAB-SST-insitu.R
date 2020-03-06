@@ -10,7 +10,7 @@ annotation_custom2 <- function (grob, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax
 
 #EPU shapefile
 mab_epu_sf <- ecodata::epu_sf %>% 
-  filter(EPU %in% c("MAB"))
+  dplyr::filter(EPU %in% c("MAB"))
 
 #Map line parameters
 map.lwd <- 0.4
@@ -22,31 +22,31 @@ ymin = 35.5
 ymax = 43
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
-sst <- seasonal_sst_anomaly_gridded 
+sst <- ecodata::seasonal_sst_anomaly_gridded 
 
 sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Spring",
                                             "Summer",
                                             "Fall"))
-sst<- sst %>% mutate(Value = replace(Value, Value > 4, 4))
+sst<- sst %>% dplyr::mutate(Value = replace(Value, Value > 4, 4))
 sst_map <- 
-  ggplot() +
-  geom_tile(data = sst, aes(x = Longitude, y = Latitude,fill = Value)) +
-  geom_sf(data = ecodata::coast, size = map.lwd) +
-  geom_sf(data = mab_epu_sf, fill = "transparent", size = map.lwd) +
-  scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
+  ggplot2::ggplot() +
+  ggplot2::geom_tile(data = sst, aes(x = Longitude, y = Latitude,fill = Value)) +
+  ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) +
+  ggplot2::geom_sf(data = mab_epu_sf, fill = "transparent", size = map.lwd) +
+  ggplot2::scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
                        limits = c(-4,4),
                        labels = c("<-4", "-2", "0", "2", ">4")) +
-  coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
-  facet_wrap(Season~.) +
-  theme_map() +
-  ggtitle("SST anomaly (2019)") +
-  xlab("Longitude") +
-  ylab("Latitude") +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
+  ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
+  ggplot2::facet_wrap(Season~.) +
+  ecodata::theme_map() +
+  ggplot2::ggtitle("SST anomaly (2019)") +
+  ggplot2::xlab("Longitude") +
+  ggplot2::ylab("Latitude") +
+  ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
         legend.key = element_blank(),
         axis.title = element_text(size = 11),
         strip.background = element_blank(),
@@ -54,23 +54,23 @@ sst_map <-
         axis.text = element_text(size = 8), 
         axis.title.y = element_text(angle = 90))
 
-winter_anom <-  ggplotGrob( seasonal_oisst_anom %>% 
-                              filter(EPU == "MAB",
-                                     str_detect(Var, "winter")) %>% 
-                              mutate(hline = mean(Value)) %>% 
-                              ggplot(aes(x = Time, y = Value)) +
-                              annotate("rect", fill = shade.fill, alpha = shade.alpha,
+winter_anom <-  ggplot2::ggplotGrob( seasonal_oisst_anom %>% 
+                              dplyr::filter(EPU == "MAB",
+                                     stringr::str_detect(Var, "winter")) %>% 
+                              dplyr::mutate(hline = mean(Value)) %>% 
+                              ggplot2::ggplot(aes(x = Time, y = Value)) +
+                              ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
                                        xmin = x.shade.min , xmax = x.shade.max,
                                        ymin = -Inf, ymax = Inf) +
-                              geom_line() +
-                              geom_point() +
-                              geom_gls(alpha = trend.alpha + 0.25) +
-                              ylab("SST anomaly (C)")+
-                              xlab(element_blank())+
-                              scale_x_continuous(expand = c(0.01, 0.01)) +
-                              geom_hline(aes(yintercept = hline)) +
-                              theme_ts()+
-                              theme(axis.title = element_text(size = 6),
+                              ggplot2::geom_line() +
+                              ggplot2::geom_point() +
+                              ecodata::geom_gls(alpha = trend.alpha + 0.25) +
+                              ggplot2::ylab("SST anomaly (C)")+
+                              ggplot2::xlab(element_blank())+
+                              ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+                              ggplot2::geom_hline(aes(yintercept = hline)) +
+                              ecodata::theme_ts()+
+                              ggplot2::theme(axis.title = element_text(size = 6),
                                     axis.text = element_text(size = 6),
                                     panel.background = element_rect(fill = "transparent"), 
                                     plot.background = element_rect(fill = "transparent", color = NA), 
@@ -83,23 +83,23 @@ winter_anom <-  ggplotGrob( seasonal_oisst_anom %>%
                                     panel.border = element_blank())
 )
 
-spring_anom <-  ggplotGrob( seasonal_oisst_anom %>% 
-                              filter(EPU == "MAB",
-                                     str_detect(Var, "spring")) %>% 
-                              mutate(hline = mean(Value)) %>% 
-                              ggplot(aes(x = Time, y = Value)) +
-                              annotate("rect", fill = shade.fill, alpha = shade.alpha,
+spring_anom <-  ggplot2::ggplotGrob( seasonal_oisst_anom %>% 
+                              dplyr::filter(EPU == "MAB",
+                                     stringr::str_detect(Var, "spring")) %>% 
+                              dplyr::mutate(hline = mean(Value)) %>% 
+                              ggplot2::ggplot(aes(x = Time, y = Value)) +
+                              ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
                                        xmin = x.shade.min , xmax = x.shade.max,
                                        ymin = -Inf, ymax = Inf) +
-                              geom_line() +
-                              geom_point() +
-                              geom_gls(alpha = trend.alpha + 0.25) +
-                              ylab("SST anomaly (C)")+
-                              xlab(element_blank())+
-                              scale_x_continuous(expand = c(0.01, 0.01)) +
-                              geom_hline(aes(yintercept = hline)) +
-                              theme_ts()+
-                              theme(axis.title = element_text(size = 6),
+                              ggplot2::geom_line() +
+                              ggplot2::geom_point() +
+                              ecodata::geom_gls(alpha = trend.alpha + 0.25) +
+                              ggplot2::ylab("SST anomaly (C)")+
+                              ggplot2::xlab(element_blank())+
+                              ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+                              ggplot2::geom_hline(aes(yintercept = hline)) +
+                              ecodata::theme_ts()+
+                              ggplot2::theme(axis.title = element_text(size = 6),
                                     axis.text = element_text(size = 6),
                                     panel.background = element_rect(fill = "transparent"), 
                                     plot.background = element_rect(fill = "transparent", color = NA),
@@ -112,23 +112,23 @@ spring_anom <-  ggplotGrob( seasonal_oisst_anom %>%
                                     panel.border = element_blank())
 )
 
-summer_anom <-  ggplotGrob( seasonal_oisst_anom %>% 
-                              filter(EPU == "MAB",
-                                     str_detect(Var, "summer")) %>% 
-                              mutate(hline = mean(Value)) %>% 
-                              ggplot(aes(x = Time, y = Value)) +
-                              annotate("rect", fill = shade.fill, alpha = shade.alpha,
+summer_anom <-  ggplot2::ggplotGrob( seasonal_oisst_anom %>% 
+                              dplyr::filter(EPU == "MAB",
+                                     stringr::str_detect(Var, "summer")) %>% 
+                              dplyr::mutate(hline = mean(Value)) %>% 
+                              ggplot2::ggplot(aes(x = Time, y = Value)) +
+                              ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
                                        xmin = x.shade.min , xmax = x.shade.max,
                                        ymin = -Inf, ymax = Inf) +
-                              geom_line() +
-                              geom_point() +
-                              geom_gls(alpha = trend.alpha + 0.25) +
-                              ylab("SST anomaly (C)")+
-                              xlab(element_blank())+
-                              scale_x_continuous(expand = c(0.01, 0.01)) +
-                              geom_hline(aes(yintercept = hline)) +
-                              theme_ts()+
-                              theme(axis.title = element_text(size = 6),
+                              ggplot2::geom_line() +
+                              ggplot2::geom_point() +
+                              ecodata::geom_gls(alpha = trend.alpha + 0.25) +
+                              ggplot2::ylab("SST anomaly (C)")+
+                              ggplot2::xlab(element_blank())+
+                              ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+                              ggplot2::geom_hline(aes(yintercept = hline)) +
+                              ecodata::theme_ts()+
+                              ggplot2::theme(axis.title = element_text(size = 6),
                                     axis.text = element_text(size = 6),
                                     panel.background = element_rect(fill = "transparent"),
                                     plot.background = element_rect(fill = "transparent", color = NA),
@@ -141,23 +141,23 @@ summer_anom <-  ggplotGrob( seasonal_oisst_anom %>%
                                     panel.border = element_blank())
 )
 
-fall_anom <-  ggplotGrob( seasonal_oisst_anom %>% 
-                            filter(EPU == "MAB",
-                                   str_detect(Var, "fall")) %>% 
-                            mutate(hline = mean(Value)) %>% 
-                            ggplot(aes(x = Time, y = Value)) +
-                            annotate("rect", fill = shade.fill, alpha = shade.alpha,
+fall_anom <-  ggplot2::ggplotGrob( seasonal_oisst_anom %>% 
+                            dplyr::filter(EPU == "MAB",
+                                   stringr::str_detect(Var, "fall")) %>% 
+                            dplyr::mutate(hline = mean(Value)) %>% 
+                            ggplot2::ggplot(aes(x = Time, y = Value)) +
+                            ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
                                      xmin = x.shade.min , xmax = x.shade.max,
                                      ymin = -Inf, ymax = Inf) +
-                            geom_line() +
-                            geom_point() +
-                            geom_gls(alpha = trend.alpha + 0.25) +
-                            ylab("SST anomaly (C)")+
-                            xlab(element_blank())+
-                            scale_x_continuous(expand = c(0.01, 0.01)) +
-                            geom_hline(aes(yintercept = hline)) +
-                            theme_ts()+
-                            theme(axis.title = element_text(size = 6),
+                            ggplot2::geom_line() +
+                            ggplot2::geom_point() +
+                            ecodata::geom_gls(alpha = trend.alpha + 0.25) +
+                            ggplot2::ylab("SST anomaly (C)")+
+                            ggplot2::xlab(element_blank())+
+                            ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+                            ggplot2::geom_hline(aes(yintercept = hline)) +
+                            ecodata::theme_ts()+
+                            ggplot2::theme(axis.title = element_text(size = 6),
                                   axis.text = element_text(size = 6),
                                   panel.background = element_rect(fill = "transparent"), 
                                   plot.background = element_rect(fill = "transparent", color = NA), 

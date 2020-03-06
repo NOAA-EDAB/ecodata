@@ -6,30 +6,33 @@ ymin = 36
 ymax = 45
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
-sst <- seasonal_sst_anomaly_gridded 
+sst <- ecodata::seasonal_sst_anomaly_gridded 
 
 sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Spring",
                                             "Summer",
                                             "Fall"))
+
+sst<- sst %>% dplyr::mutate(Value = replace(Value, Value > 4, 4))
 epu_sf <- ecodata::epu_sf[ecodata::epu_sf$EPU != "SS",]
 
-ggplot() +
-  geom_tile(data = sst, aes(x = Longitude, y = Latitude, fill = Value)) +
-  geom_sf(data = ecodata::coast, size = map.lwd) +
-  geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) +
-  scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
+ggplot2::ggplot() +
+  ggplot2::geom_tile(data = sst, aes(x = Longitude, y = Latitude, fill = Value)) +
+  ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) +
+  ggplot2::geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) +
+  ggplot2::scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
-                       limits = c(-6,6)) +
-  coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
-  facet_wrap(Season~.) +
-  theme_map() +
-  ggtitle("SST anomaly (2019)") +
-  xlab("Longitude") +
-  ylab("Latitude") +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
+                       limits = c(-4,4), 
+                       labels = c("<-4", "-2", "0", "2", ">4")) +
+  ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
+  ggplot2::facet_wrap(Season~.) +
+  ecodata::theme_map() +
+  ggplot2::ggtitle("SST anomaly (2019)") +
+  ggplot2::xlab("Longitude") +
+  ggplot2::ylab("Latitude") +
+  ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
         legend.key = element_blank(),
         axis.title = element_text(size = 11),
         strip.background = element_blank(),

@@ -1,5 +1,5 @@
 
-temp_anom <- ecodata::oceantemp_insitu %>% 
+temp_anom <- ecodata::bottom_temp %>% 
   dplyr::filter(EPU == epu_abbr) %>% 
   tidyr::complete(Time = tidyr::full_seq(min(oceantemp_insitu$Time):max(oceantemp_insitu$Time),1),
            tidyr::nesting(Var)) %>% 
@@ -8,21 +8,20 @@ temp_anom <- ecodata::oceantemp_insitu %>%
 temp_anom %>%
  dplyr::filter(Var == "bottom temp anomaly in situ") %>%
 ggplot2::ggplot() +
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  geom_line(aes(x = Time, y = Value)) +
-  geom_gls(aes(x = Time, y = Value)) +
-  geom_point(aes(x = Time, y = Value), size = 1) +
-  ylab("Temperature (C)") +
-  xlab(element_blank())+
-  ggtitle("Bottom temp. anomaly") +
-  scale_x_continuous(expand = c(0.01, 0.01)) +
-  theme_ts() +
-  theme(strip.text=element_text(hjust=0),
+  ggplot2::geom_line(aes(x = Time, y = Value)) +
+  ecodata::geom_gls(aes(x = Time, y = Value)) +
+  ggplot2::geom_point(aes(x = Time, y = Value), size = 1) +
+  ggplot2::ylab("Temperature (C)") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("Bottom temperature anomaly") +
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  ggplot2::theme(strip.text=element_text(hjust=0),
         plot.title = element_text(size = 12))+
-  geom_hline(aes(yintercept = hline),
+  ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
- theme_ts()
+  ecodata::theme_ts()

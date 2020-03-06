@@ -1,26 +1,26 @@
 
 upper.line<-ecodata::wcr %>%
-  filter(Time>2000) %>% 
-  mutate(hline = c(mean(Value)))
+  dplyr::filter(Time>2000) %>% 
+  dplyr::mutate(hline = c(mean(Value)))
 lower.line<-ecodata::wcr%>%
-  filter(Time<2000) %>% 
-  mutate(hline = c(mean(Value)))
+  dplyr::filter(Time<2000) %>% 
+  dplyr::mutate(hline = c(mean(Value)))
 wcr<- upper.line %>% 
   rbind(lower.line)
 
 wcr %>% 
-  ggplot(aes(x = Time, y = Value))+
-  geom_point()+
-  geom_line()+
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  ggplot2::ggplot(aes(x = Time, y = Value))+
+  ggplot2::geom_point()+
+  ggplot2::geom_line()+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  ylab("Warm Core Ring Births")+
-  xlab(element_blank())+
-  ggtitle("Warm Core Rings")+
-  theme_ts()+
-  geom_segment(data = upper.line, aes(x = min(Time), y = hline, 
+  ggplot2::ylab("Warm Core Ring Births")+
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("Warm Core Rings")+
+  ecodata::theme_ts()+
+  ggplot2::geom_segment(data = upper.line, aes(x = min(Time), y = hline, 
                                       xend = max(Time), yend = hline, color = "segment") )+
-  geom_segment(data = lower.line, aes(x = min(Time), y = hline, 
-                                      xend = max(Time), yend = hline, color = "segment") )+
-  theme(legend.position = "none")
+  ggplot2::geom_segment(data = lower.line, aes(x = min(Time), y = hline, 
+                                    xend = max(Time), yend = hline, color = "segment") )+
+  ggplot2::theme(legend.position = "none")
