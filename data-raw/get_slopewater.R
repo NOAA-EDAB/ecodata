@@ -19,8 +19,8 @@ get_slopewater <- function(save_clean = F){
 
   slopewater <- d %>%
     dplyr::rename(Time = year, Var = water.mass.flavor, Value = prop) %>%
-    mutate(EPU = "GOM", Units = "unitless", Var2 = "proportion ne channel") %>%
-    unite(.,Var,c(Var,Var2), sep = " ") %>%
+    dplyr::mutate(EPU = "GOM", Units = "unitless", Var2 = "proportion ne channel") %>%
+    tidyr::unite(.,Var,c(Var,Var2), sep = " ") %>%
     as.data.frame()
 
   if (save_clean){

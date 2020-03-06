@@ -36,7 +36,7 @@ raw.dir <- here::here("data-raw")
 
 get_ne_inshore_survey <- function(save_clean = F){
 
-  ne_inshore_survey <- read_excel(file.path(raw.dir, "MENH_TrawlSurvey.xlsx")) %>%
+  ne_inshore_survey <- readxl::read_excel(file.path(raw.dir, "MENH_TrawlSurvey.xlsx")) %>%
     dplyr::rename(Var = SOE.20,
                   Value = StratMean_Weight,
                   Time = Year) %>%
@@ -44,8 +44,8 @@ get_ne_inshore_survey <- function(save_clean = F){
                   Units = "(KG/tow)") %>%
     dplyr::select(-...1,-CV_Weight, - SE_Weight,
                   -Low_CI_Weight, -High_CI_Weight, -Survey ) %>%
-    mutate(Season = recode(Season, "FL"= "Fall","SP" = "Spring" )) %>%
-    unite(.,Var, c("Var","Season"),sep = " ")
+    dplyr::mutate(Season = dplyr::recode(Season, "FL"= "Fall","SP" = "Spring" )) %>%
+    tidyr::unite(.,Var, c("Var","Season"),sep = " ")
   if (save_clean){
     usethis::use_data(ne_inshore_survey, overwrite = T)
   } else {
@@ -56,8 +56,8 @@ get_ne_inshore_survey <- function(save_clean = F){
 
 get_ne_inshore_survey_species <- function(save_clean = F){
   ne_inshore_survey_species <- read_excel(file.path(raw.dir, "MENH_TrawlSpeciesinSOE2020.xlsx")) %>%
-    mutate(Var = "Maine and NH inshore survey species") %>%
-    rename(Species = CommonName,
+    dplyr::mutate(Var = "Maine and NH inshore survey species") %>%
+    dplyr::rename(Species = CommonName,
            Group = SOE.20) %>%
     dplyr::select(-ITISSPP, -COMNAME, -SVSPP, -SCINAME)
 

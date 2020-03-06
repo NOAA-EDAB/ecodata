@@ -38,75 +38,75 @@ library(lubridate)
 
 #Data directories
 raw.dir <- here::here("data-raw")
-gis.dir <- here::here("inst","extdata","gis")
+gis.dir <- here::here("data-raw", "gis")
 
 #CRS
 crs <- "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 
 get_ecomon <- function(save_clean = F){
-  
+
   d <- read.csv(file.path(raw.dir,"EcoMon Nutrient Data Through June 2018.csv"), stringsAsFactors = FALSE)
-  
+
   #Create data frame for mapping units to variable names
   mapping <- data.frame(Units = as.character(d[1,]),
                         Var = as.character(names(d)))
   mapping[mapping$Units == "" | mapping$Units == "NA",]$Units <- NA
-  
+
   #remove row with units
   d <- slice(d,-1)
-  
-  d1 <- d %>% 
+
+  d1 <- d %>%
     mutate(Time = Date_UTC) %>% #create Time variable
     dplyr::select(-Date_UTC,-Time_UTC) %>% #remove time, date
     gather(., Var, Value, -Latitude, -Longitude, -Time, -Depth_sampling, -Depth_station) %>% #turn wide to long while retaining lat/lon
     filter(!is.na(Value)) %>% #remove NA
-    left_join(., mapping, by = c("Var")) %>% #join units 
+    left_join(., mapping, by = c("Var")) %>% #join units
     mutate(Longitude = as.numeric(Longitude),
            Latitude = as.numeric(Latitude),
-           Time = mdy(Time)) %>% 
+           Time = mdy(Time)) %>%
     filter(Latitude > 32, Latitude<50)
-  
+
   #Read in EPU shapefile
-  epu <- readOGR(file.path(gis.dir, "EPU_Extended.shp"), verbose = F) 
+  epu <- readOGR(file.path(gis.dir, "EPU_Extended.shp"), verbose = F)
   epu <- as(epu, "sf") #convert to sf object
-  
+
   #get latitude and longitude for creating SpatialPointsDataFrame
   lat <-  as.numeric(d$Latitude)
   lon <- as.numeric(d$Longitude)
   coords <- data.frame(lon = lon,lat = lat)
-  
+
   #create spdf
   spdf <- SpatialPointsDataFrame(coords = coords, data = coords,
                                  proj4string = CRS(crs))
   #convert to sf
-  coords_sf <- st_as_sf(spdf) 
-  
+  coords_sf <- st_as_sf(spdf)
+
   #get intersection for mapping EPUs back to nutrient data
   epu_intersect <- st_intersection(epu, coords_sf)
-  
+
   #Map back to nutrient data frame
   epu_df <- data.frame(Longitude = epu_intersect$lon,
                        Latitude = epu_intersect$lat,
                        EPU = epu_intersect$EPU)
   #join
-  ecomon <- d1 %>% 
-    left_join(.,epu_df, by = c("Latitude","Longitude")) %>% 
-    filter(!Var %in% c("Cruise_ID","EXPOCODE")) %>% 
-    dplyr::select(-Latitude, -Longitude) %>% 
+  ecomon <- d1 %>%
+    left_join(.,epu_df, by = c("Latitude","Longitude")) %>%
+    filter(!Var %in% c("Cruise_ID","EXPOCODE")) %>%
+    dplyr::select(-Latitude, -Longitude) %>%
     mutate(Value = as.numeric(Value),
            Depth_station = as.numeric(Depth_station),
-           Depth_sampling = as.numeric(Depth_sampling)) %>% 
-    mutate(bot_dif = Depth_station-Depth_sampling) %>% 
+           Depth_sampling = as.numeric(Depth_sampling)) %>%
+    mutate(bot_dif = Depth_station-Depth_sampling) %>%
     mutate(surf_bot = ifelse(bot_dif <= 10, "bottom",
-                             ifelse(bot_dif > 10 & Depth_sampling <= 5, "surface", "mid-water"))) %>% 
+                             ifelse(bot_dif > 10 & Depth_sampling <= 5, "surface", "mid-water"))) %>%
     filter(Value > 0, !is.na(EPU), !Var %in% c("BTLNBR","CASTNO","Depth_sampling",
-                                               "Depth_station","STNNBR")) %>% 
-    mutate(Var = paste(Var, surf_bot)) %>% 
-    dplyr::select(Time, Var, Value, Units, EPU) %>% 
-    group_by(EPU, Time = year(Time), Var, Units) %>% 
-    dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>% 
+                                               "Depth_station","STNNBR")) %>%
+    mutate(Var = paste(Var, surf_bot)) %>%
+    dplyr::select(Time, Var, Value, Units, EPU) %>%
+    group_by(EPU, Time = year(Time), Var, Units) %>%
+    dplyr::summarise(Value = mean(Value, na.rm = TRUE)) %>%
     as.data.frame()
-  
+
     if (save_clean){
       usethis::use_data(ecomon, overwrite = T)
     } else {

@@ -31,21 +31,21 @@ seasonal_epu_ltm <- function(ltm, epu_name){
 }
 
 #Get long-term mean for anomaly calculation
-ltm <- stack(file.path(raw.dir, "sst.day.mean.ltm.1982-2010.nc"))
-ltm <- crop(ltm, extent(280,300,30,50))
-ltm <- rotate(ltm)
+ltm <- raster::stack(file.path(raw.dir, "sst.day.mean.ltm.1982-2010.nc"))
+ltm <- raster::crop(ltm, extent(280,300,30,50))
+ltm <- raster::rotate(ltm)
 
 winter.ltm <- ltm[[1:90]]
-winter.ltm <- stackApply(winter.ltm, indices = rep(1,nlayers(winter.ltm)),mean)
+winter.ltm <- raster::stackApply(winter.ltm, indices = rep(1,nlayers(winter.ltm)),mean)
 
 spring.ltm <- ltm[[91:181]]
-spring.ltm <- stackApply(spring.ltm, indices = rep(1,nlayers(spring.ltm)),mean)
+spring.ltm <- raster::stackApply(spring.ltm, indices = rep(1,nlayers(spring.ltm)),mean)
 
 summer.ltm <- ltm[[182:273]]
-summer.ltm <- stackApply(summer.ltm, indices = rep(1,nlayers(summer.ltm)),mean)
+summer.ltm <- raster::stackApply(summer.ltm, indices = rep(1,nlayers(summer.ltm)),mean)
 
 fall.ltm <- ltm[[274:365]]
-fall.ltm <- stackApply(fall.ltm, indices = rep(1,nlayers(fall.ltm)),mean)
+fall.ltm <- raster::stackApply(fall.ltm, indices = rep(1,nlayers(fall.ltm)),mean)
 
 
 #Function to get seasonal averages by year
@@ -53,7 +53,7 @@ fall.ltm <- stackApply(fall.ltm, indices = rep(1,nlayers(fall.ltm)),mean)
 get_group_mean <- function(fname, epu_name, anom = T){
 
   #Import raster data
-  raw <- stack(file.path(raw.dir, fname))
+  raw <- raster::stack(file.path(raw.dir, fname))
 
   crs(raw) <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 
@@ -65,11 +65,11 @@ get_group_mean <- function(fname, epu_name, anom = T){
   }
 
   year_split <- year %>%
-    group_by(Time) %>%
-      mutate(day = 1:n()) %>%
-      mutate(leap = ifelse(n() == 365,"common","leap")) %>%
-      group_by(leap) %>%
-        mutate(season = ifelse(day <= 90 & leap == "common", "winter",
+    dplyr::group_by(Time) %>%
+    dplyr::mutate(day = 1:n()) %>%
+    dplyr::mutate(leap = ifelse(n() == 365,"common","leap")) %>%
+    dplyr::group_by(leap) %>%
+    dplyr::mutate(season = ifelse(day <= 90 & leap == "common", "winter",
                                ifelse(day > 90 & day <= 181 & leap == "common", "spring",
                                       ifelse(day > 181 & day <= 273 & leap == "common", "summer",
                                              ifelse(day > 273 & leap == "common", "fall",
@@ -78,8 +78,8 @@ get_group_mean <- function(fname, epu_name, anom = T){
                                ifelse(day > 91 & day <= 181 & leap == "leap", "spring",
                                       ifelse(day > 181 & day <= 273 & leap == "leap", "summer",
                                              ifelse(day > 273 & leap == "leap", "fall",NA))))))))) %>%
-    group_by(Time, leap, season) %>%
-    mutate(index = paste(Time, season))
+    dplyr::group_by(Time, leap, season) %>%
+    dplyr::mutate(index = paste(Time, season))
 
   if (any(is.na(year_split))){
     message("NA in year")
@@ -91,23 +91,23 @@ get_group_mean <- function(fname, epu_name, anom = T){
 
   #Split data on layer index - stackApply will break if there are too many layers
   g1 <- year_split %>%
-    filter(index %in% unique(.$index)[1:10]) %>%
+    dplyr::filter(index %in% unique(.$index)[1:10]) %>%
     pull(index)
 
   g2 <- year_split %>%
-    filter(!index %in% unique(.$index)[1:10]) %>%
+    dplyr::filter(!index %in% unique(.$index)[1:10]) %>%
     pull(index)
 
   #Apply and combine
   message(paste('Finding mean'))
-  n <- nlayers(raw1)
-  rawMean1 <- stackApply(raw1[[1:length(g1)]], indices = g1, mean)
-  rawMean2 <- stackApply(raw1[[(length(g1) + 1):n]], indices = g2, mean)
-  rawMean <- stack(rawMean1,rawMean2)
+  n <- raster::nlayers(raw1)
+  rawMean1 <- raster::stackApply(raw1[[1:length(g1)]], indices = g1, mean)
+  rawMean2 <- raster::stackApply(raw1[[(length(g1) + 1):n]], indices = g2, mean)
+  rawMean <- raster::stack(rawMean1,rawMean2)
 
   #Mask output to EPU
   message(paste('Masking to',epu_name))
-  out <- mask(rawMean, epu[epu$EPU == epu_name,])
+  out <- raster::mask(rawMean, epu[epu$EPU == epu_name,])
 
   #Find seasonal anomaly
   mean_sst <- NULL
@@ -153,10 +153,10 @@ for (e in epu_list){
 
 #process output
 seasonal_oisst_anom <- rbind(MAB,GOM,GB) %>%
-    mutate(Time = as.numeric(str_extract(year,"\\d{4}")),
-           Var = paste(str_extract(year, "winter|spring|summer|fall"),"OI SST Anomaly")) %>%
+    dplyr::mutate(Time = as.numeric(stringr::str_extract(year,"\\d{4}")),
+           Var = paste(stringr::str_extract(year, "winter|spring|summer|fall"),"OI SST Anomaly")) %>%
     dplyr::select(-year) %>%
-    mutate(Units = "degreesC")
+    dplyr::mutate(Units = "degreesC")
 
 usethis::use_data(seasonal_oisst_anom, overwrite = TRUE)
 

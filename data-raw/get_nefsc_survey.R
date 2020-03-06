@@ -18,10 +18,10 @@ load(file.path(data.dir, 'Survdat.RData'))
 strata <- ecodata::epu_sf %>% as("Spatial")
 
 #Generate area table
-strat.area <- getarea(strata, 'EPU')
+strat.area <- Survdat::getarea(strata, 'EPU')
 
 #Post stratify data
-survdat.EPU <- poststrat(survdat, strata, 'EPU')
+survdat.EPU <- Survdat::poststrat(survdat, strata, 'EPU')
 setnames(survdat.EPU, 'newstrata', 'EPU')
 
 #Subset by season/ strata set
@@ -29,8 +29,8 @@ fall   <- survdat.EPU[SEASON == 'FALL',   ]
 spring <- survdat.EPU[SEASON == 'SPRING', ]
 
 #Run stratification prep
-fall.prep   <- stratprep(fall,   strat.area, strat.col = 'EPU', area.col = 'Area')
-spring.prep <- stratprep(spring, strat.area, strat.col = 'EPU', area.col = 'Area')
+fall.prep   <- Survdat::stratprep(fall,   strat.area, strat.col = 'EPU', area.col = 'Area')
+spring.prep <- Survdat::stratprep(spring, strat.area, strat.col = 'EPU', area.col = 'Area')
 
 #Calculate mean weight/tow by aggregate groups
 #n tows
@@ -38,19 +38,19 @@ n.tows.fall  <- unique(fall.prep[,   list(YEAR, EPU, ntows)])
 n.tows.spring <- unique(spring.prep[, list(YEAR, EPU, ntows)])
 
 #drop length data
-setkey(fall.prep, YEAR, EPU, STATION, STRATUM, SVSPP, CATCHSEX)
+data.table::setkey(fall.prep, YEAR, EPU, STATION, STRATUM, SVSPP, CATCHSEX)
 fall.prep <- unique(fall.prep, by = key(fall.prep))
 fall.prep[, c('LENGTH', 'NUMLEN') := NULL]
 
-setkey(spring.prep, YEAR, EPU, STATION, STRATUM, SVSPP, CATCHSEX)
+data.table::setkey(spring.prep, YEAR, EPU, STATION, STRATUM, SVSPP, CATCHSEX)
 spring.prep <- unique(spring.prep, by = key(spring.prep))
 spring.prep[, c('LENGTH', 'NUMLEN') := NULL]
 
 #Merge Sexed species
-setkey(fall.prep, YEAR, EPU, STATION, STRATUM, SVSPP)
+data.table::setkey(fall.prep, YEAR, EPU, STATION, STRATUM, SVSPP)
 fall.prep <- fall.prep[, sum(BIOMASS, na.rm = T), by = key(fall.prep)]
 
-setkey(spring.prep, YEAR, EPU, STATION, STRATUM, SVSPP)
+data.table::setkey(spring.prep, YEAR, EPU, STATION, STRATUM, SVSPP)
 spring.prep <- spring.prep[, sum(BIOMASS, na.rm = T), by = key(spring.prep)]
 
 #Sum biomass within an EPU
@@ -72,7 +72,7 @@ spring.mean <- spring.sum[, list(YEAR, EPU, SVSPP, kg.per.tow)]
 groups <- ecodata::species_groupings %>%
   dplyr::select(group = SOE_18, SVSPP,
                 comname = COMNAME) %>%
-  filter(!is.na(SVSPP)) %>%
+  dplyr::filter(!is.na(SVSPP)) %>%
   as.data.table()
 
 #Aggregate by conceptual model groupings
@@ -90,24 +90,24 @@ spring$season <- "spring"
 fall$season <- "fall"
 
 survey_biomass <- rbind(spring, fall) %>%
-  filter(!is.na(SVSPP))
+  dplyr::filter(!is.na(SVSPP))
 
 managed <- ecodata::species_groupings %>%
   dplyr::select(comname = COMNAME, Fed_Managed)
 
 nefsc_survey_disaggregated <-
   survey_biomass %>%
-  group_by(EPU, group, season, YEAR) %>%
-  mutate(Total = sum(kg.per.tow)) %>%
-  mutate(Prop = kg.per.tow/Total) %>%
-  filter(!group %in% c("Apex Predator","Other"),
+  dplyr::group_by(EPU, group, season, YEAR) %>%
+  dplyr::mutate(Total = sum(kg.per.tow)) %>%
+  dplyr::mutate(Prop = kg.per.tow/Total) %>%
+  dplyr::filter(!group %in% c("Apex Predator","Other"),
          EPU != "SS") %>%
   dplyr::rename(Time = YEAR) %>%
   as.data.frame() %>%
-  left_join(.,managed,by = c("comname") ) %>%
-  distinct() %>%
-  complete(Time = full_seq(min(.$Time):max(.$Time),1),
-           nesting(EPU, Fed_Managed,season, group, comname, SVSPP)) %>%
+  dplyr::left_join(.,managed,by = c("comname") ) %>%
+  dplyr::distinct() %>%
+  tidyr::complete(Time = full_seq(min(.$Time):max(.$Time),1),
+           tidyr::nesting(EPU, Fed_Managed,season, group, comname, SVSPP)) %>%
   dplyr::rename(Management = Fed_Managed,
                 `Feeding guild` = group,
                 Season = season,
@@ -145,8 +145,8 @@ agg_survey <- rbind(spring.tot, fall.tot)
 #Merge into one data set
 nefsc_survey <- agg_survey %>%
   dplyr::select(Time, EPU = Region, Var, Units, Value)  %>%
-  distinct() %>%
-  complete(Time = full_seq(min(.$Time):max(.$Time),1),
-           nesting(EPU,Var))
+  dplyr::distinct() %>%
+  tidyr::complete(Time = full_seq(min(.$Time):max(.$Time),1),
+           tidyr::nesting(EPU,Var))
 
 usethis::use_data(nefsc_survey, overwrite = T)

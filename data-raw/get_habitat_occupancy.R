@@ -13,9 +13,9 @@ get_hab_occupancy <- function(save_clean = F){
 
   #Process
   habitat_occupancy <- d %>%
-    rename("Time" = "Year") %>%
+    dplyr::rename("Time" = "Year") %>%
     tidyr::gather(key  = "Var", value = "Value", -Time) %>%
-    mutate(EPU = c("All"),
+    dplyr::mutate(EPU = c("All"),
            Units = c("10^3km^2"))
 
   if (save_clean){

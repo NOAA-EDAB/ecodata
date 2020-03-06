@@ -11,11 +11,12 @@ get_mab_inshore_survey <- function(save_clean = F){
 
   mab_inshore_survey <- read_excel(file.path(raw.dir,
                                              "NEAMAP_SOE INDICES_2019_final.xlsx")) %>%
-    unite(Var, "Category","Season", sep = " ") %>%
+    tidyr::unite(Var, "Category","Season", sep = " ") %>%
     dplyr::rename(Time = Year,
                   Value = Index) %>%
-    mutate(Units = c("kg tow^-1"),
+    dplyr::mutate(Units = c("kg tow^-1"),
            EPU = "MAB")
+
   if (save_clean){
     usethis::use_data(mab_inshore_survey, overwrite = T)
   } else {

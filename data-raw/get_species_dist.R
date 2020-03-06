@@ -14,12 +14,12 @@ get_species_dist <- function(save_clean = F){
                   `along-shelf distance` = ASD,
                   `distance to coast` = DTC,
                   Time = Year) %>%
-    gather(.,Var,Value,-Time) %>%
-    mutate(EPU = "All",
-           Units = ifelse(str_detect(Var,"distance"),"km",
-                          ifelse(str_detect(Var,"Latitude"),
-                                     "degreesN",ifelse(str_detect(Var,"Longitude"),
-                                                      "degreesW",ifelse(str_detect(Var, "depth"),
+    tidyr::pivot_longer(-Time, names_to = "Var", values_to = "Value") %>%
+    dplyr::mutate(EPU = "All",
+           Units = ifelse(stringr::str_detect(Var,"distance"),"km",
+                          ifelse(stringr::str_detect(Var,"Latitude"),
+                                     "degreesN",ifelse(stringr::str_detect(Var,"Longitude"),
+                                                      "degreesW",ifelse(stringr::str_detect(Var, "depth"),
                                                                         "m",NA)))))
   if (save_clean){
     usethis::use_data(species_dist, overwrite = T)

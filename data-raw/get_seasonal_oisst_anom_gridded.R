@@ -36,7 +36,7 @@ fall.anom <- sst.2019[[274:365]] - fall.ltm
 
 
 rast_process <- function(r, season){
-  r <- stackApply(r, indices = rep(1,nlayers(r)),mean) #Find mean anomaly
+  r <- raster::stackApply(r, indices = rep(1,nlayers(r)),mean) #Find mean anomaly
   crs(r) <- crs #Add SOE CRS
   ### Remove smoothing steps due to "over smoothing'
   #r <- disaggregate(r, 5) #interpolate step 1 - create higher res grid
@@ -48,7 +48,7 @@ rast_process <- function(r, season){
     reshape2::melt(id = c("y","x")) %>%
     dplyr::rename(Latitude = y, Longitude = x) %>%
     dplyr::select(-variable) %>%
-    mutate(Season = season) %>%
+    dplyr::mutate(Season = season) %>%
     dplyr::rename(Value = value)
 
   return(r)

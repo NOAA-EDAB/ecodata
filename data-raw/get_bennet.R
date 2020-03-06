@@ -10,7 +10,7 @@ get_bennet <- function(save_clean = F){
 
   load(file.path(raw.dir, "Bennet_Index_20.Rdata"))
   bennet <- bennet %>%
-    rename(EPU = Region)
+    dplyr::rename(EPU = Region)
 
   if (save_clean){
     usethis::use_data(bennet, overwrite = T)

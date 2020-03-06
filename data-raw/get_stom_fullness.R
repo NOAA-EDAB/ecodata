@@ -9,13 +9,13 @@ get_stom_fullness <- function(save_clean = F){
 
   stom_fullness <- read.csv(file.path(raw.dir,"AnnualStomFullnessEPU_2019.csv")) %>%
     dplyr::select(year, EPU, Species, AvgStomFullEPU) %>%
-    rename(Time = year,
+    dplyr::rename(Time = year,
            Var = Species) %>%
-    distinct() %>%
-    group_by(EPU, Var) %>%
-    mutate(Value = AvgStomFullEPU-mean(AvgStomFullEPU)) %>%
-    ungroup() %>%
-    mutate(Units = c("anom")) %>%
+    dplyr::distinct() %>%
+    dplyr::group_by(EPU, Var) %>%
+    dplyr::mutate(Value = AvgStomFullEPU-mean(AvgStomFullEPU)) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(Units = c("anom")) %>%
     dplyr::select(Time, Var, Value, EPU, Units)
 
   if (save_clean){

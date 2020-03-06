@@ -111,17 +111,17 @@ get_zoo_oi <- function(save_clean = F){
   zoo_oi <- zoo_oi %>%
     dplyr::rename(EPU = epu) %>%
     dplyr::select(-Season) %>%
-    mutate(Units = "log N m^-3")
+    dplyr::mutate(Units = "log N m^-3")
 
   #Split out +/- SD because too lazy to gather ;)
   sd.low <- zoo_oi %>%
     dplyr::select(-Value, -sd.high) %>%
-    mutate(Var = as.factor(paste(Var, "- 1 SD"))) %>%
+    dplyr::mutate(Var = as.factor(paste(Var, "- 1 SD"))) %>%
     dplyr::rename(Value = sd.low)
 
   sd.high <- zoo_oi %>%
     dplyr::select(-Value, -sd.low) %>%
-    mutate(Var = as.factor(paste(Var, "+ 1 SD"))) %>%
+    dplyr::mutate(Var = as.factor(paste(Var, "+ 1 SD"))) %>%
     dplyr::rename(Value = sd.high)
 
   zoo_oi <- zoo_oi %>% dplyr::select(-sd.high,-sd.low)

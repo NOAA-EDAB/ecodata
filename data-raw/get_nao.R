@@ -3,9 +3,6 @@
 # Download Data DJFM Station
 
 library(dplyr)
-library(tidyr)
-library(lubridate)
-library(zoo)
 
 #Get raw
 raw.dir <- here::here("data-raw") #input raw
@@ -14,7 +11,7 @@ raw.dir <- here::here("data-raw") #input raw
 get_nao <- function(save_clean = F){
 
   nao <- read.csv(file.path(raw.dir, "NAO_index.csv")) %>%
-    mutate(Var = "north atlantic oscillation",
+    dplyr::mutate(Var = "north atlantic oscillation",
            Units = "unitless",
            EPU = "All") %>%
     as.data.frame()

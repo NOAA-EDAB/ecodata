@@ -1,4 +1,5 @@
 #processing small fish per large fish biomass indicator
+# data processing comes from trawlR package.
 
 library(dplyr)
 library(tidyr)
@@ -16,7 +17,7 @@ epu_rec_anom <- dat_spec_rec_epu_forSOE %>%
 #Select, rename, and bind
 productivity_anomaly <- dat_spec_rec_forSOE %>%
   dplyr::select(-Source) %>%
-  mutate(EPU = "All",
+  dplyr::mutate(EPU = "All",
          Var = paste("NE LME",Var)) %>%
   rbind(.,epu_rec_anom) %>%
   as.data.frame()

@@ -14,7 +14,7 @@ get_ichthyo_diversity <- function(save_clean = F){
     dplyr::select(-Source) %>%
     dplyr::rename(Time = Year,
                   EPU = Region) %>%
-    mutate(Value  = as.numeric(Value))
+    dplyr::mutate(Value  = as.numeric(Value))
 
   if (save_clean){
     usethis::use_data(ichthyo_diversity, overwrite = T)

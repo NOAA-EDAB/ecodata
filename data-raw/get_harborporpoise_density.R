@@ -15,12 +15,12 @@ crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +da
 process_hp <- function(season){
   d <- read.csv(file.path(gis.dir,"Harbor_Porpoise - Fall AMAPPS mapping data from website.csv"),
                 stringsAsFactors = FALSE) %>%
-    filter(Season == season) %>%
+    dplyr::filter(Season == season) %>%
     dplyr::select(Latitude = Center_Lat,
                   Longitude = Center_Lon,
                   Density = Mean_Density) %>%
     dplyr::mutate(Density = as.numeric(Density)) %>%
-    filter(!is.na(Density))
+    dplyr::filter(!is.na(Density))
 
   #dataframe to spdf
   coordinates(d) <- ~Longitude + Latitude
@@ -30,7 +30,7 @@ process_hp <- function(season){
   #spdf to raster to spatial pixels to data frame
   r <- raster(extent(-77,-63,35,45), ncol = 105,nrow = 105)
   crs(r) <- crs
-  l <- rasterize(d.spdf, r, fun = mean)[[2]]
+  l <- raster::rasterize(d.spdf, r, fun = mean)[[2]]
   d.df <- as.data.frame(as(l,"SpatialPixelsDataFrame"))
 
   #cuts to bin data with
@@ -43,7 +43,7 @@ process_hp <- function(season){
     reshape2::melt(id = c("y","x")) %>%
     dplyr::rename(Latitude = y, Longitude = x) %>%
     dplyr::select(-variable) %>%
-    mutate(Bin = cut(value, breaks = cuts),
+    dplyr::mutate(Bin = cut(value, breaks = cuts),
            Season = season) %>%
     dplyr::rename(Value = value)
 

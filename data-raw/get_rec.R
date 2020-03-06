@@ -22,7 +22,7 @@ get_rec <- function(save_clean = F){
     }
   }
 
-  recdat <- recdat %>% filter(!is.na(EPU))
+  recdat <- recdat %>% dplyr::filter(!is.na(EPU))
 
   if (save_clean){
     usethis::use_data(recdat, overwrite = T)
