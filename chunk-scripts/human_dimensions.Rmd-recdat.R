@@ -24,9 +24,9 @@ series.col <- "black"
 
 rec_effort <- recdat %>% 
   dplyr::filter(Var == "Recreational Effort") %>% 
-  ggplot() + 
+  ggplot2::ggplot() + 
  #Highlight last ten years
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   #label
@@ -35,31 +35,31 @@ rec_effort <- recdat %>%
   #          y = label_loc[label_loc$Var == "Recreational Effort",]$yloc,
   #          label = label_loc[label_loc$Var == "Recreational Effort",]$labels,
   #          size = letter_size)+
-  geom_gls(aes(x = Time, y = Value,
+  ecodata::geom_gls(aes(x = Time, y = Value,
                group = Var),
              alpha = trend.alpha, size = trend.size) +
-  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
-  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+  ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
   
-  scale_x_continuous(expand = c(0.01, 0.01)) +
-  scale_y_continuous(labels = function(l){trans = l / 1000000}, limits = ylim_re)+
-  scale_color_manual(values = series.col, aesthetics = "color")+
-  guides(color = FALSE) +
-  ggtitle("Recreational effort")+
-  ylab(expression("Days fished (10"^6*" N)")) +
-  xlab("")+
-  geom_hline(aes(yintercept = hline,
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000000}, limits = ylim_re)+
+  ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
+  ggplot2::guides(color = FALSE) +
+  ggplot2::ggtitle("Recreational effort")+
+  ggplot2::ylab(expression("Days fished (10"^6*" N)")) +
+  ggplot2::xlab("")+
+  ggplot2::geom_hline(aes(yintercept = hline,
                color = Var),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  theme_ts() 
+  ecodata::theme_ts() 
 
 rec_div <- recdat %>% 
   dplyr::filter(Var == "Recreational fleet effort diversity across modes") %>% 
-  ggplot() + 
+  ggplot2::ggplot() + 
  #Highlight last ten years
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   # annotate("text", 
@@ -67,30 +67,30 @@ rec_div <- recdat %>%
   #          y = label_loc[label_loc$Var == "Recreational fleet effort diversity across modes",]$yloc,
   #          label = label_loc[label_loc$Var == "Recreational fleet effort diversity across modes",]$labels,
   #          size = letter_size)+
-  geom_gls(aes(x = Time, y = Value,
+  ecodata::geom_gls(aes(x = Time, y = Value,
                group = Var),
              alpha = trend.alpha, size = trend.size) +
-  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
-  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
-  ylim(ylim_rd)+
-  scale_x_continuous(expand = c(0.01, 0.01)) +
-  scale_color_manual(values = series.col, aesthetics = "color")+
-  guides(color = FALSE) +
-  ggtitle("Rec. fleet effort diversity")+
-  ylab(expression("Effective Shannon")) +
-  xlab("")+
-  geom_hline(aes(yintercept = hline,
+  ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+  ggplot2::ylim(ylim_rd)+
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
+  ggplot2::guides(color = FALSE) +
+  ggplot2::ggtitle("Rec. fleet effort diversity")+
+  ggplot2::ylab(expression("Effective Shannon")) +
+  ggplot2::xlab("")+
+  ggplot2::geom_hline(aes(yintercept = hline,
                color = Var),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  theme_ts()
+  ecodata::theme_ts()
 
 rec_div_catch <- recdat %>% 
   dplyr::filter(Var == "Recreational Diversity of Catch") %>% 
-  ggplot() + 
+  ggplot2::ggplot() + 
  #Highlight last ten years
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
     # annotate("text", 
@@ -98,24 +98,24 @@ rec_div_catch <- recdat %>%
     #        y = label_loc[label_loc$Var == "Recreational anglers",]$yloc,
     #        label = label_loc[label_loc$Var == "Recreational anglers",]$labels,
     #        size = letter_size)+
-  geom_gls(aes(x = Time, y = Value,
+  ecodata::geom_gls(aes(x = Time, y = Value,
                group = Var),
              alpha = trend.alpha, size = trend.size) +
-  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
-  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+  ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
 
-  scale_x_continuous(expand = c(0.01, 0.01)) +
-  scale_color_manual(values = series.col, aesthetics = "color")+
-  guides(color = FALSE) +
-  ggtitle("Rec. diversity of catch")+
-  ylab(expression("Effective Shannon")) +
-  xlab("Time")+
-  geom_hline(aes(yintercept = hline,
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
+  ggplot2::guides(color = FALSE) +
+  ggplot2::ggtitle("Rec. diversity of catch")+
+  ggplot2::ylab(expression("Effective Shannon")) +
+  ggplot2::xlab("Time")+
+  ggplot2::geom_hline(aes(yintercept = hline,
                color = Var),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  theme_ts()
+  ecodata::theme_ts()
 
 
 cowplot::plot_grid(rec_effort, 
@@ -123,4 +123,4 @@ cowplot::plot_grid(rec_effort,
                    rec_div_catch,
                    ncol = 1, 
                    align = "hv") +
-    theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
+    ggplot2::theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))

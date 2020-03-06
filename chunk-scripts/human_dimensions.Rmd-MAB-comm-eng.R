@@ -1,40 +1,40 @@
 
 eng<-ecodata::engagement %>% 
-  filter(!Var == "med.high.scores")
+  dplyr::filter(!Var == "med.high.scores")
 eng$Var <- factor(eng$Var, levels = c("%High","%Medium High","%Moderate", "%Low"))
-eng %>% filter(EPU == "MA") %>% 
-  ggplot()+
+eng %>% dplyr::filter(EPU == "MA") %>% 
+  ggplot2::ggplot()+
    #ylim(0.8, NA)+
-  geom_bar(aes(x = Time, y = Value, 
+  ggplot2::geom_bar(aes(x = Time, y = Value, 
                fill = Var), 
            stat = "identity")+
   #scale_y_continuous(labels = Value(suffix = "%", prefix = "")) +
   #geom_text(aes(x = Time, y = Value,
   #             label = paste0(Value,"%")), size=4) +
-  theme(legend.position="bottom", legend.direction="horizontal",
+  ggplot2::theme(legend.position="bottom", legend.direction="horizontal",
         legend.title = element_blank())+
-  coord_cartesian(ylim=c(0.85,1))+
-  xlab("Time") +
-  ylab("% Communities in each category (Low to High)")+
-  ggtitle("Commercial Engagement")+
-  theme_ts()
+  ggplot2::coord_cartesian(ylim=c(0.85,1))+
+  ggplot2::xlab("Time") +
+  ggplot2::ylab("% Communities in each category (Low to High)")+
+  ggplot2::ggtitle("Commercial Engagement")+
+  ecodata::theme_ts()
 
 
 ecodata::engagement %>% 
-  filter(Var == "med.high.scores", 
+  dplyr::filter(Var == "med.high.scores", 
          EPU == "MA") %>% 
-  mutate(hline = mean(Value)) %>% 
-  ggplot()+
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  dplyr::mutate(hline = mean(Value)) %>% 
+  ggplot2::ggplot()+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  geom_line(aes(x = Time, y = Value), size = lwd) +
-  geom_point(aes(x = Time, y = Value), size = pcex) +
-  scale_x_continuous(expand = c(0.01, 0.01)) +
-  ggtitle("Medium-High communities ") +
-  ylab(expression("Average score for Med High communities")) +
-  geom_hline(aes(yintercept = hline),
+  ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
+  ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  ggplot2::ggtitle("Medium-High communities ") +
+  ggplot2::ylab(expression("Average score for Med High communities")) +
+  ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
- theme_ts()
+  ecodata::theme_ts()

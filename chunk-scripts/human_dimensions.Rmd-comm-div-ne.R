@@ -1,8 +1,8 @@
 
 comm_div <- ecodata::commercial_div %>% 
-  filter(EPU == region_abbr) %>% 
-  group_by(Var) %>% 
-  mutate(hline = mean(Value))
+  dplyr::filter(EPU == region_abbr) %>% 
+  dplyr::group_by(Var) %>% 
+  dplyr::mutate(hline = mean(Value))
 
 ylim_fc <- c(min(comm_div[comm_div$Var == "Fleet count",]$Value) - 10, max(comm_div[comm_div$Var == "Fleet count",]$Value) + 10 )
 ylim_fd <- c(3, max(comm_div[comm_div$Var == "Fleet diversity in revenue",]$Value) + 3 )
@@ -16,10 +16,10 @@ ylim_fd <- c(3, max(comm_div[comm_div$Var == "Fleet diversity in revenue",]$Valu
 series.col = c("black")
 
 fleet_count <- comm_div %>% 
-  filter(Var == "Fleet count") %>% 
-  ggplot() + 
+  dplyr::filter(Var == "Fleet count") %>% 
+  ggplot2::ggplot() + 
  #Highlight last ten years
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   #label
@@ -27,27 +27,27 @@ fleet_count <- comm_div %>%
   #          y = label_loc[label_loc$Var == "Fleet count",]$yloc,
   #          label = label_loc[label_loc$Var == "Fleet count",]$label,
   #          size = letter_size) +
-  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
-  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
-  ylim(ylim_fc)+
-  scale_x_continuous(expand = c(0.01, 0.01)) +
-  scale_color_manual(values = series.col, aesthetics = "color")+
-  guides(color = FALSE) +
-  ggtitle("Fleet count") +
-  ylab(expression("Count (n)")) +
-  xlab("")+
-  geom_hline(aes(yintercept = hline,
+  ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+  ggplot2::ylim(ylim_fc)+
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
+  ggplot2::guides(color = FALSE) +
+  ggplot2::ggtitle("Fleet count") +
+  ggplot2::ylab(expression("Count (n)")) +
+  ggplot2::xlab("")+
+  ggplot2::geom_hline(aes(yintercept = hline,
                color = Var),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  theme_ts()
+  ecodata::theme_ts()
 
 fleet_div <- comm_div %>% 
-  filter(Var == "Fleet diversity in revenue") %>% 
-  ggplot() + 
+  dplyr::filter(Var == "Fleet diversity in revenue") %>% 
+  ggplot2::ggplot() + 
  #Highlight last ten years
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   #label
@@ -55,21 +55,21 @@ fleet_div <- comm_div %>%
   #          y = label_loc[label_loc$Var == "Fleet diversity in revenue",]$yloc,
   #          label = label_loc[label_loc$Var == "Fleet diversity in revenue",]$label,
   #          size = letter_size) +
-  geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
-  geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
-  ylim(ylim_fd)+
-  scale_x_continuous(expand = c(0.01, 0.01)) +
-  scale_color_manual(values = series.col, aesthetics = "color")+
-  guides(color = FALSE) +
-  ggtitle("Fleet diversity in revenue") +
-  ylab(expression("Effective Shannon")) +
+  ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
+  ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+  ggplot2::ylim(ylim_fd)+
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
+  ggplot2::guides(color = FALSE) +
+  ggplot2::ggtitle("Fleet diversity in revenue") +
+  ggplot2::ylab(expression("Effective Shannon")) +
 
-  geom_hline(aes(yintercept = hline,
+  ggplot2::geom_hline(aes(yintercept = hline,
                color = Var),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
- theme_ts()
+  ecodata::theme_ts()
 
 cowplot::plot_grid(fleet_count, fleet_div, ncol = 1, align = "hv") + 
   theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))

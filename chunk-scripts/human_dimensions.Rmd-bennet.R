@@ -22,18 +22,19 @@ ind_fill <- c("#a6cee3", "#b2df8a")
 y.lim <- c(-450,600)
 
 #plot
-ggplot()+
+ggplot2::ggplot()+
   #Highlight last ten years
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf)+
-  geom_bar(data = indicators, aes(x = Time, y = Value, fill = Var), stat="identity")+
-  scale_fill_manual(name = "Indicators", values = ind_fill) +
-  geom_line(data = revchange, aes(x = Time, y = Value, color = "$"))+
-  scale_colour_grey(name ="Revenue Change") +
-  ggtitle("Bennet Indicator")+
-  labs(y="Value $1,000,000 ($2015)") +
-  scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
-  scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), limits = y.lim, expand = c(0.01, 0.01)) +
-  theme_ts() +
-  theme(title = element_text(size = 10))
+  ggplot2::geom_bar(data = indicators, aes(x = Time, y = Value, fill = Var), stat="identity")+
+  ggplot2::scale_fill_manual(name = "Indicators", values = ind_fill) +
+  ggplot2::geom_line(data = revchange, aes(x = Time, y = Value, color = "$"))+
+  ggplot2::scale_colour_grey(name ="Revenue Change") +
+  ggplot2::ggtitle("Bennet Indicator")+
+  ggplot2::labs(y="Value $1,000,000 ($2015)") +
+  ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), 
+                              limits = y.lim, expand = c(0.01, 0.01)) +
+  ecodata::theme_ts() +
+  ggplot2::theme(title = element_text(size = 10))
