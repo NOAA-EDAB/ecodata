@@ -1,7 +1,7 @@
 
-diet_div <- ecodata::common_tern %>% 
-  dplyr::filter(str_detect(Var, "Diet"),
-         !str_detect(Var, "Sum")) %>% 
+diet_div <- ecodata::seabird_ne %>% 
+  dplyr::filter(stringr::str_detect(Var, "Diet"),
+         !stringr::str_detect(Var, "Sum")) %>% 
   dplyr::mutate(Island = word(Var, 1),
          Var = word(Var, 4)) %>% 
   dplyr::group_by(Island, Time) %>%
@@ -19,21 +19,21 @@ diet_div <- ecodata::common_tern %>%
 
 shannon <- diet_div %>% 
   dplyr::filter(Var == "shannon") %>% 
-  ggplot(aes(x = Time, y = Value)) +
-      annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  ggplot2::ggplot(aes(x = Time, y = Value)) +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  geom_line() +
-  geom_point() +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
   #geom_gls() +
-  scale_x_continuous(expand = c(0.01, 0.01),limits = c(1992,2018)) +
-  ggtitle("Common tern diet diversity")+
-  ylab(expression("Shannon Diversity")) +
-  xlab("")+
-  geom_hline(aes(yintercept = hline),
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01),limits = c(1992,2018)) +
+  ggplot2::ggtitle("Common tern diet diversity")+
+  ggplot2::ylab(expression("Shannon Diversity")) +
+  ggplot2::xlab("")+
+  ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  theme_ts() 
+  ecodata::theme_ts() 
 
 shannon 

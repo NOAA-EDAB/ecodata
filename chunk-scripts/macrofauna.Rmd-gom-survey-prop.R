@@ -1,19 +1,19 @@
 
 GOM_prop <- 
   prop %>% 
-    filter(EPU == "GOM") %>% 
-ggplot(aes(x = Time, y = Proportion, color = Management, group = Var2)) +
+    dplyr::filter(EPU == "GOM") %>% 
+ggplot2::ggplot(aes(x = Time, y = Proportion, color = Management, group = Var2)) +
   
   #Highlight last ten years
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
            xmin = x.shade.min , xmax = x.shade.max ,
            ymin = -Inf, ymax = Inf) +
   
   #Add time series
-  geom_line(size = 0.5) +
-  geom_point_interactive(aes(tooltip = tt),size = 0.5) +
+  ggplot2::geom_line(size = 0.5) +
+  ggiraph::geom_point_interactive(aes(tooltip = tt),size = 0.5) +
 #  guides(color = FALSE) +
-  geom_hline(aes(yintercept = hline,
+  ggplot2::geom_hline(aes(yintercept = hline,
                  group = Var2,
                  color = Management),
              size = 0.5,
@@ -21,14 +21,14 @@ ggplot(aes(x = Time, y = Proportion, color = Management, group = Var2)) +
              linetype = hline.lty)+
   
   #Facet 
-  facet_wrap(Var~., ncol = 2) +
+  ggplot2::facet_wrap(Var~., ncol = 2) +
   
   #Axis and theme
-  scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
-  ylab(expression("Proportion of survey")) +
-  ggtitle("GOM") +
-  theme_facet()+
-  theme(strip.text=element_text(hjust=0))
-GOM_prop <- girafe(ggobj = GOM_prop)
-GOM_prop <- girafe_options(GOM_prop, opts_zoom(max = 5) )
+  ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ggplot2::ylab(expression("Proportion of survey")) +
+  ggplot2::ggtitle("GOM") +
+  ecodata::theme_facet()+
+  ggplot2::theme(strip.text=element_text(hjust=0))
+GOM_prop <- ggiraph::girafe(ggobj = GOM_prop)
+GOM_prop <- ggiraph::girafe_options(GOM_prop, opts_zoom(max = 5) )
 GOM_prop

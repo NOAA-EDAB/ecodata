@@ -1,18 +1,18 @@
 
 fullness <- ecodata::stom_fullness %>%
-  group_by(Var, EPU) %>% ## Remove values with missing data
-  filter(n()> 10) %>% ## at least ten years of data
-  ungroup() %>% 
-  filter(EPU == "MAB") %>%
-  ggplot(aes(x = Time, y = Value)) +
-  geom_line() +
-  geom_point() +
-  annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  dplyr::group_by(Var, EPU) %>% ## Remove values with missing data
+  dplyr::filter(n()> 10) %>% ## at least ten years of data
+  dplyr::ungroup() %>% 
+  dplyr::filter(EPU == "MAB") %>%
+  ggplot2::ggplot(aes(x = Time, y = Value)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  ggtitle("Stomach fullness") +
-  ylab("Stomach fullness") +
-  facet_wrap(~Var)+
-  theme(strip.text=element_text(hjust=0))
+  ggplot2::ggtitle("Stomach fullness") +
+  ggplot2::ylab("Stomach fullness") +
+  ggplot2::facet_wrap(~Var)+
+  ggplot2::theme(strip.text=element_text(hjust=0))
 
 fullness

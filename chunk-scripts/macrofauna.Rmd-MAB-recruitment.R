@@ -53,7 +53,7 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
                   var2bar = gsub(pattern      = " by EPU", 
                                  replacement  = "", 
                                  x            = var2bar)) %>%
-    filter(var2bar %in% mab_species)
+    dplyr::filter(var2bar %in% mab_species)
 } else if (filt == FALSE){
     dat2plot <-
     dat2bar %>%
@@ -82,34 +82,34 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
 }
   if (aggregate){
    agg <- dat2plot %>%
-     group_by(YEAR) %>%
+     dplyr::group_by(YEAR) %>%
      dplyr::summarise(Total = sum(value, na.rm = T)) %>% 
-     mutate(Total = ifelse(Total == 0, NA, Total))
+     dplyr::mutate(Total = ifelse(Total == 0, NA, Total))
   }
   
   p <-   
-    ggplot(dat2plot,
+    ggplot2::ggplot(dat2plot,
            aes(x = YEAR)) +
-    geom_bar(data = dat2plot %>% filter(value > 0),
+    ggplot2::geom_bar(data = dat2plot %>% filter(value > 0),
              aes(y = value, fill = var2bar),
              stat = "identity") +
-    geom_bar(data = dat2plot %>% filter(value < 0),
+    ggplot2::geom_bar(data = dat2plot %>% filter(value < 0),
              aes(y = value, fill = var2bar),
              stat = "identity") +
     {if(aggregate) geom_line(data = agg,aes(x = YEAR, y = Total),
                              size = 1)} +
-    geom_hline(size = 0.3, aes(yintercept = 0)) +
-    xlab(xlab) +
-    ylab(ylab) +
-    ggtitle(titl) +
-    guides(fill = guide_legend(ncol = leg_ncol)) +
-    theme_ts()+
-    theme(axis.title   = element_text(size = 16),
+    ggplot2::geom_hline(size = 0.3, aes(yintercept = 0)) +
+    ggplot2::xlab(xlab) +
+    ggplot2::ylab(ylab) +
+    ggplot2::ggtitle(titl) +
+    ggplot2::guides(fill = guide_legend(ncol = leg_ncol)) +
+    ecodata::theme_ts()+
+    ggplot2::theme(axis.title   = element_text(size = 16),
           axis.text    = element_text(size = 15),
           plot.title   = element_text(size = 20),
           legend.text  = element_text(size = leg_font_size),
           legend.title = element_blank()) +
-    annotate("text", label = label, x = 1980, y = y.text,size = 8, colour = "black")
+    ggplot2::annotate("text", label = label, x = 1980, y = y.text,size = 8, colour = "black")
   
 
   
@@ -119,7 +119,7 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
 }
 
 bar_dat <- ecodata::productivity_anomaly %>% 
-  filter(EPU == "MAB")
+  dplyr::filter(EPU == "MAB")
 
 # mafmc <-plot_stackbarcpts_single(YEAR = bar_dat$Time,
 #                          var2bar = bar_dat$Var,

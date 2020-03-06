@@ -29,7 +29,6 @@ library(cowplot)
 library(sf)
 library(rgdal)
 library(raster)
-#library(rnaturalearth)
 
 
 #GIS directory

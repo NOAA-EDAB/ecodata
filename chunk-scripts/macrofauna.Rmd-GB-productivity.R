@@ -1,7 +1,7 @@
 
 ## GB
 bar_dat <- ecodata::productivity_anomaly %>% 
-  filter(EPU == "GB")
+  dplyr::filter(EPU == "GB")
 
 gb <- plot_stackbarcpts_single(YEAR = bar_dat$Time,
                          var2bar = bar_dat$Var,
