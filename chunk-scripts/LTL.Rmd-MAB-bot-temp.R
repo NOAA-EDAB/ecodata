@@ -1,7 +1,7 @@
 
 temp_anom <- ecodata::bottom_temp %>% 
   dplyr::filter(EPU == epu_abbr) %>% 
-  tidyr::complete(Time = tidyr::full_seq(min(oceantemp_insitu$Time):max(oceantemp_insitu$Time),1),
+  tidyr::complete(Time = tidyr::full_seq(min(bottom_temp$Time):max(bottom_temp$Time),1),
            tidyr::nesting(Var)) %>% 
   dplyr::mutate(hline = 0)
 
