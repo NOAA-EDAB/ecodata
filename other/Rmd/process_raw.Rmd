@@ -62,8 +62,6 @@ save_clean <- F
 #Execute spatial processing (must be TRUE to write clean data to file). If FALSE, will load sample data from file for plotting example
 spatial_processing <- F
 
-
-
 ```
 
 
