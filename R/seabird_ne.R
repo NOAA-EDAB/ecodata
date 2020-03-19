@@ -24,4 +24,4 @@
 #' Performance at Four Restored Colonies along the Maine Coast, 1991-2002. \emph{Waterbirds: The International Journal
 #'  of Waterbird Biology}. 27 (4). 424-433.
 #'
-"common_tern"
+"seabird_ne"

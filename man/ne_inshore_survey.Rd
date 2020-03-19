@@ -33,7 +33,7 @@ survey, region, stratum, and species group was calculated.
 and stratum. (average weight * area surveyed).
 \item The new weighted averages were then summed up by survey and species group then the totals
 were divided by the total area of the survey (11699.831 km2) to provide the stratified mean biomass
-for each species group in each survey. The coefficient of variation, standard error, and 95%
+for each species group in each survey. The coefficient of variation, standard error, and 95\%
 confidence intervals were also calculated for each species group and provided.
 }
 

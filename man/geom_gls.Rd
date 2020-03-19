@@ -4,9 +4,17 @@
 \alias{geom_gls}
 \title{A geom to fit a GLS model to a time series}
 \usage{
-geom_gls(mapping = NULL, data = NULL, stat = "GLS",
-  position = "identity", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, warn = TRUE, ...)
+geom_gls(
+  mapping = NULL,
+  data = NULL,
+  stat = "GLS",
+  position = "identity",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE,
+  warn = TRUE,
+  ...
+)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{aes()}. By default \code{inherit.aes = TRUE}, which

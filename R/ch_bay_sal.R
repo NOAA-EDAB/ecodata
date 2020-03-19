@@ -14,4 +14,4 @@
 #' }
 #'
 #' @details More information available at \url{https://noaa-edab.github.io/tech-doc/chesapeake-bay-salinity.html}
-"ches_bay_sal"
+"ch_bay_sal"
