@@ -1,10 +1,10 @@
 #' Common tern productivity and diet composition
-#' 
-#' These data are time series of productivity and diet composition for common tern at different islands in 
-#' southern Gulf of Maine. 
-#' 
+#'
+#' These data are time series of productivity and diet composition for common tern at different islands in
+#' southern Gulf of Maine.
+#'
 #' @format Data set contains 3060 rows and 5 columns
-#' 
+#'
 #' \itemize{
 #'     \item Var: The first three letters in the variable \code{Var} correspond to the island at which sampling occurred,
 #'     with COTE referring to Common Tern. Further, \code{Var} specifies either productivity (average number of fledged
@@ -14,14 +14,14 @@
 #'     \item EPU: Ecological Production Unit (EPU) where sampling occurred. All data were sampled in southern Gulf of Maine.
 #'     \item Time: Year of sampling.
 #' }
-#' 
-#' @references 
-#' 
-#' Hall, S.C., Kress, S.W., Griffin, C. R. (2000) Composition, Spatial and Temporal Variation of Common and Arctic Tern 
+#'
+#' @references
+#'
+#' Hall, S.C., Kress, S.W., Griffin, C. R. (2000) Composition, Spatial and Temporal Variation of Common and Arctic Tern
 #' Chick Diets in the Gulf of Maine. \emph{Waterbirds: The International Journal of Waterbird Biology}. 23 (3). 430-439.
-#' 
+#'
 #' Hall, S.C. and Kress, S.W. (2004) Comparison of Common Tern Reproductive
 #' Performance at Four Restored Colonies along the Maine Coast, 1991-2002. \emph{Waterbirds: The International Journal
 #'  of Waterbird Biology}. 27 (4). 424-433.
-#'  
+#'
 "common_tern"
