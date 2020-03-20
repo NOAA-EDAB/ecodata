@@ -1,0 +1,39 @@
+---
+title: "ecodata maintenance"
+author: "NOAA-EDAB"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ecodata maintenance}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The purpose of the `ecodata` package is to hold and facilitate the use of ecosystem indicator datasets used in the annual State of the Ecosystem reports delivered to the New England and Mid-Atlantic Fisheries Management Councils. Since these reports are iterative, the indicators used to develop the reports are added to or changed regularly. To ensure continuity between years and package authors the follow protocols have been estabolished. 
+
+## Update existing indicator
+
+From year to year most datasets will be delivered in the same format using the same name. In this case, ensure delivered .csv/.xls/.Rdata file is in the data-raw folder and run the get_example.R script. 
+
+In some cases the data will not arrive in the same format or naming convention. In this case, ensure delivered .csv/.xls/.Rdata file is in the data-raw folder and edit the get_example.R script to ensure that the output data frame is structured correctly (i.e. 5 columns (Time, Var, Value, Units, EPU)). 
+
+## Add new indicator
+
+To add a new indicator dataset to the `ecodata` package, first ensure delivered .csv/.xls/.Rdata file is in the data-raw folder
+
+
+The data-raw folder should hold contributor datasets, functions for wrangling data into SOE format (get_example.R scripts) and any supplimental functions used to create those datasets. 
+
+Running the get_example.R script will populate the data folder with the updated/new indicator. Building and installing `ecodata` will allow for lazy loading these updated/new indicators. 
+
+## Document indicator
+For each new indicator add a .R file to the R folder. This file should include the name of the dataset, a short description of the dataset, an "\item" list of all of the columns in the dataframe and a "@details" section which links to the relevant tech doc chapter. 
+
+
