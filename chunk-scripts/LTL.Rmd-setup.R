@@ -17,6 +17,7 @@ library(ggrepel)
 library(stringr)
 library(patchwork)
 library(grid)
+library(heatwaveR)
 
 #GIS libraries
 library(sf)

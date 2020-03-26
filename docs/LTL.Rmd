@@ -26,6 +26,7 @@ library(ggrepel)
 library(stringr)
 library(patchwork)
 library(grid)
+library(heatwaveR)
 
 #GIS libraries
 library(sf)
@@ -844,8 +845,22 @@ ecodata::cold_pool %>%
 [Notes](https://docs.google.com/document/d/0B1lP7X3GP_hQLTlmU3hqLUMzVWcwS2U5R2oxTWNWb19tcmFz/edit)
 
 ```{r MAB_heatwave1, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Mid-Atlantic occuring in 2019."}
+ecodata::heatwave_year %>% 
+  filter(EPU == "MAB") %>% 
+  ggplot( aes(x = t, y = temp))+
+  geom_flame(aes(y2 = thresh))+ 
+  geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
+  geom_line(aes(x = t, y = thresh, color = "c"), size = 1)+
+  geom_line(aes(x = t, y = temp, color = "b"))+
+  scale_colour_manual(values = c("turquoise4", "sienna3", "black"),
+                      labels = c("Climatology","Temperature", "Threshold"))+
+  ylab("Temperature (°C)")+
+  xlab(element_blank())+
+  scale_x_date(date_labels = "%b", breaks = "1 month")+
+  theme_bw()+
+  theme(legend.title = element_blank(),
+        legend.position=c(0.2, 0.8))
 
-knitr::include_graphics(file.path(image.dir,"mab_heatwave.jpeg"))
 
 ```
 
@@ -1713,12 +1728,39 @@ gb_zoo_div + gom_zoo_div + patchwork::plot_layout(ncol = 1)
 #### Monthly time series
 ```{r timesseries_heatwave, fig.cap="Georges Bank", eval= T, echo = F}
 
-knitr::include_graphics(file.path(image.dir,"gb_heatwave.jpeg"))
+ecodata::heatwave_year %>% 
+  filter(EPU == "GB") %>% 
+  ggplot( aes(x = t, y = temp))+
+  geom_flame(aes(y2 = thresh))+ 
+  geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
+  geom_line(aes(x = t, y = thresh, color = "c"), size = 1)+
+  geom_line(aes(x = t, y = temp, color = "b"))+
+  scale_colour_manual(values = c("turquoise4", "sienna3", "black"),
+                      labels = c("Climatology","Temperature", "Threshold"))+
+  ylab("Temperature (°C)")+
+  xlab(element_blank())+
+  scale_x_date(date_labels = "%b", breaks = "1 month")+
+  theme_bw()+
+  theme(legend.title = element_blank(),
+        legend.position=c(0.2, 0.8))
 ```
 
 ```{r timesseries_heatwave1, fig.cap = "Gulf of Maine", eval= T, echo = F}
-
-knitr::include_graphics(file.path(image.dir,"gom_heatwave.jpeg"))
+ecodata::heatwave_year %>% 
+  filter(EPU == "GOM") %>% 
+  ggplot( aes(x = t, y = temp))+
+  geom_flame(aes(y2 = thresh))+ 
+  geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
+  geom_line(aes(x = t, y = thresh, color = "c"), size = 1)+
+  geom_line(aes(x = t, y = temp, color = "b"))+
+  scale_colour_manual(values = c("turquoise4", "sienna3", "black"),
+                      labels = c("Climatology","Temperature", "Threshold"))+
+  ylab("Temperature (°C)")+
+  xlab(element_blank())+
+  scale_x_date(date_labels = "%b", breaks = "1 month")+
+  theme_bw()+
+  theme(legend.title = element_blank(),
+        legend.position=c(0.2, 0.8))
 ```
 
 #### Yearly timeseries
@@ -1762,6 +1804,7 @@ gb.hw<-hw %>% dplyr::filter(EPU == "GB") %>%
         axis.title.y = element_text(angle = 90))
 
 
+                    
 gom.hw<-hw %>% dplyr::filter(EPU == "GOM") %>% 
   ggplot2::ggplot() +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -1778,11 +1821,17 @@ gom.hw<-hw %>% dplyr::filter(EPU == "GOM") %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+
+  ggplot2::geom_hline(aes(yintercept = 0),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  ylab("Heatwave Intensity")+
   ggplot2::facet_wrap(~Var, scales = "free") +
   ecodata::theme_ts()+
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"), 
-        axis.title.y = element_text(angle = 90))
+        axis.title.y = element_text(angle = 90)) 
+
 cowplot::plot_grid(gb.hw,gom.hw, nrow = 2)
 ```
 

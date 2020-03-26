@@ -49,8 +49,8 @@ get_heatwave <- function(save_clean = F){
     dplyr::select(Time, EPU, Value, Var)
 
   heatwave<- rbind(cum.intensity, max.intensity) %>%
-    dplyr:: mutate(Units = "degrees C",
-           Time = as.numeric(Time))
+  dplyr:: mutate(Units = "degrees C",
+            Time = as.numeric(Time))
 
   if (save_clean){
     usethis::use_data(heatwave, overwrite = T)
@@ -64,30 +64,69 @@ get_heatwave(save_clean = T)
 
 
 
-# Plot from Vince https://drive.google.com/drive/u/0/folders/0B1lP7X3GP_hQfk00dFd6bTQ2cmJyQjlwQnFWQ0JMWF9ZOWhRckNvSTlxT2NHSEZRdjV1WVk
-# #
-# event_line(gom.mhw, spread = 200, metric = "intensity_cumulative",
-#            start_date = "2019-01-01", end_date = "2019-12-08") ## Plot the year
-#
-#
+
+
+
+
+#### get_heatwave_year get single year of heatwave
+get_heatwave_year <- function(save_clean = F){
+  # import data
+  gom<-read_csv(file.path(raw.dir,"GOM_OISST - Vincent Saba - NOAA Federal.csv"),
+                col_types = cols(temp = col_double(),t = col_date()))
+  gb<-read_csv(file.path(raw.dir,"GB_OISST - Vincent Saba - NOAA Federal.csv"),
+               col_types = cols(temp = col_double(),t = col_date()))
+  mab<-read_csv(file.path(raw.dir,"MAB_OISST - Vincent Saba - NOAA Federal.csv"),
+                col_types = cols(temp = col_double(),t = col_date()))
+  #GB
+  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2010-12-31"))
+  gb.mhw <- heatwaveR::detect_event(ts)
+  #GOM
+  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2010-12-31"))
+  gom.mhw <- heatwaveR::detect_event(ts)
+  #MAB
+  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2010-12-31"))
+  mab.mhw <- heatwaveR::detect_event(ts)
+
+  ### Take just clim
+  #GB
+  mhw<- gb.mhw$clim %>%
+    mutate(EPU = c("GB"))# add EPU column
+  mhw.gb.year <- mhw[13515:13857,]## days in 2019 data set only went to dec 9, 2019
+  #GOM
+  mhw<- gom.mhw$clim %>%
+    mutate(EPU = c("GOM"))# add EPU column
+  mhw.gom.year <- mhw[13515:13857,]## days in 2019 data set only went to dec 9, 2019
+  #MAB
+  mhw<- mab.mhw$clim %>%
+    mutate(EPU = c("MAB"))# add EPU column
+  mhw.mab.year <- mhw[13515:13857,]## days in 2019 data set only went to dec 9, 2019
+
+  # bind dfs together for master list for plotting
+  heatwave_year<- rbind(mhw.gb.year, mhw.gom.year, mhw.mab.year)
+if (save_clean){
+  usethis::use_data(heatwave_year, overwrite = T)
+} else {
+  return(heatwave_year)
+}
+}
+get_heatwave_year(save_clean = T)
+
+
 
 
 ##########################    Plotting for SOE   ######################
-# mhw<- gom.mhw$clim ## coming from above, detect_event() from heatwaveR
-#
-# mhw.max.year <- mhw[13515:13857,]## days in 2019 data set only went to dec 9, 2019
-#
-# mhw.max.year %>%
-#   ggplot( aes(x = t, y = temp))+
-#   geom_flame(aes(y2 = thresh))+ #heatwaveR function
-#   geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
-#   geom_line(aes(x = t, y = thresh, color = "c"), size = 1)+
-#   geom_line(aes(x = t, y = temp, color = "b"))+
-#   scale_colour_manual(values = c("turquoise4", "sienna3", "black"),
-#                       labels = c("Climatology","Temperature", "Threshold"))+
-#   ylab("Temperature (C)")+
-#   xlab(element_blank())+
-#   scale_x_date(date_labels = "%b", breaks = "1 month")+
-#   theme_bw()+
-#   theme(legend.title = element_blank(),
-#         legend.position=c(0.2, 0.8))
+
+mhw.max.year %>%
+  ggplot( aes(x = t, y = temp))+
+  geom_flame(aes(y2 = thresh))+ #heatwaveR function
+  geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
+  geom_line(aes(x = t, y = thresh, color = "c"), size = 1)+
+  geom_line(aes(x = t, y = temp, color = "b"))+
+  scale_colour_manual(values = c("turquoise4", "sienna3", "black"),
+                      labels = c("Climatology","Temperature", "Threshold"))+
+  ylab("Temperature (°C)")+
+  xlab(element_blank())+
+  scale_x_date(date_labels = "%b", breaks = "1 month")+
+  theme_bw()+
+  theme(legend.title = element_blank(),
+        legend.position=c(0.2, 0.8))
