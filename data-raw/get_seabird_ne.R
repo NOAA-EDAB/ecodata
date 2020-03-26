@@ -13,6 +13,7 @@
 
 library(dplyr)
 library(tidyr)
+library(readxl)
 
 #Get raw data
 raw.dir <- here::here("data-raw")
@@ -20,7 +21,7 @@ raw.dir <- here::here("data-raw")
 
 get_seabird_ne <- function(save_clean = F){
 
-  d <- read.csv(file.path(raw.dir,"Audubon_Common_Tern.csv"))
+  d <- read_excel(file.path(raw.dir,"Audubon Common Tern Data for 2019 NOAA EA Effort (2).xlsx"))
 
   #Process
   seabird_ne <- d %>%

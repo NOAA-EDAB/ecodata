@@ -112,21 +112,3 @@ if (save_clean){
 get_heatwave_year(save_clean = T)
 
 
-
-
-##########################    Plotting for SOE   ######################
-
-mhw.max.year %>%
-  ggplot( aes(x = t, y = temp))+
-  geom_flame(aes(y2 = thresh))+ #heatwaveR function
-  geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
-  geom_line(aes(x = t, y = thresh, color = "c"), size = 1)+
-  geom_line(aes(x = t, y = temp, color = "b"))+
-  scale_colour_manual(values = c("turquoise4", "sienna3", "black"),
-                      labels = c("Climatology","Temperature", "Threshold"))+
-  ylab("Temperature (°C)")+
-  xlab(element_blank())+
-  scale_x_date(date_labels = "%b", breaks = "1 month")+
-  theme_bw()+
-  theme(legend.title = element_blank(),
-        legend.position=c(0.2, 0.8))
