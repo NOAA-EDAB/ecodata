@@ -31,6 +31,7 @@ Management Councils (FMCs), and therefore indicator data for Scotian Shelf are i
 
 1.  Use the command `remotes::install_github("noaa-edab/ecodata",build_vignettes=TRUE)` to install the package.
 2.  Load the package into your environment with `library(ecodata)`
+3. Further information about the `ecodata` package can be found [here](https://noaa-edab.github.io/ecodata/).
 
 ## Loading data sets
 
