@@ -18,8 +18,7 @@ representative of specific Ecological Production Units (EPUs), referring
 to the Mid-Atlantic Bight (MAB), Georges Bank (GB), Gulf of Maine (GOM),
 and Scotian Shelf (SS). SOE reports are developed for US Fishery
 Management Councils (FMCs), and therefore indicator data for Scotian
-Shelf are included when available, but this is not always the
-case.
+Shelf are included when available, but this is not always the case.
 
 ### Please consult the [technical documentation](https://noaa-edab.github.io/tech-doc/) of SOE indicators before using data sets.
 
@@ -29,6 +28,8 @@ case.
     `remotes::install_github("noaa-edab/ecodata",build_vignettes=TRUE)`
     to install the package.
 2.  Load the package into your environment with `library(ecodata)`
+3.  Further information about the `ecodata` package can be found
+    [here](https://noaa-edab.github.io/ecodata/).
 
 ## Loading data sets
 
@@ -38,7 +39,7 @@ case.
 
 <p align="center" width="645">
 
-<img src="https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/ecodataHelp.gif">
+<img src="https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/ecodata1.gif">
 
 </p>
 
