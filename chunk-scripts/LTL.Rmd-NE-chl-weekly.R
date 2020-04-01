@@ -15,7 +15,7 @@ ne_chl <- ggplot2::ggplot(data = ne_chl_weekly) +
   ggplot2::facet_wrap(EPU~., ncol = 2)+
   ggplot2::guides(color = F) +
   ggplot2::xlab("")+
-  ggplot2::ylab("") +
+  ggplot2::ylab("mg m^-3") +
   ggplot2::scale_x_continuous(breaks = seq(1,52,10),
                    labels = c("Jan.","Mar.","May","July","Oct.","Dec."),
                    expand = c(0.01,0.01)) +
@@ -38,7 +38,7 @@ ne_ppd <- ggplot2::ggplot(data = ne_ppd_weekly) +
   guides(color = F) +
   ggplot2::facet_wrap(EPU~., ncol = 2)+
   ggplot2::xlab("")+
-  ggplot2::ylab("") +
+  ggplot2::ylab("gC m^-2 d^-1") +
   ggplot2::scale_x_continuous(breaks = seq(1,52,10),
                    labels = c("Jan.","Mar.","May","July","Oct.","Dec."),
                    expand = c(0.01,0.01)) +

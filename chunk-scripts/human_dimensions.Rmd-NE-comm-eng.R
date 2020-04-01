@@ -3,6 +3,7 @@ eng<-ecodata::engagement %>%
   dplyr::filter(!Var == "med.high.scores")
 eng$Var <- factor(eng$Var, levels = c("%High","%Medium High","%Moderate", "%Low"))
 eng %>% dplyr::filter(EPU == "NE") %>% 
+  mutate(Value = Value*100) %>% 
   ggplot2::ggplot()+
    #ylim(0.8, NA)+
   ggplot2::geom_bar(aes(x = Time, y = Value, 
@@ -13,7 +14,7 @@ eng %>% dplyr::filter(EPU == "NE") %>%
   #             label = paste0(Value,"%")), size=4) +
   ggplot2::theme(legend.position="bottom", legend.direction="horizontal",
         legend.title = element_blank())+
-  ggplot2::coord_cartesian(ylim=c(0.75,1))+
+  ggplot2::coord_cartesian(ylim=c(75,100))+
   ggplot2::xlab("Time") +
   ggplot2::ylab("% Communities in each category (Low to High)")+
   ggplot2::ggtitle("Commercial Engagement")+

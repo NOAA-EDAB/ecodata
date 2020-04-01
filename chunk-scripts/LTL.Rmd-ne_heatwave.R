@@ -38,6 +38,7 @@ gb.hw<-hw %>% dplyr::filter(EPU == "GB") %>%
         axis.title.y = element_text(angle = 90))
 
 
+                    
 gom.hw<-hw %>% dplyr::filter(EPU == "GOM") %>% 
   ggplot2::ggplot() +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -54,9 +55,15 @@ gom.hw<-hw %>% dplyr::filter(EPU == "GOM") %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+
+  ggplot2::geom_hline(aes(yintercept = 0),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  ylab("Heatwave Intensity")+
   ggplot2::facet_wrap(~Var, scales = "free") +
   ecodata::theme_ts()+
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"), 
-        axis.title.y = element_text(angle = 90))
+        axis.title.y = element_text(angle = 90)) 
+
 cowplot::plot_grid(gb.hw,gom.hw, nrow = 2)
