@@ -15,4 +15,3 @@ for (i in rmd.list) {
     knitr:::knit_code$restore() # remove chunks from current knitr session
 }
 
-
