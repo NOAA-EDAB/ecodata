@@ -18,6 +18,17 @@ knitr::opts_chunk$set(
 
 The purpose of the `ecodata` package is to hold and facilitate the use of ecosystem indicator datasets used in the annual State of the Ecosystem reports developed for the New England and Mid-Atlantic Fisheries Management Councils. Since these reports are iterative, the indicators used to develop the reports are added to or changed regularly. To ensure continuity between years and package authors, the following protocols have been established. 
 
+## Workflow Overveiew
+
+
+```{r , fig.cap="ecodata workflow schematic.", eval = T, echo = F, out.width="90%"}
+
+knitr::include_graphics(file.path(here::here("ecodata-schematic.png")))
+
+```
+
+
+
 ## Update existing indicator
 
 From year to year most datasets will be delivered in the same format using the same name. In this case, ensure delivered .csv/.xls/.Rdata file is in the data-raw folder and run the get_example.R script. 

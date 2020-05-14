@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-[ecodata](https://github.com/NOAA-EDAB/ecodata) is an R package developed to hold and facilitate interaction with ecosystem indicators on the Northeast Conitnental Shelf. These indicators are applied to State of the Ecosystem (SOE) reports. These yearly reports are developed by the Ecosystem Dynamics and Assessment Branch at the Northeast Fisheries Science Center for distribution to the US Fisheries Management Councils(FMCs). 
+[`ecodata`](https://github.com/NOAA-EDAB/ecodata) is an R package developed to hold and facilitate interaction with ecosystem indicators on the Northeast Conitnental Shelf. These indicators are applied to State of the Ecosystem (SOE) reports. These yearly reports are developed by the Ecosystem Dynamics and Assessment Branch at the Northeast Fisheries Science Center for distribution to the US Fisheries Management Councils(FMCs). 
 
 Visualizations of ecosystem indicators can be found at the links below.
 
@@ -42,7 +42,7 @@ library(ecodata)
 
 <p align="center" width="645">
 
-<img src="https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/ecodataHelp.gif">
+<img src="https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/ecodata1.gif">
 
 </p>
 
