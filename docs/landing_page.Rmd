@@ -1,0 +1,54 @@
+---
+title: "ecodata"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+
+```{r, echo=FALSE}
+htmltools::img(src = knitr::image_uri(here::here("ecodata_logo.png")), 
+               alt = 'logo', 
+               style = 'position:absolute; top:0; right:0; height:175px; padding-right:20px;')
+```
+
+
+## Overview
+
+[**`ecodata`**](https://github.com/NOAA-EDAB/ecodata) is an R data package developed by the [Ecosystem Dynamics and Assessment Branch of the Northeast Fisheries Science Center](https://www.fisheries.noaa.gov/new-england-mid-atlantic/ecosystems/northeast-ecosystem-dynamics-and-assessment-our-research) for use in State of the Ecosystem (SOE) reporting.
+
+## Background
+
+The State of the Ecosystem reports are high-level overviews of ecosystem indicator status and trends occurring on the Northeast Continental Shelf. They are apart of a larger [Integrated Ecosystem Assessmnet (IEA)](https://www.integratedecosystemassessment.noaa.gov/regions/northeast) approach to ecosystem based management.  The SOE reports are developed for US Fishery Management Councils (FMCs) in New England and the Mid-Atlantic. 
+
+## How it works
+
+The schematic below shows the workflow from contributor data subission to developing the State of the Ecosystem and other products. The data, once contributed, is cleaned to ensure the data is in the correct format. These `indicator.rda` datasets are used to create draft visualizations in categorized subgroup_visuals.Rmd. The subgroups include [Low Trophic/Climate/Habitat](https://noaa-edab.github.io/ecodata/LTL), [Macrofauna](https://noaa-edab.github.io/ecodata/macrofauna) and [Human Dimensions](https://noaa-edab.github.io/ecodata/human_dimensions). The code used to create these visuals is stored so it can be grabbed for use in the State of the Ecosystem reports and other products (technical documentation, presentations, etc.).  
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE}
+knitr::include_graphics(here::here("ecodata-schematic.png"))
+```
+
+
+## What is included 
+
+Each annual report cycle is developed with new and updated datasets. This table shows which versions of all related products correspond to a specific State of the Ecosystem report cycle. 
+
+
+| Year | State of the Ecosystem version | ecodata version | Technical Documentation Version |
+|------|--------------------------------|-----------------|---------------------------------|
+| 2019 | [0.1.0](https://github.com/NOAA-EDAB/SOE-NEFMC/tree/v0.1.0)                          | [0.1.0](https://github.com/NOAA-EDAB/ecodata/tree/0.1.0)           | [1.0.0](https://github.com/NOAA-EDAB/tech-doc/tree/v1.0.0)                           |
+| 2019 | [0.1.1](https://github.com/NOAA-EDAB/SOE-NEFMC/tree/v0.1.1)                          | [0.1.0](https://github.com/NOAA-EDAB/ecodata/tree/0.1.0)           | [1.0.0](https://github.com/NOAA-EDAB/tech-doc/tree/v1.0.0)                           |
+
+
+Below is a table outlining the indicators included in `ecodata` and which SOE year the indicator was included in the report(s). Further information for each indicator can be found in the [Technical Documentation: State of the Ecosystem](https://noaa-edab.github.io/tech-doc/). This holds the details on the methodologies used for all indicators included in the reports including those not included in `ecodata`.  
+
+```{r, echo = FALSE, eval = TRUE, message=FALSE}
+table<-googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1B10TeAs50giBoCgiRdZtzDr5fm3TAZyqexRJ_yrPWR0/edit#gid=0")
+
+knitr::kable(table)
+```
+
+
