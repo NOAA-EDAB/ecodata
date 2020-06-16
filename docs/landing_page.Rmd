@@ -23,7 +23,17 @@ library(magrittr)
 
 ## Background
 
-The State of the Ecosystem reports are high-level overviews of ecosystem indicator status and trends occurring on the Northeast Continental Shelf. They are apart of a larger [Integrated Ecosystem Assessmnet (IEA)](https://www.integratedecosystemassessment.noaa.gov/regions/northeast) approach to ecosystem based management.  The SOE reports are developed for US Fishery Management Councils (FMCs) in New England and the Mid-Atlantic. 
+<div style= "float:right;position: relative; top: 20px;">
+| DOIs |
+| --- |
+| [MAFMC SOE 2020](https://doi.org/10.25923/1f8j-d564) |
+| [NEFMC SOE 2020](https://doi.org/10.25923/4tdk-eg57) |
+| [Technical Documentation SOE 2020](https://doi.org/10.25923/64pf-sc70) |
+</div>
+
+The State of the Ecosystem reports are high-level overviews of ecosystem indicator status and trends occurring on the Northeast Continental Shelf. They are apart of a larger [Integrated Ecosystem Assessmnet (IEA)](https://www.integratedecosystemassessment.noaa.gov/regions/northeast) approach to ecosystem based management.  The SOE reports are developed for US Fishery Management Councils (FMCs) in New England and the Mid-Atlantic. DOIs for SOEs and related documents are found in the table to the right. 
+
+
 
 ## How it works
 
@@ -39,6 +49,7 @@ knitr::include_graphics(here::here("ecodata-schematic.png"))
 Each annual report cycle is developed with new and updated datasets. This table shows which versions of all related products correspond to a specific State of the Ecosystem report cycle. 
 
 
+
 | Year | Audience  | State of the Ecosystem | Response Memo | ecodata | Technical Documentation |
 |------|------------------|-------------|----------------|--------------|------------------|
 | 2019 | MAMFC | [0.1.0](https://github.com/NOAA-EDAB/SOE-NEFMC/tree/v0.1.0) | NA | [0.1.0](https://github.com/NOAA-EDAB/ecodata/tree/0.1.0) | [1.0.0](https://github.com/NOAA-EDAB/tech-doc/tree/v1.0.0)  |
@@ -52,8 +63,10 @@ Each annual report cycle is developed with new and updated datasets. This table 
 | 2020 | MAFMC | [2020.2.0](https://github.com/NOAA-EDAB/SOE-MAFMC/tree/2020.2.0) | [2020.1.0](https://github.com/NOAA-EDAB/memos/tree/2020.1.0) | [1.1.0](https://github.com/NOAA-EDAB/ecodata/tree/1.1.0) | [2.0.0](https://github.com/NOAA-EDAB/tech-doc/tree/2.0.0)
 | 2020 | NEFMC | [2020.2.0](https://github.com/NOAA-EDAB/SOE-NEFMC/tree/2020.2.0) | [2020.1.0](https://github.com/NOAA-EDAB/memos/tree/2020.1.0) | [1.1.0](https://github.com/NOAA-EDAB/ecodata/tree/1.1.0) | [2.0.0](https://github.com/NOAA-EDAB/tech-doc/tree/2.0.0) |
 
+
 Below is a table outlining the indicators included in `ecodata` and which SOE year the indicator was included in the report(s). Further information for each indicator can be found in the [Technical Documentation: State of the Ecosystem](https://noaa-edab.github.io/tech-doc/). This holds the details on the methodologies used for all indicators included in the reports including those not included in `ecodata`.  
 
+ 
 ```{r, echo = FALSE, eval = TRUE, message=FALSE, warning=FALSE}
 table<-googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1B10TeAs50giBoCgiRdZtzDr5fm3TAZyqexRJ_yrPWR0/edit#gid=0")
 
