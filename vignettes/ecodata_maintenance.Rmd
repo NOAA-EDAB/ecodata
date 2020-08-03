@@ -53,6 +53,6 @@ The **data** folder should hold only wrangled .rda files.
 
 3)  Ecodata uses [pkgdown](https://pkgdown.r-lib.org/index.html) so once the manual documentation is complete run `pkgdown::build_site()`. This will populate the website with is updated indicator dataset information. 
 
-Website link - https://noaa-edab.github.io/ecodata/
+Website link - https://noaa-edab.github.io/ecodata/landing_page
 
 

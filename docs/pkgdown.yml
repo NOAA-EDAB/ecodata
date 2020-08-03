@@ -6,3 +6,74 @@ articles:
   ecodata_maintenance: ecodata_maintenance.html
 last_built: 2020-05-14T18:47Z
 
+
+
+url: https://noaa-edab.github.io/ecodata/
+
+reference:
+  - title: "Functions List"
+    desc: "Main files for running the model and plotting its output"
+    contents:
+    - '`coast`'
+    - '`epu_sf`'
+    - '`geom_gls`'
+    - '`theme_facet`'
+    - '`theme_map`'
+    - '`theme_ts`'
+  - title: "Synthetic Indicators"
+    desc: "Data files containing synthetic indicators used in the State of the Ecosystem Reports"
+    contents:
+    - '`ppr`'
+    - '`wind_occupancy`'
+  - title: "Human Dimension Indicators"
+    - desc: "Data files containing human-related indicators used in the State of the Ecosystem Reports"
+    contents:
+    - '`aquaculture`'
+    - '`bennet`'
+    - '`comdat`'
+    - '`commercial_div`'
+    - '`engagement`'
+    - '`hms_landings`'
+    - '`recdat`'
+    - '`bennet`'
+  - title: "Megafauna Indicators"
+    desc: "Data files containing megafauna indicators used in the State of the Ecosystem Reports"
+    contents:
+    - '`aggregate_biomass`'
+    - '`blue_runner`'
+    - '`energy_density`'
+    - '`harborporpoise`'
+    - '`hp_density`'
+    - '`mab_inshore_survey`'
+    - '`mass_inshore_survey`'
+    - '`narw`'
+    - '`ne_inshore_survey`'
+    - '`nefsc_survey`'
+    - '`nefsc_survey_disaggregated`'
+    - '`productivity_anomaly`'
+    - '`seabird_mab`'
+    - '`seabird_ne`'
+    - '`species_dist`'
+    - '`species_groupings`'
+    - '`stock_status`'
+    - '`stom_fullness`'
+  - title: "LTL/Hab/Env Indicators"
+    desc: "Data files containing Low Trophic Level, Habitat and Environmental indicators used in the State of the Ecosystem Reports"
+    contents:
+    - '`bottom_temp`'
+    - '`ch_bay_sal`'
+    - '`ches_bay_wq`'
+    - '`chl_pp`'
+    - '`cold_pool`'
+    - '`gsi`'
+    - '`heatwave`'
+    - '`heatwave_year`'
+    - '`ichthyo_diversity`'
+    - '`long_term_sst`'
+    - '`ne_wind`'
+    - '`seasonal_oisst_anom`'
+    - '`seasonal_sst_anom_gridded`'
+    - '`slopewater`'
+    - '`wcr`'
+    - '`wind`'
+    - '`zoo_oi`'
