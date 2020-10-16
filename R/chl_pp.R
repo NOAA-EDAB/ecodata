@@ -1,23 +1,23 @@
-#' Chlorophyll \emph{a} and primary production 
-#' 
+#' Chlorophyll \emph{a} and primary production
+#'
 #' These data are time series of remotely sensed chlorophyll \emph{a} (CHL) and primary production (PP) data from the Northeast Continental Shelf.
 #' Included are median and anomaly CHL and PP estimates for Ecological Production Units, along with subsets for CHL and PP by
 #' phytoplankton size class. Data from multiple sensors (OC-CCI, SeaWiFS, MODIS-Aqua) and algorithms (see
 #' \url{https://noaa-edab.github.io/tech-doc/chl-pp.html}) are presented.
-#' 
+#'
 #' @format These data contain 88076 rows and 5 columns.
-#' 
+#'
 #' \itemize{
 #'     \item Var: Specifies temporal sampling resolution (\code{ANNUAL},\code{MONTHLY},\code{WEEKLY}), variable type (\code{MEDIAN},
 #'     \code{ANOMALY}, \code{PICO}, \code{NANO}, \code{MICRO}), algorithm, and sensor (\code{OC-CCI}, \code{SeaWiFS}, \code{MODIS-Aqua}).
-#'     If \code{ANOMALY} is specified, \code{Var} also include a time range from which the long-term mean was calculated. 
+#'     If \code{ANOMALY} is specified, \code{Var} also include a time range from which the long-term mean was calculated.
 #'     \item Value: Value of variable \code{Var}.
 #'     \item Units: Units of variable \code{Var}.
-#'     \item Time: Time step of \code{Var}. Time format is given as YYYYMM for monthly time steps and YYYYWW for weekly data. 
-#'     \item EPU: Ecological Production Unit (EPU) where sampling occurred. 
+#'     \item Time: Time step of \code{Var}. Time format is given as YYYYMM for monthly time steps and YYYYWW for weekly data.
+#'     \item EPU: Ecological Production Unit (EPU) where sampling occurred.
 #' }
-#' 
+#'
 #' @details Methods used to calculate median and anomaly data are available at \url{https://noaa-edab.github.io/tech-doc/chl-pp.html}. Methods
-#' used to find phytoplankton size-class information are forthcoming. 
-#' 
+#' used to find phytoplankton size-class information are forthcoming.
+#'
 "chl_pp"
