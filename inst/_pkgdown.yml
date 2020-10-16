@@ -11,25 +11,27 @@ last_built: 2020-05-14T18:47Z
 url: https://noaa-edab.github.io/ecodata/
 
 reference:
-  - title: "Functions List"
-    desc: "Main files for running the model and plotting its output"
+  - title: "Plotting and modeling functions"
+    desc: "main functions for running models and plotting its output"
     contents:
-    - '`coast`'
-    - '`epu_sf`'
-    - '`geom_gls`'
-    - '`theme_facet`'
-    - '`theme_map`'
-    - '`theme_ts`'
+    - ecodata
+    - coast
+    - epu_sf
+    - geom_gls
+    - soe
+    - theme_facet
+    - theme_map
+    - theme_ts
   - title: "Synthetic Indicators"
     desc: "Data files containing synthetic indicators used in the State of the Ecosystem Reports"
     contents:
-    - '`ppr`'
-    - '`wind_occupancy`'
+    - ppr
+    - wind_occupancy
   - title: "Human Dimension Indicators"
-    - desc: "Data files containing human-related indicators used in the State of the Ecosystem Reports"
+    desc: "Data files containing human-related indicators used in the State of the Ecosystem Reports"
     contents:
-    - '`aquaculture`'
-    - '`bennet`'
+    - aquaculture
+    - bennet
     - '`comdat`'
     - '`commercial_div`'
     - '`engagement`'
@@ -67,13 +69,14 @@ reference:
     - '`cold_pool`'
     - '`gsi`'
     - '`heatwave`'
-    - '`heatwave_year`'
+    # - '`heatwave_year`'
     - '`ichthyo_diversity`'
     - '`long_term_sst`'
     - '`ne_wind`'
     - '`seasonal_oisst_anom`'
-    - '`seasonal_sst_anom_gridded`'
+    - '`seasonal_sst_anomaly_gridded`'
+    # - '`seasonal_sst_anom_gridded`'
     - '`slopewater`'
     - '`wcr`'
-    - '`wind`'
+    # - '`wind`'
     - '`zoo_oi`'
