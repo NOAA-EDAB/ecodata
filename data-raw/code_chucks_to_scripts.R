@@ -1,6 +1,7 @@
 ### Convert Rmd code chunks into R scripts
 
-rmd.list<-list("human_dimensions.Rmd", "LTL.Rmd", "macrofauna.Rmd") # Rmds to convert
+rmd.list<-list("human_dimensions_MAB.Rmd", "LTL_MAB.Rmd", "macrofauna_MAB.Rmd",
+               "human_dimensions_NE.Rmd", "LTL_NE.Rmd", "macrofauna_NE.Rmd") # Rmds to convert
 
 # create r scripts from rmd
 for (i in rmd.list) {
