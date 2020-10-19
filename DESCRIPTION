@@ -1,7 +1,7 @@
 Package: ecodata
 Title: Documentation of Ecosystem Indicator Reporting
 Version: 0.1.0
-Authors@R:  c(person("Kimberly", "Bastille", email = "kimberly.bastille@noaa.gov", role = c("cre", "aut")),
+Authors@R: c(person("Kimberly", "Bastille", email = "kimberly.bastille@noaa.gov", role = c("cre", "aut")),
               person("Sean", "Hardison", role = "aut"))
 Description: A data package for reporting on Northeast Continental Shelf ecosystem status and trends.
 License: CC0
@@ -23,3 +23,5 @@ Suggests:
 	zoo
 VignetteBuilder: knitr
 RoxygenNote: 7.0.2
+Depends: 
+    R (>= 2.10)

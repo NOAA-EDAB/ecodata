@@ -13,12 +13,17 @@ library(lubridate)
 #Get raw
 raw.dir <- here::here("data-raw") #input raw
 
+bottom_temp_GOM_csv<-"bot_temp_GOM.csv"
+bottom_temp_GB_csv<-"bot_temp_GB.csv"
+bottom_temp_MAB_csv<-"bot_temp_MAB.csv"
+bottom_temp_SS_csv<-"bot_temp_SS.csv"
+
 get_bottom_temp <- function(save_clean = F){
 
-  ss <- read.csv(file.path(raw.dir,"bot_temp_SS.csv")) %>% mutate(EPU = "SS")
-  gom <- read.csv(file.path(raw.dir,"bot_temp_GOM.csv")) %>% mutate(EPU = "GOM")
-  gb <- read.csv(file.path(raw.dir,"bot_temp_GB.csv")) %>% mutate(EPU = "GB")
-  mab <- read.csv(file.path(raw.dir,"bot_temp_MAB.csv")) %>% mutate(EPU = "MAB")
+  ss <- read.csv(file.path(raw.dir,bottom_temp_SS_csv)) %>% mutate(EPU = "SS")
+  gom <- read.csv(file.path(raw.dir,bottom_temp_GOM_csv)) %>% mutate(EPU = "GOM")
+  gb <- read.csv(file.path(raw.dir,bottom_temp_GB_csv)) %>% mutate(EPU = "GB")
+  mab <- read.csv(file.path(raw.dir,bottom_temp_MAB_csv)) %>% mutate(EPU = "MAB")
 
   bottom_temp <- rbind(ss, gom, gb, mab) %>% #bind all
     dplyr::mutate(Units = "degreesC", Time = as.Date(format(date_decimal(Time), "%Y-%b-%d"), "%Y-%b-%d"),
@@ -39,5 +44,15 @@ get_bottom_temp <- function(save_clean = F){
   } else {
     return(bottom_temp)
   }
+
+  # metadata ----
+  attr(bottom_temp, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/bottom-temperatures.html"
+  attr(bottom_temp, "data_files")   <- list(
+    bottom_temp_SS_csv = bottom_temp_SS_csv,
+    bottom_temp_GB_csv = bottom_temp_GB_csv,
+    bottom_temp_GOM_csv = bottom_temp_GOM_csv,
+    bottom_temp_MAB_csv = bottom_temp_MAB_csv)
+  attr(bottom_temp, "data_steward") <- c(
+    "Paula Fratantoni <paula.fratantoni@noaa.gov>")
 }
 get_bottom_temp(save_clean = T)
