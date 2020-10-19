@@ -8,9 +8,10 @@ library(readxl)
 
 raw.dir <- here::here("data-raw")
 
+engagement_xlsx<-"ComEng Scores 2004-2018 for SOE 2020 Report 021020.xlsx"
 get_eng_rel <- function(save_clean = F){
 
-  d <-read_excel(file.path(raw.dir, "ComEng Scores 2004-2018 for SOE 2020 Report 021020.xlsx"))
+  d <-read_excel(file.path(raw.dir, engagement_xlsx))
 
   #Process
   engagement <- d %>%
@@ -26,7 +27,12 @@ get_eng_rel <- function(save_clean = F){
   } else {
     return(engagement)
   }
-
+  # metadata ----
+  attr(engagement, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/community-engagement.html"
+  attr(engagement, "data_files")   <- list(
+    engagement_xlsx = engagement_xlsx)
+  attr(engagement, "data_steward") <- c(
+    "Lisa Colburn <lisa.colburn@noaa.gov>")
 }
 get_eng_rel(save_clean = T)
 
