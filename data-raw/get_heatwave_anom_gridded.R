@@ -16,13 +16,13 @@ rast_prep <- function(r){
 raw.dir <- here::here("data-raw/gridded/sst_data")
 crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40
 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
-
-
+heatwave_anom_gridded_day_nc <- "sst.day.mean.2019.nc"
+heatwave_anom_gridded_ltm_nc <- "sst.day.mean.ltm.1982-2010.nc"
 #These data are large files that are not included among ecodata source files. They are accessible
 #here: https://www.esrl.noaa.gov/psd/data/gridded/data.noaa.oisst.v2.highres.html
 # but are removed after use as they are too large to store on github
-sst.2019 <- rast_prep(stack(file.path(raw.dir, "sst.day.mean.2019.nc")))
-ltm <- rast_prep(stack(file.path(raw.dir, "sst.day.mean.ltm.1982-2010.nc")))
+sst.2019 <- rast_prep(stack(file.path(raw.dir, heatwave_anom_gridded_day_nc)))
+ltm <- rast_prep(stack(file.path(raw.dir, heatwave_anom_gridded_ltm_nc)))
 
 ## Use day of Max heatwave intensity.
 gb.ltm <- ltm[[235]] # Aug 23
@@ -56,5 +56,11 @@ heatwave_anom_gridded<-
         rast_process(gom.anom,epu = "GOM"),
         rast_process(mab.anom, epu = "MAB"))
 
-
+# metadata ----
+attr(heatwave_anom_gridded, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/marine-heatwave.html"
+attr(heatwave_anom_gridded, "data_files")   <- list(
+  heatwave_anom_gridded_day_nc = heatwave_anom_gridded_day_nc,
+  heatwave_anom_gridded_ltm_nc = heatwave_anom_gridded_ltm_nc)
+attr(heatwave_anom_gridded, "data_steward") <- c(
+  "Kimberly Bastille <kimberly.bastille@noaa.gov>")
 usethis::use_data(heatwave_anom_gridded, overwrite = T)

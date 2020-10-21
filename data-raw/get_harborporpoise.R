@@ -7,10 +7,10 @@ library(dplyr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-
+harborporpoise_csv<-"1994-2017_5yr_hp_est.csv"
 #HP bycatch time series estimates------------------------------------------------------
 get_harborporpoise <- function(save_clean = F){
-  d <- read.csv(file.path(raw.dir,"1994-2017_5yr_hp_est.csv"))
+  d <- read.csv(file.path(raw.dir,harborporpoise_csv))
 
   #Create confidence intervals
   var1nnum <- log(1+d$CV^2)
@@ -36,4 +36,10 @@ get_harborporpoise <- function(save_clean = F){
   } else {
     return(harborporpoise)
   }
+  # metadata ----
+  attr(harborporpoise, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/harbor-porpoise-bycatch.html"
+  attr(harborporpoise, "data_files")   <- list(
+    harborporpoise_csv = harborporpoise_csv)
+  attr(harborporpoise, "data_steward") <- c(
+    "Chris Orphanides <chris.orphanides@noaa.gov>")
 }

@@ -8,12 +8,12 @@ library(rgdal)
 library(colorRamps)
 library(gstat)
 
-gis.dir <- here::here("inst","extdata","gridded")
+gis.dir <- here::here("data-raw","gridded")
 
 crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
-
+hp_denisty_csv<-"Harbor_Porpoise - Fall AMAPPS mapping data from website.csv"
 process_hp <- function(season){
-  d <- read.csv(file.path(gis.dir,"Harbor_Porpoise - Fall AMAPPS mapping data from website.csv"),
+  d <- read.csv(file.path(gis.dir,hp_denisty_csv),
                 stringsAsFactors = FALSE) %>%
     dplyr::filter(Season == season) %>%
     dplyr::select(Latitude = Center_Lat,
@@ -55,6 +55,13 @@ spring_hp <- process_hp(season = "Spring")
 
 hp_density <- rbind(fall_hp, spring_hp)
 
+
+# metadata ----
+attr(hp_density, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/harbor-porpoise-bycatch.html"
+attr(hp_density, "data_files")   <- list(
+  hp_denisty_csv = hp_denisty_csv)
+attr(hp_density, "data_steward") <- c(
+  "Chris Orphanides <chris.orphanides@noaa.gov>")
 usethis::use_data(hp_density, overwrite = T)
 
 
