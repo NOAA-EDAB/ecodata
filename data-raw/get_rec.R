@@ -29,5 +29,10 @@ get_rec <- function(save_clean = F){
   } else {
     return(recdat)
   }
+  # metadata ----
+  attr(recdat, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/recreational-fishing-indicators.html"
+  attr(recdat, "data_files")   <- list()
+  attr(recdat, "data_steward") <- c(
+    "Geret DePiper <geret.depiper@noaa.gov>")
 }
 get_rec(save_clean = T)

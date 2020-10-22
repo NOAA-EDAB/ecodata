@@ -4,11 +4,11 @@ library(readxl)
 library(stringr)
 
 raw.dir <- here::here("data-raw")
-
+zoo_diversity_xlsx <- "NEFSCZooplankton_v3_6b_v2018.xlsx"
 ### Zooplankton Diversity
 get_zoo_diversity <- function(save_clean = F){
 
-  zoo_diversity <- read_excel(file.path(raw.dir,"NEFSCZooplankton_v3_6b_v2018.xlsx"), sheet = "Diversity") %>%
+  zoo_diversity <- read_excel(file.path(raw.dir,zoo_diversity_xlsx), sheet = "Diversity") %>%
     dplyr::select(-Source) %>%
     dplyr::rename(Time = Year,
                   EPU = Region) %>%
@@ -19,6 +19,14 @@ get_zoo_diversity <- function(save_clean = F){
   } else {
     return(zoo_diversity)
   }
+  # metadata ----
+  attr(zoo_diversity, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/zooabund.html"
+  attr(zoo_diversity, "data_files")   <- list(
+    zoo_diversity_xlsx = zoo_diversity_xlsx)
+  attr(zoo_diversity, "data_steward") <- c(
+    "Harvey Walsh <harvey.walsh@noaa.gov>",
+    "Mike Jones <michael.jones@noaa.gov>",
+    "Ryan Morse <ryan.morse@noaa.gov>")
 }
 get_zoo_diversity(save_clean = T)
 

@@ -30,8 +30,10 @@ seasonal_epu_ltm <- function(ltm, epu_name){
   return(ltm_out)
 }
 
+seasonal_oisst_anom_nc <-"sst.day.mean.ltm.1982-2010.nc"
+
 #Get long-term mean for anomaly calculation
-ltm <- raster::stack(file.path(raw.dir, "sst.day.mean.ltm.1982-2010.nc"))
+ltm <- raster::stack(file.path(raw.dir,seasonal_oisst_anom_nc))
 ltm <- raster::crop(ltm, extent(280,300,30,50))
 ltm <- raster::rotate(ltm)
 
@@ -157,6 +159,14 @@ seasonal_oisst_anom <- rbind(MAB,GOM,GB) %>%
            Var = paste(stringr::str_extract(year, "winter|spring|summer|fall"),"OI SST Anomaly")) %>%
     dplyr::select(-year) %>%
     dplyr::mutate(Units = "degreesC")
+
+
+# metadata ----
+attr(seasonal_oisst_anom, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/seasonal-sst-anomalies.html"
+attr(seasonal_oisst_anom, "data_files")   <- list(
+  seasonal_oisst_anom_nc = seasonal_oisst_anom_nc)
+attr(seasonal_oisst_anom, "data_steward") <- c(
+  "Kimberly Bastille <kimberly.bastille@noaa.gov>")
 
 usethis::use_data(seasonal_oisst_anom, overwrite = TRUE)
 

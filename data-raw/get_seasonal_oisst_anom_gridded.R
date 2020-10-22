@@ -17,12 +17,13 @@ raw.dir <- here::here("data-raw/gridded/sst_data")
 crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40
 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 
-
+seasonal_sst_anomaly_gridded_day_nc <-"sst.day.mean.2019.nc"
+seasonal_sst_anomaly_gridded_ltm_nc <- "sst.day.mean.ltm.1982-2010.nc"
 #These data are large files that are not included among ecodata source files. They are accessible
 #here: https://www.esrl.noaa.gov/psd/data/gridded/data.noaa.oisst.v2.highres.html
 # but are removed after use as they are too large to store on github
-sst.2019 <- rast_prep(stack(file.path(raw.dir, "sst.day.mean.2019.nc")))
-ltm <- rast_prep(stack(file.path(raw.dir, "sst.day.mean.ltm.1982-2010.nc")))
+sst.2019 <- rast_prep(stack(file.path(raw.dir, seasonal_sst_anomaly_gridded_day_nc)))
+ltm <- rast_prep(stack(file.path(raw.dir, seasonal_sst_anomaly_gridded_ltm_nc)))
 
 winter.ltm <- ltm[[1:90]]
 spring.ltm <- ltm[[91:181]]
@@ -59,5 +60,14 @@ seasonal_sst_anomaly_gridded <-
       rast_process(spring.anom,season = "Spring"),
       rast_process(summer.anom, season = "Summer"),
       rast_process(fall.anom, season = "Fall"))
+
+# metadata ----
+attr(seasonal_sst_anomaly_gridded, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/seasonal-sst-anomalies.html"
+attr(seasonal_sst_anomaly_gridded, "data_files")   <- list(
+  seasonal_sst_anomaly_gridded_day_nc = seasonal_sst_anomaly_gridded_day_nc,
+  seasonal_sst_anomaly_gridded_ltm_nc = seasonal_sst_anomaly_gridded_ltm_nc)
+attr(seasonal_sst_anomaly_gridded, "data_steward") <- c(
+  "Kimberly Bastille <kimberly.bastille@noaa.gov>")
+
 usethis::use_data(seasonal_sst_anomaly_gridded, overwrite = T)
 

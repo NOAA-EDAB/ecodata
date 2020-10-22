@@ -11,9 +11,9 @@ data.dir <- here::here("data-raw")
 library(data.table); library(rgdal); library(Survdat)
 library(dplyr);library(sf);library(tidyr)
 #-------------------------------------------------------------------------------
-
+nefsc_survey_rdata <- 'Survdat.RData'
 #Load raw data and get "strata" aka EPUs here
-load(file.path(data.dir, 'Survdat.RData'))
+load(file.path(data.dir, nefsc_survey_rdata ))
 
 strata <- ecodata::epu_sf %>% as("Spatial")
 
@@ -149,4 +149,11 @@ nefsc_survey <- agg_survey %>%
   tidyr::complete(Time = full_seq(min(.$Time):max(.$Time),1),
            tidyr::nesting(EPU,Var))
 
+
+# metadata ----
+attr(nefsc_survey, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/survdat.html"
+attr(nefsc_survey, "data_files")   <- list(
+  nefsc_survey_rdata = nefsc_survey_rdata)
+attr(nefsc_survey, "data_steward") <- c(
+  "Sean Lucey <sean.lucey@noaa.gov>")
 usethis::use_data(nefsc_survey, overwrite = T)

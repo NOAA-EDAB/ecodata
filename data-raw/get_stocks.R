@@ -7,10 +7,11 @@ library(tidyr)
 library(ggplot2)
 
 data.dir <- here::here('data-raw')
-
+stock_status_access_csv <- "2019assess.csv"
+stock_status_decoder_csv <-  "2019decoder.csv"
 get_stocks <- function(save_clean = F){
-  assess <- read.csv(file.path(data.dir, "2019assess.csv"))
-  decode <- read.csv(file.path(data.dir, "2019decoder.csv"))
+  assess <- read.csv(file.path(data.dir, stock_status_access_csv))
+  decode <- read.csv(file.path(data.dir, stock_status_decoder_csv))
 
   stock_status <-
     assess %>%
@@ -35,5 +36,12 @@ get_stocks <- function(save_clean = F){
   } else {
     return(stock_status)
   }
+  # metadata ----
+  attr(stock_status, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/stockstatus.html"
+  attr(stock_status, "data_files")   <- list(
+    stock_status_access_csv = stock_status_access_csv,
+    stock_status_decoder_csv = stock_status_decoder_csv)
+  attr(stock_status, "data_steward") <- c(
+    "Sarah Gaichas <sarah.gaichas@noaa.gov>")
 }
 get_stocks(save_clean = T)

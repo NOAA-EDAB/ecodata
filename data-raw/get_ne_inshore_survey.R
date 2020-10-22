@@ -33,10 +33,12 @@ library(readxl)
 library(stringr)
 
 raw.dir <- here::here("data-raw")
+ne_inshore_survey_xlsx <- "MENH_TrawlSurvey.xlsx"
+ne_inshore_survey_species_xlsx <- "MENH_TrawlSpeciesinSOE2020.xlsx"
 
 get_ne_inshore_survey <- function(save_clean = F){
 
-  ne_inshore_survey <- readxl::read_excel(file.path(raw.dir, "MENH_TrawlSurvey.xlsx")) %>%
+  ne_inshore_survey <- readxl::read_excel(file.path(raw.dir, ne_inshore_survey_xlsx)) %>%
     dplyr::rename(Var = SOE.20,
                   Value = StratMean_Weight,
                   Time = Year) %>%
@@ -51,11 +53,21 @@ get_ne_inshore_survey <- function(save_clean = F){
   } else {
     return(list(ne_inshore_survey))
   }
-
+  # metadata ----
+  attr(ne_inshore_survey, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/inshoresurvdat.html"
+  attr(ne_inshore_survey, "data_files")   <- list(
+    ne_inshore_survey_xlsx = ne_inshore_survey_xlsx)
+  attr(ne_inshore_survey, "data_steward") <- c(
+    "Rebecca Peters <rebecca.j.peters@maine.gov>")
 }
 
+
+
+
+
+
 get_ne_inshore_survey_species <- function(save_clean = F){
-  ne_inshore_survey_species <- read_excel(file.path(raw.dir, "MENH_TrawlSpeciesinSOE2020.xlsx")) %>%
+  ne_inshore_survey_species <- read_excel(file.path(raw.dir, ne_inshore_survey_species_xlsx)) %>%
     dplyr::mutate(Var = "Maine and NH inshore survey species") %>%
     dplyr::rename(Species = CommonName,
            Group = SOE.20) %>%
@@ -66,7 +78,12 @@ get_ne_inshore_survey_species <- function(save_clean = F){
   } else {
     return(list( ne_inshore_survey_species))
   }
-
+  # metadata ----
+  attr(ne_inshore_survey_species, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/inshoresurvdat.html"
+  attr(ne_inshore_survey_species, "data_files")   <- list(
+    ne_inshore_survey_species_xlsx = ne_inshore_survey_species_xlsx)
+  attr(ne_inshore_survey_species, "data_steward") <- c(
+    "Rebecca Peters <rebecca.j.peters@maine.gov>")
 }
 get_ne_inshore_survey(save_clean = T)
 get_ne_inshore_survey_species(save_clean = T)
