@@ -12,14 +12,21 @@ library(dplyr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
+aquaculture_csv <- "mab_oyster_harvest.csv"
 
 get_aquaculture <- function(save_clean = F){
-  aquaculture <- read.csv(file.path(raw.dir,"mab_oyster_harvest.csv"))
+  aquaculture <- read.csv(file.path(raw.dir,aquaculture_csv))
 
   if (save_clean){
     usethis::use_data(aquaculture, overwrite = T)
   } else {
     return(aquaculture)
   }
-
+  # metadata ----
+  attr(aquaculture, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/aquaculture.html"
+  attr(aquaculture, "data_files")   <- list(
+    aquaculture_csv = aquaculture_csv)
+  attr(aquaculture, "data_steward") <- c(
+    "Kimberly Bastille <kimberly.bastille@noaa.gov>")
 }
+get_aquaculture(save_clean = T)

@@ -5,11 +5,11 @@ library(tidyr)
 
 #Get raw data
 raw.dir <- here::here("data-raw")
-
+habitat_occupancy_csv<- "hab_occupancy.csv"
 
 get_hab_occupancy <- function(save_clean = F){
 
-  d <- read.csv(file.path(raw.dir,"hab_occupancy.csv"))
+  d <- read.csv(file.path(raw.dir,habitat_occupancy_csv))
 
   #Process
   habitat_occupancy <- d %>%
@@ -23,5 +23,11 @@ get_hab_occupancy <- function(save_clean = F){
   } else {
     return(habitat_occupancy)
   }
+  # metadata ----
+  attr(habitat_occupancy, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/hab-occu.html"
+  attr(habitat_occupancy, "data_files")   <- list(
+    habitat_occupancy_csv = habitat_occupancy_csv)
+  attr(habitat_occupancy, "data_steward") <- c(
+    "Kevin Friedland <kevin.friedland@noaa.gov>")
 }
 get_hab_occupancy(save_clean = T)

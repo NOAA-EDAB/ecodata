@@ -17,11 +17,11 @@ library(readxl)
 
 #Get raw data
 raw.dir <- here::here("data-raw")
-
+seabird_ne_xlsx <- "Audubon Common Tern Data for 2019 NOAA EA Effort (2).xlsx"
 
 get_seabird_ne <- function(save_clean = F){
 
-  d <- read_excel(file.path(raw.dir,"Audubon Common Tern Data for 2019 NOAA EA Effort (2).xlsx"))
+  d <- read_excel(file.path(raw.dir,seabird_ne_xlsx))
 
   #Process
   seabird_ne <- d %>%
@@ -38,6 +38,12 @@ get_seabird_ne <- function(save_clean = F){
   } else {
     return(seabird_ne)
   }
+  # metadata ----
+  attr(seabird_ne, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/ne-seabird-diet-and-productivity.html"
+  attr(seabird_ne, "data_files")   <- list(
+    seabird_ne_xlsx = seabird_ne_xlsx)
+  attr(seabird_ne, "data_steward") <- c(
+    "Don Lyons <dlyons@audubon.org>")
 }
 get_seabird_ne(save_clean = T)
 

@@ -7,10 +7,11 @@ library(stringr)
 
 raw.dir <- here::here("data-raw")
 
+ichthyo_diversity_xlsx <- "NEFSCIchthyoplanktonSpeciesCount_v3_3.xlsx"
 
 get_ichthyo_diversity <- function(save_clean = F){
 
-  ichthyo_diversity <- read_excel(file.path(raw.dir,"NEFSCIchthyoplankton_v3_6.xlsx")) %>%
+  ichthyo_diversity <- read_excel(file.path(raw.dir,ichthyo_diversity_xlsx)) %>%
     dplyr::select(-Source) %>%
     dplyr::rename(Time = Year,
                   EPU = Region) %>%
@@ -21,6 +22,13 @@ get_ichthyo_diversity <- function(save_clean = F){
   } else {
     return(ichthyo_diversity)
   }
+
+  # metadata ----
+  attr(ichthyo_diversity, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/ichthyoplankton-diversity.html"
+  attr(ichthyo_diversity, "data_files")   <- list(
+    ichthyo_diversity_xlsx = ichthyo_diversity_xlsx)
+  attr(ichthyo_diversity, "data_steward") <- c(
+    "Harvey Walsh <harvey.walsh@noaa.gov>")
 }
 get_ichthyo_diversity(save_clean = T)
 

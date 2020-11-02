@@ -13,9 +13,10 @@ library(tidyr)
 library(stringr)
 
 raw.dir <- here::here("data-raw")
+commercial_div_csv <- "Commercial_Diversity.csv"
 
 get_commercial_div <- function(save_clean = F){
-  commercial_div <- read.csv(file.path(raw.dir, "Commercial_Diversity.csv")) %>%
+  commercial_div <- read.csv(file.path(raw.dir, commercial_div_csv)) %>%
     dplyr::select(-X, -Source) %>%
     dplyr::rename(EPU = Region) %>%
     as.data.frame()
@@ -27,7 +28,12 @@ get_commercial_div <- function(save_clean = F){
   } else {
     return(commercial_div)
   }
-
+  # metadata ----
+  attr(commercial_div, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc"
+  attr(commercial_div, "data_files")   <- list(
+    commercial_div_csv = commercial_div_csv)
+  attr(commercial_div, "data_steward") <- c(
+    "Geret DePiper <geret.depiper@noaa.gov>")
 
 }
 get_commercial_div(save_clean = T)

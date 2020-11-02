@@ -6,9 +6,9 @@ library(stringr)
 library(readxl)
 
 raw.dir <- here::here("data-raw")
-
+wcr_xlsx <- "WCR.xlsx"
 get_warm_core_rings <- function(save_clean = F){
-  wcr <- read_excel(file.path(raw.dir,"WCR.xlsx")) %>%
+  wcr <- read_excel(file.path(raw.dir,wcr_xlsx)) %>%
     dplyr::select(Time, WCR) %>%
     dplyr::rename(Value = WCR) %>%
     dplyr::mutate(EPU = c("All"),
@@ -20,6 +20,11 @@ get_warm_core_rings <- function(save_clean = F){
   } else {
     return(wcr)
   }
-
+  # metadata ----
+  attr(wcr, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/warm-core-rings.html"
+  attr(wcr, "data_files")   <- list(
+    wcr_xlsx = wcr_xlsx)
+  attr(wcr, "data_steward") <- c(
+    "Avijit Gangopadhyay <avijit.gangopadhyay@umassd.edu>")
 }
 get_warm_core_rings(save_clean = T)

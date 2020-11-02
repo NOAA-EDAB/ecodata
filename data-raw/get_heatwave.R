@@ -7,14 +7,17 @@ library(readr)
 
 raw.dir <- here::here("data-raw")
 
+heatwave_gb_csv<-"GB_OISST - Vincent Saba - NOAA Federal.csv"
+heatwave_gom_csv<-"GOM_OISST - Vincent Saba - NOAA Federal.csv"
+heatwave_mab_csv<-"MAB_OISST - Vincent Saba - NOAA Federal.csv"
 
 get_heatwave <- function(save_clean = F){
 
-  gom<-read_csv(file.path(raw.dir,"GOM_OISST - Vincent Saba - NOAA Federal.csv"),
+  gom<-read_csv(file.path(raw.dir,heatwave_gom_csv),
                  col_types = cols(temp = col_double(),t = col_date()))
-  gb<-read_csv(file.path(raw.dir,"GB_OISST - Vincent Saba - NOAA Federal.csv"),
+  gb<-read_csv(file.path(raw.dir,heatwave_gb_csv),
                 col_types = cols(temp = col_double(),t = col_date()))
-  mab<-read_csv(file.path(raw.dir,"MAB_OISST - Vincent Saba - NOAA Federal.csv"),
+  mab<-read_csv(file.path(raw.dir,heatwave_mab_csv),
                 col_types = cols(temp = col_double(),t = col_date()))
   #GB
   ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2010-12-31"))
@@ -57,6 +60,14 @@ get_heatwave <- function(save_clean = F){
   } else {
     return(heatwave)
   }
+  # metadata ----
+  attr(heatwave, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/marine-heatwave.html"
+  attr(heatwave, "data_files")   <- list(
+    heatwave_gom_csv = heatwave_gom_csv,
+    heatwave_gb_csv = heatwave_gb_csv,
+    heatwave_mab_csv = heatwave_mab_csv)
+  attr(heatwave, "data_steward") <- c(
+    "Vincent Saba <vincent.saba@noaa.gov>")
 }
 get_heatwave(save_clean = T)
 

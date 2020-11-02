@@ -9,9 +9,9 @@ library(stringr)
 library(readxl)
 
 raw.dir <- here::here("data-raw")
-
+narw_xlsx <- "narw_abundance.xlsx"
 get_narw <- function(save_clean = F){
-  narw <- read_excel(file.path(raw.dir,"narw_abundance.xlsx")) %>%
+  narw <- read_excel(file.path(raw.dir,narw_xlsx)) %>%
     dplyr::select(-c(5,7:10)) %>%
     dplyr::rename(Lower95 = Lower95...2,
            Median = Median...3,
@@ -31,7 +31,12 @@ get_narw <- function(save_clean = F){
   } else {
     return(narw)
   }
-
+  # metadata ----
+  attr(narw, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/right-whale-abundance.html"
+  attr(narw, "data_files")   <- list(
+    narw_xlsx = narw_xlsx)
+  attr(narw, "data_steward") <- c(
+    "Chris Orphanides <chris.orphanides@noaa.gov>")
 }
 get_narw(save_clean = T)
 

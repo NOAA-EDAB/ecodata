@@ -12,10 +12,10 @@ library(tidyr)
 
 #Get raw
 raw.dir <- here::here("data-raw") #input raw
-
+slopewater_csv <- "slopewater_proportions.csv"
 get_slopewater <- function(save_clean = F){
 
-  d <- read.csv(file.path(raw.dir,"slopewater_proportions.csv"))
+  d <- read.csv(file.path(raw.dir,slopewater_csv))
 
   slopewater <- d %>%
     dplyr::rename(Time = year, Var = water.mass.flavor, Value = prop) %>%
@@ -28,6 +28,11 @@ get_slopewater <- function(save_clean = F){
   } else {
     return(slopewater)
   }
-
+  # metadata ----
+  attr(slopewater, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/slopewater-proportions.html"
+  attr(slopewater, "data_files")   <- list(
+    slopewater_csv = slopewater_csv)
+  attr(slopewater, "data_steward") <- c(
+    "Paula Frantantoni <paula.fratantoni@noaa.gov>")
 }
 get_slopewater(save_clean = T)

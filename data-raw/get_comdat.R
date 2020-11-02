@@ -10,9 +10,11 @@ library(dplyr)
 
 raw.dir <- here::here("data-raw")
 
+comdat_RData<-"Commerical_data_pull_20.RData"
+
 get_comdat <- function(save_clean = F){
 
-  load(file.path(raw.dir, "Commerical_data_pull_20.RData"))
+  load(file.path(raw.dir, comdat_RData))
 
   comdat <- commercial %>%
     dplyr::rename(EPU = Region) %>%
@@ -23,7 +25,12 @@ get_comdat <- function(save_clean = F){
   } else {
     return(comdat)
   }
-
+  # metadata ----
+  attr(comdat, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/comdat.html"
+  attr(comdat, "data_files")   <- list(
+    comdat_RData = comdat_RData)
+  attr(comdat, "data_steward") <- c(
+    "Sean Lucey <sean.lucey@noaa.gov>")
 }
 get_comdat(save_clean = T)
 

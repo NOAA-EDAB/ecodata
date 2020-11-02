@@ -8,10 +8,10 @@ library(tidyr)
 library(lubridate)
 
 raw.dir <- here::here("data-raw")
-
+gsi_csv<-"GSI.csv"
 get_gsi <- function(save_clean = F){
 
-  gsi <- read.csv(file.path(raw.dir, "GSI.csv")) %>%
+  gsi <- read.csv(file.path(raw.dir, gsi_csv)) %>%
     dplyr::rename(Time = Month, Value = GSI) %>%
     dplyr::mutate(Var = "gulf stream index",
            Units = "latitude anomaly",
@@ -22,5 +22,11 @@ get_gsi <- function(save_clean = F){
   } else {
     return(gsi)
   }
+  # metadata ----
+  attr(gsi, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/gulf-stream-index.html"
+  attr(gsi, "data_files")   <- list(
+    gsi_csv = gsi_csv)
+  attr(gsi, "data_steward") <- c(
+    "Vincent Saba <vincent.saba@noaa.gov>")
 }
 get_gsi(save_clean = T)

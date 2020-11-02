@@ -2,10 +2,12 @@ library(tidyverse)
 
 
 raw.dir <- here::here("data-raw")
+zoo_abund_rdata <- "zoo_abun_anom.rdata"
+zoo_strat_abun_xlsx <- "NEFSCZooplankton_v3_6b_v2018.xlsx"
 
 get_zoo_abun_anom <- function(save_clean = F){
 
-  load(file.path(raw.dir, "zoo_abun_anom.rdata"))
+  load(file.path(raw.dir, zoo_abund_rdata))
 
   small <- as.tibble(mtest) %>%
     dplyr::filter(!variable == "Cf") %>%
@@ -28,6 +30,14 @@ get_zoo_abun_anom <- function(save_clean = F){
   } else {
     return(zoo_abund)
   }
+  # metadata ----
+  attr(zoo_abund, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/zooabund.html"
+  attr(zoo_abund, "data_files")   <- list(
+    zoo_abund_rdata = zoo_abund_rdata)
+  attr(zoo_abund, "data_steward") <- c(
+    "Harvey Walsh <harvey.walsh@noaa.gov>",
+    "Mike Jones <michael.jones@noaa.gov>",
+    "Ryan Morse <ryan.morse@noaa.gov>")
 }
 get_zoo_abun_anom(save_clean = T)
 
@@ -35,7 +45,7 @@ get_zoo_abun_anom(save_clean = T)
 ## Stratified Abundance for Small and Large Calanoids, euphasids and cnidarians
 get_zoo_strat_abun <- function(save_clean = F){
 
-  zoo_strat_abun <- read_excel(file.path(raw.dir,"NEFSCZooplankton_v3_6b_v2018.xlsx"), sheet = "StratifiedAbundance") %>%
+  zoo_strat_abun <- read_excel(file.path(raw.dir,zoo_strat_abun_xlsx), sheet = "StratifiedAbundance") %>%
     dplyr::select(Year, Units, Region, SmallCalanoida, LargeCalanoida, Euphausiacea, Cnidaria) %>%
     dplyr::rename(Time = Year,
                   EPU = Region) %>%
@@ -46,6 +56,14 @@ get_zoo_strat_abun <- function(save_clean = F){
   } else {
     return(zoo_strat_abun)
   }
+  # metadata ----
+  attr(zoo_strat_abun, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chl-pp.html"
+  attr(zoo_strat_abun, "data_files")   <- list(
+    zoo_strat_abun_xlsx = zoo_strat_abun_xlsx)
+  attr(zoo_strat_abun, "data_steward") <- c(
+    "Harvey Walsh <harvey.walsh@noaa.gov>",
+    "Mike Jones <michael.jones@noaa.gov>",
+    "Ryan Morse <ryan.morse@noaa.gov>")
 }
 get_zoo_strat_abun(save_clean = T)
 

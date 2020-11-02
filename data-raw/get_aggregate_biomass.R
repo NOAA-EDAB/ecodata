@@ -6,9 +6,10 @@ library(dplyr)
 
 raw.dir <- here::here("data-raw")
 
+aggregate_biomass_RData <- "Aggregate_Survey_biomass_20 (5).RData"
 get_aggregate_biomass <- function(save_clean = F){
 
-  load(file.path(raw.dir, "Aggregate_Survey_biomass_20 (5).RData"))
+  load(file.path(raw.dir, aggregate_biomass_RData))
 
   aggregate_biomass <- survey %>%
     dplyr::rename(EPU = Region)
@@ -19,6 +20,11 @@ get_aggregate_biomass <- function(save_clean = F){
   } else {
     return(aggregate_biomass)
   }
-
+  # metadata ----
+  attr(aggregate_biomass, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/aggroups.html"
+  attr(aggregate_biomass, "data_files")   <- list(
+    aggregate_bimass_RData = aggregate_bimass_RData)
+  attr(aggregate_biomass, "data_steward") <- c(
+    "Sean Lucey <sean.lucey@noaa.gov>")
 }
 get_aggregate_biomass(save_clean = T)
