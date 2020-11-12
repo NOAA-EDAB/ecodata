@@ -819,24 +819,26 @@ zoo_div %>%
 ```{r cold_pool, eval = T, echo = F, fig.cap="Cold pool index - mean bottom temperature anomaly for Sept-Oct in the MAB." }
 
 ecodata::cold_pool %>% 
-    dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
+  dplyr::group_by(Var) %>% 
+  dplyr::mutate(hline = mean(Val, na.rm = T)) %>% 
   ggplot2::ggplot() + 
  #Highlight last ten years
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -3, ymax = 3) +
-  ecodata::geom_gls(aes(x = Time, y = Value),
+  #ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  #    xmin = x.shade.min , xmax = x.shade.max) +
+  ecodata::geom_gls(aes(x = Time, y = Val),
              alpha = trend.alpha, size = trend.size) +
-  ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
-  ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
+  ggplot2::geom_line(aes(x = Time, y = Val), size = lwd) +
+  ggplot2::geom_point(aes(x = Time, y = Val), size = pcex) +
   ggplot2::geom_hline(aes(yintercept = hline),
      size = hline.size,
      alpha = hline.alpha,
      linetype = hline.lty)+
   ggplot2::ggtitle("Cold Pool Index")+
+  ggplot2::facet_wrap(~Var, scales = "free")+
   ggplot2::ylab(expression("Cold Pool Temp Anomaly (C) ")) +
   ggplot2::xlab("")+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  plotly::plotly() 
 ```
 
 ### Marine Heat Wave
