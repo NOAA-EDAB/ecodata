@@ -19,6 +19,10 @@ get_cold_pool <- function(save_clean = F){
   cold_pool <- tidync::tidync(cold_pool_file) %>%
     tidync::hyper_tibble() %>%
     dplyr::mutate(Time = c(ny+1992)) %>%
+    dplyr::filter(V_max < 100,
+                  T_peak < 100,
+                  T_min < 100,
+                  T_mean < 100) %>%
     tidyr::pivot_longer(cols = c("T_peak", "T_min", "T_mean", "V_max"), names_to = "Var",values_to = "Value") %>%
     dplyr::group_by(Time, Var) %>%
     dplyr::summarise(Val = mean(Value),

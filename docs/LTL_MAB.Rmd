@@ -818,7 +818,7 @@ zoo_div %>%
 ### Cold Pool Index
 ```{r cold_pool, eval = T, echo = F, fig.cap="Cold pool index - mean bottom temperature anomaly for Sept-Oct in the MAB." }
 
-ecodata::cold_pool %>% 
+cp<- ecodata::cold_pool %>% 
   dplyr::group_by(Var) %>% 
   dplyr::mutate(hline = mean(Val, na.rm = T)) %>% 
   ggplot2::ggplot() + 
@@ -835,10 +835,11 @@ ecodata::cold_pool %>%
      linetype = hline.lty)+
   ggplot2::ggtitle("Cold Pool Index")+
   ggplot2::facet_wrap(~Var, scales = "free")+
-  ggplot2::ylab(expression("Cold Pool Temp Anomaly (C) ")) +
+  ggplot2::ylab("Cold Pool") +
   ggplot2::xlab("")+
-  ecodata::theme_ts()+
-  plotly::plotly() 
+  ecodata::theme_ts()
+
+plotly::ggplotly(cp) 
 ```
 
 ### Marine Heat Wave
