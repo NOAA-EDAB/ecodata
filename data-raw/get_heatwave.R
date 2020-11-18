@@ -111,7 +111,7 @@ get_heatwave_year <- function(save_clean = F){
   mhw<- mab.mhw$clim %>%
     mutate(EPU = c("MAB"))# add EPU column
   mhw.mab.year <- mhw[13515:13857,]## days in 2019 data set only went to dec 9, 2019
-
+#  mhw.mab.year2018 <- mhw[13150:13514,] Running 2018 for Kim H
   # bind dfs together for master list for plotting
   heatwave_year<- rbind(mhw.gb.year, mhw.gom.year, mhw.mab.year)
 if (save_clean){
