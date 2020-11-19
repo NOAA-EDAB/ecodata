@@ -4,7 +4,8 @@
 \name{species_groupings}
 \alias{species_groupings}
 \title{Species groupings}
-\format{1023 rows and 12 columns
+\format{
+1023 rows and 12 columns
 
 \itemize{
 \item COMNAME: Common name of listed species.
@@ -19,7 +20,8 @@
 \item SOE_18: Feeding guild groupings used in 2018-2019 SOE reports.
 \item Garrison_Link: Groupings adapted from Garrison and Link 2000.
 \item NEIEA: Simplified feeding guilds for NE-IEA website.
-}}
+}
+}
 \usage{
 species_groupings
 }

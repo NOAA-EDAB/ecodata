@@ -4,7 +4,9 @@
 \name{coast}
 \alias{coast}
 \title{Coast}
-\format{This data set is a spatial (sf) object.}
+\format{
+This data set is a spatial (sf) object.
+}
 \usage{
 coast
 }

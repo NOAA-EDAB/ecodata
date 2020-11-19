@@ -4,7 +4,8 @@
 \name{nefsc_survey_disaggregated}
 \alias{nefsc_survey_disaggregated}
 \title{NEFSC Bottom Trawl Survey (species-level)}
-\format{\itemize{
+\format{
+\itemize{
 \item SVSPP: Species identifier code.
 \item Time: Years.
 \item EPU: Ecological Production Unit where sampling occurred (MAB = Mid-Atlantic Bight, GB = Georges Bank,
@@ -16,7 +17,8 @@ GOM = Gulf of Maine, SS = Scotian Shelf).
 \item Guild total: Annual feeding guild biomass.
 \item Proportion: Proportion of feeding guild biomass by species.
 \item Management: Species management body (MAFMC, NEFMC, or JOINT).
-}}
+}
+}
 \usage{
 nefsc_survey_disaggregated
 }

@@ -4,7 +4,8 @@
 \name{aquaculture}
 \alias{aquaculture}
 \title{Oyster harvest data from the Mid-Atlantic}
-\format{A data set containing 24 rows and 5 columns.
+\format{
+A data set containing 24 rows and 5 columns.
 
 \itemize{
 \item Var: Specifies state from which oyster harvest data were taken.
@@ -12,7 +13,8 @@
 \item EPU: Ecological Production Unit (EPU) where data originated. Here "MAB" refers to the Mid-Atlantic Bight.
 \item Units: Units of variable \code{Var}.
 \item Time: Survey year.
-}}
+}
+}
 \usage{
 aquaculture
 }

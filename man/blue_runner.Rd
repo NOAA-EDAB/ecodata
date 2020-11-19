@@ -4,7 +4,8 @@
 \name{blue_runner}
 \alias{blue_runner}
 \title{SAFMC managed Blue Runner presence on NES}
-\format{Data set includes 1152 rows and 6 columns.
+\format{
+Data set includes 1152 rows and 6 columns.
 
 \itemize{
 \item Var: Either lat or long of Blue runner present on NES broken into 3 time catgories (prior to 2001, 2001-2010, 2010-pres)
@@ -13,7 +14,8 @@
 \item Units: decimal degrees
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.
 \item Source: NEFSC bottom trawl survey.
-}}
+}
+}
 \usage{
 blue_runner
 }

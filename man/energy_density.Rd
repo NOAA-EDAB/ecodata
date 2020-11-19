@@ -4,7 +4,8 @@
 \name{energy_density}
 \alias{energy_density}
 \title{Forage fish energy density}
-\format{A data set containing 8 rows and 13 columns.
+\format{
+A data set containing 8 rows and 13 columns.
 
 \itemize{
 \item Species: Species included in analysis.
@@ -21,7 +22,8 @@
 \item Mean.ED: Mean found in Stiemle and Terranove 1985.
 \item Mean.ED..SD..5: Mean and standard deviation found in Lawson et al. 1998.
 
-}}
+}
+}
 \usage{
 energy_density
 }

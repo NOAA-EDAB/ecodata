@@ -4,7 +4,8 @@
 \name{seasonal_oisst_anom}
 \alias{seasonal_oisst_anom}
 \title{Sea-surface temperature anomaly time serries}
-\format{444 observations in 5 columns
+\format{
+444 observations in 5 columns
 
 \itemize{
 \item Value: SST anomaly in degrees C.
@@ -12,7 +13,8 @@
 \item Var: Specifies season of anomaly.
 \item Time: Year.
 \item Units: Units.
-}}
+}
+}
 \usage{
 seasonal_oisst_anom
 }

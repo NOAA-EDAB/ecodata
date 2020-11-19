@@ -4,7 +4,8 @@
 \name{narw}
 \alias{narw}
 \title{North Atlantic right whale abundance}
-\format{These data include 84 rows and 5 columns.
+\format{
+These data include 84 rows and 5 columns.
 
 \itemize{
 \item Var: Specifies variable of interest, including NARW abundance estimate median and 95\% credible
@@ -13,7 +14,8 @@ intervals.
 \item Units: Units of variable \code{Var}.
 \item Time: Year.
 \item EPU: Ecological Production Unit (EPU).
-}}
+}
+}
 \usage{
 narw
 }

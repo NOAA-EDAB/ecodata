@@ -4,7 +4,8 @@
 \name{stock_status}
 \alias{stock_status}
 \title{Managed species stock status}
-\format{98 rows and 7 columns
+\format{
+98 rows and 7 columns
 
 \itemize{
 \item Stock: Stock identifier.
@@ -16,7 +17,8 @@ at maximum sustainable yield (or proxy), or \code{B.Bmsy}, defined as the ratio 
 estimated biomass at maximum sustainable yield (or proxy).
 \item Value: Value of variable \code{Var}.
 \item Units: Units of variable \code{Var}.
-}}
+}
+}
 \usage{
 stock_status
 }

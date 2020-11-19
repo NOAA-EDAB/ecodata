@@ -4,7 +4,8 @@
 \name{harborporpoise}
 \alias{harborporpoise}
 \title{Harbor porpoise bycatch}
-\format{Data set includes 120 rows and 5 columns.
+\format{
+Data set includes 120 rows and 5 columns.
 
 \itemize{
 \item Var: Specifies variable of interest, including bycatch estimates (five year moving average) with
@@ -14,7 +15,8 @@ harbor porpoise.
 \item Time: Year.
 \item Units: Units of variable \code{Var}.
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.
-}}
+}
+}
 \usage{
 harborporpoise
 }

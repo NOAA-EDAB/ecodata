@@ -4,7 +4,8 @@
 \name{hp_density}
 \alias{hp_density}
 \title{Harbor porpoise density estimates}
-\format{6244 rows and 5 columns
+\format{
+6244 rows and 5 columns
 
 \itemize{
 \item Latitude: Decimal latitude.
@@ -12,7 +13,8 @@
 \item Value: Density (Animals/km^2)
 \item Bin: Density bins for plotting.
 \item Season: Season; \code{fall} or \code{spring}.
-}}
+}
+}
 \source{
 Data were sourced from \url{https://www.nefsc.noaa.gov/AMAPPSviewer/} on 12/14/2018.
 }

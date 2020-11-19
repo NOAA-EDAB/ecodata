@@ -4,7 +4,8 @@
 \name{heatwave}
 \alias{heatwave}
 \title{Marine Heatwaves}
-\format{380 rows and 5 columns.
+\format{
+380 rows and 5 columns.
 
 \itemize{
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.
@@ -12,7 +13,8 @@
 \item Var: Cumulative or maximum marine heatwave intensity.
 \item Value: Value of variable \code{Var}.
 \item Units: Units of variable \code{Var}.
-}}
+}
+}
 \usage{
 heatwave
 }

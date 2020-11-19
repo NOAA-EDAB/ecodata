@@ -4,13 +4,15 @@
 \name{ichthyo_diversity}
 \alias{ichthyo_diversity}
 \title{Ichthyoplankton diversity}
-\format{\itemize{
+\format{
+\itemize{
 \item Var: Specifies variable of interest and sampling season.
 \item Time: Sampling year.
 \item Units: Units of variable \code{Var}.
 \item EPU: Ecological Production Units (EPU) where sampling occurred. \code{All} refers to data aggregated to the level of the Northeast Continental Shelf.
 \item Value: Value of variable \code{Var}.
-}}
+}
+}
 \usage{
 ichthyo_diversity
 }

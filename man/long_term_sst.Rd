@@ -4,14 +4,16 @@
 \name{long_term_sst}
 \alias{long_term_sst}
 \title{Long-term SST}
-\format{Data contain 165 rows and 5 columns.
+\format{
+Data contain 165 rows and 5 columns.
 \itemize{
 \item Var: Specifies variable of interest.
 \item Value: Value of variable \code{Var}.
 \item Units: Units of variable \code{Var}.
 \item EPU: Ecological Production Unit (EPU) from which data were collected or aggregated. An EPU of \code{All} means that the scope of the data set is the entire Northeast US Continental Shelf.
 \item Time: Year.
-}}
+}
+}
 \source{
 \url{https://www.esrl.noaa.gov/psd/data/gridded/data.noaa.ersst.v5.html}
 }

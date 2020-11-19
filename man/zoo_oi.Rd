@@ -4,14 +4,16 @@
 \name{zoo_oi}
 \alias{zoo_oi}
 \title{Zooplankton abundance (EcoMon seasonal and interpolated)}
-\format{2160 rows and 5 columns.
+\format{
+2160 rows and 5 columns.
 \itemize{
 \item Var: Specifies species name and observation season.
 \item Value: Value of variable \code{Var}.
 \item Units: Units of variable \code{Var}.
 \item EPU: Ecological Production Units where data originated.
 \item Time: Year.
-}}
+}
+}
 \usage{
 zoo_oi
 }

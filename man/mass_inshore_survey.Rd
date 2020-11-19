@@ -4,7 +4,8 @@
 \name{mass_inshore_survey}
 \alias{mass_inshore_survey}
 \title{Massachusetts inshore bottom trawl survey}
-\format{413 rows and 5 columns
+\format{
+413 rows and 5 columns
 
 \itemize{
 \item Var: Specifies variable type, including SOE species groupings and sampling season with stratified mean biomass per tow
@@ -12,7 +13,8 @@
 \item Time: Year.
 \item Units: Units of variable \code{Var}.
 \item EPU: Ecological Production Unit. These data reflect inshore sampling in MA state waters.
-}}
+}
+}
 \usage{
 mass_inshore_survey
 }

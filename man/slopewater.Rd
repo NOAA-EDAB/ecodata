@@ -4,7 +4,8 @@
 \name{slopewater}
 \alias{slopewater}
 \title{Northeast Channel slopewater proportions}
-\format{74 rows and 5 columns
+\format{
+74 rows and 5 columns
 
 \itemize{
 \item Var: Specifies slopewater source (either Labrador Slope Water (LSLW) or Warm Slope Water (WSW))
@@ -12,7 +13,8 @@
 \item Units: Units of variable \code{Var}; proportion.
 \item Time: Year.
 \item EPU: Ecological Production Unit where data originated.
-}}
+}
+}
 \usage{
 slopewater
 }

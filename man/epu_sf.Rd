@@ -4,7 +4,9 @@
 \name{epu_sf}
 \alias{epu_sf}
 \title{Ecological Production Units}
-\format{This data set is a \code{sf} object with 4 features and 3 fields.}
+\format{
+This data set is a \code{sf} object with 4 features and 3 fields.
+}
 \usage{
 epu_sf
 }

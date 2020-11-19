@@ -4,7 +4,8 @@
 \name{comdat}
 \alias{comdat}
 \title{Aggregated commercial fisheries data}
-\format{These data include 25394 rows and 5 columns.
+\format{
+These data include 25394 rows and 5 columns.
 
 \itemize{
 \item Var: Specifies feeding guild and data type (e.g. managed or unmanaged, revenue or landings). Variables including
@@ -13,7 +14,8 @@
 \item EPU: Ecological Production Unit from which data were aggregated.
 \item Units: Units of variable \code{Var}.
 \item Time: Year.
-}}
+}
+}
 \usage{
 comdat
 }

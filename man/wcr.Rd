@@ -4,7 +4,8 @@
 \name{wcr}
 \alias{wcr}
 \title{Warm core rings spun off of gulf stream}
-\format{Data set contains 40 rows and 5 columns
+\format{
+Data set contains 40 rows and 5 columns
 
 \itemize{
 \item Time: Year.
@@ -12,7 +13,8 @@
 \item Value: Value of variable  \code{Var}.
 \item Units: Unit of Variable  \code{Var}.
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.
-}}
+}
+}
 \usage{
 wcr
 }
