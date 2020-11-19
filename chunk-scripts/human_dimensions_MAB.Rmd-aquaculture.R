@@ -39,6 +39,6 @@ ggplot2::ggplot() +
   ggplot2::scale_x_continuous(breaks = seq(2005,2018,3),expand = c(0.01, 0.01)) +
   ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000000})+
   ggplot2::ggtitle("Oyster harvest")+
-  ggplot2::ylab(("Oysters sold (10"^6*" n)")) +
+  ggplot2::ylab(expression("Oysters sold (10"^6*" n)")) +
   ggplot2::xlab("")+
   ecodata::theme_ts()
