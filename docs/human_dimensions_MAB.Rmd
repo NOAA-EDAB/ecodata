@@ -823,12 +823,15 @@ rec_div_catch <- recdat %>%
   ecodata::theme_ts()
 
 
+
 cowplot::plot_grid(rec_effort, 
                    rec_div, 
                    rec_div_catch,
                    ncol = 1, 
                    align = "hv") +
     ggplot2::theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
+
+
 ```
 
 ### Primary Production Required
