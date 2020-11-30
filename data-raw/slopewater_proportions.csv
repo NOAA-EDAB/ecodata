@@ -1,4 +1,4 @@
-year,water mass flavor,prop
+year,water.mass.flavor,prop
 1977,WSW,57
 1979,WSW,60.934
 1980,WSW,56.7604
@@ -37,7 +37,7 @@ year,water mass flavor,prop
 2016,WSW,94.3438
 2017,WSW,99.2474
 2018,WSW,97.6771
-2019,WSW,100
+2019,WSW,98.8906
 1977,LSLW,40
 1979,LSLW,45.3819
 1980,LSLW,39.8958
@@ -76,4 +76,4 @@ year,water mass flavor,prop
 2016,LSLW,4.0625
 2017,LSLW,0
 2018,LSLW,7.3958
-2019,LSLW,0
+2019,LSLW,2.3438
