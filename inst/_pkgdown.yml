@@ -32,51 +32,51 @@ reference:
     contents:
     - aquaculture
     - bennet
-    - '`comdat`'
-    - '`commercial_div`'
-    - '`engagement`'
-    - '`hms_landings`'
-    - '`recdat`'
-    - '`bennet`'
+    - comdat
+    - commercial_div
+    - engagement
+    - hms_landings
+    - recdat
+    - bennet
   - title: "Megafauna Indicators"
     desc: "Data files containing megafauna indicators used in the State of the Ecosystem Reports"
     contents:
-    - '`aggregate_biomass`'
-    - '`blue_runner`'
-    - '`energy_density`'
-    - '`harborporpoise`'
-    - '`hp_density`'
-    - '`mab_inshore_survey`'
-    - '`mass_inshore_survey`'
-    - '`narw`'
-    - '`ne_inshore_survey`'
-    - '`nefsc_survey`'
-    - '`nefsc_survey_disaggregated`'
-    - '`productivity_anomaly`'
-    - '`seabird_mab`'
-    - '`seabird_ne`'
-    - '`species_dist`'
-    - '`species_groupings`'
-    - '`stock_status`'
-    - '`stom_fullness`'
+    - aggregate_biomass
+    - blue_runner
+    - energy_density
+    - harborporpoise
+    - hp_density
+    - mab_inshore_survey
+    - mass_inshore_survey
+    - narw
+    - ne_inshore_survey
+    - nefsc_survey
+    - nefsc_survey_disaggregated
+    - productivity_anomaly
+    - seabird_mab
+    - seabird_ne
+    - species_dist
+    - species_groupings
+    - stock_status
+    - stom_fullness
   - title: "LTL/Hab/Env Indicators"
     desc: "Data files containing Low Trophic Level, Habitat and Environmental indicators used in the State of the Ecosystem Reports"
     contents:
-    - '`bottom_temp`'
-    - '`ch_bay_sal`'
-    - '`ches_bay_wq`'
-    - '`chl_pp`'
-    - '`cold_pool`'
-    - '`gsi`'
-    - '`heatwave`'
-    # - '`heatwave_year`'
-    - '`ichthyo_diversity`'
-    - '`long_term_sst`'
-    - '`ne_wind`'
-    - '`seasonal_oisst_anom`'
-    - '`seasonal_sst_anomaly_gridded`'
-    # - '`seasonal_sst_anom_gridded`'
-    - '`slopewater`'
-    - '`wcr`'
-    # - '`wind`'
-    - '`zoo_oi`'
+    - bottom_temp
+    - ch_bay_sal
+    - ches_bay_wq
+    - chl_pp
+    - cold_pool
+    - gsi
+    - heatwave
+    # - heatwave_year
+    - ichthyo_diversity
+    - long_term_sst
+    - ne_wind
+    - seasonal_oisst_anom
+    - seasonal_sst_anomaly_gridded
+    # - seasonal_sst_anom_gridded
+    - slopewater
+    - wcr
+    # - wind
+    - zoo_oi
