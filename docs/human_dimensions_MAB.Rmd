@@ -846,6 +846,7 @@ ecodata::rec_hms %>%
   ecodata::theme_ts()
 
 ```
+Recent pelagic landings coming primarily from Common Thresher and Shortfin Mako. 
 
 ### Primary Production Required
 

@@ -973,6 +973,12 @@ kable(hv, escape = FALSE,
   add_header_above(c(" " = 3, "Importance of habitat by life stage (ACFHP)" = 4, " " = 1)) %>% 
   kable_classic()
 ```
+### Ocean Acidication
+```{r mab-oa, fig.cap = "Seasonal pH in MAB in 2019."}
+
+knitr::include_graphics(file.path(image.dir, "Seasonal pH on MAB shelf - Grace Saba.jpg"))
+
+```
 
 ## Shelfwide Indicators {.tabset .tabset-fade}
 
@@ -1108,16 +1114,4 @@ wcr %>%
 ```
 
 
-### NERRs water quality 
-
-<p style="color:red">Potentially possible to get map like this for DO, chl and nitrogen. Not this year though. </p>
-```{r shelf-NERRs-MP-DIN, eval= T, echo = F, out.width = "80%"}
-
-knitr::include_graphics(file.path(image.dir,"nerrs_map.png"))
-```
-<p style="color:red">I've asked for the total number of events per year.</p>
-```{r shelf-NERRs-MH-DIN, eval= T, echo = F, out.width = "80%"}
-
-knitr::include_graphics(file.path(image.dir,"nerrs_DO.png"))
-```
 

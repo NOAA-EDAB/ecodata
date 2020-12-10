@@ -50,3 +50,25 @@ attr(rec_hms, "data_steward") <- c(
 }
 get_rec_hms(save_clean = T)
 
+
+
+
+###### Test plot for individual spp
+# rec_hms<- d %>%
+#   dplyr::filter(SUB_REG <= 5) %>%  # 4 = North Atlantic, 5 = Mid atlantic
+#   left_join(sp_cat, by= "SP_CODE") %>% # merge catch year with common names and category
+#   dplyr::group_by(YEAR, COMMON_NAME, SUB_REG) %>%
+#   dplyr::summarise(Value = sum(LANDING)) %>% #  Definition of Landings. The total number of fish removed from the fishery resource.
+#   #May be obtained by summing catch types A (CLAIM) and B1 (HARVEST).
+#   dplyr::rename( Time = YEAR,
+#                  Var = COMMON_NAME,
+#                  Region = SUB_REG) %>%
+#   dplyr::mutate(Region = as.character(Region)) %>%
+#   dplyr::mutate(Region = dplyr::recode(Region,
+#                                        `4` = "New England",
+#                                        `5` = "Mid-Atlantic")) %>%
+#   filter(Region == "Mid-Atlantic") %>%
+#   ggplot(aes(x=Time, y=Value))+
+#   geom_point()+
+#   geom_line()+
+#   facet_wrap(~Var, scale = "free")
