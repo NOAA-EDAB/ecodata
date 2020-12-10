@@ -974,11 +974,12 @@ kable(hv, escape = FALSE,
   kable_classic()
 ```
 ### Ocean Acidication
-```{r mab-oa, fig.cap = "Seasonal pH in MAB in 2019."}
+```{r mab-oa, fig.cap = " Seasonal glider-based pH observations on the Mid-Atlantic Bight shelf (New Jersey cross-shelf transect) in relation to Atlantic surfclam and Atlantic sea scallop habitats (modified from Wright-Fairbanks et al. 2020)."}
 
 knitr::include_graphics(file.path(image.dir, "Seasonal pH on MAB shelf - Grace Saba.jpg"))
 
 ```
+Grace Saba at Rutgers University recently established a glider-based pH observation program to monitor seasonal dynamics of carbonate chemistry in the Mid-Atlantic Bight covering Atlantic surfclam (*Spisula solidissima*) and Atlantic sea scallop (*Placopecten magellanicus*) habitats. Glider-based pH data are shown here with a general representation of depth ranges/habitat occupied by surfclams and sea scallops. Seasonal and spatial carbonate chemistry dynamics were influenced by stratification, freshwater input, biological processes, and water mass mixing. Highest pH was observed in winter shelf and fall shelf break water. Lower pH occurred in nearshore surface (spring through fall), likely as a result of freshwater input. The lowest pH values were observed in Cold Pool bottom water, particularly in the summer. This is likely attributed to low ventilation between surface and bottom water and biological respiration in bottom water. 
 
 ## Shelfwide Indicators {.tabset .tabset-fade}
 
