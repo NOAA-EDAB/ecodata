@@ -700,13 +700,13 @@ f_missing <- stock_status %>%
 #A dataframe that defines custom legend for stocks with unknown status
 all.df <- data.frame(text = all_missing$Code,
                     x = rep(x.max*0.9,length(all_missing$Code)),
-                    y = seq(1.45,1.05, length.out = 7))
+                    y = seq(1.45,0.7, length.out = 11))
 b.df <- data.frame(text = b_missing$Code,
                     x = rep(x.max*0.7,length(b_missing$Code)),
-                    y = c(1.45,2.15))
+                    y = seq(1.45,1.30, length.out = 3))
 f.df <- data.frame(text = f_missing$Code,
                     x = rep(x.max*0.5,length(f_missing$Code)),
-                    y = seq(1.45,1.0, length.out = 8))
+                    y = seq(1.45,1, length.out = 7))
 
 #Plotting code
 ggplot2::ggplot(data = stock_status) +
@@ -736,8 +736,8 @@ ggplot2::ggplot(data = stock_status) +
   ggplot2::annotate("rect",  
              xmin = 0.70*x.max,
              xmax = 0.85*x.max,
-             ymin = 0.90*y.max,
-             ymax = 1.8,
+             ymin = 0.30*y.max,
+             ymax = 0.98*y.max,
              alpha = 0.01) +
   ggplot2::annotate("text", x = 7, y = 1.5, label = "B missing", fontface =2, size = 3)+
   ggplot2::annotate("rect", xmin = 0.509*x.max,
@@ -757,51 +757,77 @@ ggplot2::ggplot(data = stock_status) +
 
 #### Engagement and reliance
 
-```{r engagement, message=F, fig.cap= "Commercial engagement scores (total pounds landed, value landed, commercial permits and commercial dealers in a community)  for New England fishing communities, 2004-2018."}
+```{r commercial-engagement, message=F, fig.cap= "Commercial engagement and reliance for the top top commercial fishing communities in New England."}
 
-eng<-ecodata::engagement %>% 
-  dplyr::filter(!Var == "med.high.scores")
-eng$Var <- factor(eng$Var, levels = c("%High","%Medium High","%Moderate", "%Low"))
-eng %>% dplyr::filter(EPU == "NE") %>% 
-  mutate(Value = Value*100) %>% 
+com<-ecodata::engagement %>% 
+  dplyr::filter(Region == "New England", 
+                Fishery == "Commercial")
+
+com2<-com %>% 
   ggplot2::ggplot()+
-   #ylim(0.8, NA)+
-  ggplot2::geom_bar(aes(x = Time, y = Value, 
-               fill = Var), 
-           stat = "identity")+
-  #scale_y_continuous(labels = Value(suffix = "%", prefix = "")) +
-  #geom_text(aes(x = Time, y = Value,
-  #             label = paste0(Value,"%")), size=4) +
-  ggplot2::theme(legend.position="bottom", legend.direction="horizontal",
+  ggplot2::geom_point(aes(x = Eng, y = Rel, color = Rating), size = 2)+
+  ggplot2::geom_vline(xintercept = 1, linetype = "dashed",color = "black")+
+  ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black") +
+  ggrepel::geom_label_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
+                      y = Rel,
+                      label = Community,
+                      color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
+  ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
+                     breaks = com$Rating) +
+  xlim(-5,40)+
+  ylim(-1,6)+
+  theme(legend.position="top",
         legend.title = element_blank())+
-  ggplot2::coord_cartesian(ylim=c(75,100))+
-  ggplot2::xlab("Time") +
-  ggplot2::ylab("% Communities in each category (Low to High)")+
-  ggplot2::ggtitle("Commercial Engagement")+
+  ggplot2::xlab("Commercial Engagament Score") +
+  ggplot2::ylab("Commercial Reliance Score") +
+  ggplot2::ggtitle("Social Vulnerability in Top Commercial Fishing Communities")
+  ggplot2::guides(color = FALSE) +
   ecodata::theme_ts()
+  
+  
+  gridExtra::grid.arrange(com2, bottom = textGrob("Low <--------------------------------------------------------------------------------------------------------------------------------------> High", 
+                                     x = 0.5, y = 1, gp = gpar(fontsize = 7)),
+                          left = textGrob("Low <-----------------------------------------------------------------> High", rot = 90,
+                                   x = 1, y = 0.45, gp = gpar(fontsize = 7)))
 
-
-ecodata::engagement %>% 
-  dplyr::filter(Var == "med.high.scores", 
-         EPU == "NE") %>% 
-  dplyr::mutate(hline = mean(Value)) %>% 
-  ggplot2::ggplot()+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
-  ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
-  ggplot2::ggtitle("Medium-High communities ") +
-  ggplot2::ylab(expression("Average score for Med High communities")) +
-  ggplot2::geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  ecodata::theme_ts()
 
 ```
 
+```{r recreational-engagement, message=F, fig.cap= "Commercial engagement and reliance for the top top recreational fishing communities in New England."}
+
+com<-ecodata::engagement %>% 
+  dplyr::filter(Region == "New England", 
+                Fishery == "Recreational")
+
+com2<-com %>% 
+  ggplot2::ggplot()+
+  ggplot2::geom_point(aes(x = Eng, y = Rel, color = Rating), size = 2)+
+  ggplot2::geom_vline(xintercept = 1, linetype = "dashed", color = "black")+
+  ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black") +
+  ggrepel::geom_label_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
+                      y = Rel,
+                      label = Community,
+                      color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
+  ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
+                     breaks = com$Rating) +
+  xlim(-0.2,5)+
+  ylim(-0.5,2)+
+  theme(legend.position="top",
+        legend.title = element_blank())+
+  ggplot2::xlab("Recreation Engagament Score") +
+  ggplot2::ylab("Recreation Reliance Score") +
+  ggplot2::ggtitle("Social Vulnerability in Top Recreation Fishing Communities")
+  ggplot2::guides(color = FALSE) +
+  ecodata::theme_ts()
+  
+  
+  gridExtra::grid.arrange(com2, bottom = textGrob("Low <--------------------------------------------------------------------------------------------------------------------------------------> High", 
+                                     x = 0.5, y = 1, gp = gpar(fontsize = 7)),
+                          left = textGrob("Low <-----------------------------------------------------------------> High", rot = 90,
+                                   x = 1, y = 0.45, gp = gpar(fontsize = 7)))
+
+
+```
 ### Recreational fisheries {.tabset .tabset-fade}
 
 #### Recreational landings

@@ -9,7 +9,7 @@ library(stringr)
 library(readxl)
 
 raw.dir <- here::here("data-raw")
-narw_xlsx <- "narw_abundance.xlsx"
+narw_xlsx <- "RW Abundance & Calves -for2021 report.xlsx"
 get_narw <- function(save_clean = F){
   narw <- read_excel(file.path(raw.dir,narw_xlsx)) %>%
     dplyr::select(-c(5,7:10)) %>%
@@ -21,10 +21,10 @@ get_narw <- function(save_clean = F){
     dplyr::mutate(Units =  "n",
            EPU = "All")
 
-  calves19<-data.frame(Time = c(2019), Var = c("Calves"),
-                       Value = c(7), Units = c("n"), EPU = c("All")) #add 7 calves from 2019
-
-  narw <- rbind(narw, calves19) #bind with rest of data
+  # calves19<-data.frame(Time = c(2019), Var = c("Calves"),
+  #                      Value = c(7), Units = c("n"), EPU = c("All")) #add 7 calves from 2019
+  #
+  # narw <- rbind(narw, calves19) #bind with rest of data
 
   if (save_clean){
     usethis::use_data(narw, overwrite = T)

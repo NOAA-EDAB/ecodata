@@ -4,23 +4,36 @@
 
 library(tidyverse)
 library(readxl)
+library(janitor)
 
 
 raw.dir <- here::here("data-raw")
 
-engagement_xlsx<-"ComEng Scores 2004-2018 for SOE 2020 Report 021020.xlsx"
+engagement_xlsx<-"SocVul_in_Top_Fishing_Communities_120820_WENG - Changhua Weng - NOAA Affiliate.xlsx"
 get_eng_rel <- function(save_clean = F){
 
-  d <-read_excel(file.path(raw.dir, engagement_xlsx))
+  ## MAB
+  d1 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "Top 10 Communities_Mid-Atlantic")
+  col_names <- d1 %>%
+    slice(1)
+  dta <- d1 %>%
+    slice(-1, -(15:34)) %>% # Removes the rows containing new and original names
+    rlang::set_names(., nm = col_names) %>%
+    dplyr::mutate(Fishery = c(rep("Commercial",13),rep("Recreational",17)))
+  ## NE
+  d2 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "Top 10 Communities_New England")
+  col_names <- d2 %>%
+    slice(1)
+  dta2 <- d2 %>%
+    slice(-1, -(19:34)) %>% # Removes the rows containing new and original names
+    rlang::set_names(., nm = col_names) %>%
+    dplyr::mutate(Fishery = c(rep("Commercial",17),rep("Recreational",14)))
 
-  #Process
-  engagement <- d %>%
-    dplyr::rename(EPU = Region,
-                  "%med.high.scores" = "Average Scores for Medium High Communities  (n=49)") %>%
-    tidyr::pivot_longer(cols = starts_with("%"), names_to = "Var", values_to = "Value") %>%
-    dplyr::mutate(Var = recode(Var, "%med.high.scores" = "med.high.scores")) %>%
-    dplyr::select(EPU, Time, Var, Value) %>%
-    dplyr::mutate(Units = "unitless")
+  col.names <-c("Region", "StAbb", "Community", "Eng", "Rel", "Rating", "Fishery")
+  engagement <- dta %>% rbind(dta2) %>%
+    dplyr::mutate(ComEng = as.numeric(ComEng),
+                  ComRel = as.numeric(ComRel))
+  colnames(engagement) = col.names
 
   if (save_clean){
     usethis::use_data(engagement, overwrite = T)
@@ -32,7 +45,8 @@ get_eng_rel <- function(save_clean = F){
   attr(engagement, "data_files")   <- list(
     engagement_xlsx = engagement_xlsx)
   attr(engagement, "data_steward") <- c(
-    "Lisa Colburn <lisa.colburn@noaa.gov>")
+    "Lisa Colburn <lisa.colburn@noaa.gov>",
+    "Changhua Weng <changhua.weng@noaa.gov>")
 }
 get_eng_rel(save_clean = T)
 

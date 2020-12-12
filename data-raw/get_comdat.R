@@ -10,7 +10,7 @@ library(dplyr)
 
 raw.dir <- here::here("data-raw")
 
-comdat_RData<-"Commerical_data_pull_20.RData"
+comdat_RData<-"Commercial_data_pull_21.RData"
 
 get_comdat <- function(save_clean = F){
 

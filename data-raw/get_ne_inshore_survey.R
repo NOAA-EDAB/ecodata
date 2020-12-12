@@ -33,18 +33,18 @@ library(readxl)
 library(stringr)
 
 raw.dir <- here::here("data-raw")
-ne_inshore_survey_xlsx <- "MENH_TrawlSurvey.xlsx"
+ne_inshore_survey_csv <- "MENH_TrawlSurvey_SOE_Data.csv"
 ne_inshore_survey_species_xlsx <- "MENH_TrawlSpeciesinSOE2020.xlsx"
 
 get_ne_inshore_survey <- function(save_clean = F){
 
-  ne_inshore_survey <- readxl::read_excel(file.path(raw.dir, ne_inshore_survey_xlsx)) %>%
+  ne_inshore_survey <- read.csv(file.path(raw.dir, ne_inshore_survey_csv)) %>%
     dplyr::rename(Var = SOE.20,
                   Value = StratMean_Weight,
                   Time = Year) %>%
     dplyr::mutate(EPU = "NE",
                   Units = "(KG/tow)") %>%
-    dplyr::select(-...1,-CV_Weight, - SE_Weight,
+    dplyr::select(-X,-CV_Weight, - SE_Weight,
                   -Low_CI_Weight, -High_CI_Weight, -Survey ) %>%
     dplyr::mutate(Season = dplyr::recode(Season, "FL"= "Fall","SP" = "Spring" )) %>%
     tidyr::unite(.,Var, c("Var","Season"),sep = " ")
@@ -56,7 +56,7 @@ get_ne_inshore_survey <- function(save_clean = F){
   # metadata ----
   attr(ne_inshore_survey, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/inshoresurvdat.html"
   attr(ne_inshore_survey, "data_files")   <- list(
-    ne_inshore_survey_xlsx = ne_inshore_survey_xlsx)
+    ne_inshore_survey_csv = ne_inshore_survey_csv)
   attr(ne_inshore_survey, "data_steward") <- c(
     "Rebecca Peters <rebecca.j.peters@maine.gov>")
 }
