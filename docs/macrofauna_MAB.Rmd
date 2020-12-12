@@ -741,7 +741,36 @@ bird %>%
 
 ### Protected species 
 
-Harbor porpoise bycatch continues to be quite low and has been low for a number of years now, so I don't think it is important to include anymore. At one point we had discussed putting in representative figures of marine mammal distribution available on a NEFSC website, but perhaps just mentioning the [link somewhere](https://www.nefsc.noaa.gov/AMAPPSviewer/) on the page would be better.
+```{r harborporpoise, fig.cap="Estimated Harbor porpoise bycatch (black) and the potential biological removal (red)." }
+
+ecodata::harborporpoise %>% 
+  tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
+  ggplot2::ggplot()+
+  ggplot2::geom_point(aes(x=Year, y = EST), color = "black")+
+  ggplot2::geom_line(aes(x=Year, y = EST), color = "black")+
+  ggplot2::geom_point(aes(x=Year, y = PBR), color = "red")+
+  ggplot2::geom_line(aes(x=Year, y = PBR), color = "red")+
+  ggplot2::geom_ribbon(aes(ymin = lo95ci, ymax = up95ci, x = Year), alpha = 0.3)+
+  ggplot2::ggtitle("Harbor Porpoise Byctach")+
+  ggplot2::ylab("Estimated Bycatch (n)")+
+  ecodata::theme_ts()
+  
+```
+```{r grayseal, fig.cap="Estimated gray seal bycatch (black) and the potential biological removal (red)." }
+
+ecodata::grayseal %>% 
+  tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
+  ggplot2::ggplot()+
+  ggplot2::geom_point(aes(x=Year, y = EST), color = "black")+
+  ggplot2::geom_line(aes(x=Year, y = EST), color = "black")+
+  ggplot2::geom_point(aes(x=Year, y = PBR), color = "red")+
+  ggplot2::geom_line(aes(x=Year, y = PBR), color = "red")+
+  ggplot2::geom_ribbon(aes(ymin = lo95ci, ymax = up95ci, x = Year), alpha = 0.3)+
+  ggplot2::ggtitle("Gray Seal Byctach")+
+  ggplot2::ylab("Estimated Bycatch (n)")+
+  ecodata::theme_ts()
+  
+```
 
 Notes on upcoming indicators- 
 Salmon ecosystem indicator - in the works but won't be ready for this SOE. 
@@ -951,3 +980,11 @@ blue_map <-
 blue_map
 ```
 
+### Condition project 
+
+[text here](https://docs.google.com/document/d/1uHMmMTnZG2LAmPi5SSO30k5_5NzfzdKj/edit)
+```{r condition-proj, fig.cap = ""}
+
+knitr::include_graphics(file.path(image.dir, "condition_proj.png"))
+
+```
