@@ -736,6 +736,41 @@ bird %>%
   ecodata::theme_ts()
 ```
 
+### Forage Anomaly
+```{r}
+ecodata::forage_anomaly %>% 
+  filter(EPU == "MAB") %>% 
+  pivot_wider(names_from = Var, values_from = Value) %>% 
+  ggplot()+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_point(aes(x=Time, y = Forage_Mean))+
+  ggplot2::geom_line(aes(x=Time, y =Forage_Mean))+
+  ggplot2::geom_ribbon(aes(ymin = Forage_Lower, ymax = Forage_Upper, x = Time), alpha = 0.3)+
+  ggplot2::geom_hline(yintercept = 0, linetype = "dashed")+
+  ggplot2::ggtitle("Forage Anomalies")+
+  ggplot2::ylab("Forage Anomaly")+
+  ecodata::theme_ts()
+
+```
+
+### Observed Shark Numbers
+```{r}
+ecodata::observed_sharks %>% 
+  filter(EPU == "MAB") %>% 
+  ggplot()+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_point(aes(x=Time, y = Value, color = Var))+
+  ggplot2::geom_line(aes(x=Time, y = Value, color = Var))+
+  ggplot2::ggtitle("Observed Sharks")+
+  ggplot2::ylab("Number of Sharks per Haul")+
+  ecodata::theme_ts()
+
+```
+
 
 ## Shelfwide Indicators{.tabset .tabset-fade}
 
@@ -756,6 +791,7 @@ ecodata::harborporpoise %>%
   ecodata::theme_ts()
   
 ```
+
 ```{r grayseal, fig.cap="Estimated gray seal bycatch (black) and the potential biological removal (red)." }
 
 ecodata::grayseal %>% 
@@ -912,17 +948,19 @@ asd + depth + patchwork::plot_layout(ncol = 1)
 
 
 ### Forage fish energy content
-Notably, the energy density Atlantic herring was
-lower (5.69 +/- 0.07 kJ/g wet weight) than earlier studies (10.6-9.4 kJ/ g wet weight). Silver hake, sandlance, lolligo and Illex were also lower than previous estimates. Energy density of Alewife, butterfish and Atlantic mackerel were higher than earlier estimates. Sampling and laboratory analysis is ongoing, with the goal of continuing routine monitoring of energy density of these species.
+
 ```{r energy-density, eval=T, echo=F}
 d<-ecodata::energy_density
 
-colNames <- c("Species",rep(c("Mean ED (SD)","N"),5),"Mean ED", "Mean ED (SD)")
+# colNames <- c("Species",rep(c("Mean ED (SD)","N"),5),"Mean ED", "Mean ED (SD)")
+# 
+# kable(d, caption = "Forage fish energy content",col.names = colNames) %>%
+#   kable_styling(bootstrap_options = "striped", font_size = 9) %>%
+#   add_header_above(c(" " = 1, "Spring" = 2, "Fall" = 2, "Spring" = 2, "Fall" = 2, " " = 4)) %>% 
+#   add_header_above(c(" " = 1, "2017" = 4, "2018" = 4, "Total" = 2, "Steimle and Terranove (1985)" = 1, "Lawson et al. (1998)" = 1))
 
-kable(d, caption = "Forage fish energy content",col.names = colNames) %>%
-  kable_styling(bootstrap_options = "striped", font_size = 9) %>%
-  add_header_above(c(" " = 1, "Spring" = 2, "Fall" = 2, "Spring" = 2, "Fall" = 2, " " = 4)) %>% 
-  add_header_above(c(" " = 1, "2017" = 4, "2018" = 4, "Total" = 2, "Steimle and Terranove (1985)" = 1, "Lawson et al. (1998)" = 1))
+kable(d, caption = "Forage fish energy content") %>% 
+  kable_styling(bootstrap_options = "striped", font_size = 9)
 ```
 
 

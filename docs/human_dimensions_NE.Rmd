@@ -1060,3 +1060,29 @@ knitr::include_graphics(file.path(image.dir, "ppr_index-0.90.png"))
 knitr::include_graphics(file.path(image.dir, "mtl_index-0.90.png"))
 ```
 
+### Wind Energy Revenue
+```{r wind-revenue, fig.cap="Wind energy revenue in the Mid-Atlantic"}
+ecodata::wind_revenue %>% 
+  dplyr::mutate(Value = Value/1000000, 
+                Time = as.numeric(Time)) %>% 
+  tidyr::separate(Var, into=c("Var", "Trash"), sep = "[(]") %>% 
+  dplyr::select(!Trash) %>% 
+  #dplyr::group_by(EPU) %>% 
+ # dplyr::mutate(hline = mean(Value)) %>% 
+  dplyr::filter(EPU == "NE.") %>% 
+  ggplot2::ggplot() +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_point(aes(x = Time, y = Value))+
+  ggplot2::geom_line(aes(x = Time, y = Value))+
+  ggplot2::facet_wrap(~Var, ncol = 1, scales = "free")+
+  #ggplot2::geom_hline(aes(yintercept = hline),
+  #         size = hline.size,
+  #         alpha = hline.alpha,
+  #         linetype = hline.lty)+
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  ggplot2::ggtitle("Wind Energy Revenue")+
+  ggplot2::ylab("2019 Constant Million Dollars ")+
+  ecodata::theme_ts()
+```

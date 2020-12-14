@@ -901,9 +901,81 @@ ecodata::ppr %>%
   ecodata::theme_ts()
 ```
 
+### Wind Energy Revenue
+```{r wind-revenue, fig.cap="Wind energy revenue in the Mid-Atlantic"}
+ecodata::wind_revenue %>% 
+  dplyr::mutate(Value = Value/1000000, 
+                Time = as.numeric(Time)) %>% 
+  tidyr::separate(Var, into=c("Var", "Trash"), sep = "[(]") %>% 
+  dplyr::select(!Trash) %>% 
+  #dplyr::group_by(EPU) %>% 
+ # dplyr::mutate(hline = mean(Value)) %>% 
+  dplyr::filter(EPU == "MAB") %>% 
+  ggplot2::ggplot() +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_point(aes(x = Time, y = Value))+
+  ggplot2::geom_line(aes(x = Time, y = Value))+
+  ggplot2::facet_wrap(~Var, ncol = 1, scales = "free")+
+  #ggplot2::geom_hline(aes(yintercept = hline),
+  #         size = hline.size,
+  #         alpha = hline.alpha,
+  #         linetype = hline.lty)+
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  ggplot2::ggtitle("Wind Energy Revenue")+
+  ggplot2::ylab("2019 Constant Million Dollars ")+
+  ecodata::theme_ts()
+```
+
 
 ## Shelfwide Indicators
 
+### Wind Development Spped
+```{r wind-dev-speed0.30, eval = T, echo = F, fig.cap='', out.width='80%'}
+labels<- ecodata::wind_dev_speed %>% 
+  group_by(Time) %>% 
+  summarise("Projects(n)" = length(Project_Name)) %>% 
+  filter(!Time == "NA")
+
+total_area<- ecodata::wind_dev_speed%>% 
+  filter(Var == "Cumulative_area",
+         !Time == "NA") %>% 
+  ggplot2::ggplot()+
+  ggplot2::geom_point(aes(x = Time, y = Value))+
+  ggplot2::ylab("Total Area (Acres)")+
+  ggplot2::xlab("")+
+  ggplot2::ggtitle("Cumulative Area")+
+  theme(axis.text.x = element_text(angle = 45))
+  
+dist_area<- ecodata::wind_dev_speed%>% 
+  filter(Var == "Cumulative_seafloor_disturbance",
+         !Time == "NA") %>% 
+  ggplot2::ggplot()+
+  ggplot2::geom_point(aes(x = Time, y = Value))+
+  ggplot2::ylab(" Total Seafloor Distubrance (Acres)")+
+  ggplot2::xlab("")+
+  ggplot2::ggtitle("Cumulative Seafloor Disturbance")+
+  theme(axis.text.x = element_text(angle = 45))
+
+foundations<- ecodata::wind_dev_speed%>% 
+  filter(Var == "Cumulative_foundations",
+         !Time == "NA") %>% 
+  ggplot2::ggplot()+
+  ggplot2::geom_point(aes(x = Time, y = Value))+
+  ggplot2::ylab(" Foundations (n)")+
+  ggplot2::xlab("")+
+  ggplot2::ggtitle("Cumulative Number of Foundations")+
+  theme(axis.text.x = element_text(angle = 45))
+
+gridExtra::grid.arrange(
+  gridExtra::tableGrob(labels, theme = gridExtra::ttheme_minimal(base_size = 6)),
+  total_area, dist_area, foundations,
+  ncol = 2,
+  widths = c(1, 1),
+  clip = FALSE
+)
+```
 
 ### Wind Sites and Occurrence 
 These are the five species most likely to occur in the lease areas. 
