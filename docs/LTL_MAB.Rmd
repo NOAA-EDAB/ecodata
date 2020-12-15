@@ -245,9 +245,6 @@ fall_anom <-  ggplot2::ggplotGrob( seasonal_oisst_anom %>%
                                    stringr::str_detect(Var, "fall")) %>% 
                             dplyr::mutate(hline = mean(Value)) %>% 
                             ggplot2::ggplot(aes(x = Time, y = Value)) +
-                            ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-                                     xmin = x.shade.min , xmax = x.shade.max,
-                                     ymin = -Inf, ymax = Inf) +
                             ggplot2::geom_line() +
                             ggplot2::geom_point() +
                             ecodata::geom_gls(alpha = trend.alpha + 0.25) +
@@ -255,6 +252,9 @@ fall_anom <-  ggplot2::ggplotGrob( seasonal_oisst_anom %>%
                             ggplot2::xlab(element_blank())+
                             ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
                             ggplot2::geom_hline(aes(yintercept = hline)) +
+                            ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+                                     xmin = x.shade.min , xmax = x.shade.max,
+                                     ymin = -Inf, ymax = Inf) +
                             ecodata::theme_ts()+
                             ggplot2::theme(axis.title = element_text(size = 6),
                                   axis.text = element_text(size = 6),
@@ -747,6 +747,84 @@ zoo_div %>%
 
 ```
 
+#### Calanus Stage
+```{r calanus-stage, fig.width = 8, fig.asp = .35, fig.cap=""}
+cal <- ecodata::CalanusStage %>% 
+  dplyr::filter(EPU == epu_abbr)
+
+cal1<- cal %>% filter(Var %in% c("CIII", "CIV", "CV", "Adt"), 
+                      season == "Spring") %>% 
+  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
+  ggplot2::geom_bar(stat = "identity")+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::ylab("Calanus Stage (N/100m^3)") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("Calanus Stage Spring") +
+  ggplot2::theme(legend.position = "bottom")
+cal2<-cal %>% filter(Var %in% c("CIIIpct", "CIVpct", "CVpct", "Adtpct"), 
+                      season == "Spring") %>% 
+  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
+  ggplot2::geom_bar(stat = "identity")+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::ylab("Percent Calanus Stage") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("percent Calanus Stage Spring") +
+  ggplot2::theme(legend.position = "bottom")
+cal1+cal2
+  
+cal3<- cal %>% filter(Var %in% c("CIII", "CIV", "CV", "Adt"), 
+                      season == "Summer") %>% 
+  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
+  ggplot2::geom_bar(stat = "identity")+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::ylab("Calanus Stage (N/100m^3)") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("Calanus Stage Summer") +
+  ggplot2::theme(legend.position = "bottom")
+cal4<-cal %>% filter(Var %in% c("CIIIpct", "CIVpct", "CVpct", "Adtpct"), 
+                      season == "Summer") %>% 
+  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
+  ggplot2::geom_bar(stat = "identity")+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::ylab("Percent Calanus Stage") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("percent Calanus Stage Spring") +
+  ggplot2::theme(legend.position = "bottom")
+cal3+cal4
+
+cal5<- cal %>% filter(Var %in% c("CIII", "CIV", "CV", "Adt"), 
+                      season == "Fall") %>% 
+  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
+  ggplot2::geom_bar(stat = "identity")+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::ylab("Calanus Stage (N/100m^3)") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("Calanus Stage Fall") +
+  ggplot2::theme(legend.position = "bottom")
+cal6<-cal %>% filter(Var %in% c("CIIIpct", "CIVpct", "CVpct", "Adtpct"), 
+                      season == "Fall") %>% 
+  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
+  ggplot2::geom_bar(stat = "identity")+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::ylab("Percent Calanus Stage") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("percent Calanus Stage Fall") +
+  ggplot2::theme(legend.position = "bottom")
+cal5+cal6
+```
+
 #### OI abundance
 
 <!-- ```{r MAB-oi-zoo, fig.width=8} -->
@@ -877,9 +955,7 @@ plotly::ggplotly(cp)
 
 ### Marine Heat Wave
 
-[Notes](https://docs.google.com/document/d/0B1lP7X3GP_hQLTlmU3hqLUMzVWcwS2U5R2oxTWNWb19tcmFz/edit)
-
-```{r heatwave-year, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Mid-Atlantic occuring in 2019."}
+```{r heatwave-year, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Mid-Atlantic occuring in 2020."}
 ecodata::heatwave_year %>% 
   filter(EPU == "MAB") %>% 
   ggplot( aes(x = t, y = temp))+

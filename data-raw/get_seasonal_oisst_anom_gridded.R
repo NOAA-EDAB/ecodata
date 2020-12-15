@@ -13,7 +13,8 @@ rast_prep <- function(r){
   return(r)
 }
 
-raw.dir <- here::here("data-raw/gridded/sst_data")
+ltm.dir <- here::here("data-raw/gridded")
+raw.dir <- here::here("data-raw")
 crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40
 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 
@@ -23,7 +24,7 @@ seasonal_sst_anomaly_gridded_ltm_nc <- "sst.day.mean.ltm.1982-2010.nc"
 #here: https://www.esrl.noaa.gov/psd/data/gridded/data.noaa.oisst.v2.highres.html
 # but are removed after use as they are too large to store on github
 sst.2019 <- rast_prep(stack(file.path(raw.dir, seasonal_sst_anomaly_gridded_day_nc)))
-ltm <- rast_prep(stack(file.path(raw.dir, seasonal_sst_anomaly_gridded_ltm_nc)))
+ltm <- rast_prep(stack(file.path(ltm.dir, seasonal_sst_anomaly_gridded_ltm_nc)))
 
 winter.ltm <- ltm[[1:90]]
 spring.ltm <- ltm[[91:181]]
@@ -33,7 +34,7 @@ fall.ltm <- ltm[[274:365]]
 winter.anom <- sst.2019[[1:90]] - winter.ltm
 spring.anom <- sst.2019[[91:181]] - spring.ltm
 summer.anom <- sst.2019[[182:273]] - summer.ltm
-fall.anom <- sst.2019[[274:365]] - fall.ltm
+fall.anom <- sst.2019[[274:347]] - fall.ltm ### switched to cover just dates included in 2020.nc up to Dec 13th.
 
 
 rast_process <- function(r, season){
