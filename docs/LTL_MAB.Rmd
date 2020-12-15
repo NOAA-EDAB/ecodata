@@ -1017,7 +1017,7 @@ mab.hw %>%
 
 ```
 
-```{r heatwave-anom-gridded, fig.cap="Maximum intensity heatwave anomaly in the Mid-Atlantic Bight occuring on July 22, 2019."}
+```{r heatwave-anom-gridded, fig.cap="Maximum intensity heatwave anomaly in the Mid-Atlantic Bight occuring on July 28, 2020."}
 #EPU shapefile
 mab_epu_sf <- ecodata::epu_sf %>% 
   dplyr::filter(EPU %in% c("MAB"))
@@ -1032,8 +1032,9 @@ ymin = 35.5
 ymax = 43
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
-hw <- ecodata::heatwave_anom_gridded %>% 
-  dplyr::filter(EPU == "MAB")
+hw <- ecodata::heatwave_peak_date %>% 
+  dplyr::filter(EPU == "MAB") %>% 
+  dplyr::mutate(Value = replace(Value, Value > 4, 4))
 
 mab_map <- 
   ggplot2::ggplot() +
@@ -1044,11 +1045,11 @@ mab_map <-
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
-                       limits = c(-5,7)) +
+                       limits = c(-4,4)) +
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   #facet_wrap(Season~.) +
   ecodata::theme_map() +
-  ggplot2::ggtitle("MAB heatwave anomaly (July 22, 2019)") +
+  ggplot2::ggtitle("MAB heatwave anomaly (July 28, 2020)") +
   ggplot2::xlab("Longitude") +
   ggplot2::ylab("Latitude") +
   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
