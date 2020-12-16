@@ -79,7 +79,7 @@ label.size <- 5
 hjust.label <- 1.5
 letter_size <- 4
 feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
-x.shade.min <- 2009
+x.shade.min <- 2010
 x.shade.max <- 2020
 #Function for custom ggplot facet labels
 label <- function(variable,value){
@@ -315,6 +315,7 @@ ggplot2::ggplot() +
 ```
 
 #### Bottom Temp GLORYS
+
 ```{r bottom-temp-glorys, fig.width = 6, fig.asp = .55, fig.cap="Annual bottom temperature in the Mid-Atlantic Bight."}
 ecodata::bottom_temp_glorys %>% 
   dplyr::filter(EPU == epu_abbr)%>%
@@ -343,6 +344,8 @@ ggplot2::ggplot() +
 
 
 ### Chlorophyll and Primary Productivity {.tabset .tabset-fade}
+
+<span style="color: red;">NO NEW DATA</span>
 
 #### Primary production
 
@@ -491,6 +494,9 @@ MAB_chl_weekly + MAB_pp_weekly + plot_layout(ncol = 1)
 
 
 ### Chesapeake Bay Water Quality Attainment
+ 
+<span style="color: red;">NO NEW DATA</span>
+
 <!-- <p style="color:red">No data delivered. Note from Jan 2 -  We are in the process of finalizing our assessment of Chesapeake bay water quality standards attainment for the latest assessment cycle (2016-2018). We may send you the data in a week or two.</p> -->
 
 ```{r ches-bay-wq,fig.width = 6, fig.asp = 0.55, fig.cap = "Water quality attainment in Chesapeake Bay following rolling three year assessment periods."}
@@ -522,9 +528,12 @@ ecodata::ches_bay_wq %>%
 
 ### Chesapeake Bay 
 
+<span style="color: red;">NO NEW DATA, only summary</span>
+
 Headline:  Warmer-than-average winter water temps in Chesapeake Bay likely help blue crabs, hurt striped bass numbers.
 
 [Details here](https://docs.google.com/document/u/1/d/12Aq9nxrdrtZKESoZ8KtW152i0amf_O54/edit?usp=drive_web&ouid=111390006230717850267&rtpof=true).
+
 
 <!-- ### Chesepeake Bay Salinity Anomolies -->
 
@@ -554,8 +563,10 @@ Headline:  Warmer-than-average winter water temps in Chesapeake Bay likely help 
 
 ### Zooplankton {.tabset .tabset-fade}
 
+<span style="color: red;">ONLY CALANUS STAGE IS NEW</span>
 
 #### Euphausiids + Cnidarians
+
 ```{r zoo-strat-abun, fig.cap="Stratified abundance of cnidarians and euphausiids in Mid-Atlantic Bight."}
 zoo_abund <- ecodata::zoo_strat_abun %>% 
   dplyr::filter(EPU == epu_abbr,
@@ -748,6 +759,7 @@ zoo_div %>%
 ```
 
 #### Calanus Stage
+
 ```{r calanus-stage, fig.width = 8, fig.asp = .35, fig.cap=""}
 cal <- ecodata::CalanusStage %>% 
   dplyr::filter(EPU == epu_abbr)
@@ -927,6 +939,7 @@ cal5+cal6
 <!-- ``` -->
 
 ### Cold Pool Index
+
 ```{r cold_pool, eval = T, echo = F, fig.cap="Cold pool index - mean bottom temperature anomaly for Sept-Oct in the MAB." }
 
 cp<- ecodata::cold_pool %>% 
@@ -954,6 +967,8 @@ plotly::ggplotly(cp)
 ```
 
 ### Marine Heat Wave
+
+[notes here](https://docs.google.com/document/u/1/d/1ik6aAXY85DEgLmz4BaBwxtdEPq6e9xXo/edit?usp=drive_web&ouid=111390006230717850267&rtpof=true)
 
 ```{r heatwave-year, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Mid-Atlantic occuring in 2020."}
 ecodata::heatwave_year %>% 
@@ -1083,12 +1098,15 @@ kable(hv, escape = FALSE,
   add_header_above(c(" " = 3, "Importance of habitat by life stage (ACFHP)" = 4, " " = 1)) %>% 
   kable_classic()
 ```
+
 ### Ocean Acidication
+
 ```{r mab-oa, fig.cap = " Seasonal glider-based pH observations on the Mid-Atlantic Bight shelf (New Jersey cross-shelf transect) in relation to Atlantic surfclam and Atlantic sea scallop habitats (modified from Wright-Fairbanks et al. 2020)."}
 
 knitr::include_graphics(file.path(image.dir, "Seasonal pH on MAB shelf - Grace Saba.jpg"))
 
 ```
+
 Grace Saba at Rutgers University recently established a glider-based pH observation program to monitor seasonal dynamics of carbonate chemistry in the Mid-Atlantic Bight covering Atlantic surfclam (*Spisula solidissima*) and Atlantic sea scallop (*Placopecten magellanicus*) habitats. Glider-based pH data are shown here with a general representation of depth ranges/habitat occupied by surfclams and sea scallops. Seasonal and spatial carbonate chemistry dynamics were influenced by stratification, freshwater input, biological processes, and water mass mixing. Highest pH was observed in winter shelf and fall shelf break water. Lower pH occurred in nearshore surface (spring through fall), likely as a result of freshwater input. The lowest pH values were observed in Cold Pool bottom water, particularly in the summer. This is likely attributed to low ventilation between surface and bottom water and biological respiration in bottom water. 
 
 ## Shelfwide Indicators {.tabset .tabset-fade}
@@ -1167,7 +1185,11 @@ lt_sst %>%
 ```
 
 ### GSI
+
+<span style="color: red;">NO NEW DATA</span>
+
 [Notes](https://drive.google.com/drive/u/0/folders/0B1lP7X3GP_hQfk00dFd6bTQ2cmJyQjlwQnFWQ0JMWF9ZOWhRckNvSTlxT2NHSEZRdjV1WVk)
+
 ```{r gsi, fig.width = 5, fig.asp = 0.55, fig.cap="Index representing the north wall  of the Gulf Stream. Positive values represent a more northerly Gulf Stream position."}
 ecodata::gsi %>% 
   dplyr::mutate(Year = floor(Time)) %>% 
@@ -1196,6 +1218,9 @@ ecodata::gsi %>%
 ```
 
 ### Warm Core Rings
+
+<span style="color: red;">NO NEW DATA</span>
+
 ```{r wcr, fig.cap= "Warm core ring formation on the Northeast US Shelf."}
 upper.line<-ecodata::wcr %>%
   dplyr::filter(Time>2000) %>% 

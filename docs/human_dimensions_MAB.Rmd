@@ -567,6 +567,8 @@ ggplot2::ggplot(data = stock_status) +
 
 #### Oyster aquaculture
 
+<span style="color: red;">NO NEW DATA</span>
+
 ```{r aquaculture, fig.width = 5, fig.asp = 0.45, fig.cap = "Oyster aquaculture production in terms of number of oysters sold from Virginia, Maryland, and New Jersey. \\label{oyster-aqua}"}
 
 aqua <- ecodata::aquaculture %>%
@@ -693,6 +695,7 @@ com2<-com %>%
 ### Recreational fisheries {.tabset .tabset-fade}
 
 #### Recreational landings
+
 ```{r recdat-landings, fig.cap = paste0("Total recreational landings in the ",region," region. \\label{rec-landings}")}
 
 landings_rec <- ecodata::recdat %>% 
@@ -863,7 +866,9 @@ cowplot::plot_grid(rec_effort,
 
 
 ```
+
 #### Recreational Shark Landings
+
 ```{r rec_hms, fig.cap="SHark Landings by Yea."}
 ecodata::rec_hms %>% 
   dplyr::filter(Region == "Mid-Atlantic") %>% 
@@ -876,9 +881,12 @@ ecodata::rec_hms %>%
   ecodata::theme_ts()
 
 ```
+
 Recent pelagic landings coming primarily from Common Thresher and Shortfin Mako. 
 
 ### Primary Production Required
+
+<span style="color: red;">NO NEW DATA</span>
 
 ```{r ppr, fig.cap="Primary production required to support the commercial landings. Included are the top species accounting for 80% of the landings in each year."}
 ecodata::ppr %>% 
@@ -902,6 +910,7 @@ ecodata::ppr %>%
 ```
 
 ### Wind Energy Revenue
+
 ```{r wind-revenue, fig.cap="Wind energy revenue in the Mid-Atlantic"}
 ecodata::wind_revenue %>% 
   dplyr::mutate(Value = Value/1000000, 
@@ -915,9 +924,9 @@ ecodata::wind_revenue %>%
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_point(aes(x = Time, y = Value))+
-  ggplot2::geom_line(aes(x = Time, y = Value))+
-  ggplot2::facet_wrap(~Var, ncol = 1, scales = "free")+
+  ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+
+  ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+
+  #ggplot2::facet_wrap(~Var, ncol = 1, scales = "free")+
   #ggplot2::geom_hline(aes(yintercept = hline),
   #         size = hline.size,
   #         alpha = hline.alpha,
@@ -932,6 +941,7 @@ ecodata::wind_revenue %>%
 ## Shelfwide Indicators
 
 ### Wind Development Spped
+
 ```{r wind-dev-speed0.30, eval = T, echo = F, fig.cap='', out.width='80%'}
 labels<- ecodata::wind_dev_speed %>% 
   group_by(Time) %>% 
@@ -978,6 +988,9 @@ gridExtra::grid.arrange(
 ```
 
 ### Wind Sites and Occurrence 
+
+<span style="color: red;">NO NEW DATA</span>
+
 These are the five species most likely to occur in the lease areas. 
 
 ```{r wind-occupancy, eval = T, echo = F, fig.cap='', out.width='80%'}

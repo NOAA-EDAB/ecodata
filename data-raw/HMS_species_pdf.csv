@@ -1,0 +1,122 @@
+"","Latin","Common","Code","Numeric"
+"1","Makaira nigricans","MARLIN BLUE","BUM",2179
+"2","Testrapturus albidus","MARLIN WHITE","WHM",2177
+"3","Istiophorus albicans","SAILFISH ATLANTIC","SAI",3026
+"4","Tetrapturus spp.","SPEARFISH","SPX",4000
+"5","Tetrapturus pfluegeri","SPEARFISH LONGBILL","SPF",4010
+"6","Tetrapturus georgii","SPEARFISH ROUNDSCALE","SPG",4009
+"7","T. albidus georgii","WHITE MARLIN / R.S. SPEARFISH","WHX",2180
+"8","Xiphias gladius","SWORDFISH","SWO",4320
+"9","Isurus spp","SHARK MAKO","XMA",3580
+"10","Isurus oxyrinchus","SHARK MAKO SHORTFIN","SMA",3505
+"11","Isurus paucus","SHARK MAKO LONGFIN","LMA",3502
+"12","Lamna nasus","SHARK PORBEAGLE","POR",3501
+"13","Carcharhinus longimanus","SHARK OCEANIC WHITETIP","OCS",3498
+"14","Carcharihinidae spp","SHARK REQUIEM","SRQ",3571
+"15","Galieocercdo cuvier","SHARK TIGER","TIG",3515
+"16","Rhizopriondon terraenovae","SHARK ATLANTIC SHARPNOSE","SAS",3518
+"17","Carcharhinus acronotus","SHARK BLACKNOSE","SBN",3485
+"18","Charcharhinus ultima","SHARK BIGNOSE","SBG",3491
+"19","Carcharhinus limbatus","SHARK BLACKTIP","SBK",3495
+"20","Prionace glauca","SHARK BLUE","BSH",3504
+"21","Carcharhinus leucas","SHARK BULL","SBU",3497
+"22","Carcharhinus obscurus","SHARK DUSKY","DUS",3514
+"23","Carcharhinus isodon","SHARK FINETOOTH","SFT",3481
+"24","Carcharhinus plumbeus","SHARK SANDBAR","SSB",3513
+"25","Carcharhinus falciformis","SHARK SILKY","FAL",3493
+"26","Carcharhinus brevipinna","SHARK SPINNER","SSP",3496
+"27","Carcharhinus signatus","SHARK NIGHT","SNI",3494
+"28","Carcharhinus perezii","SHARK REEF","SRF",3490
+"29","Alopias spp.","SHARK THRESHER","XTH",3500
+"30","Asopias superciliosus","SHARK THRESHER BIGEYE","BTH",3510
+"31","Asopias vulpinus","SHARK THRESHER COMMON","PTH",3509
+"32","Pseudocarcharias kamoharai","SHARK CROCODILE","SCR",3578
+"33","Carcharias taurus","SHARK SAND TIGER","SST",3482
+"34","Sphyrna spp.","SHARK HAMMERHEAD","XHH",3516
+"35","Sphyrnamokarran","SHARK HAMMERHEAD GREAT","GHH",3524
+"36","Sphyrna lewini","SHARK HAMMERHEAD SCALLOPED","SPL",3523
+"37","Sphyrna zygaena","SHARK HAMMERHEAD SMOOTH","SHH",3522
+"38","Squalidae spp.","SHARK DOGFISH","SDG",3503
+"39","Isistius brasiliensis","SHARK DOGFISH COLLARED","SCO",3572
+"40","Mustelus canis","SHARK DOGFISH SMOOTH","DGS",3511
+"41","Squalus acanthias","SHARK DOGFISH SPINEY","DGY",3521
+"42","Somniosus microcephalus","SHARK GREENLAND","SGR",3532
+"43","","SHARK","SHX",3508
+"44","Pteroplatytrogon violacia","PELAGIC STINGRAY","PEL",2859
+"45","Mobulidae","MANTA RAY","MAN",2864
+"46","","SKATES/RAYS","SRX",3650
+"47","Thunnus thynnus","TUNA BLUEFIN","BFT",4652
+"48","Thunnus albacares","TUNA YELLOWFIN","YFT",4655
+"49","Thunnus atlanticus","TUNA BLACKFIN","BLK",4658
+"50","Thunnus obesus","TUNA BIGEYE","BET",4657
+"51","Katsuwonus pelamis","TUNA SKIPJACK","SKJ",4654
+"52","Thunnus alalunga","TUNA ALBACORE","ALB",4651
+"53","Euthynnus allettaratus","LITTLE TUNNY","LTA",4653
+"54","Sarda sarda","BONITO","BON",330
+"55","Acanthocybium solandri","WAHOO","WAH",4710
+"56","Scomberomorus cavalla","MACKEREL KING","KGM",1940
+"57","Scomber japonicus","MACKEREL CHUB","CHM",2150
+"58","Auxis thazard","MACKEREL FRIGATE","FRM",1320
+"59","Rachycentron canadum","COBIA","CBA",570
+"60","Coryphaena spp","DOLPHIN FISH","DOL",1050
+"61","Lepidocybium flavobrunneum","ESCOLAR (SMOOTH SKIN)","GEM",2501
+"62","Revettus pretiosus","OILFISH (ROUGH SKIN)","OIL",2502
+"63","Seriola spp.","AMBERJACK","AMJ",30
+"64","Caranx spp.","JACK","JAC",34
+"65","Sphyraena spp.","BARRACUDA","BAR",180
+"66","Elagatus bipinnlata","RAINBOW RUNNER","RUN",1814
+"67","Pomatomus salratrix","BLUEFISH","BLU",230
+"68","Cubiceps spp.","CIGARFISH","CUB",530
+"69","Trachipterus arcticus","DEALFISH","DEA",985
+"70","Alepisaursus spp.","LANCETFISH","LAX",2035
+"71","Trichiuridae spp.","MACKERAL SNAKE","TRX",2504
+"72","Lampris guttatus","OPAH","OPA",2503
+"73","Brama spp.","POMFRET","POA",2710
+"74","","PUFFER","PUX",2760
+"75","Echeneidae spp.","REMORA","REM",2865
+"76","Mola spp.","SUNFISH","MOX",4260
+"77","Masturus lanceolatus","SUNFISH SHARPTIAL","MST",4264
+"78","Mola mola","SUNFISH OCEAN","MOC",4263
+"79","Megalops atlanticus","TARPON","TAR",4350
+"80","Lobotes surinamensis","TRIPLETAIL","TPL",4590
+"81","","MARINE FINFISH","MFI",5261
+"82","","SQUID","SQX",8030
+"83","","UNCODED ANIMAL","UNC",9999
+"84","","UNKNOWN","UNK",0
+"85","NA","TURTLE GREEN","TTG",8112
+"86","NA","TURTLE HAWKSBILL","THB",8113
+"87","NA","TURTLE LOGGERHEAD","TTL",8114
+"88","NA","TURTLE KEMP'S RIDLEY","TKR",8119
+"89","NA","TURTLE LEATHERBACK","TLB",8118
+"90","Caretta caretta","TURTLE LOGGERHEAD","TTL",8114
+"91","Lepidochelys kempii","TURTLE KEMP'S RIDLEY","TKR",8119
+"92","Dermochelys coriacea","TURTLE LEATHERBACK","TLB",8118
+"93","NA","WHALE KILLER","MKW",9020
+"94","NA","WHALE BEAKED","WBK",6953
+"95","NA","WHALE SPERM PYGMY","PSW",9013
+"96","NA","WHALE PILOT","MPW",9026
+"97","NA","WHALE PILOT LONGFIN","PWL",9027
+"98","NA","WHALE PILOT SHORTFIN","PWS",9028
+"99","NA","WHALE NORTHERN BOTTLENOSE","WNB",9049
+"100","Ziphiidea spp.","WHALE BEAKED","WBK",6953
+"101","Kogia breviceps","WHALE SPERM PYGMY","PSW",9013
+"102","Globicephala spp.","WHALE PILOT","MPW",9026
+"103","Globicephala melas","WHALE PILOT LONGFIN","PWL",9027
+"104","Globicephala macrorhynchus","WHALE PILOT SHORTFIN","PWS",9028
+"105","Tursiops truncates","DOLPHIN BOTTLENOSE","MBD",9036
+"106","Grampus griseus","DOLPHIN RISSOS","MRD",9037
+"107","Stenella attenuata","DOLPHIN PANTROPICAL SPOTTED","MPD",9039
+"108","Stenella frontalis","DOLPHIN ATLANTIC SPOTTED","MAD",9040
+"109","Stenella clymene","DOLPHIN SPINNER SHORT BEAKED","MCL",9041
+"110","Delphinus delphis","DOLPHIN COMMON","MCO",9042
+"111","Stenella coeruleoalba","DOLPHIN STRIPED","MSD",9043
+"112","Morus bassanus","GANNET NORTHERN","GAN",6171
+"113","Larinae spp.","GULL","GUX",6200
+"114","Larus marinus","GULL GREAT BLACK BACKED","GBB",6205
+"115","Larus argentatus","GULL HERRING","GHE",6206
+"116","Leucophaeus atricilla","GULL LAUGHING","GLA",6208
+"117","Puffinus spp.","SHEARWATER","SWX",6400
+"118","Puffinus gravis","SHEARWATER GREATER","SWG",6402
+"119","Calonectris diomedea","SHEARWATER CORY'S","SWC",6407
+"120","Oceanites oceanicus","STORM PETREL","SPW",6434
+"121","Fregata magnificens","FRIGATE BIRD","FRB",6141

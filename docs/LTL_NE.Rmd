@@ -78,7 +78,7 @@ label.size <- 5
 hjust.label <- 1.5
 letter_size <- 4
 feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
-x.shade.min <- 2009
+x.shade.min <- 2010
 x.shade.max <- 2020
 #Function for custom ggplot facet labels
 label <- function(variable,value){
@@ -243,6 +243,7 @@ bot_temp_insitu_gom +
 ```
 
 #### Bottom Temp GLORYS
+
 ```{r bottom-temp-glorys, fig.width = 6, fig.asp = .55, fig.cap="Annual bottom temperature in the Mid-Atlantic Bight."}
 ecodata::bottom_temp_glorys %>% 
   dplyr::filter(!EPU == "MAB", 
@@ -302,6 +303,8 @@ ggplot2::ggplot(data = sw.df) +
 
 
 ### Chlorophyll and Primary Productivity {.tabset .tabset-fade}
+
+style="color: red;">NOT UPDATED</span>
 
 #### Primary production
 
@@ -493,8 +496,10 @@ chl_cci_gb + chl_cci_gom + patchwork::plot_layout(ncol = 1)
 
 ### Zooplankton {.tabset .tabset-fade}
 
+style="color: red;">ONLY CALANUS sTAGE IS NEW</span>
 
 #### Euphausiids + Cnidarians
+
 ```{r zoo-strat-abun, fig.width = 8, fig.cap="Stratified abundance of cnidarians and euphausiids in Mid-Atlantic Bight."}
 zoo_abund <- ecodata::zoo_strat_abun %>% 
   dplyr::mutate(Value = log10(Value+1)) %>% 
@@ -618,7 +623,9 @@ ecodata::zoo_abund %>%
 
 
 ```
+
 #### Calanus Stage
+
 ```{r gom-calanus-stage, fig.width = 8, fig.asp = .35, fig.cap=""}
 cal <- ecodata::CalanusStage %>% 
   dplyr::filter(EPU == "GOM")
@@ -772,6 +779,7 @@ cal6<-cal %>% filter(Var %in% c("CIIIpct", "CIVpct", "CVpct", "Adtpct"),
   ggplot2::theme(legend.position = "bottom")
 cal5+cal6
 ```
+
 #### PP anomaly
  
 
@@ -840,6 +848,7 @@ pp_anom_plt
 ```
 
 #### Zooplankton Diversity
+
 ```{r zoo-diversity, fig.cap="Zooplankton diversity in Georges Bank and Gulf of Maine."}
 zoo_div <- ecodata::zoo_diversity %>% 
   dplyr::filter(EPU %in% c("GOM","GB"))
@@ -899,7 +908,10 @@ gom_zoo_div
 
 ### Marine Heat Wave {.tabset .tabset-fade}
 
+[notes here](https://docs.google.com/document/u/1/d/1ik6aAXY85DEgLmz4BaBwxtdEPq6e9xXo/edit?usp=drive_web&ouid=111390006230717850267&rtpof=true)
+
 #### Monthly time series
+
 ```{r heatwave-year-gb, fig.cap="Georges Bank", eval= T, echo = F}
 
 ecodata::heatwave_year %>% 
@@ -938,6 +950,7 @@ ecodata::heatwave_year %>%
 ```
 
 #### Yearly timeseries
+
 ```{r heatwave, eval= T, echo = F, fig.cap="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Georges Bank and Gulf of Maine ."}
 cumu <- ecodata::heatwave %>% 
   dplyr::filter(Var == "cumulative intensity") %>% 
