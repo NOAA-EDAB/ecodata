@@ -8,7 +8,7 @@ library(tidyr)
 library(lubridate)
 
 raw.dir <- here::here("data-raw")
-gsi_csv<-"GSI.csv"
+gsi_csv<-"GSI_1993_2019.csv"
 get_gsi <- function(save_clean = F){
 
   gsi <- read.csv(file.path(raw.dir, gsi_csv)) %>%

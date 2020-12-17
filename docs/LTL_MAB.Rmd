@@ -1186,9 +1186,8 @@ lt_sst %>%
 
 ### GSI
 
-<span style="color: red;">NO NEW DATA</span>
 
-[Notes](https://drive.google.com/drive/u/0/folders/0B1lP7X3GP_hQfk00dFd6bTQ2cmJyQjlwQnFWQ0JMWF9ZOWhRckNvSTlxT2NHSEZRdjV1WVk)
+[Notes](https://docs.google.com/document/d/1SgZ9m4pal3ygKnUSYr4UwgOoMJeaKzpO/edit)
 
 ```{r gsi, fig.width = 5, fig.asp = 0.55, fig.cap="Index representing the north wall  of the Gulf Stream. Positive values represent a more northerly Gulf Stream position."}
 ecodata::gsi %>% 
