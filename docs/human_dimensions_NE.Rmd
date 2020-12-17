@@ -108,34 +108,25 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 #Get data for plotting
 ## Apex pred
 apex<-ecodata::hms_landings %>% 
-  dplyr::filter(stringr::str_detect(Var, "Weight")) %>% 
-  tidyr::separate(., Var, "Var", "_")
+  dplyr::filter(stringr::str_detect(Var, "Landings")) %>% 
+  separate(Var, c("Var", "trash"), sep = "_")
 
-apex$sp.group <- ifelse(grepl("Shark", apex$Var, ignore.case = T), "shark", 
-         ifelse(grepl("TUNA", apex$Var, ignore.case = T), "tuna", "swordfish"))
 
-apex<-apex %>% 
-  dplyr::group_by(sp.group, Region, Time) %>% 
-  dplyr::summarise(Value = sum(Value)) %>% 
-  dplyr::mutate(Units = c("metric tons"),
-         feeding.guild = factor(c("Apex Predator")),
-         Value = (Value/2024.6)) %>% 
-  dplyr::rename(EPU = Region, 
-           Var = sp.group) %>% 
-  dplyr::mutate(grouping = factor(c("total")))
+#Define constants for figure plot
+series.col <- c("indianred","black")
 
 ##Plot
-apex_landings<-apex %>% 
+p1<-apex %>% 
   dplyr::filter(EPU == "NE") %>% 
   dplyr::group_by(Var) %>% 
   dplyr::mutate(hline = mean(Value)) %>% 
 
-  ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
+  ggplot2::ggplot(aes(x = YEAR, y = Value, color = Var)) +
   
   #Add time series
   ggplot2::geom_line(size = lwd) +
   ggplot2::geom_point(size = pcex) +
-  ggplot2::stat_summary(fun.y = sum, color = "black", geom = "line")+
+  #ggplot2::stat_summary(fun.y = sum, color = "black", geom = "line")+
   #scale_color_manual(values = series.col, aesthetics = "color")+
   #guides(color = FALSE) +
   ggplot2::geom_hline(aes(yintercept = hline,
@@ -153,7 +144,7 @@ apex_landings<-apex %>%
   ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), limits = c(1985, 2018)) +
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0), 
-        legend.position = c(0.4, 0.7), 
+        legend.position = "bottom", 
         legend.direction = "horizontal", 
         legend.title = element_blank())+
   ggplot2::ylab("")
@@ -271,7 +262,7 @@ gb_landings <- landings %>% dplyr::filter(EPU == "GB") %>%
   ggplot2::theme(strip.text=element_text(hjust=0)) +
   ggplot2::ggtitle("Georges Bank")
 
-#apex_landings
+p1
 gb_landings
 gom_landings
 #, ncol = 1, align = 'v', rel_heights = c(1,4,4))
@@ -757,7 +748,7 @@ ggplot2::ggplot(data = stock_status) +
 
 #### Engagement and reliance
 
-```{r commercial-engagement, message=F, fig.cap= "Commercial engagement and reliance for the top top commercial fishing communities in New England."}
+```{r commercial-engagement, message=F, warning = FALSE, fig.cap= "Commercial engagement and reliance for the top top commercial fishing communities in New England."}
 
 com<-ecodata::engagement %>% 
   dplyr::filter(Region == "New England", 
@@ -768,32 +759,32 @@ com2<-com %>%
   ggplot2::geom_point(aes(x = Eng, y = Rel, color = Rating), size = 2)+
   ggplot2::geom_vline(xintercept = 1, linetype = "dashed",color = "black")+
   ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black") +
-  ggrepel::geom_label_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
+  ggrepel::geom_text_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
                       y = Rel,
                       label = Community,
                       color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
   ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
                      breaks = com$Rating) +
-  xlim(-5,40)+
-  ylim(-1,6)+
+  xlim(0,40)+
+  ylim(0,3.5)+
   theme(legend.position="top",
         legend.title = element_blank())+
   ggplot2::xlab("Commercial Engagament Score") +
   ggplot2::ylab("Commercial Reliance Score") +
-  ggplot2::ggtitle("Social Vulnerability in Top Commercial Fishing Communities")
+  ggplot2::ggtitle("Social Vulnerability in Top Commercial Fishing Communities")+
   ggplot2::guides(color = FALSE) +
   ecodata::theme_ts()
   
   
   gridExtra::grid.arrange(com2, bottom = textGrob("Low <--------------------------------------------------------------------------------------------------------------------------------------> High", 
                                      x = 0.5, y = 1, gp = gpar(fontsize = 7)),
-                          left = textGrob("Low <-----------------------------------------------------------------> High", rot = 90,
-                                   x = 1, y = 0.45, gp = gpar(fontsize = 7)))
+                          left = textGrob("Low <-------------------------------------------------------------------------------------> High", rot = 90,
+                                   x = 1, y = 0.5, gp = gpar(fontsize = 7)))
 
 
 ```
 
-```{r recreational-engagement, message=F, fig.cap= "Commercial engagement and reliance for the top top recreational fishing communities in New England."}
+```{r recreational-engagement, message=F, warning = FALSE, fig.cap= "Commercial engagement and reliance for the top top recreational fishing communities in New England."}
 
 com<-ecodata::engagement %>% 
   dplyr::filter(Region == "New England", 
@@ -804,27 +795,27 @@ com2<-com %>%
   ggplot2::geom_point(aes(x = Eng, y = Rel, color = Rating), size = 2)+
   ggplot2::geom_vline(xintercept = 1, linetype = "dashed", color = "black")+
   ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black") +
-  ggrepel::geom_label_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
+  ggrepel::geom_text_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
                       y = Rel,
                       label = Community,
                       color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
   ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
                      breaks = com$Rating) +
-  xlim(-0.2,5)+
-  ylim(-0.5,2)+
+  xlim(0,4.5)+
+  ylim(0,1.6)+
   theme(legend.position="top",
         legend.title = element_blank())+
   ggplot2::xlab("Recreation Engagament Score") +
   ggplot2::ylab("Recreation Reliance Score") +
-  ggplot2::ggtitle("Social Vulnerability in Top Recreation Fishing Communities")
+  ggplot2::ggtitle("Social Vulnerability in Top Recreational Fishing Communities")+
   ggplot2::guides(color = FALSE) +
   ecodata::theme_ts()
   
   
   gridExtra::grid.arrange(com2, bottom = textGrob("Low <--------------------------------------------------------------------------------------------------------------------------------------> High", 
                                      x = 0.5, y = 1, gp = gpar(fontsize = 7)),
-                          left = textGrob("Low <-----------------------------------------------------------------> High", rot = 90,
-                                   x = 1, y = 0.45, gp = gpar(fontsize = 7)))
+                          left = textGrob("Low <-------------------------------------------------------------------------------------> High", rot = 90,
+                                   x = 1, y = 0.5, gp = gpar(fontsize = 7)))
 
 
 ```
@@ -1066,7 +1057,7 @@ knitr::include_graphics(file.path(image.dir, "mtl_index-0.90.png"))
 
 ### Wind Energy Revenue
 
-```{r wind-revenue, fig.cap="Wind energy revenue in the Mid-Atlantic"}
+```{r wind-revenue, fig.cap="Wind energy revenue in the New England."}
 ecodata::wind_revenue %>% 
   dplyr::mutate(Value = Value/1000000, 
                 Time = as.numeric(Time)) %>% 
@@ -1087,7 +1078,7 @@ ecodata::wind_revenue %>%
   #         alpha = hline.alpha,
   #         linetype = hline.lty)+
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
-  ggplot2::ggtitle("Wind Energy Revenue")+
+  ggplot2::ggtitle("Fishery Revenue in Wind Lease Areas")+
   ggplot2::ylab("2019 Constant Million Dollars ")+
   ecodata::theme_ts()
 ```
