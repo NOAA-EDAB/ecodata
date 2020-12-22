@@ -1239,14 +1239,15 @@ gb_larv_div + gom_larv_div + patchwork::plot_layout(ncol = 1)
 
 ### GOM Common Tern
 
-<span style="color: red;">NO NEW DATA</span>
+2020 was a challenging year for terns raising chicks - although diet composition was pretty similar to the long term average the quantity of food readily available was apparently less than normal, particularly around the time of chick hatching (confounded a little by cold, wet weather) and when chicks would normally be close to fledging (mid-late July). Our anecdotal observations of feeding rates were low at both those times.
+
 
 
 
 ```{r seabird-ne-diversity, fig.cap = "Shannon diversity of common tern diets observed at nesting sites in Gulf of Maine. Diversity of common tern diets has been predominantly above the long-term mean since 2006.",fig.width = 5, fig.asp = 0.55}
 
 diet_div <- ecodata::seabird_ne %>% 
-  dplyr::filter(stringr::str_detect(Var, "Diet"),
+  dplyr::filter(!stringr::str_detect(Var, "Productvity"),
          !stringr::str_detect(Var, "Sum")) %>% 
   dplyr::mutate(Island = word(Var, 1),
          Var = word(Var, 4)) %>% 
@@ -1318,11 +1319,12 @@ shannon
 ```{r seabird-ne-prey-freq, fig.cap = "Prey frequencies in the diets of common tern observed at seven different islands in Gulf of Maine."}
 
 prey_freq <- ecodata::seabird_ne %>% 
-  dplyr::filter(stringr::str_detect(Var, "Diet"),
+  dplyr::filter(!stringr::str_detect(Var, "Productivity"),
          !stringr::str_detect(Var, "Sum")) %>% 
-  dplyr::mutate(Island = word(Var, 1),
-         Var = word(Var, 4)) %>%
-  dplyr::group_by(Var, Time) %>% 
+  tidyr::separate(Var,c("Island", "COTE", "Spp", "Extra"), sep = " ") %>% 
+  mutate(Diet = (paste(Spp, Extra, sep = " " ))) %>% 
+  mutate(Diet = (gsub("NA", "", Diet))) %>% 
+  dplyr::group_by(Diet, Time) %>% 
   dplyr::summarise(Value = sum(Value, na.rm = T)) %>% 
   dplyr::group_by(Time) %>% 
   dplyr::mutate(Freq = Value/sum(Value, na.rm = T)) %>% 
@@ -1330,12 +1332,12 @@ prey_freq <- ecodata::seabird_ne %>%
 
 prey_freq1 <- prey_freq %>% 
   dplyr::filter(Freq > 0.05) %>% 
-  dplyr::mutate(Prey = gsub("\\.", " ", Var)) %>% 
-  dplyr::mutate(Prey = gsub("Other Invertebrate", "Unknown Invertebrate", Prey))
+  #dplyr::mutate(Prey = gsub("\\.", " ", Var)) %>% 
+  dplyr::mutate(Diet = gsub("Other Invertebrate", "Unknown Invertebrate", Diet))
 
 prey_freq2<- prey_freq %>% 
   dplyr::filter(Freq < 0.05) %>% 
-  dplyr::mutate(Prey = c("<5% Occurance"))
+  dplyr::mutate(Diet = c("<5% Occurance"))
 
 prey_freq3<-prey_freq1 %>% 
   rbind(prey_freq2)
@@ -1346,7 +1348,7 @@ colors<- c("grey", "#a6cee3", "#1f78b4", "#b2df8a",
 diet_freq_bar <-
   ggplot2::ggplot() +
   ggplot2::geom_bar(data = prey_freq3, 
-           aes(x = Time, y = Freq, fill = Prey), 
+           aes(x = Time, y = Freq, fill = Diet), 
            stat = "identity") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
   ggplot2::scale_fill_manual(values = colors) +
@@ -1433,14 +1435,15 @@ full_map
 
 #### Common tern productivity
 
-<span style="color: red;">NO NEW DATA</span>
+
 
 ```{r seabird-ne-productivity, fig.cap = "Mean common tern productivity at nesting sites in Gulf of Maine. Error bars show +/- 1 SE of the mean."}
 aggregate_prod <- ecodata::seabird_ne %>% 
-    dplyr::filter(!stringr::str_detect(Var, "Diet|Sum"))  %>% 
-  dplyr::mutate(Island = word(Var, 1),
-         Var = word(Var, 3),
-         Island = plyr::mapvalues(Island, from = c("EER","JI","MR","OGI","PINWR","SINWR","STI"),
+    dplyr::filter(stringr::str_detect(Var, "Productivity"))  %>% 
+  tidyr::separate(Var,c("Island", "COTE", "Spp", "Extra"), sep = " ") %>% 
+  mutate(Diet = (paste(Spp, Extra, sep = " " ))) %>% 
+  mutate(Diet = (gsub("NA", "", Diet))) %>% 
+  dplyr::mutate(Island = plyr::mapvalues(Island, from = c("EER","JI","MR","OGI","PINWR","SINWR","STI"),
                                   to = c("Eastern Egg Rock", "Jenny Island", "Matinicus Rock", 
                                          "Outer Green Island", "Pond Island", "Seal Island",
                                          "Stratton Island"))) %>%
