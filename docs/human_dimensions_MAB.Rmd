@@ -564,7 +564,7 @@ ggplot2::ggplot() +
  #Highlight last ten years
   ggplot2::geom_line(data = aqua, aes(x = Time, y = Value), size = lwd) +
   ggplot2::geom_point(data = aqua,aes(x = Time, y = Value), size = pcex) +
-  ggplot2::facet_wrap(~Var, scales = "free")+
+  ggplot2::facet_wrap(~Var, scales = "free", nrow = 3)+
   ggplot2::ggtitle("Oyster Production in Maryland")+
   ggplot2::ylab(expression("Oysters production")) +
   ggplot2::xlab("")+
@@ -872,7 +872,7 @@ ecodata::ppr %>%
 ```{r wind-revenue, fig.cap="Wind energy revenue in the Mid-Atlantic"}
 ecodata::wind_revenue %>% 
   dplyr::mutate(Value = Value/1000000, 
-                Time = as.numeric(Time)) %>% 
+                Time = as.integer(Time)) %>% 
   tidyr::separate(Var, into=c("Var", "Trash"), sep = "[(]") %>% 
   dplyr::select(!Trash) %>% 
   #dplyr::group_by(EPU) %>% 
@@ -889,9 +889,11 @@ ecodata::wind_revenue %>%
   #         size = hline.size,
   #         alpha = hline.alpha,
   #         linetype = hline.lty)+
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  scale_x_continuous(breaks=c(2008,2012,2016, 2020))+
   ggplot2::ggtitle("Fishery Revenue in Wind Lease Areas")+
   ggplot2::ylab("2019 Constant Million Dollars ")+
+  theme(legend.title = element_blank())+
+  ggplot2::xlab("")+
   ecodata::theme_ts()
 ```
 
@@ -915,11 +917,12 @@ total_area<- ecodata::wind_dev_speed %>%
 
   ggplot2::ggplot()+
   ggplot2::geom_point(aes(x = Time, y = Value_3))+
+  ggplot2::geom_line(aes(x = as.factor(Time), y = Value_3, group=1))+
   ggplot2::ylab("Total Area (Acres)")+
   ggplot2::xlab("")+
   ggplot2::ggtitle("Cumulative Area")+
   ecodata::theme_ts()+
-  theme(axis.text.x = element_text(angle = 90))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
   
 dist_area<- ecodata::wind_dev_speed%>% 
   filter(Var == "Cumulative_seafloor_disturbance",
@@ -941,13 +944,15 @@ foundations<- ecodata::wind_dev_speed%>%
   ggplot2::ggtitle("Cumulative Number of Foundations")+
   theme(axis.text.x = element_text(angle = 45))
 
-gridExtra::grid.arrange(
-  gridExtra::tableGrob(labels, theme = gridExtra::ttheme_minimal(base_size = 8)),
-  total_area,
-  ncol = 2,
-  widths = c(0.5, 1.5),
-  clip = FALSE
-)
+# gridExtra::grid.arrange(
+#   gridExtra::tableGrob(labels, theme = gridExtra::ttheme_minimal(base_size = 8)),
+#   total_area,
+#   ncol = 2,
+#   widths = c(0.5, 1.5),
+#   clip = FALSE
+# )
+
+total_area
 ```
 
 ### Wind Sites and Occurrence 

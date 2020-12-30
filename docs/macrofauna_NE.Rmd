@@ -109,7 +109,9 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 <span style="color: red;">ONLY ME/NH NEW DATA</span>
 
 #### NEFSC BTS
-
+ 
+<span style="color: red;">NO NEW DATA</span>
+ 
 ```{r aggregate-biomass, fig.cap = paste0("Spring (left) and fall (right) NEFSC surveyed biomass in Georges Bank.")}
 agg<-ecodata::aggregate_biomass %>% 
   dplyr::filter(!stringr::str_detect(Var, "Apex|inshore|offshore|managed|NEFMC|MAFMC|JOINT|NA")) %>% #remove unused datasets
@@ -476,6 +478,8 @@ cowplot::plot_grid(p1, p2, p3, p4, nrow=4)
 
 #### NEFMC Benthivores in MAB
 
+<span style="color: red;">NO NEW DATA</span>
+
 ```{r nefsc-survey-disaggregated-NEFMC-ssp-in-mab}
 nefmc_ma <- ecodata::nefsc_survey_disaggregated %>% 
   # distinct() %>% 
@@ -528,6 +532,8 @@ mab_nefmc_props
 ```
 
 #### MA inshore survey
+
+<span style="color: red;">NO NEW DATA</span>
 
 ```{r ma-inshore-survey, fig.cap = "Spring (left) and fall (right) surveyed biomass from the Massachusetts state inshore bottom trawl survey."}
 mass <- ecodata::mass_inshore_survey %>% 
@@ -1124,16 +1130,19 @@ gom
 ```{r gb-cf, fig.cap = "Condition factor for species sampled in Georges Bank."}
 
 
-knitr::include_graphics(file.path(image.dir, "GBcondition_2020_viridis_final.jpg"))
+a<-knitr::include_graphics(file.path(image.dir, "GBcondition_2020_viridis_final.jpg"))
+b<-knitr::include_graphics(file.path(image.dir, "GOMcondition_2020_viridis_final.jpg"))
 
+cowplot::plot_grid(a, b)
 ```
+
 
 #### GOM
 
-```{r gom-cf, fig.cap = "Condition factor for species sampled in the Gulf of Maine."}
+```{r gom-cf, fig.cap = "Condition factor for species sampled in the Gulf of Maine.", fig.width=50}
 
 
-knitr::include_graphics(file.path(image.dir, "GOMcondition_2020_viridis_final.jpg"))
+knitr::include_graphics(c(file.path(image.dir, "GOMcondition_2020_viridis_final.jpg"),file.path(image.dir, "GOMcondition_2020_viridis_final.jpg") ))
 
 ```
 
@@ -1486,6 +1495,8 @@ aggregate_prod %>%
 ```
 
 ### Forage Anomaly
+
+[Taxa include](https://docs.google.com/spreadsheets/d/108snlOTy1wzMGmxbYp1qJuKgqYfYM8MD/edit#gid=966266704)
 
 ```{r}
 ecodata::forage_anomaly %>% 

@@ -756,6 +756,8 @@ bird %>%
 
 ### Forage Anomaly
 
+[Taxa include](https://docs.google.com/spreadsheets/d/108snlOTy1wzMGmxbYp1qJuKgqYfYM8MD/edit#gid=966266704)
+
 ```{r}
 ecodata::forage_anomaly %>% 
   filter(EPU == "MAB") %>% 
@@ -998,7 +1000,8 @@ ed%>%
   ggplot2::facet_wrap(~Season)+
   ggplot2::ylab("Mean Energy Density")+
   ggplot2::theme(axis.title.x=element_blank(), 
-                 axis.text.x = element_text(angle = 45,  hjust = 1))+
+                 axis.text.x = element_text(angle = 45,  hjust = 1), 
+                 legend.title = element_blank())+
   ggplot2::ggtitle("Forage Fish Energy Density")+
   ecodata::theme_facet()
 

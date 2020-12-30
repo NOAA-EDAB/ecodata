@@ -97,7 +97,7 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 #### SST 
 
-```{r seasonal-sst-anomaly-gridded, fig.width=8, fig.height = 8, fig.cap="GB and GOM 2019 seasonal sea surface temperature spatial anomalies. "}
+```{r seasonal-sst-anomaly-gridded, fig.width=8, fig.height = 8, fig.cap="GB and GOM 2020 seasonal sea surface temperature spatial anomalies. "}
 #EPU shapefile
 ne_epu_sf <- ecodata::epu_sf %>% 
   dplyr::filter(EPU %in% c("GOM","GB"))
@@ -243,7 +243,7 @@ bot_temp_insitu_gb <- ecodata::bottom_temp %>%
 ```
 
 
-```{r bottom-temp-glorys, fig.width = 6, fig.asp = .55, fig.cap="Annual bottom temperature in the New England (black = Paula's, red = GLORYS."}
+```{r bottom-temp-glorys, fig.width = 6, fig.asp = .55, fig.cap="Annual bottom temperature in the New England (black = Paula's, red = GLORYS)."}
 # ecodata::bottom_temp_glorys %>% 
 #   dplyr::filter(!EPU == "MAB", 
 #                 !EPU == "SS")%>%
@@ -372,7 +372,7 @@ ggplot2::ggplot(data = sw.df) +
 
 ### Chlorophyll and Primary Productivity {.tabset .tabset-fade}
 
-style="color: red;">NOT UPDATED</span>
+<span style="color: red;">NOT UPDATED</span>
 
 #### Primary production
 
@@ -564,7 +564,7 @@ chl_cci_gb + chl_cci_gom + patchwork::plot_layout(ncol = 1)
 
 ### Zooplankton {.tabset .tabset-fade}
 
-style="color: red;">ONLY CALANUS sTAGE IS NEW</span>
+<span style="color: red;">ONLY CALANUS STAGE IS NEW</span>
 
 #### Euphausiids + Cnidarians
 
@@ -1165,7 +1165,9 @@ gom_map <-
   ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) +
   ggplot2::geom_sf(data = ne_epu_sf, fill = "transparent", size = map.lwd) +
-  ggplot2::scale_fill_gradientn( colours = c(scales::muted("blue"), "white", scales::muted("red"), "black"),
+  ggplot2::scale_fill_gradientn(name = "Temp.\nAnomaly (C)", 
+                                colours = c(scales::muted("blue"), "white",
+                                            scales::muted("red"), "black"),
                                 values = scales::rescale(c(-4,0,4,8)),
                                 guide = "colorbar", limits=c(-4,8)) +
   

@@ -97,7 +97,7 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 #### SST
 
-```{r seasonal-sst-anom-gridded, fig.cap="MAB seasonal sea surface temperature time series overlaid onto 2019 seasonal spatial anomalies."}
+```{r seasonal-sst-anom-gridded, fig.cap="MAB seasonal sea surface temperature time series overlaid onto 2020 seasonal spatial anomalies."}
 annotation_custom2 <- function (grob, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf, data) 
 {
   layer(data = data, stat = StatIdentity, position = PositionIdentity, 
@@ -1226,7 +1226,7 @@ Grace Saba at Rutgers University recently established a glider-based pH observat
 
 ### Seasonal SST anomaly
 
-```{r shelf-seasonal-sst-anomaly-gridded, fig.height=8, fig.cap="Seasonal sea surface temperature anomalies for 2019 over the Northeast US Shelf."}
+```{r shelf-seasonal-sst-anomaly-gridded, fig.height=8, fig.cap="Seasonal sea surface temperature anomalies for 2020 over the Northeast US Shelf."}
 # Set lat/lon window for maps
 xmin = -77
 xmax = -65
@@ -1257,7 +1257,7 @@ ggplot2::ggplot() +
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
-  ggplot2::ggtitle("SST anomaly (2019)") +
+  ggplot2::ggtitle("SST anomaly (2020)") +
   ggplot2::xlab("Longitude") +
   ggplot2::ylab("Latitude") +
   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
