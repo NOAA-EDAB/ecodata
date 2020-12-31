@@ -1,36 +1,39 @@
 
-#EPU shapefile
-mab_epu_sf <- ecodata::epu_sf %>% 
-  dplyr::filter(EPU %in% c("MAB"))
+cpsf26<- ecodata::cold_pool_sf %>% 
+  mutate(Time = c(1:26)) %>% 
+  filter(Time == 26)
+cpsf<- ecodata::cold_pool_sf %>% 
+  mutate(Time = c(1:26)) %>% 
+  filter(!Time == 26)
 
 #Map line parameters
 map.lwd <- 0.4
 
 # Set lat/lon window for maps
-xmin = -81
-xmax = -66
+xmin = -80
+xmax = -68
 ymin = 35.5
 ymax = 43
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
-hw <- ecodata::heatwave_peak_date %>% 
-  dplyr::filter(EPU == "MAB") %>% 
-  dplyr::mutate(Value = replace(Value, Value > 4, 4))
 
-mab_map <- 
+cp_map <- 
   ggplot2::ggplot() +
-  ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
+  #ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) +
-  ggplot2::geom_sf(data = mab_epu_sf, fill = "transparent", size = map.lwd) +
-  ggplot2::scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
-                       low = scales::muted("blue"),
-                       mid = "white",
-                       high = scales::muted("red"),
-                       limits = c(-4,4)) +
+  ggplot2::geom_sf(data = cpsf, alpha = 0.1)  +
+  ggplot2::geom_sf(data = cpsf26, fill = "transparent", color = "black", size = 1)+
+  
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
+  #ggplot2::scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
+  #                     low = scales::muted("blue"),
+  #                     mid = "white",
+  #                     high = scales::muted("red"),
+  #                     limits = c(-4,4)) +
+  
   #facet_wrap(Season~.) +
   ecodata::theme_map() +
-  ggplot2::ggtitle("MAB heatwave anomaly (July 28, 2020)") +
+  ggplot2::ggtitle("Cold Pool Area") +
   ggplot2::xlab("Longitude") +
   ggplot2::ylab("Latitude") +
   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
@@ -42,4 +45,4 @@ mab_map <-
         axis.title.y = element_text(angle = 90))
 
 
-mab_map 
+cp_map 

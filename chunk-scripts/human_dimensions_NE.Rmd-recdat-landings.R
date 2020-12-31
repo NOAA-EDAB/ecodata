@@ -6,7 +6,7 @@ landings_rec <- ecodata::recdat %>%
 
 series.col <- "black"
 
-ggplot2::ggplot(data = landings_rec)+
+rec_landings <- ggplot2::ggplot(data = landings_rec)+
   
   #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -22,12 +22,14 @@ ggplot2::ggplot(data = landings_rec)+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
-  ggplot2::ylab(expression("Fish caught (10"^6*"n)")) +
-
-  ggplot2::geom_hline(aes(yintercept = hline,
-               
-               color = Var),
+  # Plotly can not use "expression" so follow notes below
+  ggplot2::ylab(("Fish caught (10^6*n)")) + # Use this for HTML version
+  #ggplot2::ylab(expression("Fish caught (10"^6"*n)")) + #Use this for SOEs and anything pdf 
+  ggplot2::geom_hline(aes(yintercept = hline, color = Var),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts()
+
+#plotly::ggplotly(rec_landings) # plotly removes geom_gls
+rec_landings

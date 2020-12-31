@@ -191,4 +191,4 @@ p4<- gb_surv %>%
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0))
 
-cowplot::plot_grid(p1, p2, p3, p4, nrow=4)
+cowplot::plot_grid( p2, p3, p4, nrow=3)

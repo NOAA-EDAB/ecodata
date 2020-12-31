@@ -118,6 +118,7 @@ rec_div_catch <- recdat %>%
   ecodata::theme_ts()
 
 
+
 cowplot::plot_grid(rec_effort, 
                    rec_div, 
                    rec_div_catch,

@@ -13,8 +13,9 @@ ymin = 39
 ymax = 45
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
-hw <- ecodata::heatwave_anom_gridded %>% 
-  dplyr::filter(EPU == "GB")
+hw <- ecodata::heatwave_peak_date %>% 
+  dplyr::filter(EPU == "GB") %>% 
+  dplyr::mutate(Value = replace(Value, Value > 4, 4))
 
 gb_map <- 
   ggplot2::ggplot() +
@@ -25,11 +26,11 @@ gb_map <-
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
-                       limits = c(-5,7)) +
+                       limits = c(-4,4)) +
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   #facet_wrap(Season~.) +
   ecodata::theme_map() +
-  ggplot2::ggtitle("GB heatwave anomaly (Aug 23, 2019)") +
+  ggplot2::ggtitle("GB heatwave anomaly (Aug 14, 2020)") +
   ggplot2::xlab("Longitude") +
   ggplot2::ylab("Latitude") +
   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),

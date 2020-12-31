@@ -1,9 +1,10 @@
 
 aggregate_prod <- ecodata::seabird_ne %>% 
-    dplyr::filter(!stringr::str_detect(Var, "Diet|Sum"))  %>% 
-  dplyr::mutate(Island = word(Var, 1),
-         Var = word(Var, 3),
-         Island = plyr::mapvalues(Island, from = c("EER","JI","MR","OGI","PINWR","SINWR","STI"),
+    dplyr::filter(stringr::str_detect(Var, "Productivity"))  %>% 
+  tidyr::separate(Var,c("Island", "COTE", "Spp", "Extra"), sep = " ") %>% 
+  mutate(Diet = (paste(Spp, Extra, sep = " " ))) %>% 
+  mutate(Diet = (gsub("NA", "", Diet))) %>% 
+  dplyr::mutate(Island = plyr::mapvalues(Island, from = c("EER","JI","MR","OGI","PINWR","SINWR","STI"),
                                   to = c("Eastern Egg Rock", "Jenny Island", "Matinicus Rock", 
                                          "Outer Green Island", "Pond Island", "Seal Island",
                                          "Stratton Island"))) %>%

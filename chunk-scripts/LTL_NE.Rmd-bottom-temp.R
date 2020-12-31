@@ -47,7 +47,7 @@ bot_temp_insitu_gb <- ecodata::bottom_temp %>%
         plot.title = element_text(size = 12))
 
 
-bot_temp_insitu_gb +
-bot_temp_insitu_gom +
-  patchwork::plot_layout(ncol =  1) &
-  ggplot2::theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
+# bot_temp_insitu_gb +
+# bot_temp_insitu_gom +
+#   patchwork::plot_layout(ncol =  1) &
+#   ggplot2::theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))

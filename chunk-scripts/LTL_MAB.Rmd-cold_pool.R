@@ -19,5 +19,5 @@ cp<- ecodata::cold_pool %>%
   ggplot2::ylab("Cold Pool") +
   ggplot2::xlab("")+
   ecodata::theme_ts()
-
-plotly::ggplotly(cp) 
+cp
+#plotly::ggplotly(cp) 

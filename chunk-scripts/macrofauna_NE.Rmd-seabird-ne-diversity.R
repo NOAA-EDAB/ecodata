@@ -1,6 +1,6 @@
 
 diet_div <- ecodata::seabird_ne %>% 
-  dplyr::filter(stringr::str_detect(Var, "Diet"),
+  dplyr::filter(!stringr::str_detect(Var, "Productvity"),
          !stringr::str_detect(Var, "Sum")) %>% 
   dplyr::mutate(Island = word(Var, 1),
          Var = word(Var, 4)) %>% 
