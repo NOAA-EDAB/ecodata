@@ -26,7 +26,7 @@ library(here)
 library(kableExtra)
 library(ggrepel)
 library(stringr)
-library(patchwork)
+#library(patchwork)
 library(grid)
 library(cowplot)
 
@@ -104,50 +104,9 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 #### Commercial landings
 
 
-```{r hms-landings-comdat-commercial-landings, warning=F, fig.length = 24, fig.cap = "NEFMC managed species landings (red) and total commercial landings (black) by feeding guild in Gulf of Maine (left) and Georges Bank (right)."}
-#Get data for plotting
-## Apex pred
-apex<-ecodata::hms_landings %>% 
-  dplyr::filter(stringr::str_detect(Var, "Landings")) %>% 
-  separate(Var, c("Var", "trash"), sep = "_")
-
-
+```{r comdat-commercial-landings, warning=F, fig.length = 24, fig.cap = "NEFMC managed species landings (red) and total commercial landings (black) by feeding guild in Gulf of Maine (left) and Georges Bank (right)."}
 #Define constants for figure plot
 series.col <- c("indianred","black")
-
-##Plot
-p1<-apex %>% 
-  dplyr::filter(EPU == "NE") %>% 
-  dplyr::group_by(Var) %>% 
-  dplyr::mutate(hline = mean(Value)) %>% 
-
-  ggplot2::ggplot(aes(x = YEAR, y = Value, color = Var)) +
-  
-  #Add time series
-  ggplot2::geom_line(size = lwd) +
-  ggplot2::geom_point(size = pcex) +
-  #ggplot2::stat_summary(fun.y = sum, color = "black", geom = "line")+
-  #scale_color_manual(values = series.col, aesthetics = "color")+
-  #guides(color = FALSE) +
-  ggplot2::geom_hline(aes(yintercept = hline,
-                 color = Var,
-                 size = Var),
-             size = hline.size,
-             alpha = hline.alpha,
-             linetype = hline.lty)+
-  #Highlight last ten years
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  #Axis and theme
-  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
-  ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), limits = c(1985, 2018)) +
-  ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_text(hjust=0), 
-        legend.position = "bottom", 
-        legend.direction = "horizontal", 
-        legend.title = element_blank())+
-  ggplot2::ylab("")
 
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
@@ -262,12 +221,61 @@ gb_landings <- landings %>% dplyr::filter(EPU == "GB") %>%
   ggplot2::theme(strip.text=element_text(hjust=0)) +
   ggplot2::ggtitle("Georges Bank")
 
-p1
+#p1
 gb_landings
 gom_landings
 #, ncol = 1, align = 'v', rel_heights = c(1,4,4))
 
 ```
+
+
+```{r hms-commercial-landings, warning=F, fig.length = 24, fig.cap = "HMS groups include “Bluefin Tuna”, “BAYS”, “Swordfish”, “Large Coastal Sharks”, “Small Coastal Sharks”, “Pelagic Sharks”, “Smoothhound Sharks”. “BAYS” includes bigeye, albacore, yellowfin and skipjack tunas. “Large Coastal Sharks” includes blacktip, bull, great hammerhead, scalloped hammerhead, smooth hammerhead, lemon, nurse, sandbar, silky, spinner, and tiger sharks. “Small Coastal Sharks” includes Atlantic sharpnose, blacknose, bonnethead, finetooth sharks. “Pelagic Sharks” includes blue, porbeagle, shortfin mako, and thresher sharks. “Smoothhound Sharks” includes smooth dogfish shark."}
+#Get data for plotting
+## Apex pred
+apex<-ecodata::hms_landings %>% 
+  dplyr::filter(stringr::str_detect(Var, "Landings")) %>% 
+  separate(Var, c("Var", "trash"), sep = "_")
+
+
+##Plot
+p1<-apex %>% 
+  dplyr::filter(EPU == "NE") %>% 
+  dplyr::group_by(Var) %>% 
+  dplyr::mutate(hline = mean(Value)) %>% 
+
+  ggplot2::ggplot(aes(x = YEAR, y = Value, color = Var)) +
+  
+  #Add time series
+  ggplot2::geom_line(size = lwd) +
+  ggplot2::geom_point(size = pcex) +
+  #ggplot2::stat_summary(fun.y = sum, color = "black", geom = "line")+
+  #scale_color_manual(values = series.col, aesthetics = "color")+
+  #guides(color = FALSE) +
+  ggplot2::geom_hline(aes(yintercept = hline,
+                 color = Var,
+                 size = Var),
+             size = hline.size,
+             alpha = hline.alpha,
+             linetype = hline.lty)+
+  #Highlight last ten years
+  # ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  #     xmin = x.shade.min , xmax = x.shade.max,
+  #     ymin = -Inf, ymax = Inf) +
+  #Axis and theme
+  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
+  #ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), limits = c(1985, 2018)) +
+  ecodata::theme_facet() +
+  ggplot2::theme(strip.text=element_text(hjust=0), 
+        legend.position = "bottom", 
+        legend.direction = "horizontal", 
+        legend.title = element_blank())+
+  ggplot2::ylab("")
+
+p1
+
+
+```
+
 
 ```{r comdat-total-landings, fig.cap = paste0("Total commercial seafood landings (black) shown with NEFMC managed seafood landings (red) in Gulf of Maine (left) and Georges Bank (right). \\label{total-landings}")}
 
@@ -468,7 +476,7 @@ rev_agg <- ecodata::comdat %>%
          !stringr::str_detect(Var, "prop|Other|MAFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
          EPU %in% epu_abbr,
          Time >= 1986) %>% 
-  dplyr::mutate(Status = ifelse(str_detect(Var, "Revenue weight"), 
+  dplyr::mutate(Status = ifelse(str_detect(Var, "managed"), 
                          "Managed","Total")) %>% #Create groups for aggregation
   dplyr::group_by(EPU,Status, Time) %>% 
   dplyr::summarise(Total = sum(Value)) %>% 
@@ -548,6 +556,53 @@ cowplot::plot_grid(gb_rev_agg, gom_rev_agg, ncol = 2)
 # 
 # min_rev_perc <- min(rev_inline)
 # max_rev_perc <- max(rev_inline)
+```
+
+```{r hms-comm-revenue,  fig.cap = "HMS revenue. \\label{comm-rev}"}
+## Apex pred
+apex<-ecodata::hms_landings %>% 
+  dplyr::filter(stringr::str_detect(Var, "Revenue")) %>% 
+  separate(Var, c("Var", "trash"), sep = "_")
+
+
+#Define constants for figure plot
+series.col <- c("indianred","black")
+
+##Plot
+p1<-apex %>% 
+  dplyr::filter(EPU == "NE") %>% 
+  dplyr::group_by(Var) %>% 
+  dplyr::mutate(hline = mean(Value)) %>% 
+
+  ggplot2::ggplot(aes(x = YEAR, y = Value, color = Var)) +
+  
+  #Add time series
+  ggplot2::geom_line(size = lwd) +
+  ggplot2::geom_point(size = pcex) +
+  ggplot2::geom_hline(aes(yintercept = hline,
+                 color = Var,
+                 size = Var),
+             size = hline.size,
+             alpha = hline.alpha,
+             linetype = hline.lty)+
+  #Highlight last ten years
+  # ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  #     xmin = x.shade.min , xmax = x.shade.max,
+  #     ymin = -Inf, ymax = Inf) +
+  # #Axis and theme
+  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
+  #ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), limits = c(1985, 2020)) +
+  ecodata::theme_facet() +
+  ggplot2::theme(strip.text=element_text(hjust=0), 
+        legend.position = "bottom", 
+        legend.direction = "horizontal", 
+        legend.title = element_blank())+
+  ggplot2::ylab(expression("Revenue (US Dollars)")) +
+  ggplot2::xlab("Time")+
+  ggplot2::ggtitle("HMS Revenue")
+
+p1
+
 ```
 
 #### Commercial diversity
