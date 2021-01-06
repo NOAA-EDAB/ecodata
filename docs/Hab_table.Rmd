@@ -109,7 +109,12 @@ hab.table <- hab.table %>%
     )
 
 
-datatable(hab.table, rownames = FALSE
+datatable(hab.table, rownames = FALSE, 
+          extensions = c('Scroller', 'FixedColumns'), #add scrolling and fixed column
+          options = list(deferRender = TRUE,
+          scrollY = 200, scroller = TRUE,
+          dom = 't',scrollX = TRUE,fixedColumns = TRUE)
+
           #, options = list(columnDefs = list(list(targets = 16, visible = FALSE)))
   ) %>% 
   formatStyle(#Color code base on dependence
@@ -121,7 +126,7 @@ datatable(hab.table, rownames = FALSE
     formatStyle(
     names(hab.table)[2:15],
     backgroundColor = styleEqual(c("Low", "Moderate", "High", "Very high"), 
-                                 c('lightgreen', 'yellow', 'orange', 'red'))
+                                 c('lightgreen', 'yellow', 'orange', 'red'))  
   )
 
 ```
@@ -202,7 +207,11 @@ hab.table <- hab.table %>%
     )
 
 
-datatable(hab.table, rownames = FALSE
+datatable(hab.table, rownames = FALSE, 
+           extensions = c('Scroller', 'FixedColumns'), #add scrolling and fixed column
+          options = list(deferRender = TRUE,
+          scrollY = 200, scroller = TRUE,
+          dom = 't',scrollX = TRUE,fixedColumns = TRUE)
           #, options = list(columnDefs = list(list(targets = 16, visible = FALSE)))
   ) %>% 
   formatStyle(#Color code base on dependence
