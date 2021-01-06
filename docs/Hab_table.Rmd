@@ -1,19 +1,38 @@
 ---
 title: "Hab_table"
 author: "Sean Lucey"
-date: "12/22/2020"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-library(here); library(kableExtra); library(dplyr); library(readxl); library(data.table)
+library(here); library(kableExtra); library(dplyr); library(readxl); library(data.table); library(DT)
 knitr::opts_chunk$set(echo = FALSE)
 
 options(knitr.kable.NA = '')
 
 ```
 
-```{r Mid table}
+```{css, echo=FALSE}
+
+/*alter risk assessment table formatting*/
+.risktable {
+    border-collapse: collapse;
+}
+.risktable th {
+    padding: 2px;
+}
+.risktable td {
+    padding: 1px;
+}
+.risktable tbody tr:nth-of-type(even) {
+  background-color:transparent;
+}
+
+```
+
+
+```{r class.source="risktable"}
 #Read in Mid-Atlantic table
 mid <- as.data.table(readxl::read_xlsx(here('data-raw/habitat_vulnerability.xlsx'), 
                          sheet = 'Mid-Atlantic', skip = 1))
@@ -65,11 +84,50 @@ hab.table %>%
               x == "Very high" ~ cell_spec(x, format = "html", color = "white", 
                                      background = "red"))}) %>%
   kable(format = "html", escape = F, table.attr='class="risktable"') %>%
-  kable_styling(font_size = 14)
+  kable_styling(font_size = 14, fixed_thead = T)
 
 ```
 
-```{r NE table}
+```{r midDT}
+#from examples here https://rstudio.github.io/DT/010-style.html
+
+#color coding cells works
+#need to add column with species vulnerability and color code species by it but not show it, like #hideV6 example at link
+#if we show it we can sort by species vulnerability though... alphabetical doesnt work so use numbers to go lowest-highest
+#still need to color code headers
+hab.table <- hab.table %>%
+  mutate(spVul = #Color code species based on climate vul
+    # case_when(Species %in% low.vul ~ "low.vul",
+    #           Species %in% mod.vul ~ "mod.vul",
+    #           Species %in% high.vul ~ "high.vul",
+    #           Species %in% vhigh.vul ~ "vhigh.vul")
+    # )
+    case_when(Species %in% low.vul ~ 1,
+              Species %in% mod.vul ~ 2,
+              Species %in% high.vul ~ 3,
+              Species %in% vhigh.vul ~ 4)
+    )
+
+
+datatable(hab.table, rownames = FALSE
+          #, options = list(columnDefs = list(list(targets = 16, visible = FALSE)))
+  ) %>% 
+  formatStyle(#Color code base on dependence
+    'Species', "spVul",
+    backgroundColor = styleEqual(#c("low.vul", "mod.vul", "high.vul", "vhigh.vul"),
+                                 c(1,2,3,4),
+                                 c('lightgreen', 'yellow', 'orange', 'red')) #Color code base on dependence)
+    ) %>%
+    formatStyle(
+    names(hab.table)[2:15],
+    backgroundColor = styleEqual(c("Low", "Moderate", "High", "Very high"), 
+                                 c('lightgreen', 'yellow', 'orange', 'red'))
+  )
+
+```
+
+
+```{r class.source="risktable"}
 #Read in New England table
 ne <- as.data.table(readxl::read_xlsx(here('data-raw/habitat_vulnerability.xlsx'), 
                          sheet = 'New England', skip = 1))
@@ -121,6 +179,44 @@ hab.table %>%
               x == "Very high" ~ cell_spec(x, format = "html", color = "white", 
                                      background = "red"))}) %>%
   kable(format = "html", escape = F, table.attr='class="risktable"') %>%
-  kable_styling(font_size = 14)
+  kable_styling(font_size = 14, fixed_thead = T)
 
 ```
+
+```{r neDT}
+
+#color coding cells works
+#need to add column with species vulnerability and color code species by it but not show it, like #hideV6 example at link
+#if we show it we can sort by species vulnerability though... alphabetical doesnt work so use numbers to go lowest-highest
+hab.table <- hab.table %>%
+  mutate(spVul = #Color code species based on climate vul
+    # case_when(Species %in% low.vul ~ "low.vul",
+    #           Species %in% mod.vul ~ "mod.vul",
+    #           Species %in% high.vul ~ "high.vul",
+    #           Species %in% vhigh.vul ~ "vhigh.vul")
+    # )
+    case_when(Species %in% low.vul ~ 1,
+              Species %in% mod.vul ~ 2,
+              Species %in% high.vul ~ 3,
+              Species %in% vhigh.vul ~ 4)
+    )
+
+
+datatable(hab.table, rownames = FALSE
+          #, options = list(columnDefs = list(list(targets = 16, visible = FALSE)))
+  ) %>% 
+  formatStyle(#Color code base on dependence
+    'Species', "spVul",
+    backgroundColor = styleEqual(#c("low.vul", "mod.vul", "high.vul", "vhigh.vul"),
+                                 c(1,2,3,4),
+                                 c('lightgreen', 'yellow', 'orange', 'red')) #Color code base on dependence)
+    ) %>%
+    formatStyle(
+    names(hab.table)[2:15],
+    backgroundColor = styleEqual(c("Low", "Moderate", "High", "Very high"), 
+                                 c('lightgreen', 'yellow', 'orange', 'red'))
+  )
+
+
+```
+
