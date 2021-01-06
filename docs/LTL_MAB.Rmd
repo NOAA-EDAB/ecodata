@@ -984,8 +984,8 @@ cpsf<- ecodata::cold_pool_sf %>%
 map.lwd <- 0.4
 
 # Set lat/lon window for maps
-xmin = -80
-xmax = -68
+xmin = -78
+xmax = -69
 ymin = 35.5
 ymax = 43
 xlims <- c(xmin, xmax)
@@ -1019,8 +1019,57 @@ cp_map <-
         axis.title.y = element_text(angle = 90))
 
 
-cp_map 
+annotation_custom2 <- function (grob, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf) 
+{
+  layer( stat = StatIdentity, position = PositionIdentity, 
+        geom = ggplot2:::GeomCustomAnn,
+        inherit.aes = TRUE, params = list(grob = grob, 
+                                          xmin = xmin, xmax = xmax, 
+                                          ymin = ymin, ymax = ymax))
+}
+
+area<- ecodata::cold_pool_sf %>%
+  mutate(Time = c(1993:2018)) 
+area2<- data.frame(Area = st_area(area))%>% 
+  mutate(Time = c(1993:2018)) %>% 
+  separate(Area, c("Value", "Units"), sep = " ") %>%
+  mutate(Value = as.numeric(Value), 
+         hline = mean(Value)) 
+
+area_ts <-  ggplot2::ggplotGrob(area2 %>% 
+                                      ggplot2::ggplot() +   
+                                      ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
+                                      ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
+                                      ggplot2::geom_hline(aes(yintercept = hline),
+                                                          size = hline.size,
+                                                          alpha = hline.alpha,
+                                                          linetype = hline.lty)+
+                                      ggplot2::scale_x_continuous(breaks = c(1995, 2000, 2005, 2010, 2015),
+                                                                  expand = c(0.01, 0.01)) +
+                                      ggplot2::ggtitle("")+
+                                      ggplot2::ylab("Area (m^2)") +
+                                      ggplot2::xlab("")+
+                                      ecodata::theme_ts()+
+                              ggplot2::theme(
+                                   axis.text.y = element_text(size = 6),
+                                   axis.text.x = element_text(size = 6),
+                                    panel.background = element_rect(fill = "transparent"),
+                                    plot.background = element_rect(fill = "transparent", color = NA),
+                                    panel.grid.major = element_blank(),
+                                    panel.grid.minor = element_blank(),
+                                    legend.background = element_rect(fill = "transparent"),
+                                    legend.box.background = element_rect(fill = "transparent"),
+                                    legend.key = element_rect(fill = "transparent", colour = NA),
+                                    axis.line = element_blank())#,
+                                    #panel.border = element_blank())
+)
+
+cp_map +
+  annotation_custom(grob = area_ts,  xmin=-78.5, xmax=-71.75,
+                     ymin=40.95, ymax=43.75)
 ```
+
+
 
 
 
