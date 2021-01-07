@@ -5,41 +5,41 @@ library(stringr)
 raw.dir <- here::here("data-raw")
 
 # input files ----
-ppd_csv <- "SOE_V2020_2-NES_EPU_NOESTUARIES-PPD-VGPM2-STATS_ANOMS-SEAWIFS_MODIS.csv"
-chl_csv <- "SOE_V2020_2-NES_EPU_NOESTUARIES-CHLOR_A-PAN-STATS_ANOMS-SEAWIFS_MODIS-V2.csv"
+ppd_csv <- "1998_2020-OCCCI_SAV-PPD-STATS_ANOMS-NES_EPU_NOESTUARIES-V2021-SOE_FORMAT.csv"
+chl_csv <- "1998_2020-OCCCI_SAV-CHLOR_A-STATS_ANOMS-NES_EPU_NOESTUARIES-V2021-SOE_FORMAT.csv"
 
 # transformation ----
 ppd <- read.csv(file.path(raw.dir, ppd_csv)) %>%
   dplyr::mutate(ALGORITHM = word(str_replace(ALGORITHM, "_", " "))) %>%
   tidyr::unite(.,VARIABLE, c("VARIABLE","SENSOR","ALGORITHM"), sep = " ") %>%
-  dplyr::mutate(VARIABLE = ifelse(stringr::str_detect(FILENAME, "1998_2019"),
-                           paste(VARIABLE,"1998_2019"),
-                           ifelse(stringr::str_detect(FILENAME, "1998_2018"),
-                                  paste(VARIABLE, "1998_2018"),
-                                  ifelse(stringr::str_detect(FILENAME, "1997_2019"),
-                                         paste(VARIABLE, "1997_2019"),
-                                         ifelse(stringr::str_detect(FILENAME, "1997_2018"),
-                                                paste(VARIABLE, "1997_2018"),
-                                                VARIABLE))))) %>%
-  dplyr::select(TIME, UNITS, VARIABLE, VALUE, REGION) %>%
-  dplyr::rename(Time = TIME, Units = UNITS, Var = VARIABLE,
-                EPU = REGION, Value = VALUE)
+  # dplyr::mutate(VARIABLE = ifelse(stringr::str_detect(FILENAME, "1998_2020"),
+  #                           paste(VARIABLE,"1998_20120")))
+  #                          # ifelse(stringr::str_detect(FILENAME, "1998_2020"),
+  #                          #        paste(VARIABLE, "1998_2018"),
+  #                          #        ifelse(stringr::str_detect(FILENAME, "1997_2019"),
+  #                          #               paste(VARIABLE, "1997_2019"),
+  #                          #               ifelse(stringr::str_detect(FILENAME, "1997_2018"),
+  #                          #                      paste(VARIABLE, "1997_2018"),
+  #                          #                      VARIABLE))))) %>%
+  dplyr::select(TIME_START, UNITS, VARIABLE, VALUE, SUBAREA) %>%
+  dplyr::rename(Time = TIME_START, Units = UNITS, Var = VARIABLE,
+                EPU =SUBAREA, Value = VALUE)
 
 chl <- read.csv(file.path(raw.dir, chl_csv)) %>%
   dplyr::mutate(ALGORITHM = word(stringr::str_replace(ALGORITHM, "_", " "))) %>%
   tidyr::unite(.,VARIABLE, c("VARIABLE","SENSOR","ALGORITHM"), sep = " ") %>%
-  dplyr::mutate(VARIABLE = ifelse(stringr::str_detect(FILENAME, "1998_2019"),
-                           paste(VARIABLE,"1998_2019"),
-                           ifelse(stringr::str_detect(FILENAME, "1998_2017"),
-                                  paste(VARIABLE, "1998_2017"),
-                                  ifelse(stringr::str_detect(FILENAME, "1997_2019"),
-                                         paste(VARIABLE, "1997_2019"),
-                                         ifelse(stringr::str_detect(FILENAME, "1997_2017"),
-                                                paste(VARIABLE, "1997_2017"),
-                                                VARIABLE))))) %>%
-  dplyr::select(TIME, UNITS, VARIABLE, VALUE, REGION) %>%
-  dplyr::rename(Time = TIME, Units = UNITS, Var = VARIABLE,
-                EPU = REGION, Value = VALUE)
+  # dplyr::mutate(VARIABLE = ifelse(stringr::str_detect(FILENAME, "1998_2019"),
+  #                          paste(VARIABLE,"1998_2019"),
+  #                          ifelse(stringr::str_detect(FILENAME, "1998_2017"),
+  #                                 paste(VARIABLE, "1998_2017"),
+  #                                 ifelse(stringr::str_detect(FILENAME, "1997_2019"),
+  #                                        paste(VARIABLE, "1997_2019"),
+  #                                        ifelse(stringr::str_detect(FILENAME, "1997_2017"),
+  #                                               paste(VARIABLE, "1997_2017"),
+  #                                               VARIABLE))))) %>%
+  dplyr::select(TIME_END, UNITS, VARIABLE, VALUE, SUBAREA) %>%
+  dplyr::rename(Time = TIME_END, Units = UNITS, Var = VARIABLE,
+                EPU = SUBAREA, Value = VALUE)
 
 chl_pp <- rbind(ppd,chl)
 
