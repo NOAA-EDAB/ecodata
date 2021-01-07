@@ -17,7 +17,7 @@ library(here)
 library(kableExtra)
 library(ggrepel)
 library(stringr)
-library(patchwork)
+#library(patchwork)
 library(grid)
 library(cowplot)
 

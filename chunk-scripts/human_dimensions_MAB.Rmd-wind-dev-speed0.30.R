@@ -9,12 +9,12 @@ total_area<- ecodata::wind_dev_speed %>%
          !Time == "NA") %>% 
   group_by(Time) %>% 
   summarise(Value_2 = sum(Value)) %>% 
-  mutate(Value_3 = cumsum(Value_2)) %>% 
+  mutate(Value_3 = cumsum(Value_2)/1000000) %>% 
 
   ggplot2::ggplot()+
   ggplot2::geom_point(aes(x = Time, y = Value_3))+
   ggplot2::geom_line(aes(x = as.factor(Time), y = Value_3, group=1))+
-  ggplot2::ylab("Total Area (Acres)")+
+  ggplot2::ylab("Total Area (Million Acres)")+
   ggplot2::xlab("")+
   ggplot2::ggtitle("Cumulative Area")+
   ecodata::theme_ts()+

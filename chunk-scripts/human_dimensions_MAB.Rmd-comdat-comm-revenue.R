@@ -1,11 +1,22 @@
 
+## Apex pred
+apex<-ecodata::hms_landings %>% 
+  dplyr::filter(stringr::str_detect(Var, "Revenue")) %>% 
+  separate(Var, c("Var", "trash"), sep = "_") %>% 
+  group_by(YEAR) %>% 
+  summarise(Value = sum(Value)) %>% 
+  rename( Time = YEAR) %>% 
+  mutate(Var = c("HMS Revenue"), 
+         Units = c("metric tons"), 
+         EPU = c("MAB"))
 #Filtering and aggregation step
 rev_agg <- ecodata::comdat %>% 
   dplyr::filter(stringr::str_detect(Var, "Revenue"),
-         !stringr::str_detect(Var, "prop|Other|NEFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
+         !stringr::str_detect(Var, "Apex|prop|Other|NEFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
          EPU == epu_abbr,
          Time >= 1986) %>% 
-  dplyr::mutate(Status = ifelse(str_detect(Var, "Revenue weight"), 
+  rbind(apex) %>% 
+  dplyr::mutate(Status = ifelse(str_detect(Var, "managed"), 
                          "Managed","Total")) %>% #Create groups for aggregation
   dplyr::group_by(Status, Time) %>% 
   dplyr::summarise(Total = sum(Value)) %>% 

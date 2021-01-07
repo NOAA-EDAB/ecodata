@@ -1,14 +1,19 @@
 
 ## Apex pred
 apex<-ecodata::hms_landings %>% 
-  dplyr::filter(stringr::str_detect(Var, "Landings")) %>% 
+  dplyr::filter(stringr::str_detect(Var, "Revenue")) %>% 
   separate(Var, c("Var", "trash"), sep = "_")
+
+
+#Define constants for figure plot
+series.col <- c("indianred","black")
 
 ##Plot
 p1<-apex %>% 
   dplyr::filter(EPU == "MAB") %>% 
   dplyr::group_by(Var) %>% 
-  dplyr::mutate(hline = mean(Value)) %>% 
+  dplyr::mutate(Value = Value/1000000, 
+                hline = mean(Value)) %>% 
 
   ggplot2::ggplot(aes(x = YEAR, y = Value, color = Var)) +
   
@@ -33,8 +38,8 @@ p1<-apex %>%
         legend.position = "bottom", 
         legend.direction = "horizontal", 
         legend.title = element_blank())+
-  ggplot2::ylab(expression("Landings (metric tons)")) +
+  ggplot2::ylab(expression("Revenue (10^6 US Dollars)")) +
   ggplot2::xlab("Time")+
-  ggplot2::ggtitle("HMS Landings")
+  ggplot2::ggtitle("HMS Revenue")
 
 p1
