@@ -945,7 +945,7 @@ cal5+cal6
 
 ### Cold Pool Index
 
-```{r cold_pool, eval = T, echo = F, fig.cap="Cold pool index - mean bottom temperature anomaly for Sept-Oct in the MAB." }
+```{r cold_pool, eval = T, echo = F, fig.cap="Cold pool index." }
 
 cp<- ecodata::cold_pool %>% 
   dplyr::group_by(Var) %>% 
@@ -972,7 +972,7 @@ cp
 ```
 
 
-```{r cold_pool_map, eval = T, echo = F, fig.cap="Map of cold pool area. The final year (2018) in the time series is bolded." }
+```{r cold_pool_map, eval = T, echo = F, fig.cap="Map of cold pool area- final year (2018) in bold. Time series of cold pool spatial extent FROM 1993-2018." }
 cpsf26<- ecodata::cold_pool_sf %>% 
   mutate(Time = c(1:26)) %>% 
   filter(Time == 26)

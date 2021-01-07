@@ -471,10 +471,10 @@ p3 <- gridExtra::grid.arrange(gridExtra::arrangeGrob(gb_bennet + theme(legend.po
 
 ```{r comdat-comm-revenue, fig.cap = "Total commercial revenue (black) and revenue from NEFMC managed species (red) in Georges Bank (left) and Gulf of Maine (right). \\label{comm-rev}"}
 
-#Filtering and aggregation step
+#Filtering and aggation step
 rev_agg <- ecodata::comdat %>% 
   dplyr::filter(stringr::str_detect(Var, "Revenue"),
-         !stringr::str_detect(Var, "prop|Other|MAFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
+         !stringr::str_detect(Var, "Apex|prop|Other|MAFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
          EPU %in% epu_abbr,
          Time >= 1986) %>% 
   dplyr::mutate(Status = ifelse(str_detect(Var, "managed"), 
