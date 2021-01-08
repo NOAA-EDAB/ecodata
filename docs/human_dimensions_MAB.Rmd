@@ -976,6 +976,30 @@ ecodata::wind_revenue %>%
 
 ### Wind Development Speed
 
+```{r wind-dev-cumul, fig.cap = ""}
+
+knitr::include_graphics(file.path(image.dir, "CumulativeWindDraft_20201231.jpg"))
+
+```
+
+```{r wind-dev-cumul-MAB, fig.cap = ""}
+
+knitr::include_graphics(file.path(image.dir, "MidAtlantic_20201231.jpg"))
+
+```
+
+```{r wind-dev-NE, fig.cap = ""}
+
+knitr::include_graphics(file.path(image.dir, "Northeast_20201231.jpg"))
+
+```
+
+```{r wind-dev-survey, fig.cap = ""}
+
+knitr::include_graphics(file.path(image.dir, "SurveysWindFarmAreas_20201229.jpg"))
+
+```
+
 ```{r wind-dev-speed0.30, eval = T, echo = F, fig.cap='', out.width='80%'}
 labels<- ecodata::wind_dev_speed %>% 
   group_by(Time) %>% 
