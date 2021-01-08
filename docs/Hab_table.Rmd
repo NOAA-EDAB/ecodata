@@ -6,7 +6,8 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-library(here); library(kableExtra); library(dplyr); library(readxl); library(data.table); library(DT)
+library(here); library(kableExtra); library(dplyr); library(readxl); library(data.table); library(DT);
+library(stringr)
 knitr::opts_chunk$set(echo = FALSE)
 
 options(knitr.kable.NA = '')
@@ -62,6 +63,8 @@ setcolorder(mid, c('Species', 'Stage', habitats$'Habitat Name'))
 hab.table <- rbindlist(list(as.data.table(t(hab.vul)), mid), use.names = F)
 #Add names back in
 names(hab.table) <- names(mid)
+hab.table <- hab.table %>% mutate_if(is.character, str_trim) #one cell has a space, not getting color
+
 
 #generalize to all
 hab.table %>%
@@ -94,8 +97,9 @@ hab.table %>%
 #color coding cells works
 #need to add column with species vulnerability and color code species by it but not show it, like #hideV6 example at link
 #if we show it we can sort by species vulnerability though... alphabetical doesnt work so use numbers to go lowest-highest
-#still need to color code headers
+#still need to color code headers--done with spans below
 hab.table <- hab.table %>%
+  filter(Species != "") %>% #remove row with habitat vul because headers now in color
   mutate(spVul = #Color code species based on climate vul
     # case_when(Species %in% low.vul ~ "low.vul",
     #           Species %in% mod.vul ~ "mod.vul",
@@ -108,27 +112,47 @@ hab.table <- hab.table %>%
               Species %in% vhigh.vul ~ 4)
     )
 
+colnames(hab.table)[c(3:4)] <- paste0('<span style="box-shadow: -10px 0 0 red, 10px 0 0 red; background-color:red; color:white">',colnames(hab.table)[c(3:4)],'</span>')
+colnames(hab.table)[c(5:10)] <- paste0('<span style="box-shadow: -10px 0 0 orange, 10px 0 0 orange; background-color:',c("orange"),'">',colnames(hab.table)[c(5:10)],'</span>')
+colnames(hab.table)[c(11:15)] <- paste0('<span style="box-shadow: -10px 0 0 yellow, 10px 0 0 yellow; background-color:',c("yellow"),'">',colnames(hab.table)[c(11:15)],'</span>')
 
-datatable(hab.table, rownames = FALSE, 
+dt <- datatable(hab.table, rownames = FALSE, escape = FALSE,
           extensions = c('Scroller', 'FixedColumns'), #add scrolling and fixed column
           options = list(deferRender = TRUE,
-          scrollY = 200, scroller = TRUE,
+          scrollY = 300, scroller = TRUE,
           dom = 't',scrollX = TRUE,fixedColumns = TRUE)
-
           #, options = list(columnDefs = list(list(targets = 16, visible = FALSE)))
   ) %>% 
+  formatStyle(
+    names(hab.table)[3:4],
+    backgroundColor = '#FF000080'
+  ) %>%
+  formatStyle(
+    names(hab.table)[5:10],
+    backgroundColor = '#FFA50080'
+  ) %>%
+  formatStyle(
+    names(hab.table)[11:15],
+    backgroundColor = '#FFFF0080'
+  ) %>%
+
   formatStyle(#Color code base on dependence
     'Species', "spVul",
     backgroundColor = styleEqual(#c("low.vul", "mod.vul", "high.vul", "vhigh.vul"),
                                  c(1,2,3,4),
-                                 c('lightgreen', 'yellow', 'orange', 'red')) #Color code base on dependence)
+                                 c('lightgreen', 'yellow', 'orange', 'red')), #Color code base on dependence)
+    color = styleEqual(c(1,2,3,4),
+                                 c('black', 'black', 'black', 'white'))
     ) %>%
     formatStyle(
-    names(hab.table)[2:15],
+    names(hab.table),
     backgroundColor = styleEqual(c("Low", "Moderate", "High", "Very high"), 
-                                 c('lightgreen', 'yellow', 'orange', 'red'))  
+                                 c('lightgreen', 'yellow', 'orange', 'red')), 
+    color = styleEqual(c("Low", "Moderate", "High", "Very high"), 
+                                 c('black', 'black', 'black', 'white'))
   )
 
+dt
 ```
 
 
@@ -162,6 +186,7 @@ setcolorder(ne, c('Species', 'Stage', habitats$'Habitat Name'))
 hab.table <- rbindlist(list(as.data.table(t(hab.vul)), ne), use.names = F)
 #Add names back in
 names(hab.table) <- names(ne)
+hab.table <- hab.table %>% mutate_if(is.character, str_trim) #one cell has a space, not getting color
 
 #generalize to all
 hab.table %>%
