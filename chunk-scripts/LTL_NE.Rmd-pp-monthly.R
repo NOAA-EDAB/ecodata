@@ -2,10 +2,11 @@
 out_pp <- ecodata::chl_pp %>% 
   dplyr::filter(EPU %in% c("GOM","GB"),
          stringr::str_detect(Var, "MONTHLY_PPD_MEDIAN")) %>% 
-  tidyr::separate(.,Time, into = c("Year","Month"), sep = 4) %>% 
+  tidyr::separate(.,Time, into = c("Year","Month"), sep = "-") %>% 
   dplyr::mutate(Month = plyr::mapvalues(Month, from = c("01","02","03","04","05","06",
                                                    "07","08","09","10","11","12"),
                                    to = c(month.abb))) %>% 
+  dplyr::filter(!Value == "NA") %>% 
   dplyr::group_by(EPU, Month) %>% 
   dplyr::mutate(hline = mean(Value))
 out_pp$Month <- factor(out_pp$Month, levels = month.abb)

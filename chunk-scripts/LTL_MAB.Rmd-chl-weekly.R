@@ -1,9 +1,9 @@
 
-interp_chl_pp <- function(epu, year = 2019, Variable){
+interp_chl_pp <- function(epu, year = 2020, Variable){
   out <- ecodata::chl_pp %>% 
     dplyr::filter(stringr::str_detect(Var,Variable),
            EPU == epu) %>% 
-    tidyr::separate(.,Time, c("Year","Week"),sep = 4) %>% 
+    tidyr::separate(.,Time, c("Year","Week"),sep = "-") %>% 
     dplyr::filter(Year == year) %>% 
     dplyr::group_by(EPU) %>% 
     dplyr::mutate(Time = 1:length(Year))
@@ -11,7 +11,7 @@ interp_chl_pp <- function(epu, year = 2019, Variable){
   ltm_out <- ecodata::chl_pp %>% 
     dplyr::filter(stringr::str_detect(Var,Variable),
            EPU == epu) %>% 
-    tidyr::separate(.,Time, c("Year","Week"),sep = 4) %>% 
+    tidyr::separate(.,Time, c("Year","Week"),sep = "-") %>% 
     dplyr::group_by(Week) %>% 
     dplyr::summarise(LTM = mean(Value, na.rm = T),
                      SD = sd(Value, na.rm = T)) %>% 
@@ -27,7 +27,7 @@ interp_chl_pp <- function(epu, year = 2019, Variable){
   return(ltm_out)
 }
 
-MAB_chl <- interp_chl_pp(epu = "MAB", Variable = "WEEKLY_CHLOR_A_MEDIAN MODIS-Aqua PAN")
+MAB_chl <- interp_chl_pp(epu = "MAB", Variable = "WEEKLY_CHLOR_A_MEDIAN")
 
 MAB_chl_weekly <- ggplot2::ggplot(data = MAB_chl) +
   ggplot2::geom_line(aes(x = Time, y = LTM)) +

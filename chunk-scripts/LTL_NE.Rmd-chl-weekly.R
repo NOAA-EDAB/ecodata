@@ -1,9 +1,9 @@
 
-interp_chl_pp <- function(epu, year = 2019, Variable){
+interp_chl_pp <- function(epu, year = 2020, Variable){
   out <- ecodata::chl_pp %>% 
     dplyr::filter(stringr::str_detect(Var,Variable),
            EPU == epu) %>% 
-    tidyr::separate(.,Time, c("Year","Week"),sep = 4) %>% 
+    tidyr::separate(.,Time, c("Year","Week"),sep = "-") %>% 
     dplyr::filter(Year == year) %>% 
     dplyr::group_by(EPU) %>% 
     dplyr::mutate(Time = 1:length(Year))
@@ -11,7 +11,7 @@ interp_chl_pp <- function(epu, year = 2019, Variable){
   ltm_out <- ecodata::chl_pp %>% 
     dplyr::filter(stringr::str_detect(Var,Variable),
            EPU == epu) %>% 
-    tidyr::separate(.,Time, c("Year","Week"),sep = 4) %>% 
+    tidyr::separate(.,Time, c("Year","Week"),sep = "-") %>% 
     dplyr::group_by(Week) %>% 
     dplyr::summarise(LTM = mean(Value, na.rm = T),
                      SD = sd(Value, na.rm = T)) %>% 
@@ -27,8 +27,8 @@ interp_chl_pp <- function(epu, year = 2019, Variable){
   return(ltm_out)
 }
 
-GB_chl_weekly <- interp_chl_pp(epu = "GB", year = 2019,Variable = "WEEKLY_CHLOR_A_MEDIAN")
-GOM_chl_weekly <- interp_chl_pp(epu = "GOM", year = 2019,Variable = "WEEKLY_CHLOR_A_MEDIAN")
+GB_chl_weekly <- interp_chl_pp(epu = "GB", Variable = "WEEKLY_CHLOR_A_MEDIAN")
+GOM_chl_weekly <- interp_chl_pp(epu = "GOM", Variable = "WEEKLY_CHLOR_A_MEDIAN")
 ne_chl_weekly<-rbind(GB_chl_weekly, GOM_chl_weekly)
 
 ne_chl <- ggplot2::ggplot(data = ne_chl_weekly) +
@@ -51,8 +51,8 @@ ne_chl <- ggplot2::ggplot(data = ne_chl_weekly) +
   ecodata::theme_ts()
 
 
-GB_ppd_weekly <- interp_chl_pp(epu = "GB",  year = 2019,Variable = "WEEKLY_PPD_MEDIAN")
-GOM_ppd_weekly <- interp_chl_pp(epu = "GOM",  year = 2019,Variable = "WEEKLY_PPD_MEDIAN")
+GB_ppd_weekly <- interp_chl_pp(epu = "GB",  Variable = "WEEKLY_PPD_MEDIAN")
+GOM_ppd_weekly <- interp_chl_pp(epu = "GOM", Variable = "WEEKLY_PPD_MEDIAN")
 ne_ppd_weekly<-rbind(GB_ppd_weekly, GOM_ppd_weekly)
 
 ne_ppd <- ggplot2::ggplot(data = ne_ppd_weekly) +
