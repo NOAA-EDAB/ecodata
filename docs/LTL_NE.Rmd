@@ -616,7 +616,7 @@ out_phyto<-  ecodata::phyto_size %>%
           panel.spacing = unit(.5, "lines"),
           plot.margin = unit(c(0.1, 0, 0, 0), "cm"), 
           legend.position= "top")+
-    scale_fill_manual(values=c("#8DA0CB","#66C2A5", "#FC8D62"), name = "", 
+    scale_fill_manual(values=c("#8DA0CB", "#FC8D62","#66C2A5"), name = "", 
                      labels = c("Picoplankton", 
                                 "Nanoplankton", "Microplankton"))+
     scale_y_continuous( name = "Phytoplankton Size Fraction", sec.axis = sec_axis(~.*2, name="Chlorophyll a (mg m^-3)"))+
