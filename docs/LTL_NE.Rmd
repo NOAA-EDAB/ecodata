@@ -490,6 +490,7 @@ pp_cci_gom <- out_pp %>%
  pp_cci_gb + pp_cci_gom + patchwork::plot_layout(ncol = 1)
  
 ```
+
 #### Sesonal chlorophyll *a* & primary production
 
 ```{r chl-weekly, fig.width = 8, fig.cap = "Weekly chlorophyll concentrations and primary productivity for 2019 in Georges Bank and Gulf of Maine are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
@@ -615,9 +616,9 @@ out_phyto<-  ecodata::phyto_size %>%
           panel.spacing = unit(.5, "lines"),
           plot.margin = unit(c(0.1, 0, 0, 0), "cm"), 
           legend.position= "top")+
-    scale_fill_manual(values=c("#66C2A5", "#FC8D62", "#8DA0CB"), name = "", 
-                     labels = c("Microplankton", 
-                                "Nanoplankton", "Picoplankton"))+
+    scale_fill_manual(values=c("#8DA0CB","#66C2A5", "#FC8D62"), name = "", 
+                     labels = c("Picoplankton", 
+                                "Nanoplankton", "Microplankton"))+
     scale_y_continuous( name = "Phytoplankton Size Fraction", sec.axis = sec_axis(~.*2, name="Chlorophyll a (mg m^-3)"))+
    scale_x_continuous(breaks = month_numeric, 
                     labels = month_label)
@@ -662,9 +663,9 @@ out_phyto2<-  ecodata::phyto_size %>%
           panel.spacing = unit(.5, "lines"),
           plot.margin = unit(c(0.1, 0, 0, 0), "cm"), 
           legend.position= "top")+
-    scale_fill_manual(values=c("#66C2A5", "#FC8D62", "#8DA0CB"), name = "", 
-                     labels = c("Microplankton", 
-                                "Nanoplankton", "Picoplankton"))+
+    scale_fill_manual(values=c( "#8DA0CB", "#FC8D62","#66C2A5"), name = "", 
+                     labels = c("Picoplankton", 
+                                "Nanoplankton", "Microplankton"))+
     scale_y_continuous( name = "Phytoplankton Size Fraction", sec.axis = sec_axis(~.*2, name="Chlorophyll a (mg m^-3)"))+
    scale_x_continuous(breaks = month_numeric, 
                     labels = month_label)
