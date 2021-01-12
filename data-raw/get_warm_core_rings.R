@@ -11,6 +11,7 @@ get_warm_core_rings <- function(save_clean = F){
   wcr <- read_excel(file.path(raw.dir,wcr_xlsx)) %>%
     dplyr::select(Time, WCR) %>%
     dplyr::rename(Value = WCR) %>%
+    tibble::add_row(Time = 2020, Value = 21) %>% #add 2020 data point
     dplyr::mutate(EPU = c("All"),
            Var = c("Warm Core Rings"),
            Units = c("n"))

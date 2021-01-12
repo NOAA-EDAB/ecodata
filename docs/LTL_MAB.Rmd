@@ -1473,7 +1473,6 @@ ggplot2::ggplot() +
 
 ### Warm Core Rings
 
-<span style="color: red;">NO NEW DATA</span>
 
 ```{r wcr, fig.cap= "Warm core ring formation on the Northeast US Shelf."}
 upper.line<-ecodata::wcr %>%
