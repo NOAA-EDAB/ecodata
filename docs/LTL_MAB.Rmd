@@ -505,119 +505,38 @@ MAB_chl_weekly + MAB_pp_weekly + plot_layout(ncol = 1)
 
 #### Phytoplankton Size Class
 
-
-```{r monthly-phyto-size, eval = T}
-out_phyto <- ecodata::phyto_size %>% 
-  dplyr::filter(EPU == epu_abbr,
-         stringr::str_detect(Var, ("CLIMATOLOGICAL_MONTH"))) %>% 
-  tidyr::separate(.,Time, into = c("Cat", "Month", "Year1", "Year2"), sep = "_") %>% 
-    dplyr::mutate(Month = plyr::mapvalues(Month, from = c("01","02","03","04","05","06",
-                                                   "07","08","09","10","11","12"),
-                                   to = c(month.abb)))%>% 
-  dplyr::filter(!Value == "NA", 
-                !Var == "CLIMATOLOGICAL_MONTH_CHLOR_A_MEDIAN") #%>% 
-  #dplyr::group_by(Month) %>% 
-  #dplyr::mutate(hline = mean(Value))
-
-out_phyto$Month <- factor(out_phyto$Month, levels = month.abb)
-
-
-phyto <- ggplot2::ggplot(out_phyto) +
-   # geom_gls(aes(x = Year, y = Value, group = Month))+
-    ggplot2::geom_bar(aes(x = Month, y = Value, 
-                           fill = factor(Var, c("CLIMATOLOGICAL_MONTH_PICO_PERCENTAGE_MEDIAN", 
-                                               "CLIMATOLOGICAL_MONTH_NANO_PERCENTAGE_MEDIAN", 
-                                                "CLIMATOLOGICAL_MONTH_MICRO_PERCENTAGE_MEDIAN"))),
-                      stat = "identity") +
-    #ggplot2::geom_line(aes(x = Year2, y = Value, group = Month)) +
-    #ggplot2::scale_x_discrete(name = "", breaks = seq(min(out_phyto$Year2),max(out_phyto$Year2),10)) +  
-    #        geom_hline(aes(yintercept = hline),
-    #       size = hline.size,
-    #       alpha = hline.alpha,
-    #       linetype = hline.lty) +
-   # ggplot2::facet_wrap(Month~., ncol = 12) +
-    ggplot2::ggtitle("Phytoplankton Size Class") +
-    ggplot2::ylab("Percent") +
-    ggplot2::xlab(element_blank())+
-    ecodata::theme_facet() +
-    ggplot2::theme(axis.text.x = element_text(angle=45, hjust = 1),
-          panel.spacing = unit(.5, "lines"),
-          plot.margin = unit(c(0.1, 0, 0, 0), "cm"), 
-          legend.position= "top")+
-   scale_fill_manual(values=c("#66C2A5", "#FC8D62", "#8DA0CB"), name = "Size", 
-                     labels = c("Picoplankton", 
-                                "Nanoplankton", "Microplankton"))
+```{r weekly-phyto-size, eval = T}
 
 
 chlor <- ecodata::phyto_size %>% 
   dplyr::filter(EPU == c( "MAB"),
                 !Value == "NA", 
-                Var == "CLIMATOLOGICAL_MONTH_CHLOR_A_MEDIAN")  %>% 
-  tidyr::separate(.,Time, into = c("Cat", "Month", "Year1", "Year2"), sep = "_") %>% 
-    dplyr::mutate(Month = plyr::mapvalues(Month, from = c("01","02","03","04","05","06",
-                                                   "07","08","09","10","11","12"),
-                                   to = c(month.abb)))
-chlor$Month <- factor(chlor$Month, levels = month.abb)
+                Var == "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")  %>% 
+  tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
+  mutate(Value = Value/2)
 
-chlor_plot <- ggplot2::ggplot(chlor) +
-   # geom_gls(aes(x = Year, y = Value, group = Month))+
-    ggplot2::geom_point(aes(x = Month, y = Value)) +
-    ggplot2::geom_line(aes(x = as.factor(Month), y = Value,group=1)) +
-    #ggplot2::scale_x_discrete(name = "", breaks = seq(min(out_phyto$Year2),max(out_phyto$Year2),10)) +  
-    #        geom_hline(aes(yintercept = hline),
-    #       size = hline.size,
-    #       alpha = hline.alpha,
-    #       linetype = hline.lty) +
-    #ggplot2::facet_wrap(EPU~., ncol = 2) +
-    ggplot2::ggtitle("Chlorophyll") +
-    ggplot2::ylab("mg m^-3") +
-    ggplot2::xlab(element_blank()) +
-    ecodata::theme_facet() +
-    ggplot2::theme(axis.text.x = element_text(angle=45, hjust = 1),
-          panel.spacing = unit(.5, "lines"),
-          plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
+month <- seq(as.Date("2020-01-01"), 
+             as.Date("2020-12-01"), 
+             by = "1 month")
+month_numeric <- lubridate::yday(month) / 365 * 52 + 1
+month_label <- lubridate::month(month, label = TRUE)
 
-phyto
-chlor_plot
-```
-
-```{r monthly-phyto-size2, eval = T}
-out_phyto <- ecodata::phyto_size %>% 
+out_phyto2<-  ecodata::phyto_size %>% 
   dplyr::filter(EPU == c("MAB"),
-         stringr::str_detect(Var, ("CLIMATOLOGICAL_MONTH"))) %>% 
-  tidyr::separate(.,Time, into = c("Cat", "Month", "Year1", "Year2"), sep = "_") %>% 
-    dplyr::mutate(Month = plyr::mapvalues(Month, from = c("01","02","03","04","05","06",
-                                                   "07","08","09","10","11","12"),
-                                   to = c(month.abb)))%>% 
+         stringr::str_detect(Var, ("CLIMATOLOGICAL_WEEK"))) %>% 
+  tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
   dplyr::filter(!Value == "NA", 
-                !Var == "CLIMATOLOGICAL_MONTH_CHLOR_A_MEDIAN") 
+                !Var == "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")  %>%
 
-out_phyto$Month <- factor(out_phyto$Month, levels = month.abb)
-
-
-
-chlor <- ecodata::phyto_size %>% 
-  dplyr::filter(EPU == c( "MAB"),
-                !Value == "NA", 
-                Var == "CLIMATOLOGICAL_MONTH_CHLOR_A_MEDIAN")  %>% 
-  tidyr::separate(.,Time, into = c("Cat", "Month", "Year1", "Year2"), sep = "_") %>% 
-    dplyr::mutate(Month = plyr::mapvalues(Month, from = c("01","02","03","04","05","06",
-                                                   "07","08","09","10","11","12"),
-                                   to = c(month.abb)))
-chlor$Month <- factor(chlor$Month, levels = month.abb)
-
-
-phyto <- ggplot2::ggplot(out_phyto) +
-   # geom_gls(aes(x = Year, y = Value, group = Month))+
-    ggplot2::geom_bar(aes(x = Month, y = Value, 
-                           fill = factor(Var, c("CLIMATOLOGICAL_MONTH_PICO_PERCENTAGE_MEDIAN", 
-                                               "CLIMATOLOGICAL_MONTH_NANO_PERCENTAGE_MEDIAN", 
-                                                "CLIMATOLOGICAL_MONTH_MICRO_PERCENTAGE_MEDIAN"))),
-                      stat = "identity") +
-    ggplot2::geom_point(data = chlor, aes(x = Month, y = Value)) +
-    ggplot2::geom_line(data = chlor, aes(x = as.factor(Month), y = Value,group=1))+
+  ggplot2::ggplot() +
+   geom_area(aes(x=as.numeric(WEEK), y=Value, 
+                 fill = factor(Var, c("CLIMATOLOGICAL_WEEK_PICO_PERCENTAGE_MEDIAN",
+                                      "CLIMATOLOGICAL_WEEK_NANO_PERCENTAGE_MEDIAN", 
+                                      "CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN"))), alpha=0.6)+
+    ggplot2::geom_point(data = chlor, aes(x = as.numeric(WEEK), y = Value)) +
+    ggplot2::geom_line(data = chlor, aes(x = as.numeric(WEEK), y = Value))+
     #ggplot2::facet_wrap(EPU~., ncol = 2)+
-    ggplot2::ggtitle("Phytoplankton Size Class") +
+    ggplot2::ggtitle("Mid-Atlantic Bight Phytoplankton Size Class") +
     ggplot2::ylab("Percent") +
     ggplot2::xlab(element_blank())+
     ecodata::theme_facet() +
@@ -626,12 +545,13 @@ phyto <- ggplot2::ggplot(out_phyto) +
           plot.margin = unit(c(0.1, 0, 0, 0), "cm"), 
           legend.position= "top")+
     scale_fill_manual(values=c("#66C2A5", "#FC8D62", "#8DA0CB"), name = "Size", 
-                     labels = c("Picoplankton", 
-                                "Nanoplankton", "Microplankton"))+
-    scale_y_continuous( name = "Percent", sec.axis = sec_axis(~.*1, name="Chlorophyll A"))
+                     labels = c("Microplankton", 
+                                "Nanoplankton", "Picoplankton"))+
+    scale_y_continuous( name = "Phytoplankton Size Fraction", sec.axis = sec_axis(~.*2, name="Chlorophyll a (mg m^-3)"))+
+   scale_x_continuous(breaks = month_numeric, 
+                    labels = month_label)
 
-
-phyto
+out_phyto2
 
 ```
 
