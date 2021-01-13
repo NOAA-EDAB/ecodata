@@ -3,7 +3,8 @@ interp_chl_pp <- function(epu, year = 2020, Variable){
   out <- ecodata::chl_pp %>% 
     dplyr::filter(stringr::str_detect(Var,Variable),
            EPU == epu) %>% 
-    tidyr::separate(.,Time, c("Year","Week"),sep = "-") %>% 
+    tidyr::separate(.,Time, into = c("Cat", "Time2"), sep = "_") %>% 
+    tidyr::separate(.,Time2, into = c("Year", "Week"), sep = 4) %>% 
     dplyr::filter(Year == year) %>% 
     dplyr::group_by(EPU) %>% 
     dplyr::mutate(Time = 1:length(Year))
@@ -11,7 +12,8 @@ interp_chl_pp <- function(epu, year = 2020, Variable){
   ltm_out <- ecodata::chl_pp %>% 
     dplyr::filter(stringr::str_detect(Var,Variable),
            EPU == epu) %>% 
-    tidyr::separate(.,Time, c("Year","Week"),sep = "-") %>% 
+    tidyr::separate(.,Time, into = c("Cat", "Time2"), sep = "_") %>% 
+    tidyr::separate(.,Time2, into = c("Year", "Week"), sep = 4)  %>% 
     dplyr::group_by(Week) %>% 
     dplyr::summarise(LTM = mean(Value, na.rm = T),
                      SD = sd(Value, na.rm = T)) %>% 
