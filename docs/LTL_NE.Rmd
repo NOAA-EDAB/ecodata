@@ -493,7 +493,7 @@ pp_cci_gom <- out_pp %>%
 
 #### Seasonal chlorophyll *a* & primary production
 
-```{r chl-weekly, fig.width = 8, fig.cap = "Weekly chlorophyll concentrations and primary productivity for 2019 in Georges Bank and Gulf of Maine are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
+```{r chl-weekly, fig.width = 8, fig.cap = "Weekly chlorophyll concentrations and primary productivity for 2020 in Georges Bank and Gulf of Maine are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
 interp_chl_pp <- function(epu, year = 2020, Variable){
   out <- ecodata::chl_pp %>% 
     dplyr::filter(stringr::str_detect(Var,Variable),
