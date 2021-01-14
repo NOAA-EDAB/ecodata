@@ -122,4 +122,3 @@ if (save_clean){
 }
 get_heatwave_year(save_clean = T)
 
-## mhw.gom.year %>% dplyr::filter(temp == max(temp)) ## calculate peak for each EPU

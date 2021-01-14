@@ -1,30 +1,58 @@
 library(tidyverse)
+library(readxl)
 
 
 raw.dir <- here::here("data-raw")
 zoo_abund_rdata <- "zoo_abun_anom.rdata"
-zoo_strat_abun_xlsx <- "NEFSCZooplankton_v3_6b_v2018.xlsx"
+zoo_strat_abun_xlsx <- "NEFSCZooplankton_v3_7_v2019.xlsx"
 
 get_zoo_abun_anom <- function(save_clean = F){
 
   load(file.path(raw.dir, zoo_abund_rdata))
+  #
+  # small <- as.tibble(mtest) %>%
+  #   dplyr::filter(!variable == "Cf") %>%
+  #   dplyr::group_by(Time, Region) %>%
+  #   dplyr::mutate(value = mean(value)) %>%
+  #   dplyr::rename(EPU = Region, Value = value, Var = variable) %>%
+  #   dplyr::mutate(Var = c("small"))
+  #
+  # large<- as.tibble(mtest) %>%
+  #   dplyr::filter(variable == "Cf") %>%
+  #   dplyr::group_by(Time, Region) %>%
+  #   dplyr::mutate(value = mean(value)) %>%
+  #   dplyr::rename(EPU = Region, Value = value, Var = variable) %>%
+  #   dplyr::mutate(Var = c("large"))
+  #
 
-  small <- as.tibble(mtest) %>%
-    dplyr::filter(!variable == "Cf") %>%
-    dplyr::group_by(Time, Region) %>%
-    dplyr::mutate(value = mean(value)) %>%
-    dplyr::rename(EPU = Region, Value = value, Var = variable) %>%
-    dplyr::mutate(Var = c("small"))
 
-  large<- as.tibble(mtest) %>%
-    dplyr::filter(variable == "Cf") %>%
-    dplyr::group_by(Time, Region) %>%
-    dplyr::mutate(value = mean(value)) %>%
-    dplyr::rename(EPU = Region, Value = value, Var = variable) %>%
-    dplyr::mutate(Var = c("large"))
+  small <- read_excel(file.path(raw.dir,zoo_strat_abun_xlsx), sheet = "StratifiedAbundance") %>%
+    dplyr::select(Year, Units, Region, "Centropages typicus", "Temora longicornis", "Pseudocalanus spp.", "Centropages hamatus" ) %>%
+    dplyr::rename(Cty = "Centropages typicus",
+           Tlo = "Temora longicornis",
+           Pse = "Pseudocalanus spp.",
+           Cha =  "Centropages hamatus",
+           Time = Year) %>%
+    dplyr::group_by(Time) %>%
+    dplyr::mutate(Total = sum(Cty +Tlo+Pse+Cha )/4) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(Mean = mean(Total),
+                  Value = Total - Mean,
+                  Var = c("small")) %>%
+    dplyr::select(Time, Value, Var, Units, Region)
 
-  zoo_abund <- rbind(small, large)
 
+  large <- read_excel(file.path(raw.dir,zoo_strat_abun_xlsx), sheet = "StratifiedAbundance") %>%
+    dplyr::select(Year, Units, Region, "Calanus finmarchicus" ) %>%
+    dplyr::rename(Total = "Calanus finmarchicus",
+                  Time = Year) %>%
+    dplyr::mutate(Mean = mean(Total),
+                  Value = Total - Mean,
+                  Var = c("large")) %>%
+    dplyr::select(Time, Value, Var, Units, Region)
+
+  zoo_abund <- rbind(small, large) %>%
+    dplyr::rename(EPU = Region)
   if (save_clean){
     usethis::use_data(zoo_abund, overwrite = T)
   } else {

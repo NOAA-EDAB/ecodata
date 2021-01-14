@@ -77,7 +77,7 @@ usethis::use_data(seasonal_sst_anomaly_gridded, overwrite = T)
 
 mab_peak_hw <- sst.2019[[210]] - summer.ltm## 7/28/2020
 gb_peak_hw <- sst.2019[[227]] - summer.ltm## 8/14/2020
-gom_peak_hw <- sst.2019[[228]] - summer.ltm## 8/15/2020
+gom_peak_hw <- sst.2019[[214]] - summer.ltm## 8/2/2020
 
 rast_process_epu <- function(r, epu){
   r <- raster::stackApply(r, indices = rep(1,nlayers(r)),mean) #Find mean anomaly

@@ -16,7 +16,7 @@ rast_prep <- function(r){
 raw.dir <- here::here("data-raw/gridded/sst_data")
 crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40
 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
-heatwave_anom_gridded_day_nc <- "sst.day.mean.2019.nc"
+heatwave_anom_gridded_day_nc <- "sst.day.mean.2020.nc"
 heatwave_anom_gridded_ltm_nc <- "sst.day.mean.ltm.1982-2010.nc"
 #These data are large files that are not included among ecodata source files. They are accessible
 #here: https://www.esrl.noaa.gov/psd/data/gridded/data.noaa.oisst.v2.highres.html
@@ -25,13 +25,13 @@ sst.2019 <- rast_prep(stack(file.path(raw.dir, heatwave_anom_gridded_day_nc)))
 ltm <- rast_prep(stack(file.path(raw.dir, heatwave_anom_gridded_ltm_nc)))
 
 ## Use day of Max heatwave intensity.
-gb.ltm <- ltm[[235]] # Aug 23
-gom.ltm <- ltm[[213]] # Aug 1
-mab.ltm <- ltm[[203]] # July 22
+gb.ltm <- ltm[[227]] # Aug 23
+gom.ltm <- ltm[[214]] # Aug 1
+mab.ltm <- ltm[[209]] # July 22
 
-gb.anom<-sst.2019[[235]] - gb.ltm
-gom.anom<-sst.2019[[213]] - gom.ltm
-mab.anom<-sst.2019[[203]] - mab.ltm
+gb.anom<-sst.2019[[227]] - gb.ltm
+gom.anom<-sst.2019[[214]] - gom.ltm
+mab.anom<-sst.2019[[209]] - mab.ltm
 
 rast_process <- function(r, epu){
   r <- raster::stackApply(r, indices = rep(1,nlayers(r)),mean) #Find mean anomaly
