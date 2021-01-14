@@ -134,7 +134,7 @@ sst_map <-
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
-  ggplot2::ggtitle("SST anomaly (2019)") +
+  ggplot2::ggtitle("SST anomaly (2020)") +
   ggplot2::xlab("Longitude") +
   ggplot2::ylab("Latitude") +
   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
@@ -491,7 +491,7 @@ pp_cci_gom <- out_pp %>%
  
 ```
 
-#### Sesonal chlorophyll *a* & primary production
+#### Seasonal chlorophyll *a* & primary production
 
 ```{r chl-weekly, fig.width = 8, fig.cap = "Weekly chlorophyll concentrations and primary productivity for 2019 in Georges Bank and Gulf of Maine are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
 interp_chl_pp <- function(epu, year = 2020, Variable){
@@ -579,14 +579,6 @@ ne_chl
 
 ```{r weekly-phyto-size, eval = T}
 
-
-chlor <- ecodata::phyto_size %>% 
-  dplyr::filter(EPU == c( "GB"),
-                !Value == "NA", 
-                Var == "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")  %>% 
-  tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
-  mutate(Value = Value/2)
-
 month <- seq(as.Date("2020-01-01"), 
              as.Date("2020-12-01"), 
              by = "1 month")
@@ -605,8 +597,8 @@ out_phyto<-  ecodata::phyto_size %>%
                  fill = factor(Var, c("CLIMATOLOGICAL_WEEK_PICO_PERCENTAGE_MEDIAN",
                                       "CLIMATOLOGICAL_WEEK_NANO_PERCENTAGE_MEDIAN", 
                                       "CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN"))), alpha=0.6)+
-    ggplot2::geom_point(data = chlor, aes(x = as.numeric(WEEK), y = Value)) +
-    ggplot2::geom_line(data = chlor, aes(x = as.numeric(WEEK), y = Value))+
+    #ggplot2::geom_point(data = chlor, aes(x = as.numeric(WEEK), y = Value)) +
+    #ggplot2::geom_line(data = chlor, aes(x = as.numeric(WEEK), y = Value))+
     #ggplot2::facet_wrap(EPU~., ncol = 2)+
     ggplot2::ggtitle("Georges Bank Phytoplankton Size Class") +
     ggplot2::ylab("Percent") +
@@ -619,27 +611,14 @@ out_phyto<-  ecodata::phyto_size %>%
     scale_fill_manual(values=c("#8DA0CB", "#FC8D62","#66C2A5"), name = "", 
                      labels = c("Picoplankton", 
                                 "Nanoplankton", "Microplankton"))+
-    scale_y_continuous( name = "Phytoplankton Size Fraction", sec.axis = sec_axis(~.*2, name="Chlorophyll a (mg m^-3)"))+
+   #scale_y_continuous( name = "Phytoplankton Size Fraction", sec.axis = sec_axis(~.*2, name="Chlorophyll a (mg m^-3)"))+
    scale_x_continuous(breaks = month_numeric, 
                     labels = month_label)
 
-out_phyto
+out_phyto 
 
 
 ### GOM
-chlor2 <- ecodata::phyto_size %>% 
-  dplyr::filter(EPU == c( "GOM"),
-                !Value == "NA", 
-                Var == "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")  %>% 
-  tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
-  mutate(Value = Value/2)
-
-month <- seq(as.Date("2020-01-01"), 
-             as.Date("2020-12-01"), 
-             by = "1 month")
-month_numeric <- lubridate::yday(month) / 365 * 52 + 1
-month_label <- lubridate::month(month, label = TRUE)
-
 out_phyto2<-  ecodata::phyto_size %>% 
   dplyr::filter(EPU == c("GOM"),
          stringr::str_detect(Var, ("CLIMATOLOGICAL_WEEK"))) %>% 
@@ -652,8 +631,8 @@ out_phyto2<-  ecodata::phyto_size %>%
                  fill = factor(Var, c("CLIMATOLOGICAL_WEEK_PICO_PERCENTAGE_MEDIAN",
                                       "CLIMATOLOGICAL_WEEK_NANO_PERCENTAGE_MEDIAN", 
                                       "CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN"))), alpha=0.6)+
-    ggplot2::geom_point(data = chlor2, aes(x = as.numeric(WEEK), y = Value)) +
-    ggplot2::geom_line(data = chlor2, aes(x = as.numeric(WEEK), y = Value))+
+    #ggplot2::geom_point(data = chlor2, aes(x = as.numeric(WEEK), y = Value)) +
+    #ggplot2::geom_line(data = chlor2, aes(x = as.numeric(WEEK), y = Value))+
     #ggplot2::facet_wrap(EPU~., ncol = 2)+
     ggplot2::ggtitle("Gulf of Maine Phytoplankton Size Class") +
     ggplot2::ylab("Percent") +
@@ -666,13 +645,35 @@ out_phyto2<-  ecodata::phyto_size %>%
     scale_fill_manual(values=c( "#8DA0CB", "#FC8D62","#66C2A5"), name = "", 
                      labels = c("Picoplankton", 
                                 "Nanoplankton", "Microplankton"))+
-    scale_y_continuous( name = "Phytoplankton Size Fraction", sec.axis = sec_axis(~.*2, name="Chlorophyll a (mg m^-3)"))+
+    #scale_y_continuous( name = "Phytoplankton Size Fraction", sec.axis = sec_axis(~.*2, name="Chlorophyll a (mg m^-3)"))+
    scale_x_continuous(breaks = month_numeric, 
                     labels = month_label)
 
 out_phyto2
 
 ```
+
+```{r}
+
+micro_chlor <- ecodata::phyto_size %>% 
+  dplyr::filter(EPU %in% c("GB", "GOM"),
+                Var %in% c("CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN", 
+                           "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")) %>% 
+  tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
+  dplyr::filter(!Value == "NA") %>% 
+  dplyr::select(-Year1, -Year2, -Cat,  -Units) %>% 
+  tidyr::pivot_wider(id_cols= c(EPU, WEEK), names_from = Var, values_from = Value) %>% 
+  ggplot2::ggplot() +
+  ggplot2::geom_point( aes(x = CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN, y = CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN)) +
+  ggplot2::ggtitle("") +
+  ggplot2::facet_wrap(~EPU)+
+  ggplot2::ylab("Chlorophyll a (mg m^-3)") +
+  ggplot2::xlab("Microplankton % of Total Phytoplankton Composition ") +
+  ecodata::theme_facet()
+micro_chlor
+
+```
+
 
 <!-- ```{r chl-monthly, fig.width = 8, fig.height=8, eval = F} -->
 <!-- out_chl <- ecodata::chl_pp %>%  -->
@@ -722,7 +723,6 @@ out_phyto2
 
 ### Zooplankton {.tabset .tabset-fade}
 
-<span style="color: red;">ONLY CALANUS STAGE IS NEW</span>
 
 #### Euphausiids + Cnidarians
 
@@ -782,7 +782,7 @@ cowplot::plot_grid(gb_zoo, gom_zoo, nrow = 2)
 ```
 
 
-#### Small and Large Calanoid stratified abundance
+<!-- #### Small and Large Calanoid stratified abundance -->
 
 <!-- ```{r ne-sm-lg, fig.width = 8, fig.asp = .35, fig.cap= "Large (red) and small (black) calanoid zooplankton abundance in New England."} -->
 <!-- zoo_abund <- ecodata::zoo_strat_abun %>%  -->
@@ -852,161 +852,91 @@ ecodata::zoo_abund %>%
 
 #### Calanus Stage
 
-```{r gom-calanus-stage, fig.width = 8, fig.asp = .35, fig.cap=""}
+```{r gom-calanus-stage, fig.cap=""}
 cal <- ecodata::CalanusStage %>% 
-  dplyr::filter(EPU == "GOM")
+  dplyr::filter(EPU == "GOM") %>% 
+  filter(Var %in% c("CIII", "CIV", "CV", "Adt"))
 
-cal1<- cal %>% filter(Var %in% c("CIII", "CIV", "CV", "Adt"), 
-                      season == "Spring") %>% 
-  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Calanus Stage (N/100m^3)") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GOM Calanus Stage Spring") +
-  ggplot2::theme(legend.position = "bottom")
-cal2<-cal %>% filter(Var %in% c("CIIIpct", "CIVpct", "CVpct", "Adtpct"), 
-                      season == "Spring") %>% 
-  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Percent Calanus Stage") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GOM Percent Calanus Stage Spring") +
-  ggplot2::theme(legend.position = "bottom")
-cal1+cal2
-  
-cal3<- cal %>% filter(Var %in% c("CIII", "CIV", "CV", "Adt"), 
-                      season == "Summer") %>% 
-  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Calanus Stage (N/100m^3)") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GOM Calanus Stage Summer") +
-  ggplot2::theme(legend.position = "bottom")
-cal4<-cal %>% filter(Var %in% c("CIIIpct", "CIVpct", "CVpct", "Adtpct"), 
-                      season == "Summer") %>% 
-  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Percent Calanus Stage") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GOM Percent Calanus Stage Spring") +
-  ggplot2::theme(legend.position = "bottom")
-cal3+cal4
+cal$Var <- factor(cal$Var, levels = c("CIII", "CIV", "CV", "Adt"))
+cal$season <- factor(cal$season, levels = c("Spring", "Summer", "Fall"))
 
-cal5<- cal %>% filter(Var %in% c("CIII", "CIV", "CV", "Adt"), 
-                      season == "Fall") %>% 
+cal %>% 
   ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+    ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
+      ymin = -Inf, ymax = Inf)+
+  ggplot2::geom_bar(stat = "identity")+
+  ggplot2::facet_wrap(~season)+
   ggplot2::ylab("Calanus Stage (N/100m^3)") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GOM Calanus Stage Fall") +
-  ggplot2::theme(legend.position = "bottom")
-cal6<-cal %>% filter(Var %in% c("CIIIpct", "CIVpct", "CVpct", "Adtpct"), 
-                      season == "Fall") %>% 
+  ggplot2::ggtitle("GOM Calanus Stage Abundance") +
+  ggplot2::theme(legend.position = "bottom", 
+                 legend.title = element_blank())+
+  ecodata::theme_facet()+
+  scale_fill_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
+  scale_color_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))
+
+cal %>% 
   ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+    ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Percent Calanus Stage") +
+      ymin = -Inf, ymax = Inf)+
+  ggplot2::geom_bar(stat = "identity")+
+  ggplot2::facet_wrap(~season, ncol = 1, scales = "free")+
+  ggplot2::ylab("Calanus Stage (N/100m^3)") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GOM Percent Calanus Stage Fall") +
-  ggplot2::theme(legend.position = "bottom")
-cal5+cal6
+  ggplot2::ggtitle("GOM Calanus Stage Abundance") +
+  ggplot2::theme(legend.position = "bottom", 
+                 legend.title = element_blank())+
+  ecodata::theme_facet()+
+  scale_fill_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
+  scale_color_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))
+
 ```
 
-```{r gb-calanus-stage, fig.width = 8, fig.asp = .35, fig.cap=""}
+```{r gb-calanus-stage, fig.cap=""}
 cal <- ecodata::CalanusStage %>% 
-  dplyr::filter(EPU == "GB")
+  dplyr::filter(EPU == "GB") %>% 
+  filter(Var %in% c("CIII", "CIV", "CV", "Adt"))
 
-cal1<- cal %>% filter(Var %in% c("CIII", "CIV", "CV", "Adt"), 
-                      season == "Spring") %>% 
-  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Calanus Stage (N/100m^3)") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GB Calanus Stage Spring") +
-  ggplot2::theme(legend.position = "bottom")
-cal2<-cal %>% filter(Var %in% c("CIIIpct", "CIVpct", "CVpct", "Adtpct"), 
-                      season == "Spring") %>% 
-  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Percent Calanus Stage") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GB Percent Calanus Stage Spring") +
-  ggplot2::theme(legend.position = "bottom")
-cal1+cal2
-  
-cal3<- cal %>% filter(Var %in% c("CIII", "CIV", "CV", "Adt"), 
-                      season == "Summer") %>% 
-  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Calanus Stage (N/100m^3)") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GB Calanus Stage Summer") +
-  ggplot2::theme(legend.position = "bottom")
-cal4<-cal %>% filter(Var %in% c("CIIIpct", "CIVpct", "CVpct", "Adtpct"), 
-                      season == "Summer") %>% 
-  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Percent Calanus Stage") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GB Percent Calanus Stage Spring") +
-  ggplot2::theme(legend.position = "bottom")
-cal3+cal4
+cal$Var <- factor(cal$Var, levels = c("CIII", "CIV", "CV", "Adt"))
+cal$season <- factor(cal$season, levels = c("Spring", "Summer", "Fall"))
 
-cal5<- cal %>% filter(Var %in% c("CIII", "CIV", "CV", "Adt"), 
-                      season == "Fall") %>% 
+cal %>% 
   ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+    ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
+      ymin = -Inf, ymax = Inf)+
+  ggplot2::geom_bar(stat = "identity")+
+  ggplot2::facet_wrap(~season)+
   ggplot2::ylab("Calanus Stage (N/100m^3)") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GB Calanus Stage Fall") +
-  ggplot2::theme(legend.position = "bottom")
-cal6<-cal %>% filter(Var %in% c("CIIIpct", "CIVpct", "CVpct", "Adtpct"), 
-                      season == "Fall") %>% 
+  ggplot2::ggtitle("GB Calanus Stage Abundance") +
+  ggplot2::theme(legend.position = "bottom", 
+                 legend.title = element_blank())+
+  ecodata::theme_facet()+
+  scale_fill_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
+  scale_color_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))
+
+
+cal %>% 
   ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+    ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Percent Calanus Stage") +
+      ymin = -Inf, ymax = Inf)+
+  ggplot2::geom_bar(stat = "identity")+
+  ggplot2::facet_wrap(~season, ncol = 1, scales = "free")+
+  ggplot2::ylab("Calanus Stage (N/100m^3)") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GB Percent Calanus Stage Fall") +
-  ggplot2::theme(legend.position = "bottom")
-cal5+cal6
+  ggplot2::ggtitle("GB Calanus Stage Abundance") +
+  ggplot2::theme(legend.position = "bottom", 
+                 legend.title = element_blank())+
+  ecodata::theme_facet()+
+  scale_fill_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
+  scale_color_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))
 ```
 
-#### PP anomaly
+<!-- #### PP anomaly -->
  
 
 <!-- ```{r chl-pp-anom} -->
@@ -1129,7 +1059,6 @@ gom_zoo_div
 
 ```
 
-#### OI abundance
 
 
 
@@ -1340,7 +1269,7 @@ gom_map <-
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   #facet_wrap(Season~.) +
   ecodata::theme_map() +
-  ggplot2::ggtitle("GOM heatwave anomaly (Aug 15, 2020)") +
+  ggplot2::ggtitle("GOM heatwave anomaly (Aug 2, 2020)") +
   ggplot2::xlab("Longitude") +
   ggplot2::ylab("Latitude") +
   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
@@ -1359,20 +1288,4 @@ gom_map
 
 ### Habitat Vulnerability
 
-```{r habitat-vulnerability-ne, eval = T, echo = F, fig.cap='', out.width='80%'}
-hv <- ecodata::habitat_vulnerability %>% 
-  dplyr::filter(EPU == "NE") %>% 
-  dplyr::select(!EPU)
-colnames(hv) = hv[1,] 
-hv = hv[-1,]
-
-kable(hv, escape = FALSE,
-      caption = "Council-managed or forage species that are highly dependent on (very) highly vulnerable habitats.",
-      booktabs = T) %>%
-  collapse_rows(columns = 1, valign = "top") %>% 
-  kable_styling(bootstrap_options = c("striped")) %>% 
-  kable_styling(latex_options = c("hold_position", "scale_down")) %>% 
-  add_header_above(c(" " = 3, "Importance of habitat by life stage (ACFHP)" = 4, " " = 1)) %>% 
-  kable_classic()
-
-```
+[Table to be described in SOE](https://noaa-edab.github.io/ecodata/Hab_table).

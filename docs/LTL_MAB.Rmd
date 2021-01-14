@@ -729,7 +729,7 @@ ecodata::zoo_abund%>%
 
 ```
 
-#### Small-large index
+<!-- #### Small-large index -->
 
 <!-- ```{r MAB-sli} -->
 <!-- sli <- ecodata::zoo_sli_anom %>%  -->
@@ -822,84 +822,34 @@ zoo_div %>%
 
 #### Calanus Stage
 
-```{r calanus-stage, fig.width = 8, fig.asp = .35, fig.cap=""}
+```{r calanus-stage,  fig.cap=""}
 cal <- ecodata::CalanusStage %>% 
-  dplyr::filter(EPU == epu_abbr)
+  dplyr::filter(EPU == "GB") %>% 
+  filter(Var %in% c("CIII", "CIV", "CV", "Adt"))
 
-cal1<- cal %>% filter(Var %in% c("CIII", "CIV", "CV", "Adt"), 
-                      season == "Spring") %>% 
-  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Calanus Stage (N/100m^3)") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Calanus Stage Spring") +
-  ggplot2::theme(legend.position = "bottom")
-cal2<-cal %>% filter(Var %in% c("CIIIpct", "CIVpct", "CVpct", "Adtpct"), 
-                      season == "Spring") %>% 
-  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Percent Calanus Stage") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("percent Calanus Stage Spring") +
-  ggplot2::theme(legend.position = "bottom")
-cal1+cal2
-  
-cal3<- cal %>% filter(Var %in% c("CIII", "CIV", "CV", "Adt"), 
-                      season == "Summer") %>% 
-  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Calanus Stage (N/100m^3)") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Calanus Stage Summer") +
-  ggplot2::theme(legend.position = "bottom")
-cal4<-cal %>% filter(Var %in% c("CIIIpct", "CIVpct", "CVpct", "Adtpct"), 
-                      season == "Summer") %>% 
-  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Percent Calanus Stage") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("percent Calanus Stage Spring") +
-  ggplot2::theme(legend.position = "bottom")
-cal3+cal4
+cal$Var <- factor(cal$Var, levels = c("CIII", "CIV", "CV", "Adt"))
+cal$season <- factor(cal$season, levels = c("Spring", "Summer", "Fall"))
 
-cal5<- cal %>% filter(Var %in% c("CIII", "CIV", "CV", "Adt"), 
-                      season == "Fall") %>% 
+cal %>% 
   ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+    ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
+      ymin = -Inf, ymax = Inf)+
+  ggplot2::geom_bar(stat = "identity")+
+  ggplot2::facet_wrap(~season)+
   ggplot2::ylab("Calanus Stage (N/100m^3)") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Calanus Stage Fall") +
-  ggplot2::theme(legend.position = "bottom")
-cal6<-cal %>% filter(Var %in% c("CIIIpct", "CIVpct", "CVpct", "Adtpct"), 
-                      season == "Fall") %>% 
-  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Percent Calanus Stage") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("percent Calanus Stage Fall") +
-  ggplot2::theme(legend.position = "bottom")
-cal5+cal6
+  ggplot2::ggtitle("GB Calanus Stage Abundance") +
+  ggplot2::theme(legend.position = "bottom", 
+                 legend.title = element_blank())+
+  ecodata::theme_facet()+
+  scale_fill_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
+  scale_color_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))
+
+
 ```
 
-#### OI abundance
+<!-- #### OI abundance -->
 
 <!-- ```{r MAB-oi-zoo, fig.width=8} -->
 <!-- facet_names <- list( -->
@@ -1271,15 +1221,23 @@ hw <- ecodata::heatwave_peak_date %>%
   dplyr::mutate(Value = replace(Value, Value > 4, 4))
 
 mab_map <- 
-  ggplot2::ggplot() +
+    ggplot2::ggplot() +
   ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) +
   ggplot2::geom_sf(data = mab_epu_sf, fill = "transparent", size = map.lwd) +
-  ggplot2::scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
-                       low = scales::muted("blue"),
-                       mid = "white",
-                       high = scales::muted("red"),
-                       limits = c(-4,4)) +
+  ggplot2::scale_fill_gradientn(name = "Temp.\nAnomaly (C)", 
+                                colours = c(scales::muted("blue"), "white",
+                                            scales::muted("red"), "black"),
+                                values = scales::rescale(c(-4,0,4,8)),
+                                guide = "colorbar", limits=c(-4,8)) +
+  
+  # ggplot2::scale_fill_gradient2(name = "Temp Anomaly (C)",
+  #                      low = scales::muted("blue"),
+  #                      mid = "white",
+  #                      midpoint = 0,
+  #                      high = scales::muted("red"),
+  #                      guide = "colourbar",
+  #                      limits = c(-4,8)) +
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   #facet_wrap(Season~.) +
   ecodata::theme_map() +
@@ -1291,8 +1249,7 @@ mab_map <-
         axis.title = element_text(size = 11),
         strip.background = element_blank(),
         strip.text=element_text(hjust=0),
-        axis.text = element_text(size = 8),
-        axis.title.y = element_text(angle = 90))
+        axis.text = element_text(size = 8))
 
 
 mab_map 
