@@ -34,6 +34,10 @@ feeding.guilds1<- c("Piscivore","Planktivore","Benthivore","Benthos")
 feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
 x.shade.min <- 2010
 x.shade.max <- 2020
+
+#Define constants for figure plot
+series.col <- c("indianred","black")
+
 #Function for custom ggplot facet labels
 label <- function(variable,value){
   return(facet_names[value])

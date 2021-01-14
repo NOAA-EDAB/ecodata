@@ -24,8 +24,8 @@ out_phyto2<-  ecodata::phyto_size %>%
                  fill = factor(Var, c("CLIMATOLOGICAL_WEEK_PICO_PERCENTAGE_MEDIAN",
                                       "CLIMATOLOGICAL_WEEK_NANO_PERCENTAGE_MEDIAN", 
                                       "CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN"))), alpha=0.6)+
-    ggplot2::geom_point(data = chlor, aes(x = as.numeric(WEEK), y = Value)) +
-    ggplot2::geom_line(data = chlor, aes(x = as.numeric(WEEK), y = Value))+
+    #ggplot2::geom_point(data = chlor, aes(x = as.numeric(WEEK), y = Value)) +
+    #ggplot2::geom_line(data = chlor, aes(x = as.numeric(WEEK), y = Value))+
     #ggplot2::facet_wrap(EPU~., ncol = 2)+
     ggplot2::ggtitle("Mid-Atlantic Bight Phytoplankton Size Class") +
     ggplot2::ylab("Percent") +
@@ -38,7 +38,7 @@ out_phyto2<-  ecodata::phyto_size %>%
     scale_fill_manual(values=c("#8DA0CB", "#FC8D62",  "#66C2A5"), name = "", 
                      labels = c("Picoplankton", 
                                 "Nanoplankton", "Microplankton"))+
-    scale_y_continuous( name = "Phytoplankton Size Fraction", sec.axis = sec_axis(~.*2, name="Chlorophyll a (mg m^-3)"))+
+    #scale_y_continuous( name = "Phytoplankton Size Fraction", sec.axis = sec_axis(~.*2, name="Chlorophyll a (mg m^-3)"))+
    scale_x_continuous(breaks = month_numeric, 
                     labels = month_label)
 

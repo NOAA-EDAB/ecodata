@@ -90,6 +90,10 @@ feeding.guilds1<- c("Piscivore","Planktivore","Benthivore","Benthos")
 feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
 x.shade.min <- 2010
 x.shade.max <- 2020
+
+#Define constants for figure plot
+series.col <- c("indianred","black")
+
 #Function for custom ggplot facet labels
 label <- function(variable,value){
   return(facet_names[value])
@@ -108,8 +112,7 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 ```{r comdat-commercial-landings, fig.cap="MAFMC managed species landings (red) and total commercial landings (black) by feeding guild. \\label{comm-landings}"}
 
-#Define constants for figure plot
-series.col <- c("indianred","black")
+
 
 #Managed landings
 managed_landings <- ecodata::comdat  %>%

@@ -1,7 +1,4 @@
 
-#Define constants for figure plot
-series.col <- c("indianred","black")
-
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
   dplyr::filter(stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight")),

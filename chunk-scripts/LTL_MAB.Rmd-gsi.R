@@ -46,8 +46,8 @@ ggplot2::ggplot() +
   ggplot2::geom_line(aes(x = gsi$Time, y = gsi$Value)) +
   ggplot2::geom_point(aes(x = gsi$Time, y = gsi$Value)) +
   #ecodata::geom_gls(aes(x = gsi_old$Time, y = gsi_old$Value)) +
-  ggplot2::geom_line(aes(x = gsi_old$Time, y = gsi_old$Value), color ="red") +
-  ggplot2::geom_point(aes(x = gsi_old$Time, y = gsi_old$Value), color = "red") +
+  #ggplot2::geom_line(aes(x = gsi_old$Time, y = gsi_old$Value), color ="red") +
+  #ggplot2::geom_point(aes(x = gsi_old$Time, y = gsi_old$Value), color = "red") +
   ggplot2::ylab("Gulf Stream position anomaly") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Gulf Stream Index") +

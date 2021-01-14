@@ -38,7 +38,7 @@ gom_map <-
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   #facet_wrap(Season~.) +
   ecodata::theme_map() +
-  ggplot2::ggtitle("GOM heatwave anomaly (Aug 15, 2020)") +
+  ggplot2::ggtitle("GOM heatwave anomaly (Aug 2, 2020)") +
   ggplot2::xlab("Longitude") +
   ggplot2::ylab("Latitude") +
   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),

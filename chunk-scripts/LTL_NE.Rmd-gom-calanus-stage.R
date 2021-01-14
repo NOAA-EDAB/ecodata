@@ -1,75 +1,39 @@
 
 cal <- ecodata::CalanusStage %>% 
-  dplyr::filter(EPU == "GOM")
+  dplyr::filter(EPU == "GOM") %>% 
+  filter(Var %in% c("CIII", "CIV", "CV", "Adt"))
 
-cal1<- cal %>% filter(Var %in% c("CIII", "CIV", "CV", "Adt"), 
-                      season == "Spring") %>% 
-  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Calanus Stage (N/100m^3)") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GOM Calanus Stage Spring") +
-  ggplot2::theme(legend.position = "bottom")
-cal2<-cal %>% filter(Var %in% c("CIIIpct", "CIVpct", "CVpct", "Adtpct"), 
-                      season == "Spring") %>% 
-  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Percent Calanus Stage") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GOM Percent Calanus Stage Spring") +
-  ggplot2::theme(legend.position = "bottom")
-cal1+cal2
-  
-cal3<- cal %>% filter(Var %in% c("CIII", "CIV", "CV", "Adt"), 
-                      season == "Summer") %>% 
-  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Calanus Stage (N/100m^3)") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GOM Calanus Stage Summer") +
-  ggplot2::theme(legend.position = "bottom")
-cal4<-cal %>% filter(Var %in% c("CIIIpct", "CIVpct", "CVpct", "Adtpct"), 
-                      season == "Summer") %>% 
-  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Percent Calanus Stage") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GOM Percent Calanus Stage Spring") +
-  ggplot2::theme(legend.position = "bottom")
-cal3+cal4
+cal$Var <- factor(cal$Var, levels = c("CIII", "CIV", "CV", "Adt"))
+cal$season <- factor(cal$season, levels = c("Spring", "Summer", "Fall"))
 
-cal5<- cal %>% filter(Var %in% c("CIII", "CIV", "CV", "Adt"), 
-                      season == "Fall") %>% 
+cal %>% 
   ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+    ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
+      ymin = -Inf, ymax = Inf)+
+  ggplot2::geom_bar(stat = "identity")+
+  ggplot2::facet_wrap(~season)+
   ggplot2::ylab("Calanus Stage (N/100m^3)") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GOM Calanus Stage Fall") +
-  ggplot2::theme(legend.position = "bottom")
-cal6<-cal %>% filter(Var %in% c("CIIIpct", "CIVpct", "CVpct", "Adtpct"), 
-                      season == "Fall") %>% 
+  ggplot2::ggtitle("GOM Calanus Stage Abundance") +
+  ggplot2::theme(legend.position = "bottom", 
+                 legend.title = element_blank())+
+  ecodata::theme_facet()+
+  scale_fill_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
+  scale_color_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))
+
+cal %>% 
   ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
-  ggplot2::geom_bar(stat = "identity")+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+    ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::ylab("Percent Calanus Stage") +
+      ymin = -Inf, ymax = Inf)+
+  ggplot2::geom_bar(stat = "identity")+
+  ggplot2::facet_wrap(~season, ncol = 1, scales = "free")+
+  ggplot2::ylab("Calanus Stage (N/100m^3)") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GOM Percent Calanus Stage Fall") +
-  ggplot2::theme(legend.position = "bottom")
-cal5+cal6
+  ggplot2::ggtitle("GOM Calanus Stage Abundance") +
+  ggplot2::theme(legend.position = "bottom", 
+                 legend.title = element_blank())+
+  ecodata::theme_facet()+
+  scale_fill_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
+  scale_color_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))
