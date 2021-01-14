@@ -1119,7 +1119,6 @@ ecodata::rec_hms %>%
 
 ### Primary Production Required
 
-<span style="color: red;">NO NEW DATA</span>
 
 ```{r ppr, fig.cap="Primary production required to support the commercial landings. Included are the top species accounting for 80% of the landings in each year."}
 
@@ -1145,20 +1144,6 @@ ecodata::ppr %>%
   ggplot2::ggtitle("Primary Production Required")+
   ggplot2::ylab("Proportion of Total PPD")+
   ecodata::theme_ts()
-```
-
-[notes](https://drive.google.com/drive/folders/1_BNoAPvEaYQrdsi900175kcjpjmtcYzT)
-```{r ppr_comp90, eval = T, echo = F, fig.cap='', out.width='80%'}
-
-knitr::include_graphics(file.path(image.dir, "composition-.90.png"))
-```
-
-```{r ppr_index, eval = T, echo = F, fig.cap='', out.width='80%'}
-knitr::include_graphics(file.path(image.dir, "ppr_index-0.90.png"))
-```
-
-```{r ppr_mtl, eval = T, echo = F, fig.cap='', out.width='80%'}
-knitr::include_graphics(file.path(image.dir, "mtl_index-0.90.png"))
 ```
 
 ### Wind Energy Revenue

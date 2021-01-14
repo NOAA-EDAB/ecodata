@@ -918,7 +918,6 @@ Recent pelagic landings coming primarily from Common Thresher and Shortfin Mako.
 
 ### Primary Production Required
 
-<span style="color: red;">NO NEW DATA</span>
 
 ```{r ppr, fig.cap="Primary production required to support the commercial landings. Included are the top species accounting for 80% of the landings in each year."}
 ecodata::ppr %>% 
