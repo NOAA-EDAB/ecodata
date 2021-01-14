@@ -1,5 +1,5 @@
 ---
-title: "Hab_table"
+title: "Habitat Vulnerability Tables"
 author: "Sean Lucey"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
@@ -32,10 +32,11 @@ options(knitr.kable.NA = '')
 
 ```
 
+#### Mid-Atlantic Habitat Vulnerability Table
 
 ```{r class.source="risktable"}
 #Read in Mid-Atlantic table
-mid <- as.data.table(readxl::read_xlsx(here('data-raw/habitat_vulnerability.xlsx'), 
+mid <- as.data.table(readxl::read_xlsx(here('data-raw/habitat_vulnerability.xlsx'),
                          sheet = 'Mid-Atlantic', skip = 1))
 
 #Identify individual species climate vulnerability
@@ -44,7 +45,7 @@ high.vul  <- unique(mid[`Species Vulnerability Rank (FCVA)` == 'High', Species])
 mod.vul   <- unique(mid[`Species Vulnerability Rank (FCVA)` == 'Moderate', Species])
 low.vul   <- unique(mid[`Species Vulnerability Rank (FCVA)` == 'Low', Species])
 
-#Grab habitat vulnerability 
+#Grab habitat vulnerability
 hab.vul <- unique(mid[, c('Habitat Name', 'Habitat Vulnerability Rank (HVCA)')])
 habitats <- hab.vul[, 'Habitat Name']
 hab.vul <- data.table('Habitat Vulnerability' = c(NA, NA, t(hab.vul[, 'Habitat Vulnerability Rank (HVCA)'])))
@@ -67,27 +68,27 @@ hab.table <- hab.table %>% mutate_if(is.character, str_trim) #one cell has a spa
 
 
 #generalize to all
-hab.table %>%
-  mutate_at(vars(Species), function(x){ #Color code species based on climate vul
-    case_when(x %in% low.vul ~ cell_spec(x, format = "html", color = "black", 
-                                     background = "lightgreen"),
-              x %in% mod.vul ~ cell_spec(x, format = "html", color = "black", 
-                                     background = "yellow"),
-              x %in% high.vul ~ cell_spec(x, format = "html", color = "black", 
-                                     background = "orange"),
-              x %in% vhigh.vul ~ cell_spec(x, format = "html", color = "white", 
-                                     background = "red"))}) %>%
-  mutate_at(vars(-c(Species, Stage)), function(x){ #Color code base on dependence
-    case_when(x == "Low" ~ cell_spec(x, format = "html", color = "black", 
-                                     background = "lightgreen"),
-              x == "Moderate" ~ cell_spec(x, format = "html", color = "black", 
-                                     background = "yellow"),
-              x == "High" ~ cell_spec(x, format = "html", color = "black", 
-                                     background = "orange"),
-              x == "Very high" ~ cell_spec(x, format = "html", color = "white", 
-                                     background = "red"))}) %>%
-  kable(format = "html", escape = F, table.attr='class="risktable"') %>%
-  kable_styling(font_size = 14, fixed_thead = T)
+# hab.table %>%
+#   mutate_at(vars(Species), function(x){ #Color code species based on climate vul
+#     case_when(x %in% low.vul ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "lightgreen"),
+#               x %in% mod.vul ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "yellow"),
+#               x %in% high.vul ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "orange"),
+#               x %in% vhigh.vul ~ cell_spec(x, format = "html", color = "white",
+#                                      background = "red"))}) %>%
+#   mutate_at(vars(-c(Species, Stage)), function(x){ #Color code base on dependence
+#     case_when(x == "Low" ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "lightgreen"),
+#               x == "Moderate" ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "yellow"),
+#               x == "High" ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "orange"),
+#               x == "Very high" ~ cell_spec(x, format = "html", color = "white",
+#                                      background = "red"))}) %>%
+#   kable(format = "html", escape = F, table.attr='class="risktable"') %>%
+#   kable_styling(font_size = 14, fixed_thead = T)
 
 ```
 
@@ -155,10 +156,13 @@ dt <- datatable(hab.table, rownames = FALSE, escape = FALSE,
 dt
 ```
 
+#### New England Habitat Vulnerability Table
+
+
 
 ```{r class.source="risktable"}
 #Read in New England table
-ne <- as.data.table(readxl::read_xlsx(here('data-raw/habitat_vulnerability.xlsx'), 
+ne <- as.data.table(readxl::read_xlsx(here('data-raw/habitat_vulnerability.xlsx'),
                          sheet = 'New England', skip = 1))
 
 #Identify individual species climate vulnerability
@@ -167,7 +171,7 @@ high.vul  <- unique(ne[`Species Vulnerability Rank (FCVA)` == 'High', Species])
 mod.vul   <- unique(ne[`Species Vulnerability Rank (FCVA)` == 'Moderate', Species])
 low.vul   <- unique(ne[`Species Vulnerability Rank (FCVA)` == 'Low', Species])
 
-#Grab habitat vulnerability 
+#Grab habitat vulnerability
 hab.vul <- unique(ne[, c('Habitat Name', 'Habitat Vulnerability Rank (HVCA)')])
 habitats <- hab.vul[, 'Habitat Name']
 hab.vul <- data.table('Habitat Vulnerability' = c(NA, NA, t(hab.vul[, 'Habitat Vulnerability Rank (HVCA)'])))
@@ -189,27 +193,27 @@ names(hab.table) <- names(ne)
 hab.table <- hab.table %>% mutate_if(is.character, str_trim) #one cell has a space, not getting color
 
 #generalize to all
-hab.table %>%
-  mutate_at(vars(Species), function(x){ #Color code species based on climate vul
-    case_when(x %in% low.vul ~ cell_spec(x, format = "html", color = "black", 
-                                     background = "lightgreen"),
-              x %in% mod.vul ~ cell_spec(x, format = "html", color = "black", 
-                                     background = "yellow"),
-              x %in% high.vul ~ cell_spec(x, format = "html", color = "black", 
-                                     background = "orange"),
-              x %in% vhigh.vul ~ cell_spec(x, format = "html", color = "white", 
-                                     background = "red"))}) %>%
-  mutate_at(vars(-c(Species, Stage)), function(x){ #Color code base on dependence
-    case_when(x == "Low" ~ cell_spec(x, format = "html", color = "black", 
-                                     background = "lightgreen"),
-              x == "Moderate" ~ cell_spec(x, format = "html", color = "black", 
-                                     background = "yellow"),
-              x == "High" ~ cell_spec(x, format = "html", color = "black", 
-                                     background = "orange"),
-              x == "Very high" ~ cell_spec(x, format = "html", color = "white", 
-                                     background = "red"))}) %>%
-  kable(format = "html", escape = F, table.attr='class="risktable"') %>%
-  kable_styling(font_size = 14, fixed_thead = T)
+# hab.table %>%
+#   mutate_at(vars(Species), function(x){ #Color code species based on climate vul
+#     case_when(x %in% low.vul ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "lightgreen"),
+#               x %in% mod.vul ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "yellow"),
+#               x %in% high.vul ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "orange"),
+#               x %in% vhigh.vul ~ cell_spec(x, format = "html", color = "white",
+#                                      background = "red"))}) %>%
+#   mutate_at(vars(-c(Species, Stage)), function(x){ #Color code base on dependence
+#     case_when(x == "Low" ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "lightgreen"),
+#               x == "Moderate" ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "yellow"),
+#               x == "High" ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "orange"),
+#               x == "Very high" ~ cell_spec(x, format = "html", color = "white",
+#                                      background = "red"))}) %>%
+#   kable(format = "html", escape = F, table.attr='class="risktable"') %>%
+#   kable_styling(font_size = 14, fixed_thead = T)
 
 ```
 
@@ -253,4 +257,6 @@ datatable(hab.table, rownames = FALSE,
 
 
 ```
+
+#### Data Sourecs
 
