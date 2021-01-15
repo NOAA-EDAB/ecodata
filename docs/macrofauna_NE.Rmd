@@ -110,7 +110,7 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 #### NEFSC BTS
  
-<span style="color: red;">NO NEW DATA</span>
+<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
  
 ```{r aggregate-biomass, fig.cap = paste0("Spring (left) and fall (right) NEFSC surveyed biomass in Georges Bank.")}
 agg<-ecodata::aggregate_biomass %>% 
@@ -473,12 +473,12 @@ ggplot2::ggplot(aes(x = Time, y = Mean)) +
 cowplot::plot_grid(p1, p2, p3, p4, nrow=4)
 ```
 
-#### NEFSC Survey location map
+
 
 
 #### NEFMC Benthivores in MAB
 
-<span style="color: red;">NO NEW DATA</span>
+<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
 
 ```{r nefsc-survey-disaggregated-NEFMC-ssp-in-mab}
 nefmc_ma <- ecodata::nefsc_survey_disaggregated %>% 
@@ -533,7 +533,7 @@ mab_nefmc_props
 
 #### MA inshore survey
 
-<span style="color: red;">NO NEW DATA</span>
+<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
 
 ```{r ma-inshore-survey, fig.cap = "Spring (left) and fall (right) surveyed biomass from the Massachusetts state inshore bottom trawl survey."}
 mass <- ecodata::mass_inshore_survey %>% 
@@ -838,7 +838,7 @@ cowplot::plot_grid(p1, p2, p3, p4, nrow = 4)
 
 #### Proportion managed species in NEFSC BTS
 
-<span style="color: red;">NO NEW DATA</span>
+<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
 
 ```{r nefsc-survey-disaggregated-managed-spp-bts-gb}
 prop <- ecodata::nefsc_survey_disaggregated %>% 
@@ -959,7 +959,7 @@ GOM_prop
 
 ### Productivity anomaly
 
-<span style="color: red;">NO NEW DATA</span>
+<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
 
 ```{r productivity-anomaly-gb, fig.cap = "Small fish per large fish biomass anomaly in Georges Bank."}
 #### Adjust plot properties -------------------------------
@@ -1125,30 +1125,16 @@ gom
 
 ### Condition factor
 
-#### GB
-
-```{r gb-cf, fig.cap = "Condition factor for species sampled in Georges Bank."}
-
-
-a<-knitr::include_graphics(file.path(image.dir, "GBcondition_2020_viridis_final.jpg"))
-b<-knitr::include_graphics(file.path(image.dir, "GOMcondition_2020_viridis_final.jpg"))
-
-cowplot::plot_grid(a, b)
-```
-
-
-#### GOM
-
 ```{r gom-cf, fig.cap = "Condition factor for species sampled in the Gulf of Maine.", fig.width=50}
 
 
-knitr::include_graphics(c(file.path(image.dir, "GOMcondition_2020_viridis_final.jpg"),file.path(image.dir, "GOMcondition_2020_viridis_final.jpg") ))
+knitr::include_graphics(c(file.path(image.dir, "GOMcondition_2020_viridis_final.jpg"),file.path(image.dir, "GBcondition_2020_viridis_final.jpg") ))
 
 ```
 
 ### Stomach Fullness
 
-<span style="color: red;">NO NEW DATA</span>
+<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
 
 ```{r stom-fullness, fig.cap=" Stomach Fullness Anomaly in New England." }
 gb_fullness <- ecodata::stom_fullness %>%
@@ -1194,12 +1180,11 @@ gom_fullness
 
 ### Larval diversity {.tabset .tabset-fade}
 
-<span style="color: red;">NO NEW DATA</span>
+
 
 ```{r ichthyo-diversity}
 gom_larv_div <- ecodata::ichthyo_diversity %>%
-  dplyr::filter(EPU == "GOM", 
-                Season == "Fall") %>%
+  dplyr::filter(EPU == "GOM") %>%
   #dplyr::mutate(Var = word(Var,1)) %>% 
   #dplyr::group_by(Var) %>% 
   dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
@@ -1221,8 +1206,7 @@ gom_larv_div <- ecodata::ichthyo_diversity %>%
   ggplot2::theme(strip.text=element_text(hjust=0))
 
 gb_larv_div <- ecodata::ichthyo_diversity %>%
-  dplyr::filter(EPU == "GB", 
-                Season == "Fall") %>%
+  dplyr::filter(EPU == "GB") %>%
   #dplyr::mutate(Var = word(Var,1)) %>% 
   #dplyr::group_by(Var) %>% 
   dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 

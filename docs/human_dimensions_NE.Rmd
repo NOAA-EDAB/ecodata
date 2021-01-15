@@ -273,7 +273,8 @@ p1<-apex %>%
         legend.direction = "horizontal", 
         legend.title = element_blank())+
   ggplot2::ylab("Landings (metric tons)")+
-  ggplot2::xlab("Time")
+  ggplot2::ggtitle("HMS Commercial Landings")
+  ggplot2::xlab(element_blank())
 
 p1
 
@@ -413,12 +414,13 @@ ggplot2::ggplot()+
       ymin = -Inf, ymax = Inf)+
   #guides(color = F, fill = F)+
   ggplot2::geom_bar(aes(x=Time, y= Value, fill = Var), stat="identity")+
-  ggplot2::scale_fill_manual(name = "Indicators", values = ind_fill, guide = FALSE) +
+  ggplot2::scale_fill_manual(name = "Indicators", values = ind_fill, 
+                             labels = c("Price", "Volume"), guide = FALSE) +
   ggplot2::geom_line(data = revchange.gom, 
             aes(x = Time, y = revchange.line, colour = "$"))+
   ggplot2::scale_colour_grey(name ="Revenue Change") +
   ggplot2::ggtitle("Gulf of Maine Benthivore Component")+
-  ggplot2::labs(y="Value $1,000,000 ($2015)") +
+  ggplot2::ylab(element_blank()) +
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), limits = y.lim,
                      expand = c(0.01, 0.01)) +
@@ -439,12 +441,12 @@ ggplot2::ggplot()+
       ymin = -Inf, ymax = Inf)+
   
   ggplot2::geom_bar(aes(x=Time, y= Value, fill = Var), stat="identity")+
-  ggplot2::scale_fill_manual(name = "Indicators", values = ind_fill) +
+  ggplot2::scale_fill_manual(name = "Indicators", values = ind_fill,  labels = c("Price", "Volume")) +
   ggplot2::geom_line(data = revchange.gb, 
             aes(x = Time, y = revchange.line, colour = "$"))+
   ggplot2::scale_colour_grey(name ="Revenue Change") +
   ggplot2::ggtitle("Georges Bank Benthos Component")+
-  ggplot2::labs(y="") +
+  ggplot2::ylab("Value $1,000,000 ($2015)") + 
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), 
                               limits = y.lim, expand = c(0.01, 0.01)) +
@@ -453,7 +455,7 @@ ggplot2::ggplot()+
   ggplot2::theme(legend.position="bottom", legend.direction = "horizontal",
         legend.background = element_rect(fill = "transparent"), 
         legend.title = element_text(size = 8), 
-        legend.text = element_text(size = 8)) +
+        legend.text = element_text(size = 8)) 
   ggplot2::guides(color = guide_legend(order = 1),
          fill = guide_legend(order = 0))
 
@@ -828,12 +830,14 @@ com2<-com %>%
                      breaks = com$Rating) +
   xlim(0,40)+
   ylim(0,3.5)+
-  theme(legend.position="top",
-        legend.title = element_blank())+
+  theme(legend.position=c(0.8, 0.85), 
+        legend.title = element_blank(),       
+        legend.background = element_blank(),
+        legend.box.background = element_rect(colour = "black"))+
   ggplot2::xlab("Commercial Engagament Score") +
   ggplot2::ylab("Commercial Reliance Score") +
   ggplot2::ggtitle("Social Vulnerability in Top Commercial Fishing Communities")+
-  ggplot2::guides(color = FALSE) +
+  #ggplot2::guides(color = FALSE) +
   ecodata::theme_ts()
   
   
@@ -845,41 +849,6 @@ com2<-com %>%
 
 ```
 
-```{r recreational-engagement, message=F, warning = FALSE, fig.cap= "Commercial engagement and reliance for the top top recreational fishing communities in New England."}
-
-com<-ecodata::engagement %>% 
-  dplyr::filter(Region == "New England", 
-                Fishery == "Recreational")
-
-com2<-com %>% 
-  ggplot2::ggplot()+
-  ggplot2::geom_point(aes(x = Eng, y = Rel, color = Rating), size = 2)+
-  ggplot2::geom_vline(xintercept = 1, linetype = "dashed", color = "black")+
-  ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black") +
-  ggrepel::geom_text_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
-                      y = Rel,
-                      label = Community,
-                      color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
-  ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
-                     breaks = com$Rating) +
-  xlim(0,4.5)+
-  ylim(0,1.6)+
-  theme(legend.position="top",
-        legend.title = element_blank())+
-  ggplot2::xlab("Recreation Engagament Score") +
-  ggplot2::ylab("Recreation Reliance Score") +
-  ggplot2::ggtitle("Social Vulnerability in Top Recreational Fishing Communities")+
-  ggplot2::guides(color = FALSE) +
-  ecodata::theme_ts()
-  
-  
-  gridExtra::grid.arrange(com2, bottom = textGrob("Low <--------------------------------------------------------------------------------------------------------------------------------------> High", 
-                                     x = 0.5, y = 1, gp = gpar(fontsize = 7)),
-                          left = textGrob("Low <-------------------------------------------------------------------------------------> High", rot = 90,
-                                   x = 1, y = 0.5, gp = gpar(fontsize = 7)))
-
-
-```
 
 #### Oyster aquaculture
 
@@ -973,7 +942,7 @@ rec_landings
 
 #### Recreational diversity
 
-```{r recdat-diversity,  fig.cap = paste0("Recreational effort, recreational effort diversity, number of recreational anglers, and diverstiy of recreational catch in ",region,". \\label{recdat}")}
+```{r recdat-diversity,  fig.cap = paste0("Recreational effort, recreational effort diversity, number of recreational anglers, and diverstiy of recreational catch in New England")}
 recdat <- ecodata::recdat %>% 
   dplyr::filter(EPU == region_abbr) %>% 
   dplyr::group_by(Var) %>% 
@@ -1067,6 +1036,8 @@ rec_div <- recdat %>%
 
 rec_div_catch <- recdat %>% 
   dplyr::filter(Var == "Recreational Diversity of Catch") %>% 
+  
+  plyr::mutate(hline = mean(Value)) %>% 
   ggplot2::ggplot() + 
  #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -1104,10 +1075,49 @@ cowplot::plot_grid(rec_effort,
                    align = "hv") +
     ggplot2::theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
 ```
+#### Recreational Engagement and Social Vulnerability
+
+```{r recreational-engagement, message=F, warning = FALSE, fig.cap= "Commercial engagement and reliance for the top top recreational fishing communities in New England."}
+
+com<-ecodata::engagement %>% 
+  dplyr::filter(Region == "New England", 
+                Fishery == "Recreational")
+
+com2<-com %>% 
+  ggplot2::ggplot()+
+  ggplot2::geom_point(aes(x = Eng, y = Rel, color = Rating), size = 2)+
+  ggplot2::geom_vline(xintercept = 1, linetype = "dashed", color = "black")+
+  ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black") +
+  ggrepel::geom_text_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
+                      y = Rel,
+                      label = Community,
+                      color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
+  ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
+                     breaks = com$Rating) +
+  xlim(0,4.5)+
+  ylim(0,1.6)+
+  theme(legend.position=c(0.8, 0.85), 
+        legend.title = element_blank(),       
+        legend.background = element_blank(),
+        legend.box.background = element_rect(colour = "black"))+
+  ggplot2::xlab("Recreation Engagament Score") +
+  ggplot2::ylab("Recreation Reliance Score") +
+  ggplot2::ggtitle("Social Vulnerability in Top Recreational Fishing Communities")+
+  #ggplot2::guides(color = FALSE) +
+  ecodata::theme_ts()
+  
+  
+  gridExtra::grid.arrange(com2, bottom = textGrob("Low <--------------------------------------------------------------------------------------------------------------------------------------> High", 
+                                     x = 0.5, y = 1, gp = gpar(fontsize = 7)),
+                          left = textGrob("Low <-------------------------------------------------------------------------------------> High", rot = 90,
+                                   x = 1, y = 0.5, gp = gpar(fontsize = 7)))
+
+
+```
 
 #### Recreational Shark Landings
 
-```{r rec_hms, fig.cap="SHark Landings by Yea."}
+```{r rec_hms, fig.cap="Recreational shark Landings from mrip."}
 ecodata::rec_hms %>% 
   dplyr::filter(Region == "New England") %>% 
   ggplot2::ggplot()+

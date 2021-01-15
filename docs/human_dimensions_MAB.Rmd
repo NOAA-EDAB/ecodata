@@ -671,8 +671,10 @@ com2<-com %>%
                      breaks = com$Rating) +
   xlim(0,12)+
   ylim(0,5.5)+
-  theme(legend.position="top",
-        legend.title = element_blank())+
+  theme(legend.position=c(0.8, 0.85), 
+        legend.title = element_blank(),       
+        legend.background = element_blank(),
+        legend.box.background = element_rect(colour = "black"))+
   ggplot2::xlab("Commercial Engagament Score") +
   ggplot2::ylab("Commercial Reliance Score") +
   ggplot2::ggtitle("Social Vulnerability in Top Commercial Fishing Communities")+
@@ -691,41 +693,6 @@ com2<-com %>%
 ```
 
 
-```{r recreational-engagement, message=F, fig.cap= "Commercial engagement and reliance for the top top recreational fishing communities in the Mid-atlantic."}
-
-com<-ecodata::engagement %>% 
-  dplyr::filter(Region == "Mid-Atlantic", 
-                Fishery == "Recreational")
-
-com2<-com %>% 
-  ggplot2::ggplot()+
-  ggplot2::geom_point(aes(x = Eng, y = Rel, color = Rating), size = 2)+
-  ggplot2::geom_vline(xintercept = 1, linetype = "dashed", color = "black")+
-  ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black") +
-  ggrepel::geom_text_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
-                      y = Rel,
-                      label = Community,
-                      color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
-  ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
-                     breaks = com$Rating) +
-  xlim(0,12)+
-  ylim(0,16)+
-  theme(legend.position="top",
-        legend.title = element_blank())+
-  ggplot2::xlab("Recreation Engagament Score") +
-  ggplot2::ylab("Recreation Reliance Score") +
-  ggplot2::ggtitle("Social Vulnerability in Top Recreational Fishing Communities")+
-  ggplot2::guides(color = FALSE) +
-  ecodata::theme_ts()
-  
-  
-  gridExtra::grid.arrange(com2, bottom = textGrob("Low <--------------------------------------------------------------------------------------------------------------------------------------> High", 
-                                     x = 0.5, y = 1, gp = gpar(fontsize = 7)),
-                          left = textGrob("Low <----------------------------------------------------------------------------------------> High", rot = 90,
-                                   x = 1, y = 0.5, gp = gpar(fontsize = 7)))
-
-
-```
 
 ### Recreational fisheries {.tabset .tabset-fade}
 
@@ -902,9 +869,49 @@ cowplot::plot_grid(rec_effort,
 
 ```
 
+#### Recreational Engagement and Reliance
+
+```{r recreational-engagement, message=F, fig.cap= "Commercial engagement and reliance for the top top recreational fishing communities in the Mid-atlantic."}
+
+com<-ecodata::engagement %>% 
+  dplyr::filter(Region == "Mid-Atlantic", 
+                Fishery == "Recreational")
+
+com2<-com %>% 
+  ggplot2::ggplot()+
+  ggplot2::geom_point(aes(x = Eng, y = Rel, color = Rating), size = 2)+
+  ggplot2::geom_vline(xintercept = 1, linetype = "dashed", color = "black")+
+  ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black") +
+  ggrepel::geom_text_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
+                      y = Rel,
+                      label = Community,
+                      color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
+  ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
+                     breaks = com$Rating) +
+  xlim(0,12)+
+  ylim(0,16)+
+  theme(legend.position=c(0.8, 0.85), 
+        legend.title = element_blank(),       
+        legend.background = element_blank(),
+        legend.box.background = element_rect(colour = "black"))+
+  ggplot2::xlab("Recreation Engagament Score") +
+  ggplot2::ylab("Recreation Reliance Score") +
+  ggplot2::ggtitle("Social Vulnerability in Top Recreational Fishing Communities")+
+  #ggplot2::guides(color = FALSE) +
+  ecodata::theme_ts()
+  
+  
+  gridExtra::grid.arrange(com2, bottom = textGrob("Low <--------------------------------------------------------------------------------------------------------------------------------------> High", 
+                                     x = 0.5, y = 1, gp = gpar(fontsize = 7)),
+                          left = textGrob("Low <----------------------------------------------------------------------------------------> High", rot = 90,
+                                   x = 1, y = 0.5, gp = gpar(fontsize = 7)))
+
+
+```
+
 #### Recreational Shark Landings
 
-```{r rec_hms, fig.cap="SHark Landings by Yea."}
+```{r rec_hms, fig.cap="Recreational shark landings from mrip."}
 ecodata::rec_hms %>% 
   dplyr::filter(Region == "Mid-Atlantic") %>% 
   ggplot2::ggplot()+
@@ -1055,46 +1062,54 @@ foundations<- ecodata::wind_dev_speed%>%
 total_area
 ```
 
-### Wind Sites and Occurrence 
+<!-- ### Wind Sites and Occurrence  -->
 
-<span style="color: red;">NO NEW DATA</span>
+<!-- <span style="color: red;">NO NEW DATA</span> -->
 
-These are the five species most likely to occur in the lease areas. 
+<!-- These are the five species most likely to occur in the lease areas.  -->
 
-```{r wind-occupancy, eval = T, echo = F, fig.cap='', out.width='80%'}
-wind1 <- ecodata::wind_occupancy
-wind1$trend<- ifelse(wind1$Trend == "pos", 
-                    "$\\nearrow$",
-                    ifelse(wind1$Trend == "neg",
-                    "$\\searrow$", 
-                    " ")) 
-wind2<-wind1 %>% dplyr::select(Area, Season, Species, trend)
-names<-c("Area", "Season", "Species", "trend")
-bnew<-c("Area.1", "Season.1", "Species.1", "trend.1")
-cnew<-c("Area.2", "Season.2", "Species.2", "trend.2")
-dnew<-c("Area.3", "Season.3", "Species.3", "trend.3")
-enew<-c("Area.4", "Season.4", "Species.4", "trend.4")
-a<-wind2 %>% dplyr::filter(Area == "Existing-North") 
-b<-wind2 %>% dplyr::filter(Area == "Proposed-North") %>% 
-  dplyr::rename_at(vars(names), ~ bnew)
-c<-wind2 %>% dplyr::filter(Area == "Existing-Mid")%>% 
-  dplyr::rename_at(vars(names), ~ cnew)
-d<-wind2 %>% dplyr::filter(Area == "Proposed-Mid")%>% 
-  dplyr::rename_at(vars(names), ~ dnew)
-e<-wind2 %>% dplyr::filter(Area == "Existing-South")%>% 
-  dplyr::rename_at(vars(names), ~ enew)
-all<- a %>% cbind(b,c,d,e) %>% 
-  dplyr::select(2:4,7:8,11:12,15:16,19:20)
-  
-kable(all, escape = FALSE,
-      col.names = c("Season", "Species", "Trend", "Species", "Trend", "Species","Trend", "Species","Trend", "Species", "Trend"),
-      caption = "Species with highest probability of occupancy species each season and area, with observed trends",
-      booktabs = T) %>%
-    add_header_above(c(" " = 1, "Existing - North" = 2, "Proposed - North" = 2, 
-                     "Existing - Mid" = 2, "Proposed - Mid" = 2, 
-                     "Existing - South" = 2)) %>%
-  kable_styling(latex_options = c("hold_position", "scale_down")) 
-```
+<!-- ```{r wind-occupancy, eval = T, echo = F, fig.cap='', out.width='80%'} -->
+<!-- wind1 <- ecodata::wind_occupancy -->
+<!-- wind1$trend<- ifelse(wind1$Trend == "pos",  -->
+<!--                     "$\\nearrow$", -->
+<!--                     ifelse(wind1$Trend == "neg", -->
+<!--                     "$\\searrow$",  -->
+<!--                     " "))  -->
+<!-- wind2<-wind1 %>% dplyr::select(Area, Season, Species, trend) -->
+<!-- names<-c("Area", "Season", "Species", "trend") -->
+<!-- bnew<-c("Area.1", "Season.1", "Species.1", "trend.1") -->
+<!-- cnew<-c("Area.2", "Season.2", "Species.2", "trend.2") -->
+<!-- dnew<-c("Area.3", "Season.3", "Species.3", "trend.3") -->
+<!-- enew<-c("Area.4", "Season.4", "Species.4", "trend.4") -->
+<!-- a<-wind2 %>% dplyr::filter(Area == "Existing-North")  -->
+<!-- b<-wind2 %>% dplyr::filter(Area == "Proposed-North") %>%  -->
+<!--   dplyr::rename_at(vars(names), ~ bnew) -->
+<!-- c<-wind2 %>% dplyr::filter(Area == "Existing-Mid")%>%  -->
+<!--   dplyr::rename_at(vars(names), ~ cnew) -->
+<!-- d<-wind2 %>% dplyr::filter(Area == "Proposed-Mid")%>%  -->
+<!--   dplyr::rename_at(vars(names), ~ dnew) -->
+<!-- e<-wind2 %>% dplyr::filter(Area == "Existing-South")%>%  -->
+<!--   dplyr::rename_at(vars(names), ~ enew) -->
+<!-- all<- a %>% cbind(b,c,d,e) %>%  -->
+<!--   dplyr::select(2:4,7:8,11:12,15:16,19:20) -->
+
+<!-- kable(all, escape = FALSE, -->
+<!--       col.names = c("Season", "Species", "Trend", "Species", "Trend", "Species","Trend", "Species","Trend", "Species", "Trend"), -->
+<!--       caption = "Species with highest probability of occupancy species each season and area, with observed trends", -->
+<!--       booktabs = T) %>% -->
+<!--     add_header_above(c(" " = 1, "Existing - North" = 2, "Proposed - North" = 2,  -->
+<!--                      "Existing - Mid" = 2, "Proposed - Mid" = 2,  -->
+<!--                      "Existing - South" = 2)) %>% -->
+<!--   kable_styling(latex_options = c("hold_position", "scale_down"))  -->
+<!-- ``` -->
+
+
+
+
+
+
+
+
 
 
 <!-- ```{r wind-map, eval = T, echo = F, fig.cap="Map of BOEM existing (black) and proposed (red) lease areas as of February 2019.", message=FALSE, results=FALSE} -->
