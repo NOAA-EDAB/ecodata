@@ -1,7 +1,6 @@
 
 gom_larv_div <- ecodata::ichthyo_diversity %>%
-  dplyr::filter(EPU == "GOM", 
-                Season == "Fall") %>%
+  dplyr::filter(EPU == "GOM") %>%
   #dplyr::mutate(Var = word(Var,1)) %>% 
   #dplyr::group_by(Var) %>% 
   dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
@@ -23,8 +22,7 @@ gom_larv_div <- ecodata::ichthyo_diversity %>%
   ggplot2::theme(strip.text=element_text(hjust=0))
 
 gb_larv_div <- ecodata::ichthyo_diversity %>%
-  dplyr::filter(EPU == "GB", 
-                Season == "Fall") %>%
+  dplyr::filter(EPU == "GB") %>%
   #dplyr::mutate(Var = word(Var,1)) %>% 
   #dplyr::group_by(Var) %>% 
   dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 

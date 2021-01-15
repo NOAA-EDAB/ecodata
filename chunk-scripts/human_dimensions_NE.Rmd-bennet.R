@@ -40,12 +40,13 @@ ggplot2::ggplot()+
       ymin = -Inf, ymax = Inf)+
   #guides(color = F, fill = F)+
   ggplot2::geom_bar(aes(x=Time, y= Value, fill = Var), stat="identity")+
-  ggplot2::scale_fill_manual(name = "Indicators", values = ind_fill, guide = FALSE) +
+  ggplot2::scale_fill_manual(name = "Indicators", values = ind_fill, 
+                             labels = c("Price", "Volume"), guide = FALSE) +
   ggplot2::geom_line(data = revchange.gom, 
             aes(x = Time, y = revchange.line, colour = "$"))+
   ggplot2::scale_colour_grey(name ="Revenue Change") +
   ggplot2::ggtitle("Gulf of Maine Benthivore Component")+
-  ggplot2::labs(y="Value $1,000,000 ($2015)") +
+  ggplot2::ylab(element_blank()) +
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), limits = y.lim,
                      expand = c(0.01, 0.01)) +
@@ -66,12 +67,12 @@ ggplot2::ggplot()+
       ymin = -Inf, ymax = Inf)+
   
   ggplot2::geom_bar(aes(x=Time, y= Value, fill = Var), stat="identity")+
-  ggplot2::scale_fill_manual(name = "Indicators", values = ind_fill) +
+  ggplot2::scale_fill_manual(name = "Indicators", values = ind_fill,  labels = c("Price", "Volume")) +
   ggplot2::geom_line(data = revchange.gb, 
             aes(x = Time, y = revchange.line, colour = "$"))+
   ggplot2::scale_colour_grey(name ="Revenue Change") +
   ggplot2::ggtitle("Georges Bank Benthos Component")+
-  ggplot2::labs(y="") +
+  ggplot2::ylab("Value $1,000,000 ($2015)") + 
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), 
                               limits = y.lim, expand = c(0.01, 0.01)) +
@@ -80,7 +81,7 @@ ggplot2::ggplot()+
   ggplot2::theme(legend.position="bottom", legend.direction = "horizontal",
         legend.background = element_rect(fill = "transparent"), 
         legend.title = element_text(size = 8), 
-        legend.text = element_text(size = 8)) +
+        legend.text = element_text(size = 8)) 
   ggplot2::guides(color = guide_legend(order = 1),
          fill = guide_legend(order = 0))
 

@@ -1,7 +1,6 @@
 
 ma_larv_div <- ecodata::ichthyo_diversity %>%
-  dplyr::filter(EPU == "MAB", 
-                Season == "Fall") %>%
+  dplyr::filter(EPU == "MAB") %>%
   dplyr::mutate(Var = word(Var,1)) %>% 
   dplyr::group_by(Var) %>% 
   dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 

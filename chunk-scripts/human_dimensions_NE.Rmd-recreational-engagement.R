@@ -16,12 +16,14 @@ com2<-com %>%
                      breaks = com$Rating) +
   xlim(0,4.5)+
   ylim(0,1.6)+
-  theme(legend.position="top",
-        legend.title = element_blank())+
+  theme(legend.position=c(0.8, 0.85), 
+        legend.title = element_blank(),       
+        legend.background = element_blank(),
+        legend.box.background = element_rect(colour = "black"))+
   ggplot2::xlab("Recreation Engagament Score") +
   ggplot2::ylab("Recreation Reliance Score") +
   ggplot2::ggtitle("Social Vulnerability in Top Recreational Fishing Communities")+
-  ggplot2::guides(color = FALSE) +
+  #ggplot2::guides(color = FALSE) +
   ecodata::theme_ts()
   
   

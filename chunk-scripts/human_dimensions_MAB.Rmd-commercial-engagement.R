@@ -16,8 +16,10 @@ com2<-com %>%
                      breaks = com$Rating) +
   xlim(0,12)+
   ylim(0,5.5)+
-  theme(legend.position="top",
-        legend.title = element_blank())+
+  theme(legend.position=c(0.8, 0.85), 
+        legend.title = element_blank(),       
+        legend.background = element_blank(),
+        legend.box.background = element_rect(colour = "black"))+
   ggplot2::xlab("Commercial Engagament Score") +
   ggplot2::ylab("Commercial Reliance Score") +
   ggplot2::ggtitle("Social Vulnerability in Top Commercial Fishing Communities")+

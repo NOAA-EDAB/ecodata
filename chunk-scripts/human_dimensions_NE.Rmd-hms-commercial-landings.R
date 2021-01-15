@@ -39,6 +39,7 @@ p1<-apex %>%
         legend.direction = "horizontal", 
         legend.title = element_blank())+
   ggplot2::ylab("Landings (metric tons)")+
-  ggplot2::xlab("Time")
+  ggplot2::ggtitle("HMS Commercial Landings")
+  ggplot2::xlab(element_blank())
 
 p1

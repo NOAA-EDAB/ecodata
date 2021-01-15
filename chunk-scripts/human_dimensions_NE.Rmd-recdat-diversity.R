@@ -92,6 +92,8 @@ rec_div <- recdat %>%
 
 rec_div_catch <- recdat %>% 
   dplyr::filter(Var == "Recreational Diversity of Catch") %>% 
+  
+  plyr::mutate(hline = mean(Value)) %>% 
   ggplot2::ggplot() + 
  #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
