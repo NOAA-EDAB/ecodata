@@ -101,19 +101,40 @@ get_heatwave_year <- function(save_clean = F){
   ### Take just clim
   #GB
   mhw<- gb.mhw$clim %>%
-    mutate(EPU = c("GB"))# add EPU column
+    mutate(EPU = c("GB"),
+           Year = c("2020"))# add EPU column
   mhw.gb.year <- mhw[13880:14223,]## days in 2020 data set only went to dec 9, 2020
   #GOM
   mhw<- gom.mhw$clim %>%
-    mutate(EPU = c("GOM"))# add EPU column
+    mutate(EPU = c("GOM"),
+           Year = c("2020"))# add EPU column
   mhw.gom.year <- mhw[13880:14223,]## days in 2020 data set only went to dec 9, 2020
   #MAB
   mhw<- mab.mhw$clim %>%
-    mutate(EPU = c("MAB"))# add EPU column
+    mutate(EPU = c("MAB"),
+           Year = c("2020"))# add EPU column
   mhw.mab.year <- mhw[13880:14223,]## days in 2020 data set only went to dec 9, 2020
-#  mhw.mab.year2018 <- mhw[13150:13514,] Running 2018 for Kim H
-  # bind dfs together for master list for plotting
-  heatwave_year<- rbind(mhw.gb.year, mhw.gom.year, mhw.mab.year)
+
+  ### 2012
+  #GB
+  mhw<- gb.mhw$clim %>%
+    mutate(EPU = c("GB"),
+           Year = c("2012"),
+           DoY = stringr::str_sub(t,-5))# add EPU column
+  mhw.gb.year2012 <- mhw[10958:11301,]## days in 2012
+  #GOM
+  mhw<- gom.mhw$clim %>%
+    mutate(EPU = c("GOM"),
+           Year = c("2012"))# add EPU column
+  mhw.gom.year2012 <- mhw[10958:11301,]## days in 2012
+  mhw<- mab.mhw$clim %>%
+    mutate(EPU = c("MAB"),
+           Year = c("2012"),
+           DoY = stringr::str_sub(t,-5))# add EPU column
+  mhw.mab.year2012 <- mhw[10958:11301,]## days in 2012
+
+  heatwave_year<- rbind(mhw.gb.year, mhw.gom.year, mhw.mab.year,
+                        mhw.gb.year2012, mhw.gom.year2012, mhw.mab.year2012)
 if (save_clean){
   usethis::use_data(heatwave_year, overwrite = T)
 } else {
