@@ -371,7 +371,7 @@ cowplot::plot_grid(gb_total, gom_total, ncol = 2)
 
 #### Commercial revenue
 
-```{r bennet, fig.cap = paste0("Revenue change from the long-term mean in 2015 dollars (black), Price (PI), and Volume Indicators (VI) for commercial landings in Georges Bank (left) and Gulf of Maine (right). \\label{bennet}")}
+```{r bennet, echo = FALSE, message=FALSE, results='hide', fig.cap = paste0("Revenue change from the long-term mean in 2015 dollars (black), Price (PI), and Volume Indicators (VI) for commercial landings in Georges Bank (left) and Gulf of Maine (right). \\label{bennet}")}
 
 #Filter data into two dataframes for plotting
 
