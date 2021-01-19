@@ -7,26 +7,32 @@ library(dplyr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-grayseal_csv<-"Orphanides_1996-2019_5yr_gs_est_LONG_FORMAT - Chris Orphanides - NOAA Federal.csv"
+grayseal_csv<-"1996-2019_5yr_gs_est_wPBR.xlsx"
 #HP bycatch time series estimates------------------------------------------------------
 get_grayseal <- function(save_clean = F){
-  d <- read.csv(file.path(raw.dir,grayseal_csv)) %>%
+  d <- readxl::read_excel(file.path(raw.dir,grayseal_csv)) %>%
     dplyr::mutate(Region = "All") %>%
-    dplyr::select(-X) %>%
-    dplyr::group_by(Year, Region) %>%
-    tidyr::pivot_wider(names_from = Var, values_from = Value)
+    dplyr::rename(EST5 = `5-YR EST`,
+                  EST1 = `NE 1-YR EST`) %>%
+    dplyr::select(-...8,
+                  -LCI_DIFF,
+                  -UCI_DIFF,
+                  -...11,
+                  -...12) #%>%
+    #dplyr::group_by(Year, Region) %>%
+    #tidyr::pivot_wider(names_from = Var, values_from = Value)
 
   #Create confidence intervals
-  var1nnum <- log(1+d$CV^2)
-  c <- exp(1.96 * sqrt(var1nnum))
-  d$up95ci <- d$EST * c
-  d$lo95ci <- d$EST / c
+  # var1nnum <- log(1+d$CV^2)
+  # c <- exp(1.96 * sqrt(var1nnum))
+  # d$up95ci <- d$EST * c
+  # d$lo95ci <- d$EST / c
 
 
   grayseal <- d %>%
-    tidyr::pivot_longer(cols = c("EST", "CV", "PBR", "up95ci", "lo95ci"), names_to = "Var", values_to = "Value") %>%
-    mutate(Units = "N") %>%
-    as.data.frame()
+    tidyr::pivot_longer(cols = c("EST5", "EST1","CV", "PBR", "LCI", "UCI"), names_to = "Var", values_to = "Value") %>%
+    mutate(Units = "N") #%>%
+    #as.data.frame()
 
   if (save_clean){
     usethis::use_data(grayseal, overwrite = TRUE)

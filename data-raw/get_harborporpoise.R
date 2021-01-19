@@ -7,24 +7,24 @@ library(dplyr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-harborporpoise_csv<-"Orphanides_1994-2019_5yr_hp_est_LONG_FORMAT - Chris Orphanides - NOAA Federal.csv"
+harborporpoise_csv<-"1994-2019_5yr_hp_est.xlsx"
 #HP bycatch time series estimates------------------------------------------------------
 get_harborporpoise <- function(save_clean = F){
-  d <- read.csv(file.path(raw.dir,harborporpoise_csv)) %>%
-    dplyr::mutate(Region = "All") %>%
-    dplyr::select(-X) %>%
-    dplyr::group_by(Year, Region) %>%
-    tidyr::pivot_wider(names_from = Var, values_from = Value)
+  d <- readxl::read_excel(file.path(raw.dir,harborporpoise_csv)) %>%
+    dplyr::mutate(Region = "All")# %>%
+    #dplyr::select(-X) %>%
+    #dplyr::group_by(Year, Region) %>%
+    #tidyr::pivot_wider(names_from = Var, values_from = Value)
 
-  #Create confidence intervals
-  var1nnum <- log(1+d$CV^2)
-  c <- exp(1.96 * sqrt(var1nnum))
-  d$up95ci <- d$EST * c
-  d$lo95ci <- d$EST / c
+  # #Create confidence intervals
+  # var1nnum <- log(1+d$CV^2)
+  # c <- exp(1.96 * sqrt(var1nnum))
+  # d$up95ci <- d$EST * c
+  # d$lo95ci <- d$EST / c
 
 
   harborporpoise <- d %>%
-    tidyr::pivot_longer(cols = c("EST", "CV", "PBR", "up95ci", "lo95ci"), names_to = "Var", values_to = "Value") %>%
+    tidyr::pivot_longer(cols = c("EST", "CV", "PBR", "LCI", "UCI"), names_to = "Var", values_to = "Value") %>%
     mutate(Units = "N") %>%
     as.data.frame()
 
