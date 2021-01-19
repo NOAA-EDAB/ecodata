@@ -33,13 +33,22 @@ GB_chl_weekly <- interp_chl_pp(epu = "GB", Variable = "WEEKLY_CHLOR_A_MEDIAN")
 GOM_chl_weekly <- interp_chl_pp(epu = "GOM", Variable = "WEEKLY_CHLOR_A_MEDIAN")
 ne_chl_weekly<-rbind(GB_chl_weekly, GOM_chl_weekly)
 
-ne_chl <- ggplot2::ggplot(data = ne_chl_weekly) +
+ne_early<-ne_chl_weekly %>% filter(Week.x <=26)
+ne_late<-ne_chl_weekly %>% filter(Week.x >=26)
+
+ne_chl <- ggplot2::ggplot(data = ne_early) +
   ggplot2::geom_line(aes(x = Time, y = LTM)) +
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(sd.low,0), ymax = sd.high), 
               alpha = 0.1,
               fill = "grey1") +
   ggplot2::geom_line(aes(x = Time, y = Value),
             size = 1,color = "#33a02c") +
+    ggplot2::geom_line(data = ne_late, aes(x = Time, y = LTM)) +
+  ggplot2::geom_ribbon(data = ne_late,aes(x = Time, ymin = pmax(sd.low,0), ymax = sd.high), 
+              alpha = 0.1,
+              fill = "grey1") +
+  ggplot2::geom_line(data = ne_late,aes(x = Time, y = Value),
+            size = 1,color = "#33a02c", linetype = "dashed") +
   ggplot2::ggtitle(expression("GB chlorophyll"~italic(a)~"")) +
   ggplot2::ylim(c(0, 3))+
   ggplot2::facet_wrap(EPU~., ncol = 2)+
@@ -57,13 +66,22 @@ GB_ppd_weekly <- interp_chl_pp(epu = "GB",  Variable = "WEEKLY_PPD_MEDIAN")
 GOM_ppd_weekly <- interp_chl_pp(epu = "GOM", Variable = "WEEKLY_PPD_MEDIAN")
 ne_ppd_weekly<-rbind(GB_ppd_weekly, GOM_ppd_weekly)
 
-ne_ppd <- ggplot2::ggplot(data = ne_ppd_weekly) +
+ne_pp_early<-ne_ppd_weekly %>% filter(Week.x <=26)
+ne_pp_late<-ne_ppd_weekly %>% filter(Week.x >=26)
+
+ne_ppd <- ggplot2::ggplot(data = ne_pp_early) +
   ggplot2::geom_line(aes(x = Time, y = LTM)) +
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(sd.low,0), ymax = sd.high), 
               alpha = 0.1,
               fill = "grey1") +
   ggplot2::geom_line(aes(x = Time, y = Value),
             size = 1,color = "#33a02c") +
+    ggplot2::geom_line(data = ne_pp_late, aes(x = Time, y = LTM)) +
+  ggplot2::geom_ribbon(data = ne_pp_late,aes(x = Time, ymin = pmax(sd.low,0), ymax = sd.high), 
+              alpha = 0.1,
+              fill = "grey1") +
+  ggplot2::geom_line(data = ne_pp_late,aes(x = Time, y = Value),
+            size = 1,color = "#33a02c", linetype = "dashed") +
   ggplot2::ggtitle(expression("GB primary production")) +
   guides(color = F) +
   ggplot2::facet_wrap(EPU~., ncol = 2)+
