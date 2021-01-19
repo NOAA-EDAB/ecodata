@@ -1,6 +1,7 @@
 
 ecodata::heatwave_year %>% 
-  filter(EPU == "GOM") %>% 
+  filter(EPU == "GOM", 
+         Year == "2020") %>% 
   ggplot( aes(x = t, y = temp))+
   geom_flame(aes(y2 = thresh))+ 
   geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
