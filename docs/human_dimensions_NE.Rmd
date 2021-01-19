@@ -486,12 +486,17 @@ indicators <- ecodata::bennet %>%
   dplyr::mutate(Var, Var = plyr::mapvalues(Var, from = c("Total Volume Index - Bennet", "Total Price Index - Bennet"),
                                            to = c("Volume","Price"))) %>% 
   dplyr::group_by(Time) %>% 
-  dplyr::mutate(New = sum(Value))
+  as.data.frame()
+  #dplyr::mutate(New = sum(Value))
 
 revchange <- ecodata::bennet %>% 
   dplyr::filter(EPU %in% c("GOM","GB"),
          Var %in% c("Total Revenue Change - Bennet"),
-         !Time<1985)
+         !Time<1985) %>% 
+  as.data.frame()
+
+output2<- indicators %>% rbind( revchange) 
+
 #custom bar fill color (color-blind friendly)
 ind_fill <- c("#a6cee3", "#b2df8a")
 
@@ -520,6 +525,8 @@ ggplot2::ggplot()+
   ecodata::theme_ts() +
   ggplot2::facet_wrap(~EPU)+
   ggplot2::theme(title = element_text(size = 10))
+
+indicators %>% kable()
 
 ```
 

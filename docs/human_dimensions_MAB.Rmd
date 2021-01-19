@@ -995,19 +995,19 @@ ecodata::wind_revenue %>%
 
 ```{r wind-dev-cumul, fig.cap = ""}
 
-knitr::include_graphics(file.path(image.dir, "CumulativeWindDraft_20201231.jpg"))
+knitr::include_graphics(file.path(image.dir, "All_2021119-01.jpg"))
 
 ```
 
 ```{r wind-dev-cumul-MAB, fig.cap = ""}
 
-knitr::include_graphics(file.path(image.dir, "MidAtlantic_20201231.jpg"))
+knitr::include_graphics(file.path(image.dir, "MidAtlantic_2021119-01.jpg"))
 
 ```
 
 ```{r wind-dev-NE, fig.cap = ""}
 
-knitr::include_graphics(file.path(image.dir, "Northeast_20201231.jpg"))
+knitr::include_graphics(file.path(image.dir, "NE2021119.jpg"))
 
 ```
 
