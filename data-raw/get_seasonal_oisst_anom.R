@@ -33,7 +33,7 @@ seasonal_epu_ltm <- function(ltm, epu_name){
 seasonal_oisst_anom_nc <-"sst.day.mean.ltm.1982-2010.nc"
 
 #Get long-term mean for anomaly calculation
-ltm <- raster::stack(file.path(raw.dir,seasonal_oisst_anom_nc))
+ltm <- raster::stack(file.path(ltm.dir,seasonal_oisst_anom_nc))
 ltm <- raster::crop(ltm, extent(280,300,30,50))
 ltm <- raster::rotate(ltm)
 

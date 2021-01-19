@@ -91,8 +91,8 @@ label.size <- 5
 hjust.label <- 1.5
 letter_size <- 4
 feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
-x.shade.min <- 2009
-x.shade.max <- 2019
+x.shade.min <- 2010
+x.shade.max <- 2020
 #Function for custom ggplot facet labels
 label <- function(variable,value){
   return(facet_names[value])
@@ -106,8 +106,12 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 ### Surveys {.tabset .tabset-fade}
 
-#### NEFSC BTS
+<span style="color: red;">ONLY ME/NH NEW DATA</span>
 
+#### NEFSC BTS
+ 
+<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
+ 
 ```{r aggregate-biomass, fig.cap = paste0("Spring (left) and fall (right) NEFSC surveyed biomass in Georges Bank.")}
 agg<-ecodata::aggregate_biomass %>% 
   dplyr::filter(!stringr::str_detect(Var, "Apex|inshore|offshore|managed|NEFMC|MAFMC|JOINT|NA")) %>% #remove unused datasets
@@ -301,7 +305,7 @@ p4<- gb_surv %>%
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0))
 
-cowplot::plot_grid(p1, p2, p3, p4, nrow=4)
+cowplot::plot_grid( p2, p3, p4, nrow=3)
 ```
 
 
@@ -469,10 +473,12 @@ ggplot2::ggplot(aes(x = Time, y = Mean)) +
 cowplot::plot_grid(p1, p2, p3, p4, nrow=4)
 ```
 
-#### NEFSC Survey location map
+
 
 
 #### NEFMC Benthivores in MAB
+
+<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
 
 ```{r nefsc-survey-disaggregated-NEFMC-ssp-in-mab}
 nefmc_ma <- ecodata::nefsc_survey_disaggregated %>% 
@@ -526,6 +532,8 @@ mab_nefmc_props
 ```
 
 #### MA inshore survey
+
+<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
 
 ```{r ma-inshore-survey, fig.cap = "Spring (left) and fall (right) surveyed biomass from the Massachusetts state inshore bottom trawl survey."}
 mass <- ecodata::mass_inshore_survey %>% 
@@ -830,6 +838,8 @@ cowplot::plot_grid(p1, p2, p3, p4, nrow = 4)
 
 #### Proportion managed species in NEFSC BTS
 
+<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
+
 ```{r nefsc-survey-disaggregated-managed-spp-bts-gb}
 prop <- ecodata::nefsc_survey_disaggregated %>% 
   dplyr::filter(!stringr::str_detect(`Feeding guild`, "Other|other"),
@@ -948,6 +958,9 @@ GOM_prop
 
 
 ### Productivity anomaly
+
+<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
+
 ```{r productivity-anomaly-gb, fig.cap = "Small fish per large fish biomass anomaly in Georges Bank."}
 #### Adjust plot properties -------------------------------
 adjustAxes <- 
@@ -1112,23 +1125,17 @@ gom
 
 ### Condition factor
 
-#### GB
-```{r gb-cf, fig.cap = "Condition factor for species sampled in Georges Bank."}
+```{r gom-cf, fig.cap = "Condition factor for species sampled in the Gulf of Maine.", fig.width=50}
 
 
-knitr::include_graphics(file.path(image.dir, "GBcondition_2019_viridis_final.jpg"))
-
-```
-
-#### GOM
-```{r gom-cf, fig.cap = "Condition factor for species sampled in the Gulf of Maine."}
-
-
-knitr::include_graphics(file.path(image.dir, "GOMcondition_2019_viridis_final.jpg"))
+knitr::include_graphics(c(file.path(image.dir, "GOMcondition_2020_viridis_final.jpg"),file.path(image.dir, "GBcondition_2020_viridis_final.jpg") ))
 
 ```
 
 ### Stomach Fullness
+
+<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
+
 ```{r stom-fullness, fig.cap=" Stomach Fullness Anomaly in New England." }
 gb_fullness <- ecodata::stom_fullness %>%
   dplyr::group_by(Var, EPU) %>% ## Remove values with missing data
@@ -1174,12 +1181,12 @@ gom_fullness
 ### Larval diversity {.tabset .tabset-fade}
 
 
+
 ```{r ichthyo-diversity}
 gom_larv_div <- ecodata::ichthyo_diversity %>%
-  dplyr::filter(EPU == "GOM",
-         str_detect(Var, "Ich_Shannon")) %>%
-  dplyr::mutate(Var = word(Var,1)) %>% 
-  dplyr::group_by(Var) %>% 
+  dplyr::filter(EPU == "GOM") %>%
+  #dplyr::mutate(Var = word(Var,1)) %>% 
+  #dplyr::group_by(Var) %>% 
   dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
   ggplot2::ggplot(aes(x = Time, y = Value, group = Var)) +
   ggplot2::geom_line() +
@@ -1199,10 +1206,9 @@ gom_larv_div <- ecodata::ichthyo_diversity %>%
   ggplot2::theme(strip.text=element_text(hjust=0))
 
 gb_larv_div <- ecodata::ichthyo_diversity %>%
-  dplyr::filter(EPU == "GB",
-         stringr::str_detect(Var, "Ich_Shannon")) %>%
-  dplyr::mutate(Var = word(Var,1)) %>% 
-  dplyr::group_by(Var) %>% 
+  dplyr::filter(EPU == "GB") %>%
+  #dplyr::mutate(Var = word(Var,1)) %>% 
+  #dplyr::group_by(Var) %>% 
   dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
   ggplot2::ggplot(aes(x = Time, y = Value, group = Var)) +
   ggplot2::geom_line() +
@@ -1214,7 +1220,7 @@ gb_larv_div <- ecodata::ichthyo_diversity %>%
   ggplot2::ggtitle("GB larval diversity") +
   ylab("Shannon Diversity") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
-      geom_hline(aes(yintercept = hline),
+   geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+
@@ -1226,13 +1232,15 @@ gb_larv_div + gom_larv_div + patchwork::plot_layout(ncol = 1)
 
 ### GOM Common Tern
 
-Potential to add Puffin data mid-Jan. 
+2020 was a challenging year for terns raising chicks - although diet composition was pretty similar to the long term average the quantity of food readily available was apparently less than normal, particularly around the time of chick hatching (confounded a little by cold, wet weather) and when chicks would normally be close to fledging (mid-late July). Our anecdotal observations of feeding rates were low at both those times.
+
+
 
 
 ```{r seabird-ne-diversity, fig.cap = "Shannon diversity of common tern diets observed at nesting sites in Gulf of Maine. Diversity of common tern diets has been predominantly above the long-term mean since 2006.",fig.width = 5, fig.asp = 0.55}
 
 diet_div <- ecodata::seabird_ne %>% 
-  dplyr::filter(stringr::str_detect(Var, "Diet"),
+  dplyr::filter(!stringr::str_detect(Var, "Productvity"),
          !stringr::str_detect(Var, "Sum")) %>% 
   dplyr::mutate(Island = word(Var, 1),
          Var = word(Var, 4)) %>% 
@@ -1304,11 +1312,12 @@ shannon
 ```{r seabird-ne-prey-freq, fig.cap = "Prey frequencies in the diets of common tern observed at seven different islands in Gulf of Maine."}
 
 prey_freq <- ecodata::seabird_ne %>% 
-  dplyr::filter(stringr::str_detect(Var, "Diet"),
+  dplyr::filter(!stringr::str_detect(Var, "Productivity"),
          !stringr::str_detect(Var, "Sum")) %>% 
-  dplyr::mutate(Island = word(Var, 1),
-         Var = word(Var, 4)) %>%
-  dplyr::group_by(Var, Time) %>% 
+  tidyr::separate(Var,c("Island", "COTE", "Spp", "Extra"), sep = " ") %>% 
+  mutate(Diet = (paste(Spp, Extra, sep = " " ))) %>% 
+  mutate(Diet = (gsub("NA", "", Diet))) %>% 
+  dplyr::group_by(Diet, Time) %>% 
   dplyr::summarise(Value = sum(Value, na.rm = T)) %>% 
   dplyr::group_by(Time) %>% 
   dplyr::mutate(Freq = Value/sum(Value, na.rm = T)) %>% 
@@ -1316,12 +1325,12 @@ prey_freq <- ecodata::seabird_ne %>%
 
 prey_freq1 <- prey_freq %>% 
   dplyr::filter(Freq > 0.05) %>% 
-  dplyr::mutate(Prey = gsub("\\.", " ", Var)) %>% 
-  dplyr::mutate(Prey = gsub("Other Invertebrate", "Unknown Invertebrate", Prey))
+  #dplyr::mutate(Prey = gsub("\\.", " ", Var)) %>% 
+  dplyr::mutate(Diet = gsub("Other Invertebrate", "Unknown Invertebrate", Diet))
 
 prey_freq2<- prey_freq %>% 
   dplyr::filter(Freq < 0.05) %>% 
-  dplyr::mutate(Prey = c("<5% Occurance"))
+  dplyr::mutate(Diet = c("<5% Occurance"))
 
 prey_freq3<-prey_freq1 %>% 
   rbind(prey_freq2)
@@ -1332,7 +1341,7 @@ colors<- c("grey", "#a6cee3", "#1f78b4", "#b2df8a",
 diet_freq_bar <-
   ggplot2::ggplot() +
   ggplot2::geom_bar(data = prey_freq3, 
-           aes(x = Time, y = Freq, fill = Prey), 
+           aes(x = Time, y = Freq, fill = Diet), 
            stat = "identity") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
   ggplot2::scale_fill_manual(values = colors) +
@@ -1419,14 +1428,15 @@ full_map
 
 #### Common tern productivity
 
-Despite the overall warming trend in the GOM, common terns can have good productivity years, suggesting in some years at least, forage fish can still occur in reasonable abundance in traditional areas. In the long term, we hope this will continue to hold true. A concern will be how frequent the hot (poor) years are.
+
 
 ```{r seabird-ne-productivity, fig.cap = "Mean common tern productivity at nesting sites in Gulf of Maine. Error bars show +/- 1 SE of the mean."}
 aggregate_prod <- ecodata::seabird_ne %>% 
-    dplyr::filter(!stringr::str_detect(Var, "Diet|Sum"))  %>% 
-  dplyr::mutate(Island = word(Var, 1),
-         Var = word(Var, 3),
-         Island = plyr::mapvalues(Island, from = c("EER","JI","MR","OGI","PINWR","SINWR","STI"),
+    dplyr::filter(stringr::str_detect(Var, "Productivity"))  %>% 
+  tidyr::separate(Var,c("Island", "COTE", "Spp", "Extra"), sep = " ") %>% 
+  mutate(Diet = (paste(Spp, Extra, sep = " " ))) %>% 
+  mutate(Diet = (gsub("NA", "", Diet))) %>% 
+  dplyr::mutate(Island = plyr::mapvalues(Island, from = c("EER","JI","MR","OGI","PINWR","SINWR","STI"),
                                   to = c("Eastern Egg Rock", "Jenny Island", "Matinicus Rock", 
                                          "Outer Green Island", "Pond Island", "Seal Island",
                                          "Stratton Island"))) %>%
@@ -1468,3 +1478,44 @@ aggregate_prod %>%
 
 ```
 
+### Forage Anomaly
+
+[Taxa include](https://docs.google.com/spreadsheets/d/108snlOTy1wzMGmxbYp1qJuKgqYfYM8MD/edit#gid=966266704)
+
+```{r}
+ecodata::forage_anomaly %>% 
+  filter(!EPU == "MAB") %>% 
+  pivot_wider(names_from = Var, values_from = Value) %>% 
+  ggplot()+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_point(aes(x=Time, y = Forage_Mean))+
+  ggplot2::geom_line(aes(x=Time, y =Forage_Mean))+
+  ggplot2::geom_ribbon(aes(ymin = Forage_Lower, ymax = Forage_Upper, x = Time), alpha = 0.3)+
+  ggplot2::geom_hline(yintercept = 0, linetype = "dashed")+
+  ggplot2::facet_wrap(~EPU)+
+  ggplot2::ggtitle("Forage Anomalies")+
+  ggplot2::ylab("Forage Anomaly")+
+  ecodata::theme_ts()
+
+```
+
+### Observed Shark Numbers
+
+```{r}
+ecodata::observed_sharks %>% 
+  filter(!EPU == "MAB", 
+         !EPU == "SS") %>% 
+  ggplot()+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_point(aes(x=Time, y = Value, color = Var))+
+  ggplot2::geom_line(aes(x=Time, y = Value, color = Var))+
+  ggplot2::facet_wrap(~EPU)+
+  ggplot2::ggtitle("Observed Sharks")+
+  ggplot2::ylab("Number of Sharks per Haul")+
+  ecodata::theme_ts()
+
+```

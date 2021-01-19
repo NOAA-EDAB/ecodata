@@ -4,7 +4,7 @@ library(readxl)
 library(stringr)
 
 raw.dir <- here::here("data-raw")
-zoo_diversity_xlsx <- "NEFSCZooplankton_v3_6b_v2018.xlsx"
+zoo_diversity_xlsx <- "NEFSCZooplankton_v3_7_v2019.xlsx"
 ### Zooplankton Diversity
 get_zoo_diversity <- function(save_clean = F){
 

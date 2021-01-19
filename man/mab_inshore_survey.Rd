@@ -4,7 +4,8 @@
 \name{mab_inshore_survey}
 \alias{mab_inshore_survey}
 \title{NEAMAP Mid-Atlantic inshore trawl survey}
-\format{These data contain 184 rows and 5 columns
+\format{
+These data contain 184 rows and 5 columns
 
 \itemize{
 \item Var: Specifies variable type, including SOE species groupings and sampling season with stratified mean biomass per tow ("index")
@@ -13,7 +14,8 @@ or sample coefficient of variation ("cv").
 \item Time: Sampling year.
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.
 \item Units: Units of variable \code{Var}.
-}}
+}
+}
 \usage{
 mab_inshore_survey
 }

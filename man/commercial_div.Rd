@@ -4,7 +4,8 @@
 \name{commercial_div}
 \alias{commercial_div}
 \title{Commercial fisheries diversity}
-\format{These data contain 132 rows and 5 columns.
+\format{
+These data contain 132 rows and 5 columns.
 
 \itemize{
 \item Var: Specifies diversity metric or number of fleets, where fleet is defined by vessel length and gear type.
@@ -12,7 +13,8 @@
 \item EPU: Specifies region data were drawn from. Either New England ("NE") or Mid-Atlantic ("MA").
 \item Units: Units of variable \code{Var}.
 \item Time: Year.
-}}
+}
+}
 \usage{
 commercial_div
 }

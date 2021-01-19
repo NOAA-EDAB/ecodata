@@ -6,13 +6,26 @@ managed_landings <- ecodata::comdat  %>%
          Time >= 1986,
          EPU == epu_abbr)
 
+# HMS Landings
+apex<-ecodata::hms_landings %>% 
+  dplyr::filter(stringr::str_detect(Var, "Landings")) %>% 
+  separate(Var, c("Var", "trash"), sep = "_") %>% 
+  group_by(YEAR) %>% 
+  summarise(Value = sum(Value)) %>% 
+  rename( Time = YEAR) %>% 
+  mutate(Var = c("HMS Landings"), 
+         Units = c("metric tons"), 
+         EPU = c("MAB"))
+
 #Total landings
 total_landings <- ecodata::comdat  %>%
   dplyr::filter(!stringr::str_detect(Var, "managed species"),
          !stringr::str_detect(Var, "Other"),
+         !stringr::str_detect(Var, "Apex"),
          stringr::str_detect(Var, "Landings"),
          Time >= 1986,
-         EPU == epu_abbr)
+         EPU == epu_abbr) %>% 
+  rbind(apex)
 
 total_landings_agg <- total_landings %>%
   dplyr::group_by(Time) %>%

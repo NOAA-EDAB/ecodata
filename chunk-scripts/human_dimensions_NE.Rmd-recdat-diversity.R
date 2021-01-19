@@ -80,7 +80,7 @@ rec_div <- recdat %>%
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Rec. fleet effort diversity")+
-  ggplot2::ylab(expression("Effective Shannon")) +
+  ggplot2::ylab("Effective Shannon") +
   ggplot2::xlab("")+
   ggplot2::geom_hline(aes(yintercept = hline,
                color = Var),
@@ -92,6 +92,8 @@ rec_div <- recdat %>%
 
 rec_div_catch <- recdat %>% 
   dplyr::filter(Var == "Recreational Diversity of Catch") %>% 
+  
+  plyr::mutate(hline = mean(Value)) %>% 
   ggplot2::ggplot() + 
  #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -112,7 +114,7 @@ rec_div_catch <- recdat %>%
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Rec. diversity of catch")+
-  ggplot2::ylab(expression("Effective Shannon")) +
+  ggplot2::ylab("Effective Shannon") +
   ggplot2::xlab("Time")+
   ggplot2::geom_hline(aes(yintercept = hline,
                color = Var),

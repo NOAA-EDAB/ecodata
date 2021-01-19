@@ -4,7 +4,8 @@
 \name{aggregate_biomass}
 \alias{aggregate_biomass}
 \title{NEFSC survey data broken into season and aggregate group biomass}
-\format{A data set containing 30572 rows and 6 columns.
+\format{
+A data set containing 30572 rows and 6 columns.
 
 \itemize{
 \item Time: Survey year.
@@ -13,7 +14,8 @@
 \item EPU: Ecological Production Unit (EPU) where data originated. Here "MAB" refers to the Mid-Atlantic Bight.
 \item Units: Units of variable \code{Var}.
 \item Source: Survdat.
-}}
+}
+}
 \usage{
 aggregate_biomass
 }

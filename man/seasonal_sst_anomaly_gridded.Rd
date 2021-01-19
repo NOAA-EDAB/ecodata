@@ -4,7 +4,8 @@
 \name{seasonal_sst_anomaly_gridded}
 \alias{seasonal_sst_anomaly_gridded}
 \title{Sea-surface temperature anomaly}
-\format{Data set contains 8528 rows and 4 columns
+\format{
+Data set contains 8528 rows and 4 columns
 
 \itemize{
 \item Latitude
@@ -12,7 +13,8 @@
 \item Value: Mean SST anomaly (degrees C)
 \item Season: Season
 
-}}
+}
+}
 \source{
 Source data for this indicator are available at
 \url{https://www.esrl.noaa.gov/psd/data/gridded/data.noaa.oisst.v2.highres.html}

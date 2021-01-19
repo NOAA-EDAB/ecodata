@@ -5,15 +5,11 @@ library(tidyr)
 library(stringr)
 
 raw.dir <- here::here("data-raw")
-ppr_rds<-"PPR.rds"
+ppr_rds<-"PPR_2020.rds"
 get_ppr <- function(save_clean = F){
 
   ppr<-readRDS(file.path(raw.dir, ppr_rds)) %>%
-    dplyr::rename(Time  = YEAR,
-           EPU = REGION,
-           Value = INDEX) %>%
-    dplyr::mutate(Units = c("%"),
-           Var = c("Primary Production Required"))
+    dplyr::rename(Time  = Year)
 
   if (save_clean){
     usethis::use_data(ppr, overwrite = T)
@@ -28,3 +24,4 @@ get_ppr <- function(save_clean = F){
     "Andrew Beet <andrew.beet@noaa.gov>")
 }
 get_ppr(save_clean = T)
+

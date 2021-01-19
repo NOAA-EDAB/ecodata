@@ -91,8 +91,8 @@ label.size <- 5
 hjust.label <- 1.5
 letter_size <- 4
 feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
-x.shade.min <- 2009
-x.shade.max <- 2019
+x.shade.min <- 2010
+x.shade.max <- 2020
 #Function for custom ggplot facet labels
 label <- function(variable,value){
   return(facet_names[value])
@@ -105,7 +105,11 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 ### Surveys {.tabset .tabset-fade}
 
+<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
+
 #### NEFSC BTS & NEAMAP 
+
+<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
 
 ```{r aggregate-biomass, fig.cap = paste0("Spring (left) and fall (right) surveyed biomass in the Mid-Atlantic Bight. Data from the NEFSC Bottom Trawl Survey are shown in black, with NEAMAP shown in red. \\label{nefsc-biomass}")}
 agg<-ecodata::aggregate_biomass %>% 
@@ -343,6 +347,8 @@ cowplot::plot_grid(p1, p2, p3, p4, nrow=4)
 
 #### Proportion managed species in NEFSC BTS
 
+<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
+
 ```{r nefsc-survey-disaggregated-managed-spp-bts}
 prop <- ecodata::nefsc_survey_disaggregated %>% 
   dplyr::filter(!stringr::str_detect(`Feeding guild`, "Other|other"),
@@ -402,6 +408,8 @@ mab_prop
 ```
 
 #### MAFMC Planktivores in NE
+
+<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
 
 ```{r nefsc-survey-disaggregated-mafmc-spp-in-ne}
 mafmc_ne <- ecodata::nefsc_survey_disaggregated %>% 
@@ -490,6 +498,8 @@ gom_mafmc_props + gb_mafmc_props + patchwork::plot_layout(ncol = 1)
 ```
 
 ### Productivity anomaly
+
+<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
 
 ```{r productivity-anomaly, fig.cap = "Small fish per large fish biomass anomaly in the Mid-Atlantic Bight."}
 
@@ -649,10 +659,14 @@ mid
 
 ```{r mab-cf, fig.cap = "Condition factor for species sampled in MAB."}
 
-knitr::include_graphics(file.path(image.dir, "MABcondition_2019_viridis_final.jpg"))
+knitr::include_graphics(file.path(image.dir, "MABcondition_2020_viridis_final.jpg"))
 
 ```
+
 ### Stomach Fullness
+
+<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
+
 ```{r stom-fullness, fig.cap= "Stomach fullness anomaly in the Mid-Atlantic Bight." }
 fullness <- ecodata::stom_fullness %>%
   dplyr::group_by(Var, EPU) %>% ## Remove values with missing data
@@ -673,12 +687,14 @@ fullness <- ecodata::stom_fullness %>%
 fullness
 
 ```
+
 ### Larval diversity
-Potentially adding 2018 point in mid-Jan - ETA Jan 17
+
+
+
 ```{r ichthyo-diversity}
 ma_larv_div <- ecodata::ichthyo_diversity %>%
-  dplyr::filter(EPU == "MAB",
-         str_detect(Var, "Ich_Shannon")) %>%
+  dplyr::filter(EPU == "MAB") %>%
   dplyr::mutate(Var = word(Var,1)) %>% 
   dplyr::group_by(Var) %>% 
   dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
@@ -690,7 +706,7 @@ ma_larv_div <- ecodata::ichthyo_diversity %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::ggtitle("Mid-Atlantic larval diversity") +
   ggplot2::ylab("Shannon Diversity") +
-  ggplot2::facet_wrap(Var~., ncol = 2, scales = "free_y") +
+  #ggplot2::facet_wrap(~ Season, ncol = 2, scales = "free_y") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
@@ -705,9 +721,10 @@ ma_larv_div
 
 
 ### Virginia Common Tern Abundance
-Values gathered from https://ccbbirds.org/wp-content/uploads/CCBTR-19-06_Colonial-waterbirds-in-coastal-Virginia-2018.pdf
-Recommended Citation - 
-Watts, B. D., B. J. Paxton, R. Boettcher, and A. L. Wilke. 2019. Status and distribution of colonial waterbirds in coastal Virginia: 2018 breeding season. Center for Conservation Biology Technical Report Series, CCBTR-19-06. College of William and Mary & Virginia Commonwealth University, Williamsburg, VA. 28 pp
+
+<span style="color: red;">NO NEW DATA</span>
+
+
 ```{r seabird-mab, fig.cap = "Estimated number of breeding pairs in Virginia barrier island/lagoon system. "}
 
 bird<- ecodata::seabird_mab %>% 
@@ -736,16 +753,83 @@ bird %>%
   ecodata::theme_ts()
 ```
 
+### Forage Anomaly
+
+[Taxa include](https://docs.google.com/spreadsheets/d/108snlOTy1wzMGmxbYp1qJuKgqYfYM8MD/edit#gid=966266704)
+
+```{r}
+ecodata::forage_anomaly %>% 
+  filter(EPU == "MAB") %>% 
+  pivot_wider(names_from = Var, values_from = Value) %>% 
+  ggplot()+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_point(aes(x=Time, y = Forage_Mean))+
+  ggplot2::geom_line(aes(x=Time, y =Forage_Mean))+
+  ggplot2::geom_ribbon(aes(ymin = Forage_Lower, ymax = Forage_Upper, x = Time), alpha = 0.3)+
+  ggplot2::geom_hline(yintercept = 0, linetype = "dashed")+
+  ggplot2::ggtitle("Forage Anomalies")+
+  ggplot2::ylab("Forage Anomaly")+
+  ecodata::theme_ts()
+
+```
+
+### Observed Shark Numbers
+
+```{r}
+ecodata::observed_sharks %>% 
+  filter(EPU == "MAB") %>% 
+  ggplot()+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_point(aes(x=Time, y = Value, color = Var))+
+  ggplot2::geom_line(aes(x=Time, y = Value, color = Var))+
+  ggplot2::ggtitle("Observed Sharks")+
+  ggplot2::ylab("Number of Sharks per Haul")+
+  ecodata::theme_ts()
+
+```
+
 
 ## Shelfwide Indicators{.tabset .tabset-fade}
 
 ### Protected species 
 
-Harbor porpoise bycatch continues to be quite low and has been low for a number of years now, so I don't think it is important to include anymore. At one point we had discussed putting in representative figures of marine mammal distribution available on a NEFSC website, but perhaps just mentioning the [link somewhere](https://www.nefsc.noaa.gov/AMAPPSviewer/) on the page would be better.
+```{r harborporpoise, fig.cap="Estimated Harbor porpoise bycatch (black) and the potential biological removal (red)." }
 
-Notes on upcoming indicators- 
-Salmon ecosystem indicator - in the works but won't be ready for this SOE. 
-Seals - diet work underway but unpublished so don't want to include. but can reference generally in text. -  their diet appears to lean on non-commercial fish far more than commercially important species, we can try out some text and see what Kimbelry Murray feels comfortable with.
+ecodata::harborporpoise %>% 
+  tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
+  ggplot2::ggplot()+
+  ggplot2::geom_point(aes(x=Year, y = EST), color = "black")+
+  ggplot2::geom_line(aes(x=Year, y = EST), color = "black")+
+  ggplot2::geom_point(aes(x=Year, y = PBR), color = "red")+
+  ggplot2::geom_line(aes(x=Year, y = PBR), color = "red")+
+  ggplot2::geom_ribbon(aes(ymin = lo95ci, ymax = up95ci, x = Year), alpha = 0.3)+
+  ggplot2::ggtitle("Harbor Porpoise Byctach")+
+  ggplot2::ylab("Estimated Bycatch (n)")+
+  ecodata::theme_ts()
+  
+```
+
+```{r grayseal, fig.cap="Estimated gray seal bycatch (black) and the potential biological removal (red)." }
+
+ecodata::grayseal %>% 
+  tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
+  ggplot2::ggplot()+
+  ggplot2::geom_point(aes(x=Year, y = EST), color = "black")+
+  ggplot2::geom_line(aes(x=Year, y = EST), color = "black")+
+  ggplot2::geom_point(aes(x=Year, y = PBR), color = "red")+
+  ggplot2::geom_line(aes(x=Year, y = PBR), color = "red")+
+  ggplot2::geom_ribbon(aes(ymin = lo95ci, ymax = up95ci, x = Year), alpha = 0.3)+
+  ggplot2::ggtitle("Gray Seal Byctach")+
+  ggplot2::ylab("Estimated Bycatch (n)")+
+  ecodata::theme_ts()
+  
+```
+
+
 
 [Starter text from Chris](https://docs.google.com/document/d/0B1lP7X3GP_hQSWRHV1NGWkFlc0VUNVNPcGJRalVUTEpUSjVz/edit?dls=true)
 
@@ -805,6 +889,8 @@ ecodata::narw %>%
 ```
 
 ### Aggregate species distribution
+
+<span style="color: red;">NO NEW DATA</span>
 
 ```{r species-dist, fig.cap = "Aggregate species distribution metrics for species in the Northeast Large Marine Ecosystem."}
 
@@ -883,71 +969,198 @@ asd + depth + patchwork::plot_layout(ncol = 1)
 
 
 ### Forage fish energy content
-Notably, the energy density Atlantic herring was
-lower (5.69 +/- 0.07 kJ/g wet weight) than earlier studies (10.6-9.4 kJ/ g wet weight). Silver hake, sandlance, lolligo and Illex were also lower than previous estimates. Energy density of Alewife, butterfish and Atlantic mackerel were higher than earlier estimates. Sampling and laboratory analysis is ongoing, with the goal of continuing routine monitoring of energy density of these species.
+
 ```{r energy-density, eval=T, echo=F}
 d<-ecodata::energy_density
 
-colNames <- c("Species",rep(c("Mean ED (SD)","N"),5),"Mean ED", "Mean ED (SD)")
+old.ed<- data.frame("Species" = c("Atl. Herring","Atl. Herring","Illex squid", "Illex squid", "Sand lance","Sand lance",
+                                  "Atl. Herring","Atl. Herring","Illex squid", "Illex squid", "Sand lance","Sand lance"),
+                    "Year" = c("1980s", "1990s","1980s", "1990s","1980s", "1990s",
+                               "1980s", "1990s","1980s", "1990s","1980s", "1990s"), 
+                    "Season" = c("Spring", "Spring", "Spring", "Spring", "Spring", "Spring", 
+                                     "Fall", "Fall", "Fall", "Fall", "Fall", "Fall"), 
+                    "N" = c(rep("NA", 12)), 
+                    "Energy.Density_Mean" = c(10.6, 9.4, 7.1, 5.9, 6.8, 4.4, 
+                                              10.6, 9.4, 7.1, 5.9, 6.8, 4.4), 
+                    "Energy.Density_SD" = c("NA", 1.4, "NA", 0.56, "NA", 0.82, 
+                                            "NA", 1.4, "NA", 0.56, "NA", 0.82))
+ed<- rbind(d, old.ed)
 
-kable(d, caption = "Forage fish energy content",col.names = colNames) %>%
-  kable_styling(bootstrap_options = "striped", font_size = 9) %>%
-  add_header_above(c(" " = 1, "Spring" = 2, "Fall" = 2, "Spring" = 2, "Fall" = 2, " " = 4)) %>% 
-  add_header_above(c(" " = 1, "2017" = 4, "2018" = 4, "Total" = 2, "Steimle and Terranove (1985)" = 1, "Lawson et al. (1998)" = 1))
+ed%>% 
+  dplyr::mutate(Energy.Density_Mean = as.numeric(Energy.Density_Mean), 
+                Energy.Density_SD = as.numeric(Energy.Density_SD), 
+                upper = Energy.Density_Mean + Energy.Density_SD, 
+                lower = Energy.Density_Mean - Energy.Density_SD) %>% 
+  dplyr::group_by(Season, Species) %>% 
+  ggplot2::ggplot(aes(x = Species, y = Energy.Density_Mean, fill = Year))+
+  ggplot2::geom_bar(stat = "identity", position = "dodge")+
+  ggplot2::geom_errorbar(aes(ymin=lower, ymax=upper), width=.2,
+                 position=position_dodge(.9)) + 
+  ggplot2::facet_wrap(~Season)+
+  ggplot2::ylab("Mean Energy Density")+
+  ggplot2::theme(axis.title.x=element_blank(), 
+                 axis.text.x = element_text(angle = 45,  hjust = 1), 
+                 legend.title = element_blank())+
+  ggplot2::ggtitle("Forage Fish Energy Density")+
+  ecodata::theme_facet()
+
+
 ```
 
 
-### Blue Runner on NES
+<!-- ### Blue Runner on NES -->
 
-```{r blue-runner, fig.cap = "Blue runner presence on Northeast Shelf"}
-blue<-ecodata::blue_runner %>% 
-  tidyr::separate(Var, c("Var", "Pos"), "L") %>% 
-  tidyr::spread(., Pos, Value) %>% 
-  dplyr::rename(Lat = at, 
-         Lon = on) %>% 
-  dplyr::mutate(Var = recode(Var,
-                      "Positive Blue Runner Tows before 2001 - " = "Prior to 2000",
-                      "Positive Blue Runner Tows 2001 - 2010 - " = "2001-2010", 
-                      "Positive Blue Runner Tows since 2010 - " = "Since 2010"))
-blue$Var <- factor(blue$Var, levels = c("Prior to 2000", "2001-2010", "Since 2010"))
-  
-#EPU shapefile
-epu_sf <- ecodata::epu_sf %>% 
-  dplyr::filter(EPU %in% c("GOM","GB", "MAB"))
+<!-- <span style="color: red;">NO NEW DATA</span> -->
 
-#Map line parameters
-map.lwd <- 0.4
+<!-- ```{r blue-runner, fig.cap = "Blue runner presence on Northeast Shelf"} -->
+<!-- blue<-ecodata::blue_runner %>%  -->
+<!--   tidyr::separate(Var, c("Var", "Pos"), "L") %>%  -->
+<!--   tidyr::spread(., Pos, Value) %>%  -->
+<!--   dplyr::rename(Lat = at,  -->
+<!--          Lon = on) %>%  -->
+<!--   dplyr::mutate(Var = recode(Var, -->
+<!--                       "Positive Blue Runner Tows before 2001 - " = "Prior to 2000", -->
+<!--                       "Positive Blue Runner Tows 2001 - 2010 - " = "2001-2010",  -->
+<!--                       "Positive Blue Runner Tows since 2010 - " = "Since 2010")) -->
+<!-- blue$Var <- factor(blue$Var, levels = c("Prior to 2000", "2001-2010", "Since 2010")) -->
 
-# Set lat/lon window for maps
-xmin = -77
-xmax = -65
-ymin = 35
-ymax = 45
-xlims <- c(xmin, xmax)
-ylims <- c(ymin, ymax)
+<!-- #EPU shapefile -->
+<!-- epu_sf <- ecodata::epu_sf %>%  -->
+<!--   dplyr::filter(EPU %in% c("GOM","GB", "MAB")) -->
 
-## Map plotting blue runner
-blue_map <- 
-  ggplot2::ggplot() +
-  ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) +
-  ggplot2::geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) +
-  ggplot2::geom_point(data = blue, aes(x = Lon, y = Lat, color = Var, shape = Var))+
-  ggplot2::scale_shape_manual(values=c(16, 3, 17))+
-  ggplot2::scale_color_manual(values = c("blue", "black", "red"))+
-  ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
-  ecodata::theme_map() +
-  ggplot2::ggtitle("Blue Runner Presence") +
-  ggplot2::xlab("") +
-  ggplot2::ylab("") +
-  ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
-        legend.key = element_blank(),
-        axis.title = element_text(size = 11),
-        strip.background = element_blank(),
-        strip.text=element_text(hjust=0),
-        axis.text = element_text(size = 8), 
-        legend.title = element_blank(), 
-        legend.position = c(0.6, 0.15))
+<!-- #Map line parameters -->
+<!-- map.lwd <- 0.4 -->
 
-blue_map
+<!-- # Set lat/lon window for maps -->
+<!-- xmin = -77 -->
+<!-- xmax = -65 -->
+<!-- ymin = 35 -->
+<!-- ymax = 45 -->
+<!-- xlims <- c(xmin, xmax) -->
+<!-- ylims <- c(ymin, ymax) -->
+
+<!-- ## Map plotting blue runner -->
+<!-- blue_map <-  -->
+<!--   ggplot2::ggplot() + -->
+<!--   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) + -->
+<!--   ggplot2::geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) + -->
+<!--   ggplot2::geom_point(data = blue, aes(x = Lon, y = Lat, color = Var, shape = Var))+ -->
+<!--   ggplot2::scale_shape_manual(values=c(16, 3, 17))+ -->
+<!--   ggplot2::scale_color_manual(values = c("blue", "black", "red"))+ -->
+<!--   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) + -->
+<!--   ecodata::theme_map() + -->
+<!--   ggplot2::ggtitle("Blue Runner Presence") + -->
+<!--   ggplot2::xlab("") + -->
+<!--   ggplot2::ylab("") + -->
+<!--   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75), -->
+<!--         legend.key = element_blank(), -->
+<!--         axis.title = element_text(size = 11), -->
+<!--         strip.background = element_blank(), -->
+<!--         strip.text=element_text(hjust=0), -->
+<!--         axis.text = element_text(size = 8),  -->
+<!--         legend.title = element_blank(),  -->
+<!--         legend.position = c(0.6, 0.15)) -->
+
+<!-- blue_map -->
+<!-- ``` -->
+
+### Condition project 
+
+[text here](https://docs.google.com/document/d/1uHMmMTnZG2LAmPi5SSO30k5_5NzfzdKj/edit)
+```{r condition-proj, fig.cap = ""}
+
+knitr::include_graphics(file.path(image.dir, "condition_proj.png"))
+
 ```
+
+### HMS CPUE
+
+```{r, hms-all-cpue}
+
+knitr::include_graphics(file.path(image.dir, "hms-too-big.png"))
+
+# ecodata::hms_cpue %>%
+#   ggplot()+
+#  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+#       xmin = x.shade.min , xmax = x.shade.max,
+#       ymin = -Inf, ymax = Inf) +
+#   ggplot2::geom_point(aes(x=Year, y = Value))+
+#   ggplot2::geom_line(aes(x=Year, y = Value))+
+#   ggplot2::facet_wrap(~Var, scales = "free")+
+#   ggplot2::ggtitle("HMS POP CPUE ALL")+
+#   ggplot2::ylab("Number per Haul")+
+#   ecodata::theme_ts()
+
+```
+
+
+```{r, hms-tuna-cpue}
+ecodata::hms_cpue %>% 
+  filter(str_detect(Var, "TUNA")) %>% 
+  ggplot()+
+ ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_point(aes(x=Year, y = Value))+
+  ggplot2::geom_line(aes(x=Year, y = Value))+
+  ggplot2::facet_wrap(~Var, scales = "free")+
+  ggplot2::ggtitle("HMS POP TUNA CPUE")+
+  ggplot2::ylab("Number per Haul")+
+  ecodata::theme_ts()
+
+```
+
+```{r hms-cpue-sharks, fig.cap="Species groupings based on list from Debbie Duarte - missing Boonethead, Atlantic Angel shark, Sixgill shark, sevengill shark, nurse shark, white shark, basking shark, lemon shark." }
+sp_cat<- read.csv(here::here("data-raw/hms-mrip/hms_sp_category.csv"))
+ecodata::hms_cpue %>% 
+  filter(str_detect(Var, "SHARK")) %>% 
+  rename(COMMON_POP = Var) %>% 
+  left_join(sp_cat) %>% 
+  group_by(Year, SP_CATEGORY) %>% 
+  summarise(Value = sum(Value)) %>% 
+  rename(Var = SP_CATEGORY) %>% 
+  filter(!Var == "NA") %>% 
+  ggplot()+
+ ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_point(aes(x=Year, y = Value, color = Var))+
+  ggplot2::geom_line(aes(x=Year, y = Value, color = Var))+
+  #ggplot2::facet_wrap(~Var, scales = "free")+
+  ggplot2::ggtitle("HMS POP SHARK CPUE")+
+  ggplot2::ylab("Number per Haul")+
+  ecodata::theme_ts()
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

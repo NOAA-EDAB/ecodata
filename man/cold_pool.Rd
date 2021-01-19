@@ -4,7 +4,8 @@
 \name{cold_pool}
 \alias{cold_pool}
 \title{Cold pool index}
-\format{A data set containing 41 rows and 5 columns.
+\format{
+A data set containing 41 rows and 5 columns.
 
 \itemize{
 \item Time: Year
@@ -13,7 +14,8 @@
 \item Units: Anomaly.
 \item Source: NEFSC Hydro Data (OCDBS).
 
-}}
+}
+}
 \usage{
 cold_pool
 }

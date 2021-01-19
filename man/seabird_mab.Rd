@@ -4,7 +4,8 @@
 \name{seabird_mab}
 \alias{seabird_mab}
 \title{Virginia waterbor productivity}
-\format{Data set contains 24 rows and 5 columns
+\format{
+Data set contains 24 rows and 5 columns
 
 \itemize{
 \item Group: Group of waterbirds.
@@ -15,7 +16,8 @@
 }
 
 More information including processing and indicator derivation steps are available at
-\url{https://noaa-edab.github.io/tech-doc/ma-waterbird-productivity.html}.}
+\url{https://noaa-edab.github.io/tech-doc/ma-waterbird-productivity.html}.
+}
 \usage{
 seabird_mab
 }

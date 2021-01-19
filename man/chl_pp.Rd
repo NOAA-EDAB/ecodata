@@ -4,7 +4,8 @@
 \name{chl_pp}
 \alias{chl_pp}
 \title{Chlorophyll \emph{a} and primary production}
-\format{These data contain 88076 rows and 5 columns.
+\format{
+These data contain 88076 rows and 5 columns.
 
 \itemize{
 \item Var: Specifies temporal sampling resolution (\code{ANNUAL},\code{MONTHLY},\code{WEEKLY}), variable type (\code{MEDIAN},
@@ -14,7 +15,8 @@ If \code{ANOMALY} is specified, \code{Var} also include a time range from which 
 \item Units: Units of variable \code{Var}.
 \item Time: Time step of \code{Var}. Time format is given as YYYYMM for monthly time steps and YYYYWW for weekly data.
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.
-}}
+}
+}
 \usage{
 chl_pp
 }

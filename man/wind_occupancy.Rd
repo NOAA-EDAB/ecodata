@@ -4,7 +4,8 @@
 \name{wind_occupancy}
 \alias{wind_occupancy}
 \title{Wind lease area and habitat occupancy model overlap}
-\format{Data set contains 50 rows and 5 columns
+\format{
+Data set contains 50 rows and 5 columns
 
 \itemize{
 \item Season: Fall or Spring.
@@ -12,7 +13,8 @@
 \item Mean: Mean.
 \item Trend: Trend of species in or out of wind lease area.
 \item Area: Existing or proposed.
-}}
+}
+}
 \usage{
 wind_occupancy
 }

@@ -2,34 +2,25 @@
 #Get data for plotting
 ## Apex pred
 apex<-ecodata::hms_landings %>% 
-  dplyr::filter(stringr::str_detect(Var, "Weight")) %>% 
-  tidyr::separate(., Var, "Var", "_")
+  dplyr::filter(stringr::str_detect(Var, "Landings")) %>% 
+  separate(Var, c("Var", "trash"), sep = "_")
 
-apex$sp.group <- ifelse(grepl("Shark", apex$Var, ignore.case = T), "shark", 
-         ifelse(grepl("TUNA", apex$Var, ignore.case = T), "tuna", "swordfish"))
 
-apex<-apex %>% 
-  dplyr::group_by(sp.group, Region, Time) %>% 
-  dplyr::summarise(Value = sum(Value)) %>% 
-  dplyr::mutate(Units = c("metric tons"),
-         feeding.guild = factor(c("Apex Predator")),
-         Value = (Value/2024.6)) %>% 
-  dplyr::rename(EPU = Region, 
-           Var = sp.group) %>% 
-  dplyr::mutate(grouping = factor(c("total")))
+#Define constants for figure plot
+series.col <- c("indianred","black")
 
 ##Plot
-apex_landings<-apex %>% 
+p1<-apex %>% 
   dplyr::filter(EPU == "NE") %>% 
   dplyr::group_by(Var) %>% 
   dplyr::mutate(hline = mean(Value)) %>% 
 
-  ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
+  ggplot2::ggplot(aes(x = YEAR, y = Value, color = Var)) +
   
   #Add time series
   ggplot2::geom_line(size = lwd) +
   ggplot2::geom_point(size = pcex) +
-  ggplot2::stat_summary(fun.y = sum, color = "black", geom = "line")+
+  #ggplot2::stat_summary(fun.y = sum, color = "black", geom = "line")+
   #scale_color_manual(values = series.col, aesthetics = "color")+
   #guides(color = FALSE) +
   ggplot2::geom_hline(aes(yintercept = hline,
@@ -47,7 +38,7 @@ apex_landings<-apex %>%
   ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), limits = c(1985, 2018)) +
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0), 
-        legend.position = c(0.4, 0.7), 
+        legend.position = "bottom", 
         legend.direction = "horizontal", 
         legend.title = element_blank())+
   ggplot2::ylab("")
@@ -165,7 +156,7 @@ gb_landings <- landings %>% dplyr::filter(EPU == "GB") %>%
   ggplot2::theme(strip.text=element_text(hjust=0)) +
   ggplot2::ggtitle("Georges Bank")
 
-apex_landings
+p1
 gb_landings
 gom_landings
 #, ncol = 1, align = 'v', rel_heights = c(1,4,4))

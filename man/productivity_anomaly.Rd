@@ -4,13 +4,15 @@
 \name{productivity_anomaly}
 \alias{productivity_anomaly}
 \title{Small fish per large fish biomass anomaly}
-\format{\itemize{
+\format{
+\itemize{
 \item Var: Common name of surveyed species. If data reflect the aggregated shelf-wide anomaly, then \code{NE LME} is included with the species name.
 \item EPU: EPU where sampling occurred.
 \item Time: Year.
 \item Value: Small fish per large fish biomass anomaly.
 \item Units: Units of variable \code{Var}.
-}}
+}
+}
 \usage{
 productivity_anomaly
 }

@@ -1,7 +1,6 @@
 
 ma_larv_div <- ecodata::ichthyo_diversity %>%
-  dplyr::filter(EPU == "MAB",
-         str_detect(Var, "Ich_Shannon")) %>%
+  dplyr::filter(EPU == "MAB") %>%
   dplyr::mutate(Var = word(Var,1)) %>% 
   dplyr::group_by(Var) %>% 
   dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
@@ -13,7 +12,7 @@ ma_larv_div <- ecodata::ichthyo_diversity %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::ggtitle("Mid-Atlantic larval diversity") +
   ggplot2::ylab("Shannon Diversity") +
-  ggplot2::facet_wrap(Var~., ncol = 2, scales = "free_y") +
+  #ggplot2::facet_wrap(~ Season, ncol = 2, scales = "free_y") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,

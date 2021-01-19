@@ -4,7 +4,8 @@
 \name{ne_wind}
 \alias{ne_wind}
 \title{NCEP NARR Wind}
-\format{Data set inclues 2385 rows and 5 columns
+\format{
+Data set inclues 2385 rows and 5 columns
 
 \itemize{
 \item Var: Specifies variable and season of interest.
@@ -12,7 +13,18 @@
 \item Units: Units of variable \code{Var}.
 \item EPU: Ecological Production Unit (EPU) from which data were collected.
 \item Time: Year.
-}}
+}
+
+Data set inclues 2385 rows and 5 columns
+
+\itemize{
+\item Var: Specifies variable and season of interest.
+\item Value: Value of variable \code{Var}.
+\item Units: Units of variable \code{Var}.
+\item EPU: Ecological Production Unit (EPU) from which data were collected.
+\item Time: Year.
+}
+}
 \source{
 \url{https://www.esrl.noaa.gov/psd/data/gridded/data.narr.monolevel.html}
 

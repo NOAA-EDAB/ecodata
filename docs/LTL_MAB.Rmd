@@ -79,7 +79,7 @@ label.size <- 5
 hjust.label <- 1.5
 letter_size <- 4
 feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
-x.shade.min <- 2009
+x.shade.min <- 2010
 x.shade.max <- 2020
 #Function for custom ggplot facet labels
 label <- function(variable,value){
@@ -97,7 +97,7 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 #### SST
 
-```{r seasonal-sst-anom-gridded, fig.cap="MAB seasonal sea surface temperature time series overlaid onto 2019 seasonal spatial anomalies."}
+```{r seasonal-sst-anom-gridded, fig.cap="MAB seasonal sea surface temperature time series overlaid onto 2020 seasonal spatial anomalies."}
 annotation_custom2 <- function (grob, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf, data) 
 {
   layer(data = data, stat = StatIdentity, position = PositionIdentity, 
@@ -142,7 +142,7 @@ sst_map <-
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
-  ggplot2::ggtitle("SST anomaly (2019)") +
+  ggplot2::ggtitle("SST anomaly (2020)") +
   ggplot2::xlab("Longitude") +
   ggplot2::ylab("Latitude") +
   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
@@ -245,9 +245,6 @@ fall_anom <-  ggplot2::ggplotGrob( seasonal_oisst_anom %>%
                                    stringr::str_detect(Var, "fall")) %>% 
                             dplyr::mutate(hline = mean(Value)) %>% 
                             ggplot2::ggplot(aes(x = Time, y = Value)) +
-                            ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-                                     xmin = x.shade.min , xmax = x.shade.max,
-                                     ymin = -Inf, ymax = Inf) +
                             ggplot2::geom_line() +
                             ggplot2::geom_point() +
                             ecodata::geom_gls(alpha = trend.alpha + 0.25) +
@@ -255,6 +252,9 @@ fall_anom <-  ggplot2::ggplotGrob( seasonal_oisst_anom %>%
                             ggplot2::xlab(element_blank())+
                             ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
                             ggplot2::geom_hline(aes(yintercept = hline)) +
+                            ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+                                     xmin = x.shade.min , xmax = x.shade.max,
+                                     ymin = -Inf, ymax = Inf) +
                             ecodata::theme_ts()+
                             ggplot2::theme(axis.title = element_text(size = 6),
                                   axis.text = element_text(size = 6),
@@ -284,39 +284,72 @@ sst_map +
 
 #### Bottom temperature
 
-```{r bottom-temp, fig.width = 6, fig.asp = .55, fig.cap="Annual bottom temperature in the Mid-Atlantic Bight."}
+```{r bottom-temp, fig.width = 6, fig.asp = .55, fig.cap="Annual bottom temperature in the Mid-Atlantic Bight. (black = Paula's, red = GLORYS)"}
 temp_anom <- ecodata::bottom_temp %>% 
   dplyr::filter(EPU == epu_abbr) %>% 
   tidyr::complete(Time = tidyr::full_seq(min(bottom_temp$Time):max(bottom_temp$Time),1),
            tidyr::nesting(Var)) %>% 
-  dplyr::mutate(hline = 0)
+  dplyr::mutate(hline = 0)%>%
+ dplyr::filter(Var == "bottom temp anomaly in situ")
 
-temp_anom %>%
- dplyr::filter(Var == "bottom temp anomaly in situ") %>%
+gl_bt<- ecodata::bottom_temp_glorys%>% 
+  dplyr::filter(EPU == epu_abbr)
+#bot_temp<-temp_anom %>%
+# dplyr::filter(Var == "bottom temp anomaly in situ") %>%
 ggplot2::ggplot() +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_line(aes(x = Time, y = Value)) +
-  ecodata::geom_gls(aes(x = Time, y = Value)) +
-  ggplot2::geom_point(aes(x = Time, y = Value), size = 1) +
+  ggplot2::geom_line(aes(x = temp_anom$Time, y = temp_anom$Value), color = "black") +
+  ggplot2::geom_point(aes(x = temp_anom$Time, y = temp_anom$Value), size = 1, color = "black") +
+  ggplot2::geom_point(aes(x = gl_bt$Time, y = gl_bt$Value), size = 1, color = "red") +
+  ggplot2::geom_line(aes(x = gl_bt$Time, y = gl_bt$Value), color = "red") +
+  ecodata::geom_gls(aes(x = temp_anom$Time, y = temp_anom$Value)) +
   ggplot2::ylab("Temperature (C)") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Bottom temperature anomaly") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
   ggplot2::theme(strip.text=element_text(hjust=0),
         plot.title = element_text(size = 12))+
-  ggplot2::geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
+  #ggplot2::geom_hline(aes(yintercept = hline),
+  #         size = hline.size,
+  #         alpha = hline.alpha,
+  #         linetype = hline.lty) +
   ecodata::theme_ts()
 
 ```
 
 
 
+<!-- ```{r bottom-temp-glorys, fig.width = 6, fig.asp = .55, fig.cap="Annual bottom temperature in the Mid-Atlantic Bight."} -->
+<!-- ecodata::bottom_temp_glorys %>%  -->
+<!--   dplyr::filter(EPU == epu_abbr)%>% -->
+<!--   dplyr::group_by(EPU) %>%  -->
+<!--   dplyr::mutate(hline = mean(Value)) %>%  -->
+<!-- ggplot2::ggplot() + -->
+<!--   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   ggplot2::geom_line(aes(x = Time, y = Value)) + -->
+<!--   #ecodata::geom_gls(aes(x = Time, y = Value)) + -->
+<!--   ggplot2::geom_point(aes(x = Time, y = Value), size = 1) + -->
+<!--   ggplot2::ylab("Temperature (C)") + -->
+<!--   ggplot2::xlab(element_blank())+ -->
+<!--   ggplot2::ggtitle("Bottom temperature GLORYS anomaly") + -->
+<!--   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) + -->
+<!--   ggplot2::theme(strip.text=element_text(hjust=0), -->
+<!--         plot.title = element_text(size = 12))+ -->
+<!--   ggplot2::geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty) + -->
+<!--   ecodata::theme_ts() -->
+
+<!-- ``` -->
+
+
 ### Chlorophyll and Primary Productivity {.tabset .tabset-fade}
+
 
 #### Primary production
 
@@ -325,10 +358,12 @@ ggplot2::ggplot() +
 out_pp <- ecodata::chl_pp %>% 
   dplyr::filter(EPU == epu_abbr,
          stringr::str_detect(Var, "MONTHLY_PPD_MEDIAN")) %>% 
-  tidyr::separate(.,Time, into = c("Year","Month"), sep = 4) %>% 
+  tidyr::separate(.,Time, into = c("Cat", "Time2"), sep = "_") %>% 
+  tidyr::separate(.,Time2, into = c("Year", "Month"), sep = 4) %>% 
   dplyr::mutate(Month = plyr::mapvalues(Month, from = c("01","02","03","04","05","06",
                                                    "07","08","09","10","11","12"),
                                    to = c(month.abb))) %>% 
+  dplyr::filter(!Value == "NA") %>% 
   dplyr::group_by(Month) %>% 
   dplyr::mutate(hline = mean(Value))
 
@@ -355,16 +390,19 @@ pp_cci
 ```
 
 
-```{r chl-monthly, eval = F}
+```{r chl-monthly, eval = T}
 out_chl <- ecodata::chl_pp %>% 
   dplyr::filter(EPU == epu_abbr,
          stringr::str_detect(Var, "MONTHLY_CHLOR_A_MEDIAN")) %>% 
-  tidyr::separate(.,Time, into = c("Year","Month"), sep = 4) %>% 
+  tidyr::separate(.,Time, into = c("Cat", "Time2"), sep = "_") %>% 
+  tidyr::separate(.,Time2, into = c("Year", "Month"), sep = 4)%>% 
     dplyr::mutate(Month = plyr::mapvalues(Month, from = c("01","02","03","04","05","06",
                                                    "07","08","09","10","11","12"),
                                    to = c(month.abb)))%>% 
+  dplyr::filter(!Value == "NA") %>% 
   dplyr::group_by(Month) %>% 
   dplyr::mutate(hline = mean(Value))
+
 out_chl$Month <- factor(out_chl$Month, levels = month.abb)
 
 
@@ -384,19 +422,21 @@ chl_cci <- ggplot2::ggplot(out_chl) +
     ggplot2::theme(axis.text.x = element_text(angle=45, hjust = 1),
           panel.spacing = unit(.5, "lines"),
           plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
+
 chl_cci
 ```
 
 
 #### Sesonal chlorophyll *a* & primary production
 
-```{r chl-weekly,fig.cap = "Weekly chlorophyll concentrations and primary productivity in the Mid-Atlantic are shown for by the colored line for 2019. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
+```{r chl-weekly,fig.cap = "Weekly chlorophyll concentrations and primary productivity in the Mid-Atlantic are shown for by the colored line for 2020. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
 
-interp_chl_pp <- function(epu, year = 2019, Variable){
+interp_chl_pp <- function(epu, year = 2020, Variable){
   out <- ecodata::chl_pp %>% 
     dplyr::filter(stringr::str_detect(Var,Variable),
            EPU == epu) %>% 
-    tidyr::separate(.,Time, c("Year","Week"),sep = 4) %>% 
+    tidyr::separate(.,Time, into = c("Cat", "Time2"), sep = "_") %>% 
+    tidyr::separate(.,Time2, into = c("Year", "Week"), sep = 4) %>% 
     dplyr::filter(Year == year) %>% 
     dplyr::group_by(EPU) %>% 
     dplyr::mutate(Time = 1:length(Year))
@@ -404,7 +444,8 @@ interp_chl_pp <- function(epu, year = 2019, Variable){
   ltm_out <- ecodata::chl_pp %>% 
     dplyr::filter(stringr::str_detect(Var,Variable),
            EPU == epu) %>% 
-    tidyr::separate(.,Time, c("Year","Week"),sep = 4) %>% 
+    tidyr::separate(.,Time, into = c("Cat", "Time2"), sep = "_") %>% 
+    tidyr::separate(.,Time2, into = c("Year", "Week"), sep = 4)  %>% 
     dplyr::group_by(Week) %>% 
     dplyr::summarise(LTM = mean(Value, na.rm = T),
                      SD = sd(Value, na.rm = T)) %>% 
@@ -420,7 +461,7 @@ interp_chl_pp <- function(epu, year = 2019, Variable){
   return(ltm_out)
 }
 
-MAB_chl <- interp_chl_pp(epu = "MAB", Variable = "WEEKLY_CHLOR_A_MEDIAN MODIS-Aqua PAN")
+MAB_chl <- interp_chl_pp(epu = "MAB", Variable = "WEEKLY_CHLOR_A_MEDIAN")
 
 MAB_chl_weekly <- ggplot2::ggplot(data = MAB_chl) +
   ggplot2::geom_line(aes(x = Time, y = LTM)) +
@@ -462,9 +503,83 @@ MAB_chl_weekly + MAB_pp_weekly + plot_layout(ncol = 1)
 
 ```
 
+#### Phytoplankton Size Class
 
+```{r weekly-phyto-size, eval = T}
+
+
+chlor <- ecodata::phyto_size %>% 
+  dplyr::filter(EPU == c( "MAB"),
+                !Value == "NA", 
+                Var == "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")  %>% 
+  tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
+  mutate(Value = Value/2)
+
+month <- seq(as.Date("2020-01-01"), 
+             as.Date("2020-12-01"), 
+             by = "1 month")
+month_numeric <- lubridate::yday(month) / 365 * 52 + 1
+month_label <- lubridate::month(month, label = TRUE)
+
+out_phyto2<-  ecodata::phyto_size %>% 
+  dplyr::filter(EPU == c("MAB"),
+         stringr::str_detect(Var, ("CLIMATOLOGICAL_WEEK"))) %>% 
+  tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
+  dplyr::filter(!Value == "NA", 
+                !Var == "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")  %>%
+
+  ggplot2::ggplot() +
+   geom_area(aes(x=as.numeric(WEEK), y=Value, 
+                 fill = factor(Var, c("CLIMATOLOGICAL_WEEK_PICO_PERCENTAGE_MEDIAN",
+                                      "CLIMATOLOGICAL_WEEK_NANO_PERCENTAGE_MEDIAN", 
+                                      "CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN"))), alpha=0.6)+
+    #ggplot2::geom_point(data = chlor, aes(x = as.numeric(WEEK), y = Value)) +
+    #ggplot2::geom_line(data = chlor, aes(x = as.numeric(WEEK), y = Value))+
+    #ggplot2::facet_wrap(EPU~., ncol = 2)+
+    ggplot2::ggtitle("Mid-Atlantic Bight Phytoplankton Size Class") +
+    ggplot2::ylab("Percent") +
+    ggplot2::xlab(element_blank())+
+    ecodata::theme_facet() +
+    ggplot2::theme(axis.text.x = element_text(angle=45, hjust = 1),
+          panel.spacing = unit(.5, "lines"),
+          plot.margin = unit(c(0.1, 0, 0, 0), "cm"), 
+          legend.position= "top")+
+    scale_fill_manual(values=c("#8DA0CB", "#FC8D62",  "#66C2A5"), name = "", 
+                     labels = c("Picoplankton", 
+                                "Nanoplankton", "Microplankton"))+
+    #scale_y_continuous( name = "Phytoplankton Size Fraction", sec.axis = sec_axis(~.*2, name="Chlorophyll a (mg m^-3)"))+
+   scale_x_continuous(breaks = month_numeric, 
+                    labels = month_label)
+
+out_phyto2
+
+```
+
+```{r}
+
+micro_chlor <- ecodata::phyto_size %>% 
+  dplyr::filter(EPU %in% c("MAB"),
+                Var %in% c("CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN", 
+                           "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")) %>% 
+  tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
+  dplyr::filter(!Value == "NA") %>% 
+  dplyr::select(-Year1, -Year2, -Cat,  -Units) %>% 
+  tidyr::pivot_wider(id_cols= c(EPU, WEEK), names_from = Var, values_from = Value) %>% 
+  ggplot2::ggplot() +
+  ggplot2::geom_point( aes(x = CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN, y = CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN)) +
+  ggplot2::ggtitle("MAB ") +
+  #ggplot2::facet_wrap(~EPU)+
+  ggplot2::ylab("Chlorophyll a (mg m^-3)") +
+  ggplot2::xlab("Microplankton % of Total Phytoplankton Composition ") +
+  ecodata::theme_facet()
+micro_chlor
+
+```
 
 ### Chesapeake Bay Water Quality Attainment
+ 
+<span style="color: red;">NO NEW DATA</span>
+
 <!-- <p style="color:red">No data delivered. Note from Jan 2 -  We are in the process of finalizing our assessment of Chesapeake bay water quality standards attainment for the latest assessment cycle (2016-2018). We may send you the data in a week or two.</p> -->
 
 ```{r ches-bay-wq,fig.width = 6, fig.asp = 0.55, fig.cap = "Water quality attainment in Chesapeake Bay following rolling three year assessment periods."}
@@ -494,35 +609,46 @@ ecodata::ches_bay_wq %>%
   ecodata::theme_ts()
 ```
 
+### Chesapeake Bay 
 
-### Chesepeake Bay Salinity Anomolies
+<span style="color: red;">NO NEW DATA, only summary</span>
 
-Write up on anomalies in salinity we saw in 2018,2019 following record breaking rain in 2018.  The low salinities impacted [hypoxia, fish and oysters](https://docs.google.com/document/d/19ikLWKQWiRSrjmQJ2F7EB_ZcieBMk6Ykf1RX_Gissao/edit). 
+Headline:  Warmer-than-average winter water temps in Chesapeake Bay likely help blue crabs, hurt striped bass numbers.
 
-```{r ch-bay-sal, fig.cap = "Salinity in Chesapeake Bay throughout 2018 (blue) and 2019 (red)  as well as the daily average 2008-2019 (black). "}
+[Details here](https://docs.google.com/document/u/1/d/12Aq9nxrdrtZKESoZ8KtW152i0amf_O54/edit?usp=drive_web&ouid=111390006230717850267&rtpof=true).
 
-ches_sal<-ecodata::ch_bay_sal %>% 
-  dplyr::filter(!Var == "UTCTime") %>% 
-  tidyr::drop_na() %>%
-  dplyr::mutate(Time =  as.numeric(str_sub(Time, 2, -1)),
-         Time1 = as.Date(Time, origin = "2018-12-31")) %>% 
-  tidyr::pivot_wider(names_from = Var, values_from = Value)
 
-ches_sal %>% 
-  ggplot2::ggplot() +
-  ggplot2::geom_ribbon(aes(x = Time1, ymin = AvgMinLim, ymax = AvgMaxLim))+
-  ggplot2::geom_ribbon(aes(x = Time1, ymin = MinDataLim, ymax = MaxDataLim), alpha = 0.3)+
-  ggplot2::geom_line(aes(x = Time1, y = Daily18), color = "blue") +
-  ggplot2::geom_line(aes(x = Time1, y = Daily19), color = "red") +
-  ggplot2::ylab(expression("PSU")) +
-  ggplot2::ggtitle("Chesapeake Bay Salinity") +
-  ecodata::theme_ts()
-```
+<!-- ### Chesepeake Bay Salinity Anomolies -->
+
+
+
+<!-- Write up on anomalies in salinity we saw in 2018,2019 following record breaking rain in 2018.  The low salinities impacted [hypoxia, fish and oysters](https://docs.google.com/document/d/19ikLWKQWiRSrjmQJ2F7EB_ZcieBMk6Ykf1RX_Gissao/edit).  -->
+
+<!-- ```{r ch-bay-sal, fig.cap = "Salinity in Chesapeake Bay throughout 2018 (blue) and 2019 (red)  as well as the daily average 2008-2019 (black). "} -->
+
+<!-- ches_sal<-ecodata::ch_bay_sal %>%  -->
+<!--   dplyr::filter(!Var == "UTCTime") %>%  -->
+<!--   tidyr::drop_na() %>% -->
+<!--   dplyr::mutate(Time =  as.numeric(str_sub(Time, 2, -1)), -->
+<!--          Time1 = as.Date(Time, origin = "2018-12-31")) %>%  -->
+<!--   tidyr::pivot_wider(names_from = Var, values_from = Value) -->
+
+<!-- ches_sal %>%  -->
+<!--   ggplot2::ggplot() + -->
+<!--   ggplot2::geom_ribbon(aes(x = Time1, ymin = AvgMinLim, ymax = AvgMaxLim))+ -->
+<!--   ggplot2::geom_ribbon(aes(x = Time1, ymin = MinDataLim, ymax = MaxDataLim), alpha = 0.3)+ -->
+<!--   ggplot2::geom_line(aes(x = Time1, y = Daily18), color = "blue") + -->
+<!--   ggplot2::geom_line(aes(x = Time1, y = Daily19), color = "red") + -->
+<!--   ggplot2::ylab(expression("PSU")) + -->
+<!--   ggplot2::ggtitle("Chesapeake Bay Salinity") + -->
+<!--   ecodata::theme_ts() -->
+<!-- ``` -->
 
 ### Zooplankton {.tabset .tabset-fade}
 
 
 #### Euphausiids + Cnidarians
+
 ```{r zoo-strat-abun, fig.cap="Stratified abundance of cnidarians and euphausiids in Mid-Atlantic Bight."}
 zoo_abund <- ecodata::zoo_strat_abun %>% 
   dplyr::filter(EPU == epu_abbr,
@@ -556,7 +682,7 @@ zoo_abund %>%
 ```
 
 
-#### Small and Large Calanoid stratified abundance
+<!--#### Small and Large Calanoid stratified abundance -->
 
 <!-- ```{r MAB-sm-lg, fig.cap= "Large (red) and small (black) copepod zooplankton abundance in the Mid-Atlantic Bight."} -->
 <!-- zoo_abund <- ecodata::zoo_strat_abun %>%  -->
@@ -623,7 +749,7 @@ ecodata::zoo_abund%>%
 
 ```
 
-#### Small-large index
+<!-- #### Small-large index -->
 
 <!-- ```{r MAB-sli} -->
 <!-- sli <- ecodata::zoo_sli_anom %>%  -->
@@ -714,7 +840,51 @@ zoo_div %>%
 
 ```
 
-#### OI abundance
+#### Calanus Stage
+
+```{r calanus-stage,  fig.cap=""}
+cal <- ecodata::CalanusStage %>% 
+  dplyr::filter(EPU == "GB") %>% 
+  filter(Var %in% c("CIII", "CIV", "CV", "Adt"))
+
+cal$Var <- factor(cal$Var, levels = c("CIII", "CIV", "CV", "Adt"))
+cal$season <- factor(cal$season, levels = c("Spring", "Summer", "Fall"))
+
+cal %>% 
+  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
+    ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf)+
+  ggplot2::geom_bar(stat = "identity")+
+  ggplot2::facet_wrap(~season)+
+  ggplot2::ylab("Calanus Stage (N/100m^3)") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("MAB Calanus Stage Abundance") +
+  ggplot2::theme(legend.position = "bottom", 
+                 legend.title = element_blank())+
+  ecodata::theme_facet()+
+  scale_fill_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
+  scale_color_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))
+
+cal %>% 
+  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
+    ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf)+
+  ggplot2::geom_bar(stat = "identity")+
+  ggplot2::facet_wrap(~season, ncol = 1, scales = "free")+
+  ggplot2::ylab("Calanus Stage (N/100m^3)") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("MAB Calanus Stage Abundance") +
+  ggplot2::theme(legend.position = "bottom", 
+                 legend.title = element_blank())+
+  ecodata::theme_facet()+
+  scale_fill_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
+  scale_color_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))
+
+```
+
+<!-- #### OI abundance -->
 
 <!-- ```{r MAB-oi-zoo, fig.width=8} -->
 <!-- facet_names <- list( -->
@@ -816,34 +986,195 @@ zoo_div %>%
 <!-- ``` -->
 
 ### Cold Pool Index
-```{r cold_pool, eval = T, echo = F, fig.cap="Cold pool index - mean bottom temperature anomaly for Sept-Oct in the MAB." }
 
-ecodata::cold_pool %>% 
-    dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
+```{r cold_pool, eval = T, echo = F, fig.cap="Cold pool index." }
+
+cp<- ecodata::cold_pool %>% 
+  dplyr::group_by(Var) %>% 
+  dplyr::mutate(hline = mean(Val, na.rm = T)) %>% 
   ggplot2::ggplot() + 
  #Highlight last ten years
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -3, ymax = 3) +
-  ecodata::geom_gls(aes(x = Time, y = Value),
+  #ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  #    xmin = x.shade.min , xmax = x.shade.max) +
+  ecodata::geom_gls(aes(x = Time, y = Val),
              alpha = trend.alpha, size = trend.size) +
-  ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
-  ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
+  ggplot2::geom_line(aes(x = Time, y = Val), size = lwd) +
+  ggplot2::geom_point(aes(x = Time, y = Val), size = pcex) +
   ggplot2::geom_hline(aes(yintercept = hline),
      size = hline.size,
      alpha = hline.alpha,
      linetype = hline.lty)+
   ggplot2::ggtitle("Cold Pool Index")+
-  ggplot2::ylab(expression("Cold Pool Temp Anomaly (C) ")) +
+  ggplot2::facet_wrap(~Var, scales = "free")+
+  ggplot2::ylab("Cold Pool") +
   ggplot2::xlab("")+
   ecodata::theme_ts()
+cp
+#plotly::ggplotly(cp) 
 ```
+
+
+```{r cold_pool_map, eval = T, echo = F, fig.cap="Map of cold pool area- final year (2018) in bold. Time series of cold pool spatial extent FROM 1993-2018." }
+cpsf26<- ecodata::cold_pool_sf %>% 
+  mutate(Time = c(1:26)) %>% 
+  filter(Time == 26)
+cpsf<- ecodata::cold_pool_sf %>% 
+  mutate(Time = c(1:26)) %>% 
+  filter(!Time == 26)
+
+#Map line parameters
+map.lwd <- 0.4
+
+# Set lat/lon window for maps
+xmin = -78
+xmax = -69
+ymin = 35.5
+ymax = 43
+xlims <- c(xmin, xmax)
+ylims <- c(ymin, ymax)
+
+cp_map <- 
+  ggplot2::ggplot() +
+  #ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
+  ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) +
+  ggplot2::geom_sf(data = cpsf, alpha = 0.1)  +
+  ggplot2::geom_sf(data = cpsf26, fill = "transparent", color = "black", size = 1)+
+  
+  ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
+  #ggplot2::scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
+  #                     low = scales::muted("blue"),
+  #                     mid = "white",
+  #                     high = scales::muted("red"),
+  #                     limits = c(-4,4)) +
+  
+  #facet_wrap(Season~.) +
+  ecodata::theme_map() +
+  ggplot2::ggtitle("Cold Pool Area") +
+  ggplot2::xlab("Longitude") +
+  ggplot2::ylab("Latitude") +
+  ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
+        legend.key = element_blank(),
+        axis.title = element_text(size = 11),
+        strip.background = element_blank(),
+        strip.text=element_text(hjust=0),
+        axis.text = element_text(size = 8),
+        axis.title.y = element_text(angle = 90))
+
+
+annotation_custom2 <- function (grob, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf) 
+{
+  layer( stat = StatIdentity, position = PositionIdentity, 
+        geom = ggplot2:::GeomCustomAnn,
+        inherit.aes = TRUE, params = list(grob = grob, 
+                                          xmin = xmin, xmax = xmax, 
+                                          ymin = ymin, ymax = ymax))
+}
+
+area<- ecodata::cold_pool_sf %>%
+  mutate(Time = c(1993:2018)) 
+area2<- data.frame(Area = st_area(area))%>% 
+  mutate(Time = c(1993:2018)) %>% 
+  separate(Area, c("Value", "Units"), sep = " ") %>%
+  mutate(Value = as.numeric(Value), 
+         hline = mean(Value)) 
+
+area_ts <-  ggplot2::ggplotGrob(area2 %>% 
+                                      ggplot2::ggplot() +   
+                                      ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
+                                      ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
+                                      ggplot2::geom_hline(aes(yintercept = hline),
+                                                          size = hline.size,
+                                                          alpha = hline.alpha,
+                                                          linetype = hline.lty)+
+                                      ggplot2::scale_x_continuous(breaks = c(1995, 2000, 2005, 2010, 2015),
+                                                                  expand = c(0.01, 0.01)) +
+                                      ggplot2::ggtitle("")+
+                                      ggplot2::ylab("Area (m^2)") +
+                                      ggplot2::xlab("")+
+                                      ecodata::theme_ts()+
+                              ggplot2::theme(
+                                   axis.text.y = element_text(size = 6),
+                                   axis.text.x = element_text(size = 6),
+                                    panel.background = element_rect(fill = "transparent"),
+                                    plot.background = element_rect(fill = "transparent", color = NA),
+                                    panel.grid.major = element_blank(),
+                                    panel.grid.minor = element_blank(),
+                                    legend.background = element_rect(fill = "transparent"),
+                                    legend.box.background = element_rect(fill = "transparent"),
+                                    legend.key = element_rect(fill = "transparent", colour = NA),
+                                    axis.line = element_blank())#,
+                                    #panel.border = element_blank())
+)
+
+cp_map +
+  annotation_custom(grob = area_ts,  xmin=-78.5, xmax=-71.75,
+                     ymin=40.95, ymax=43.75)
+```
+
+
+
+
+
+```{r cold_pool_map2, eval = T, echo = F, fig.cap="Map of cold pool area." }
+cpsf26<- ecodata::cold_pool_sf %>% 
+  mutate(Time = c(1993:2018)) %>% 
+  filter(Time == 2018)
+cpsf<- ecodata::cold_pool_sf %>% 
+  mutate(Time = c(1993:2018)) %>% 
+  filter(!Time == 2018)
+
+#Map line parameters
+map.lwd <- 0.4
+
+# Set lat/lon window for maps
+xmin = -80
+xmax = -68
+ymin = 35.5
+ymax = 43
+xlims <- c(xmin, xmax)
+ylims <- c(ymin, ymax)
+
+cp_map <- 
+  ggplot2::ggplot() +
+  #ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
+  ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) +
+  ggplot2::geom_sf(data = cpsf, alpha = 0.1, color = "red", size = 1)  +
+  ggplot2::geom_sf(data = cpsf26, fill = "transparent", color = "red", size = 1)+
+  
+  ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
+  #ggplot2::scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
+  #                     low = scales::muted("blue"),
+  #                     mid = "white",
+  #                     high = scales::muted("red"),
+  #                     limits = c(-4,4)) +
+  
+  #facet_wrap(Season~.) +
+  ecodata::theme_map() +
+  ggplot2::facet_wrap(~Time)+
+  ggplot2::ggtitle("Cold Pool Area") +
+  ggplot2::xlab("Longitude") +
+  ggplot2::ylab("Latitude") +
+  ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
+        legend.key = element_blank(),
+        axis.title = element_text(size = 11),
+        axis.ticks = element_blank(),
+        strip.background = element_blank(),
+        strip.text=element_text(hjust=0),
+        axis.text = element_blank(),
+        axis.title.y = element_text(angle = 90))
+
+
+cp_map 
+```
+
+
+
 
 ### Marine Heat Wave
 
-[Notes](https://docs.google.com/document/d/0B1lP7X3GP_hQLTlmU3hqLUMzVWcwS2U5R2oxTWNWb19tcmFz/edit)
+[notes here](https://docs.google.com/document/u/1/d/1ik6aAXY85DEgLmz4BaBwxtdEPq6e9xXo/edit?usp=drive_web&ouid=111390006230717850267&rtpof=true)
 
-```{r heatwave-year, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Mid-Atlantic occuring in 2019."}
+```{r heatwave-year, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Mid-Atlantic occuring in 2020."}
 ecodata::heatwave_year %>% 
   filter(EPU == "MAB") %>% 
   ggplot( aes(x = t, y = temp))+
@@ -905,7 +1236,7 @@ mab.hw %>%
 
 ```
 
-```{r heatwave-anom-gridded, fig.cap="Maximum intensity heatwave anomaly in the Mid-Atlantic Bight occuring on July 22, 2019."}
+```{r heatwave-anom-gridded, fig.cap="Maximum intensity heatwave anomaly in the Mid-Atlantic Bight occuring on July 28, 2020."}
 #EPU shapefile
 mab_epu_sf <- ecodata::epu_sf %>% 
   dplyr::filter(EPU %in% c("MAB"))
@@ -920,23 +1251,32 @@ ymin = 35.5
 ymax = 43
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
-hw <- ecodata::heatwave_anom_gridded %>% 
-  dplyr::filter(EPU == "MAB")
+hw <- ecodata::heatwave_peak_date %>% 
+  dplyr::filter(EPU == "MAB") %>% 
+  dplyr::mutate(Value = replace(Value, Value > 4, 4))
 
 mab_map <- 
-  ggplot2::ggplot() +
+    ggplot2::ggplot() +
   ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) +
   ggplot2::geom_sf(data = mab_epu_sf, fill = "transparent", size = map.lwd) +
-  ggplot2::scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
-                       low = scales::muted("blue"),
-                       mid = "white",
-                       high = scales::muted("red"),
-                       limits = c(-5,7)) +
+  ggplot2::scale_fill_gradientn(name = "Temp.\nAnomaly (C)", 
+                                colours = c(scales::muted("blue"), "white",
+                                            scales::muted("red"), "black"),
+                                values = scales::rescale(c(-4,0,4,8)),
+                                guide = "colorbar", limits=c(-4,8)) +
+  
+  # ggplot2::scale_fill_gradient2(name = "Temp Anomaly (C)",
+  #                      low = scales::muted("blue"),
+  #                      mid = "white",
+  #                      midpoint = 0,
+  #                      high = scales::muted("red"),
+  #                      guide = "colourbar",
+  #                      limits = c(-4,8)) +
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   #facet_wrap(Season~.) +
   ecodata::theme_map() +
-  ggplot2::ggtitle("MAB heatwave anomaly (July 22, 2019)") +
+  ggplot2::ggtitle("MAB heatwave anomaly (July 28, 2020)") +
   ggplot2::xlab("Longitude") +
   ggplot2::ylab("Latitude") +
   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
@@ -944,21 +1284,31 @@ mab_map <-
         axis.title = element_text(size = 11),
         strip.background = element_blank(),
         strip.text=element_text(hjust=0),
-        axis.text = element_text(size = 8),
-        axis.title.y = element_text(angle = 90))
+        axis.text = element_text(size = 8))
 
 
 mab_map 
 
 ```
 
+### Habitat Vulnerability
+
+[Habitat Table found here](https://noaa-edab.github.io/ecodata/Hab_table)
+
+### Ocean Acidication
+
+```{r mab-oa, fig.cap = " Seasonal glider-based pH observations on the Mid-Atlantic Bight shelf (New Jersey cross-shelf transect) in relation to Atlantic surfclam and Atlantic sea scallop habitats (modified from Wright-Fairbanks et al. 2020)."}
+
+knitr::include_graphics(file.path(image.dir, "Seasonal pH on MAB shelf - Grace Saba.jpg"))
+
+```
 
 
 ## Shelfwide Indicators {.tabset .tabset-fade}
 
 ### Seasonal SST anomaly
 
-```{r shelf-seasonal-sst-anomaly-gridded, fig.height=8, fig.cap="Seasonal sea surface temperature anomalies for 2019 over the Northeast US Shelf."}
+```{r shelf-seasonal-sst-anomaly-gridded, fig.height=8, fig.cap="Seasonal sea surface temperature anomalies for 2020 over the Northeast US Shelf."}
 # Set lat/lon window for maps
 xmin = -77
 xmax = -65
@@ -989,7 +1339,7 @@ ggplot2::ggplot() +
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
-  ggplot2::ggtitle("SST anomaly (2019)") +
+  ggplot2::ggtitle("SST anomaly (2020)") +
   ggplot2::xlab("Longitude") +
   ggplot2::ylab("Latitude") +
   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
@@ -1030,35 +1380,76 @@ lt_sst %>%
 ```
 
 ### GSI
-[Notes](https://drive.google.com/drive/u/0/folders/0B1lP7X3GP_hQfk00dFd6bTQ2cmJyQjlwQnFWQ0JMWF9ZOWhRckNvSTlxT2NHSEZRdjV1WVk)
+
+
+[Notes](https://docs.google.com/document/d/1SgZ9m4pal3ygKnUSYr4UwgOoMJeaKzpO/edit)
+
 ```{r gsi, fig.width = 5, fig.asp = 0.55, fig.cap="Index representing the north wall  of the Gulf Stream. Positive values represent a more northerly Gulf Stream position."}
-ecodata::gsi %>% 
-  dplyr::mutate(Year = floor(Time)) %>% 
-  dplyr::group_by(Year) %>% 
-  dplyr::summarise(Value = mean(Value)) %>% 
-  dplyr::mutate(hline = mean(Value)) %>% 
-  dplyr::rename(Time = Year) %>% 
-  ggplot2::ggplot(aes(x = Time, y = Value)) +
+# ecodata::gsi %>% 
+#   dplyr::mutate(Year = floor(Time)) %>% 
+#   dplyr::group_by(Year) %>% 
+#   dplyr::summarise(Value = mean(Value)) %>% 
+#   dplyr::mutate(hline = mean(Value)) %>% 
+#   dplyr::rename(Time = Year) %>% 
+#   ggplot2::ggplot(aes(x = Time, y = Value)) +
+#   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+#       xmin = x.shade.min , xmax = x.shade.max,
+#       ymin = -Inf, ymax = Inf) +
+#   ecodata::geom_gls() +
+#   ggplot2::geom_line() +
+#   ggplot2::geom_point() +
+#   ggplot2::ylab("Gulf Stream position anomaly") +
+#   ggplot2::xlab(element_blank())+
+#   ggplot2::ggtitle("Gulf Stream Index") +
+#   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
+#   ggplot2::geom_hline(aes(yintercept = hline),
+#            size = hline.size,
+#            alpha = hline.alpha,
+#            linetype = hline.lty)+
+#   ecodata::theme_ts() +
+#   ggplot2::theme(strip.text=element_text(hjust=0,
+#                                 face = "italic"))
+
+gsi<- ecodata::gsi %>% 
+  dplyr::mutate(Year = floor(Time)) %>%
+  dplyr::group_by(Year) %>%
+  dplyr::summarise(Value = mean(Value)) %>%
+  dplyr::mutate(hline = mean(Value)) %>%
+  dplyr::rename(Time = Year)
+
+gsi_old<- ecodata::gsi_old %>% 
+  dplyr::mutate(Year = floor(Time)) %>%
+  dplyr::group_by(Year) %>%
+  dplyr::summarise(Value = mean(Value)) %>%
+  dplyr::mutate(hline = mean(Value)) %>%
+  dplyr::rename(Time = Year)
+
+ggplot2::ggplot() +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  ecodata::geom_gls() +
-  ggplot2::geom_line() +
-  ggplot2::geom_point() +
+  ecodata::geom_gls(aes(x = gsi$Time, y = gsi$Value)) +
+  ggplot2::geom_line(aes(x = gsi$Time, y = gsi$Value)) +
+  ggplot2::geom_point(aes(x = gsi$Time, y = gsi$Value)) +
+  #ecodata::geom_gls(aes(x = gsi_old$Time, y = gsi_old$Value)) +
+  #ggplot2::geom_line(aes(x = gsi_old$Time, y = gsi_old$Value), color ="red") +
+  #ggplot2::geom_point(aes(x = gsi_old$Time, y = gsi_old$Value), color = "red") +
   ggplot2::ylab("Gulf Stream position anomaly") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Gulf Stream Index") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
-  ggplot2::geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
+  #ggplot2::geom_hline(aes(yintercept = hline),
+  #         size = hline.size,
+  #         alpha = hline.alpha,
+  #         linetype = hline.lty)+
   ecodata::theme_ts() +
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"))
 ```
 
 ### Warm Core Rings
+
+
 ```{r wcr, fig.cap= "Warm core ring formation on the Northeast US Shelf."}
 upper.line<-ecodata::wcr %>%
   dplyr::filter(Time>2000) %>% 
@@ -1088,16 +1479,4 @@ wcr %>%
 ```
 
 
-### NERRs water quality 
-
-<p style="color:red">Potentially possible to get map like this for DO, chl and nitrogen. Not this year though. </p>
-```{r shelf-NERRs-MP-DIN, eval= T, echo = F, out.width = "80%"}
-
-knitr::include_graphics(file.path(image.dir,"nerrs_map.png"))
-```
-<p style="color:red">I've asked for the total number of events per year.</p>
-```{r shelf-NERRs-MH-DIN, eval= T, echo = F, out.width = "80%"}
-
-knitr::include_graphics(file.path(image.dir,"nerrs_DO.png"))
-```
 

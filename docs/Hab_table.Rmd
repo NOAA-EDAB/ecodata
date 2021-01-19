@@ -1,0 +1,262 @@
+---
+title: "Habitat Vulnerability Tables"
+author: "Sean Lucey"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(here); library(kableExtra); library(dplyr); library(readxl); library(data.table); library(DT);
+library(stringr)
+knitr::opts_chunk$set(echo = FALSE)
+
+options(knitr.kable.NA = '')
+
+```
+
+```{css, echo=FALSE}
+
+/*alter risk assessment table formatting*/
+.risktable {
+    border-collapse: collapse;
+}
+.risktable th {
+    padding: 2px;
+}
+.risktable td {
+    padding: 1px;
+}
+.risktable tbody tr:nth-of-type(even) {
+  background-color:transparent;
+}
+
+```
+
+#### Mid-Atlantic Habitat Vulnerability Table
+
+```{r class.source="risktable"}
+#Read in Mid-Atlantic table
+mid <- as.data.table(readxl::read_xlsx(here('data-raw/habitat_vulnerability.xlsx'),
+                         sheet = 'Mid-Atlantic', skip = 1))
+
+#Identify individual species climate vulnerability
+vhigh.vul <- unique(mid[`Species Vulnerability Rank (FCVA)` == 'Very high', Species])
+high.vul  <- unique(mid[`Species Vulnerability Rank (FCVA)` == 'High', Species])
+mod.vul   <- unique(mid[`Species Vulnerability Rank (FCVA)` == 'Moderate', Species])
+low.vul   <- unique(mid[`Species Vulnerability Rank (FCVA)` == 'Low', Species])
+
+#Grab habitat vulnerability
+hab.vul <- unique(mid[, c('Habitat Name', 'Habitat Vulnerability Rank (HVCA)')])
+habitats <- hab.vul[, 'Habitat Name']
+hab.vul <- data.table('Habitat Vulnerability' = c(NA, NA, t(hab.vul[, 'Habitat Vulnerability Rank (HVCA)'])))
+
+#Rearrange table
+mid <- data.table::melt.data.table(mid, id.vars = c('Habitat Name', 'Species'),
+                                   measure.vars = c('Eggs/Larva', 'Juvenile/YOY',
+                                                    'Adult', 'Spawning Adult'),
+                                   variable.name = 'Stage', value.name = 'Dependence')
+mid[, Habitat := as.factor(mid$'Habitat Name')]
+mid <- data.table::dcast.data.table(mid, Species + Stage ~ Habitat,
+                                    value.var = 'Dependence')
+setcolorder(mid, c('Species', 'Stage', habitats$'Habitat Name'))
+
+#Add Habitat Vulnerbaility
+hab.table <- rbindlist(list(as.data.table(t(hab.vul)), mid), use.names = F)
+#Add names back in
+names(hab.table) <- names(mid)
+hab.table <- hab.table %>% mutate_if(is.character, str_trim) #one cell has a space, not getting color
+
+
+#generalize to all
+# hab.table %>%
+#   mutate_at(vars(Species), function(x){ #Color code species based on climate vul
+#     case_when(x %in% low.vul ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "lightgreen"),
+#               x %in% mod.vul ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "yellow"),
+#               x %in% high.vul ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "orange"),
+#               x %in% vhigh.vul ~ cell_spec(x, format = "html", color = "white",
+#                                      background = "red"))}) %>%
+#   mutate_at(vars(-c(Species, Stage)), function(x){ #Color code base on dependence
+#     case_when(x == "Low" ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "lightgreen"),
+#               x == "Moderate" ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "yellow"),
+#               x == "High" ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "orange"),
+#               x == "Very high" ~ cell_spec(x, format = "html", color = "white",
+#                                      background = "red"))}) %>%
+#   kable(format = "html", escape = F, table.attr='class="risktable"') %>%
+#   kable_styling(font_size = 14, fixed_thead = T)
+
+```
+
+```{r midDT}
+#from examples here https://rstudio.github.io/DT/010-style.html
+
+#color coding cells works
+#need to add column with species vulnerability and color code species by it but not show it, like #hideV6 example at link
+#if we show it we can sort by species vulnerability though... alphabetical doesnt work so use numbers to go lowest-highest
+#still need to color code headers--done with spans below
+hab.table <- hab.table %>%
+  filter(Species != "") %>% #remove row with habitat vul because headers now in color
+  mutate(spVul = #Color code species based on climate vul
+    # case_when(Species %in% low.vul ~ "low.vul",
+    #           Species %in% mod.vul ~ "mod.vul",
+    #           Species %in% high.vul ~ "high.vul",
+    #           Species %in% vhigh.vul ~ "vhigh.vul")
+    # )
+    case_when(Species %in% low.vul ~ 1,
+              Species %in% mod.vul ~ 2,
+              Species %in% high.vul ~ 3,
+              Species %in% vhigh.vul ~ 4)
+    )
+
+colnames(hab.table)[c(3:4)] <- paste0('<span style="box-shadow: -10px 0 0 red, 10px 0 0 red; background-color:red; color:white">',colnames(hab.table)[c(3:4)],'</span>')
+colnames(hab.table)[c(5:10)] <- paste0('<span style="box-shadow: -10px 0 0 orange, 10px 0 0 orange; background-color:',c("orange"),'">',colnames(hab.table)[c(5:10)],'</span>')
+colnames(hab.table)[c(11:15)] <- paste0('<span style="box-shadow: -10px 0 0 yellow, 10px 0 0 yellow; background-color:',c("yellow"),'">',colnames(hab.table)[c(11:15)],'</span>')
+
+dt <- datatable(hab.table, rownames = FALSE, escape = FALSE,
+          extensions = c('Scroller', 'FixedColumns'), #add scrolling and fixed column
+          options = list(deferRender = TRUE,
+          scrollY = 300, scroller = TRUE,
+          dom = 't',scrollX = TRUE,fixedColumns = TRUE)
+          #, options = list(columnDefs = list(list(targets = 16, visible = FALSE)))
+  ) %>% 
+  formatStyle(
+    names(hab.table)[3:4],
+    backgroundColor = '#FF000080'
+  ) %>%
+  formatStyle(
+    names(hab.table)[5:10],
+    backgroundColor = '#FFA50080'
+  ) %>%
+  formatStyle(
+    names(hab.table)[11:15],
+    backgroundColor = '#FFFF0080'
+  ) %>%
+
+  formatStyle(#Color code base on dependence
+    'Species', "spVul",
+    backgroundColor = styleEqual(#c("low.vul", "mod.vul", "high.vul", "vhigh.vul"),
+                                 c(1,2,3,4),
+                                 c('lightgreen', 'yellow', 'orange', 'red')), #Color code base on dependence)
+    color = styleEqual(c(1,2,3,4),
+                                 c('black', 'black', 'black', 'white'))
+    ) %>%
+    formatStyle(
+    names(hab.table),
+    backgroundColor = styleEqual(c("Low", "Moderate", "High", "Very high"), 
+                                 c('lightgreen', 'yellow', 'orange', 'red')), 
+    color = styleEqual(c("Low", "Moderate", "High", "Very high"), 
+                                 c('black', 'black', 'black', 'white'))
+  )
+
+dt
+```
+
+#### New England Habitat Vulnerability Table
+
+
+
+```{r class.source="risktable"}
+#Read in New England table
+ne <- as.data.table(readxl::read_xlsx(here('data-raw/habitat_vulnerability.xlsx'),
+                         sheet = 'New England', skip = 1))
+
+#Identify individual species climate vulnerability
+vhigh.vul <- unique(ne[`Species Vulnerability Rank (FCVA)` == 'Very high', Species])
+high.vul  <- unique(ne[`Species Vulnerability Rank (FCVA)` == 'High', Species])
+mod.vul   <- unique(ne[`Species Vulnerability Rank (FCVA)` == 'Moderate', Species])
+low.vul   <- unique(ne[`Species Vulnerability Rank (FCVA)` == 'Low', Species])
+
+#Grab habitat vulnerability
+hab.vul <- unique(ne[, c('Habitat Name', 'Habitat Vulnerability Rank (HVCA)')])
+habitats <- hab.vul[, 'Habitat Name']
+hab.vul <- data.table('Habitat Vulnerability' = c(NA, NA, t(hab.vul[, 'Habitat Vulnerability Rank (HVCA)'])))
+
+#Rearrange table
+ne <- data.table::melt.data.table(ne, id.vars = c('Habitat Name', 'Species'),
+                                   measure.vars = c('Eggs/Larva', 'Juvenile/YOY',
+                                                    'Adult', 'Spawning Adult'),
+                                   variable.name = 'Stage', value.name = 'Dependence')
+ne[, Habitat := as.factor(ne$'Habitat Name')]
+ne <- data.table::dcast.data.table(ne, Species + Stage ~ Habitat,
+                                    value.var = 'Dependence')
+setcolorder(ne, c('Species', 'Stage', habitats$'Habitat Name'))
+
+#Add Habitat Vulnerbaility
+hab.table <- rbindlist(list(as.data.table(t(hab.vul)), ne), use.names = F)
+#Add names back in
+names(hab.table) <- names(ne)
+hab.table <- hab.table %>% mutate_if(is.character, str_trim) #one cell has a space, not getting color
+
+#generalize to all
+# hab.table %>%
+#   mutate_at(vars(Species), function(x){ #Color code species based on climate vul
+#     case_when(x %in% low.vul ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "lightgreen"),
+#               x %in% mod.vul ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "yellow"),
+#               x %in% high.vul ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "orange"),
+#               x %in% vhigh.vul ~ cell_spec(x, format = "html", color = "white",
+#                                      background = "red"))}) %>%
+#   mutate_at(vars(-c(Species, Stage)), function(x){ #Color code base on dependence
+#     case_when(x == "Low" ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "lightgreen"),
+#               x == "Moderate" ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "yellow"),
+#               x == "High" ~ cell_spec(x, format = "html", color = "black",
+#                                      background = "orange"),
+#               x == "Very high" ~ cell_spec(x, format = "html", color = "white",
+#                                      background = "red"))}) %>%
+#   kable(format = "html", escape = F, table.attr='class="risktable"') %>%
+#   kable_styling(font_size = 14, fixed_thead = T)
+
+```
+
+```{r neDT}
+
+#color coding cells works
+#need to add column with species vulnerability and color code species by it but not show it, like #hideV6 example at link
+#if we show it we can sort by species vulnerability though... alphabetical doesnt work so use numbers to go lowest-highest
+hab.table <- hab.table %>%
+  mutate(spVul = #Color code species based on climate vul
+    # case_when(Species %in% low.vul ~ "low.vul",
+    #           Species %in% mod.vul ~ "mod.vul",
+    #           Species %in% high.vul ~ "high.vul",
+    #           Species %in% vhigh.vul ~ "vhigh.vul")
+    # )
+    case_when(Species %in% low.vul ~ 1,
+              Species %in% mod.vul ~ 2,
+              Species %in% high.vul ~ 3,
+              Species %in% vhigh.vul ~ 4)
+    )
+
+
+datatable(hab.table, rownames = FALSE, 
+           extensions = c('Scroller', 'FixedColumns'), #add scrolling and fixed column
+          options = list(deferRender = TRUE,
+          scrollY = 200, scroller = TRUE,
+          dom = 't',scrollX = TRUE,fixedColumns = TRUE)
+          #, options = list(columnDefs = list(list(targets = 16, visible = FALSE)))
+  ) %>% 
+  formatStyle(#Color code base on dependence
+    'Species', "spVul",
+    backgroundColor = styleEqual(#c("low.vul", "mod.vul", "high.vul", "vhigh.vul"),
+                                 c(1,2,3,4),
+                                 c('lightgreen', 'yellow', 'orange', 'red')) #Color code base on dependence)
+    ) %>%
+    formatStyle(
+    names(hab.table)[2:15],
+    backgroundColor = styleEqual(c("Low", "Moderate", "High", "Very high"), 
+                                 c('lightgreen', 'yellow', 'orange', 'red'))
+  )
+
+
+```
+
+#### Data Sourecs
+

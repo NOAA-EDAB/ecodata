@@ -4,14 +4,16 @@
 \name{nefsc_survey}
 \alias{nefsc_survey}
 \title{NEFSC Bottom Trawl Survey (aggregated)}
-\format{\itemize{
+\format{
+\itemize{
 \item Var: Specifies feeding guild and season in which sampling occurred.
 \item Units: Units of variable \code{Var}.
 \item Value: Value of variable \code{Var}.
 \item EPU: Ecological Production Unit where sampling occurred (MAB = Mid-Atlantic Bight, GB = Georges Bank,
 GOM = Gulf of Maine, SS = Scotian Shelf).
 \item Time: Years.
-}}
+}
+}
 \usage{
 nefsc_survey
 }

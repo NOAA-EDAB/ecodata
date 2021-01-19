@@ -1,0 +1,89 @@
+SPECIES_GROUP_ID,LW_SVSPP,SPECIES,SEXMF,IND_WEIGHT_TOLERANCE,COEFFICIENT_SPRING,IND_WEIGHT_TOLERANCE_FALL,SEASONLESS_EXPONENT,COEFFICIENT_FALL,EXPONENT_FALL,EXPONENT_SPRING,IND_WEIGHT_TOLERANCE_SPRING,CONTAINER_WEIGHT_TOLERANCE,SEASONLESS_COEFFICIENT
+7712,28,Amblyraja radiata (thorny skate),F,40,,,2.9666,,,,,20,-11.4478
+7712,28,Amblyraja radiata (thorny skate),M,40,,,2.963,,,,,20,-11.4279
+7712,28,Amblyraja radiata (thorny skate),,55,,,3.113014932,,,,,37,-12.07704745
+7849,141,Centropristis striata (black sea bass),F,40,,,2.9721,,,,,20,-11.1223
+7849,141,Centropristis striata (black sea bass),M,40,,,2.9093,,,,,20,-10.9315
+7849,141,Centropristis striata (black sea bass),,74,,,3.007359547,,,,,32,-11.22625282
+7890,32,Clupea harengus (Atlantic herring),F,40,-11.98268953,46,2.957,-11.52944656,2.959053872,3.098740242,46,20,-11.56
+7890,32,Clupea harengus (Atlantic herring),M,40,-11.89301171,47,2.9545,-11.40660272,2.919572774,3.070622305,47,20,-11.5442
+7890,32,Clupea harengus (Atlantic herring),,40,-11.99689844,56,3.0314,-11.73661214,3.027716806,3.093590667,56,27,-11.7972
+7915,145,Cynoscion regalis (weakfish),F,40,,,2.6992,,,,,20,-10.3596
+7915,145,Cynoscion regalis (weakfish),M,40,,,2.731,,,,,20,-10.4779
+7915,145,Cynoscion regalis (weakfish),,53,,,2.968710359,,,,,25,-11.4863249
+7999,73,Gadus morhua (Atlantic cod),F,40,-11.73063495,45,3.2442,-11.96635855,3.119091302,3.037759568,45,20,-12.405
+7999,73,Gadus morhua (Atlantic cod),M,40,-11.61869671,45,2.9826,-11.94050362,3.113417796,3.007232347,46,20,-11.2373
+7999,73,Gadus morhua (Atlantic cod),,40,-11.67887785,45,3.0606,-12.00037285,3.128297456,3.023559329,46,39,-11.7803
+8014,107,Glyptocephalus cynoglossus (witch flounder),F,40,-13.40470769,42,3.4114,-13.23899055,3.34323372,3.379168079,42,20,-13.4522
+8014,107,Glyptocephalus cynoglossus (witch flounder),M,40,-13.33469424,42,3.3576,-13.07608334,3.29749187,3.358644486,42,20,-13.2706
+8014,107,Glyptocephalus cynoglossus (witch flounder),,40,-13.27137315,46,3.3289,-13.0735318,3.298903753,3.342731836,47,30,-13.2151
+8049,164,Hemitripterus americanus (sea raven),F,40,,,3.139713887,,,,,,-11.39629708
+8049,164,Hemitripterus americanus (sea raven),M,40,,,3.139713887,,,,,,-11.39629708
+8049,164,Hemitripterus americanus (sea raven),,94,,,3.139713887,,,,,52,-11.39629708
+8260,104,Hippoglossina oblonga (fourspot flounder),F,40,,,3.2213,,,,,600,-12.5568
+8260,104,Hippoglossina oblonga (fourspot flounder),M,40,,,3.1239,,,,,600,-12.2648
+8260,104,Hippoglossina oblonga (fourspot flounder),,58,,,3.13441905,,,,,33,-12.26296283
+8053,102,Hippoglossoides platessoides (American plaice),F,40,,,3.3641,,,,,20,-12.9811
+8053,102,Hippoglossoides platessoides (American plaice),M,40,,,3.279,,,,,20,-12.7168
+8053,102,Hippoglossoides platessoides (American plaice),,57,,,3.307076247,,,,,28,-12.81080418
+8104,26,Leucoraja erinacea (little skate),F,40,-12.43421199,63,,-12.43742871,3.114924029,3.11934082,63,,
+8104,26,Leucoraja erinacea (little skate),M,40,-12.11949381,62,,-12.39893788,3.089254105,3.021367527,62,,
+8104,26,Leucoraja erinacea (little skate),,40,-12.24872567,64,3.128,-12.42722169,3.10469628,3.062404856,64,37,-12.4462
+8106,23,Leucoraja ocellata (winter skate),F,40,,,3.3844,,,,,,-13.3935
+8106,23,Leucoraja ocellata (winter skate),M,40,,,3.2977,,,,,,-13.0849
+8106,23,Leucoraja ocellata (winter skate),,60,,,3.220486456,,,,,32,-12.77350993
+8107,105,Limanda ferruginea (yellowtail flounder),F,40,,,3.3235,,,,,20,-12.7073
+8107,105,Limanda ferruginea (yellowtail flounder),M,40,,,3.0161,,,,,20,-11.7347
+8107,105,Limanda ferruginea (yellowtail flounder),,46,,,3.107179908,,,,,34,-12.08699576
+8118,197,Lophius americanus (goosefish),F,40,-10.74067327,70,2.9608,-10.74067327,2.925593448,2.925593448,70,20,-10.869
+8118,197,Lophius americanus (goosefish),M,40,-10.48517724,70,2.8696,-10.48517724,2.847476734,2.847476734,70,20,-10.553
+8118,197,Lophius americanus (goosefish),,40,-10.75494414,71,2.9302,-10.75494414,2.921098155,2.921098155,71,42,-10.7668
+8150,74,Melanogrammus aeglefinus (haddock),F,40,,,3.0949,,,,,20,-11.8655
+8150,74,Melanogrammus aeglefinus (haddock),M,40,,,3.0572,,,,,20,-11.7438
+8150,74,Melanogrammus aeglefinus (haddock),,43,,,3.026632493,,,,,27,-11.64652216
+8163,72,Merluccius bilinearis (silver hake),F,40,-12.70099183,52,3.211,-12.55852831,3.203223923,3.229051108,51,20,-12.6221
+8163,72,Merluccius bilinearis (silver hake),M,40,-12.73879577,53,3.2018,-12.03991407,3.037797243,3.243501673,51,20,-12.5862
+8163,72,Merluccius bilinearis (silver hake),,40,-12.56348161,63,3.1512,-12.23024116,3.104363194,3.187719952,64,35,-12.4934
+8181,13,Mustelus canis (smooth dogfish),F,40,-14.02238092,44,3.0415,-12.75626967,3.047831356,3.319153704,44,36,-12.7087
+8181,13,Mustelus canis (smooth dogfish),M,40,-13.10543476,43,3.0918,-12.53109764,2.987303884,3.092894681,43,37,-12.3265
+8181,13,Mustelus canis (smooth dogfish),,40,-13.64329361,45,3.0006,-12.67074074,3.023950035,3.224140506,45,37,-12.5532
+8258,103,Paralichthys dentatus (summer flounder),F,40,-12.44674295,32,3.1759,-12.70268566,3.321544148,3.242600169,32,20,-12.1866
+8258,103,Paralichthys dentatus (summer flounder),M,40,-12.35243714,32,3.1602,-12.50479685,3.27398136,3.221635326,33,20,-12.1197
+8258,103,Paralichthys dentatus (summer flounder),,40,-12.37130603,32,3.1651,-12.53821384,3.281091794,3.224560822,33,26,-12.1424
+8271,131,Peprilus triacanthus (butterfish),F,,,,3.093643465,,,,,20,-11.1025775
+8271,131,Peprilus triacanthus (butterfish),M,40,,,3.093643465,,,,,20,-11.1025775
+8271,131,Peprilus triacanthus (butterfish),,97,,,3.093643465,,,,,39,-11.1025775
+8287,75,Pollachius virens (pollock),F,40,,,3.0235,,,,,20,-11.5181
+8287,75,Pollachius virens (pollock),M,40,,,3.0383,,,,,20,-11.5782
+8287,75,Pollachius virens (pollock),,48,,,3.03666346,,,,,30,-11.62355464
+8296,135,Pomatomus saltatrix (bluefish),F,40,,,2.9718,,,,,20,-11.0421
+8296,135,Pomatomus saltatrix (bluefish),M,40,,,2.8647,,,,,20,-10.6743
+8296,135,Pomatomus saltatrix (bluefish),,40,,,3.013996431,,,,,33,-11.30653285
+8321,106,Pseudopleuronectes americanus (winter flounder),F,40,,,3.0457,,,,,20,-11.4598
+8321,106,Pseudopleuronectes americanus (winter flounder),M,40,,,2.9636,,,,,20,-11.2363
+8321,106,Pseudopleuronectes americanus (winter flounder),,47,,,3.09682042,,,,,30,-11.65544311
+8359,121,Scomber scombrus (Atlantic mackerel),F,40,,,3.3006,,,,,20,-12.6376
+8359,121,Scomber scombrus (Atlantic mackerel),M,40,,,3.3305,,,,,20,-12.7288
+8359,121,Scomber scombrus (Atlantic mackerel),,50,,,3.236054869,,,,,32,-12.40497601
+8365,108,Scophthalmus aquosus (windowpane),F,40,-11.92437831,56,3.1293,-11.38589852,3.004634094,3.167876441,54,20,-11.769
+8365,108,Scophthalmus aquosus (windowpane),M,40,-11.59118502,56,2.9781,-11.12862109,2.918053636,3.056735394,54,20,-11.305
+8365,108,Scophthalmus aquosus (windowpane),,40,-11.55684899,62,2.9982,-11.46703911,3.027381992,3.051163173,62,35,-11.3526
+8376,155,Sebastes fasciatus (Acadian redfish),F,40,,,3.2297,,,,,20,-11.7713
+8376,155,Sebastes fasciatus (Acadian redfish),M,40,,,3.1151,,,,,20,-11.4401
+8376,155,Sebastes fasciatus (Acadian redfish),,52,,,3.186887005,,,,,24,-11.68301612
+8423,15,Squalus acanthias (spiny dogfish),F,51,,,3.174414109,,,,51,20,-13.16027598
+8423,15,Squalus acanthias (spiny dogfish),M,51,,,3.032152874,,,,51,20,-12.68376566
+8423,15,Squalus acanthias (spiny dogfish),,56,,,3.124577508,,,,56,20,-12.98110312
+8427,143,Stenotomus chrysops (scup),,74,,,3.096632079,,,,,27,-11.02792423
+8514,77,Urophycis chuss (red hake),F,40,-12.70302223,49,3.1684,-12.51778776,3.160342202,3.194465881,49,20,-12.6066
+8514,77,Urophycis chuss (red hake),M,40,-12.46003983,49,3.1139,-12.21765318,3.059834225,3.115147106,49,20,-12.4431
+8514,77,Urophycis chuss (red hake),,40,-12.59773948,58,3.0979,-12.2741857,3.094407675,3.165860496,59,32,-12.3743
+8517,78,Urophycis regia (spotted hake),F,40,,,3.1139,,,,,20,-12.0712
+8517,78,Urophycis regia (spotted hake),M,40,,,3.1437,,,,,20,-12.1924
+8517,78,Urophycis regia (spotted hake),,60,,,3.160573829,,,,,32,-12.20433063
+8519,76,Urophycis tenuis (white hake),F,40,,,3.3039,,,,,20,-13.0099
+8519,76,Urophycis tenuis (white hake),M,40,,,3.2812,,,,,20,-12.9063
+8519,76,Urophycis tenuis (white hake),,51,,,3.220863252,,,,,31,-12.63758947
+8137,193,Zoarces americanus (ocean pout),F,40,,,3.217611214,,,,,,-13.22020896
+8137,193,Zoarces americanus (ocean pout),M,40,,,3.217611214,,,,,,-13.22020896
+8137,193,Zoarces americanus (ocean pout),,64,,,3.217611214,,,,,36,-13.22020896

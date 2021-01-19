@@ -26,7 +26,7 @@ library(here)
 library(kableExtra)
 library(ggrepel)
 library(stringr)
-library(patchwork)
+#library(patchwork)
 library(grid)
 library(cowplot)
 
@@ -89,7 +89,11 @@ letter_size <- 4
 feeding.guilds1<- c("Piscivore","Planktivore","Benthivore","Benthos")
 feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
 x.shade.min <- 2010
-x.shade.max <- 2019
+x.shade.max <- 2020
+
+#Define constants for figure plot
+series.col <- c("indianred","black")
+
 #Function for custom ggplot facet labels
 label <- function(variable,value){
   return(facet_names[value])
@@ -104,63 +108,11 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 #### Commercial landings
 
-```{r hms-landings-comdat-commercial_landings, warning=F, , fig.cap = ("MAFMC managed species landings (red) and total commercial landings (black) by feeding guild. \\label{comm-landings}")}
-#Get data for plotting
-## Apex pred
-apex<-ecodata::hms_landings %>% 
-  dplyr::filter(stringr::str_detect(Var, "Weight")) %>% 
-  tidyr::separate(., Var, "Var", "_")
-
-apex$sp.group <- ifelse(grepl("Shark", apex$Var, ignore.case = T), "shark", 
-         ifelse(grepl("TUNA", apex$Var, ignore.case = T), "tuna", "swordfish"))
-
-apex<-apex %>% 
-  dplyr::group_by(sp.group, Region, Time) %>% 
-  dplyr::summarise(Value = sum(Value)) %>% 
-  dplyr::mutate(Units = c("metric tons"),
-         feeding.guild = factor(c("Apex Predator")),
-         Value = (Value/2024.6)) %>% 
-  dplyr::rename(EPU = Region, 
-           Var = sp.group) %>% 
-  dplyr::mutate(grouping = factor(c("total")))
 
 
-#Define constants for figure plot
-series.col <- c("indianred","black")
+```{r comdat-commercial-landings, fig.cap="MAFMC managed species landings (red) and total commercial landings (black) by feeding guild. \\label{comm-landings}"}
 
-##Plot
-p1<-apex %>% 
-  dplyr::filter(EPU == "MA") %>% 
-  dplyr::group_by(Var) %>% 
-  dplyr::mutate(hline = mean(Value)) %>% 
 
-  ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
-  
-  #Add time series
-  ggplot2::geom_line(size = lwd) +
-  ggplot2::geom_point(size = pcex) +
-  ggplot2::stat_summary(fun.y = sum, color = "black", geom = "line")+
-  #scale_color_manual(values = series.col, aesthetics = "color")+
-  #guides(color = FALSE) +
-  ggplot2::geom_hline(aes(yintercept = hline,
-                 color = Var,
-                 size = Var),
-             size = hline.size,
-             alpha = hline.alpha,
-             linetype = hline.lty)+
-  #Highlight last ten years
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  #Axis and theme
-  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
-  ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), limits = c(1985, 2018)) +
-  ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_text(hjust=0), 
-        legend.position = c(0.4, 0.7), 
-        legend.direction = "horizontal", 
-        legend.title = element_blank())+
-  ggplot2::ylab("")
 
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
@@ -203,7 +155,6 @@ facet_names <- list("Apex" = expression("Apex"),
                     "Benthivores" = expression("Benthivores"),
                     "Benthos" = expression("Benthos"))
 
-
 p2<- landings %>% 
   dplyr::filter(EPU == "MAB") %>% 
   ggplot2::ggplot(aes(x = Time, y = Value, color = grouping)) +
@@ -239,11 +190,52 @@ p2<- landings %>%
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0))
 
-cowplot::plot_grid(p1, p2, ncol = 1, align = 'v', rel_heights = c(1,4))
+p2
+```
 
+```{r hms-landings-comdat-commercial_landings, warning=F, fig.cap = ("HMS groups include “Bluefin Tuna”, “BAYS”, “Swordfish”, “Large Coastal Sharks”, “Small Coastal Sharks”, “Pelagic Sharks”, “Smoothhound Sharks”. “BAYS” includes bigeye, albacore, yellowfin and skipjack tunas. “Large Coastal Sharks” includes blacktip, bull, great hammerhead, scalloped hammerhead, smooth hammerhead, lemon, nurse, sandbar, silky, spinner, and tiger sharks. “Small Coastal Sharks” includes Atlantic sharpnose, blacknose, bonnethead, finetooth sharks. “Pelagic Sharks” includes blue, porbeagle, shortfin mako, and thresher sharks. “Smoothhound Sharks” includes smooth dogfish shark.")}
+
+## Apex pred
+apex<-ecodata::hms_landings %>% 
+  dplyr::filter(stringr::str_detect(Var, "Landings")) %>% 
+  separate(Var, c("Var", "trash"), sep = "_")
+
+##Plot
+p1<-apex %>% 
+  dplyr::filter(EPU == "MAB") %>% 
+  dplyr::group_by(Var) %>% 
+  dplyr::mutate(hline = mean(Value)) %>% 
+
+  ggplot2::ggplot(aes(x = YEAR, y = Value, color = Var)) +
+  
+  #Add time series
+  ggplot2::geom_line(size = lwd) +
+  ggplot2::geom_point(size = pcex) +
+  ggplot2::geom_hline(aes(yintercept = hline,
+                 color = Var,
+                 size = Var),
+             size = hline.size,
+             alpha = hline.alpha,
+             linetype = hline.lty)+
+  #Highlight last ten years
+  # ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  #     xmin = x.shade.min , xmax = x.shade.max,
+  #     ymin = -Inf, ymax = Inf) +
+  # #Axis and theme
+  #ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
+  #ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), limits = c(1985, 2020)) +
+  ecodata::theme_facet() +
+  ggplot2::theme(strip.text=element_text(hjust=0), 
+        legend.position = "bottom", 
+        legend.direction = "horizontal", 
+        legend.title = element_blank())+
+  ggplot2::ylab(expression("Landings (metric tons)")) +
+  ggplot2::xlab("Time")+
+  ggplot2::ggtitle("HMS Landings")
+
+p1
 
 ``` 
-
 
 ```{r comdat-total-landings, fig.cap = paste0("Total commercial seafood landings (black) shown with ",region," managed seafood landings (red). \\label{total-landings}")}
 
@@ -254,13 +246,26 @@ managed_landings <- ecodata::comdat  %>%
          Time >= 1986,
          EPU == epu_abbr)
 
+# HMS Landings
+apex<-ecodata::hms_landings %>% 
+  dplyr::filter(stringr::str_detect(Var, "Landings")) %>% 
+  separate(Var, c("Var", "trash"), sep = "_") %>% 
+  group_by(YEAR) %>% 
+  summarise(Value = sum(Value)) %>% 
+  rename( Time = YEAR) %>% 
+  mutate(Var = c("HMS Landings"), 
+         Units = c("metric tons"), 
+         EPU = c("MAB"))
+
 #Total landings
 total_landings <- ecodata::comdat  %>%
   dplyr::filter(!stringr::str_detect(Var, "managed species"),
          !stringr::str_detect(Var, "Other"),
+         !stringr::str_detect(Var, "Apex"),
          stringr::str_detect(Var, "Landings"),
          Time >= 1986,
-         EPU == epu_abbr)
+         EPU == epu_abbr) %>% 
+  rbind(apex)
 
 total_landings_agg <- total_landings %>%
   dplyr::group_by(Time) %>%
@@ -346,16 +351,25 @@ ggplot2::ggplot()+
 
 ```
 
-
 ```{r comdat-comm-revenue,  fig.cap = "Total revenue for the region (black) and revenue from MAFMC managed species (red). \\label{comm-rev}"}
-
+## Apex pred
+apex<-ecodata::hms_landings %>% 
+  dplyr::filter(stringr::str_detect(Var, "Revenue")) %>% 
+  separate(Var, c("Var", "trash"), sep = "_") %>% 
+  group_by(YEAR) %>% 
+  summarise(Value = sum(Value)) %>% 
+  rename( Time = YEAR) %>% 
+  mutate(Var = c("HMS Revenue"), 
+         Units = c("metric tons"), 
+         EPU = c("MAB"))
 #Filtering and aggregation step
 rev_agg <- ecodata::comdat %>% 
   dplyr::filter(stringr::str_detect(Var, "Revenue"),
-         !stringr::str_detect(Var, "prop|Other|NEFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
+         !stringr::str_detect(Var, "Apex|prop|Other|NEFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
          EPU == epu_abbr,
          Time >= 1986) %>% 
-  dplyr::mutate(Status = ifelse(str_detect(Var, "Revenue weight"), 
+  rbind(apex) %>% 
+  dplyr::mutate(Status = ifelse(str_detect(Var, "managed"), 
                          "Managed","Total")) %>% #Create groups for aggregation
   dplyr::group_by(Status, Time) %>% 
   dplyr::summarise(Total = sum(Value)) %>% 
@@ -392,6 +406,54 @@ ggplot2::ggplot(data = rev_agg) +
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts()
+
+```
+
+```{r hms-comm-revenue,  fig.cap = "HMS revenue. \\label{comm-rev}"}
+## Apex pred
+apex<-ecodata::hms_landings %>% 
+  dplyr::filter(stringr::str_detect(Var, "Revenue")) %>% 
+  separate(Var, c("Var", "trash"), sep = "_")
+
+
+#Define constants for figure plot
+series.col <- c("indianred","black")
+
+##Plot
+p1<-apex %>% 
+  dplyr::filter(EPU == "MAB") %>% 
+  dplyr::group_by(Var) %>% 
+  dplyr::mutate(Value = Value/1000000, 
+                hline = mean(Value)) %>% 
+
+  ggplot2::ggplot(aes(x = YEAR, y = Value, color = Var)) +
+  
+  #Add time series
+  ggplot2::geom_line(size = lwd) +
+  ggplot2::geom_point(size = pcex) +
+  ggplot2::geom_hline(aes(yintercept = hline,
+                 color = Var,
+                 size = Var),
+             size = hline.size,
+             alpha = hline.alpha,
+             linetype = hline.lty)+
+  #Highlight last ten years
+  # ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  #     xmin = x.shade.min , xmax = x.shade.max,
+  #     ymin = -Inf, ymax = Inf) +
+  # #Axis and theme
+  #ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
+  #ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), limits = c(1985, 2020)) +
+  ecodata::theme_facet() +
+  ggplot2::theme(strip.text=element_text(hjust=0), 
+        legend.position = "bottom", 
+        legend.direction = "horizontal", 
+        legend.title = element_blank())+
+  ggplot2::ylab(expression("Revenue (10^6 US Dollars)")) +
+  ggplot2::xlab("Time")+
+  ggplot2::ggtitle("HMS Revenue")
+
+p1
 
 ```
 
@@ -567,102 +629,75 @@ ggplot2::ggplot(data = stock_status) +
 
 #### Oyster aquaculture
 
-```{r aquaculture, fig.width = 5, fig.asp = 0.45, fig.cap = "Oyster aquaculture production in terms of number of oysters sold from Virginia, Maryland, and New Jersey. \\label{oyster-aqua}"}
+```{r aquaculture, fig.cap = "Oyster aquaculture production in terms pieces, lease area and production by acre. \\label{oyster-aqua}"}
 
 aqua <- ecodata::aquaculture %>%
-  dplyr::group_by(Var) %>%
-  dplyr::mutate(hline = mean(Value)) %>%
-  dplyr::ungroup() %>%
-  dplyr::mutate(Var = plyr::mapvalues(Var, from = c("md oyster harvest","nj oyster harvest","va oyster harvest"),
-                                                    to  = c("MD","NJ","VA"))) %>%
-  dplyr::rename(State = Var)
-
-aqua$State <- factor(aqua$State, levels = c("VA","MD","NJ"))
-
+  dplyr::filter(Region == "Maryland") %>% 
+  dplyr::filter(!Value == "NA") %>% 
+  dplyr::mutate(Time = as.integer(Time), 
+                Value = as.numeric(Value))
 
 ggplot2::ggplot() +
-  ggplot2::geom_segment(aes(x=2005,xend=2017,y=mean(aquaculture[aquaculture$Var == "va oyster harvest",]$Value),
-                   yend=mean(aquaculture[aquaculture$Var == "va oyster harvest",]$Value)),
-               size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty,
-           color = "#1b9e77",
-           inherit.aes = F) +
-  ggplot2::geom_segment(aes(x=2012,xend=2016,y=mean(aquaculture[aquaculture$Var == "nj oyster harvest",]$Value),
-                   yend=mean(aquaculture[aquaculture$Var == "nj oyster harvest",]$Value)),
-               size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty,
-           color = "#d95f02",
-           inherit.aes = F) +
-  ggplot2::geom_segment(aes(x=2012,xend=2017,y=mean(aquaculture[aquaculture$Var == "md oyster harvest",]$Value),
-                   yend=mean(aquaculture[aquaculture$Var == "md oyster harvest",]$Value)),
-               size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty,
-           color = "#7570b3",
-           inherit.aes = F) +
  #Highlight last ten years
-  ggplot2::geom_line(data = aqua, aes(x = Time, y = Value, color = State), size = lwd) +
-  ggplot2::geom_point(data = aqua,aes(x = Time, y = Value, color = State), size = pcex) +
-  ggplot2::scale_color_manual(values = c(VA = "#1b9e77", MD = "#7570b3",NJ = "#d95f02")) +
-  ggplot2::scale_x_continuous(breaks = seq(2005,2018,3),expand = c(0.01, 0.01)) +
-  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000000})+
-  ggplot2::ggtitle("Oyster harvest")+
-  ggplot2::ylab(expression("Oysters sold (10"^6*" n)")) +
+  ggplot2::geom_line(data = aqua, aes(x = Time, y = Value), size = lwd) +
+  ggplot2::geom_point(data = aqua,aes(x = Time, y = Value), size = pcex) +
+  ggplot2::facet_wrap(~Var, scales = "free", nrow = 3)+
+  ggplot2::ggtitle("Oyster Production in Maryland")+
+  ggplot2::ylab(expression("Oysters production")) +
   ggplot2::xlab("")+
+  scale_x_continuous(breaks=c(2009,2011,2013,2015, 2017, 2019))+
   ecodata::theme_ts()
 
 ```
 
 #### Engagement and reliance
 
-```{r engagement,  fig.cap="Commercial engagement scores (total pounds landed, value landed, commercial permits and commercial dealers in a community ) for  Mid-Atlantic fishing communities, 2004-2018."}
-eng<-ecodata::engagement %>% 
-  dplyr::filter(!Var == "med.high.scores")
-eng$Var <- factor(eng$Var, levels = c("%High","%Medium High","%Moderate", "%Low"))
-eng %>% dplyr::filter(EPU == "MA") %>% 
-  ggplot2::ggplot()+
-   #ylim(0.8, NA)+
-  ggplot2::geom_bar(aes(x = Time, y = Value, 
-               fill = Var), 
-           stat = "identity")+
-  #scale_y_continuous(labels = Value(suffix = "%", prefix = "")) +
-  #geom_text(aes(x = Time, y = Value,
-  #             label = paste0(Value,"%")), size=4) +
-  ggplot2::theme(legend.position="bottom", legend.direction="horizontal",
-        legend.title = element_blank())+
-  ggplot2::coord_cartesian(ylim=c(0.85,1))+
-  ggplot2::xlab("Time") +
-  ggplot2::ylab("% Communities in each category (Low to High)")+
-  ggplot2::ggtitle("Commercial Engagement")+
-  ecodata::theme_ts()
+```{r commercial-engagement, message=F, fig.cap= "Commercial engagement and reliance for the top top commercial fishing communities in the Mid-Atlantic.", message = FALSE, warning=FALSE}
 
+com<-ecodata::engagement %>% 
+  dplyr::filter(Region == "Mid-Atlantic", 
+                Fishery == "Commercial")
 
-ecodata::engagement %>% 
-  dplyr::filter(Var == "med.high.scores", 
-         EPU == "MA") %>% 
-  dplyr::mutate(hline = mean(Value)) %>% 
+com2<-com %>% 
   ggplot2::ggplot()+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
-  ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
-  ggplot2::ggtitle("Medium-High communities ") +
-  ggplot2::ylab(expression("Average score for Med High communities")) +
-  ggplot2::geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
+  ggplot2::geom_point(aes(x = Eng, y = Rel, color = Rating), size = 2)+
+  ggplot2::geom_vline(xintercept = 1, linetype = "dashed",color = "black")+
+  ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black") +
+  ggrepel::geom_text_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
+                      y = Rel,
+                      label = Community,
+                      color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
+  ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
+                     breaks = com$Rating) +
+  xlim(0,12)+
+  ylim(0,5.5)+
+  theme(legend.position=c(0.8, 0.85), 
+        legend.title = element_blank(),       
+        legend.background = element_blank(),
+        legend.box.background = element_rect(colour = "black"))+
+  ggplot2::xlab("Commercial Engagament Score") +
+  ggplot2::ylab("Commercial Reliance Score") +
+  ggplot2::ggtitle("Social Vulnerability in Top Commercial Fishing Communities")+
+  #ggplot2::guides(color = FALSE) +
+  #theme_bw()
   ecodata::theme_ts()
+  #ecodata::theme_facet()
   
+  
+  gridExtra::grid.arrange(com2, bottom = textGrob("Low <--------------------------------------------------------------------------------------------------------------------------------------> High", 
+                                     x = 0.5, y = 1, gp = gpar(fontsize = 7)),
+                          left = textGrob("Low <-----------------------------------------------------------------> High", rot = 90,
+                                   x = 1, y = 0.45, gp = gpar(fontsize = 7)))
+
+
 ```
+
+
 
 ### Recreational fisheries {.tabset .tabset-fade}
 
 #### Recreational landings
+
 ```{r recdat-landings, fig.cap = paste0("Total recreational landings in the ",region," region. \\label{rec-landings}")}
 
 landings_rec <- ecodata::recdat %>% 
@@ -823,15 +858,76 @@ rec_div_catch <- recdat %>%
   ecodata::theme_ts()
 
 
+
 cowplot::plot_grid(rec_effort, 
                    rec_div, 
                    rec_div_catch,
                    ncol = 1, 
                    align = "hv") +
     ggplot2::theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
+
+
 ```
 
+#### Recreational Engagement and Reliance
+
+```{r recreational-engagement, message=F, fig.cap= "Commercial engagement and reliance for the top top recreational fishing communities in the Mid-atlantic."}
+
+com<-ecodata::engagement %>% 
+  dplyr::filter(Region == "Mid-Atlantic", 
+                Fishery == "Recreational")
+
+com2<-com %>% 
+  ggplot2::ggplot()+
+  ggplot2::geom_point(aes(x = Eng, y = Rel, color = Rating), size = 2)+
+  ggplot2::geom_vline(xintercept = 1, linetype = "dashed", color = "black")+
+  ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black") +
+  ggrepel::geom_text_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
+                      y = Rel,
+                      label = Community,
+                      color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
+  ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
+                     breaks = com$Rating) +
+  xlim(0,12)+
+  ylim(0,16)+
+  theme(legend.position=c(0.8, 0.85), 
+        legend.title = element_blank(),       
+        legend.background = element_blank(),
+        legend.box.background = element_rect(colour = "black"))+
+  ggplot2::xlab("Recreation Engagament Score") +
+  ggplot2::ylab("Recreation Reliance Score") +
+  ggplot2::ggtitle("Social Vulnerability in Top Recreational Fishing Communities")+
+  #ggplot2::guides(color = FALSE) +
+  ecodata::theme_ts()
+  
+  
+  gridExtra::grid.arrange(com2, bottom = textGrob("Low <--------------------------------------------------------------------------------------------------------------------------------------> High", 
+                                     x = 0.5, y = 1, gp = gpar(fontsize = 7)),
+                          left = textGrob("Low <----------------------------------------------------------------------------------------> High", rot = 90,
+                                   x = 1, y = 0.5, gp = gpar(fontsize = 7)))
+
+
+```
+
+#### Recreational Shark Landings
+
+```{r rec_hms, fig.cap="Recreational shark landings from mrip."}
+ecodata::rec_hms %>% 
+  dplyr::filter(Region == "Mid-Atlantic") %>% 
+  ggplot2::ggplot()+
+  ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+
+  ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+
+  ggplot2::ylab("Landings (number of fish)")+
+  ggplot2::xlab("")+ 
+  ggplot2::theme(legend.title = element_blank())+
+  ecodata::theme_ts()
+
+```
+
+Recent pelagic landings coming primarily from Common Thresher and Shortfin Mako. 
+
 ### Primary Production Required
+
 
 ```{r ppr, fig.cap="Primary production required to support the commercial landings. Included are the top species accounting for 80% of the landings in each year."}
 ecodata::ppr %>% 
@@ -854,91 +950,210 @@ ecodata::ppr %>%
   ecodata::theme_ts()
 ```
 
+### Wind Energy Revenue
 
-## Shelfwide Indicators
-
-
-### Wind Sites and Occurrence 
-These are the five species most likely to occur in the lease areas. 
-
-```{r wind-occupancy, eval = T, echo = F, fig.cap='', out.width='80%'}
-wind1 <- ecodata::wind_occupancy
-wind1$trend<- ifelse(wind1$Trend == "pos", 
-                    "$\\nearrow$",
-                    ifelse(wind1$Trend == "neg",
-                    "$\\searrow$", 
-                    " ")) 
-wind2<-wind1 %>% dplyr::select(Area, Season, Species, trend)
-names<-c("Area", "Season", "Species", "trend")
-bnew<-c("Area.1", "Season.1", "Species.1", "trend.1")
-cnew<-c("Area.2", "Season.2", "Species.2", "trend.2")
-dnew<-c("Area.3", "Season.3", "Species.3", "trend.3")
-enew<-c("Area.4", "Season.4", "Species.4", "trend.4")
-a<-wind2 %>% dplyr::filter(Area == "Existing-North") 
-b<-wind2 %>% dplyr::filter(Area == "Proposed-North") %>% 
-  dplyr::rename_at(vars(names), ~ bnew)
-c<-wind2 %>% dplyr::filter(Area == "Existing-Mid")%>% 
-  dplyr::rename_at(vars(names), ~ cnew)
-d<-wind2 %>% dplyr::filter(Area == "Proposed-Mid")%>% 
-  dplyr::rename_at(vars(names), ~ dnew)
-e<-wind2 %>% dplyr::filter(Area == "Existing-South")%>% 
-  dplyr::rename_at(vars(names), ~ enew)
-all<- a %>% cbind(b,c,d,e) %>% 
-  dplyr::select(2:4,7:8,11:12,15:16,19:20)
-  
-kable(all, escape = FALSE,
-      col.names = c("Season", "Species", "Trend", "Species", "Trend", "Species","Trend", "Species","Trend", "Species", "Trend"),
-      caption = "Species with highest probability of occupancy species each season and area, with observed trends",
-      booktabs = T) %>%
-    add_header_above(c(" " = 1, "Existing - North" = 2, "Proposed - North" = 2, 
-                     "Existing - Mid" = 2, "Proposed - Mid" = 2, 
-                     "Existing - South" = 2)) %>%
-  kable_styling(latex_options = c("hold_position", "scale_down")) 
+```{r wind-revenue, fig.cap="Wind energy revenue in the Mid-Atlantic"}
+ecodata::wind_revenue %>% 
+  dplyr::mutate(Value = Value/1000000, 
+                Time = as.integer(Time)) %>% 
+  tidyr::separate(Var, into=c("Var", "Trash"), sep = "[(]") %>% 
+  dplyr::select(!Trash) %>% 
+  #dplyr::group_by(EPU) %>% 
+ # dplyr::mutate(hline = mean(Value)) %>% 
+  dplyr::filter(EPU == "MAB") %>% 
+  ggplot2::ggplot() +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+
+  ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+
+  #ggplot2::facet_wrap(~Var, ncol = 1, scales = "free")+
+  #ggplot2::geom_hline(aes(yintercept = hline),
+  #         size = hline.size,
+  #         alpha = hline.alpha,
+  #         linetype = hline.lty)+
+  scale_x_continuous(breaks=c(2008,2012,2016, 2020))+
+  ggplot2::ggtitle("Fishery Revenue in Wind Lease Areas")+
+  ggplot2::ylab("2019 Constant Million Dollars ")+
+  theme(legend.title = element_blank())+
+  ggplot2::xlab("")+
+  ecodata::theme_ts()
 ```
 
 
-```{r wind-map, eval = T, echo = F, fig.cap="Map of BOEM existing (black) and proposed (red) lease areas as of February 2019.", message=FALSE, results=FALSE}
+## Shelfwide Indicators
 
+### Wind Development Speed
 
-nesbath <- marmap::fortify.bathy(marmap::getNOAA.bathy(lon1 = -77, lon2 = -65, lat1 = 35, lat2 = 45,
-              resolution = 5))
+```{r wind-dev-cumul, fig.cap = ""}
 
-lease_s<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesSPoly.shp'))
-lease_n<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesNPoly.shp'))
-lease_m<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesMPoly.shp'))
-prop_n<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_proposed_leases_NPoly.shp'))
-prop_m<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_proposed_leases_MPoly.shp'))
+knitr::include_graphics(file.path(image.dir, "CumulativeWindDraft_20201231.jpg"))
 
-invisible(sf::st_crs(lease_s)<-crs)
-invisible(sf::st_crs(lease_n)<-crs)
-invisible(sf::st_crs(lease_m)<-crs)
-invisible(sf::st_crs(prop_n)<-crs)
-invisible(sf::st_crs(prop_m)<-crs)
+```
 
-ggplot2::ggplot() +
-  ggplot2::geom_raster(data = nesbath, aes(x=x,y=y, fill = z)) +
-  ggplot2::scale_fill_gradientn(colors =c("lightcyan","lightblue4"))+
-  ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) +
-  ggplot2::geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) +
-  ggplot2::geom_sf(data = lease_s, size = map.lwd, color = "black")+
-  ggplot2::geom_sf(data = lease_n, size = map.lwd, color = "black")+
-  ggplot2::geom_sf(data = lease_m, size = map.lwd, color = "black")+
-  ggplot2::geom_sf(data = prop_n, size = map.lwd, color = "red3")+
-  ggplot2::geom_sf(data = prop_m, size = map.lwd, color = "red3")+
-  ggplot2::coord_sf(crs = crs, xlim = c(-77, -69), ylim = c(36,42))+
-  ggplot2::geom_segment(aes(x = -74.6, y = 37.4, xend =-75.4, yend =38), colour = "blue4")+
-  ggplot2::geom_segment(aes(x = -71.1, y = 40.2, xend =-71.6, yend =41.1), colour = "blue4")+
-  ggplot2::annotate("text", x = -74.9, y = 37, label = "S")+
-  ggplot2::annotate("text", x = -73.5, y = 38.7, label = "M")+
-  ggplot2::annotate("text", x = -70.5, y = 40.2, label = "N")+
-  ggspatial::annotation_scale(location = "br", width_hint = 0.4) +
-  ggplot2::theme_bw( ) +
-  ggplot2::ylab("")+
+```{r wind-dev-cumul-MAB, fig.cap = ""}
+
+knitr::include_graphics(file.path(image.dir, "MidAtlantic_20201231.jpg"))
+
+```
+
+```{r wind-dev-NE, fig.cap = ""}
+
+knitr::include_graphics(file.path(image.dir, "Northeast_20201231.jpg"))
+
+```
+
+```{r wind-dev-survey, fig.cap = ""}
+
+knitr::include_graphics(file.path(image.dir, "SurveysWindFarmAreas_20201229.jpg"))
+
+```
+
+```{r wind-dev-speed0.30, eval = T, echo = F, fig.cap='', out.width='80%'}
+labels<- ecodata::wind_dev_speed %>% 
+  group_by(Time) %>% 
+  summarise("Projects(n)" = length(Project_Name)) %>% 
+  filter(!Time == "NA")
+
+total_area<- ecodata::wind_dev_speed %>% 
+  filter(Var == "Cumulative_area",
+         !Time == "NA") %>% 
+  group_by(Time) %>% 
+  summarise(Value_2 = sum(Value)) %>% 
+  mutate(Value_3 = cumsum(Value_2)/1000000) %>% 
+
+  ggplot2::ggplot()+
+  ggplot2::geom_point(aes(x = Time, y = Value_3))+
+  ggplot2::geom_line(aes(x = as.factor(Time), y = Value_3, group=1))+
+  ggplot2::ylab("Total Area (Million Acres)")+
   ggplot2::xlab("")+
-  ggplot2::theme(legend.position = "none") +
-  ggplot2::ggtitle("BOEM lease areas")
+  ggplot2::ggtitle("Cumulative Area")+
+  ecodata::theme_ts()+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+dist_area<- ecodata::wind_dev_speed%>% 
+  filter(Var == "Cumulative_seafloor_disturbance",
+         !Time == "NA") %>% 
+  ggplot2::ggplot()+
+  ggplot2::geom_point(aes(x = Time, y = Value))+
+  ggplot2::ylab(" Total Seafloor Distubrance (Acres)")+
+  ggplot2::xlab("")+
+  ggplot2::ggtitle("Cumulative Seafloor Disturbance")+
+  theme(axis.text.x = element_text(angle = 45))
 
-``` 
+foundations<- ecodata::wind_dev_speed%>% 
+  filter(Var == "Cumulative_foundations",
+         !Time == "NA") %>% 
+  ggplot2::ggplot()+
+  ggplot2::geom_point(aes(x = Time, y = Value))+
+  ggplot2::ylab(" Foundations (n)")+
+  ggplot2::xlab("")+
+  ggplot2::ggtitle("Cumulative Number of Foundations")+
+  theme(axis.text.x = element_text(angle = 45))
+
+# gridExtra::grid.arrange(
+#   gridExtra::tableGrob(labels, theme = gridExtra::ttheme_minimal(base_size = 8)),
+#   total_area,
+#   ncol = 2,
+#   widths = c(0.5, 1.5),
+#   clip = FALSE
+# )
+
+total_area
+```
+
+<!-- ### Wind Sites and Occurrence  -->
+
+<!-- <span style="color: red;">NO NEW DATA</span> -->
+
+<!-- These are the five species most likely to occur in the lease areas.  -->
+
+<!-- ```{r wind-occupancy, eval = T, echo = F, fig.cap='', out.width='80%'} -->
+<!-- wind1 <- ecodata::wind_occupancy -->
+<!-- wind1$trend<- ifelse(wind1$Trend == "pos",  -->
+<!--                     "$\\nearrow$", -->
+<!--                     ifelse(wind1$Trend == "neg", -->
+<!--                     "$\\searrow$",  -->
+<!--                     " "))  -->
+<!-- wind2<-wind1 %>% dplyr::select(Area, Season, Species, trend) -->
+<!-- names<-c("Area", "Season", "Species", "trend") -->
+<!-- bnew<-c("Area.1", "Season.1", "Species.1", "trend.1") -->
+<!-- cnew<-c("Area.2", "Season.2", "Species.2", "trend.2") -->
+<!-- dnew<-c("Area.3", "Season.3", "Species.3", "trend.3") -->
+<!-- enew<-c("Area.4", "Season.4", "Species.4", "trend.4") -->
+<!-- a<-wind2 %>% dplyr::filter(Area == "Existing-North")  -->
+<!-- b<-wind2 %>% dplyr::filter(Area == "Proposed-North") %>%  -->
+<!--   dplyr::rename_at(vars(names), ~ bnew) -->
+<!-- c<-wind2 %>% dplyr::filter(Area == "Existing-Mid")%>%  -->
+<!--   dplyr::rename_at(vars(names), ~ cnew) -->
+<!-- d<-wind2 %>% dplyr::filter(Area == "Proposed-Mid")%>%  -->
+<!--   dplyr::rename_at(vars(names), ~ dnew) -->
+<!-- e<-wind2 %>% dplyr::filter(Area == "Existing-South")%>%  -->
+<!--   dplyr::rename_at(vars(names), ~ enew) -->
+<!-- all<- a %>% cbind(b,c,d,e) %>%  -->
+<!--   dplyr::select(2:4,7:8,11:12,15:16,19:20) -->
+
+<!-- kable(all, escape = FALSE, -->
+<!--       col.names = c("Season", "Species", "Trend", "Species", "Trend", "Species","Trend", "Species","Trend", "Species", "Trend"), -->
+<!--       caption = "Species with highest probability of occupancy species each season and area, with observed trends", -->
+<!--       booktabs = T) %>% -->
+<!--     add_header_above(c(" " = 1, "Existing - North" = 2, "Proposed - North" = 2,  -->
+<!--                      "Existing - Mid" = 2, "Proposed - Mid" = 2,  -->
+<!--                      "Existing - South" = 2)) %>% -->
+<!--   kable_styling(latex_options = c("hold_position", "scale_down"))  -->
+<!-- ``` -->
+
+
+
+
+
+
+
+
+
+
+<!-- ```{r wind-map, eval = T, echo = F, fig.cap="Map of BOEM existing (black) and proposed (red) lease areas as of February 2019.", message=FALSE, results=FALSE} -->
+
+
+<!-- nesbath <- marmap::fortify.bathy(marmap::getNOAA.bathy(lon1 = -77, lon2 = -65, lat1 = 35, lat2 = 45, -->
+<!--               resolution = 5)) -->
+
+<!-- lease_s<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesSPoly.shp')) -->
+<!-- lease_n<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesNPoly.shp')) -->
+<!-- lease_m<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesMPoly.shp')) -->
+<!-- prop_n<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_proposed_leases_NPoly.shp')) -->
+<!-- prop_m<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_proposed_leases_MPoly.shp')) -->
+
+<!-- invisible(sf::st_crs(lease_s)<-crs) -->
+<!-- invisible(sf::st_crs(lease_n)<-crs) -->
+<!-- invisible(sf::st_crs(lease_m)<-crs) -->
+<!-- invisible(sf::st_crs(prop_n)<-crs) -->
+<!-- invisible(sf::st_crs(prop_m)<-crs) -->
+
+<!-- ggplot2::ggplot() + -->
+<!--   ggplot2::geom_raster(data = nesbath, aes(x=x,y=y, fill = z)) + -->
+<!--   ggplot2::scale_fill_gradientn(colors =c("lightcyan","lightblue4"))+ -->
+<!--   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) + -->
+<!--   ggplot2::geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) + -->
+<!--   ggplot2::geom_sf(data = lease_s, size = map.lwd, color = "black")+ -->
+<!--   ggplot2::geom_sf(data = lease_n, size = map.lwd, color = "black")+ -->
+<!--   ggplot2::geom_sf(data = lease_m, size = map.lwd, color = "black")+ -->
+<!--   ggplot2::geom_sf(data = prop_n, size = map.lwd, color = "red3")+ -->
+<!--   ggplot2::geom_sf(data = prop_m, size = map.lwd, color = "red3")+ -->
+<!--   ggplot2::coord_sf(crs = crs, xlim = c(-77, -69), ylim = c(36,42))+ -->
+<!--   ggplot2::geom_segment(aes(x = -74.6, y = 37.4, xend =-75.4, yend =38), colour = "blue4")+ -->
+<!--   ggplot2::geom_segment(aes(x = -71.1, y = 40.2, xend =-71.6, yend =41.1), colour = "blue4")+ -->
+<!--   ggplot2::annotate("text", x = -74.9, y = 37, label = "S")+ -->
+<!--   ggplot2::annotate("text", x = -73.5, y = 38.7, label = "M")+ -->
+<!--   ggplot2::annotate("text", x = -70.5, y = 40.2, label = "N")+ -->
+<!--   ggspatial::annotation_scale(location = "br", width_hint = 0.4) + -->
+<!--   ggplot2::theme_bw( ) + -->
+<!--   ggplot2::ylab("")+ -->
+<!--   ggplot2::xlab("")+ -->
+<!--   ggplot2::theme(legend.position = "none") + -->
+<!--   ggplot2::ggtitle("BOEM lease areas") -->
+
+<!-- ```  -->
 
 
 

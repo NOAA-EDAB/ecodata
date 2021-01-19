@@ -1,11 +1,11 @@
 
-#Filtering and aggregation step
+#Filtering and aggation step
 rev_agg <- ecodata::comdat %>% 
   dplyr::filter(stringr::str_detect(Var, "Revenue"),
-         !stringr::str_detect(Var, "prop|Other|MAFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
+         !stringr::str_detect(Var, "Apex|prop|Other|MAFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
          EPU %in% epu_abbr,
          Time >= 1986) %>% 
-  dplyr::mutate(Status = ifelse(str_detect(Var, "Revenue weight"), 
+  dplyr::mutate(Status = ifelse(str_detect(Var, "managed"), 
                          "Managed","Total")) %>% #Create groups for aggregation
   dplyr::group_by(EPU,Status, Time) %>% 
   dplyr::summarise(Total = sum(Value)) %>% 

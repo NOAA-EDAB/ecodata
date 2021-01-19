@@ -4,7 +4,8 @@
 \name{species_dist}
 \alias{species_dist}
 \title{Species distribution on the NES.}
-\format{Data set contains 260 rows and 5 columns
+\format{
+Data set contains 260 rows and 5 columns
 
 \itemize{
 \item Time: Year.
@@ -12,7 +13,8 @@
 \item Value: Value of variable  \code{Var}.
 \item Units: Unit of Variable  \code{Var}.
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.
-}}
+}
+}
 \usage{
 species_dist
 }

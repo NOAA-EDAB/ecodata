@@ -4,7 +4,8 @@
 \name{recdat}
 \alias{recdat}
 \title{Recreational fishing indicators}
-\format{359 rows and 5 columns
+\format{
+359 rows and 5 columns
 
 \itemize{
 \item Var: Specifies variable name.
@@ -13,7 +14,8 @@
 \item Time: Year.
 \item EPU: Ecological Production Units where data originated. In this case, \code{MA} refers
 to Mid-Atlantic, and \code{NE} to New England.
-}}
+}
+}
 \source{
 Read more about the MRIP database and perform your own queries at \url{https://www.st.nmfs.noaa.gov/recreational-fisheries/data-and-documentation/run-a-data-query}.
 }

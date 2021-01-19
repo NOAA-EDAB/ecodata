@@ -4,7 +4,8 @@
 \name{stom_fullness}
 \alias{stom_fullness}
 \title{Stomach fullness index calculated from NEFSC fall bottom trawl surveys}
-\format{Data set contains 2068 rows and 5 columns
+\format{
+Data set contains 2068 rows and 5 columns
 
 \itemize{
 \item Time: Year sampled.
@@ -12,7 +13,8 @@
 \item Value: Value of variable  \code{Var}.
 \item Units: Unit of Variable  \code{Var}.
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.
-}}
+}
+}
 \usage{
 stom_fullness
 }

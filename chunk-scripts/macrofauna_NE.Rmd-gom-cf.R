@@ -1,2 +1,2 @@
 
-knitr::include_graphics(file.path(image.dir, "GOMcondition_2019_viridis_final.jpg"))
+knitr::include_graphics(c(file.path(image.dir, "GOMcondition_2020_viridis_final.jpg"),file.path(image.dir, "GBcondition_2020_viridis_final.jpg") ))

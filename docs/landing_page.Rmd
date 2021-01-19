@@ -46,7 +46,7 @@ knitr::include_graphics(here::here("ecodata-schematic.png"))
 
 ## What is included 
 
-Each annual report cycle is developed with new and updated datasets. This table shows which versions of all related products correspond to a specific State of the Ecosystem report cycle. 
+Each annual report cycle is developed with new and updated datasets. Guidelines for formatting data for the State of the Ecosystem reports are [linked here](https://noaa-edab.github.io/ecodata/data_guidelines). This table shows which versions of all related products correspond to a specific State of the Ecosystem report cycle. 
 
 
 

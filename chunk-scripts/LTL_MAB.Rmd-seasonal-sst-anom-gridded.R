@@ -43,7 +43,7 @@ sst_map <-
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
-  ggplot2::ggtitle("SST anomaly (2019)") +
+  ggplot2::ggtitle("SST anomaly (2020)") +
   ggplot2::xlab("Longitude") +
   ggplot2::ylab("Latitude") +
   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
@@ -146,9 +146,6 @@ fall_anom <-  ggplot2::ggplotGrob( seasonal_oisst_anom %>%
                                    stringr::str_detect(Var, "fall")) %>% 
                             dplyr::mutate(hline = mean(Value)) %>% 
                             ggplot2::ggplot(aes(x = Time, y = Value)) +
-                            ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-                                     xmin = x.shade.min , xmax = x.shade.max,
-                                     ymin = -Inf, ymax = Inf) +
                             ggplot2::geom_line() +
                             ggplot2::geom_point() +
                             ecodata::geom_gls(alpha = trend.alpha + 0.25) +
@@ -156,6 +153,9 @@ fall_anom <-  ggplot2::ggplotGrob( seasonal_oisst_anom %>%
                             ggplot2::xlab(element_blank())+
                             ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
                             ggplot2::geom_hline(aes(yintercept = hline)) +
+                            ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+                                     xmin = x.shade.min , xmax = x.shade.max,
+                                     ymin = -Inf, ymax = Inf) +
                             ecodata::theme_ts()+
                             ggplot2::theme(axis.title = element_text(size = 6),
                                   axis.text = element_text(size = 6),

@@ -26,7 +26,7 @@ library(here)
 library(kableExtra)
 library(ggrepel)
 library(stringr)
-library(patchwork)
+#library(patchwork)
 library(grid)
 library(cowplot)
 
@@ -89,6 +89,10 @@ feeding.guilds1<- c("Piscivore","Planktivore","Benthivore","Benthos")
 feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
 x.shade.min <- 2010
 x.shade.max <- 2020
+
+#Define constants for figure plot
+series.col <- c("indianred","black")
+
 #Function for custom ggplot facet labels
 label <- function(variable,value){
   return(facet_names[value])
@@ -104,59 +108,8 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 #### Commercial landings
 
 
-```{r hms-landings-comdat-commercial-landings, warning=F, fig.length = 24, fig.cap = "NEFMC managed species landings (red) and total commercial landings (black) by feeding guild in Gulf of Maine (left) and Georges Bank (right)."}
-#Get data for plotting
-## Apex pred
-apex<-ecodata::hms_landings %>% 
-  dplyr::filter(stringr::str_detect(Var, "Weight")) %>% 
-  tidyr::separate(., Var, "Var", "_")
+```{r comdat-commercial-landings, warning=F, fig.length = 24, fig.cap = "NEFMC managed species landings (red) and total commercial landings (black) by feeding guild in Gulf of Maine (left) and Georges Bank (right)."}
 
-apex$sp.group <- ifelse(grepl("Shark", apex$Var, ignore.case = T), "shark", 
-         ifelse(grepl("TUNA", apex$Var, ignore.case = T), "tuna", "swordfish"))
-
-apex<-apex %>% 
-  dplyr::group_by(sp.group, Region, Time) %>% 
-  dplyr::summarise(Value = sum(Value)) %>% 
-  dplyr::mutate(Units = c("metric tons"),
-         feeding.guild = factor(c("Apex Predator")),
-         Value = (Value/2024.6)) %>% 
-  dplyr::rename(EPU = Region, 
-           Var = sp.group) %>% 
-  dplyr::mutate(grouping = factor(c("total")))
-
-##Plot
-apex_landings<-apex %>% 
-  dplyr::filter(EPU == "NE") %>% 
-  dplyr::group_by(Var) %>% 
-  dplyr::mutate(hline = mean(Value)) %>% 
-
-  ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
-  
-  #Add time series
-  ggplot2::geom_line(size = lwd) +
-  ggplot2::geom_point(size = pcex) +
-  ggplot2::stat_summary(fun.y = sum, color = "black", geom = "line")+
-  #scale_color_manual(values = series.col, aesthetics = "color")+
-  #guides(color = FALSE) +
-  ggplot2::geom_hline(aes(yintercept = hline,
-                 color = Var,
-                 size = Var),
-             size = hline.size,
-             alpha = hline.alpha,
-             linetype = hline.lty)+
-  #Highlight last ten years
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  #Axis and theme
-  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
-  ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), limits = c(1985, 2018)) +
-  ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_text(hjust=0), 
-        legend.position = c(0.4, 0.7), 
-        legend.direction = "horizontal", 
-        legend.title = element_blank())+
-  ggplot2::ylab("")
 
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
@@ -271,12 +224,63 @@ gb_landings <- landings %>% dplyr::filter(EPU == "GB") %>%
   ggplot2::theme(strip.text=element_text(hjust=0)) +
   ggplot2::ggtitle("Georges Bank")
 
-apex_landings
+#p1
 gb_landings
 gom_landings
 #, ncol = 1, align = 'v', rel_heights = c(1,4,4))
 
 ```
+
+
+```{r hms-commercial-landings, warning=F, fig.length = 24, fig.cap = "HMS groups include “Bluefin Tuna”, “BAYS”, “Swordfish”, “Large Coastal Sharks”, “Small Coastal Sharks”, “Pelagic Sharks”, “Smoothhound Sharks”. “BAYS” includes bigeye, albacore, yellowfin and skipjack tunas. “Large Coastal Sharks” includes blacktip, bull, great hammerhead, scalloped hammerhead, smooth hammerhead, lemon, nurse, sandbar, silky, spinner, and tiger sharks. “Small Coastal Sharks” includes Atlantic sharpnose, blacknose, bonnethead, finetooth sharks. “Pelagic Sharks” includes blue, porbeagle, shortfin mako, and thresher sharks. “Smoothhound Sharks” includes smooth dogfish shark."}
+#Get data for plotting
+## Apex pred
+apex<-ecodata::hms_landings %>% 
+  dplyr::filter(stringr::str_detect(Var, "Landings")) %>% 
+  separate(Var, c("Var", "trash"), sep = "_")
+
+
+##Plot
+p1<-apex %>% 
+  dplyr::filter(EPU == "NE") %>% 
+  dplyr::group_by(Var) %>% 
+  dplyr::mutate(hline = mean(Value)) %>% 
+
+  ggplot2::ggplot(aes(x = YEAR, y = Value, color = Var)) +
+  
+  #Add time series
+  ggplot2::geom_line(size = lwd) +
+  ggplot2::geom_point(size = pcex) +
+  #ggplot2::stat_summary(fun.y = sum, color = "black", geom = "line")+
+  #scale_color_manual(values = series.col, aesthetics = "color")+
+  #guides(color = FALSE) +
+  ggplot2::geom_hline(aes(yintercept = hline,
+                 color = Var,
+                 size = Var),
+             size = hline.size,
+             alpha = hline.alpha,
+             linetype = hline.lty)+
+  #Highlight last ten years
+  # ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  #     xmin = x.shade.min , xmax = x.shade.max,
+  #     ymin = -Inf, ymax = Inf) +
+  #Axis and theme
+ # ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
+  #ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), limits = c(1985, 2018)) +
+  ecodata::theme_facet() +
+  ggplot2::theme(strip.text=element_text(hjust=0), 
+        legend.position = "bottom", 
+        legend.direction = "horizontal", 
+        legend.title = element_blank())+
+  ggplot2::ylab("Landings (metric tons)")+
+  ggplot2::ggtitle("HMS Commercial Landings")
+  ggplot2::xlab(element_blank())
+
+p1
+
+
+```
+
 
 ```{r comdat-total-landings, fig.cap = paste0("Total commercial seafood landings (black) shown with NEFMC managed seafood landings (red) in Gulf of Maine (left) and Georges Bank (right). \\label{total-landings}")}
 
@@ -410,12 +414,13 @@ ggplot2::ggplot()+
       ymin = -Inf, ymax = Inf)+
   #guides(color = F, fill = F)+
   ggplot2::geom_bar(aes(x=Time, y= Value, fill = Var), stat="identity")+
-  ggplot2::scale_fill_manual(name = "Indicators", values = ind_fill, guide = FALSE) +
+  ggplot2::scale_fill_manual(name = "Indicators", values = ind_fill, 
+                             labels = c("Price", "Volume"), guide = FALSE) +
   ggplot2::geom_line(data = revchange.gom, 
             aes(x = Time, y = revchange.line, colour = "$"))+
   ggplot2::scale_colour_grey(name ="Revenue Change") +
   ggplot2::ggtitle("Gulf of Maine Benthivore Component")+
-  ggplot2::labs(y="Value $1,000,000 ($2015)") +
+  ggplot2::ylab(element_blank()) +
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), limits = y.lim,
                      expand = c(0.01, 0.01)) +
@@ -436,12 +441,12 @@ ggplot2::ggplot()+
       ymin = -Inf, ymax = Inf)+
   
   ggplot2::geom_bar(aes(x=Time, y= Value, fill = Var), stat="identity")+
-  ggplot2::scale_fill_manual(name = "Indicators", values = ind_fill) +
+  ggplot2::scale_fill_manual(name = "Indicators", values = ind_fill,  labels = c("Price", "Volume")) +
   ggplot2::geom_line(data = revchange.gb, 
             aes(x = Time, y = revchange.line, colour = "$"))+
   ggplot2::scale_colour_grey(name ="Revenue Change") +
   ggplot2::ggtitle("Georges Bank Benthos Component")+
-  ggplot2::labs(y="") +
+  ggplot2::ylab("Value $1,000,000 ($2015)") + 
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), 
                               limits = y.lim, expand = c(0.01, 0.01)) +
@@ -450,7 +455,7 @@ ggplot2::ggplot()+
   ggplot2::theme(legend.position="bottom", legend.direction = "horizontal",
         legend.background = element_rect(fill = "transparent"), 
         legend.title = element_text(size = 8), 
-        legend.text = element_text(size = 8)) +
+        legend.text = element_text(size = 8)) 
   ggplot2::guides(color = guide_legend(order = 1),
          fill = guide_legend(order = 0))
 
@@ -471,13 +476,13 @@ p3 <- gridExtra::grid.arrange(gridExtra::arrangeGrob(gb_bennet + theme(legend.po
 
 ```{r comdat-comm-revenue, fig.cap = "Total commercial revenue (black) and revenue from NEFMC managed species (red) in Georges Bank (left) and Gulf of Maine (right). \\label{comm-rev}"}
 
-#Filtering and aggregation step
+#Filtering and aggation step
 rev_agg <- ecodata::comdat %>% 
   dplyr::filter(stringr::str_detect(Var, "Revenue"),
-         !stringr::str_detect(Var, "prop|Other|MAFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
+         !stringr::str_detect(Var, "Apex|prop|Other|MAFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
          EPU %in% epu_abbr,
          Time >= 1986) %>% 
-  dplyr::mutate(Status = ifelse(str_detect(Var, "Revenue weight"), 
+  dplyr::mutate(Status = ifelse(str_detect(Var, "managed"), 
                          "Managed","Total")) %>% #Create groups for aggregation
   dplyr::group_by(EPU,Status, Time) %>% 
   dplyr::summarise(Total = sum(Value)) %>% 
@@ -557,6 +562,55 @@ cowplot::plot_grid(gb_rev_agg, gom_rev_agg, ncol = 2)
 # 
 # min_rev_perc <- min(rev_inline)
 # max_rev_perc <- max(rev_inline)
+```
+
+```{r hms-comm-revenue,  fig.cap = "HMS revenue. \\label{comm-rev}"}
+## Apex pred
+apex<-ecodata::hms_landings %>% 
+  dplyr::filter(stringr::str_detect(Var, "Revenue")) %>% 
+  separate(Var, c("Var", "trash"), sep = "_")
+
+
+#Define constants for figure plot
+series.col <- c("indianred","black")
+
+##Plot
+p1<-apex %>% 
+  dplyr::filter(EPU == "NE") %>% 
+  dplyr::group_by(Var) %>% 
+  
+  dplyr::mutate(Value = Value/1000000, 
+    hline = mean(Value)) %>% 
+
+  ggplot2::ggplot(aes(x = YEAR, y = Value, color = Var)) +
+  
+  #Add time series
+  ggplot2::geom_line(size = lwd) +
+  ggplot2::geom_point(size = pcex) +
+  ggplot2::geom_hline(aes(yintercept = hline,
+                 color = Var,
+                 size = Var),
+             size = hline.size,
+             alpha = hline.alpha,
+             linetype = hline.lty)+
+  #Highlight last ten years
+  # ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  #     xmin = x.shade.min , xmax = x.shade.max,
+  #     ymin = -Inf, ymax = Inf) +
+  # #Axis and theme
+  #ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
+  #ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), limits = c(1985, 2020)) +
+  ecodata::theme_facet() +
+  ggplot2::theme(strip.text=element_text(hjust=0), 
+        legend.position = "bottom", 
+        legend.direction = "horizontal", 
+        legend.title = element_blank())+
+  ggplot2::ylab(("Revenue (10^6 US Dollars)")) +
+  ggplot2::xlab("Time")+
+  ggplot2::ggtitle("HMS Revenue")
+
+p1
+
 ```
 
 #### Commercial diversity
@@ -700,13 +754,13 @@ f_missing <- stock_status %>%
 #A dataframe that defines custom legend for stocks with unknown status
 all.df <- data.frame(text = all_missing$Code,
                     x = rep(x.max*0.9,length(all_missing$Code)),
-                    y = seq(1.45,1.05, length.out = 7))
+                    y = seq(1.45,0.7, length.out = 11))
 b.df <- data.frame(text = b_missing$Code,
                     x = rep(x.max*0.7,length(b_missing$Code)),
-                    y = c(1.45,2.15))
+                    y = seq(1.45,1.30, length.out = 3))
 f.df <- data.frame(text = f_missing$Code,
                     x = rep(x.max*0.5,length(f_missing$Code)),
-                    y = seq(1.45,1.0, length.out = 8))
+                    y = seq(1.45,1, length.out = 7))
 
 #Plotting code
 ggplot2::ggplot(data = stock_status) +
@@ -736,8 +790,8 @@ ggplot2::ggplot(data = stock_status) +
   ggplot2::annotate("rect",  
              xmin = 0.70*x.max,
              xmax = 0.85*x.max,
-             ymin = 0.90*y.max,
-             ymax = 1.8,
+             ymin = 0.30*y.max,
+             ymax = 0.98*y.max,
              alpha = 0.01) +
   ggplot2::annotate("text", x = 7, y = 1.5, label = "B missing", fontface =2, size = 3)+
   ggplot2::annotate("rect", xmin = 0.509*x.max,
@@ -757,49 +811,91 @@ ggplot2::ggplot(data = stock_status) +
 
 #### Engagement and reliance
 
-```{r engagement, message=F, fig.cap= "Commercial engagement scores (total pounds landed, value landed, commercial permits and commercial dealers in a community)  for New England fishing communities, 2004-2018."}
+```{r commercial-engagement, message=F, warning = FALSE, fig.cap= "Commercial engagement and reliance for the top top commercial fishing communities in New England."}
 
-eng<-ecodata::engagement %>% 
-  dplyr::filter(!Var == "med.high.scores")
-eng$Var <- factor(eng$Var, levels = c("%High","%Medium High","%Moderate", "%Low"))
-eng %>% dplyr::filter(EPU == "NE") %>% 
-  mutate(Value = Value*100) %>% 
+com<-ecodata::engagement %>% 
+  dplyr::filter(Region == "New England", 
+                Fishery == "Commercial")
+
+com2<-com %>% 
   ggplot2::ggplot()+
-   #ylim(0.8, NA)+
-  ggplot2::geom_bar(aes(x = Time, y = Value, 
-               fill = Var), 
-           stat = "identity")+
-  #scale_y_continuous(labels = Value(suffix = "%", prefix = "")) +
-  #geom_text(aes(x = Time, y = Value,
-  #             label = paste0(Value,"%")), size=4) +
-  ggplot2::theme(legend.position="bottom", legend.direction="horizontal",
+  ggplot2::geom_point(aes(x = Eng, y = Rel, color = Rating), size = 2)+
+  ggplot2::geom_vline(xintercept = 1, linetype = "dashed",color = "black")+
+  ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black") +
+  ggrepel::geom_text_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
+                      y = Rel,
+                      label = Community,
+                      color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
+  ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
+                     breaks = com$Rating) +
+  xlim(0,40)+
+  ylim(0,3.5)+
+  theme(legend.position=c(0.8, 0.85), 
+        legend.title = element_blank(),       
+        legend.background = element_blank(),
+        legend.box.background = element_rect(colour = "black"))+
+  ggplot2::xlab("Commercial Engagament Score") +
+  ggplot2::ylab("Commercial Reliance Score") +
+  ggplot2::ggtitle("Social Vulnerability in Top Commercial Fishing Communities")+
+  #ggplot2::guides(color = FALSE) +
+  ecodata::theme_ts()
+  
+  
+  gridExtra::grid.arrange(com2, bottom = textGrob("Low <--------------------------------------------------------------------------------------------------------------------------------------> High", 
+                                     x = 0.5, y = 1, gp = gpar(fontsize = 7)),
+                          left = textGrob("Low <-------------------------------------------------------------------------------------> High", rot = 90,
+                                   x = 1, y = 0.5, gp = gpar(fontsize = 7)))
+
+
+```
+
+
+#### Oyster aquaculture
+
+```{r aquaculture, fig.cap = "Oyster aquaculture production in terms pieces, lease area and production by acre. \\label{oyster-aqua}"}
+
+aqua <- ecodata::aquaculture %>%
+  dplyr::filter(!Region == "Maryland") %>% 
+  dplyr::filter(!Value == "NA") %>% 
+  dplyr::mutate(Time = as.integer(Time), 
+                Value = as.numeric(Value))
+
+ggplot2::ggplot() +
+ #Highlight last ten years
+  ggplot2::geom_line(data = aqua, aes(x = Time, y = Value, color = Region), size = lwd) +
+  ggplot2::geom_point(data = aqua,aes(x = Time, y = Value, color = Region), size = pcex) +
+  ggplot2::facet_wrap(~Var, scales = "free", nrow = 3)+
+  ggplot2::ggtitle("Oyster Production in New England")+
+  ggplot2::ylab(expression("Oysters production")) +
+  ggplot2::xlab("")+
+  theme(legend.position="bottom", 
         legend.title = element_blank())+
-  ggplot2::coord_cartesian(ylim=c(75,100))+
-  ggplot2::xlab("Time") +
-  ggplot2::ylab("% Communities in each category (Low to High)")+
-  ggplot2::ggtitle("Commercial Engagement")+
+  scale_x_continuous(breaks=c(2009,2011,2013,2015, 2017, 2019))+
   ecodata::theme_ts()
 
+```
 
-ecodata::engagement %>% 
-  dplyr::filter(Var == "med.high.scores", 
-         EPU == "NE") %>% 
-  dplyr::mutate(hline = mean(Value)) %>% 
-  ggplot2::ggplot()+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
+
+```{r aquaculture-pieces, fig.cap="Oyster aquaculture production in pieces for four New England states (Maine, Massachusettes, New Hampshire and Rhode Island)."}
+ecodata::aquaculture %>%
+  dplyr::filter(!Region == "Maryland") %>% 
+  dplyr::filter(!Value == "NA") %>% 
+  dplyr::mutate(Time = as.integer(Time), 
+                Value = as.numeric(Value))%>% 
+  filter(Var == "Pieces") %>% 
+  group_by(Time) %>% 
+  summarise(Value = sum(Value)) %>% 
+  ggplot2::ggplot() +
+ #Highlight last ten years
   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
-  ggplot2::ggtitle("Medium-High communities ") +
-  ggplot2::ylab(expression("Average score for Med High communities")) +
-  ggplot2::geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
+  ggplot2::ggtitle("Total Oyster Production in New England")+
+  ggplot2::ylab(expression("Oysters production (pieces)")) +
+  ggplot2::xlab("")+
+  theme(legend.position="bottom", 
+        legend.title = element_blank())+
+  scale_x_continuous(breaks=c(2009,2011,2013,2015, 2017, 2019))+
   ecodata::theme_ts()
-
 ```
 
 ### Recreational fisheries {.tabset .tabset-fade}
@@ -815,7 +911,7 @@ landings_rec <- ecodata::recdat %>%
 
 series.col <- "black"
 
-ggplot2::ggplot(data = landings_rec)+
+rec_landings <- ggplot2::ggplot(data = landings_rec)+
   
   #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -831,21 +927,22 @@ ggplot2::ggplot(data = landings_rec)+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
-  ggplot2::ylab(expression("Fish caught (10"^6*"n)")) +
-
-  ggplot2::geom_hline(aes(yintercept = hline,
-               
-               color = Var),
+  # Plotly can not use "expression" so follow notes below
+  ggplot2::ylab(("Fish caught (10^6*n)")) + # Use this for HTML version
+  #ggplot2::ylab(expression("Fish caught (10"^6"*n)")) + #Use this for SOEs and anything pdf 
+  ggplot2::geom_hline(aes(yintercept = hline, color = Var),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts()
 
+#plotly::ggplotly(rec_landings) # plotly removes geom_gls
+rec_landings
 ```
 
 #### Recreational diversity
 
-```{r recdat-diversity,  fig.cap = paste0("Recreational effort, recreational effort diversity, number of recreational anglers, and diverstiy of recreational catch in ",region,". \\label{recdat}")}
+```{r recdat-diversity,  fig.cap = paste0("Recreational effort, recreational effort diversity, number of recreational anglers, and diverstiy of recreational catch in New England")}
 recdat <- ecodata::recdat %>% 
   dplyr::filter(EPU == region_abbr) %>% 
   dplyr::group_by(Var) %>% 
@@ -927,7 +1024,7 @@ rec_div <- recdat %>%
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Rec. fleet effort diversity")+
-  ggplot2::ylab(expression("Effective Shannon")) +
+  ggplot2::ylab("Effective Shannon") +
   ggplot2::xlab("")+
   ggplot2::geom_hline(aes(yintercept = hline,
                color = Var),
@@ -939,6 +1036,8 @@ rec_div <- recdat %>%
 
 rec_div_catch <- recdat %>% 
   dplyr::filter(Var == "Recreational Diversity of Catch") %>% 
+  
+  plyr::mutate(hline = mean(Value)) %>% 
   ggplot2::ggplot() + 
  #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -959,7 +1058,7 @@ rec_div_catch <- recdat %>%
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Rec. diversity of catch")+
-  ggplot2::ylab(expression("Effective Shannon")) +
+  ggplot2::ylab("Effective Shannon") +
   ggplot2::xlab("Time")+
   ggplot2::geom_hline(aes(yintercept = hline,
                color = Var),
@@ -976,9 +1075,63 @@ cowplot::plot_grid(rec_effort,
                    align = "hv") +
     ggplot2::theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
 ```
+#### Recreational Engagement and Social Vulnerability
 
+```{r recreational-engagement, message=F, warning = FALSE, fig.cap= "Commercial engagement and reliance for the top top recreational fishing communities in New England."}
+
+com<-ecodata::engagement %>% 
+  dplyr::filter(Region == "New England", 
+                Fishery == "Recreational")
+
+com2<-com %>% 
+  ggplot2::ggplot()+
+  ggplot2::geom_point(aes(x = Eng, y = Rel, color = Rating), size = 2)+
+  ggplot2::geom_vline(xintercept = 1, linetype = "dashed", color = "black")+
+  ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black") +
+  ggrepel::geom_text_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
+                      y = Rel,
+                      label = Community,
+                      color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
+  ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
+                     breaks = com$Rating) +
+  xlim(0,4.5)+
+  ylim(0,1.6)+
+  theme(legend.position=c(0.8, 0.85), 
+        legend.title = element_blank(),       
+        legend.background = element_blank(),
+        legend.box.background = element_rect(colour = "black"))+
+  ggplot2::xlab("Recreation Engagament Score") +
+  ggplot2::ylab("Recreation Reliance Score") +
+  ggplot2::ggtitle("Social Vulnerability in Top Recreational Fishing Communities")+
+  #ggplot2::guides(color = FALSE) +
+  ecodata::theme_ts()
+  
+  
+  gridExtra::grid.arrange(com2, bottom = textGrob("Low <--------------------------------------------------------------------------------------------------------------------------------------> High", 
+                                     x = 0.5, y = 1, gp = gpar(fontsize = 7)),
+                          left = textGrob("Low <-------------------------------------------------------------------------------------> High", rot = 90,
+                                   x = 1, y = 0.5, gp = gpar(fontsize = 7)))
+
+
+```
+
+#### Recreational Shark Landings
+
+```{r rec_hms, fig.cap="Recreational shark Landings from mrip."}
+ecodata::rec_hms %>% 
+  dplyr::filter(Region == "New England") %>% 
+  ggplot2::ggplot()+
+  ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+
+  ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+
+  ggplot2::ylab("Landings (number of fish)")+
+  ggplot2::xlab("")+ 
+  ggplot2::theme(legend.title = element_blank())+
+  ecodata::theme_ts()
+
+```
 
 ### Primary Production Required
+
 
 ```{r ppr, fig.cap="Primary production required to support the commercial landings. Included are the top species accounting for 80% of the landings in each year."}
 
@@ -1006,17 +1159,31 @@ ecodata::ppr %>%
   ecodata::theme_ts()
 ```
 
-[notes](https://drive.google.com/drive/folders/1_BNoAPvEaYQrdsi900175kcjpjmtcYzT)
-```{r ppr_comp90, eval = T, echo = F, fig.cap='', out.width='80%'}
+### Wind Energy Revenue
 
-knitr::include_graphics(file.path(image.dir, "composition-.90.png"))
+```{r wind-revenue, fig.cap="Fisheries revenue from wind lease areas in New England."}
+ecodata::wind_revenue %>% 
+  dplyr::mutate(Value = Value/1000000, 
+                Time = as.numeric(Time)) %>% 
+  tidyr::separate(Var, into=c("Var", "Trash"), sep = "[(]") %>% 
+  dplyr::select(!Trash) %>% 
+  #dplyr::group_by(EPU) %>% 
+ # dplyr::mutate(hline = mean(Value)) %>% 
+  dplyr::filter(EPU == "NE") %>% 
+  ggplot2::ggplot() +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+
+  ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+
+  #ggplot2::facet_wrap(~Var, ncol = 1, scales = "free")+
+  #ggplot2::geom_hline(aes(yintercept = hline),
+  #         size = hline.size,
+  #         alpha = hline.alpha,
+  #         linetype = hline.lty)+
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  ggplot2::ggtitle("Fishery Revenue in Wind Lease Areas")+
+  ggplot2::ylab("2019 Constant Million Dollars ")+
+  ggplot2::theme(legend.title = element_blank())+
+  ecodata::theme_ts()
 ```
-
-```{r ppr_index, eval = T, echo = F, fig.cap='', out.width='80%'}
-knitr::include_graphics(file.path(image.dir, "ppr_index-0.90.png"))
-```
-
-```{r ppr_mtl, eval = T, echo = F, fig.cap='', out.width='80%'}
-knitr::include_graphics(file.path(image.dir, "mtl_index-0.90.png"))
-```
-

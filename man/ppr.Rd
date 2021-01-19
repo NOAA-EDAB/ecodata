@@ -4,7 +4,8 @@
 \name{ppr}
 \alias{ppr}
 \title{Primary Production required}
-\format{63 rows and 5 columns.
+\format{
+63 rows and 5 columns.
 
 \itemize{
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.
@@ -12,7 +13,8 @@
 \item Var: Primary Production Required.
 \item Value: Value of variable \code{Var}.
 \item Units: Units of variable \code{Var}.
-}}
+}
+}
 \usage{
 ppr
 }

@@ -9,6 +9,7 @@
 library(dplyr)
 library(tidyr)
 library(lubridate)
+library(readr)
 
 #Get raw
 raw.dir <- here::here("data-raw") #input raw
@@ -56,3 +57,32 @@ get_bottom_temp <- function(save_clean = F){
     "Paula Fratantoni <paula.fratantoni@noaa.gov>")
 }
 get_bottom_temp(save_clean = T)
+
+
+
+
+
+
+#### GLORYS Data
+
+bottom_temp_glorys_csv<-"GLORYS12v1_bottom_temp_anomaly_EPU - Joseph Caracappa - NOAA Affiliate.csv"
+
+
+get_bottom_temp_glorys <- function(save_clean = F){
+
+  bottom_temp_glorys <- read.csv(file.path(raw.dir,bottom_temp_glorys_csv))
+
+  if (save_clean){
+    usethis::use_data(bottom_temp_glorys, overwrite = T)
+  } else {
+    return(bottom_temp_glorys)
+  }
+
+  # metadata ----
+  attr(bottom_temp_glorys, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/bottom-temperatures.html"
+  attr(bottom_temp_glorys, "data_files")   <- list(
+    bottom_temp_glorys_csv = bottom_temp_glorys_csv)
+  attr(bottom_temp_glorys, "data_steward") <- c(
+    "Joseph Caracappa <joseph.caracappa@noaa.gov>")
+}
+get_bottom_temp_glorys(save_clean = T)

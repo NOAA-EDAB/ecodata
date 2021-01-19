@@ -25,13 +25,13 @@ f_missing <- stock_status %>%
 #A dataframe that defines custom legend for stocks with unknown status
 all.df <- data.frame(text = all_missing$Code,
                     x = rep(x.max*0.9,length(all_missing$Code)),
-                    y = seq(1.45,1.05, length.out = 7))
+                    y = seq(1.45,0.7, length.out = 11))
 b.df <- data.frame(text = b_missing$Code,
                     x = rep(x.max*0.7,length(b_missing$Code)),
-                    y = c(1.45,2.15))
+                    y = seq(1.45,1.30, length.out = 3))
 f.df <- data.frame(text = f_missing$Code,
                     x = rep(x.max*0.5,length(f_missing$Code)),
-                    y = seq(1.45,1.0, length.out = 8))
+                    y = seq(1.45,1, length.out = 7))
 
 #Plotting code
 ggplot2::ggplot(data = stock_status) +
@@ -61,8 +61,8 @@ ggplot2::ggplot(data = stock_status) +
   ggplot2::annotate("rect",  
              xmin = 0.70*x.max,
              xmax = 0.85*x.max,
-             ymin = 0.90*y.max,
-             ymax = 1.8,
+             ymin = 0.30*y.max,
+             ymax = 0.98*y.max,
              alpha = 0.01) +
   ggplot2::annotate("text", x = 7, y = 1.5, label = "B missing", fontface =2, size = 3)+
   ggplot2::annotate("rect", xmin = 0.509*x.max,

@@ -4,7 +4,8 @@
 \name{ches_bay_wq}
 \alias{ches_bay_wq}
 \title{Chesapeake Bay Water Quality Attainment}
-\format{\itemize{
+\format{
+\itemize{
 \item Var: Variable name.
 \item Units: Units of variable \code{Var}.
 \item Value: Value of variable \code{Var}.
@@ -12,7 +13,8 @@
 GOM = Gulf of Maine, SS = Scotian Shelf).
 \item Time: The first year of a three year rolling attainment window. For example, 1998 represents the attainment
 percentage for years 1998, 1999, and 2000.
-}}
+}
+}
 \usage{
 ches_bay_wq
 }

@@ -4,7 +4,8 @@
 \name{ch_bay_sal}
 \alias{ch_bay_sal}
 \title{Chesapeake Bay 2018 - 2019 salinity with historical trends for comapirson}
-\format{A data set containing 2555 rows and 5 columns.
+\format{
+A data set containing 2555 rows and 5 columns.
 
 \itemize{
 \item Time: Day
@@ -13,7 +14,8 @@
 \item EPU: Ecological Production Unit (EPU) where data originated. Here "MAB" refers to the Mid-Atlantic Bight.
 \item Units: Units of variable \code{Var}.
 
-}}
+}
+}
 \usage{
 ch_bay_sal
 }

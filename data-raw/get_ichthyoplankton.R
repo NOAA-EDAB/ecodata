@@ -7,11 +7,12 @@ library(stringr)
 
 raw.dir <- here::here("data-raw")
 
-ichthyo_diversity_xlsx <- "NEFSCIchthyoplanktonSpeciesCount_v3_3.xlsx"
+ichthyo_diversity_xlsx <- "NEFSCIchthyoplankton_v3_7_v2019.xlsx"
 
 get_ichthyo_diversity <- function(save_clean = F){
 
-  ichthyo_diversity <- read_excel(file.path(raw.dir,ichthyo_diversity_xlsx)) %>%
+  ichthyo_diversity <- read_excel(file.path(raw.dir,ichthyo_diversity_xlsx), sheet =
+                                    "Diversity") %>%
     dplyr::select(-Source) %>%
     dplyr::rename(Time = Year,
                   EPU = Region) %>%

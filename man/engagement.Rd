@@ -4,7 +4,8 @@
 \name{engagement}
 \alias{engagement}
 \title{Commercial and recreational fishery social-economic indicators}
-\format{150 rows and 5 columns.
+\format{
+150 rows and 5 columns.
 
 \itemize{
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.
@@ -12,7 +13,8 @@
 \item Var: Percent engagement of group communities.
 \item Value: Value of variable \code{Var}.
 \item Units: Units of variable \code{Var}.
-}}
+}
+}
 \usage{
 engagement
 }

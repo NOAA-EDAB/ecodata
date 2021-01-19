@@ -1,9 +1,8 @@
 
 gom_larv_div <- ecodata::ichthyo_diversity %>%
-  dplyr::filter(EPU == "GOM",
-         str_detect(Var, "Ich_Shannon")) %>%
-  dplyr::mutate(Var = word(Var,1)) %>% 
-  dplyr::group_by(Var) %>% 
+  dplyr::filter(EPU == "GOM") %>%
+  #dplyr::mutate(Var = word(Var,1)) %>% 
+  #dplyr::group_by(Var) %>% 
   dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
   ggplot2::ggplot(aes(x = Time, y = Value, group = Var)) +
   ggplot2::geom_line() +
@@ -23,10 +22,9 @@ gom_larv_div <- ecodata::ichthyo_diversity %>%
   ggplot2::theme(strip.text=element_text(hjust=0))
 
 gb_larv_div <- ecodata::ichthyo_diversity %>%
-  dplyr::filter(EPU == "GB",
-         stringr::str_detect(Var, "Ich_Shannon")) %>%
-  dplyr::mutate(Var = word(Var,1)) %>% 
-  dplyr::group_by(Var) %>% 
+  dplyr::filter(EPU == "GB") %>%
+  #dplyr::mutate(Var = word(Var,1)) %>% 
+  #dplyr::group_by(Var) %>% 
   dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
   ggplot2::ggplot(aes(x = Time, y = Value, group = Var)) +
   ggplot2::geom_line() +
@@ -38,7 +36,7 @@ gb_larv_div <- ecodata::ichthyo_diversity %>%
   ggplot2::ggtitle("GB larval diversity") +
   ylab("Shannon Diversity") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
-      geom_hline(aes(yintercept = hline),
+   geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+
