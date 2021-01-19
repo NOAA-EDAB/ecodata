@@ -833,7 +833,7 @@ ecodata::grayseal %>%
   ggplot2::ggtitle("Gray Seal Byctach")+
   ggplot2::ylab("Estimated Bycatch (n)")+
   ggplot2::scale_color_identity(name = "",
-                          breaks = c("black", "red", "blue"),
+                          breaks = c("black", "blue", "red"),
                           labels = c("5-YR Estimate", "1-YR Estimate", "PBR"),
                           guide = "legend")+
   ggplot2::theme(legend.position = "bottom")+
