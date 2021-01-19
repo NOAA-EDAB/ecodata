@@ -5,6 +5,8 @@ output:
     toc: true
     toc_float: true
     theme: lumen
+  rmarkdown::word_document:
+    toc: true
 ---
 
 ```{r setup, include=FALSE}
@@ -801,6 +803,15 @@ ecodata::observed_sharks %>%
 
 ecodata::harborporpoise %>% 
   tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
+  rename(
+    #Year   = Time, 
+    # EST    = `harbor porpoise bycatch estimate`, 
+    # PBR    = `harbor porpoise bycatch pbr`,
+    # lo95ci = `harbor porpoise bycatch lo95ci`,
+    # up95ci = `harbor porpoise bycatch up95ci`) %>% 
+    Year   = YEAR, 
+    lo95ci = LCI,
+    up95ci = UCI) %>% 
   ggplot2::ggplot()+
   ggplot2::geom_point(aes(x=Year, y = EST), color = "black")+
   ggplot2::geom_line(aes(x=Year, y = EST), color = "black")+
@@ -810,13 +821,23 @@ ecodata::harborporpoise %>%
   ggplot2::ggtitle("Harbor Porpoise Byctach")+
   ggplot2::ylab("Estimated Bycatch (n)")+
   ecodata::theme_ts()
-  
 ```
 
 ```{r grayseal, fig.cap="Estimated gray seal bycatch (black) and the potential biological removal (red)." }
-
 ecodata::grayseal %>% 
   tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
+  rename(
+    Year   = YEAR,
+    EST    = EST1, # TODO: or EST5?
+    lo95ci = LCI,
+    up95ci = UCI) %>% 
+  filter(!is.na(Year)) %>% 
+  rowwise() %>% 
+  mutate(
+    EST = unlist(EST),
+    PBR = unlist(PBR),
+    lo95ci = unlist(lo95ci),
+    up95ci = unlist(up95ci)) %>% 
   ggplot2::ggplot()+
   ggplot2::geom_point(aes(x=Year, y = EST), color = "black")+
   ggplot2::geom_line(aes(x=Year, y = EST), color = "black")+
@@ -826,7 +847,6 @@ ecodata::grayseal %>%
   ggplot2::ggtitle("Gray Seal Byctach")+
   ggplot2::ylab("Estimated Bycatch (n)")+
   ecodata::theme_ts()
-  
 ```
 
 
