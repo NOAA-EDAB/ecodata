@@ -14,17 +14,17 @@ get_aggregate_biomass <- function(save_clean = F){
   aggregate_biomass <- survey %>%
     dplyr::rename(EPU = Region)
 
+  # metadata ----
+  attr(aggregate_biomass, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/aggroups.html"
+  attr(aggregate_biomass, "data_files")   <- list(
+    aggregate_biomass_RData = aggregate_biomass_RData)
+  attr(aggregate_biomass, "data_steward") <- c(
+    "Sean Lucey <sean.lucey@noaa.gov>")
 
   if (save_clean){
     usethis::use_data(aggregate_biomass, overwrite = T)
   } else {
     return(aggregate_biomass)
   }
-  # metadata ----
-  attr(aggregate_biomass, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/aggroups.html"
-  attr(aggregate_biomass, "data_files")   <- list(
-    aggregate_bimass_RData = aggregate_bimass_RData)
-  attr(aggregate_biomass, "data_steward") <- c(
-    "Sean Lucey <sean.lucey@noaa.gov>")
 }
 get_aggregate_biomass(save_clean = T)
