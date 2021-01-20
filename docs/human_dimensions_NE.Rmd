@@ -885,11 +885,11 @@ com2<-com %>%
   ggrepel::geom_text_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
                       y = Rel,
                       label = Community,
-                      color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
+                      color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.4, size = 3)+
   ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
                      breaks = com$Rating) +
-  xlim(0,40)+
-  ylim(0,3.5)+
+  xlim(-1,40)+
+  ylim(-1,6)+
   theme(legend.position=c(0.8, 0.85), 
         legend.title = element_blank(),       
         legend.background = element_blank(),
@@ -1154,8 +1154,8 @@ com2<-com %>%
                       color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
   ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
                      breaks = com$Rating) +
-  xlim(0,4.5)+
-  ylim(0,1.6)+
+  xlim(-0.1,4.5)+
+  ylim(-0.1,1.6)+
   theme(legend.position=c(0.8, 0.85), 
         legend.title = element_blank(),       
         legend.background = element_blank(),
