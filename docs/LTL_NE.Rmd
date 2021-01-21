@@ -805,73 +805,67 @@ cowplot::plot_grid(gb_zoo, gom_zoo, nrow = 2)
 ```
 
 
-<!-- #### Small and Large Calanoid stratified abundance -->
+#### Small and Large Calanoid stratified abundance
 
-<!-- ```{r ne-sm-lg, fig.width = 8, fig.asp = .35, fig.cap= "Large (red) and small (black) calanoid zooplankton abundance in New England."} -->
-<!-- zoo_abund <- ecodata::zoo_strat_abun %>%  -->
-<!--   mutate(Value = Value/10^8) %>%  -->
-<!--   filter(EPU %in% c("GOM", "GB"), -->
-<!--          str_detect(Var, "Small|Large")) %>%  -->
-<!--   group_by(Var, EPU) %>%  -->
-<!--   mutate(hline = mean(Value))  -->
+```{r ne-sm-lg, fig.width = 8, fig.asp = .35, fig.cap= "Large (red) and small (black) calanoid zooplankton abundance in New England."}
 
-<!-- zoo_abund %>%  -->
-<!--   ggplot() + -->
-<!--   annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
-<!--       xmin = x.shade.min , xmax = x.shade.max, -->
-<!--       ymin = -Inf, ymax = Inf) + -->
-<!--   geom_line(aes(x = Time, y = Value, color = Var)) + -->
-<!--   geom_point(aes(x = Time, y = Value, color = Var)) + -->
-<!--   scale_color_manual(values = c("#ca0020", "black"))+ -->
-<!--   geom_gls(aes(x = Time, y = Value, group = Var)) + -->
-<!--   ylab(expression("Stratified Abundance" (10^"8"))) + -->
-<!--   xlab(element_blank())+ -->
-<!--   ggtitle("Small and large calanoid abundance") + -->
-<!--   facet_wrap(EPU~., ncol = 1, scales = "free") + -->
-<!--   scale_x_continuous(expand = c(0.01, 0.01))+ -->
-<!--   geom_hline(aes(yintercept = hline, -->
-<!--            color = Var),  -->
-<!--            size = hline.size, -->
-<!--            alpha = hline.alpha, -->
-<!--            linetype = hline.lty)+ -->
-<!--   theme_facet() + -->
-<!--   theme(strip.text=element_text(hjust=0, -->
-<!--                                 face = "italic"),  -->
-<!--         legend.position = "none") -->
+ecodata::zoo_sli_anom %>%
+  filter(EPU %in% c("GOM","GB")) %>%
+  mutate(hline = 0) %>% 
+  ggplot(aes(x = Time, y = Value, color = Var)) +
+         annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  #geom_gls() +
+  geom_line() +
+  geom_point() +
+  ylab("Abundance anomaly") +
+  xlab(element_blank())+
+  ggtitle("Small and large-bodied copepod abundance anomaly") +
+  facet_wrap(EPU~., nrow = 2) +
+  scale_x_continuous(expand = c(0.01, 0.01))+
+  scale_colour_discrete(name = "Copeopds", labels = c("large-bodied", "small-bodied"))+
+      geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  theme_facet() +
+  theme(strip.text=element_text(hjust=0,
+                                face = "italic"), 
+        legend.title = element_blank()) 
 
-
-<!-- ``` -->
+```
 
 
 #### Abundance anomaly
 
-```{r zoo-abund, fig.cap= "Large (red) and small-bodied (blue) copepod zooplankton abundance in New England."}
-ecodata::zoo_abund %>%
-  dplyr::filter(EPU %in% c("GOM","GB")) %>%
-  dplyr::mutate(hline = 0) %>% 
-  ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  #geom_gls() +
-  ggplot2::geom_line() +
-  ggplot2::geom_point() +
-  ggplot2::ylab("Abundance anomaly") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Small and large-bodied copepod abundance anomaly") +
-  ggplot2::facet_wrap(EPU~., nrow = 2) +
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
-  ggplot2::geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
-  ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_text(hjust=0,
-                                face = "italic"), 
-        legend.title = element_blank())
-
-
-```
+<!-- # ```{r zoo-abund, fig.cap= "Large (red) and small-bodied (blue) copepod zooplankton abundance in New England."} -->
+<!-- # ecodata::zoo_abund %>% -->
+<!-- #   dplyr::filter(EPU %in% c("GOM","GB")) %>% -->
+<!-- #   dplyr::mutate(hline = 0) %>%  -->
+<!-- #   ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) + -->
+<!-- #   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!-- #       xmin = x.shade.min , xmax = x.shade.max, -->
+<!-- #       ymin = -Inf, ymax = Inf) + -->
+<!-- #   #geom_gls() + -->
+<!-- #   ggplot2::geom_line() + -->
+<!-- #   ggplot2::geom_point() + -->
+<!-- #   ggplot2::ylab("Abundance anomaly") + -->
+<!-- #   ggplot2::xlab(element_blank())+ -->
+<!-- #   ggplot2::ggtitle("Small and large-bodied copepod abundance anomaly") + -->
+<!-- #   ggplot2::facet_wrap(EPU~., nrow = 2) + -->
+<!-- #   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+ -->
+<!-- #   ggplot2::geom_hline(aes(yintercept = hline), -->
+<!-- #            size = hline.size, -->
+<!-- #            alpha = hline.alpha, -->
+<!-- #            linetype = hline.lty)+ -->
+<!-- #   ecodata::theme_facet() + -->
+<!-- #   ggplot2::theme(strip.text=element_text(hjust=0, -->
+<!-- #                                 face = "italic"),  -->
+<!-- #         legend.title = element_blank()) -->
+<!-- #  -->
+<!-- #  -->
+<!-- # ``` -->
 
 #### Calanus Stage
 

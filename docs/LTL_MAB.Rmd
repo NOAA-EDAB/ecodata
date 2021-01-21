@@ -744,7 +744,7 @@ zoo_abund %>%
 #### Abundance anomaly
 
 ```{r zoo-abund,  fig.cap= "Large (red) and small-bodied (blue) copepod abundance in the Mid-Atlantic Bight." }
-ecodata::zoo_abund%>%
+ecodata::zoo_sli_anom %>%
    dplyr::filter(EPU == epu_abbr) %>%
    dplyr::group_by(Time) %>% 
    dplyr::mutate(hline = 0) %>% 
