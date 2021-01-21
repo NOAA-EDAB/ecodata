@@ -109,7 +109,7 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 #### NEFSC BTS & NEAMAP 
 
-<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
+<span style="color: red;">NEW DATA ONLY NEAMAP FALL 2020 - NO NEFSC BTS SURVEY IN 2020</span>
 
 ```{r aggregate-biomass, fig.cap = paste0("Spring (left) and fall (right) surveyed biomass in the Mid-Atlantic Bight. Data from the NEFSC Bottom Trawl Survey are shown in black, with NEAMAP shown in red. \\label{nefsc-biomass}")}
 agg<-ecodata::aggregate_biomass %>% 
