@@ -10,3 +10,11 @@ ecodata::harborporpoise %>%
   ggplot2::ggtitle("Harbor Porpoise Byctach")+
   ggplot2::ylab("Estimated Bycatch (n)")+
   ecodata::theme_ts()
+  
+# hp %>% 
+#   dplyr::filter(YEAR %in% c(max(YEAR), max(YEAR-1))) %>% 
+#   dplyr::summarise(m = mean(EST))
+# 
+# hp %>% 
+#   dplyr::filter(YEAR %in% c(max(YEAR-2), max(YEAR-3),  max(YEAR-4))) %>% 
+#   dplyr::summarise(m= mean(EST))

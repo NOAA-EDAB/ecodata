@@ -74,14 +74,3 @@ ggplot2::ggplot() +
     ggtitle("Georges Bank")
 
 cowplot::plot_grid(gb_rev_agg, gom_rev_agg, ncol = 2)
-
-# rev_inline <- rev_agg %>% 
-#   dplyr::select(Status, Time, Total) %>% 
-#   spread(.,Status, Total) %>% 
-#   group_by(EPU) %>% 
-#   mutate(percent_managed = round(Managed/Total * 100)) %>% 
-#   filter(Time > latest_landings_data - 5, Time <= latest_landings_data) %>% 
-#   pull(percent_managed)
-# 
-# min_rev_perc <- min(rev_inline)
-# max_rev_perc <- max(rev_inline)

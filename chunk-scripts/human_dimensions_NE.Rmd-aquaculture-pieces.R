@@ -1,6 +1,6 @@
 
-ecodata::aquaculture %>%
-  dplyr::filter(!Region == "Maryland") %>% 
+hp<- ecodata::aquaculture %>%
+  dplyr::filter(Region == c("Maine", "Mass", "NEwHampshire", "RhodeLsland"))  %>% 
   dplyr::filter(!Value == "NA") %>% 
   dplyr::mutate(Time = as.integer(Time), 
                 Value = as.numeric(Value))%>% 

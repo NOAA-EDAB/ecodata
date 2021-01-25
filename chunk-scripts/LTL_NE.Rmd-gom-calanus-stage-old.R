@@ -1,6 +1,6 @@
 
 cal <- ecodata::CalanusStage %>% 
-  dplyr::filter(EPU == "GB") %>% 
+  dplyr::filter(EPU == "GOM") %>% 
   filter(Var %in% c("c3", "c4", "c5", "adt"))
 
 cal$Var <- factor(cal$Var, levels = c("c3", "c4", "c5", "adt"))
@@ -15,7 +15,7 @@ cal %>%
   ggplot2::facet_wrap(~season)+
   ggplot2::ylab("Calanus Stage (N/100m^3)") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("MAB Calanus Stage Abundance") +
+  ggplot2::ggtitle("GOM Calanus Stage Abundance") +
   ggplot2::theme(legend.position = "bottom", 
                  legend.title = element_blank())+
   ecodata::theme_facet()+
@@ -31,7 +31,7 @@ cal %>%
   ggplot2::facet_wrap(~season, ncol = 1, scales = "free")+
   ggplot2::ylab("Calanus Stage (N/100m^3)") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("MAB Calanus Stage Abundance") +
+  ggplot2::ggtitle("GOM Calanus Stage Abundance") +
   ggplot2::theme(legend.position = "bottom", 
                  legend.title = element_blank())+
   ecodata::theme_facet()+
@@ -49,7 +49,7 @@ cal %>%
   ggplot2::facet_wrap(~season, ncol = 3, scales = "free")+
   ggplot2::ylab("Mean day of year") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("MAB Calanus Stage Mean DOY") +
+  ggplot2::ggtitle("GOM Calanus Stage Mean DOY") +
   #ggplot2::theme(legend.position = "bottom", 
   #               legend.title = element_blank())+
   ecodata::theme_facet()
@@ -65,7 +65,7 @@ cal %>%
   ggplot2::facet_wrap(~season, ncol = 3, scales = "free")+
   ggplot2::ylab("Number of sampling days") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("MAB Number of sampling days") +
+  ggplot2::ggtitle("GOM Number of sampling days") +
   #ggplot2::theme(legend.position = "bottom", 
   #               legend.title = element_blank())+
   ecodata::theme_facet()

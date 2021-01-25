@@ -1,5 +1,5 @@
 
-ecodata::zoo_abund%>%
+ecodata::zoo_sli_anom %>%
    dplyr::filter(EPU == epu_abbr) %>%
    dplyr::group_by(Time) %>% 
    dplyr::mutate(hline = 0) %>% 

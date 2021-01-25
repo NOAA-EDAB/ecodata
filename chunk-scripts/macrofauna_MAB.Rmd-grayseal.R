@@ -5,6 +5,7 @@ ecodata::grayseal %>%
   dplyr::group_by(YEAR) %>% 
   #tidyr::spread(key = Var, value = Value)
   tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
+  dplyr::ungroup() %>% 
   ggplot2::ggplot()+ 
   ggplot2::geom_point(aes(x=YEAR, y = EST5, color = "black"))+
   ggplot2::geom_line(aes(x=YEAR, y = EST5, color = "black"))+

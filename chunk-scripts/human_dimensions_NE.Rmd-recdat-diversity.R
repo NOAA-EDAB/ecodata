@@ -59,6 +59,7 @@ rec_effort <- recdat %>%
 
 rec_div <- recdat %>% 
   dplyr::filter(Var == "Recreational fleet effort diversity across modes") %>% 
+  dplyr::mutate(hline = mean(Value)) %>% 
   ggplot2::ggplot() + 
  #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
