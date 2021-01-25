@@ -742,14 +742,14 @@ ggplot2::ggplot() +
   scale_x_continuous(breaks=c(2009,2011,2013,2015, 2017, 2019))+
   ecodata::theme_ts()
 
-aqua %>% group_by(Time) %>% summarise(Value = sum(Value)) %>% 
-  dplyr::filter(Time %in% c(max(Time), max(Time-1))) %>% 
-  dplyr::summarise(m = mean(Value))
-
-aqua %>% group_by(Time) %>% summarise(Value = sum(Value)) %>% 
-  dplyr::filter(Time %in% c(max(Time-2), max(Time-3),  max(Time-4)), 
-                !Value == "NA") %>%  
-  dplyr::summarise(m= mean(Value))
+# aqua %>% group_by(Time) %>% summarise(Value = sum(Value)) %>% 
+#   dplyr::filter(Time %in% c(max(Time), max(Time-1))) %>% 
+#   dplyr::summarise(m = mean(Value))
+# 
+# aqua %>% group_by(Time) %>% summarise(Value = sum(Value)) %>% 
+#   dplyr::filter(Time %in% c(max(Time-2), max(Time-3),  max(Time-4)), 
+#                 !Value == "NA") %>%  
+#   dplyr::summarise(m= mean(Value))
 
 ```
 
@@ -836,14 +836,14 @@ ggplot2::ggplot(data = landings_rec)+
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts()
-
-landings_rec %>% 
-  dplyr::filter(Time %in% c(max(Time), max(Time-1))) %>% 
-  dplyr::summarise(m = mean(Value))
-
-landings_rec %>% 
-  dplyr::filter(Time %in% c(max(Time-2), max(Time-3),  max(Time-4))) %>% 
-  dplyr::summarise(m= mean(Value))
+# 
+# landings_rec %>% 
+#   dplyr::filter(Time %in% c(max(Time), max(Time-1))) %>% 
+#   dplyr::summarise(m = mean(Value))
+# 
+# landings_rec %>% 
+#   dplyr::filter(Time %in% c(max(Time-2), max(Time-3),  max(Time-4))) %>% 
+#   dplyr::summarise(m= mean(Value))
 ```
 
 #### Recreational diversity
@@ -1075,16 +1075,22 @@ ecodata::ppr %>%
   dplyr::filter(Var == "Fogarty") %>% 
   dplyr::mutate(Value = Value*1000) %>% 
   dplyr::group_by(EPU) %>% 
-  dplyr::mutate(hline = mean(Value)) %>% 
+  dplyr::mutate(hline = mean(Value), 
+                gr_up = c(0.92),
+                rd_up = c(2.5),
+                gr_lw = c(0.22),
+                rd_lw = c(1)) %>% 
   dplyr::filter(EPU == "MAB") %>% 
   ggplot2::ggplot() +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_hline(yintercept = .92, color = "green", linetype = "dashed")+
-  ggplot2::geom_hline(yintercept = .22, color = "green", linetype = "dashed")+
-  ggplot2::geom_hline(yintercept = 1, color = "red", linetype = "dashed")+
-  ggplot2::geom_hline(yintercept = 2.5, color = "red", linetype = "dashed")+
+  ggplot2::geom_ribbon( aes(ymin = gr_lw, ymax = gr_up, x = Time), fill = "darkolivegreen3", alpha = 0.5)+
+  ggplot2::geom_ribbon( aes(ymin = rd_lw, ymax = rd_up, x = Time), fill = "lightcoral", aplha = 0.5)+
+  #ggplot2::geom_hline(yintercept = .92, color = "green", linetype = "dashed")+
+  #ggplot2::geom_hline(yintercept = .22, color = "green", linetype = "dashed")+
+  #ggplot2::geom_hline(yintercept = 1, color = "red", linetype = "dashed")+
+  #ggplot2::geom_hline(yintercept = 2.5, color = "red", linetype = "dashed")+
   ggplot2::geom_point(aes(x = Time, y = Value))+
   ggplot2::geom_line(aes(x = Time, y = Value))+
   #ggplot2::geom_line(data = a, aes(x = Time, y = Value), linetype = "dashed")+
@@ -1107,16 +1113,23 @@ ecodata::ppr %>%
 ecodata::ppr %>% 
   dplyr::filter(Var == "Ryther") %>% 
   dplyr::group_by(EPU) %>% 
-  dplyr::mutate(hline = mean(Value)) %>% 
+  dplyr::mutate(hline = mean(Value), 
+                gr_up = c(1.1),
+                rd_up = c(5),
+                gr_lw = c(0.3),
+                rd_lw = c(3))%>%
+  
   dplyr::filter(EPU == "MAB") %>% 
   ggplot2::ggplot() +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_hline(yintercept = 0.3, color = "green", linetype = "dashed")+
-  ggplot2::geom_hline(yintercept = 1.1, color = "green", linetype = "dashed")+
-  ggplot2::geom_hline(yintercept = 3, color = "red", linetype = "dashed")+
-  ggplot2::geom_hline(yintercept = 5, color = "red", linetype = "dashed")+
+  ggplot2::geom_ribbon( aes(ymin = gr_lw, ymax = gr_up, x = Time), fill = "darkolivegreen3", alpha = 0.5)+
+  ggplot2::geom_ribbon( aes(ymin = rd_lw, ymax = rd_up, x = Time), fill = "lightcoral", aplha = 0.5)+
+  #ggplot2::geom_hline(yintercept = 0.3, color = "green", linetype = "dashed")+
+  #ggplot2::geom_hline(yintercept = 1.1, color = "green", linetype = "dashed")+
+  #ggplot2::geom_hline(yintercept = 3, color = "red", linetype = "dashed")+
+  #ggplot2::geom_hline(yintercept = 5, color = "red", linetype = "dashed")+
   ggplot2::geom_point(aes(x = Time, y = Value))+
   ggplot2::geom_line(aes(x = Time, y = Value))+
   #ggplot2::geom_line(data = a, aes(x = Time, y = Value), linetype = "dashed")+
@@ -1130,9 +1143,10 @@ ecodata::ppr %>%
   ggplot2::ylab("mt km-2 y-1")+
   ecodata::theme_ts()
 ```
+
 ### Mean Trophic Level
 
-```{r mtl, fig.cap="Fogarty Index"}
+```{r mtl, fig.cap="Mean trophic level"}
 
 ecodata::ppr %>% 
   dplyr::filter(Var == "MTL") %>% 
@@ -1158,7 +1172,7 @@ ecodata::ppr %>%
 
 ### PP reconstructed
 
-```{r pp-reconstructed, fig.cap="Fogarty Index"}
+```{r pp-reconstructed, fig.cap="reconstructed primary production"}
 
 
 a<-ecodata::ppr %>% 
@@ -1255,7 +1269,7 @@ knitr::include_graphics(file.path(image.dir, "SurveysWindFarmAreas_20201229.jpg"
 
 ```
 
-```{r wind-dev-speed0.30, eval = T, echo = F, fig.cap='', out.width='80%'}
+```{r wind-dev-speed0, eval = T, echo = F, fig.cap='', out.width='80%'}
 total_area<- ecodata::wind_dev_speed %>% mutate(Value = as.numeric(Value)/1000000, 
                                                 Time = as.integer(Time)) %>% 
 

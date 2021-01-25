@@ -499,7 +499,7 @@ gom_mafmc_props + gb_mafmc_props + patchwork::plot_layout(ncol = 1)
 
 ### Expected number of Species
 
-```{r}
+```{r exp-n}
 exp<- ecodata::exp_n %>% filter( EPU == "MAB", 
                                    Season == "FALL", 
                                    str_detect(Var, 'AlbatrossSD|BigelowSD')) %>% 
@@ -814,7 +814,7 @@ bird %>%
 
 [Taxa include](https://docs.google.com/spreadsheets/d/108snlOTy1wzMGmxbYp1qJuKgqYfYM8MD/edit#gid=966266704)
 
-```{r}
+```{r forage-anomaly}
 ecodata::forage_anomaly %>% 
   filter(EPU == "MAB") %>% 
   pivot_wider(names_from = Var, values_from = Value) %>% 
@@ -834,7 +834,7 @@ ecodata::forage_anomaly %>%
 
 ### Observed Shark Numbers
 
-```{r}
+```{r observed-sharks}
 ecodata::observed_sharks %>% 
   filter(EPU == "MAB") %>% 
   ggplot()+

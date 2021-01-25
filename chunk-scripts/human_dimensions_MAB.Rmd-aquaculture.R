@@ -15,3 +15,12 @@ ggplot2::ggplot() +
   ggplot2::xlab("")+
   scale_x_continuous(breaks=c(2009,2011,2013,2015, 2017, 2019))+
   ecodata::theme_ts()
+
+# aqua %>% group_by(Time) %>% summarise(Value = sum(Value)) %>% 
+#   dplyr::filter(Time %in% c(max(Time), max(Time-1))) %>% 
+#   dplyr::summarise(m = mean(Value))
+# 
+# aqua %>% group_by(Time) %>% summarise(Value = sum(Value)) %>% 
+#   dplyr::filter(Time %in% c(max(Time-2), max(Time-3),  max(Time-4)), 
+#                 !Value == "NA") %>%  
+#   dplyr::summarise(m= mean(Value))
