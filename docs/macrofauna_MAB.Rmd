@@ -497,6 +497,52 @@ gom_mafmc_props + gb_mafmc_props + patchwork::plot_layout(ncol = 1)
 
 ```
 
+### Expected number of Species
+
+```{r}
+exp<- ecodata::exp_n %>% filter( EPU == "MAB", 
+                                   Season == "FALL", 
+                                   str_detect(Var, 'AlbatrossSD|BigelowSD')) %>% 
+    rename(VarSD = Var, 
+         ValueSD = Value) 
+exp2<- ecodata::exp_n %>% filter(EPU == "MAB", 
+                                 Season == "FALL", 
+                                 Var %in% c("Albatross", "Bigelow"))   %>% 
+
+  left_join(exp) %>% 
+  mutate(upper = Value+ValueSD, 
+         lower = Value - ValueSD)
+
+exp2 %>% 
+ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
+  
+  #Highlight last ten years
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max ,
+      ymin = -Inf, ymax = Inf) +
+
+  ggplot2::geom_ribbon(data = exp2, aes(ymax = pmax(upper, 0), ymin = lower, x = Time),
+              alpha = 0.5) +
+  ggplot2::geom_line(size = lwd-0.5) +
+  ggplot2::geom_point(size = pcex-0.5) +
+  # scale_color_manual(values = series.col, aesthetics = "color")+
+  #ggplot2::guides(color = FALSE) +
+  #ggplot2::geom_hline(aes(yintercept = hline,
+  #               group = Var),
+  #           size = hline.size,
+  #           alpha = hline.alpha,
+  #           linetype = hline.lty)+
+  #ggplot2::facet_wrap(Var~.,scales = "free_y", ncol = 2) +
+  ggplot2::ggtitle("Expected Number of Species ")+
+  #Axis and theme
+  ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ggplot2::ylab("Expected N/tow") +
+  ecodata::theme_facet()+
+  ggplot2::theme(strip.text=element_text(hjust=0))
+
+```
+
+
 ### Productivity anomaly
 
 <span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
@@ -716,6 +762,8 @@ ma_larv_div <- ecodata::ichthyo_diversity %>%
   ggplot2::theme(strip.text=element_text(hjust=0))
 
 ma_larv_div
+
+
 ```
 
 
@@ -811,6 +859,13 @@ ecodata::harborporpoise %>%
   ggplot2::ylab("Estimated Bycatch (n)")+
   ecodata::theme_ts()
   
+# hp %>% 
+#   dplyr::filter(YEAR %in% c(max(YEAR), max(YEAR-1))) %>% 
+#   dplyr::summarise(m = mean(EST))
+# 
+# hp %>% 
+#   dplyr::filter(YEAR %in% c(max(YEAR-2), max(YEAR-3),  max(YEAR-4))) %>% 
+#   dplyr::summarise(m= mean(EST))
 ```
 
 
@@ -822,6 +877,7 @@ ecodata::grayseal %>%
   dplyr::group_by(YEAR) %>% 
   #tidyr::spread(key = Var, value = Value)
   tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
+  dplyr::ungroup() %>% 
   ggplot2::ggplot()+ 
   ggplot2::geom_point(aes(x=YEAR, y = EST5, color = "black"))+
   ggplot2::geom_line(aes(x=YEAR, y = EST5, color = "black"))+
@@ -840,6 +896,7 @@ ecodata::grayseal %>%
   ggplot2::xlab(element_blank())+
   ecodata::theme_ts()
   
+
 ```
 
 
@@ -873,11 +930,13 @@ ecodata::narw %>%
           alpha = hline.alpha,
           linetype = hline.lty) +
   ecodata::theme_ts()
+
+
 ```
 
 ```{r NARW-calf-abundance, fig.cap = "Number of North Atlantic right whale calf births, 1990 - 2019."}
 
-ecodata::narw %>% 
+hp<- ecodata::narw %>% 
   dplyr::filter(Var == "Calves") %>%
   dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
   ggplot2::ggplot() +
@@ -898,6 +957,11 @@ ecodata::narw %>%
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts()
+
+
+
+
+
 ```
 
 ### Aggregate species distribution
