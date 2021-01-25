@@ -303,6 +303,8 @@ ggplot2::ggplot(data = landings_agg)+
            linetype = hline.lty) +
   ecodata::theme_ts()
 
+
+
 ```
 
 #### Commercial revenue 
@@ -496,6 +498,8 @@ ggplot2::ggplot(data = rev_agg) +
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts()
+
+
 
 ```
 
@@ -738,6 +742,15 @@ ggplot2::ggplot() +
   scale_x_continuous(breaks=c(2009,2011,2013,2015, 2017, 2019))+
   ecodata::theme_ts()
 
+aqua %>% group_by(Time) %>% summarise(Value = sum(Value)) %>% 
+  dplyr::filter(Time %in% c(max(Time), max(Time-1))) %>% 
+  dplyr::summarise(m = mean(Value))
+
+aqua %>% group_by(Time) %>% summarise(Value = sum(Value)) %>% 
+  dplyr::filter(Time %in% c(max(Time-2), max(Time-3),  max(Time-4)), 
+                !Value == "NA") %>%  
+  dplyr::summarise(m= mean(Value))
+
 ```
 
 #### Engagement and reliance
@@ -824,6 +837,13 @@ ggplot2::ggplot(data = landings_rec)+
            linetype = hline.lty) +
   ecodata::theme_ts()
 
+landings_rec %>% 
+  dplyr::filter(Time %in% c(max(Time), max(Time-1))) %>% 
+  dplyr::summarise(m = mean(Value))
+
+landings_rec %>% 
+  dplyr::filter(Time %in% c(max(Time-2), max(Time-3),  max(Time-4))) %>% 
+  dplyr::summarise(m= mean(Value))
 ```
 
 #### Recreational diversity
@@ -955,7 +975,6 @@ cowplot::plot_grid(rec_effort,
                    ncol = 1, 
                    align = "hv") +
     ggplot2::theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
-
 
 ```
 
@@ -1237,21 +1256,18 @@ knitr::include_graphics(file.path(image.dir, "SurveysWindFarmAreas_20201229.jpg"
 ```
 
 ```{r wind-dev-speed0.30, eval = T, echo = F, fig.cap='', out.width='80%'}
-total_area<- ecodata::wind_dev_speed %>% 
-  filter(Var == "Cumulative_area",
-         !Time == "NA") %>% 
-  group_by(Time) %>% 
-  summarise(Value_2 = sum(Value)) %>% 
-  mutate(Value_3 = cumsum(Value_2)/10000000) %>% 
+total_area<- ecodata::wind_dev_speed %>% mutate(Value = as.numeric(Value)/1000000, 
+                                                Time = as.integer(Time)) %>% 
 
   ggplot2::ggplot()+
-  ggplot2::geom_point(aes(x = Time, y = Value_3))+
-  ggplot2::geom_line(aes(x = as.factor(Time), y = Value_3, group=1))+
+  ggplot2::geom_point(aes(x = Time, y = Value))+
+  ggplot2::geom_line(aes(x = Time, y = Value, group=1))+
   ggplot2::ylab("Total Area (Million Acres)")+
-  ggplot2::xlab("")+
+  ggplot2::xlab("Project End Year")+
   ggplot2::ggtitle("Cumulative Area")+
   ecodata::theme_ts()+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  scale_x_continuous(breaks=c(2020,2022, 2024,2026, 2028))
 
 total_area
 ```

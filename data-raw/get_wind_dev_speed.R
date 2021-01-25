@@ -6,16 +6,17 @@ library(stringr)
 library(readxl)
 
 raw.dir <- here::here("data-raw")
-wind_dev_speed_xlsx<- "Silva_Data_Wind_Speed_Extent - Angela Silva - NOAA Affiliate.xlsx"
+wind_dev_speed_xlsx<- "Tables_Cumulative Totals by Construction Year_01_20_21.xlsx"
 
 get_wind_dev_speed <- function(save_clean = F){
-  wind_dev_speed <- read_excel(file.path(raw.dir,wind_dev_speed_xlsx)) %>%
-    dplyr::rename(Time = Constr_Yrs,
-                  Cumulative_area = Cumul_Proj_Acres,
-                  Cumulative_foundations = Cumul_FDNS,
-                  Cumulative_seafloor_disturbance = "Cumul_ SeaDist_FndScr_Acres") %>%
-    dplyr::select(Project_Name, Time, Cumulative_seafloor_disturbance, Cumulative_area, Cumulative_foundations) %>%
-    tidyr::pivot_longer(cols = starts_with("Cumulative"),  names_to = "Var", values_to = "Value")
+  wind_dev_speed <- read_excel(file.path(raw.dir,wind_dev_speed_xlsx), sheet = 3) %>%
+    janitor::row_to_names(row_number = 1) %>%
+    dplyr::rename(Time = "Year End",
+                  Value = "Project Acres") %>%
+    dplyr::mutate( Var = c("WindDevelopment"),
+                  EPU = c("ALL"))%>%
+    dplyr::select( Time, Value, Var, EPU) %>%
+    dplyr::filter(!Value == "NA")
 
   if (save_clean){
     usethis::use_data(wind_dev_speed, overwrite = T)

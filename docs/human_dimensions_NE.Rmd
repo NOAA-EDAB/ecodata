@@ -367,6 +367,8 @@ ggplot2::ggplot()+
 
 cowplot::plot_grid(gb_total, gom_total, ncol = 2)
 
+
+
 ```
 
 #### Commercial revenue
@@ -612,16 +614,7 @@ ggplot2::ggplot() +
 
 cowplot::plot_grid(gb_rev_agg, gom_rev_agg, ncol = 2)
 
-# rev_inline <- rev_agg %>% 
-#   dplyr::select(Status, Time, Total) %>% 
-#   spread(.,Status, Total) %>% 
-#   group_by(EPU) %>% 
-#   mutate(percent_managed = round(Managed/Total * 100)) %>% 
-#   filter(Time > latest_landings_data - 5, Time <= latest_landings_data) %>% 
-#   pull(percent_managed)
-# 
-# min_rev_perc <- min(rev_inline)
-# max_rev_perc <- max(rev_inline)
+
 ```
 
 ```{r hms-comm-revenue,  fig.cap = "HMS revenue. \\label{comm-rev}"}
@@ -937,7 +930,7 @@ ggplot2::ggplot() +
 
 
 ```{r aquaculture-pieces, fig.cap="Oyster aquaculture production in pieces for four New England states (Maine, Massachusettes, New Hampshire and Rhode Island)."}
-ecodata::aquaculture %>%
+hp<- ecodata::aquaculture %>%
   dplyr::filter(Region == c("Maine", "Mass", "NEwHampshire", "RhodeLsland"))  %>% 
   dplyr::filter(!Value == "NA") %>% 
   dplyr::mutate(Time = as.integer(Time), 
@@ -956,6 +949,8 @@ ecodata::aquaculture %>%
         legend.title = element_blank())+
   scale_x_continuous(breaks=c(2009,2011,2013,2015, 2017, 2019))+
   ecodata::theme_ts()
+
+
 ```
 
 ### Recreational fisheries {.tabset .tabset-fade}
@@ -998,6 +993,8 @@ rec_landings <- ggplot2::ggplot(data = landings_rec)+
 
 #plotly::ggplotly(rec_landings) # plotly removes geom_gls
 rec_landings
+
+
 ```
 
 #### Recreational diversity
@@ -1135,6 +1132,8 @@ cowplot::plot_grid(rec_effort,
                    ncol = 1, 
                    align = "hv") +
     ggplot2::theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
+
+
 ```
 #### Recreational Engagement and Social Vulnerability
 
