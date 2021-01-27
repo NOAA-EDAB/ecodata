@@ -999,7 +999,7 @@ rec_landings
 
 #### Recreational diversity
 
-```{r recdat-diversity,  fig.cap = paste0("Recreational effort, recreational effort diversity, number of recreational anglers, and diverstiy of recreational catch in New England")}
+```{r recdat-effort,  fig.cap = paste0("Recreational effort, recreational effort diversity, number of recreational anglers, and diverstiy of recreational catch in New England")}
 recdat <- ecodata::recdat %>% 
   dplyr::filter(EPU == region_abbr) %>% 
   dplyr::group_by(Var) %>% 
@@ -1057,6 +1057,26 @@ rec_effort <- recdat %>%
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts() 
+rec_effort
+
+```
+
+
+
+```{r recdat-diversity}
+recdat <- ecodata::recdat %>% 
+  dplyr::filter(EPU == region_abbr) %>% 
+  dplyr::group_by(Var) %>% 
+  plyr::mutate(hline = mean(Value))
+
+ylim_re <- c(5e6, 30e6)
+ylim_rd <- c(1.75,2.75)
+ylim_ra  <- c(0, 2e6)
+
+x.shade.min <- max(recdat$Time, na.rm = T) - 9
+x.shade.max <- max(recdat$Time, na.rm = T)
+
+series.col <- "black"
 
 rec_div <- recdat %>% 
   dplyr::filter(Var == "Recreational fleet effort diversity across modes") %>% 
@@ -1090,8 +1110,23 @@ rec_div <- recdat %>%
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts()
+rec_div
+```
 
+```{r recdat-div-catch }
+recdat <- ecodata::recdat %>% 
+  dplyr::filter(EPU == region_abbr) %>% 
+  dplyr::group_by(Var) %>% 
+  plyr::mutate(hline = mean(Value))
 
+ylim_re <- c(5e6, 30e6)
+ylim_rd <- c(1.75,2.75)
+ylim_ra  <- c(0, 2e6)
+
+x.shade.min <- max(recdat$Time, na.rm = T) - 9
+x.shade.max <- max(recdat$Time, na.rm = T)
+
+series.col <- "black"
 rec_div_catch <- recdat %>% 
   dplyr::filter(Var == "Recreational Diversity of Catch") %>% 
   
@@ -1126,14 +1161,8 @@ rec_div_catch <- recdat %>%
   ecodata::theme_ts()
 
 
-cowplot::plot_grid(rec_effort, 
-                   rec_div, 
-                   rec_div_catch,
-                   ncol = 1, 
-                   align = "hv") +
-    ggplot2::theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
 
-
+rec_div_catch
 ```
 
 #### Recreational Engagement and Social Vulnerability
