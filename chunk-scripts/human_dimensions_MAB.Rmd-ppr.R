@@ -2,13 +2,15 @@
 a<- ecodata::ppr %>% 
   dplyr::group_by(EPU) %>% 
   dplyr::mutate(hline = mean(Value)) %>% 
-  dplyr::filter(EPU == "MAB", 
+  dplyr::filter(Var == "PPR",
+                EPU == "MAB", 
                 Time <= 1997) 
 
 ecodata::ppr %>% 
   dplyr::group_by(EPU) %>% 
   dplyr::mutate(hline = mean(Value)) %>% 
-  dplyr::filter(EPU == "MAB", 
+  dplyr::filter(Var == "PPR",
+                EPU == "MAB", 
                 Time >= 1997) %>% 
   ggplot2::ggplot() +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,

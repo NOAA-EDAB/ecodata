@@ -848,7 +848,7 @@ ggplot2::ggplot(data = landings_rec)+
 
 #### Recreational diversity
 
-```{r recdat-diversity,fig.cap = paste0("Recreational effort, recreational effort diversity, number of recreational anglers, and diversity of recreational catch in the ",region,". \\label{recdat}")}
+```{r recdat-effort,fig.cap = paste0("Recreational effort, recreational effort diversity, number of recreational anglers, and diversity of recreational catch in the ",region,". \\label{recdat}")}
 recdat <- ecodata::recdat %>% 
   dplyr::filter(EPU == region_abbr) %>% 
   dplyr::group_by(Var) %>% 
@@ -905,6 +905,24 @@ rec_effort <- recdat %>%
            linetype = hline.lty) +
   ecodata::theme_ts() 
 
+
+
+rec_effort
+```
+
+```{r recdat-diversity}
+
+recdat <- ecodata::recdat %>% 
+  dplyr::filter(EPU == region_abbr) %>% 
+  dplyr::group_by(Var) %>% 
+  dplyr::mutate(hline = mean(Value))
+
+ylim_re <- c(2e7, 7e7)
+ylim_rd <- c(1.75,2.75)
+ylim_ra  <- c(1e6, 3.5e6)
+
+series.col <- "black"
+
 rec_div <- recdat %>% 
   dplyr::filter(Var == "Recreational fleet effort diversity across modes") %>% 
   ggplot2::ggplot() + 
@@ -935,6 +953,24 @@ rec_div <- recdat %>%
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts()
+
+rec_div
+
+```
+
+
+```{r recdat-div-catch}
+
+recdat <- ecodata::recdat %>% 
+  dplyr::filter(EPU == region_abbr) %>% 
+  dplyr::group_by(Var) %>% 
+  dplyr::mutate(hline = mean(Value))
+
+ylim_re <- c(2e7, 7e7)
+ylim_rd <- c(1.75,2.75)
+ylim_ra  <- c(1e6, 3.5e6)
+
+series.col <- "black"
 
 rec_div_catch <- recdat %>% 
   dplyr::filter(Var == "Recreational Diversity of Catch") %>% 
@@ -967,15 +1003,7 @@ rec_div_catch <- recdat %>%
            linetype = hline.lty) +
   ecodata::theme_ts()
 
-
-
-cowplot::plot_grid(rec_effort, 
-                   rec_div, 
-                   rec_div_catch,
-                   ncol = 1, 
-                   align = "hv") +
-    ggplot2::theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
-
+rec_div_catch
 ```
 
 #### Recreational Engagement and Reliance
@@ -1042,13 +1070,15 @@ Recent pelagic landings coming primarily from Common Thresher and Shortfin Mako.
 a<- ecodata::ppr %>% 
   dplyr::group_by(EPU) %>% 
   dplyr::mutate(hline = mean(Value)) %>% 
-  dplyr::filter(EPU == "MAB", 
+  dplyr::filter(Var == "PPR",
+                EPU == "MAB", 
                 Time <= 1997) 
 
 ecodata::ppr %>% 
   dplyr::group_by(EPU) %>% 
   dplyr::mutate(hline = mean(Value)) %>% 
-  dplyr::filter(EPU == "MAB", 
+  dplyr::filter(Var == "PPR",
+                EPU == "MAB", 
                 Time >= 1997) %>% 
   ggplot2::ggplot() +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -1247,26 +1277,26 @@ ecodata::wind_revenue %>%
 
 ```{r wind-dev-cumul, fig.cap = ""}
 
+#knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/All_2021119-01.jpg")
 knitr::include_graphics(file.path(image.dir, "All_2021119-01.jpg"))
-
 ```
 
 ```{r wind-dev-cumul-MAB, fig.cap = ""}
 
 knitr::include_graphics(file.path(image.dir, "MidAtlantic_2021119-01.jpg"))
-
+#knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/MidAtlantic_2021119-01.jpg")
 ```
 
 ```{r wind-dev-NE, fig.cap = ""}
 
+#knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/NE2021119.jpg")
 knitr::include_graphics(file.path(image.dir, "NE2021119.jpg"))
-
 ```
 
 ```{r wind-dev-survey, fig.cap = ""}
 
 knitr::include_graphics(file.path(image.dir, "SurveysWindFarmAreas_20201229.jpg"))
-
+#knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/SurveysWindFarmAreas_20201229.jpg")
 ```
 
 ```{r wind-dev-speed0, eval = T, echo = F, fig.cap='', out.width='80%'}

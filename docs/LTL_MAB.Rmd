@@ -1368,6 +1368,12 @@ knitr::include_graphics(file.path(image.dir, "Seasonal pH on MAB shelf - Grace S
 ```
 
 
+```{r mab-oa-glider, fig.cap = "Glider Transect."}
+
+knitr::include_graphics(file.path(image.dir, "pH glider transect map - Grace Saba.jpg"))
+
+```
+
 ## Shelfwide Indicators {.tabset .tabset-fade}
 
 ### Seasonal SST anomaly
