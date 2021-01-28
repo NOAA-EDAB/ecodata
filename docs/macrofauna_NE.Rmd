@@ -955,6 +955,23 @@ GOM_prop <- ggiraph::girafe_options(GOM_prop, opts_zoom(max = 5) )
 GOM_prop
 ```
 
+### Survey Shannon Diversity
+
+```{r survey-shannon, fig.cap="Decresing trend in GB FALL."}
+ecodata::survey_shannon %>% filter(!EPU == "MAB", 
+                                   !EPU == "SS") %>% 
+  ggplot2::ggplot(aes(x = Time, y = Value, color = Var))+
+  ggplot2::geom_point()+
+  ggplot2::geom_line()+
+  ecodata::geom_gls() +
+  ggtitle("Survey Shannon Diversity Index")+
+  ggplot2::facet_wrap(~EPU)+
+  ggplot2::ylab("Shannon")+
+  ggplot2::scale_color_discrete(name = "Season", labels = c("Fall", "Spring"))+
+  ecodata::theme_ts()
+  
+```
+
 ### Expected number of Species
 
 ```{r exp-n}
