@@ -1,5 +1,5 @@
 
-sp_cat<- read.csv(here::here("data-raw/hms-mrip/hms_sp_category.csv"))
+sp_cat<- ecodata::hms_category
 ecodata::hms_cpue %>% 
   filter(str_detect(Var, "SHARK")) %>% 
   rename(COMMON_POP = Var) %>% 
@@ -14,6 +14,7 @@ ecodata::hms_cpue %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_point(aes(x=Year, y = Value, color = Var))+
   ggplot2::geom_line(aes(x=Year, y = Value, color = Var))+
+  ggplot2::scale_color_discrete(name = "Category")+
   #ggplot2::facet_wrap(~Var, scales = "free")+
   ggplot2::ggtitle("HMS POP SHARK CPUE")+
   ggplot2::ylab("Number per Haul")+

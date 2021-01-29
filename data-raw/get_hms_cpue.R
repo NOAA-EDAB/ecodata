@@ -36,3 +36,29 @@ get_hms_cpue <- function(save_clean = F){
     "Jennifer Cudney <Jennifer.cudney@noaa.gov>")
 }
 get_hms_cpue(save_clean = T)
+
+
+
+
+
+
+raw.dir <- here::here("data-raw")
+
+HMS_sp_cat_csv <- "hms-mrip/hms_sp_category.csv"
+
+get_hms_category <- function(save_clean = F){
+  hms_category<- read.csv(file.path(raw.dir,HMS_sp_cat_csv))
+
+  if (save_clean){
+    usethis::use_data(hms_category, overwrite = T)
+  } else {
+    return(hms_category)
+  }
+  # metadata ----
+  attr(hms_category, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc.html"
+  attr(hms_category, "data_files")   <- list(
+    HMS_sp_cat_csv = HMS_sp_cat_csv)
+  attr(hms_category, "data_steward") <- c(
+    "Jennifer Cudney <Jennifer.cudney@noaa.gov>")
+}
+get_hms_category(save_clean = T)
