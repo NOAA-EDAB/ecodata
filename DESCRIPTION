@@ -4,7 +4,7 @@ Version: 0.1.0
 Authors@R: c(person("Kimberly", "Bastille", email = "kimberly.bastille@noaa.gov", role = c("cre", "aut")),
               person("Sean", "Hardison", role = "aut"))
 Description: A data package for reporting on Northeast Continental Shelf ecosystem status and trends.
-License: CC0
+License: file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
