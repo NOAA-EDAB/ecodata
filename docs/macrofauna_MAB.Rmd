@@ -1164,9 +1164,16 @@ d %>%
 ### Condition project 
 
 [text here](https://docs.google.com/document/d/1uHMmMTnZG2LAmPi5SSO30k5_5NzfzdKj/edit)
-```{r condition-proj, fig.cap = ""}
+```{r condition-table, fig.cap = ""}
 
-knitr::include_graphics(file.path(image.dir, "condition_proj.png"))
+knitr::include_graphics(file.path(image.dir, "Condition_table.png"))
+
+```
+
+
+```{r condition-matrix, fig.cap = ""}
+
+knitr::include_graphics(file.path(image.dir, "Condition_matrix.png"))
 
 ```
 
