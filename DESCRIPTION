@@ -20,6 +20,7 @@ Suggests:
 	tufte,
 	here,
 	usethis,
+	AICcmodavg,
 	zoo
 VignetteBuilder: knitr
 RoxygenNote: 7.1.0
