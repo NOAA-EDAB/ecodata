@@ -5,6 +5,7 @@
 
 <!-- badges: start -->
 
+![gitleaks](https://github.com/NOAA-EDAB/ecodata/workflows/gitleaks/badge.svg)
 <!-- badges: end -->
 
 ## Overview
@@ -38,9 +39,7 @@ Shelf are included when available, but this is not always the case.
     `ecodata::...`
 
 <p align="center" width="645">
-
 <img src="https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/ecodata1.gif">
-
 </p>
 
 ## Using geom\_gls()
@@ -49,7 +48,7 @@ Also included in this package is a “geom” extension of `ggplot2` for
 assessing trends in time series. This function fits four trend models to
 each series, uses AICc to select the best model fit, and then implements
 a likelihood-ratio test to determine if a trend is present. If a
-significant trend is present (*P* \< 0.05), then the trend line is
+significant trend is present (*P* &lt; 0.05), then the trend line is
 plotted with the series. By default, a purple line color is assigned to
 negative trends and orange to positive trends. More detailed information
 about this method is available
@@ -61,10 +60,10 @@ example,
     m <- 0.1
     x <- 1:30
     y <-  m*x + rnorm(30, sd = 0.35)
-    
+
     data <- data.frame(x = x,
                       y = y)
-    
+
     #Plot series with trend 
     ggplot2::ggplot(data = data,aes(x = x, y = y)) +
       geom_line() +
@@ -87,3 +86,62 @@ endorsement, recommendation or favoring by the Department of Commerce.
 The Department of Commerce seal and logo, or the seal and logo of a DOC
 bureau, shall not be used in any manner to imply endorsement of any
 commercial product or activity by DOC or the United States Government.
+
+## Build documentation
+
+Organize
+[Reference](https://noaa-edab.github.io/ecodata/reference/index.html) by
+datasets and functions in `inst/_pkgdown.yml` and update using:
+
+``` r
+update_datasets_reference <- function(){
+  library(here)
+  library(dplyr)
+  library(yaml)
+
+  yml <- here("inst/_pkgdown.yml")
+
+  lst <- read_yaml(yml)
+  # listviewer::jsonedit(lst)
+  
+  # inject reference to datasets  
+  datasets <- data(package="ecodata") %>% .$results %>% .[, "Item"]
+  lst$reference <- list(
+      title = "Datasets",
+      contents = datasets)
+
+  write_yaml(lst, yml)
+}
+
+# build just Reference index
+pkgdown::build_reference_index()
+
+# build whole documentation website into docs/*
+pkgdown::build_site()
+```
+
+Note that when building, you’ll get alerted if datasets are missing or
+not included, eg:
+
+    > pkgdown::build_reference_index()
+    Writing 'reference/index.html'
+    Warning messages:
+    1: In '_pkgdown.yml', topic must be a known topic name or alias
+    x Not '`heatwave_year`' 
+    2: In '_pkgdown.yml', topic must be a known topic name or alias
+    x Not '`seasonal_sst_anom_gridded`' 
+    3: In '_pkgdown.yml', topic must be a known topic name or alias
+    x Not '`wind`' 
+    4: Topics missing from index: 
+    * ecodata
+    * seasonal_sst_anomaly_gridded
+    * soe 
+
+Aside: get all plot chunks mentioning given dataset for Uploader:
+
+``` r
+dataset <- "chl_pp"
+res <- system(glue::glue("grep ecodata::{dataset} chunk-scripts/*", intern = T))
+# todo: get just filenames
+res
+```
