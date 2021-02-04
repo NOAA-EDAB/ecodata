@@ -5,23 +5,24 @@ library(stringr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-exp_n_rdata <- "Expected_number_of_species_21.RData"
+exp_n_rdata <- "Expected_number_of_species_21 (1).RData"
 get_exp_n <- function(save_clean = F){
 
   load(file.path(raw.dir, exp_n_rdata))
 
 
 
-  exp_n2<-ESn.epu %>% filter(str_detect(Var,  'ESn - Bigelow|ESn - Albatross')) %>%
-    tidyr::separate(Var, c("Season", "EPU", "trash1", "Var")) %>%
-    dplyr::select(-trash1)
+  exp_n2<-ESn.epu %>% filter(str_detect(Var,  'Species - Bigelow|Species - Albatross')) %>%
+    tidyr::separate(Var, c("Season", "EPU", "trash1","trash2", "trash3", "trash4", "Var")) %>%
+    dplyr::select(-trash1, -trash2, -trash3, -trash4)
 
-  exp_n<-ESn.epu %>% filter(str_detect(Var,  'ESn Standard Deviation')) %>%
-    tidyr::separate(Var, c("Season", "EPU", "trash1", "trash2", "trash3","Var")) %>%
+  exp_n<-ESn.epu %>% filter(str_detect(Var,  'Standard Deviation')) %>%
+    tidyr::separate(Var, c("Season", "EPU", "trash1", "trash2", "trash3","trash4",
+                           "trash5", "trash6","Var")) %>%
     dplyr::mutate(Var=recode(Var,
                              `Albatross`="AlbatrossSD",
                              `Bigelow`="BigelowSD")) %>%
-    dplyr::select(-trash1, -trash2, -trash3) %>%
+    dplyr::select(-trash1, -trash2, -trash3, -trash4, -trash5, -trash6) %>%
     rbind(exp_n2)
 
 
