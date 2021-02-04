@@ -464,14 +464,22 @@ interp_chl_pp <- function(epu, year = 2020, Variable){
 }
 
 MAB_chl <- interp_chl_pp(epu = "MAB", Variable = "WEEKLY_CHLOR_A_MEDIAN")
+MAB_early<- MAB_chl %>% filter(Week.x <=26)
+MAB_late <- MAB_chl %>% filter(Week.x >=26)
 
-MAB_chl_weekly <- ggplot2::ggplot(data = MAB_chl) +
+MAB_chl_weekly <- ggplot2::ggplot(data = MAB_early) +
   ggplot2::geom_line(aes(x = Time, y = LTM)) +
   ggplot2::geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high), 
               alpha = 0.1,
               fill = "grey1") +
+  ggplot2::geom_line(data = MAB_late,aes(x = Time, y = LTM)) +
+  ggplot2::geom_ribbon(data = MAB_late,aes(x = Time, ymin = sd.low, ymax = sd.high), 
+              alpha = 0.1,
+              fill = "grey1")+
   ggplot2::geom_line(aes(x = Time, y = Value),
             size = 1,color = "#33a02c") +
+    ggplot2::geom_line(data = MAB_late, aes(x = Time, y = Value),
+            size = 1,color = "#33a02c", linetype = "dashed")+
   ggplot2::ggtitle(expression("Chlorophyll"~italic(a)~"")) +
   ggplot2::guides(color = F) +
   ggplot2::xlab("")+
@@ -483,14 +491,22 @@ MAB_chl_weekly <- ggplot2::ggplot(data = MAB_chl) +
   ecodata::theme_ts()
 
 MAB_pp <- interp_chl_pp(epu = "MAB", Variable =  "WEEKLY_PPD_MEDIAN")
+MAB_early<- MAB_pp %>% filter(Week.x <=26)
+MAB_late <- MAB_pp %>% filter(Week.x >=26)
 
-MAB_pp_weekly <- ggplot2::ggplot(data = MAB_pp) +
+MAB_pp_weekly <- ggplot2::ggplot(data = MAB_early) +
   ggplot2::geom_line(aes(x = Time, y = LTM)) +
   ggplot2::geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high),
               alpha = 0.1,
               fill = "grey1") +
+  ggplot2::geom_line(data = MAB_late,aes(x = Time, y = LTM)) +
+  ggplot2::geom_ribbon(data = MAB_late,aes(x = Time, ymin = sd.low, ymax = sd.high), 
+              alpha = 0.1,
+              fill = "grey1")+
   ggplot2::geom_line(aes(x = Time, y = Value),
             size = 1,color = "#33a02c") +
+  ggplot2::geom_line(data = MAB_late, aes(x = Time, y = Value),
+            size = 1,color = "#33a02c", linetype = "dashed")+
   ggplot2::ggtitle(expression("Primary production")) +
   ggplot2::guides(color = F) +
   ggplot2::xlab("")+
@@ -567,13 +583,19 @@ micro_chlor <- ecodata::phyto_size %>%
   dplyr::filter(!Value == "NA") %>% 
   dplyr::select(-Year1, -Year2, -Cat,  -Units) %>% 
   tidyr::pivot_wider(id_cols= c(EPU, WEEK), names_from = Var, values_from = Value) %>% 
+  dplyr::mutate(Month = rep(1:4, each = 13)) %>% 
   ggplot2::ggplot() +
-  ggplot2::geom_point( aes(x = CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN, y = CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN)) +
+  ggplot2::geom_point( aes(x = CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN, 
+                           y = CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN, color = factor(Month))) +
+   ggplot2::scale_color_discrete(name = "Season", labels=c("Jan-Mar", "Apr-Jun", "Jul-Sep", "Oct-Dec"))+
   ggplot2::ggtitle("MAB ") +
   #ggplot2::facet_wrap(~EPU)+
   ggplot2::ylab("Chlorophyll a (mg m^-3)") +
   ggplot2::xlab("Microplankton % of Total Phytoplankton Composition ") +
-  ecodata::theme_facet()
+  ecodata::theme_facet()#+
+  #ggplot2::theme(legend.title = element_text("Season"), 
+  #               legend.text =element_text("Jan-Mar", "Apr-Jun", "Jul-Sep", "Oct-Dec") )#+
+ 
 micro_chlor
 
 ```
@@ -724,7 +746,7 @@ zoo_abund %>%
 #### Abundance anomaly
 
 ```{r zoo-abund,  fig.cap= "Large (red) and small-bodied (blue) copepod abundance in the Mid-Atlantic Bight." }
-ecodata::zoo_abund%>%
+ecodata::zoo_sli_anom %>%
    dplyr::filter(EPU == epu_abbr) %>%
    dplyr::group_by(Time) %>% 
    dplyr::mutate(hline = 0) %>% 
@@ -840,6 +862,9 @@ zoo_div %>%
   ggplot2::theme(strip.text=element_blank())
   
 
+
+
+
 ```
 
 #### Calanus Stage
@@ -847,9 +872,9 @@ zoo_div %>%
 ```{r calanus-stage,  fig.cap=""}
 cal <- ecodata::CalanusStage %>% 
   dplyr::filter(EPU == "GB") %>% 
-  filter(Var %in% c("CIII", "CIV", "CV", "Adt"))
+  filter(Var %in% c("c3", "c4", "c5", "adt"))
 
-cal$Var <- factor(cal$Var, levels = c("CIII", "CIV", "CV", "Adt"))
+cal$Var <- factor(cal$Var, levels = c("c3", "c4", "c5", "adt"))
 cal$season <- factor(cal$season, levels = c("Spring", "Summer", "Fall"))
 
 cal %>% 
@@ -884,6 +909,37 @@ cal %>%
   scale_fill_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
   scale_color_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))
 
+cal %>% 
+  ggplot2::ggplot() +
+    ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf)+
+  ggplot2::geom_line(aes(x = Year, y = meanday))+
+  ggplot2::geom_point(aes(x = Year, y = meanday))+
+  #ecodata::geom_gls( aes(x = Year, y = meanday)) +
+  ggplot2::facet_wrap(~season, ncol = 3, scales = "free")+
+  ggplot2::ylab("Mean day of year") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("MAB Calanus Stage Mean DOY") +
+  #ggplot2::theme(legend.position = "bottom", 
+  #               legend.title = element_blank())+
+  ecodata::theme_facet()
+
+cal %>% 
+  ggplot2::ggplot() +
+    ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf)+
+  ggplot2::geom_line(aes(x = Year, y = ndays))+
+  ggplot2::geom_point(aes(x = Year, y = ndays))+
+  #ecodata::geom_gls( aes(x = Year, y = ndays)) +
+  ggplot2::facet_wrap(~season, ncol = 3, scales = "free")+
+  ggplot2::ylab("Number of sampling days") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("MAB Number of sampling days") +
+  #ggplot2::theme(legend.position = "bottom", 
+  #               legend.title = element_blank())+
+  ecodata::theme_facet()
 ```
 
 <!-- #### OI abundance -->
@@ -1016,13 +1072,19 @@ cp
 ```
 
 
-```{r cold_pool_map, eval = T, echo = F, fig.cap="Map of cold pool area- final year (2018) in bold. Time series of cold pool spatial extent FROM 1993-2018." }
+```{r cold_pool_map, eval = T, echo = F, fig.cap="Map of cold pool area. Time series of cold pool spatial extent FROM 1993-2018. Black = 2018 (Last year in time series), Red = 2012 Minimum area, Blue = 2005 Maximum area" }
 cpsf26<- ecodata::cold_pool_sf %>% 
   mutate(Time = c(1:26)) %>% 
   filter(Time == 26)
 cpsf<- ecodata::cold_pool_sf %>% 
   mutate(Time = c(1:26)) %>% 
   filter(!Time == 26)
+cpmin <- ecodata::cold_pool_sf %>% 
+  mutate(Time = c(1:26)) %>% 
+  filter(Time == 20)
+cpmax <- ecodata::cold_pool_sf %>% 
+  mutate(Time = c(1:26)) %>% 
+  filter(Time == 13)
 
 #Map line parameters
 map.lwd <- 0.4
@@ -1041,7 +1103,8 @@ cp_map <-
   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) +
   ggplot2::geom_sf(data = cpsf, alpha = 0.1)  +
   ggplot2::geom_sf(data = cpsf26, fill = "transparent", color = "black", size = 1)+
-  
+   ggplot2::geom_sf(data = cpmax, fill = "transparent", color = "red", size = 0.5)+
+  ggplot2::geom_sf(data = cpmin, fill = "transparent", color = "blue", size = 0.5)+
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   #ggplot2::scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
   #                     low = scales::muted("blue"),
@@ -1178,7 +1241,8 @@ cp_map
 
 ```{r heatwave-year, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Mid-Atlantic occuring in 2020."}
 ecodata::heatwave_year %>% 
-  filter(EPU == "MAB") %>% 
+  filter(EPU == "MAB", 
+         str_detect(t, "2020")) %>% 
   ggplot( aes(x = t, y = temp))+
   geom_flame(aes(y2 = thresh))+ 
   geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
@@ -1186,7 +1250,7 @@ ecodata::heatwave_year %>%
   geom_line(aes(x = t, y = temp, color = "b"))+
   scale_colour_manual(values = c("turquoise4", "sienna3", "black"),
                       labels = c("Climatology","Temperature", "Threshold"))+
-  ylab("Temperature (°C)")+
+  ylab("Temperature (C)")+
   xlab(element_blank())+
   scale_x_date(date_labels = "%b", breaks = "1 month")+
   theme_bw()+
@@ -1305,6 +1369,12 @@ knitr::include_graphics(file.path(image.dir, "Seasonal pH on MAB shelf - Grace S
 
 ```
 
+
+```{r mab-oa-glider, fig.cap = "Glider Transect."}
+
+knitr::include_graphics(file.path(image.dir, "pH glider transect map - Grace Saba.jpg"))
+
+```
 
 ## Shelfwide Indicators {.tabset .tabset-fade}
 

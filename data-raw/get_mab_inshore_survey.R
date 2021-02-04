@@ -6,7 +6,7 @@ library(stringr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-mab_inshore_survey_xlsx <- "NEAMAP_SOE INDICES_2019_final.xlsx"
+mab_inshore_survey_xlsx <- "NEAMAP_SOE INDICES_2020.xlsx"
 get_mab_inshore_survey <- function(save_clean = F){
 
   mab_inshore_survey <- read_excel(file.path(raw.dir,

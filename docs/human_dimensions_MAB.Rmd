@@ -305,6 +305,8 @@ ggplot2::ggplot(data = landings_agg)+
            linetype = hline.lty) +
   ecodata::theme_ts()
 
+
+
 ```
 
 #### Commercial revenue 
@@ -352,6 +354,161 @@ ggplot2::ggplot()+
   ggplot2::theme(title = element_text(size = 10))
 
 ```
+
+```{r bennet-all, fig.cap = paste0("Revenue change from the 2015 values in dollars (black), Price (PI), and Volume Indicators (VI) for commercial landings in the Mid-Atlantic Bight. \\label{bennet}")}
+
+#Filter data into two dataframes for plotting
+
+indicators <- ecodata::bennet %>% 
+  dplyr::filter(EPU == epu_abbr) 
+
+indicators <- ecodata::bennet %>% 
+  dplyr::filter(EPU == epu_abbr) 
+
+indicators$Var<- gsub( "Predator", "", indicators$Var)
+indicators$Var<- gsub( "Value", "Volume", indicators$Var)
+indicators<- indicators %>% 
+  separate(Var, c("Guild", "Var") ) %>% 
+  dplyr::filter(!Var == "Revenue",
+                !Guild == "Total", 
+         !Time < 1985) %>% 
+  dplyr::group_by(Time,  Var) %>% 
+  dplyr::mutate(component = sum(Value)) %>% 
+  ungroup()
+
+  # dplyr::filter(#stringr::str_detect(Var, pattern="Total"),
+  #        !Var == "Total Revenue Change - Bennet", 
+  #        !Time < 1985) %>% 
+  # dplyr::mutate(Var, Var = plyr::mapvalues(Var, from = c("Total Volume Index - Bennet", "Total Price Index - Bennet"),
+  #                                          to = c("Volume","Price"))) %>% 
+  # dplyr::group_by(Time) %>% 
+  # dplyr::mutate(New = sum(Value)) %>% 
+  # dplyr::group_by(Time, Var) %>% 
+  # dplyr::mutate(component = sum(Value))
+
+revchange <- ecodata::bennet %>% 
+  dplyr::filter(EPU == "MAB",
+         #Var %in% c("Total Revenue Change - Bennet"),
+         !Time<1985)
+#custom bar fill color (color-blind friendly)
+#ind_fill <- c("#a6cee3", "#b2df8a", "#000001")
+
+#limits
+y.lim <- c(-400,550)
+
+indicators$Guild<-factor(indicators$Guild, levels = c("Apex", "Piscivore", "Planktivore", 
+                                                      "Benthivore", "Benthos", "Other"))
+
+#plot
+ggplot2::ggplot()+
+  #Highlight last ten years
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf)+
+  ggplot2::geom_bar(data = indicators, aes(x = Time, y = Value, fill = Guild), stat="identity")+
+  #ggplot2::scale_fill_manual(name = "Indicators", values = Guild) +
+  ggplot2::geom_line(data = indicators, aes(x = Time, y = component, color = "$"))+
+  ggplot2::facet_wrap(~Var)+
+  ggplot2::scale_colour_grey(name ="Component") +
+  ggplot2::ggtitle("Bennet Indicator")+
+  ggplot2::labs(y="Value $1,000,000 ($2015)") +
+  ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
+  ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), 
+                              limits = y.lim, expand = c(0.01, 0.01)) +
+  ggplot2::scale_fill_brewer(palette = "Set1")+
+  ecodata::theme_ts() +
+  ggplot2::theme(title = element_text(size = 10))
+
+```
+
+```{r bennet2, fig.cap = paste0("Revenue change from the 2015 values in dollars (black), Price (PI), and Volume Indicators (VI) for commercial landings in the Mid-Atlantic Bight. \\label{bennet}")}
+
+#Filter data into two dataframes for plotting
+
+indicators <- ecodata::bennet %>% 
+  dplyr::filter(EPU == epu_abbr) 
+
+indicators$Var<- gsub( "Predator", "", indicators$Var)
+indicators$Var<- gsub( "Value", "Volume", indicators$Var)
+indicators<- indicators %>% 
+  separate(Var, c("Guild", "Var") ) %>% 
+  dplyr::filter(!Var == "Revenue",
+                !Guild == "Total", 
+         !Time < 1985) %>% 
+  dplyr::group_by(Time, Guild) %>% 
+  dplyr::mutate(New = sum(Value))
+
+revchange <- ecodata::bennet %>% 
+  dplyr::filter(EPU == "MAB",
+         Var %in% c("Total Revenue Change - Bennet"),
+         !Time<1985)
+#custom bar fill color (color-blind friendly)
+ind_fill <- c("#a6cee3", "#b2df8a")
+
+#limits
+y.lim <- c(-450,600)
+
+#plot
+ggplot2::ggplot()+
+  #Highlight last ten years
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf)+
+  ggplot2::geom_bar(data = indicators, aes(x = Time, y = Value, fill = Var), stat="identity")+
+  ggplot2::scale_fill_manual(name = "Indicators", values = ind_fill) +
+  ggplot2::geom_line(data = revchange, aes(x = Time, y = Value, color = "$"))+
+  ggplot2::scale_colour_grey(name ="Revenue Change") +
+  ggplot2::ggtitle("Bennet Indicator")+
+  ggplot2::labs(y="Value $1,000,000 ($2015)") +
+  ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), 
+                              limits = y.lim, expand = c(0.01, 0.01)) +
+  ecodata::theme_ts() +
+  ggplot2::facet_wrap(~Guild)+
+  ggplot2::theme(title = element_text(size = 10), 
+                 legend.position = "bottom")
+
+```
+
+```{r bennet-table}
+indicators <- ecodata::bennet %>% 
+  dplyr::filter(EPU == epu_abbr) 
+
+indicators$Var<- gsub( "Predator", "", indicators$Var)
+indicators$Var<- gsub( "Value", "Volume", indicators$Var)
+indicators<- indicators %>% 
+  separate(Var, c("Guild", "Var") ) %>% 
+  dplyr::filter(!Var == "Revenue",
+                !Guild == "Total", 
+         !Time < 1985) %>% 
+  dplyr::group_by(Time, Guild) %>% 
+  dplyr::mutate(New = sum(Value)) %>% 
+  ungroup()
+
+#dplyr::select(ind2, !c(Units, EPU, Guild, Source, Var, New))
+
+ind2<- indicators %>% 
+  dplyr::mutate(Name = paste(Guild, Var)) %>% 
+  dplyr::select(-c(Guild, Units, EPU, Source, Var, New)) %>% 
+  tidyr::pivot_wider(names_from = Name, values_from = Value) %>% 
+  dplyr::select(Time, `Apex Volume`, `Apex Price`, 
+                `Benthivore Volume`, `Benthivore Price`, 
+                `Benthos Volume`, `Benthos Price`,
+                `Planktivore Volume`, `Planktivore Price`,
+                `Piscivore Volume`, `Piscivore Price`,
+                `Other Volume`, `Other Price` )
+
+Table<- kable(ind2, col.names = c("Time", "Volume", "Price",  "Volume", "Price",
+                           "Volume", "Price",  "Volume", "Price", 
+                           "Volume", "Price",  "Volume", "Price")) %>% 
+  kableExtra::add_header_above(c(" ", "Apex Pred" = 2, "Benthivore" = 2, 
+                                 "Benthos" = 2, "Planktivore" = 2, 
+                                 "Piscivore" = 2, "Other" = 2))
+
+
+```
+
+
 
 ```{r comdat-comm-revenue,  fig.cap = "Total revenue for the region (black) and revenue from MAFMC managed species (red). \\label{comm-rev}"}
 ## Apex pred
@@ -408,6 +565,8 @@ ggplot2::ggplot(data = rev_agg) +
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts()
+
+
 
 ```
 
@@ -631,24 +790,33 @@ ggplot2::ggplot(data = stock_status) +
 
 #### Oyster aquaculture
 
-```{r aquaculture, fig.cap = "Oyster aquaculture production in terms pieces, lease area and production by acre. \\label{oyster-aqua}"}
+```{r aquaculture, fig.cap = "Oyster aquaculture production in pieces. \\label{oyster-aqua}"}
 
 aqua <- ecodata::aquaculture %>%
-  dplyr::filter(Region == "Maryland") %>% 
+  dplyr::filter(Region %in% c("MD", "VA", "NJ")) %>% 
   dplyr::filter(!Value == "NA") %>% 
   dplyr::mutate(Time = as.integer(Time), 
                 Value = as.numeric(Value))
 
 ggplot2::ggplot() +
  #Highlight last ten years
-  ggplot2::geom_line(data = aqua, aes(x = Time, y = Value), size = lwd) +
-  ggplot2::geom_point(data = aqua,aes(x = Time, y = Value), size = pcex) +
-  ggplot2::facet_wrap(~Var, scales = "free", nrow = 3)+
-  ggplot2::ggtitle("Oyster Production in Maryland")+
+  ggplot2::geom_line(data = aqua, aes(x = Time, y = Value, color = Region), size = lwd) +
+  ggplot2::geom_point(data = aqua,aes(x = Time, y = Value, color = Region), size = pcex) +
+  #ggplot2::facet_wrap(~Region, nrow = 3)+
+  ggplot2::ggtitle("Oyster Production in MAB")+
   ggplot2::ylab(expression("Oysters production")) +
   ggplot2::xlab("")+
   scale_x_continuous(breaks=c(2009,2011,2013,2015, 2017, 2019))+
   ecodata::theme_ts()
+
+# aqua %>% group_by(Time) %>% summarise(Value = sum(Value)) %>% 
+#   dplyr::filter(Time %in% c(max(Time), max(Time-1))) %>% 
+#   dplyr::summarise(m = mean(Value))
+# 
+# aqua %>% group_by(Time) %>% summarise(Value = sum(Value)) %>% 
+#   dplyr::filter(Time %in% c(max(Time-2), max(Time-3),  max(Time-4)), 
+#                 !Value == "NA") %>%  
+#   dplyr::summarise(m= mean(Value))
 
 ```
 
@@ -671,8 +839,8 @@ com2<-com %>%
                       color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
   ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
                      breaks = com$Rating) +
-  xlim(0,12)+
-  ylim(0,5.5)+
+  xlim(-1,12)+
+  ylim(-1,5.5)+
   theme(legend.position=c(0.8, 0.85), 
         legend.title = element_blank(),       
         legend.background = element_blank(),
@@ -735,12 +903,19 @@ ggplot2::ggplot(data = landings_rec)+
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts()
-
+# 
+# landings_rec %>% 
+#   dplyr::filter(Time %in% c(max(Time), max(Time-1))) %>% 
+#   dplyr::summarise(m = mean(Value))
+# 
+# landings_rec %>% 
+#   dplyr::filter(Time %in% c(max(Time-2), max(Time-3),  max(Time-4))) %>% 
+#   dplyr::summarise(m= mean(Value))
 ```
 
 #### Recreational diversity
 
-```{r recdat-diversity,fig.cap = paste0("Recreational effort, recreational effort diversity, number of recreational anglers, and diversity of recreational catch in the ",region,". \\label{recdat}")}
+```{r recdat-effort,fig.cap = paste0("Recreational effort, recreational effort diversity, number of recreational anglers, and diversity of recreational catch in the ",region,". \\label{recdat}")}
 recdat <- ecodata::recdat %>% 
   dplyr::filter(EPU == region_abbr) %>% 
   dplyr::group_by(Var) %>% 
@@ -797,6 +972,24 @@ rec_effort <- recdat %>%
            linetype = hline.lty) +
   ecodata::theme_ts() 
 
+
+
+rec_effort
+```
+
+```{r recdat-diversity}
+
+recdat <- ecodata::recdat %>% 
+  dplyr::filter(EPU == region_abbr) %>% 
+  dplyr::group_by(Var) %>% 
+  dplyr::mutate(hline = mean(Value))
+
+ylim_re <- c(2e7, 7e7)
+ylim_rd <- c(1.75,2.75)
+ylim_ra  <- c(1e6, 3.5e6)
+
+series.col <- "black"
+
 rec_div <- recdat %>% 
   dplyr::filter(Var == "Recreational fleet effort diversity across modes") %>% 
   ggplot2::ggplot() + 
@@ -827,6 +1020,24 @@ rec_div <- recdat %>%
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts()
+
+rec_div
+
+```
+
+
+```{r recdat-div-catch}
+
+recdat <- ecodata::recdat %>% 
+  dplyr::filter(EPU == region_abbr) %>% 
+  dplyr::group_by(Var) %>% 
+  dplyr::mutate(hline = mean(Value))
+
+ylim_re <- c(2e7, 7e7)
+ylim_rd <- c(1.75,2.75)
+ylim_ra  <- c(1e6, 3.5e6)
+
+series.col <- "black"
 
 rec_div_catch <- recdat %>% 
   dplyr::filter(Var == "Recreational Diversity of Catch") %>% 
@@ -859,16 +1070,7 @@ rec_div_catch <- recdat %>%
            linetype = hline.lty) +
   ecodata::theme_ts()
 
-
-
-cowplot::plot_grid(rec_effort, 
-                   rec_div, 
-                   rec_div_catch,
-                   ncol = 1, 
-                   align = "hv") +
-    ggplot2::theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
-
-
+rec_div_catch
 ```
 
 #### Recreational Engagement and Reliance
@@ -890,8 +1092,8 @@ com2<-com %>%
                       color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
   ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
                      breaks = com$Rating) +
-  xlim(0,12)+
-  ylim(0,16)+
+  xlim(-1,12)+
+  ylim(-1,16)+
   theme(legend.position=c(0.8, 0.85), 
         legend.title = element_blank(),       
         legend.background = element_blank(),
@@ -932,7 +1134,119 @@ Recent pelagic landings coming primarily from Common Thresher and Shortfin Mako.
 
 
 ```{r ppr, fig.cap="Primary production required to support the commercial landings. Included are the top species accounting for 80% of the landings in each year."}
+a<- ecodata::ppr %>% 
+  dplyr::group_by(EPU) %>% 
+  dplyr::mutate(hline = mean(Value)) %>% 
+  dplyr::filter(Var == "PPR",
+                EPU == "MAB", 
+                Time <= 1997) 
+
 ecodata::ppr %>% 
+  dplyr::group_by(EPU) %>% 
+  dplyr::mutate(hline = mean(Value)) %>% 
+  dplyr::filter(Var == "PPR",
+                EPU == "MAB", 
+                Time >= 1997) %>% 
+  ggplot2::ggplot() +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_point(aes(x = Time, y = Value))+
+  ggplot2::geom_line(aes(x = Time, y = Value))+
+  ggplot2::geom_line(data = a, aes(x = Time, y = Value), linetype = "dashed")+
+  ggplot2::geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  ggplot2::ggtitle("Primary Production Required")+
+  ggplot2::ylab("Proportion of Total PPD ")+
+  ecodata::theme_ts()
+```
+
+### Fogarty Index
+
+```{r fogarty, fig.cap="Fogarty Index"}
+
+ecodata::ppr %>% 
+  dplyr::filter(Var == "Fogarty") %>% 
+  dplyr::mutate(Value = Value*1000) %>% 
+  dplyr::group_by(EPU) %>% 
+  dplyr::mutate(hline = mean(Value), 
+                gr_up = c(0.92),
+                rd_up = c(2.5),
+                gr_lw = c(0.22),
+                rd_lw = c(1)) %>% 
+  dplyr::filter(EPU == "MAB") %>% 
+  ggplot2::ggplot() +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_ribbon( aes(ymin = gr_lw, ymax = gr_up, x = Time), fill = "darkolivegreen3", alpha = 0.5)+
+  ggplot2::geom_ribbon( aes(ymin = rd_lw, ymax = rd_up, x = Time), fill = "lightcoral", aplha = 0.5)+
+  #ggplot2::geom_hline(yintercept = .92, color = "green", linetype = "dashed")+
+  #ggplot2::geom_hline(yintercept = .22, color = "green", linetype = "dashed")+
+  #ggplot2::geom_hline(yintercept = 1, color = "red", linetype = "dashed")+
+  #ggplot2::geom_hline(yintercept = 2.5, color = "red", linetype = "dashed")+
+  ggplot2::geom_point(aes(x = Time, y = Value))+
+  ggplot2::geom_line(aes(x = Time, y = Value))+
+  #ggplot2::geom_line(data = a, aes(x = Time, y = Value), linetype = "dashed")+
+  #ggplot2::geom_hline(aes(yintercept = hline),
+  #         size = hline.size,
+  #         alpha = hline.alpha,
+  #         linetype = hline.lty)+
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  #ggplot2::facet_wrap( ~ EPU)+
+  ggplot2::ggtitle("Fogarty Index")+
+  ggplot2::ylab("PPT")+
+  ecodata::theme_ts()
+```
+
+### Ryther
+
+```{r ryther, fig.cap="Ryther Index"}
+
+
+ecodata::ppr %>% 
+  dplyr::filter(Var == "Ryther") %>% 
+  dplyr::group_by(EPU) %>% 
+  dplyr::mutate(hline = mean(Value), 
+                gr_up = c(1.1),
+                rd_up = c(5),
+                gr_lw = c(0.3),
+                rd_lw = c(3))%>%
+  
+  dplyr::filter(EPU == "MAB") %>% 
+  ggplot2::ggplot() +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_ribbon( aes(ymin = gr_lw, ymax = gr_up, x = Time), fill = "darkolivegreen3", alpha = 0.5)+
+  ggplot2::geom_ribbon( aes(ymin = rd_lw, ymax = rd_up, x = Time), fill = "lightcoral", aplha = 0.5)+
+  #ggplot2::geom_hline(yintercept = 0.3, color = "green", linetype = "dashed")+
+  #ggplot2::geom_hline(yintercept = 1.1, color = "green", linetype = "dashed")+
+  #ggplot2::geom_hline(yintercept = 3, color = "red", linetype = "dashed")+
+  #ggplot2::geom_hline(yintercept = 5, color = "red", linetype = "dashed")+
+  ggplot2::geom_point(aes(x = Time, y = Value))+
+  ggplot2::geom_line(aes(x = Time, y = Value))+
+  #ggplot2::geom_line(data = a, aes(x = Time, y = Value), linetype = "dashed")+
+  #ggplot2::geom_hline(aes(yintercept = hline),
+  #         size = hline.size,
+  #         alpha = hline.alpha,
+  #         linetype = hline.lty)+
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  #ggplot2::facet_wrap( ~ EPU)+
+  ggplot2::ggtitle("Ryther Index")+
+  ggplot2::ylab("mt km-2 y-1")+
+  ecodata::theme_ts()
+```
+
+### Mean Trophic Level
+
+```{r mtl, fig.cap="Mean trophic level"}
+
+ecodata::ppr %>% 
+  dplyr::filter(Var == "MTL") %>% 
   dplyr::group_by(EPU) %>% 
   dplyr::mutate(hline = mean(Value)) %>% 
   dplyr::filter(EPU == "MAB") %>% 
@@ -947,8 +1261,49 @@ ecodata::ppr %>%
            alpha = hline.alpha,
            linetype = hline.lty)+
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
-  ggplot2::ggtitle("Primary Production Required")+
-  ggplot2::ylab("Proportion of Total PPD ")+
+  #ggplot2::facet_wrap( ~ EPU)+
+  ggplot2::ggtitle("Mean Trophic Level")+
+  ggplot2::ylab("")+
+  ecodata::theme_ts()
+```
+
+### PP reconstructed
+
+```{r pp-reconstructed, fig.cap="reconstructed primary production"}
+
+
+a<-ecodata::ppr %>% 
+  dplyr::filter(Var == "PP") %>% 
+  dplyr::group_by(EPU) %>% 
+  dplyr::mutate(hline = mean(Value)) %>% 
+  dplyr::filter(EPU == "MAB", 
+                Time <=1997) 
+
+ecodata::ppr %>% 
+  dplyr::filter(Var == "PP") %>% 
+  dplyr::group_by(EPU) %>% 
+  dplyr::mutate(hline = mean(Value)) %>% 
+  dplyr::filter(EPU == "MAB", 
+                Time >=1997) %>% 
+  ggplot2::ggplot() +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  #ggplot2::geom_hline(yintercept = .92, color = "green", linetype = "dashed")+
+  #ggplot2::geom_hline(yintercept = .22, color = "green", linetype = "dashed")+
+  #ggplot2::geom_hline(yintercept = 1, color = "red", linetype = "dashed")+
+  #ggplot2::geom_hline(yintercept = 2.5, color = "red", linetype = "dashed")+
+  ggplot2::geom_point(aes(x = Time, y = Value))+
+  ggplot2::geom_line(aes(x = Time, y = Value))+
+  ggplot2::geom_line(data = a, aes(x = Time, y = Value), linetype = "dashed")+
+  ggplot2::geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  #ggplot2::facet_wrap( ~ EPU)+
+  ggplot2::ggtitle("PP Reconstrcted")+
+  ggplot2::ylab("mtC region-1 year-1")+
   ecodata::theme_ts()
 ```
 
@@ -989,77 +1344,41 @@ ecodata::wind_revenue %>%
 
 ```{r wind-dev-cumul, fig.cap = ""}
 
-knitr::include_graphics(file.path(image.dir, "CumulativeWindDraft_20201231.jpg"))
-
+#knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/All_2021119-01.jpg")
+knitr::include_graphics(file.path(image.dir, "All_2021128_needsgraph-01.jpg"))
 ```
 
 ```{r wind-dev-cumul-MAB, fig.cap = ""}
 
-knitr::include_graphics(file.path(image.dir, "MidAtlantic_20201231.jpg"))
-
+knitr::include_graphics(file.path(image.dir, "MidAtlantic_2021128-01.jpg"))
+#knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/MidAtlantic_2021119-01.jpg")
 ```
 
 ```{r wind-dev-NE, fig.cap = ""}
 
-knitr::include_graphics(file.path(image.dir, "Northeast_20201231.jpg"))
-
+#knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/NE2021119.jpg")
+knitr::include_graphics(file.path(image.dir, "NE2021128-01.jpg"))
 ```
 
 ```{r wind-dev-survey, fig.cap = ""}
 
-knitr::include_graphics(file.path(image.dir, "SurveysWindFarmAreas_20201229.jpg"))
-
+knitr::include_graphics(file.path(image.dir, "SurveyMap2021128.png"))
+#knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/SurveysWindFarmAreas_20201229.jpg")
 ```
 
-```{r wind-dev-speed0.30, eval = T, echo = F, fig.cap='', out.width='80%'}
-labels<- ecodata::wind_dev_speed %>% 
-  group_by(Time) %>% 
-  summarise("Projects(n)" = length(Project_Name)) %>% 
-  filter(!Time == "NA")
-
-total_area<- ecodata::wind_dev_speed %>% 
-  filter(Var == "Cumulative_area",
-         !Time == "NA") %>% 
-  group_by(Time) %>% 
-  summarise(Value_2 = sum(Value)) %>% 
-  mutate(Value_3 = cumsum(Value_2)/1000000) %>% 
+```{r wind-dev-speed0, eval = T, echo = F, fig.cap='', out.width='80%'}
+total_area<- ecodata::wind_dev_speed %>% mutate(Value = as.numeric(Value)/1000000, 
+                                                Time = as.integer(Time)) %>% 
 
   ggplot2::ggplot()+
-  ggplot2::geom_point(aes(x = Time, y = Value_3))+
-  ggplot2::geom_line(aes(x = as.factor(Time), y = Value_3, group=1))+
+  ggplot2::geom_point(aes(x = Time, y = Value))+
+  ggplot2::geom_line(aes(x = Time, y = Value, group=1))+
   ggplot2::ylab("Total Area (Million Acres)")+
-  ggplot2::xlab("")+
+  ggplot2::xlab("Project End Year")+
   ggplot2::ggtitle("Cumulative Area")+
   ecodata::theme_ts()+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-  
-dist_area<- ecodata::wind_dev_speed%>% 
-  filter(Var == "Cumulative_seafloor_disturbance",
-         !Time == "NA") %>% 
-  ggplot2::ggplot()+
-  ggplot2::geom_point(aes(x = Time, y = Value))+
-  ggplot2::ylab(" Total Seafloor Distubrance (Acres)")+
-  ggplot2::xlab("")+
-  ggplot2::ggtitle("Cumulative Seafloor Disturbance")+
-  theme(axis.text.x = element_text(angle = 45))
-
-foundations<- ecodata::wind_dev_speed%>% 
-  filter(Var == "Cumulative_foundations",
-         !Time == "NA") %>% 
-  ggplot2::ggplot()+
-  ggplot2::geom_point(aes(x = Time, y = Value))+
-  ggplot2::ylab(" Foundations (n)")+
-  ggplot2::xlab("")+
-  ggplot2::ggtitle("Cumulative Number of Foundations")+
-  theme(axis.text.x = element_text(angle = 45))
-
-# gridExtra::grid.arrange(
-#   gridExtra::tableGrob(labels, theme = gridExtra::ttheme_minimal(base_size = 8)),
-#   total_area,
-#   ncol = 2,
-#   widths = c(0.5, 1.5),
-#   clip = FALSE
-# )
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  scale_x_continuous(breaks=c(2020,2022, 2024,2026, 2028))
 
 total_area
 ```

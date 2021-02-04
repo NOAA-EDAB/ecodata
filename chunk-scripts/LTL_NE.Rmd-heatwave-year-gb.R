@@ -17,7 +17,7 @@ ecodata::heatwave_year %>%
   #geom_line(aes(x = df12$doy, y = df12$temp, color = "d"))+
   scale_colour_manual(values = c("turquoise4",   "sienna3","black"),
                       labels = c("Climatology","Temperature","Threshold"))+
-  ylab("Temperature (°C)")+
+  ylab("Temperature (C)")+
   xlab(element_blank())+
   scale_x_date(date_labels = "%b", breaks = "1 month")+
   theme_bw()+

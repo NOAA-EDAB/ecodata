@@ -1,2 +1,3 @@
 
-knitr::include_graphics(file.path(image.dir, "CumulativeWindDraft_20201231.jpg"))
+#knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/All_2021119-01.jpg")
+knitr::include_graphics(file.path(image.dir, "All_2021128_needsgraph-01.jpg"))

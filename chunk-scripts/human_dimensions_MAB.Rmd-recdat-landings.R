@@ -32,3 +32,11 @@ ggplot2::ggplot(data = landings_rec)+
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts()
+# 
+# landings_rec %>% 
+#   dplyr::filter(Time %in% c(max(Time), max(Time-1))) %>% 
+#   dplyr::summarise(m = mean(Value))
+# 
+# landings_rec %>% 
+#   dplyr::filter(Time %in% c(max(Time-2), max(Time-3),  max(Time-4))) %>% 
+#   dplyr::summarise(m= mean(Value))

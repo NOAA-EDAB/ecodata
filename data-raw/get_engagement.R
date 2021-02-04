@@ -9,23 +9,23 @@ library(janitor)
 
 raw.dir <- here::here("data-raw")
 
-engagement_xlsx<-"SocVul_in_Top_Fishing_Communities_120820_WENG - Changhua Weng - NOAA Affiliate.xlsx"
+engagement_xlsx<-"SocVul_in_Top_Fishing_Communities_updated 012921.xlsx"
 get_eng_rel <- function(save_clean = F){
 
   ## MAB
   d1 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "Top 10 Communities_Mid-Atlantic")
   col_names <- d1 %>%
-    slice(1)
+    slice(3)
   dta <- d1 %>%
-    slice(-1, -(15:34)) %>% # Removes the rows containing new and original names
+    dplyr::slice(-1,-2,-3, -(17:36)) %>% # Removes the rows containing new and original names
     rlang::set_names(., nm = col_names) %>%
     dplyr::mutate(Fishery = c(rep("Commercial",13),rep("Recreational",17)))
   ## NE
   d2 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "Top 10 Communities_New England")
   col_names <- d2 %>%
-    slice(1)
+    slice(3)
   dta2 <- d2 %>%
-    slice(-1, -(19:34)) %>% # Removes the rows containing new and original names
+    slice(-1,-2,-3, -(21:36)) %>% # Removes the rows containing new and original names
     rlang::set_names(., nm = col_names) %>%
     dplyr::mutate(Fishery = c(rep("Commercial",17),rep("Recreational",14)))
 

@@ -55,10 +55,10 @@ gom.hw<-hw %>% dplyr::filter(EPU == "GOM") %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+
-  ggplot2::geom_hline(aes(yintercept = 0),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
+  #ggplot2::geom_hline(aes(yintercept = 0),
+  #         size = hline.size,
+  #         alpha = hline.alpha,
+  #         linetype = hline.lty)+
   ylab("Heatwave Intensity")+
   ggplot2::facet_wrap(~Var, scales = "free") +
   ecodata::theme_ts()+
