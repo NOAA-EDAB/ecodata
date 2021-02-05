@@ -3,14 +3,16 @@
 #' Data include commercial and recreational fishery engagement and
 #' reliance rankings for coastal communities in the Northeast US.
 #'
-#' @format 150 rows and 5 columns.
+#' @format 61 rows and 7 columns.
 #'
 #' \itemize{
-#'     \item EPU: Ecological Production Unit (EPU) where sampling occurred.
-#'     \item Time: Year.
-#'     \item Var: Percent engagement of group communities.
-#'     \item Value: Value of variable \code{Var}.
-#'     \item Units: Units of variable \code{Var}.
+#'     \item Region: Ecological Production Unit (EPU) where sampling occurred.
+#'     \item StAbb: State Abbreviation.
+#'     \item Community: Fishing community.
+#'     \item Eng: Value of fishing community engagement.
+#'     \item Rel: Value of fishing community reliance.
+#'     \item Rating: Category of social vulnerability.
+#'     \item Fishery: Fishery classification.
 #' }
 #'
 #' @details
