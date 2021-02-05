@@ -2,7 +2,7 @@
 #'
 #' Data include cumulative and maximum intensity marine heatwaves on the NES.
 #'
-#' @format 380 rows and 5 columns.
+#' @format 400 rows and 5 columns.
 #'
 #' \itemize{
 #'     \item EPU: Ecological Production Unit (EPU) where sampling occurred.

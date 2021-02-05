@@ -2,22 +2,22 @@
 #'
 #' Data from NOAA NEFSC Oceans and Climate branch EcoMon public dataset were used to examine changes in
 #' diversity of abundance among 45 ichthyoplankton taxa. The 45 taxa were established in Walsh et al. 2015,
-#' and include the most abundant taxa from the 1970s to present that represent consistency in the 
+#' and include the most abundant taxa from the 1970s to present that represent consistency in the
 #' identification of larvae. Both species counts and estimates of Shannon-Wiener diversity are included
 #' in this data set.
 #'
-#' @format
+#' @format 63 rows and 5 columns
 #'
 #' \itemize{
 #'     \item Var: Specifies variable of interest and sampling season.
 #'     \item Time: Sampling year.
 #'     \item Units: Units of variable \code{Var}.
 #'     \item EPU: Ecological Production Units (EPU) where sampling occurred. \code{All} refers to data aggregated to the level of the Northeast Continental Shelf.
-#'     \item Value: Value of variable \code{Var}. 
+#'     \item Value: Value of variable \code{Var}.
 #' }
 #'
-#' @details 
-#' \code{NaN} values were included in the data where there were too few sampling stations to be included in diversity calculations. 
+#' @details
+#' \code{NaN} values were included in the data where there were too few sampling stations to be included in diversity calculations.
 #' More information about these data are available at \url{https://noaa-edab.github.io/tech-doc/ichthyoplankton-diversity.html}.
 #'
 #' @references

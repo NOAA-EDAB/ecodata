@@ -1,8 +1,8 @@
-#' Highly Migratory Species
+#' Highly Migratory Species Landings and Revenue
 #'
-#' Data include landing weight and revenue from 19 sharks, tunas and swordfish.
+#' Data include landing weight and revenue from group HMS species.
 #'
-#' @format 148 rows and 5 columns.
+#' @format 112 rows and 5 columns.
 #'
 #' \itemize{
 #'     \item EPU: Ecological Production Unit (EPU) where sampling occurred.
