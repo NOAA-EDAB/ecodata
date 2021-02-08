@@ -2,7 +2,7 @@
 #'
 #' Data include timeseires of stomach fullness index for 22 species sampled in the NEFSC fall bottom trawl survey.
 #'
-#' @format Data set contains 40 rows and 5 columns
+#' @format Data set contains 41 rows and 5 columns
 #'
 #' \itemize{
 #'     \item Time: Year.
