@@ -83,4 +83,4 @@ MAB_pp_weekly <- ggplot2::ggplot(data = MAB_early) +
   ggplot2::scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
   ecodata::theme_ts()
 
-MAB_chl_weekly + MAB_pp_weekly + plot_layout(ncol = 1)
+MAB_pp_weekly + MAB_chl_weekly + plot_layout(ncol = 1)

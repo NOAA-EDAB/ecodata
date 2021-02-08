@@ -548,7 +548,7 @@ ggplot2::ggplot(data = rev_agg) +
                group = Status),
              alpha = trend.alpha, size = trend.size) +
   ggplot2::geom_line(aes(x = Time, y = Total, color = Status), size = lwd) +
-  ggplot2::geom_point(aes(x = Time, y = Total, color = Status), size = pcex) +
+  ggplot2::geom_point(aes(x = Time, y = Total, color = Status), size = 1.5) +
 
   #axes
   ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000000})+

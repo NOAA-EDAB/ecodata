@@ -1,5 +1,5 @@
 
-hp<- ecodata::narw %>% 
+ecodata::narw %>% 
   dplyr::filter(Var == "Calves") %>%
   dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
   ggplot2::ggplot() +

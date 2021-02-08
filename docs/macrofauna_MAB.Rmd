@@ -898,20 +898,42 @@ ecodata::harborporpoise %>%
 ```
 
 
-```{r grayseal, fig.cap="5 year Gray Seal bycatch estimate for NEUS Shelf (Black) and 1 Year estimate for New England (Blue) and the potential biological removal (red)." }
+```{r grayseal, fig.cap="5 year Gray Seal bycatch estimate for NEUS Shelf (Blue) and 1 Year estimate for New England (Black) and the potential biological removal (red)." }
 
 ecodata::grayseal %>% 
   #tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
   ggplot2::ggplot()+
   ggplot2::geom_line(aes(x=year, y = totalest5y, color = "5yr rolling mean and confidence interval"))+
-  ggplot2::geom_line(aes(x=year, y = totalest1y, color = "Annual estimates"), linetype = "dashed")+
+  ggplot2::geom_line(aes(x=year, y = totalest1y, color = "NE Annual estimates"), linetype = "dashed")+
+  ggplot2::geom_line(aes(x=year, y = pbr, color = "PBR"))+
+  #ggplot2::geom_line(aes(x=year, y = PBR), color = "red")+
+  ggplot2::geom_ribbon(aes(ymin = total5yLCI, ymax =total5yUCI, x = year), fill = "blue", alpha = 0.2)+
+  ggplot2::ggtitle("Gray Seal Byctach")+
+  ggplot2::ylab("Estimated Bycatch (n)")+
+  ggplot2::scale_color_manual(name = element_blank(), 
+                              values = c('5yr rolling mean and confidence interval' = 'blue',
+                                         'NE Annual estimates' = 'black',
+                                         'PBR' = 'red'))+
+  theme(legend.position = c(0.3, 0.85))+
+  ecodata::theme_ts()
+  
+
+```
+
+```{r grayseal-mab, fig.cap="5 year Gray Seal bycatch estimate for NEUS Shelf (Blue) and and the potential biological removal (red)." }
+
+ecodata::grayseal %>% 
+  #tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
+  ggplot2::ggplot()+
+  ggplot2::geom_line(aes(x=year, y = totalest5y, color = "5yr rolling mean and confidence interval"))+
+  #ggplot2::geom_line(aes(x=year, y = totalest1y, color = "Annual estimates"), linetype = "dashed")+
   ggplot2::geom_line(aes(x=year, y = pbr, color = "PBR"))+
   #ggplot2::geom_line(aes(x=year, y = PBR), color = "red")+
   ggplot2::geom_ribbon(aes(ymin = total5yLCI, ymax =total5yUCI, x = year), fill = "blue", alpha = 0.2)+
   ggplot2::ggtitle("Gray Seal Byctach")+
   ggplot2::ylab("Estimated Bycatch (n)")+
   ggplot2::scale_color_manual(name = element_blank(), values = c('5yr rolling mean and confidence interval' = 'blue', 
-                                         'Annual estimates' = 'black',
+   #                                      'NE Annual estimates' = 'black',
                                          'PBR' = 'red'))+
   theme(legend.position = c(0.3, 0.85))+
   ecodata::theme_ts()
@@ -956,7 +978,7 @@ ecodata::narw %>%
 
 ```{r NARW-calf-abundance, fig.cap = "Number of North Atlantic right whale calf births, 1990 - 2019."}
 
-hp<- ecodata::narw %>% 
+ecodata::narw %>% 
   dplyr::filter(Var == "Calves") %>%
   dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
   ggplot2::ggplot() +
