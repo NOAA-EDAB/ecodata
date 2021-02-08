@@ -81,12 +81,12 @@ get_zoo_sli_anom(save_clean = T)
 
 
 ####
-zoo_cal_rdata <- "RM_20210120_CalanusStage.Rda"
+zoo_cal_rdata <- "RM_20210205_CalanusStage.Rda"
 get_calanus_stage <- function(save_clean = F){
 
   load(file.path(raw.dir, zoo_cal_rdata))
 
-  CalanusStage<- CalanusStage %>%
+  CalanusStage<- CalanusStage2 %>%
     dplyr::rename(EPU = epu)
   if (save_clean){
     usethis::use_data(CalanusStage, overwrite = T)
