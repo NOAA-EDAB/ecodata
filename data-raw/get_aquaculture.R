@@ -14,7 +14,12 @@ get_aquaculture <- function(save_clean = F){
     tidyr::pivot_longer(cols = c(Pieces,`Shellfish lease Acres`, `Production/Acre`),
                         names_to = "Var", values_to = "Value") %>%
     dplyr::rename(Time = Year,
-                  Region = State)
+                  Region = State) %>%
+    dplyr::mutate(Region = dplyr::recode(Region, "Maine" = "ME",
+                                         "NEwHampshire" = "NH",
+                                         "Mass" = "MA",
+                                         "RhodeIsland" = "RI"))
+
   dat2 <- read_excel(file.path(raw.dir,aquaculture_xlsx), sheet = "Mid Atlantic")
 
   mab_aquaculture<- dat2  %>%

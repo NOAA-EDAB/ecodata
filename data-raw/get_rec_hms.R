@@ -50,6 +50,12 @@ attr(rec_hms, "data_steward") <- c(
 }
 get_rec_hms(save_clean = T)
 
+#############
+# test<- rec_hms %>% filter(SP_CATEGORY == "Pelagic",
+#                           SUB_REG == 4)  %>%
+#   ggplot()+
+#   geom_bar(aes(x = YEAR, y = LANDING, fill = COMMON_NAME), stat = "identity")
+#
 
 
 
