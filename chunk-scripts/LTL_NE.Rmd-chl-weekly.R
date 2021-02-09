@@ -49,7 +49,7 @@ ne_chl <- ggplot2::ggplot(data = ne_early) +
               fill = "grey1") +
   ggplot2::geom_line(data = ne_late,aes(x = Time, y = Value),
             size = 1,color = "#33a02c", linetype = "dashed") +
-  ggplot2::ggtitle(expression("GB chlorophyll"~italic(a)~"")) +
+  ggplot2::ggtitle(expression("Chlorophyll"~italic(a)~"")) +
   ggplot2::ylim(c(0, 3))+
   ggplot2::facet_wrap(EPU~., ncol = 2)+
   ggplot2::guides(color = F) +
@@ -82,7 +82,7 @@ ne_ppd <- ggplot2::ggplot(data = ne_pp_early) +
               fill = "grey1") +
   ggplot2::geom_line(data = ne_pp_late,aes(x = Time, y = Value),
             size = 1,color = "#33a02c", linetype = "dashed") +
-  ggplot2::ggtitle(expression("GB primary production")) +
+  ggplot2::ggtitle(expression("Primary production")) +
   guides(color = F) +
   ggplot2::facet_wrap(EPU~., ncol = 2)+
   ggplot2::xlab("")+

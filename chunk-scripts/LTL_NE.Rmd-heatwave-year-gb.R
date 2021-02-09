@@ -19,6 +19,7 @@ ecodata::heatwave_year %>%
                       labels = c("Climatology","Temperature","Threshold"))+
   ylab("Temperature (C)")+
   xlab(element_blank())+
+  ggtitle("GB Marine Heatwaves 2020")+
   scale_x_date(date_labels = "%b", breaks = "1 month")+
   theme_bw()+
   theme(legend.title = element_blank(),

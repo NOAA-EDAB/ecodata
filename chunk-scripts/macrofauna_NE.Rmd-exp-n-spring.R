@@ -1,11 +1,13 @@
 
-exp<- ecodata::exp_n %>% filter( EPU == "MAB", 
-                                   Season == "FALL", 
+exp<- ecodata::exp_n %>% filter( !EPU == "MAB", 
+                                 !EPU == "SS", 
+                                   Season == "SPRING", 
                                    str_detect(Var, 'AlbatrossSD|BigelowSD')) %>% 
     rename(VarSD = Var, 
          ValueSD = Value) 
-exp2<- ecodata::exp_n %>% filter(EPU == "MAB", 
-                                 Season == "FALL", 
+exp2<- ecodata::exp_n %>% filter(!EPU == "MAB", 
+                                 !EPU == "SS", 
+                                 Season == "SPRING", 
                                  Var %in% c("Albatross", "Bigelow"))   %>% 
 
   left_join(exp) %>% 
@@ -31,23 +33,12 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   #           size = hline.size,
   #           alpha = hline.alpha,
   #           linetype = hline.lty)+
-  #ggplot2::facet_wrap(Var~.,scales = "free_y", ncol = 2) +
-  ggplot2::ggtitle("Expected Number of Species ")+
-  
+  ggplot2::facet_wrap(EPU~.,scales = "free_y", ncol = 2) +
+  ggplot2::ggtitle("Expected Number of Species - Spring")+
   ecodata::geom_gls() +
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab("n species per 1000 ind") +
   ecodata::theme_facet()+
-  ggplot2::theme(legend.title = element_blank())+
-  ggplot2::theme(strip.text=element_text(hjust=0))
-
-# exp2 %>% 
-#   dplyr::filter(Time %in% c(max(Time), max(Time-1))) %>% 
-#   group_by(EPU) %>% 
-#   dplyr::summarise(m = mean(Value))
-# 
-# exp2 %>% 
-#   dplyr::filter(Time %in% c(max(Time-2), max(Time-3),  max(Time-4))) %>% 
-#   group_by(EPU) %>% 
-#   dplyr::summarise(m= mean(Value))
+  ggplot2::theme(strip.text=element_text(hjust=0), 
+                 legend.title = element_blank())
