@@ -544,7 +544,7 @@ ne_chl <- ggplot2::ggplot(data = ne_early) +
               fill = "grey1") +
   ggplot2::geom_line(data = ne_late,aes(x = Time, y = Value),
             size = 1,color = "#33a02c", linetype = "dashed") +
-  ggplot2::ggtitle(expression("GB chlorophyll"~italic(a)~"")) +
+  ggplot2::ggtitle(expression("Chlorophyll"~italic(a)~"")) +
   ggplot2::ylim(c(0, 3))+
   ggplot2::facet_wrap(EPU~., ncol = 2)+
   ggplot2::guides(color = F) +
@@ -577,7 +577,7 @@ ne_ppd <- ggplot2::ggplot(data = ne_pp_early) +
               fill = "grey1") +
   ggplot2::geom_line(data = ne_pp_late,aes(x = Time, y = Value),
             size = 1,color = "#33a02c", linetype = "dashed") +
-  ggplot2::ggtitle(expression("GB primary production")) +
+  ggplot2::ggtitle(expression("Primary production")) +
   guides(color = F) +
   ggplot2::facet_wrap(EPU~., ncol = 2)+
   ggplot2::xlab("")+
@@ -1154,7 +1154,7 @@ gb_zoo_div <- zoo_div %>%
   ggplot2::geom_point() +
   ggplot2::ylab("Shannon Diversity") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GOM Zooplankton Diversity") +
+  ggplot2::ggtitle("GB Zooplankton Diversity") +
   ggplot2::facet_wrap(Var~., ncol = 3) +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
   ggplot2::geom_hline(aes(yintercept = mean(Value)),
@@ -1201,6 +1201,7 @@ ecodata::heatwave_year %>%
                       labels = c("Climatology","Temperature","Threshold"))+
   ylab("Temperature (C)")+
   xlab(element_blank())+
+  ggtitle("GB Marine Heatwaves 2020")+
   scale_x_date(date_labels = "%b", breaks = "1 month")+
   theme_bw()+
   theme(legend.title = element_blank(),
@@ -1220,6 +1221,7 @@ ecodata::heatwave_year %>%
                       labels = c("Climatology","Temperature", "Threshold"))+
   ylab("Temperature (C)")+
   xlab(element_blank())+
+  ggtitle("GOM Marine Heatwaves 2020")+
   scale_x_date(date_labels = "%b", breaks = "1 month")+
   theme_bw()+
   theme(legend.title = element_blank(),
