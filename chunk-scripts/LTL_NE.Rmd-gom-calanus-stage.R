@@ -1,12 +1,14 @@
 
 cal <- ecodata::CalanusStage %>% 
   dplyr::filter(EPU == "GOM", 
-                Var %in% c( "c5", "adt"))# %>% 
+                Var %in% c( "c5", "adt")) %>%
+  dplyr::mutate(Var = recode(Var, "c5" = "Stage 5", 
+                             "adt" = "Adult" ))
   #dplyr::mutate(newval=ifelse(ndays<10, NA, Value),
   #              newday= (meanday/ 365))
   
 
-cal$Var <- factor(cal$Var, levels = c( "c5", "adt"))
+cal$Var <- factor(cal$Var, levels = c( "Stage 5", "Adult"))
 cal$season <- factor(cal$season, levels = c("Spring", "Summer", "Fall"))
 
 cal %>% 
