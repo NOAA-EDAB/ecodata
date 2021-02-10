@@ -23,7 +23,7 @@ ggplot2::ggplot(data = landings_rec)+
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Recreational seafood harvest") +
-  ggplot2::ylab(expression("Fish caught (10"^6*"n)")) +
+  ggplot2::ylab(expression("Landings")) +
 
   ggplot2::geom_hline(aes(yintercept = hline,
                
