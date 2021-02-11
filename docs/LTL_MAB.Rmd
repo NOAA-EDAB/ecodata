@@ -543,6 +543,7 @@ out_phyto2<-  ecodata::phyto_size %>%
   tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
   dplyr::filter(!Value == "NA", 
                 !Var == "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")  %>%
+  dplyr::mutate(Value = Value*100) %>% 
 
   ggplot2::ggplot() +
    geom_area(aes(x=as.numeric(WEEK), y=Value, 
@@ -556,7 +557,8 @@ out_phyto2<-  ecodata::phyto_size %>%
     ggplot2::ylab("Percent") +
     ggplot2::xlab(element_blank())+
     ecodata::theme_facet() +
-    ggplot2::theme(axis.text.x = element_text(angle=45, hjust = 1),
+    ggplot2::theme(plot.title = element_text(size = 7), 
+                   axis.text.x = element_text(angle=45, hjust = 1),
           panel.spacing = unit(.5, "lines"),
           plot.margin = unit(c(0.1, 0, 0, 0), "cm"), 
           legend.position= "top")+
@@ -764,7 +766,8 @@ ecodata::zoo_sli_anom %>%
             alpha = hline.alpha,
             linetype = hline.lty)+
    ecodata::theme_ts()+
-   ggplot2::theme(strip.text=element_text(hjust=0,
+   ggplot2::theme(plot.title = element_text(size = 7),
+                  strip.text=element_text(hjust=0,
                                  face = "italic"), 
          legend.title = element_blank())
 
@@ -847,7 +850,7 @@ zoo_div %>%
   ecodata::geom_gls() +
   ggplot2::geom_line() +
   ggplot2::geom_point() +
-  ggplot2::ylab("Shannon Diversity Index") +
+  ggplot2::ylab("Shannon Diversity") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Zooplankton Diversity") +
   ggplot2::facet_wrap(Var~., ncol = 3) +
@@ -994,7 +997,41 @@ cal %>%
 
 <!-- ``` -->
 
-### Cold Pool Index
+### 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Cold Pool Index
 
 ```{r cold_pool, eval = T, echo = F, fig.cap="Cold pool index." }
 
@@ -1054,8 +1091,8 @@ cp_map <-
   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) +
   ggplot2::geom_sf(data = cpsf, alpha = 0.1)  +
   ggplot2::geom_sf(data = cpsf26, fill = "transparent", color = "black", size = 1)+
-   ggplot2::geom_sf(data = cpmax, fill = "transparent", color = "red", size = 0.5)+
-  ggplot2::geom_sf(data = cpmin, fill = "transparent", color = "blue", size = 0.5)+
+   ggplot2::geom_sf(data = cpmax, fill = "transparent", color = "blue", size = 0.5)+
+  ggplot2::geom_sf(data = cpmin, fill = "transparent", color = "red", size = 0.5)+
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   #ggplot2::scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
   #                     low = scales::muted("blue"),
@@ -1467,7 +1504,8 @@ ggplot2::ggplot() +
   #         linetype = hline.lty)+
   ecodata::theme_ts() +
   ggplot2::theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+                                face = "italic"), 
+                 axis.title.y = element_text(size = 7))
 ```
 
 ### Warm Core Rings

@@ -237,7 +237,7 @@ p1
 
 ``` 
 
-```{r comdat-total-landings, fig.cap = paste0("Total commercial seafood landings (black) shown with ",region," managed seafood landings (red). \\label{total-landings}")}
+```{r comdat-total-landings, fig.asp=.35, fig.cap = paste0("Total commercial seafood landings (black) shown with ",region," managed seafood landings (red). \\label{total-landings}")}
 
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
@@ -301,6 +301,7 @@ ggplot2::ggplot(data = landings_agg)+
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
+  ggplot2::theme(axis.title.y = element_text(size = 7))+
   ecodata::theme_ts()
 
 
@@ -774,7 +775,7 @@ ggplot2::ggplot(data = stock_status) +
   ggplot2::ylim(0,y.max) +
   ggplot2::xlim(0,x.max) +
   ggplot2::geom_text(data = unknown, aes(x = x, y = y, label = text), #Custom legend for unknown stock status
-            size = c(4.75,rep(5,5))) +
+            size = c(4.75,rep(4,5))) +
   ggplot2::annotate("rect", xmin = 0.8*x.max,
            xmax = x.max,
            ymin = 0.65*y.max,
@@ -840,7 +841,7 @@ com2<-com %>%
                      direction = -1) +
   xlim(-1,12)+
   ylim(-1,5.5)+
-  theme(legend.position=c(0.8, 0.85), 
+  theme(legend.position=c(0.75, 0.85), 
         legend.title = element_blank(),       
         legend.background = element_blank(),
         legend.box.background = element_rect(colour = "black"))+
@@ -855,7 +856,7 @@ com2<-com %>%
   
   gridExtra::grid.arrange(com2, bottom = textGrob("Low <--------------------------------------------------------------------------------------------------------------------------------------> High", 
                                      x = 0.5, y = 1, gp = gpar(fontsize = 7)),
-                          left = textGrob("Low <-----------------------------------------------------------------> High", rot = 90,
+                          left = textGrob("Low <----------------------------------------------------------------------------------------------------------> High", rot = 90,
                                    x = 1, y = 0.45, gp = gpar(fontsize = 7)))
 
 
@@ -1094,7 +1095,7 @@ com2<-com %>%
                      direction = -1) +
   xlim(-1,12)+
   ylim(-1,16)+
-  theme(legend.position=c(0.8, 0.85), 
+  theme(legend.position=c(0.75, 0.83), 
         legend.title = element_blank(),       
         legend.background = element_blank(),
         legend.box.background = element_rect(colour = "black"))+
@@ -1121,7 +1122,7 @@ ecodata::rec_hms %>%
   ggplot2::ggplot()+
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+
-  ggplot2::ylab("Landings (number of fish)")+
+  ggplot2::ylab("Landings (N)")+
   ggplot2::xlab("")+ 
   ggplot2::theme(legend.title = element_blank())+
   ecodata::theme_ts()
@@ -1331,7 +1332,7 @@ ecodata::wind_revenue %>%
   #         linetype = hline.lty)+
   scale_x_continuous(breaks=c(2008,2012,2016, 2020))+
   ggplot2::ggtitle("Fishery Revenue in Wind Lease Areas")+
-  ggplot2::ylab("2019 Constant Million Dollars ")+
+  ggplot2::ylab(expression("2019 Constant 10"^6*"Dollars "))+
   theme(legend.title = element_blank())+
   ggplot2::xlab("")+
   ecodata::theme_ts()
