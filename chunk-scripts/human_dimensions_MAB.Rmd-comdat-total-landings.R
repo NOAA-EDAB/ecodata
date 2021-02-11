@@ -56,10 +56,11 @@ ggplot2::ggplot(data = landings_agg)+
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ylab(expression("Landings (10"^3*"metric tons)")) +
+  ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline,
                color = Var),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ggplot2::theme(axis.title.y = element_text(size = 7))+
+  ggplot2::theme(axis.title.y = element_text(size = 5))+
   ecodata::theme_ts()

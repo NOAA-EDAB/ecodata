@@ -47,7 +47,7 @@ rec_effort <- recdat %>%
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Recreational effort")+
   ggplot2::ylab(expression("Days fished (10"^6*" N)")) +
-  ggplot2::xlab("")+
+  ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline,
                color = Var),
            size = hline.size,

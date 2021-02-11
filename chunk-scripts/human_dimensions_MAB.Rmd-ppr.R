@@ -26,4 +26,5 @@ ecodata::ppr %>%
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
   ggplot2::ggtitle("Primary Production Required")+
   ggplot2::ylab("Proportion of Total PPD ")+
+  ggplot2::xlab(element_blank())+
   ecodata::theme_ts()

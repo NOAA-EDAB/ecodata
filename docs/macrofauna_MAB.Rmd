@@ -554,6 +554,7 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab("n species per 1000 ind") +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(legend.title = element_blank())+
   ggplot2::theme(strip.text=element_text(hjust=0))
@@ -786,6 +787,7 @@ ma_larv_div <- ecodata::ichthyo_diversity %>%
            alpha = hline.alpha,
            linetype = hline.lty)+
   ecodata::theme_facet() +
+  ggplot2::xlab(element_blank())+
   ggplot2::theme(strip.text=element_text(hjust=0))
 
 ma_larv_div
@@ -846,6 +848,7 @@ ecodata::forage_anomaly %>%
   ggplot2::geom_hline(yintercept = 0, linetype = "dashed")+
   ggplot2::ggtitle("Forage Anomalies")+
   ggplot2::ylab("Forage Anomaly")+
+  ggplot2::xlab(element_blank())+
   ecodata::theme_ts()
 
 ```
@@ -863,6 +866,7 @@ ecodata::observed_sharks %>%
   ggplot2::geom_line(aes(x=Time, y = Value, color = Var))+
   ggplot2::ggtitle("Observed Sharks")+
   ggplot2::ylab("Number per Haul")+
+  ggplot2::xlab(element_blank())+
   ggplot2::scale_color_discrete(name = "Category")+
   ecodata::theme_ts()
 
@@ -913,6 +917,7 @@ ecodata::grayseal %>%
   ggplot2::geom_ribbon(aes(ymin = total5yLCI, ymax =total5yUCI, x = year), fill = "blue", alpha = 0.2)+
   ggplot2::ggtitle("Gray Seal Byctach")+
   ggplot2::ylab("Estimated Bycatch (n)")+
+  ggplot2::xlab(element_blank())+
   ggplot2::scale_color_manual(name = element_blank(), 
                               values = c('5yr rolling mean and confidence interval' = 'blue',
                                          'NE Annual estimates' = 'black',
@@ -935,6 +940,7 @@ ecodata::grayseal %>%
   ggplot2::geom_ribbon(aes(ymin = total5yLCI, ymax =total5yUCI, x = year), fill = "blue", alpha = 0.2)+
   ggplot2::ggtitle("Gray Seal Byctach")+
   ggplot2::ylab("Estimated Bycatch (n)")+
+  ggplot2::xlab(element_blank())+
   ggplot2::scale_color_manual(name = element_blank(), values = c('5yr rolling mean and confidence interval' = 'blue', 
    #                                      'NE Annual estimates' = 'black',
                                          'PBR' = 'red'))+
@@ -968,7 +974,7 @@ ecodata::narw %>%
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("NARW abundance") +
   ggplot2::ylab(expression("Abundance (n)")) +
-  ggplot2::xlab("Time")+
+  ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline),
           color = "black",
           size = hline.size,
@@ -995,7 +1001,7 @@ ecodata::narw %>%
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("NARW calf abundance") +
   ggplot2::ylab(expression("Abundance (n)")) +
-  ggplot2::xlab("Time")+
+  ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline),
            color = "black",
            size = hline.size,
@@ -1231,6 +1237,7 @@ ecodata::hms_cpue %>%
   ggplot2::facet_wrap(~Var, scales = "free")+
   ggplot2::ggtitle("HMS POP TUNA CPUE")+
   ggplot2::ylab("Number per Haul")+
+  ggplot2::xlab(element_blank())+
   ecodata::theme_ts()
 
 ```

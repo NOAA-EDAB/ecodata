@@ -18,7 +18,7 @@ ecodata::narw %>%
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("NARW abundance") +
   ggplot2::ylab(expression("Abundance (n)")) +
-  ggplot2::xlab("Time")+
+  ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline),
           color = "black",
           size = hline.size,

@@ -17,6 +17,7 @@ comm_div %>%
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Permit revenue species diversity") +
   ggplot2::ylab(expression("Effective Shannon")) +
+  ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline,
                color = Var),
            size = hline.size,

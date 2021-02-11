@@ -12,7 +12,7 @@ ggplot2::ggplot() +
   #ggplot2::facet_wrap(~Region, nrow = 3)+
   ggplot2::ggtitle("Oyster Production in MAB")+
   ggplot2::ylab(expression("Oysters production")) +
-  ggplot2::xlab("")+
+  ggplot2::xlab(element_blank())+
   scale_x_continuous(breaks=c(2009,2011,2013,2015, 2017, 2019))+
   ecodata::theme_ts()
 

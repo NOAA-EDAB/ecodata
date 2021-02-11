@@ -10,4 +10,5 @@ ecodata::hms_cpue %>%
   ggplot2::facet_wrap(~Var, scales = "free")+
   ggplot2::ggtitle("HMS POP TUNA CPUE")+
   ggplot2::ylab("Number per Haul")+
+  ggplot2::xlab(element_blank())+
   ecodata::theme_ts()

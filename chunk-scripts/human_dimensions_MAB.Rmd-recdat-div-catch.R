@@ -33,7 +33,7 @@ rec_div_catch <- recdat %>%
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Rec. diversity of catch")+
   ggplot2::ylab(expression("Effective Shannon")) +
-  ggplot2::xlab("Time")+
+  ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline,
                color = Var),
            size = hline.size,

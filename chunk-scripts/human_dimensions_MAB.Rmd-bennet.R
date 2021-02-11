@@ -37,4 +37,5 @@ ggplot2::ggplot()+
   ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), 
                               limits = y.lim, expand = c(0.01, 0.01)) +
   ecodata::theme_ts() +
+  ggplot2::xlab(element_blank())+
   ggplot2::theme(title = element_text(size = 10))

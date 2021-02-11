@@ -19,6 +19,7 @@ ma_larv_div <- ecodata::ichthyo_diversity %>%
            alpha = hline.alpha,
            linetype = hline.lty)+
   ecodata::theme_facet() +
+  ggplot2::xlab(element_blank())+
   ggplot2::theme(strip.text=element_text(hjust=0))
 
 ma_larv_div

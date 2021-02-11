@@ -24,7 +24,7 @@ ggplot2::ggplot(data = landings_rec)+
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Recreational seafood harvest") +
   ggplot2::ylab(expression("Landings")) +
-
+  ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline,
                
                color = Var),

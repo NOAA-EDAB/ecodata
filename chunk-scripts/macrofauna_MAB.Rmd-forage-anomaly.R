@@ -12,4 +12,5 @@ ecodata::forage_anomaly %>%
   ggplot2::geom_hline(yintercept = 0, linetype = "dashed")+
   ggplot2::ggtitle("Forage Anomalies")+
   ggplot2::ylab("Forage Anomaly")+
+  ggplot2::xlab(element_blank())+
   ecodata::theme_ts()
