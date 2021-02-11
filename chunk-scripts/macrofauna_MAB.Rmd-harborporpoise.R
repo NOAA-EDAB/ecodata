@@ -12,7 +12,7 @@ ecodata::harborporpoise %>%
   ggplot2::scale_color_manual(name = element_blank(), values = c('5yr rolling mean and confidence interval' = 'blue', 
                                          'Annual estimates' = 'black',
                                          'PBR' = 'red'))+
-  theme(legend.position = c(0.7, 0.85))+
+  theme(legend.position = c(0.7, 0.75))+
   ecodata::theme_ts()
   
 # hp %>% 

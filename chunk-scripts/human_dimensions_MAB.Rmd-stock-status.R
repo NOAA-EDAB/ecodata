@@ -39,7 +39,7 @@ ggplot2::ggplot(data = stock_status) +
   ggplot2::ylim(0,y.max) +
   ggplot2::xlim(0,x.max) +
   ggplot2::geom_text(data = unknown, aes(x = x, y = y, label = text), #Custom legend for unknown stock status
-            size = c(4.75,rep(5,5))) +
+            size = c(4.75,rep(4,5))) +
   ggplot2::annotate("rect", xmin = 0.8*x.max,
            xmax = x.max,
            ymin = 0.65*y.max,

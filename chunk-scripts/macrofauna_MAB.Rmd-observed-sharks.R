@@ -8,5 +8,6 @@ ecodata::observed_sharks %>%
   ggplot2::geom_point(aes(x=Time, y = Value, color = Var))+
   ggplot2::geom_line(aes(x=Time, y = Value, color = Var))+
   ggplot2::ggtitle("Observed Sharks")+
-  ggplot2::ylab("Number of Sharks per Haul")+
+  ggplot2::ylab("Number per Haul")+
+  ggplot2::scale_color_discrete(name = "Category")+
   ecodata::theme_ts()

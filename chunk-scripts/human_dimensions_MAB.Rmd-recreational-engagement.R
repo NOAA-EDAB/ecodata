@@ -17,7 +17,7 @@ com2<-com %>%
                      direction = -1) +
   xlim(-1,12)+
   ylim(-1,16)+
-  theme(legend.position=c(0.8, 0.85), 
+  theme(legend.position=c(0.75, 0.83), 
         legend.title = element_blank(),       
         legend.background = element_blank(),
         legend.box.background = element_rect(colour = "black"))+

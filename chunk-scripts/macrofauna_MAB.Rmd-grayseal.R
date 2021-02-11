@@ -13,5 +13,5 @@ ecodata::grayseal %>%
                               values = c('5yr rolling mean and confidence interval' = 'blue',
                                          'NE Annual estimates' = 'black',
                                          'PBR' = 'red'))+
-  theme(legend.position = c(0.3, 0.85))+
+  theme(legend.position = c(0.3, 0.75))+
   ecodata::theme_ts()
