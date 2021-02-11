@@ -61,4 +61,5 @@ ggplot2::ggplot(data = landings_agg)+
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
+  ggplot2::theme(axis.title.y = element_text(size = 7))+
   ecodata::theme_ts()

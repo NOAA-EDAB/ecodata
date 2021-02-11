@@ -10,7 +10,7 @@ zoo_div %>%
   ecodata::geom_gls() +
   ggplot2::geom_line() +
   ggplot2::geom_point() +
-  ggplot2::ylab("Shannon Diversity Index") +
+  ggplot2::ylab("Shannon Diversity") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Zooplankton Diversity") +
   ggplot2::facet_wrap(Var~., ncol = 3) +

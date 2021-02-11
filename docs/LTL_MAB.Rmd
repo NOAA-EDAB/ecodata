@@ -641,6 +641,24 @@ Headline:  Warmer-than-average winter water temps in Chesapeake Bay likely help 
 
 [Details here](https://docs.google.com/document/u/1/d/12Aq9nxrdrtZKESoZ8KtW152i0amf_O54/edit?usp=drive_web&ouid=111390006230717850267&rtpof=true).
 
+<!-- ### Chesepeake Bay Salinity Anomolies -->
+
+
+
+<!-- Write up on anomalies in salinity we saw in 2018,2019 following record breaking rain in 2018.  The low salinities impacted [hypoxia, fish and oysters](https://docs.google.com/document/d/19ikLWKQWiRSrjmQJ2F7EB_ZcieBMk6Ykf1RX_Gissao/edit).  -->
+
+```{r ch-bay-temp, fig.cap = "Blue = 2020, red = Long term avergae 2010-2019. "}
+
+ecodata::ch_bay_temp %>%
+  tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
+  ggplot2::ggplot() +
+  ggplot2::geom_line(aes(x = Time, y = Year2020, color = "Daily 2020")) +
+  ggplot2::geom_line(aes(x = Time, y = YearLTA, color = "Long Term Average 2010-2019")) +
+  ggplot2::ylab("Temperature (F)") +
+  ggplot2::ggtitle("Chesapeake Bay Temperature") +
+  ggplot2::theme(legend.position = "bottom")+
+  ecodata::theme_ts()
+```
 
 <!-- ### Chesepeake Bay Salinity Anomolies -->
 

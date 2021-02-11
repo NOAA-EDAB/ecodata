@@ -29,8 +29,8 @@ cp_map <-
   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) +
   ggplot2::geom_sf(data = cpsf, alpha = 0.1)  +
   ggplot2::geom_sf(data = cpsf26, fill = "transparent", color = "black", size = 1)+
-   ggplot2::geom_sf(data = cpmax, fill = "transparent", color = "red", size = 0.5)+
-  ggplot2::geom_sf(data = cpmin, fill = "transparent", color = "blue", size = 0.5)+
+   ggplot2::geom_sf(data = cpmax, fill = "transparent", color = "blue", size = 0.5)+
+  ggplot2::geom_sf(data = cpmin, fill = "transparent", color = "red", size = 0.5)+
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   #ggplot2::scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
   #                     low = scales::muted("blue"),

@@ -18,6 +18,7 @@ out_phyto2<-  ecodata::phyto_size %>%
   tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
   dplyr::filter(!Value == "NA", 
                 !Var == "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")  %>%
+  dplyr::mutate(Value = Value*100) %>% 
 
   ggplot2::ggplot() +
    geom_area(aes(x=as.numeric(WEEK), y=Value, 
@@ -31,7 +32,8 @@ out_phyto2<-  ecodata::phyto_size %>%
     ggplot2::ylab("Percent") +
     ggplot2::xlab(element_blank())+
     ecodata::theme_facet() +
-    ggplot2::theme(axis.text.x = element_text(angle=45, hjust = 1),
+    ggplot2::theme(plot.title = element_text(size = 7), 
+                   axis.text.x = element_text(angle=45, hjust = 1),
           panel.spacing = unit(.5, "lines"),
           plot.margin = unit(c(0.1, 0, 0, 0), "cm"), 
           legend.position= "top")+

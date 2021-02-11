@@ -58,4 +58,5 @@ ggplot2::ggplot() +
   #         linetype = hline.lty)+
   ecodata::theme_ts() +
   ggplot2::theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+                                face = "italic"), 
+                 axis.title.y = element_text(size = 7))
