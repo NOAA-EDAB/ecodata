@@ -414,7 +414,7 @@ ggplot2::ggplot()+
   ggplot2::scale_colour_grey(name ="Component") +
   ggplot2::ggtitle("Bennet Indicator")+
   ggplot2::labs(y="Value $1,000,000 ($2015)") +
-  ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 10), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1990, 2020, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), 
                               limits = y.lim, expand = c(0.01, 0.01)) +
   ggplot2::scale_fill_brewer(palette = "Set1")+
@@ -836,8 +836,8 @@ com<-ecodata::engagement %>%
 com2<-com %>% 
   ggplot2::ggplot()+
   ggplot2::geom_point(aes(x = Eng, y = Rel, color = Rating), size = 2)+
-  ggplot2::geom_vline(xintercept = 1, linetype = "dashed",color = "black")+
-  ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black") +
+  ggplot2::geom_vline(xintercept = 1, linetype = "dashed",color = "black", size = 0.5)+
+  ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black", size = 0.5) +
   ggrepel::geom_text_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
                       y = Rel,
                       label = Community,
@@ -900,7 +900,7 @@ ggplot2::ggplot(data = landings_rec)+
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Recreational seafood harvest") +
-  ggplot2::ylab(expression("Landings")) +
+  ggplot2::ylab(expression("Landings (N)")) +
   ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline,
                
@@ -1090,8 +1090,8 @@ com<-ecodata::engagement %>%
 com2<-com %>% 
   ggplot2::ggplot()+
   ggplot2::geom_point(aes(x = Eng, y = Rel, color = Rating), size = 2)+
-  ggplot2::geom_vline(xintercept = 1, linetype = "dashed", color = "black")+
-  ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black") +
+  ggplot2::geom_vline(xintercept = 1, linetype = "dashed", color = "black", size = 0.5)+
+  ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black", size = 0.5) +
   ggrepel::geom_text_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
                       y = Rel,
                       label = Community,
@@ -1191,7 +1191,7 @@ ecodata::ppr %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_ribbon( aes(ymin = gr_lw, ymax = gr_up, x = Time), fill = "darkolivegreen3", alpha = 0.5)+
-  ggplot2::geom_ribbon( aes(ymin = rd_lw, ymax = rd_up, x = Time), fill = "lightcoral", aplha = 0.5)+
+  ggplot2::geom_ribbon( aes(ymin = rd_lw, ymax = rd_up, x = Time), fill = "sandybrown", aplha = 0.5)+
   #ggplot2::geom_hline(yintercept = .92, color = "green", linetype = "dashed")+
   #ggplot2::geom_hline(yintercept = .22, color = "green", linetype = "dashed")+
   #ggplot2::geom_hline(yintercept = 1, color = "red", linetype = "dashed")+
@@ -1231,7 +1231,7 @@ ecodata::ppr %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_ribbon( aes(ymin = gr_lw, ymax = gr_up, x = Time), fill = "darkolivegreen3", alpha = 0.5)+
-  ggplot2::geom_ribbon( aes(ymin = rd_lw, ymax = rd_up, x = Time), fill = "lightcoral", aplha = 0.5)+
+  ggplot2::geom_ribbon( aes(ymin = rd_lw, ymax = rd_up, x = Time), fill = "sandybrown", aplha = 0.5)+
   #ggplot2::geom_hline(yintercept = 0.3, color = "green", linetype = "dashed")+
   #ggplot2::geom_hline(yintercept = 1.1, color = "green", linetype = "dashed")+
   #ggplot2::geom_hline(yintercept = 3, color = "red", linetype = "dashed")+

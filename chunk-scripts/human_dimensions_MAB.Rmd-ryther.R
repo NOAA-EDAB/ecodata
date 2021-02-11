@@ -14,7 +14,7 @@ ecodata::ppr %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_ribbon( aes(ymin = gr_lw, ymax = gr_up, x = Time), fill = "darkolivegreen3", alpha = 0.5)+
-  ggplot2::geom_ribbon( aes(ymin = rd_lw, ymax = rd_up, x = Time), fill = "lightcoral", aplha = 0.5)+
+  ggplot2::geom_ribbon( aes(ymin = rd_lw, ymax = rd_up, x = Time), fill = "sandybrown", aplha = 0.5)+
   #ggplot2::geom_hline(yintercept = 0.3, color = "green", linetype = "dashed")+
   #ggplot2::geom_hline(yintercept = 1.1, color = "green", linetype = "dashed")+
   #ggplot2::geom_hline(yintercept = 3, color = "red", linetype = "dashed")+
