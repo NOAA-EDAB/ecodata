@@ -12,7 +12,7 @@
   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
   ggplot2::ggtitle("Total Oyster Production in New England")+
-  ggplot2::ylab(expression("Oysters production/acre")) +
+  ggplot2::ylab(expression("Production/Acre")) +
   ggplot2::xlab("")+
   theme(legend.position="bottom", 
         legend.title = element_blank())+

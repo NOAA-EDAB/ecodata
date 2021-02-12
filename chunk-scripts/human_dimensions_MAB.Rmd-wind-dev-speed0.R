@@ -9,7 +9,7 @@ total_area<- ecodata::wind_dev_speed %>% mutate(Value = as.numeric(Value)/100000
   ggplot2::xlab("Project End Year")+
   ggplot2::ggtitle("Cumulative Area")+
   ecodata::theme_ts()+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  #theme(axis.text.x = element_text(angle = 45, hjust = 1))+
   scale_x_continuous(breaks=c(2020,2022, 2024,2026, 2028))
 
 total_area

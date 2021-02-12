@@ -26,7 +26,7 @@ ecodata::ppr %>%
   #         size = hline.size,
   #         alpha = hline.alpha,
   #         linetype = hline.lty)+
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(expand = c(0.05, 0.05)) +
   ggplot2::facet_wrap( ~ EPU)+
   ggplot2::ggtitle("Fogarty Index")+
   ggplot2::ylab("PPT")+

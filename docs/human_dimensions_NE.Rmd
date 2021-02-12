@@ -634,6 +634,7 @@ ggplot2::ggplot()+
   ggplot2::scale_colour_grey(name ="Revenue Change") +
   ggplot2::ggtitle("Bennet Indicator - Total Revenue")+
   ggplot2::labs(y="Value $1,000,000 ($2015)") +
+  ggplot2::xlab(element_blank())+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), 
                               limits = y.lim, expand = c(0.01, 0.01)) +
@@ -644,8 +645,6 @@ ggplot2::ggplot()+
   ecodata::theme_ts() +
   ggplot2::facet_wrap(~EPU)+
   ggplot2::theme(title = element_text(size = 10))
-
-indicators %>% kable()
 
 ```
 
@@ -1088,7 +1087,7 @@ ggplot2::ggplot() +
   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
   ggplot2::ggtitle("Total Oyster Production in New England")+
-  ggplot2::ylab(expression("Oysters production/acre")) +
+  ggplot2::ylab(expression("Production/Acre")) +
   ggplot2::xlab("")+
   theme(legend.position="bottom", 
         legend.title = element_blank())+
@@ -1361,7 +1360,7 @@ ecodata::rec_hms %>%
   ggplot2::ggplot()+
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+
-  ggplot2::ylab("Landings (number of fish)")+
+  ggplot2::ylab("Landings (N)")+
   ggplot2::xlab("")+ 
   ggplot2::theme(legend.title = element_blank())+
   ecodata::theme_ts()
@@ -1398,7 +1397,7 @@ ecodata::ppr %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(expand = c(0.05, 0.05)) +
   ggplot2::facet_wrap( ~ EPU)+
   ggplot2::ggtitle("Primary Production Required")+
   ggplot2::ylab("Proportion of Total PPD")+
@@ -1437,7 +1436,7 @@ ecodata::ppr %>%
   #         size = hline.size,
   #         alpha = hline.alpha,
   #         linetype = hline.lty)+
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(expand = c(0.05, 0.05)) +
   ggplot2::facet_wrap( ~ EPU)+
   ggplot2::ggtitle("Fogarty Index")+
   ggplot2::ylab("PPT")+
@@ -1475,7 +1474,7 @@ ecodata::ppr %>%
   #         size = hline.size,
   #         alpha = hline.alpha,
   #         linetype = hline.lty)+
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(expand = c(0.05, 0.05)) +
   ggplot2::facet_wrap( ~ EPU)+
   ggplot2::ggtitle("Ryther Index")+
   ggplot2::ylab("mt km-2 y-1")+
