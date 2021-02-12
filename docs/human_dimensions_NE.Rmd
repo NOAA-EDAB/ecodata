@@ -331,7 +331,7 @@ p1
 
 
 ```{r comdat-total-landings, fig.cap = paste0("Total commercial seafood landings (black) shown with NEFMC managed seafood landings (red) in Gulf of Maine (left) and Georges Bank (right). \\label{total-landings}")}
-
+council_abbr <- "NEFMC"
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
   dplyr::filter(stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight")),
