@@ -47,25 +47,25 @@ depth <- spec_dist %>%
            linetype = hline.lty) +
   ecodata::theme_ts() 
 
-dtc <- spec_dist %>% 
-  dplyr::filter(Var == "distance to coast") %>% 
-  ggplot2::ggplot(aes(x = Time, y = Value,
-               group = Var)) + 
- #Highlight last ten years
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ecodata::geom_gls() +
-  ggplot2::geom_line() +
-  ggplot2::geom_point() +
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
-  ggplot2::ggtitle("Distance to coast")+
-  ggplot2::ylab(expression("Distance (km)")) +
-  ggplot2::xlab("Time")+
-  ggplot2::geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  ecodata::theme_ts() 
+# dtc <- spec_dist %>% 
+#   dplyr::filter(Var == "distance to coast") %>% 
+#   ggplot2::ggplot(aes(x = Time, y = Value,
+#                group = Var)) + 
+#  #Highlight last ten years
+#   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+#       xmin = x.shade.min , xmax = x.shade.max,
+#       ymin = -Inf, ymax = Inf) +
+#   ecodata::geom_gls() +
+#   ggplot2::geom_line() +
+#   ggplot2::geom_point() +
+#   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+#   ggplot2::ggtitle("Distance to coast")+
+#   ggplot2::ylab(expression("Distance (km)")) +
+#   ggplot2::xlab("Time")+
+#   ggplot2::geom_hline(aes(yintercept = hline),
+#            size = hline.size,
+#            alpha = hline.alpha,
+#            linetype = hline.lty) +
+#   ecodata::theme_ts() 
 
 asd + depth + patchwork::plot_layout(ncol = 1) 
