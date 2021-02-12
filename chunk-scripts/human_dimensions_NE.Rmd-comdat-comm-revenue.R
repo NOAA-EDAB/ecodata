@@ -3,7 +3,7 @@
 rev_agg <- ecodata::comdat %>% 
   dplyr::filter(stringr::str_detect(Var, "Revenue"),
          !stringr::str_detect(Var, "Apex|prop|Other|MAFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
-         EPU %in% epu_abbr,
+         EPU %in% c("GOM", "GB"),
          Time >= 1986) %>% 
   dplyr::mutate(Status = ifelse(str_detect(Var, "managed"), 
                          "Managed","Total")) %>% #Create groups for aggregation

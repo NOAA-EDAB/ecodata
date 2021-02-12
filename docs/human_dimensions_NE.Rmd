@@ -334,7 +334,7 @@ p1
 council_abbr <- "NEFMC"
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
-  dplyr::filter(stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight")),
+  dplyr::filter(stringr::str_detect(Var, "NEFMC managed species - Landings weight|JOINT managed species - Landings weight"),
          !stringr::str_detect(Var, "Other"),
          Time >= 1986)
 
@@ -659,7 +659,7 @@ indicators %>% kable()
 rev_agg <- ecodata::comdat %>% 
   dplyr::filter(stringr::str_detect(Var, "Revenue"),
          !stringr::str_detect(Var, "Apex|prop|Other|MAFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
-         EPU %in% epu_abbr,
+         EPU %in% c("GOM", "GB"),
          Time >= 1986) %>% 
   dplyr::mutate(Status = ifelse(str_detect(Var, "managed"), 
                          "Managed","Total")) %>% #Create groups for aggregation

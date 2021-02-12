@@ -2,7 +2,7 @@
 council_abbr <- "NEFMC"
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
-  dplyr::filter(stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight")),
+  dplyr::filter(stringr::str_detect(Var, "NEFMC managed species - Landings weight|JOINT managed species - Landings weight"),
          !stringr::str_detect(Var, "Other"),
          Time >= 1986)
 
