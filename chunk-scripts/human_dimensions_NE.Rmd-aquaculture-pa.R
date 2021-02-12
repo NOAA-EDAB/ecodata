@@ -4,7 +4,7 @@
   dplyr::filter(!Value == "NA") %>% 
   dplyr::mutate(Time = as.integer(Time), 
                 Value = as.numeric(Value))%>% 
-  filter(Var == "Pieces") %>% 
+  filter(Var == "Production/Acre") %>% 
   group_by(Time) %>% 
   summarise(Value = sum(Value)) %>% 
   ggplot2::ggplot() +
@@ -12,7 +12,7 @@
   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
   ggplot2::ggtitle("Total Oyster Production in New England")+
-  ggplot2::ylab(expression("Oysters production (Pieces)")) +
+  ggplot2::ylab(expression("Oysters production/acre")) +
   ggplot2::xlab("")+
   theme(legend.position="bottom", 
         legend.title = element_blank())+
