@@ -1,5 +1,5 @@
 
-bot_temp_insitu_gom <- ecodata::bottom_temp %>%
+ecodata::bottom_temp %>%
   dplyr::filter(EPU == "GOM",
          Var == "bottom temp anomaly in situ") %>% 
   dplyr::mutate(hline = 0) %>% 
@@ -23,7 +23,7 @@ bot_temp_insitu_gom <- ecodata::bottom_temp %>%
         plot.title = element_text(size = 12))
 
 
-# bot_temp_insitu_gb +
+#bot_temp_insitu_gom
 # bot_temp_insitu_gom +
 #   patchwork::plot_layout(ncol =  1) &
 #   ggplot2::theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))

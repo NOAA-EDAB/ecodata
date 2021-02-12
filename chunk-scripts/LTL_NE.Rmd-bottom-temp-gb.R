@@ -1,5 +1,5 @@
 
-bot_temp_insitu_gb <- ecodata::bottom_temp %>%
+ecodata::bottom_temp %>%
   dplyr::filter(EPU == "GB",
          Var == "bottom temp anomaly in situ") %>%
   dplyr::mutate(hline = 0) %>% 
