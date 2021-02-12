@@ -13,4 +13,5 @@ ecodata::forage_anomaly %>%
   ggplot2::facet_wrap(~EPU)+
   ggplot2::ggtitle("Forage Anomalies")+
   ggplot2::ylab("Forage Anomaly")+
+  ggplot2::xlab(element_blank())+
   ecodata::theme_ts()

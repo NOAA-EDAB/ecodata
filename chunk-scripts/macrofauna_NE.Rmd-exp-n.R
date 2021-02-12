@@ -39,6 +39,7 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab("n species per 1000 ind") +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0), 
                  legend.title = element_blank())

@@ -13,6 +13,7 @@ gom_larv_div <- ecodata::ichthyo_diversity %>%
   ecodata::geom_gls(aes(x = Time, y = mean(Value))) +
   ggplot2::ggtitle("GOM larval diversity") +
   ggplot2::ylab("Shannon Diversity") +
+  ggplot2::xlab(element_blank())+
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
@@ -35,6 +36,7 @@ gb_larv_div <- ecodata::ichthyo_diversity %>%
   ecodata::geom_gls(aes(x = Time, y = mean(Value))) +
   ggplot2::ggtitle("GB larval diversity") +
   ylab("Shannon Diversity") +
+  ggplot2::xlab(element_blank())+
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
    geom_hline(aes(yintercept = hline),
            size = hline.size,

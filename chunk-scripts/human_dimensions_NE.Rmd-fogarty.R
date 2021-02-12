@@ -14,7 +14,7 @@ ecodata::ppr %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_ribbon( aes(ymin = gr_lw, ymax = gr_up, x = Time), fill = "darkolivegreen3", alpha = 0.5)+
-  ggplot2::geom_ribbon( aes(ymin = rd_lw, ymax = rd_up, x = Time), fill = "lightcoral", aplha = 0.5)+
+  ggplot2::geom_ribbon( aes(ymin = rd_lw, ymax = rd_up, x = Time), fill = "sandybrown", aplha = 0.5)+
   # ggplot2::geom_hline(yintercept = .92, color = "green", linetype = "dashed")+
   # ggplot2::geom_hline(yintercept = .22, color = "green", linetype = "dashed")+
   # ggplot2::geom_hline(yintercept = 1, color = "red", linetype = "dashed")+
@@ -30,4 +30,5 @@ ecodata::ppr %>%
   ggplot2::facet_wrap( ~ EPU)+
   ggplot2::ggtitle("Fogarty Index")+
   ggplot2::ylab("PPT")+
+  ggplot2::xlab(element_blank())+
   ecodata::theme_ts()

@@ -47,6 +47,7 @@ p1<-mass %>%
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("MA Inshore BTS") +
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
@@ -86,6 +87,7 @@ p2<-mass %>%
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
         axis.title.x=element_blank())
@@ -124,6 +126,7 @@ p3<-mass %>%
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
         axis.title.x=element_blank())
@@ -162,6 +165,7 @@ p4<-mass %>%
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0))
 

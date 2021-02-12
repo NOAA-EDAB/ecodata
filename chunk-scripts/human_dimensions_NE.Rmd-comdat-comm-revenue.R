@@ -36,6 +36,8 @@ ggplot2::ggplot() +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ylab(expression("Revenue (10"^6*"USD)")) +
+  
+  ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline,
                color = Status),
            size = hline.size,
@@ -65,6 +67,7 @@ ggplot2::ggplot() +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ylab(expression("Revenue (10"^6*"USD)")) +
+  ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline,
                color = Status),
            size = hline.size,

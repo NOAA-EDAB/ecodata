@@ -21,5 +21,6 @@ ecodata::wind_revenue %>%
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
   ggplot2::ggtitle("Fishery Revenue in Wind Lease Areas")+
   ggplot2::ylab("2019 Constant Million Dollars ")+
+  ggplot2::xlab(element_blank())+
   ggplot2::theme(legend.title = element_blank())+
   ecodata::theme_ts()

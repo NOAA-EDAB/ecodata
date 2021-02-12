@@ -48,6 +48,7 @@ ggplot2::ggplot(aes(x = Time, y = Proportion, color = Management, group = Var2))
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Proportion of survey")) +
+  ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("GB") +
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0))

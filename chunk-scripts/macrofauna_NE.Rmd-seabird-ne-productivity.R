@@ -35,7 +35,7 @@ aggregate_prod %>%
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Common tern productivity") +
   ggplot2::ylab(expression("Fledged chicks per nest")) +
-  ggplot2::xlab("Time")+
+  ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline),
            color = "black",
            size = hline.size,

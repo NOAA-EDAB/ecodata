@@ -42,6 +42,7 @@ ggplot2::ggplot()+
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ylab(expression("Landings (10"^3*"metric tons)")) +
+  ggplot2::xlab(element_blank())+
 
   ggplot2::geom_hline(aes(yintercept = hline,
                
@@ -70,6 +71,7 @@ ggplot2::ggplot()+
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ylab(expression("Landings (10"^3*"metric tons)")) +
+  ggplot2::xlab(element_blank())+
 
   ggplot2::geom_hline(aes(yintercept = hline,
                

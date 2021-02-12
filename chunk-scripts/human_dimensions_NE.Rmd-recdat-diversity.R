@@ -38,7 +38,7 @@ rec_div <- recdat %>%
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Rec. fleet effort diversity")+
   ggplot2::ylab("Effective Shannon") +
-  ggplot2::xlab("")+
+  ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline,
                color = Var),
            size = hline.size,

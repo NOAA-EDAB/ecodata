@@ -29,7 +29,7 @@ shannon <- diet_div %>%
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01),limits = c(1992,2018)) +
   ggplot2::ggtitle("Common tern diet diversity")+
   ggplot2::ylab(expression("Shannon Diversity")) +
-  ggplot2::xlab("")+
+  ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,

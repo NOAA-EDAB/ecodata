@@ -35,7 +35,7 @@ fleet_count <- comm_div %>%
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Fleet count") +
   ggplot2::ylab(expression("Count (n)")) +
-  ggplot2::xlab("")+
+  ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline,
                color = Var),
            size = hline.size,
@@ -63,6 +63,7 @@ fleet_div <- comm_div %>%
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Fleet diversity in revenue") +
   ggplot2::ylab(expression("Effective Shannon")) +
+  ggplot2::xlab(element_blank())+
 
   ggplot2::geom_hline(aes(yintercept = hline,
                color = Var),

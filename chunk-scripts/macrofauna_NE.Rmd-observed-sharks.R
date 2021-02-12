@@ -11,4 +11,5 @@ ecodata::observed_sharks %>%
   ggplot2::facet_wrap(~EPU)+
   ggplot2::ggtitle("Observed Sharks")+
   ggplot2::ylab("Number of Sharks per Haul")+
+  ggplot2::xlab(element_blank())+
   ecodata::theme_ts()

@@ -27,4 +27,5 @@ ecodata::ppr %>%
   ggplot2::facet_wrap( ~ EPU)+
   ggplot2::ggtitle("Primary Production Required")+
   ggplot2::ylab("Proportion of Total PPD")+
+  ggplot2::xlab(element_blank())+
   ecodata::theme_ts()

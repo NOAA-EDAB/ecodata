@@ -185,6 +185,7 @@ p1<- gb_surv %>%
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("GB NEFSC BTS") +
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
@@ -224,6 +225,7 @@ p2<- gb_surv %>%
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
         axis.title.x=element_blank())
@@ -263,6 +265,7 @@ p3<- gb_surv %>%
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
         axis.title.x=element_blank())
@@ -302,6 +305,7 @@ p4<- gb_surv %>%
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0))
 
@@ -349,6 +353,7 @@ ggplot2::ggplot(aes(x = Time, y = Mean)) +
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("GOM NEFSC BTS") +
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
@@ -389,6 +394,7 @@ ggplot2::ggplot(aes(x = Time, y = Mean)) +
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
         axis.title.x=element_blank())
@@ -428,6 +434,7 @@ ggplot2::ggplot(aes(x = Time, y = Mean)) +
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
         axis.title.x=element_blank())
@@ -468,6 +475,7 @@ ggplot2::ggplot(aes(x = Time, y = Mean)) +
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ecodata::theme_facet()+
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ggplot2::theme(strip.text=element_text(hjust=0))
 
 cowplot::plot_grid(p1, p2, p3, p4, nrow=4)
@@ -525,6 +533,7 @@ mab_nefmc_props <- nefmc_ma %>%
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Proportion of MAB survey")) +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0))
 
@@ -584,6 +593,7 @@ p1<-mass %>%
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("MA Inshore BTS") +
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
@@ -623,6 +633,7 @@ p2<-mass %>%
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
         axis.title.x=element_blank())
@@ -661,6 +672,7 @@ p3<-mass %>%
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
         axis.title.x=element_blank())
@@ -699,6 +711,7 @@ p4<-mass %>%
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0))
 
@@ -743,6 +756,7 @@ p1<-menh %>%
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("ME/NH Inshore BTS") +
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
@@ -773,6 +787,7 @@ p2<-menh %>%
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
         axis.title.x=element_blank())
@@ -802,6 +817,7 @@ p3<-menh %>%
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
         axis.title.x=element_blank())
@@ -830,6 +846,7 @@ p4<-menh %>%
   
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0))
 
@@ -890,6 +907,7 @@ ggplot2::ggplot(aes(x = Time, y = Proportion, color = Management, group = Var2))
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Proportion of survey")) +
+  ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("GB") +
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0))
@@ -947,6 +965,7 @@ ggplot2::ggplot(aes(x = Time, y = Proportion, color = Management, group = Var2))
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Proportion of survey")) +
+  ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("GOM") +
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0))
@@ -967,6 +986,7 @@ ecodata::survey_shannon %>% filter(!EPU == "MAB",
   ggtitle("Survey Shannon Diversity Index")+
   ggplot2::facet_wrap(~EPU)+
   ggplot2::ylab("Shannon")+
+  ggplot2::xlab(element_blank())+
   ggplot2::scale_color_discrete(name = "Season", labels = c("Fall", "Spring"))+
   ecodata::theme_ts()
   
@@ -1015,6 +1035,7 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab("n species per 1000 ind") +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0), 
                  legend.title = element_blank())
@@ -1075,6 +1096,7 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab("n species per 1000 ind") +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0), 
                  legend.title = element_blank())
@@ -1322,6 +1344,7 @@ gom_larv_div <- ecodata::ichthyo_diversity %>%
   ecodata::geom_gls(aes(x = Time, y = mean(Value))) +
   ggplot2::ggtitle("GOM larval diversity") +
   ggplot2::ylab("Shannon Diversity") +
+  ggplot2::xlab(element_blank())+
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
@@ -1344,6 +1367,7 @@ gb_larv_div <- ecodata::ichthyo_diversity %>%
   ecodata::geom_gls(aes(x = Time, y = mean(Value))) +
   ggplot2::ggtitle("GB larval diversity") +
   ylab("Shannon Diversity") +
+  ggplot2::xlab(element_blank())+
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
    geom_hline(aes(yintercept = hline),
            size = hline.size,
@@ -1397,7 +1421,7 @@ shannon <- diet_div %>%
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01),limits = c(1992,2018)) +
   ggplot2::ggtitle("Common tern diet diversity")+
   ggplot2::ylab(expression("Shannon Diversity")) +
-  ggplot2::xlab("")+
+  ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
@@ -1475,6 +1499,7 @@ diet_freq_bar <-
   ggplot2::scale_fill_manual(values = colors) +
   ggplot2::ggtitle("Prey composition") +
   ggplot2::ylab("Proportion of prey items") +
+  ggplot2::xlab(element_blank())+
   ecodata::theme_ts()
 
 diet_freq_bar
@@ -1595,7 +1620,7 @@ aggregate_prod %>%
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Common tern productivity") +
   ggplot2::ylab(expression("Fledged chicks per nest")) +
-  ggplot2::xlab("Time")+
+  ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline),
            color = "black",
            size = hline.size,
@@ -1625,6 +1650,7 @@ ecodata::forage_anomaly %>%
   ggplot2::facet_wrap(~EPU)+
   ggplot2::ggtitle("Forage Anomalies")+
   ggplot2::ylab("Forage Anomaly")+
+  ggplot2::xlab(element_blank())+
   ecodata::theme_ts()
 
 ```
@@ -1644,6 +1670,7 @@ ecodata::observed_sharks %>%
   ggplot2::facet_wrap(~EPU)+
   ggplot2::ggtitle("Observed Sharks")+
   ggplot2::ylab("Number of Sharks per Haul")+
+  ggplot2::xlab(element_blank())+
   ecodata::theme_ts()
 
 ```
