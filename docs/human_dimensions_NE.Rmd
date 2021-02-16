@@ -1151,7 +1151,7 @@ recdat <- ecodata::recdat %>%
   dplyr::group_by(Var) %>% 
   dplyr::mutate(hline = mean(Value))
 
-ylim_re <- c(2e7, 7e7)
+ylim_re <- c(5e6, 30e6)
 ylim_rd <- c(1.75,2.75)
 ylim_ra  <- c(1e6, 3.5e6)
 
