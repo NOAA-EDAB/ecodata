@@ -52,7 +52,7 @@ ggplot2::ggplot()+
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts() +
-  ggplot2::ggtitle("Gulf of Maine")
+  ggplot2::ggtitle("Gulf of Maine - Total Revenue")
 
 gb_total <- landings_agg %>% dplyr::filter(EPU == "GB") %>% 
 ggplot2::ggplot()+
@@ -81,6 +81,6 @@ ggplot2::ggplot()+
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts() +
-  ggplot2::ggtitle("Georges Bank")
+  ggplot2::ggtitle("Georges Bank - Total Revenue")
 
 cowplot::plot_grid(gb_total, gom_total, ncol = 2)
