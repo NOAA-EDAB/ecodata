@@ -7,7 +7,7 @@ ecodata::grayseal %>%
   ggplot2::geom_line(aes(x=year, y = pbr, color = "PBR"))+
   #ggplot2::geom_line(aes(x=year, y = PBR), color = "red")+
   ggplot2::geom_ribbon(aes(ymin = total5yLCI, ymax =total5yUCI, x = year), fill = "blue", alpha = 0.2)+
-  ggplot2::ggtitle("Gray Seal Byctach")+
+  ggplot2::ggtitle("Gray Seal Bycatch")+
   ggplot2::ylab("Estimated Bycatch (n)")+
   ggplot2::xlab(element_blank())+
   ggplot2::scale_color_manual(name = element_blank(), 
