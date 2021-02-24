@@ -31,4 +31,5 @@ ecodata::ppr %>%
   ggplot2::facet_wrap( ~ EPU)+
   ggplot2::ggtitle("PP Reconstrcted")+
   ggplot2::ylab("mtC region-1 year-1")+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()

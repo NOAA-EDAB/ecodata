@@ -18,4 +18,5 @@ ecodata::ppr %>%
   ggplot2::facet_wrap( ~ EPU)+
   ggplot2::ggtitle("Mean Trophic Level")+
   ggplot2::ylab("")+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()

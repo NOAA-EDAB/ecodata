@@ -20,7 +20,8 @@ gom_larv_div <- ecodata::ichthyo_diversity %>%
            alpha = hline.alpha,
            linetype = hline.lty)+
   ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_text(hjust=0))
+  ggplot2::theme(strip.text=element_text(hjust=0))+
+  ecodata::theme_title()
 
 gb_larv_div <- ecodata::ichthyo_diversity %>%
   dplyr::filter(EPU == "GB") %>%
@@ -43,6 +44,7 @@ gb_larv_div <- ecodata::ichthyo_diversity %>%
            alpha = hline.alpha,
            linetype = hline.lty)+
   ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_text(hjust=0))
+  ggplot2::theme(strip.text=element_text(hjust=0))+
+  ecodata::theme_title()
 
 gb_larv_div + gom_larv_div + patchwork::plot_layout(ncol = 1)

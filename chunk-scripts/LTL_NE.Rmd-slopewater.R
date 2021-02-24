@@ -19,4 +19,5 @@ ggplot2::ggplot(data = sw.df) +
   ggplot2::geom_hline(aes(yintercept = hline, color = Origin),
            size = hline.size, alpha = hline.alpha,
            linetype = hline.lty)+
-  ecodata::theme_ts() 
+  ecodata::theme_ts() +
+  ecodata::theme_title()

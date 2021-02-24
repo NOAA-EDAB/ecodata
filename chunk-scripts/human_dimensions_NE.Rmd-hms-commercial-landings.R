@@ -40,6 +40,7 @@ p1<-apex %>%
         legend.title = element_blank())+
   ggplot2::ylab("Landings (metric tons)")+
   ggplot2::ggtitle("HMS Commercial Landings")
-  ggplot2::xlab(element_blank())
+  ggplot2::xlab(element_blank())+
+  ecodata::theme_title()
 
 p1

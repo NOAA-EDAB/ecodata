@@ -30,7 +30,8 @@ islands <- ggplot2::ggplot() +
         axis.title = element_text(size = 11),
         strip.background = element_blank(),
         strip.text=element_text(hjust=0),
-        axis.text = element_text(size = 8))
+        axis.text = element_text(size = 8))+
+  ecodata::theme_title()
 
 # inset_states <- new_england %>% filter(STATE_NAME %in% c("Maine",
 #                                                          "New Hampshire",

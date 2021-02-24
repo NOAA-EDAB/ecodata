@@ -22,7 +22,8 @@ gb_zoo_div <- zoo_div %>%
            alpha = hline.alpha,
            linetype = hline.lty)+
   ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_blank())
+  ggplot2::theme(strip.text=element_blank())+
+  ecodata::theme_title()
 
 gb_zoo_div
 

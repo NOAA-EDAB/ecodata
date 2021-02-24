@@ -41,6 +41,7 @@ p1<-apex %>%
         legend.title = element_blank())+
   ggplot2::ylab(("Revenue (10^6 US Dollars)")) +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("HMS Revenue")
+  ggplot2::ggtitle("HMS Revenue")+
+  ecodata::theme_title()
 
 p1

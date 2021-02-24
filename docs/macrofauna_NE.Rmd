@@ -187,6 +187,7 @@ p1<- gb_surv %>%
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("GB NEFSC BTS") +
+  ecodata::theme_title()+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
         axis.title.x=element_blank())
@@ -357,7 +358,8 @@ ggplot2::ggplot(aes(x = Time, y = Mean)) +
   ggplot2::ggtitle("GOM NEFSC BTS") +
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
-        axis.title.x=element_blank())
+        axis.title.x=element_blank())+
+  ecodata::theme_title()
 
 #### Plot 2 
 p2<-gom_surv %>% 
@@ -397,7 +399,8 @@ ggplot2::ggplot(aes(x = Time, y = Mean)) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
-        axis.title.x=element_blank())
+        axis.title.x=element_blank())+
+  ecodata::theme_title()
 
 ## Plot 3
 p3<-gom_surv %>% 
@@ -437,7 +440,8 @@ ggplot2::ggplot(aes(x = Time, y = Mean)) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
-        axis.title.x=element_blank())
+        axis.title.x=element_blank())+
+  ecodata::theme_title()
 
 ##Plot 4
 p4<-gom_surv %>% 
@@ -476,7 +480,8 @@ ggplot2::ggplot(aes(x = Time, y = Mean)) +
   ecodata::theme_facet()+
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
   ggplot2::xlab(element_blank())+
-  ggplot2::theme(strip.text=element_text(hjust=0))
+  ggplot2::theme(strip.text=element_text(hjust=0))+
+  ecodata::theme_title()
 
 cowplot::plot_grid(p1, p2, p3, p4, nrow=4)
 ```
@@ -988,7 +993,8 @@ ecodata::survey_shannon %>% filter(!EPU == "MAB",
   ggplot2::ylab("Shannon")+
   ggplot2::xlab(element_blank())+
   ggplot2::scale_color_discrete(name = "Season", labels = c("Fall", "Spring"))+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
   
 ```
 
@@ -1038,7 +1044,8 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0), 
-                 legend.title = element_blank())
+                 legend.title = element_blank())+
+  ecodata::theme_title()
 
 # exp2 %>% 
 #   dplyr::filter(Time %in% c(max(Time), max(Time-1))) %>% 
@@ -1099,7 +1106,8 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0), 
-                 legend.title = element_blank())
+                 legend.title = element_blank())+
+  ecodata::theme_title()
 
 
 ```
@@ -1300,7 +1308,8 @@ gb_fullness <- ecodata::stom_fullness %>%
   ggplot2::facet_wrap(~Var)+
   ggplot2::theme(strip.text=element_text(hjust=0), 
         legend.position = "none", 
-        axis.text.x = element_text(angle = 45))
+        axis.text.x = element_text(angle = 45))+
+  ecodata::theme_title()
 
 gom_fullness <- ecodata::stom_fullness %>%
   dplyr::group_by(Var, EPU) %>% ## Remove values with missing data
@@ -1318,7 +1327,8 @@ gom_fullness <- ecodata::stom_fullness %>%
   ggplot2::facet_wrap(~Var)+
   ggplot2::theme(strip.text=element_text(hjust=0), 
         legend.position = "none", 
-        axis.text.x = element_text(angle = 45))
+        axis.text.x = element_text(angle = 45))+
+  ecodata::theme_title()
 
 gb_fullness
 gom_fullness
@@ -1351,7 +1361,8 @@ gom_larv_div <- ecodata::ichthyo_diversity %>%
            alpha = hline.alpha,
            linetype = hline.lty)+
   ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_text(hjust=0))
+  ggplot2::theme(strip.text=element_text(hjust=0))+
+  ecodata::theme_title()
 
 gb_larv_div <- ecodata::ichthyo_diversity %>%
   dplyr::filter(EPU == "GB") %>%
@@ -1374,7 +1385,8 @@ gb_larv_div <- ecodata::ichthyo_diversity %>%
            alpha = hline.alpha,
            linetype = hline.lty)+
   ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_text(hjust=0))
+  ggplot2::theme(strip.text=element_text(hjust=0))+
+  ecodata::theme_title()
 
 gb_larv_div + gom_larv_div + patchwork::plot_layout(ncol = 1)
 
@@ -1403,7 +1415,8 @@ gom_larv_div <- ecodata::ichthyo_diversity %>%
            alpha = hline.alpha,
            linetype = hline.lty)+
   ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_text(hjust=0))
+  ggplot2::theme(strip.text=element_text(hjust=0))+
+  ecodata::theme_title()
 
 gb_larv_div <- ecodata::ichthyo_diversity %>%
   dplyr::filter(EPU == "GB") %>%
@@ -1426,7 +1439,8 @@ gb_larv_div <- ecodata::ichthyo_diversity %>%
            alpha = hline.alpha,
            linetype = hline.lty)+
   ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_text(hjust=0))
+  ggplot2::theme(strip.text=element_text(hjust=0))+
+  ecodata::theme_title()
 
 gb_larv_div 
 gom_larv_div 
@@ -1479,7 +1493,8 @@ shannon <- diet_div %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ecodata::theme_ts() 
+  ecodata::theme_ts() +
+  ecodata::theme_title()
 
 shannon 
 ```
@@ -1553,7 +1568,8 @@ diet_freq_bar <-
   ggplot2::ggtitle("Prey composition") +
   ggplot2::ylab("Proportion of prey items") +
   ggplot2::xlab(element_blank())+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 diet_freq_bar
 
@@ -1593,7 +1609,8 @@ islands <- ggplot2::ggplot() +
         axis.title = element_text(size = 11),
         strip.background = element_blank(),
         strip.text=element_text(hjust=0),
-        axis.text = element_text(size = 8))
+        axis.text = element_text(size = 8))+
+  ecodata::theme_title()
 
 # inset_states <- new_england %>% filter(STATE_NAME %in% c("Maine",
 #                                                          "New Hampshire",
@@ -1679,7 +1696,8 @@ aggregate_prod %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 
 ```
@@ -1704,7 +1722,8 @@ ecodata::forage_anomaly %>%
   ggplot2::ggtitle("Forage Anomalies")+
   ggplot2::ylab("Forage Anomaly")+
   ggplot2::xlab(element_blank())+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 ```
 
@@ -1725,7 +1744,8 @@ ecodata::observed_sharks %>%
   ggplot2::ylab("Number per Haul")+
   ggplot2::xlab(element_blank())+
   ggplot2::scale_color_discrete(name = "Category")+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 ```
 

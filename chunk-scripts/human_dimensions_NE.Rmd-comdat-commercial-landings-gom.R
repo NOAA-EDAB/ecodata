@@ -76,6 +76,7 @@ gom_landings<- landings %>%
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0))+
-  ggplot2::ggtitle("Gulf of Maine")
+  ggplot2::ggtitle("Gulf of Maine")+
+  ecodata::theme_title()
 
 gom_landings

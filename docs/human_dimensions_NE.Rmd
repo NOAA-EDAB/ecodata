@@ -187,7 +187,8 @@ gb_landings <- landings %>% dplyr::filter(EPU == "GB") %>%
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0)) +
-  ggplot2::ggtitle("Georges Bank")
+  ggplot2::ggtitle("Georges Bank")+
+  ecodata::theme_title()
 
 #p1
 gb_landings
@@ -274,7 +275,8 @@ gom_landings<- landings %>%
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0))+
-  ggplot2::ggtitle("Gulf of Maine")
+  ggplot2::ggtitle("Gulf of Maine")+
+  ecodata::theme_title()
 
 gom_landings
 ```
@@ -322,7 +324,8 @@ p1<-apex %>%
         legend.title = element_blank())+
   ggplot2::ylab("Landings (metric tons)")+
   ggplot2::ggtitle("HMS Commercial Landings")
-  ggplot2::xlab(element_blank())
+  ggplot2::xlab(element_blank())+
+  ecodata::theme_title()
 
 p1
 
@@ -384,7 +387,8 @@ ggplot2::ggplot()+
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts() +
-  ggplot2::ggtitle("Gulf of Maine - Total Revenue")
+  ggplot2::ggtitle("Gulf of Maine - Total Revenue")+
+  ecodata::theme_title()
 
 gb_total <- landings_agg %>% dplyr::filter(EPU == "GB") %>% 
 ggplot2::ggplot()+
@@ -413,7 +417,8 @@ ggplot2::ggplot()+
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts() +
-  ggplot2::ggtitle("Georges Bank - Total Revenue")
+  ggplot2::ggtitle("Georges Bank - Total Revenue")+
+  ecodata::theme_title()
 
 cowplot::plot_grid(gb_total, gom_total, ncol = 2)
 
@@ -481,7 +486,8 @@ ggplot2::ggplot()+
   ggplot2::theme(title = element_text(size = 10))+
   ggplot2::theme(legend.position="bottom", legend.direction = "horizontal",
         legend.background = element_rect(fill = "transparent"), 
-        legend.title = element_blank(), legend.text = element_blank())
+        legend.title = element_blank(), legend.text = element_blank())+
+  ecodata::theme_title()
 
 gb_bennet <- indicators %>% 
   dplyr::filter(EPU == "GB", 
@@ -511,7 +517,8 @@ ggplot2::ggplot()+
         legend.title = element_text(size = 8), 
         legend.text = element_text(size = 8)) 
   ggplot2::guides(color = guide_legend(order = 1),
-         fill = guide_legend(order = 0))
+         fill = guide_legend(order = 0))+
+  ecodata::theme_title()
 
 #cowplot::plot_grid(gom_bennet, gb_bennet, ncol = 2, rel_widths = c(0.7,1))
 
@@ -588,7 +595,8 @@ ggplot2::ggplot()+
   #                            limits = y.lim, expand = c(0.01, 0.01)) +
   ecodata::theme_ts() +
   ggplot2::scale_fill_brewer(palette = "Set1")+
-  ggplot2::theme(title = element_text(size = 10))
+  ggplot2::theme(title = element_text(size = 10))+
+  ecodata::theme_title()
 
 ```
 
@@ -644,7 +652,8 @@ ggplot2::ggplot()+
         legend.text = element_text(size = 8)) +
   ecodata::theme_ts() +
   ggplot2::facet_wrap(~EPU)+
-  ggplot2::theme(title = element_text(size = 10))
+  ggplot2::theme(title = element_text(size = 10))+
+  ecodata::theme_title()
 
 ```
 
@@ -699,7 +708,8 @@ ggplot2::ggplot() +
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts() +
-    ggtitle("Gulf of Maine")
+    ggtitle("Gulf of Maine")+
+  ecodata::theme_title()
 
 gb_rev_agg <- rev_agg %>% dplyr::filter(EPU == "GB") %>% 
 ggplot2::ggplot() +
@@ -729,7 +739,8 @@ ggplot2::ggplot() +
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts() +
-    ggtitle("Georges Bank")
+    ggtitle("Georges Bank")+
+  ecodata::theme_title()
 
 cowplot::plot_grid(gb_rev_agg, gom_rev_agg, ncol = 2)
 
@@ -779,7 +790,8 @@ p1<-apex %>%
         legend.title = element_blank())+
   ggplot2::ylab(("Revenue (10^6 US Dollars)")) +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("HMS Revenue")
+  ggplot2::ggtitle("HMS Revenue")+
+  ecodata::theme_title()
 
 p1
 
@@ -830,7 +842,8 @@ fleet_count <- comm_div %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 fleet_div <- comm_div %>% 
   dplyr::filter(Var == "Fleet diversity in revenue") %>% 
@@ -859,7 +872,8 @@ fleet_div <- comm_div %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 cowplot::plot_grid(fleet_count, fleet_div, ncol = 1, align = "hv") + 
   theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
@@ -896,7 +910,8 @@ comm_div %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 ```
 
 #### Stock status
@@ -1013,7 +1028,8 @@ com2<-com %>%
   ggplot2::ylab("Commercial Reliance Score") +
   ggplot2::ggtitle("Social Vulnerability in Top Commercial Fishing Communities")+
   #ggplot2::guides(color = FALSE) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
   
   
   gridExtra::grid.arrange(com2, bottom = textGrob("Low <--------------------------------------------------------------------------------------------------------------------------------------> High", 
@@ -1046,7 +1062,8 @@ ggplot2::ggplot() +
   theme(legend.position="bottom", 
         legend.title = element_blank())+
   scale_x_continuous(breaks=c(2009,2011,2013,2015, 2017, 2019))+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 ```
 ```{r aquaculture-pieces, fig.cap="Oyster aquaculture production in pieces for four New England states (Maine, Massachusettes, New Hampshire and Rhode Island)."}
@@ -1068,7 +1085,8 @@ ggplot2::ggplot() +
   theme(legend.position="bottom", 
         legend.title = element_blank())+
   scale_x_continuous(breaks=c(2009,2011,2013,2015, 2017, 2019))+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 
 ```
@@ -1092,8 +1110,8 @@ ggplot2::ggplot() +
   theme(legend.position="bottom", 
         legend.title = element_blank())+
   scale_x_continuous(breaks=c(2009,2011,2013,2015, 2017, 2019))+
-  ecodata::theme_ts()
-
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 ```
 
@@ -1135,7 +1153,8 @@ rec_landings <- ggplot2::ggplot(data = landings_rec)+
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 #plotly::ggplotly(rec_landings) # plotly removes geom_gls
 rec_landings
@@ -1200,7 +1219,8 @@ rec_effort <- recdat %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ecodata::theme_ts() 
+  ecodata::theme_ts() +
+  ecodata::theme_title()
 
 
 
@@ -1256,7 +1276,8 @@ rec_div <- recdat %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 rec_div
 ```
 
@@ -1305,7 +1326,8 @@ rec_div_catch <- recdat %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 
 
@@ -1342,7 +1364,8 @@ com2<-com %>%
   ggplot2::ylab("Recreation Reliance Score") +
   ggplot2::ggtitle("Social Vulnerability in Top Recreational Fishing Communities")+
   #ggplot2::guides(color = FALSE) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
   
   
   gridExtra::grid.arrange(com2, bottom = textGrob("Low <--------------------------------------------------------------------------------------------------------------------------------------> High", 
@@ -1364,7 +1387,8 @@ ecodata::rec_hms %>%
   ggplot2::ylab("Landings (N)")+
   ggplot2::xlab("")+ 
   ggplot2::theme(legend.title = element_blank())+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 ```
 
@@ -1403,7 +1427,8 @@ ecodata::ppr %>%
   ggplot2::ggtitle("Primary Production Required")+
   ggplot2::ylab("Proportion of Total PPD")+
   ggplot2::xlab(element_blank())+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 ```
 
 ### Fogarty Index
@@ -1442,7 +1467,8 @@ ecodata::ppr %>%
   ggplot2::ggtitle("Fogarty Index")+
   ggplot2::ylab("PPT")+
   ggplot2::xlab(element_blank())+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 ```
 
 ### Ryther
@@ -1480,7 +1506,8 @@ ecodata::ppr %>%
   ggplot2::ggtitle("Ryther Index")+
   ggplot2::ylab("mt km-2 y-1")+
   ggplot2::xlab(element_blank())+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 ```
 ### Mean Trophic Level
 
@@ -1505,7 +1532,8 @@ ecodata::ppr %>%
   ggplot2::facet_wrap( ~ EPU)+
   ggplot2::ggtitle("Mean Trophic Level")+
   ggplot2::ylab("")+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 ```
 ### PP reconstructed
 
@@ -1544,7 +1572,8 @@ ecodata::ppr %>%
   ggplot2::facet_wrap( ~ EPU)+
   ggplot2::ggtitle("PP Reconstrcted")+
   ggplot2::ylab("mtC region-1 year-1")+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 ```
 
 ### Wind Energy Revenue
@@ -1574,5 +1603,6 @@ ecodata::wind_revenue %>%
   ggplot2::ylab("2019 Constant Million Dollars ")+
   ggplot2::xlab(element_blank())+
   ggplot2::theme(legend.title = element_blank())+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 ```

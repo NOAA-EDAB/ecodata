@@ -31,4 +31,5 @@ ecodata::ppr %>%
   ggplot2::ggtitle("Fogarty Index")+
   ggplot2::ylab("PPT")+
   ggplot2::xlab(element_blank())+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()

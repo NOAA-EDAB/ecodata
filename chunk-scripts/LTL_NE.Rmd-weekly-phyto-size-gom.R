@@ -34,6 +34,7 @@ out_phyto2<-  ecodata::phyto_size %>%
                                 "Nanoplankton", "Microplankton"))+
     #scale_y_continuous( name = "Phytoplankton Size Fraction", sec.axis = sec_axis(~.*2, name="Chlorophyll a (mg m^-3)"))+
    scale_x_continuous(breaks = month_numeric, 
-                    labels = month_label)
+                    labels = month_label)+
+  ecodata::theme_title()
 
 out_phyto2

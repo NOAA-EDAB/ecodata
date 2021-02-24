@@ -44,7 +44,8 @@ ggplot2::ggplot() +
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts() +
-    ggtitle("Gulf of Maine")
+    ggtitle("Gulf of Maine")+
+  ecodata::theme_title()
 
 gb_rev_agg <- rev_agg %>% dplyr::filter(EPU == "GB") %>% 
 ggplot2::ggplot() +
@@ -74,6 +75,7 @@ ggplot2::ggplot() +
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts() +
-    ggtitle("Georges Bank")
+    ggtitle("Georges Bank")+
+  ecodata::theme_title()
 
 cowplot::plot_grid(gb_rev_agg, gom_rev_agg, ncol = 2)

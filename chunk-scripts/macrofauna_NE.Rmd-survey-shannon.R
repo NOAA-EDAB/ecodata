@@ -10,4 +10,5 @@ ecodata::survey_shannon %>% filter(!EPU == "MAB",
   ggplot2::ylab("Shannon")+
   ggplot2::xlab(element_blank())+
   ggplot2::scale_color_discrete(name = "Season", labels = c("Fall", "Spring"))+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()

@@ -55,7 +55,8 @@ ggplot2::ggplot()+
   ggplot2::theme(title = element_text(size = 10))+
   ggplot2::theme(legend.position="bottom", legend.direction = "horizontal",
         legend.background = element_rect(fill = "transparent"), 
-        legend.title = element_blank(), legend.text = element_blank())
+        legend.title = element_blank(), legend.text = element_blank())+
+  ecodata::theme_title()
 
 gb_bennet <- indicators %>% 
   dplyr::filter(EPU == "GB", 
@@ -85,7 +86,8 @@ ggplot2::ggplot()+
         legend.title = element_text(size = 8), 
         legend.text = element_text(size = 8)) 
   ggplot2::guides(color = guide_legend(order = 1),
-         fill = guide_legend(order = 0))
+         fill = guide_legend(order = 0))+
+  ecodata::theme_title()
 
 #cowplot::plot_grid(gom_bennet, gb_bennet, ncol = 2, rel_widths = c(0.7,1))
 

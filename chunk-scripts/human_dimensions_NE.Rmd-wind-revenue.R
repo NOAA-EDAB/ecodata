@@ -23,4 +23,5 @@ ecodata::wind_revenue %>%
   ggplot2::ylab("2019 Constant Million Dollars ")+
   ggplot2::xlab(element_blank())+
   ggplot2::theme(legend.title = element_blank())+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()

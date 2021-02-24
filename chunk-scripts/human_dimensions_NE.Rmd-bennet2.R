@@ -48,4 +48,5 @@ ggplot2::ggplot()+
         legend.text = element_text(size = 8)) +
   ecodata::theme_ts() +
   ggplot2::facet_wrap(~EPU)+
-  ggplot2::theme(title = element_text(size = 10))
+  ggplot2::theme(title = element_text(size = 10))+
+  ecodata::theme_title()

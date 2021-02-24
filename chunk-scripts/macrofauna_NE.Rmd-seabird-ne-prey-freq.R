@@ -36,6 +36,7 @@ diet_freq_bar <-
   ggplot2::ggtitle("Prey composition") +
   ggplot2::ylab("Proportion of prey items") +
   ggplot2::xlab(element_blank())+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 diet_freq_bar

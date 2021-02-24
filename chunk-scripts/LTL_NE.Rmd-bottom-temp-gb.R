@@ -20,4 +20,5 @@ ecodata::bottom_temp %>%
            linetype = hline.lty) +
   ecodata::theme_ts() +
   ggplot2::theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
+        plot.title = element_text(size = 12))+
+  ecodata::theme_title()

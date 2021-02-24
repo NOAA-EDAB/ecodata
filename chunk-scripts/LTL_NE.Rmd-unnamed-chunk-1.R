@@ -18,5 +18,6 @@ micro_chlor <- ecodata::phyto_size %>%
   ggplot2::facet_wrap(~EPU)+
   ggplot2::ylab("Chlorophyll a (mg m^-3)") +
   ggplot2::xlab("Microplankton % of Total Phytoplankton Composition ") +
-  ecodata::theme_facet()
+  ecodata::theme_facet()+
+  ecodata::theme_title()
 micro_chlor

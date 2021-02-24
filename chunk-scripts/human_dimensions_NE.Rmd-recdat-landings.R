@@ -31,7 +31,8 @@ rec_landings <- ggplot2::ggplot(data = landings_rec)+
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 #plotly::ggplotly(rec_landings) # plotly removes geom_gls
 rec_landings

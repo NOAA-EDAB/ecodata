@@ -55,7 +55,7 @@ ggplot2::ggplot(data = landings_agg)+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
-  ggplot2::ylab(expression("Landings (10"^3*"metric tons)")) +
+  ggplot2::ylab(expression("Landings (10"^3*"mt)")) +
   ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline,
                color = Var),
@@ -63,6 +63,6 @@ ggplot2::ggplot(data = landings_agg)+
            alpha = hline.alpha,
            linetype = hline.lty) +
   ggplot2::ggtitle("Total Landings")+
-  ggplot2::theme(axis.title.y = element_text(size = 5))+
+  ggplot2::theme(axis.title.y = element_text(size = 7))+
   ecodata::theme_ts()+
   ecodata::theme_title()

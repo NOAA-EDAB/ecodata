@@ -143,7 +143,8 @@ sst_map <-
         strip.background = element_blank(),
         strip.text=element_text(hjust=0),
         axis.text = element_text(size = 8), 
-        axis.title.y = element_text(angle = 90))
+        axis.title.y = element_text(angle = 90))+
+  ecodata::theme_title()
 
 
 sst_map 
@@ -179,7 +180,8 @@ ne_anom_plt <- ggplot2::ggplot(data = ne_anom,
   ggplot2::facet_wrap(Var ~., ncol = 2, scales = "free_y")+
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
+        plot.title = element_text(size = 12))+
+  ecodata::theme_title()
 ne_anom_plt
 ```
 
@@ -208,7 +210,8 @@ ecodata::bottom_temp %>%
            linetype = hline.lty) +
   ecodata::theme_ts() +
   ggplot2::theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
+        plot.title = element_text(size = 12))+
+  ecodata::theme_title()
 
 
 #bot_temp_insitu_gom
@@ -242,7 +245,8 @@ ecodata::bottom_temp %>%
            linetype = hline.lty) +
   ecodata::theme_ts() +
   ggplot2::theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
+        plot.title = element_text(size = 12))+
+  ecodata::theme_title()
 
 ```
 
@@ -308,7 +312,8 @@ ggplot2::ggplot() +
   #         alpha = hline.alpha,
   #         linetype = hline.lty) +
   ecodata::theme_ts()+
-  ecodata::theme_facet()
+  ecodata::theme_facet()+
+  ecodata::theme_title()
 
 
 temp_anom <- ecodata::bottom_temp %>% 
@@ -343,7 +348,8 @@ ggplot2::ggplot() +
   #         alpha = hline.alpha,
   #         linetype = hline.lty) +
   ecodata::theme_ts()+
-  ecodata::theme_facet()
+  ecodata::theme_facet()+
+  ecodata::theme_title()
 ```
 
 #### GOM Slopewater Proportions
@@ -370,7 +376,8 @@ ggplot2::ggplot(data = sw.df) +
   ggplot2::geom_hline(aes(yintercept = hline, color = Origin),
            size = hline.size, alpha = hline.alpha,
            linetype = hline.lty)+
-  ecodata::theme_ts() 
+  ecodata::theme_ts() +
+  ecodata::theme_title()
 
 ```
 
@@ -411,7 +418,8 @@ pp_cci_gom <- out_pp %>%
     ecodata::theme_facet() +
     ggplot2::theme(axis.text.x = element_text(angle=45, hjust = 1),
           panel.spacing = unit(1, "lines"),
-          plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
+          plot.margin = unit(c(0.1, 0, 0, 0), "cm"))+
+  ecodata::theme_title()
  
  pp_cci_gb <-out_pp %>% 
   dplyr::filter(EPU == "GB") %>% 
@@ -431,7 +439,8 @@ pp_cci_gom <- out_pp %>%
     ecodata::theme_facet() +
     ggplot2::theme(axis.text.x = element_text(angle=45, hjust = 1),
           panel.spacing = unit(1, "lines"),
-          plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
+          plot.margin = unit(c(0.1, 0, 0, 0), "cm"))+
+  ecodata::theme_title()
  
  pp_cci_gb + pp_cci_gom + patchwork::plot_layout(ncol = 1)
  
@@ -470,7 +479,8 @@ pp_cci_gom <- out_pp %>%
     ecodata::theme_facet() +
     ggplot2::theme(axis.text.x = element_text(angle=45, hjust = 1),
           panel.spacing = unit(1, "lines"),
-          plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
+          plot.margin = unit(c(0.1, 0, 0, 0), "cm"))+
+  ecodata::theme_title()
  
  pp_cci_gb <-out_pp %>% 
   dplyr::filter(EPU == "GB") %>% 
@@ -490,7 +500,8 @@ pp_cci_gom <- out_pp %>%
     ecodata::theme_facet() +
     ggplot2::theme(axis.text.x = element_text(angle=45, hjust = 1),
           panel.spacing = unit(1, "lines"),
-          plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
+          plot.margin = unit(c(0.1, 0, 0, 0), "cm"))+
+  ecodata::theme_title()
  
  pp_cci_gb + pp_cci_gom + patchwork::plot_layout(ncol = 1)
  
@@ -560,7 +571,8 @@ ne_ppd <- ggplot2::ggplot(data = ne_pp_early) +
                    labels = c("Jan.","Mar.","May","July","Oct.","Dec."),
                    expand = c(0.01,0.01)) +
   ggplot2::scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 ne_ppd
 
@@ -628,7 +640,8 @@ ne_chl <- ggplot2::ggplot(data = ne_early) +
                    labels = c("Jan.","Mar.","May","July","Oct.","Dec."),
                    expand = c(0.01,0.01)) +
   ggplot2::scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 ne_chl
 
 ```
@@ -673,7 +686,8 @@ out_phyto<-  ecodata::phyto_size %>%
                                 "Nanoplankton", "Microplankton"))+
    #scale_y_continuous( name = "Phytoplankton Size Fraction", sec.axis = sec_axis(~.*2, name="Chlorophyll a (mg m^-3)"))+
    scale_x_continuous(breaks = month_numeric, 
-                    labels = month_label)
+                    labels = month_label)+
+  ecodata::theme_title()
 
 out_phyto 
 
@@ -717,7 +731,8 @@ out_phyto2<-  ecodata::phyto_size %>%
                                 "Nanoplankton", "Microplankton"))+
     #scale_y_continuous( name = "Phytoplankton Size Fraction", sec.axis = sec_axis(~.*2, name="Chlorophyll a (mg m^-3)"))+
    scale_x_continuous(breaks = month_numeric, 
-                    labels = month_label)
+                    labels = month_label)+
+  ecodata::theme_title()
 
 out_phyto2
 
@@ -744,7 +759,8 @@ micro_chlor <- ecodata::phyto_size %>%
   ggplot2::facet_wrap(~EPU)+
   ggplot2::ylab("Chlorophyll a (mg m^-3)") +
   ggplot2::xlab("Microplankton % of Total Phytoplankton Composition ") +
-  ecodata::theme_facet()
+  ecodata::theme_facet()+
+  ecodata::theme_title()
 micro_chlor
 
 ```
@@ -829,7 +845,8 @@ gom_zoo<-zoo_abund %>%
            linetype = hline.lty)+
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+                                face = "italic"))+
+  ecodata::theme_title()
   
 gb_zoo<-zoo_abund %>% 
   dplyr::filter(EPU == "GB") %>% 
@@ -851,7 +868,8 @@ gb_zoo<-zoo_abund %>%
            linetype = hline.lty)+
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+                                face = "italic"))+
+  ecodata::theme_title()
   
 cowplot::plot_grid(gb_zoo, gom_zoo, nrow = 2)
 ```
@@ -884,7 +902,8 @@ ecodata::zoo_sli_anom %>%
   theme_facet() +
   theme(strip.text=element_text(hjust=0,
                                 face = "italic"), 
-        legend.title = element_blank()) 
+        legend.title = element_blank()) +
+  ecodata::theme_title()
 
 ```
 
@@ -948,7 +967,8 @@ cal %>%
                  legend.title = element_blank())+
   ecodata::theme_facet()+
   scale_fill_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
-  scale_color_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))
+  scale_color_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
+  ecodata::theme_title()
 
 
 ```
@@ -1195,7 +1215,8 @@ gb_zoo_div <- zoo_div %>%
            alpha = hline.alpha,
            linetype = hline.lty)+
   ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_blank())
+  ggplot2::theme(strip.text=element_blank())+
+  ecodata::theme_title()
 
 gb_zoo_div
 
@@ -1230,7 +1251,8 @@ gom_zoo_div <- zoo_div %>%
            alpha = hline.alpha,
            linetype = hline.lty)+
   ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_blank())
+  ggplot2::theme(strip.text=element_blank())+
+  ecodata::theme_title()
 
 gom_zoo_div
 ```
@@ -1266,7 +1288,8 @@ ecodata::heatwave_year %>%
   scale_x_date(date_labels = "%b", breaks = "1 month")+
   theme_bw()+
   theme(legend.title = element_blank(),
-        legend.position=c(0.2, 0.8))
+        legend.position=c(0.2, 0.8))+
+  ecodata::theme_title()
 ```
 
 ```{r heatwave-year-gom, fig.cap = "Gulf of Maine", eval= T, echo = F}
@@ -1286,7 +1309,8 @@ ecodata::heatwave_year %>%
   scale_x_date(date_labels = "%b", breaks = "1 month")+
   theme_bw()+
   theme(legend.title = element_blank(),
-        legend.position=c(0.2, 0.8))
+        legend.position=c(0.2, 0.8))+
+  ecodata::theme_title()
 ```
 
 #### Yearly timeseries
@@ -1328,7 +1352,8 @@ gb.hw<-hw %>% dplyr::filter(EPU == "GB") %>%
   ecodata::theme_ts()+
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"), 
-        axis.title.y = element_text(angle = 90))
+        axis.title.y = element_text(angle = 90))+
+  ecodata::theme_title()
 
 gb.hw
 ```
@@ -1376,7 +1401,8 @@ gom.hw<-hw %>% dplyr::filter(EPU == "GOM") %>%
   ecodata::theme_ts()+
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"), 
-        axis.title.y = element_text(angle = 90)) 
+        axis.title.y = element_text(angle = 90)) +
+  ecodata::theme_title()
 
 gom.hw
 ```
@@ -1423,7 +1449,8 @@ gb_map <-
         axis.title = element_text(size = 11),
         strip.background = element_blank(),
         strip.text=element_text(hjust=0),
-        axis.text = element_text(size = 8))
+        axis.text = element_text(size = 8))+
+  ecodata::theme_title()
 
 
 gb_map 
@@ -1480,7 +1507,8 @@ gom_map <-
         axis.title = element_text(size = 11),
         strip.background = element_blank(),
         strip.text=element_text(hjust=0),
-        axis.text = element_text(size = 8))
+        axis.text = element_text(size = 8))+
+  ecodata::theme_title()
 
 
 gom_map 

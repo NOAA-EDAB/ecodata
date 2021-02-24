@@ -58,4 +58,5 @@ ggplot2::ggplot()+
   #                            limits = y.lim, expand = c(0.01, 0.01)) +
   ecodata::theme_ts() +
   ggplot2::scale_fill_brewer(palette = "Set1")+
-  ggplot2::theme(title = element_text(size = 10))
+  ggplot2::theme(title = element_text(size = 10))+
+  ecodata::theme_title()

@@ -15,7 +15,8 @@ gb_fullness <- ecodata::stom_fullness %>%
   ggplot2::facet_wrap(~Var)+
   ggplot2::theme(strip.text=element_text(hjust=0), 
         legend.position = "none", 
-        axis.text.x = element_text(angle = 45))
+        axis.text.x = element_text(angle = 45))+
+  ecodata::theme_title()
 
 gom_fullness <- ecodata::stom_fullness %>%
   dplyr::group_by(Var, EPU) %>% ## Remove values with missing data
@@ -33,7 +34,8 @@ gom_fullness <- ecodata::stom_fullness %>%
   ggplot2::facet_wrap(~Var)+
   ggplot2::theme(strip.text=element_text(hjust=0), 
         legend.position = "none", 
-        axis.text.x = element_text(angle = 45))
+        axis.text.x = element_text(angle = 45))+
+  ecodata::theme_title()
 
 gb_fullness
 gom_fullness

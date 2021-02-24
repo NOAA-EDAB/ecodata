@@ -41,7 +41,8 @@ ggplot2::ggplot(aes(x = Time, y = Mean)) +
   ggplot2::ggtitle("GOM NEFSC BTS") +
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
-        axis.title.x=element_blank())
+        axis.title.x=element_blank())+
+  ecodata::theme_title()
 
 #### Plot 2 
 p2<-gom_surv %>% 
@@ -81,7 +82,8 @@ ggplot2::ggplot(aes(x = Time, y = Mean)) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
-        axis.title.x=element_blank())
+        axis.title.x=element_blank())+
+  ecodata::theme_title()
 
 ## Plot 3
 p3<-gom_surv %>% 
@@ -121,7 +123,8 @@ ggplot2::ggplot(aes(x = Time, y = Mean)) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
-        axis.title.x=element_blank())
+        axis.title.x=element_blank())+
+  ecodata::theme_title()
 
 ##Plot 4
 p4<-gom_surv %>% 
@@ -160,6 +163,7 @@ ggplot2::ggplot(aes(x = Time, y = Mean)) +
   ecodata::theme_facet()+
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
   ggplot2::xlab(element_blank())+
-  ggplot2::theme(strip.text=element_text(hjust=0))
+  ggplot2::theme(strip.text=element_text(hjust=0))+
+  ecodata::theme_title()
 
 cowplot::plot_grid(p1, p2, p3, p4, nrow=4)

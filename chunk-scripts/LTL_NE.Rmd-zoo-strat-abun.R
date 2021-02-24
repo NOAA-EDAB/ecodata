@@ -26,7 +26,8 @@ gom_zoo<-zoo_abund %>%
            linetype = hline.lty)+
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+                                face = "italic"))+
+  ecodata::theme_title()
   
 gb_zoo<-zoo_abund %>% 
   dplyr::filter(EPU == "GB") %>% 
@@ -48,6 +49,7 @@ gb_zoo<-zoo_abund %>%
            linetype = hline.lty)+
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+                                face = "italic"))+
+  ecodata::theme_title()
   
 cowplot::plot_grid(gb_zoo, gom_zoo, nrow = 2)

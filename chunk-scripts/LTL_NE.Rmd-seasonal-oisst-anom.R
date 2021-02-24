@@ -27,5 +27,6 @@ ne_anom_plt <- ggplot2::ggplot(data = ne_anom,
   ggplot2::facet_wrap(Var ~., ncol = 2, scales = "free_y")+
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))
+        plot.title = element_text(size = 12))+
+  ecodata::theme_title()
 ne_anom_plt

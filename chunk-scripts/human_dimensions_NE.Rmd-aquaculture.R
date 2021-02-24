@@ -16,4 +16,5 @@ ggplot2::ggplot() +
   theme(legend.position="bottom", 
         legend.title = element_blank())+
   scale_x_continuous(breaks=c(2009,2011,2013,2015, 2017, 2019))+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()

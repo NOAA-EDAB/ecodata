@@ -75,7 +75,8 @@ gb_landings <- landings %>% dplyr::filter(EPU == "GB") %>%
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0)) +
-  ggplot2::ggtitle("Georges Bank")
+  ggplot2::ggtitle("Georges Bank")+
+  ecodata::theme_title()
 
 #p1
 gb_landings

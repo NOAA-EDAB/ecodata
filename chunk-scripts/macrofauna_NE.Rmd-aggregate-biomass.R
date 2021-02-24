@@ -73,6 +73,7 @@ p1<- gb_surv %>%
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("GB NEFSC BTS") +
+  ecodata::theme_title()+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0),
         axis.title.x=element_blank())

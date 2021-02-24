@@ -25,4 +25,5 @@ cal %>%
                  legend.title = element_blank())+
   ecodata::theme_facet()+
   scale_fill_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
-  scale_color_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))
+  scale_color_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
+  ecodata::theme_title()

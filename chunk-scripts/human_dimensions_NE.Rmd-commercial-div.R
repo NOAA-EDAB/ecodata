@@ -41,7 +41,8 @@ fleet_count <- comm_div %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 fleet_div <- comm_div %>% 
   dplyr::filter(Var == "Fleet diversity in revenue") %>% 
@@ -70,7 +71,8 @@ fleet_div <- comm_div %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 cowplot::plot_grid(fleet_count, fleet_div, ncol = 1, align = "hv") + 
   theme(plot.margin = unit(c(0.1, 0, 0, 0), "cm"))

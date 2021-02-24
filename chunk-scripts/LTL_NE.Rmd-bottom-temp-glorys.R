@@ -58,7 +58,8 @@ ggplot2::ggplot() +
   #         alpha = hline.alpha,
   #         linetype = hline.lty) +
   ecodata::theme_ts()+
-  ecodata::theme_facet()
+  ecodata::theme_facet()+
+  ecodata::theme_title()
 
 
 temp_anom <- ecodata::bottom_temp %>% 
@@ -93,4 +94,5 @@ ggplot2::ggplot() +
   #         alpha = hline.alpha,
   #         linetype = hline.lty) +
   ecodata::theme_ts()+
-  ecodata::theme_facet()
+  ecodata::theme_facet()+
+  ecodata::theme_title()
