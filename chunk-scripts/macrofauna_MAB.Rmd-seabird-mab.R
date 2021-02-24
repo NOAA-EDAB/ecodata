@@ -22,4 +22,5 @@ bird %>%
            linetype = hline.lty) +
   ggplot2::theme(legend.position="bottom", legend.direction = "horizontal", 
         legend.title = element_blank(), legend.margin=margin(t = -20)) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()

@@ -64,4 +64,5 @@ ggplot2::ggplot(data = landings_agg)+
            linetype = hline.lty) +
   ggplot2::ggtitle("Total Landings")+
   ggplot2::theme(axis.title.y = element_text(size = 5))+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()

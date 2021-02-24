@@ -40,4 +40,5 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0), 
-                 legend.title = element_blank())
+                 legend.title = element_blank())+
+  ecodata::theme_title()

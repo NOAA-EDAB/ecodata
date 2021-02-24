@@ -22,7 +22,8 @@ asd <- spec_dist %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ecodata::theme_ts() 
+  ecodata::theme_ts()+
+  ecodata::theme_title() 
 
 depth <- spec_dist %>% 
   dplyr::filter(Var == "depth") %>% 
@@ -45,7 +46,8 @@ depth <- spec_dist %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ecodata::theme_ts() 
+  ecodata::theme_ts() +
+  ecodata::theme_title()
 
 # dtc <- spec_dist %>% 
 #   dplyr::filter(Var == "distance to coast") %>% 

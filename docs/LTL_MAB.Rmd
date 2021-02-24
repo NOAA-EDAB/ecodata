@@ -151,7 +151,8 @@ sst_map <-
         strip.background = element_blank(),
         strip.text=element_text(hjust=0),
         axis.text = element_text(size = 8), 
-        axis.title.y = element_text(angle = 90))
+        axis.title.y = element_text(angle = 90))+
+  ecodata::theme_title()
 
 winter_anom <-  ggplot2::ggplotGrob( seasonal_oisst_anom %>% 
                               dplyr::filter(EPU == "MAB",
@@ -315,7 +316,8 @@ ggplot2::ggplot() +
   #         size = hline.size,
   #         alpha = hline.alpha,
   #         linetype = hline.lty) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 ```
 
@@ -385,7 +387,8 @@ pp_cci <- ggplot2::ggplot(out_pp) +
     ecodata::theme_facet() +
     ggplot2::theme(axis.text.x = element_text(angle=45, hjust = 1),
           panel.spacing = unit(0.5, "lines"),
-          plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
+          plot.margin = unit(c(0.1, 0, 0, 0), "cm"))+
+  ecodata::theme_title()
 pp_cci
 ```
 
@@ -421,7 +424,8 @@ chl_cci <- ggplot2::ggplot(out_chl) +
     ecodata::theme_facet() +
     ggplot2::theme(axis.text.x = element_text(angle=45, hjust = 1),
           panel.spacing = unit(.5, "lines"),
-          plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
+          plot.margin = unit(c(0.1, 0, 0, 0), "cm"))+
+  ecodata::theme_title()
 
 chl_cci
 ```
@@ -486,7 +490,8 @@ MAB_chl_weekly <- ggplot2::ggplot(data = MAB_early) +
                    labels = c("Jan.","Mar.","May","July","Oct.","Dec."),
                    expand = c(0.01,0.01)) +
   ggplot2::scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 MAB_pp <- interp_chl_pp(epu = "MAB", Variable =  "WEEKLY_PPD_MEDIAN")
 MAB_early<- MAB_pp %>% filter(Week.x <=26)
@@ -513,7 +518,8 @@ MAB_pp_weekly <- ggplot2::ggplot(data = MAB_early) +
                    labels = c("Jan.","Mar.","May","July","Oct.","Dec."),
                    expand = c(0.01,0.01)) +
   ggplot2::scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 MAB_pp_weekly + MAB_chl_weekly + plot_layout(ncol = 1)
 
@@ -567,7 +573,8 @@ out_phyto2<-  ecodata::phyto_size %>%
                                 "Nanoplankton", "Microplankton"))+
     #scale_y_continuous( name = "Phytoplankton Size Fraction", sec.axis = sec_axis(~.*2, name="Chlorophyll a (mg m^-3)"))+
    scale_x_continuous(breaks = month_numeric, 
-                    labels = month_label)
+                    labels = month_label)+
+  ecodata::theme_title()
 
 out_phyto2
 
@@ -592,7 +599,8 @@ micro_chlor <- ecodata::phyto_size %>%
   #ggplot2::facet_wrap(~EPU)+
   ggplot2::ylab("Chlorophyll a (mg m^-3)") +
   ggplot2::xlab("Microplankton % of Total Phytoplankton Composition ") +
-  ecodata::theme_facet()#+
+  ecodata::theme_facet()+
+  ecodata::theme_title()#+
   #ggplot2::theme(legend.title = element_text("Season"), 
   #               legend.text =element_text("Jan-Mar", "Apr-Jun", "Jul-Sep", "Oct-Dec") )#+
  
@@ -660,7 +668,8 @@ ecodata::ch_bay_temp %>%
   ggplot2::ggtitle("Chesapeake Bay Temperature") +
   ggplot2::theme(legend.position = "bottom", 
                  legend.title = element_blank())+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 ```
 
 <!-- ### Chesepeake Bay Salinity Anomolies -->
@@ -721,7 +730,8 @@ zoo_abund %>%
            linetype = hline.lty)+
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+                                face = "italic"))+
+  ecodata::theme_title()
   
 
 ```
@@ -790,7 +800,8 @@ ecodata::zoo_sli_anom %>%
    ggplot2::theme(plot.title = element_text(size = 7),
                   strip.text=element_text(hjust=0,
                                  face = "italic"), 
-         legend.title = element_blank())
+         legend.title = element_blank())+
+  ecodata::theme_title()
 
 
 ```
@@ -881,7 +892,8 @@ zoo_div %>%
            alpha = hline.alpha,
            linetype = hline.lty)+
   ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_blank())
+  ggplot2::theme(strip.text=element_blank())+
+  ecodata::theme_title()
   
 
 
@@ -913,7 +925,8 @@ cal %>%
                  legend.title = element_blank())+
   ecodata::theme_facet()+
   scale_fill_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
-  scale_color_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))
+  scale_color_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
+  ecodata::theme_title()
 
 ```
 
@@ -1075,7 +1088,8 @@ cp<- ecodata::cold_pool %>%
   ggplot2::facet_wrap(~Var, scales = "free")+
   ggplot2::ylab("Cold Pool") +
   ggplot2::xlab("")+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 cp
 #plotly::ggplotly(cp) 
 ```
@@ -1132,7 +1146,8 @@ cp_map <-
         strip.background = element_blank(),
         strip.text=element_text(hjust=0),
         axis.text = element_text(size = 8),
-        axis.title.y = element_text(angle = 90))
+        axis.title.y = element_text(angle = 90))+
+  ecodata::theme_title()
 
 
 annotation_custom2 <- function (grob, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf) 
@@ -1235,7 +1250,8 @@ cp_map <-
         strip.background = element_blank(),
         strip.text=element_text(hjust=0),
         axis.text = element_blank(),
-        axis.title.y = element_text(angle = 90))
+        axis.title.y = element_text(angle = 90))+
+  ecodata::theme_title()
 
 
 cp_map 
@@ -1264,7 +1280,8 @@ ecodata::heatwave_year %>%
   scale_x_date(date_labels = "%b", breaks = "1 month")+
   theme_bw()+
   theme(legend.title = element_blank(),
-        legend.position=c(0.2, 0.8))
+        legend.position=c(0.2, 0.8))+
+  ecodata::theme_title()
 
 
 ```
@@ -1307,7 +1324,8 @@ mab.hw %>%
   ggplot2::facet_wrap(~Var, scales = "free")+
   ecodata::theme_ts()+
   ggplot2::theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+                                face = "italic"))+
+  ecodata::theme_title()
 
 ```
 
@@ -1359,7 +1377,8 @@ mab_map <-
         axis.title = element_text(size = 11),
         strip.background = element_blank(),
         strip.text=element_text(hjust=0),
-        axis.text = element_text(size = 8))
+        axis.text = element_text(size = 8))+
+  ecodata::theme_title()
 
 
 mab_map 
@@ -1428,7 +1447,8 @@ ggplot2::ggplot() +
         axis.title = element_text(size = 11),
         strip.background = element_blank(),
         strip.text=element_text(hjust=0),
-        axis.text = element_text(size = 8))
+        axis.text = element_text(size = 8))+
+  ecodata::theme_title()
 ```
 
 ### Long-term SST
@@ -1457,7 +1477,8 @@ lt_sst %>%
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01), breaks = seq(1840,2010,10))+
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+                                face = "italic"))+
+  ecodata::theme_title()
 ```
 
 ### GSI
@@ -1526,7 +1547,8 @@ ggplot2::ggplot() +
   ecodata::theme_ts() +
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"), 
-                 axis.title.y = element_text(size = 7))
+                 axis.title.y = element_text(size = 7))+
+  ecodata::theme_title()
 ```
 
 ### Warm Core Rings
@@ -1557,7 +1579,8 @@ wcr %>%
                                       xend = max(Time), yend = hline, color = "segment") )+
   ggplot2::geom_segment(data = lower.line, aes(x = min(Time), y = hline, 
                                     xend = max(Time), yend = hline, color = "segment") )+
-  ggplot2::theme(legend.position = "none")
+  ggplot2::theme(legend.position = "none")+
+  ecodata::theme_title()
 ```
 
 

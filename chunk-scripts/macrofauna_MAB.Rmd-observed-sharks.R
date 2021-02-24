@@ -11,4 +11,5 @@ ecodata::observed_sharks %>%
   ggplot2::ylab("Number per Haul")+
   ggplot2::xlab(element_blank())+
   ggplot2::scale_color_discrete(name = "Category")+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()

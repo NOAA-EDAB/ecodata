@@ -25,7 +25,8 @@ com2<-com %>%
   ggplot2::ylab("Recreation Reliance Score") +
   ggplot2::ggtitle("Social Vulnerability in Top Recreational Fishing Communities")+
   #ggplot2::guides(color = FALSE) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
   
   
   gridExtra::grid.arrange(com2, bottom = textGrob("Low <--------------------------------------------------------------------------------------------------------------------------------------> High", 

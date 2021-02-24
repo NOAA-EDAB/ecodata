@@ -42,4 +42,5 @@ ggplot2::ggplot()+
   ecodata::theme_ts() +
   ggplot2::facet_wrap(~Guild)+
   ggplot2::theme(title = element_text(size = 10), 
-                 legend.position = "bottom")
+                 legend.position = "bottom")+
+  ecodata::theme_title()

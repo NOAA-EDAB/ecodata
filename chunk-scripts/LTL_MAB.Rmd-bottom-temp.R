@@ -29,4 +29,5 @@ ggplot2::ggplot() +
   #         size = hline.size,
   #         alpha = hline.alpha,
   #         linetype = hline.lty) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()

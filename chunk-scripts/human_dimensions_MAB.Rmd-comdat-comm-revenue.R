@@ -53,4 +53,5 @@ ggplot2::ggplot(data = rev_agg) +
            alpha = hline.alpha,
            linetype = hline.lty) +
   ggplot2::xlab(element_blank())+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()

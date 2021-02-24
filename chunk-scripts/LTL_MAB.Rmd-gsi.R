@@ -59,4 +59,5 @@ ggplot2::ggplot() +
   ecodata::theme_ts() +
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"), 
-                 axis.title.y = element_text(size = 7))
+                 axis.title.y = element_text(size = 7))+
+  ecodata::theme_title()

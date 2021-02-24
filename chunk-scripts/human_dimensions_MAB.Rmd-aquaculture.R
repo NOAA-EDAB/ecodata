@@ -14,7 +14,8 @@ ggplot2::ggplot() +
   ggplot2::ylab(expression("Oysters production")) +
   ggplot2::xlab(element_blank())+
   scale_x_continuous(breaks=c(2009,2011,2013,2015, 2017, 2019))+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 # aqua %>% group_by(Time) %>% summarise(Value = sum(Value)) %>% 
 #   dplyr::filter(Time %in% c(max(Time), max(Time-1))) %>% 

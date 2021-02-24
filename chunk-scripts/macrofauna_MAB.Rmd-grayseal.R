@@ -15,4 +15,5 @@ ecodata::grayseal %>%
                                          'NE Annual estimates' = 'black',
                                          'PBR' = 'red'))+
   theme(legend.position = c(0.3, 0.75))+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()

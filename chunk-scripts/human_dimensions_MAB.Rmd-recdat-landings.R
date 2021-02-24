@@ -31,7 +31,8 @@ ggplot2::ggplot(data = landings_rec)+
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 # 
 # landings_rec %>% 
 #   dplyr::filter(Time %in% c(max(Time), max(Time-1))) %>% 

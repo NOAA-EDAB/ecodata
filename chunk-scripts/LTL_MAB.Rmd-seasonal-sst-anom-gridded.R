@@ -52,7 +52,8 @@ sst_map <-
         strip.background = element_blank(),
         strip.text=element_text(hjust=0),
         axis.text = element_text(size = 8), 
-        axis.title.y = element_text(angle = 90))
+        axis.title.y = element_text(angle = 90))+
+  ecodata::theme_title()
 
 winter_anom <-  ggplot2::ggplotGrob( seasonal_oisst_anom %>% 
                               dplyr::filter(EPU == "MAB",

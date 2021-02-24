@@ -44,7 +44,8 @@ cp_map <-
         strip.background = element_blank(),
         strip.text=element_text(hjust=0),
         axis.text = element_blank(),
-        axis.title.y = element_text(angle = 90))
+        axis.title.y = element_text(angle = 90))+
+  ecodata::theme_title()
 
 
 cp_map 

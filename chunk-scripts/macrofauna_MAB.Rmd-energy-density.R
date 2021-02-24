@@ -27,4 +27,5 @@ d %>%
                  legend.title = element_blank())+
   scale_x_continuous(breaks=c(2017,2018, 2019))+
   ggplot2::ggtitle("Forage Fish Energy Density")+
-  ecodata::theme_facet()
+  ecodata::theme_facet()+
+  ecodata::theme_title()

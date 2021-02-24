@@ -22,4 +22,5 @@ ecodata::zoo_sli_anom %>%
    ggplot2::theme(plot.title = element_text(size = 7),
                   strip.text=element_text(hjust=0,
                                  face = "italic"), 
-         legend.title = element_blank())
+         legend.title = element_blank())+
+  ecodata::theme_title()

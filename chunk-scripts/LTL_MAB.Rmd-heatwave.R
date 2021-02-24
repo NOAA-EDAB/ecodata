@@ -35,4 +35,5 @@ mab.hw %>%
   ggplot2::facet_wrap(~Var, scales = "free")+
   ecodata::theme_ts()+
   ggplot2::theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+                                face = "italic"))+
+  ecodata::theme_title()

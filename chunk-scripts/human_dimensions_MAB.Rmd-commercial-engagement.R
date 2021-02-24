@@ -26,7 +26,8 @@ com2<-com %>%
   ggplot2::ggtitle("Social Vulnerability in Top Commercial Fishing Communities")+
   #ggplot2::guides(color = FALSE) +
   #theme_bw()
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
   #ecodata::theme_facet()
   
   

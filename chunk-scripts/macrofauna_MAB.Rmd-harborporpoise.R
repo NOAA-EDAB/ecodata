@@ -13,7 +13,8 @@ ecodata::harborporpoise %>%
                                          'Annual estimates' = 'black',
                                          'PBR' = 'red'))+
   theme(legend.position = c(0.7, 0.7))+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
   
 # hp %>% 
 #   dplyr::filter(YEAR %in% c(max(YEAR), max(YEAR-1))) %>% 

@@ -49,7 +49,8 @@ cp_map <-
         strip.background = element_blank(),
         strip.text=element_text(hjust=0),
         axis.text = element_text(size = 8),
-        axis.title.y = element_text(angle = 90))
+        axis.title.y = element_text(angle = 90))+
+  ecodata::theme_title()
 
 
 annotation_custom2 <- function (grob, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf) 

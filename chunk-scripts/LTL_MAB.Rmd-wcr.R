@@ -23,4 +23,5 @@ wcr %>%
                                       xend = max(Time), yend = hline, color = "segment") )+
   ggplot2::geom_segment(data = lower.line, aes(x = min(Time), y = hline, 
                                     xend = max(Time), yend = hline, color = "segment") )+
-  ggplot2::theme(legend.position = "none")
+  ggplot2::theme(legend.position = "none")+
+  ecodata::theme_title()

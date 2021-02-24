@@ -25,4 +25,5 @@ zoo_abund %>%
            linetype = hline.lty)+
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+                                face = "italic"))+
+  ecodata::theme_title()

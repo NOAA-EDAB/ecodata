@@ -23,4 +23,5 @@ ecodata::wind_revenue %>%
   ggplot2::ylab(expression("2019 Constant 10"^6*"Dollars "))+
   theme(legend.title = element_blank())+
   ggplot2::xlab(element_blank())+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()

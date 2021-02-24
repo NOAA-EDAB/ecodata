@@ -29,5 +29,6 @@ pp_cci <- ggplot2::ggplot(out_pp) +
     ecodata::theme_facet() +
     ggplot2::theme(axis.text.x = element_text(angle=45, hjust = 1),
           panel.spacing = unit(0.5, "lines"),
-          plot.margin = unit(c(0.1, 0, 0, 0), "cm"))
+          plot.margin = unit(c(0.1, 0, 0, 0), "cm"))+
+  ecodata::theme_title()
 pp_cci

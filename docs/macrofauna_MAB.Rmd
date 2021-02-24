@@ -548,7 +548,7 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   #           alpha = hline.alpha,
   #           linetype = hline.lty)+
   #ggplot2::facet_wrap(Var~.,scales = "free_y", ncol = 2) +
-  ggplot2::ggtitle("Expected Number of Species ")+
+  ggplot2::ggtitle("Expected Number of Species -Fall ")+
   
   ecodata::geom_gls() +
   #Axis and theme
@@ -557,7 +557,8 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(legend.title = element_blank())+
-  ggplot2::theme(strip.text=element_text(hjust=0))
+  ggplot2::theme(strip.text=element_text(hjust=0))+
+  ecodata::theme_title()
 
 # exp2 %>% 
 #   dplyr::filter(Time %in% c(max(Time), max(Time-1))) %>% 
@@ -612,7 +613,8 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
   ggplot2::theme(strip.text=element_text(hjust=0), 
-                 legend.title = element_blank())
+                 legend.title = element_blank())+
+  ecodata::theme_title()
 
 
 ```
@@ -834,7 +836,8 @@ ma_larv_div <- ecodata::ichthyo_diversity %>%
            linetype = hline.lty)+
   ecodata::theme_facet() +
   ggplot2::xlab(element_blank())+
-  ggplot2::theme(strip.text=element_text(hjust=0))
+  ggplot2::theme(strip.text=element_text(hjust=0))+
+  ecodata::theme_title()
 
 ma_larv_div
 
@@ -873,7 +876,8 @@ bird %>%
            linetype = hline.lty) +
   ggplot2::theme(legend.position="bottom", legend.direction = "horizontal", 
         legend.title = element_blank(), legend.margin=margin(t = -20)) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 ```
 
 ### Forage Anomaly
@@ -895,7 +899,8 @@ ecodata::forage_anomaly %>%
   ggplot2::ggtitle("Forage Anomalies")+
   ggplot2::ylab("Forage Anomaly")+
   ggplot2::xlab(element_blank())+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 ```
 
@@ -914,7 +919,8 @@ ecodata::observed_sharks %>%
   ggplot2::ylab("Number per Haul")+
   ggplot2::xlab(element_blank())+
   ggplot2::scale_color_discrete(name = "Category")+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 ```
 
@@ -939,7 +945,8 @@ ecodata::harborporpoise %>%
                                          'Annual estimates' = 'black',
                                          'PBR' = 'red'))+
   theme(legend.position = c(0.7, 0.7))+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
   
 # hp %>% 
 #   dplyr::filter(YEAR %in% c(max(YEAR), max(YEAR-1))) %>% 
@@ -969,7 +976,8 @@ ecodata::grayseal %>%
                                          'NE Annual estimates' = 'black',
                                          'PBR' = 'red'))+
   theme(legend.position = c(0.3, 0.75))+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
   
 
 ```
@@ -991,7 +999,8 @@ ecodata::grayseal %>%
    #                                      'NE Annual estimates' = 'black',
                                          'PBR' = 'red'))+
   theme(legend.position = c(0.3, 0.85))+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
   
 
 ```
@@ -1026,7 +1035,8 @@ ecodata::narw %>%
           size = hline.size,
           alpha = hline.alpha,
           linetype = hline.lty) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 
 ```
@@ -1053,7 +1063,8 @@ ecodata::narw %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 
 
@@ -1090,7 +1101,8 @@ asd <- spec_dist %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ecodata::theme_ts() 
+  ecodata::theme_ts()+
+  ecodata::theme_title() 
 
 depth <- spec_dist %>% 
   dplyr::filter(Var == "depth") %>% 
@@ -1113,7 +1125,8 @@ depth <- spec_dist %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ecodata::theme_ts() 
+  ecodata::theme_ts() +
+  ecodata::theme_title()
 
 # dtc <- spec_dist %>% 
 #   dplyr::filter(Var == "distance to coast") %>% 
@@ -1172,7 +1185,8 @@ d %>%
                  legend.title = element_blank())+
   scale_x_continuous(breaks=c(2017,2018, 2019))+
   ggplot2::ggtitle("Forage Fish Energy Density")+
-  ecodata::theme_facet()
+  ecodata::theme_facet()+
+  ecodata::theme_title()
 
 
 ```
@@ -1284,7 +1298,8 @@ ecodata::hms_cpue %>%
   ggplot2::ggtitle("HMS POP TUNA CPUE")+
   ggplot2::ylab("Number per Haul")+
   ggplot2::xlab(element_blank())+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 ```
 
@@ -1308,7 +1323,8 @@ ecodata::hms_cpue %>%
   #ggplot2::facet_wrap(~Var, scales = "free")+
   ggplot2::ggtitle("HMS POP SHARK CPUE")+
   ggplot2::ylab("Number per Haul")+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 
 ```
 

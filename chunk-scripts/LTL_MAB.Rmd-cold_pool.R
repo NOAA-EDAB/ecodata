@@ -18,6 +18,7 @@ cp<- ecodata::cold_pool %>%
   ggplot2::facet_wrap(~Var, scales = "free")+
   ggplot2::ylab("Cold Pool") +
   ggplot2::xlab("")+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()
 cp
 #plotly::ggplotly(cp) 

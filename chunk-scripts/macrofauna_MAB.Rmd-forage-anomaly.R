@@ -13,4 +13,5 @@ ecodata::forage_anomaly %>%
   ggplot2::ggtitle("Forage Anomalies")+
   ggplot2::ylab("Forage Anomaly")+
   ggplot2::xlab(element_blank())+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()

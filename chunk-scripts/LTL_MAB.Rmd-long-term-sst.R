@@ -22,4 +22,5 @@ lt_sst %>%
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01), breaks = seq(1840,2010,10))+
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0,
-                                face = "italic"))
+                                face = "italic"))+
+  ecodata::theme_title()
