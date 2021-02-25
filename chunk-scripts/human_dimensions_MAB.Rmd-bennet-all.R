@@ -61,4 +61,5 @@ ggplot2::ggplot()+
   ecodata::theme_ts() +
   ggplot2::xlab(element_blank())+
   ggplot2::theme(title = element_text(size = 10))+
-  ecodata::theme_title()
+  ecodata::theme_title()+
+  ecodata::theme_facet()

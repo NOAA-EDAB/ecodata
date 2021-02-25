@@ -81,7 +81,7 @@ area_ts <-  ggplot2::ggplotGrob(area2 %>%
                                       ggplot2::scale_x_continuous(breaks = c(1995, 2000, 2005, 2010, 2015),
                                                                   expand = c(0.01, 0.01)) +
                                       ggplot2::ggtitle("")+
-                                      ggplot2::ylab("Area (m^2)") +
+                                      ggplot2::ylab((expression("Area (m"^2*")"))) +
                                       ggplot2::xlab("")+
                                       ecodata::theme_ts()+
                               ggplot2::theme(
