@@ -6,7 +6,11 @@ wind_rev_csv<- "Wind_Energy_Revenue - Geret DePiper - NOAA Federal.csv"
 
 get_wind_revenue<- function(save_clean = F){
   wind_revenue <- read.csv(file.path(raw.dir,wind_rev_csv)) %>%
-    dplyr::select(!X)
+    dplyr::select(!X) %>%
+    dplyr::mutate(Var = as.vector(Var),
+                  Var = dplyr::recode(Var,
+                                      `Surf Clam (Top 5 Species Revenue from Wind Development Areas)` =
+                                        "Surfclam (Top 5 Species Revenue from Wind Development Areas)"))
 
   if (save_clean){
     usethis::use_data(wind_revenue, overwrite = TRUE)
