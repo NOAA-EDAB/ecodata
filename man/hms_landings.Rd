@@ -3,9 +3,9 @@
 \docType{data}
 \name{hms_landings}
 \alias{hms_landings}
-\title{Highly Migratory Species}
+\title{Highly Migratory Species Landings and Revenue}
 \format{
-148 rows and 5 columns.
+112 rows and 5 columns.
 
 \itemize{
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.
@@ -19,7 +19,7 @@
 hms_landings
 }
 \description{
-Data include landing weight and revenue from 19 sharks, tunas and swordfish.
+Data include landing weight and revenue from group HMS species.
 }
 \details{
 More information including processing and indicator derivation steps are available at

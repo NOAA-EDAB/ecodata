@@ -7,9 +7,6 @@
 #' \itemize{
 #'     \item Year: Time
 #'     \item EPU: Ecological Production Unit (EPU) where data originated. Here "MAB" refers to the Mid-Atlantic Bight.
-#'     \item tot: Total
-#'     \item meanday:
-#'     \item ndays:
 #'     \item Value: Value of variable.
 #'     \item Var: calanus stage
 #'     \item Units: Number of calanus/meter cubed.
@@ -18,4 +15,4 @@
 #' }
 #'
 #' @details More information available at \url{https://noaa-edab.github.io/tech-doc/calanus_stage.html}
-"calanus_stage "
+"calanus_stage"

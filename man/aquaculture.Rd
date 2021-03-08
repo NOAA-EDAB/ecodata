@@ -3,24 +3,22 @@
 \docType{data}
 \name{aquaculture}
 \alias{aquaculture}
-\title{Oyster harvest data from the Mid-Atlantic}
+\title{Oyster aquaculture}
 \format{
-A data set containing 24 rows and 5 columns.
+A data set containing 165 rows and 4 columns.
 
 \itemize{
-\item Var: Specifies state from which oyster harvest data were taken.
-\item Value: Number of oysters sold.
-\item EPU: Ecological Production Unit (EPU) where data originated. Here "MAB" refers to the Mid-Atlantic Bight.
-\item Units: Units of variable \code{Var}.
-\item Time: Survey year.
+\item Var: Category of oyster data, production (Pieces), Shellfish lease Acres (Area), Production/Area.
+\item Value: Value of variable \code{Var}.
+\item Region: Specific state of oyster production.
+\item Time: Year.
 }
 }
 \usage{
 aquaculture
 }
 \description{
-These data contain time series of number of oysters sold in Maryland, Virginia, and New Jersey. The data were pulled directly
-from annual state- and university-sponsored surveys of shellfish farmers.
+These data contain time series of number of oysters, the area of oyster lease areas and number of oysters per area.
 }
 \details{
 More information available at \url{https://noaa-edab.github.io/tech-doc/aquaculture.html}

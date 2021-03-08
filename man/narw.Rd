@@ -5,10 +5,10 @@
 \alias{narw}
 \title{North Atlantic right whale abundance}
 \format{
-These data include 84 rows and 5 columns.
+These data include 120 rows and 5 columns.
 
 \itemize{
-\item Var: Specifies variable of interest, including NARW abundance estimate median and 95\% credible
+\item Var: Specifies variable of interest, including NARW and calf abundance estimate median and 95\% credible
 intervals.
 \item Value: Value of variable \code{Var}.
 \item Units: Units of variable \code{Var}.

@@ -5,7 +5,7 @@
 \alias{long_term_sst}
 \title{Long-term SST}
 \format{
-Data contain 165 rows and 5 columns.
+Data contain 167 rows and 5 columns.
 \itemize{
 \item Var: Specifies variable of interest.
 \item Value: Value of variable \code{Var}.

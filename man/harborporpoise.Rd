@@ -5,16 +5,15 @@
 \alias{harborporpoise}
 \title{Harbor porpoise bycatch}
 \format{
-Data set includes 120 rows and 5 columns.
+30 rows and 6 columns.
 
 \itemize{
-\item Var: Specifies variable of interest, including bycatch estimates (five year moving average) with
-coefficient of variation and confidence intervals. Also included is the potential biological removal (PBR) for
-harbor porpoise.
-\item Value: Value of variable \code{Var}.
-\item Time: Year.
-\item Units: Units of variable \code{Var}.
-\item EPU: Ecological Production Unit (EPU) where sampling occurred.
+\item totalest5y: Estimated bycatch with five year rolling window.
+\item totalest5yUCI: Upper confidence interval of estimated bycatch with five year rolling window.
+\item totalest5yLCI: Lower confidence interval of estimated bycatch with five year rolling window.
+\item totalest1y: Annual estimated bycatch.
+\item pbr: Possible Biological Removals.
+\item year: Time step.
 }
 }
 \usage{

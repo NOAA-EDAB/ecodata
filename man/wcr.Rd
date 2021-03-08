@@ -5,7 +5,7 @@
 \alias{wcr}
 \title{Warm core rings spun off of gulf stream}
 \format{
-Data set contains 40 rows and 5 columns
+Data set contains 41 rows and 5 columns
 
 \itemize{
 \item Time: Year.

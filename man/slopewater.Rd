@@ -5,7 +5,7 @@
 \alias{slopewater}
 \title{Northeast Channel slopewater proportions}
 \format{
-74 rows and 5 columns
+78 rows and 5 columns
 
 \itemize{
 \item Var: Specifies slopewater source (either Labrador Slope Water (LSLW) or Warm Slope Water (WSW))

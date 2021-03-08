@@ -5,7 +5,7 @@
 \alias{heatwave}
 \title{Marine Heatwaves}
 \format{
-380 rows and 5 columns.
+400 rows and 5 columns.
 
 \itemize{
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.
