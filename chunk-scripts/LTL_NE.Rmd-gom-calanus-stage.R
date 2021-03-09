@@ -1,5 +1,5 @@
 
-cal <- ecodata::CalanusStage %>% 
+cal <- ecodata::calanus_stage %>% 
   dplyr::filter(EPU == "GOM", 
                 Var %in% c( "c5", "adt")) %>%
   dplyr::mutate(Var = recode(Var, "c5" = "Stage 5", 

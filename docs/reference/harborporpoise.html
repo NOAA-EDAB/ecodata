@@ -136,16 +136,16 @@ Reference Documents and marine mammal stock assessments.</p>
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>Data set includes 120 rows and 5 columns.</p>
+    <p>30 rows and 6 columns.</p>
 <ul>
-<li><p>Var: Specifies variable of interest, including bycatch estimates (five year moving average) with
-coefficient of variation and confidence intervals. Also included is the potential biological removal (PBR) for
-harbor porpoise.</p></li>
-<li><p>Value: Value of variable <code>Var</code>.</p></li>
-<li><p>Time: Year.</p></li>
-<li><p>Units: Units of variable <code>Var</code>.</p></li>
-<li><p>EPU: Ecological Production Unit (EPU) where sampling occurred.</p></li>
+<li><p>totalest5y: Estimated bycatch with five year rolling window.</p></li>
+<li><p>totalest5yUCI: Upper confidence interval of estimated bycatch with five year rolling window.</p></li>
+<li><p>totalest5yLCI: Lower confidence interval of estimated bycatch with five year rolling window.</p></li>
+<li><p>totalest1y: Annual estimated bycatch.</p></li>
+<li><p>pbr: Possible Biological Removals.</p></li>
+<li><p>year: Time step.</p></li>
 </ul>
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Links to source data, further data definitions, and extended methodology are available at
@@ -166,7 +166,7 @@ harbor porpoise.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
