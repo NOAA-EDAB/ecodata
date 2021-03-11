@@ -1,6 +1,6 @@
 
-cal <- ecodata::CalanusStage %>% 
-  dplyr::filter(EPU == "GB") %>% 
+cal <- ecodata::calanus_stage %>% 
+  dplyr::filter(EPU == "MAB") %>% 
   filter(Var %in% c("c3", "c4", "c5", "adt"))
 
 cal$Var <- factor(cal$Var, levels = c("c3", "c4", "c5", "adt"))
