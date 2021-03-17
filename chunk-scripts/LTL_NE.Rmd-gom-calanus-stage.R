@@ -24,6 +24,6 @@ cal %>%
   ggplot2::theme(legend.position = "bottom", 
                  legend.title = element_blank())+
   ecodata::theme_facet()+
-  scale_fill_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
-  scale_color_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
+  scale_fill_manual(values = c("steelblue1", "coral1"))+
+  scale_color_manual(values = c("steelblue1", "coral1"))+
   ecodata::theme_title()

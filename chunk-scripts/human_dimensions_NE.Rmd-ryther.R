@@ -30,4 +30,5 @@ ecodata::ppr %>%
   ggplot2::ylab("mt km-2 y-1")+
   ggplot2::xlab(element_blank())+
   ecodata::theme_ts()+
-  ecodata::theme_title()
+  ecodata::theme_title()+
+  ecodata::theme_facet()

@@ -42,7 +42,7 @@ ggplot2::ggplot()+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
-  ggplot2::ylab(expression("Landings (10"^3*"metric tons)")) +
+  ggplot2::ylab(expression("Landings (10"^3*"mt)")) +
   ggplot2::xlab(element_blank())+
 
   ggplot2::geom_hline(aes(yintercept = hline,
@@ -52,7 +52,7 @@ ggplot2::ggplot()+
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts() +
-  ggplot2::ggtitle("Gulf of Maine - Total Revenue")+
+  ggplot2::ggtitle("Gulf of Maine - Total Landings")+
   ecodata::theme_title()
 
 gb_total <- landings_agg %>% dplyr::filter(EPU == "GB") %>% 
@@ -72,7 +72,7 @@ ggplot2::ggplot()+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
-  ggplot2::ylab(expression("Landings (10"^3*"metric tons)")) +
+  ggplot2::ylab(expression("Landings (10"^3*"mt)")) +
   ggplot2::xlab(element_blank())+
 
   ggplot2::geom_hline(aes(yintercept = hline,
@@ -82,7 +82,7 @@ ggplot2::ggplot()+
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts() +
-  ggplot2::ggtitle("Georges Bank - Total Revenue")+
+  ggplot2::ggtitle("Georges Bank - Total Landings")+
   ecodata::theme_title()
 
 cowplot::plot_grid(gb_total, gom_total, ncol = 2)

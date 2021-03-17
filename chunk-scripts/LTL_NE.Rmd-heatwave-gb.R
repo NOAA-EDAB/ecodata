@@ -36,6 +36,7 @@ gb.hw<-hw %>% dplyr::filter(EPU == "GB") %>%
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"), 
         axis.title.y = element_text(angle = 90))+
-  ecodata::theme_title()
+  ecodata::theme_title()+
+  ecodata::theme_facet()
 
 gb.hw

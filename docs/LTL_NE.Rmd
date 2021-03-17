@@ -189,22 +189,29 @@ ne_anom_plt
 #### Bottom temperature
 
 ```{r bottom-temp-gom, fig.cap="GB and GOM annual bottom temperature anomalies."}
-ecodata::bottom_temp %>%
+
+gl_bt<- ecodata::bottom_temp_glorys%>% 
+  dplyr::filter(EPU == "GOM")
+
+bt<- ecodata::bottom_temp %>%
   dplyr::filter(EPU == "GOM",
-         Var == "bottom temp anomaly in situ") %>% 
-  dplyr::mutate(hline = 0) %>% 
-  ggplot2::ggplot()+ #plot
+         Var == "bottom temp anomaly in situ") %>%
+  dplyr::mutate(hline = 0) 
+
+ggplot2::ggplot()+ #plot
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_line(aes(x = Time, y = Value)) +
-  ecodata::geom_gls(aes(x = Time, y = Value)) +
-  ggplot2::geom_point(aes(x = Time, y = Value), size = 1) +
+  ggplot2::geom_line(aes(x = bt$Time, y = bt$Value)) +
+  ecodata::geom_gls(aes(x = bt$Time, y = bt$Value)) +
+  ggplot2::geom_point(aes(x = bt$Time, y = bt$Value), size = 1) +
+  ggplot2::geom_point(aes(x = gl_bt$Time, y = gl_bt$Value), size = 1, color = "red") +
+  ggplot2::geom_line(aes(x = gl_bt$Time, y = gl_bt$Value), color = "red") +
   ggplot2::ylab("Temperature Anomaly (C)") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("GOM Bottom Temperature Anomaly") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
-  ggplot2::geom_hline(aes(yintercept = hline),
+  ggplot2::geom_hline(aes(yintercept = bt$hline),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
@@ -214,32 +221,33 @@ ecodata::bottom_temp %>%
   ecodata::theme_title()
 
 
-#bot_temp_insitu_gom
-# bot_temp_insitu_gom +
-#   patchwork::plot_layout(ncol =  1) &
-#   ggplot2::theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
-
 ```
 
 
 
 ```{r bottom-temp-gb, fig.cap="GB and GOM annual bottom temperature anomalies."}
-ecodata::bottom_temp %>%
+gl_bt<- ecodata::bottom_temp_glorys%>% 
+  dplyr::filter(EPU == "GB")
+
+bt<- ecodata::bottom_temp %>%
   dplyr::filter(EPU == "GB",
          Var == "bottom temp anomaly in situ") %>%
-  dplyr::mutate(hline = 0) %>% 
-  ggplot2::ggplot()+ #plot
+  dplyr::mutate(hline = 0) 
+
+ggplot2::ggplot()+ #plot
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_line(aes(x = Time, y = Value)) +
-  ecodata::geom_gls(aes(x = Time, y = Value)) +
-  ggplot2::geom_point(aes(x = Time, y = Value), size = 1) +
+  ggplot2::geom_line(aes(x = bt$Time, y = bt$Value)) +
+  ecodata::geom_gls(aes(x = bt$Time, y = bt$Value)) +
+  ggplot2::geom_point(aes(x = bt$Time, y = bt$Value), size = 1) +
+  ggplot2::geom_point(aes(x = gl_bt$Time, y = gl_bt$Value), size = 1, color = "red") +
+  ggplot2::geom_line(aes(x = gl_bt$Time, y = gl_bt$Value), color = "red") +
   ggplot2::ylab("Temperature Anomaly (C)") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("GB Bottom Temperature Anomaly") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
-  ggplot2::geom_hline(aes(yintercept = hline),
+  ggplot2::geom_hline(aes(yintercept = bt$hline),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
@@ -572,7 +580,9 @@ ne_ppd <- ggplot2::ggplot(data = ne_pp_early) +
                    expand = c(0.01,0.01)) +
   ggplot2::scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
   ecodata::theme_ts()+
-  ecodata::theme_title()
+  ecodata::theme_title()+
+  ecodata::theme_facet()
+
 
 ne_ppd
 
@@ -641,7 +651,9 @@ ne_chl <- ggplot2::ggplot(data = ne_early) +
                    expand = c(0.01,0.01)) +
   ggplot2::scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
   ecodata::theme_ts()+
-  ecodata::theme_title()
+  ecodata::theme_title()+
+  ecodata::theme_facet()
+
 ne_chl
 
 ```
@@ -966,8 +978,8 @@ cal %>%
   ggplot2::theme(legend.position = "bottom", 
                  legend.title = element_blank())+
   ecodata::theme_facet()+
-  scale_fill_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
-  scale_color_manual(values = c("steelblue1","steelblue3", "coral1", "coral3"))+
+  scale_fill_manual(values = c("steelblue1", "coral1"))+
+  scale_color_manual(values = c("steelblue1", "coral1"))+
   ecodata::theme_title()
 
 
@@ -1353,7 +1365,8 @@ gb.hw<-hw %>% dplyr::filter(EPU == "GB") %>%
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"), 
         axis.title.y = element_text(angle = 90))+
-  ecodata::theme_title()
+  ecodata::theme_title()+
+  ecodata::theme_facet()
 
 gb.hw
 ```
@@ -1402,7 +1415,9 @@ gom.hw<-hw %>% dplyr::filter(EPU == "GOM") %>%
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"), 
         axis.title.y = element_text(angle = 90)) +
-  ecodata::theme_title()
+  ecodata::theme_title()+
+  ecodata::theme_facet()
+
 
 gom.hw
 ```

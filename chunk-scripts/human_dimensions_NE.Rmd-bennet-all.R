@@ -59,4 +59,5 @@ ggplot2::ggplot()+
   ecodata::theme_ts() +
   ggplot2::scale_fill_brewer(palette = "Set1")+
   ggplot2::theme(title = element_text(size = 10))+
-  ecodata::theme_title()
+  ecodata::theme_title()+
+  ecodata::theme_facet()

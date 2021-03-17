@@ -14,4 +14,5 @@ ecodata::observed_sharks %>%
   ggplot2::xlab(element_blank())+
   ggplot2::scale_color_discrete(name = "Category")+
   ecodata::theme_ts()+
-  ecodata::theme_title()
+  ecodata::theme_title()+
+  ecodata::theme_facet()
