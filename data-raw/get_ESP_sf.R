@@ -56,6 +56,7 @@ for(i in stock_list2){
 
 
 ESP_sf <- sf::st_as_sf(final)
+ESP_sf$ID<- gsub('-', '_', ESP_sf$ID)
 
 if (save_clean){
   usethis::use_data(ESP_sf, overwrite = T)
