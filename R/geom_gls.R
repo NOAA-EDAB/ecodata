@@ -36,7 +36,7 @@
 geom_gls <- function(mapping = NULL, data = NULL, stat = "GLS",
                      position = "identity", na.rm = FALSE, show.legend = NA, 
                      inherit.aes = TRUE, warn = TRUE, ...) {
-  layer(
+  ggplot2::layer(
     geom = ecodata:::GeomGLS, mapping = mapping, data = data, stat = stat, 
     position = position, show.legend = show.legend, inherit.aes = inherit.aes,
     params = list(na.rm = na.rm, warn = warn, ...)
