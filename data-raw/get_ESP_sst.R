@@ -140,32 +140,91 @@ get_group_mean <- function(fname, ESP_name, anom = T){
 fname <- list.files(raw.dir)
 
 ### Changes start here
+acadian_redfish_both<- NULL
+alewife_both<- NULL
+american_lobster_gb_both<- NULL
+american_lobster_gom_both<- NULL
+american_lobster_sne_both<- NULL
+american_plaice_both<- NULL
+atlantic_cod_gb_both<- NULL
+atlantic_hagfish_both<- NULL
+atlantic_halibut_both<- NULL
+atlantic_herring_spring<- NULL
+atlantic_herring_fall<- NULL
+atlantic_menhaden_fall<- NULL
+atlantic_mackerel_spring<- NULL
+atlantic_menhaden_north_spring<- NULL
+atlantic_menhaden_north_fall<- NULL
+atlantic_menhaden_south_fall<- NULL
+atlantic_menhaden_south_spring<- NULL
+atlantic_menhaden_spring<- NULL
+atlantic_wolffish_both<- NULL
+barndoor_skate_both<- NULL
 black_sea_bass_north_pring <- NULL
 black_sea_bass_spring <- NULL
 black_sea_bass_south_spring <- NULL
+blueback_herring_both<- NULL
+bluefish_fall<- NULL
+butterfish_both<- NULL
+clearnose_skate_both<- NULL
+cusk_both<- NULL
+haddock_gb_both<- NULL
+little_skate_both<- NULL
+longfin_inshore_squid_both<- NULL
+monkfish_north_both<- NULL
+monkfish_south_both<- NULL
+northern_shortfin_squid_both<- NULL
+northern_shrimp_fall<- NULL
+ocean_pout_spring<- NULL
+offshore_hake_both<- NULL
+red_hake_gom_ngb_both<- NULL
+red_hake_sgb_ma_both<- NULL
+rosette_skate_both<- NULL
+scup_fall<- NULL
+scup_spring<- NULL
+silver_hake_gom_ngb_both<- NULL
+silver_hake_sgb_ma_both<- NULL
+smooth_dogfish_fall<- NULL
+smooth_skate_both<- NULL
+spiny_dogfish_both<- NULL
+summer_flounder_fall<- NULL
+summer_flounder_spring<- NULL
+thorny_skate_both<- NULL
+windowpane_flounder_gom_gb_both<- NULL
+windowpane_flounder_sne_ma_both<- NULL
+winter_flounder_gb_both<- NULL
+winter_flounder_gom_both<- NULL
+winter_flounder_sne_ma_both<- NULL
+winter_skate_both<- NULL
+witch_flounder_both<- NULL
+white_hake_both<- NULL
+yellowtail_flounder_cc_spring<- NULL
+yellowtail_flounder_cc_fall<- NULL
+yellowtail_flounder_gb_both<- NULL
+yellowtail_flounder_sne_ma_spring<- NULL
+yellowtail_flounder_sne_ma_fall<- NULL
 
-stock_list2 <- c(#"alewife-both","blueback-herring-both","atlantic-menhaden_north-fall",
-                 #"atlantic-menhaden-fall","atlantic-hagfish-both","spiny-dogfish-both",
-                 #"barndoor-skate-both","winter-skate-both","little-skate-both",
-                 #"smooth-skate-both","thorny-skate-both","atlantic-herring-spring",
-                 #"atlantic-herring-fall","silver-hake_gom-ngb-both","white-hake-both",
-                 #"red-hake_gom-ngb-both","atlantic-halibut-both","american-plaice-both",
-                 #"yellowtail-flounder_cc-spring","yellowtail-flounder_cc-fall","winter-flounder_gom-both",
-                 #"witch-flounder-both","atlantic-mackerel-spring","acadian-redfish-both",
-                 #"atlantic-wolffish-both","monkfish_north-both","american-lobster_gom-both",
-                 #"northern-shrimp-fall","northern-shortfin-squid-both","windowpane-flounder_gom-gb-both",
-                 #"cusk-both","ocean-pout-spring","longfin-inshore-squid-both",
-                 #"butterfish-both","haddock_gb-both","smooth-dogfish-fall",
-                 #"atlantic-cod_gb-both","american-lobster_gb-both","winter-flounder_gb-both",
-                 #"yellowtail-flounder_gb-both","summer-flounder-fall","scup-fall",
-                 #"winter-flounder_sne-ma-both","atlantic-menhaden_north-spring","atlantic-menhaden-spring",
-                 #"offshore-hake-both","silver-hake_sgb-ma-both","red-hake_sgb-ma-both",
-                 #"monkfish_south-both" ,"scup-spring",
-                 "black_sea_bass_north_spring",
-                 "black_sea_bass_spring",#"american-lobster_sne-both", "bluefish-fall",
-                 #"windowpane-flounder_sne-ma-both","summer-flounder-spring", "yellowtail-flounder_sne-ma-spring",
-                 #"yellowtail-flounder_sne-ma-fall","clearnose-skate-both","rosette-skate-both",
-                 "black_sea_bass_south_spring")#,"atlantic-menhaden_south-fall","atlantic-menhaden_south-spring" )
+stock_list2 <- c("alewife_both","blueback_herring_both","atlantic_menhaden_north_fall",
+                 "atlantic_menhaden_fall","atlantic_hagfish_both","spiny_dogfish_both",
+                 "barndoor_skate_both","winter_skate_both","little_skate_both",
+                 "smooth_skate_both","thorny_skate_both","atlantic_herring_spring",
+                 "atlantic_herring_fall","silver_hake_gom_ngb_both","white_hake_both",
+                 "red_hake_gom_ngb_both","atlantic_halibut_both","american_plaice_both",
+                 "yellowtail_flounder_cc_spring","yellowtail_flounder_cc_fall","winter_flounder_gom_both",
+                 "witch_flounder_both","atlantic_mackerel_spring","acadian_redfish_both",
+                 "atlantic_wolffish_both","monkfish_north_both","american_lobster_gom_both",
+                 "northern_shrimp_fall","northern_shortfin_squid_both","windowpane_flounder_gom_gb_both",
+                 "cusk_both","ocean_pout_spring","longfin_inshore_squid_both",
+                 "butterfish_both","haddock_gb_both","smooth_dogfish_fall",
+                 "atlantic_cod_gb_both","american_lobster_gb_both","winter_flounder_gb_both",
+                 "yellowtail_flounder_gb_both","summer_flounder_fall","scup_fall",
+                 "winter_flounder_sne_ma_both","atlantic_menhaden_north_spring","atlantic_menhaden_spring",
+                 "offshore_hake_both","silver_hake_sgb_ma_both","red_hake_sgb_ma_both",
+                 "monkfish_south_both" ,"scup_spring","black_sea_bass_north_spring",
+                 "black_sea_bass_spring","american_lobster_sne_both", "bluefish_fall",
+                 "windowpane_flounder_sne_ma_both","summer_flounder_spring", "yellowtail_flounder_sne_ma_spring",
+                 "yellowtail_flounder_sne_ma_fall","clearnose_skate_both","rosette_skate_both",
+                 "black_sea_bass_south_spring","atlantic_menhaden_south_fall","atlantic_menhaden_south_spring" )
 for (e in stock_list2){
   message(e)
   for (i in 1:4){
@@ -175,7 +234,68 @@ for (e in stock_list2){
 }
 
 #process output
-ESP_seasonal_oisst_anom <- rbind(black_sea_bass_north_spring,black_sea_bass_spring,black_sea_bass_south_spring) %>%
+ESP_seasonal_oisst_anom <- rbind(acadian_redfish_both,
+                                 alewife_both,
+                                 american_lobster_gb_both,
+                                 american_lobster_gom_both,
+                                 american_lobster_sne_both,
+                                 american_plaice_both,
+                                 atlantic_cod_gb_both,
+                                 atlantic_hagfish_both,
+                                 atlantic_halibut_both,
+                                 atlantic_herring_spring,
+                                 atlantic_herring_fall,
+                                 atlantic_mackerel_spring,
+                                 atlantic_menhaden_north_spring,
+                                 atlantic_menhaden_north_fall,
+                                 atlantic_menhaden_south_fall,
+                                 atlantic_menhaden_south_spring,
+                                 atlantic_menhaden_spring,
+                                 atlantic_wolffish_both,
+                                 barndoor_skate_both,
+                                 black_sea_bass_north_pring,
+                                 black_sea_bass_spring,
+                                 black_sea_bass_south_spring,
+                                 blueback_herring_both,
+                                 bluefish_fall,
+                                 butterfish_both,
+                                 clearnose_skate_both,
+                                 cusk_both,
+                                 haddock_gb_both,
+                                 little_skate_both,
+                                 longfin_inshore_squid_both,
+                                 monkfish_north_both,
+                                 monkfish_south_both,
+                                 northern_shortfin_squid_both,
+                                 northern_shrimp_fall,
+                                 ocean_pout_spring,
+                                 offshore_hake_both,
+                                 red_hake_gom_ngb_both,
+                                 red_hake_sgb_ma_both,
+                                 rosette_skate_both,
+                                 scup_fall,
+                                 scup_spring,
+                                 silver_hake_gom_ngb_both,
+                                 silver_hake_sgb_ma_both,
+                                 smooth_dogfish_fall,
+                                 smooth_skate_both,
+                                 spiny_dogfish_both,
+                                 summer_flounder_fall,
+                                 summer_flounder_spring,
+                                 thorny_skate_both,
+                                 windowpane_flounder_gom_gb_both,
+                                 windowpane_flounder_sne_ma_both,
+                                 winter_flounder_gb_both,
+                                 winter_flounder_gom_both,
+                                 winter_flounder_sne_ma_both,
+                                 winter_skate_both,
+                                 witch_flounder_both,
+                                 white_hake_both,
+                                 yellowtail_flounder_cc_spring,
+                                 yellowtail_flounder_cc_fall,
+                                 yellowtail_flounder_gb_both,
+                                 yellowtail_flounder_sne_ma_spring,
+                                 yellowtail_flounder_sne_ma_fall) %>%
   dplyr::mutate(Time = as.numeric(stringr::str_extract(year,"\\d{4}")),
                 Var = paste(stringr::str_extract(year, "winter|spring|summer|fall"),"OI SST Anomaly")) %>%
   dplyr::select(-year) %>%

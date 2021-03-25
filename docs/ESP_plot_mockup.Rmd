@@ -72,11 +72,12 @@ label <- function(variable,value){
 ```{r}
 
 ESP_seasonal_oisst_anom %>% 
+  dplyr::filter(grepl( "sea", ESP)) %>% 
   ggplot2::ggplot()+
   geom_point(aes(x = Time, y = Value))+
   geom_line(aes(x = Time, y = Value))+
   ecodata::geom_gls(aes(x = Time, y = Value))+
-  facet_grid(Var~ESP)
+  facet_grid(ESP~Var)
 ```
 
 
