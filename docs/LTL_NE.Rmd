@@ -721,6 +721,7 @@ out_phyto2<-  ecodata::phyto_size %>%
   tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
   dplyr::filter(!Value == "NA", 
                 !Var == "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")  %>%
+  dplyr::mutate(Value = Value*100) %>% 
 
   ggplot2::ggplot() +
    geom_area(aes(x=as.numeric(WEEK), y=Value, 
