@@ -67,8 +67,10 @@ gb_landings <- landings %>% dplyr::filter(EPU == "GB") %>%
 
   #Facet 
   #facet_wrap(feeding.guild~.,scales = "free_y", labeller = label, ncol = 1) +
-  ggplot2::facet_wrap(~feeding.guild, ncol = 1, scales = "free")+
+  ggplot2::facet_wrap(~feeding.guild, ncol = 1)+
+  #ggplot2::facet_wrap(~feeding.guild, ncol = 1, scales = "free")+
   #Axis and theme
+  ggplot2::ylim(1,NA)+
   ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Landings (10"^3*"metric tons)")) +

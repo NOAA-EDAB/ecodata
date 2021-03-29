@@ -179,8 +179,10 @@ gb_landings <- landings %>% dplyr::filter(EPU == "GB") %>%
 
   #Facet 
   #facet_wrap(feeding.guild~.,scales = "free_y", labeller = label, ncol = 1) +
-  ggplot2::facet_wrap(~feeding.guild, ncol = 1, scales = "free")+
+  ggplot2::facet_wrap(~feeding.guild, ncol = 1)+
+  #ggplot2::facet_wrap(~feeding.guild, ncol = 1, scales = "free")+
   #Axis and theme
+  ggplot2::ylim(1,NA)+
   ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Landings (10"^3*"metric tons)")) +
@@ -267,8 +269,10 @@ gom_landings<- landings %>%
 
   #Facet 
   #facet_wrap(feeding.guild~., scales = "free", labeller = label, ncol = 1)+
-  ggplot2::facet_wrap(~feeding.guild, ncol = 1, scales = "free")+
+  ggplot2::facet_wrap(~feeding.guild, ncol = 1)+
+  #ggplot2::facet_wrap(~feeding.guild, ncol = 1, scales = "free")+
   #Axis and theme
+  ggplot2::ylim(0, NA)+
   ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Landings (10"^3*"metric tons)")) +
@@ -278,7 +282,7 @@ gom_landings<- landings %>%
   ggplot2::ggtitle("Gulf of Maine")+
   ecodata::theme_title()
 
-gom_landings
+gom_landings 
 ```
 
 
@@ -1155,7 +1159,7 @@ rec_landings <- ggplot2::ggplot(data = landings_rec)+
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   # Plotly can not use "expression" so follow notes below
-  ggplot2::ylab(("Landings (N)")) + # Use this for HTML version
+  ggplot2::ylab(expression("Landings (N x 10"^6*")")) + # Use this for HTML version
   
   ggplot2::xlab(element_blank())+
   #ggplot2::ylab(expression("Fish caught (10"^6"*n)")) + #Use this for SOEs and anything pdf 
@@ -1396,6 +1400,7 @@ ecodata::rec_hms %>%
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+
   ggplot2::ylab("Landings (N)")+
   ggplot2::xlab("")+ 
+  ggplot2::ggtitle("Recreation Shark Landings")+
   ggplot2::theme(legend.title = element_blank())+
   ecodata::theme_ts()+
   ecodata::theme_title()
