@@ -21,7 +21,7 @@ com2<-com %>%
         legend.title = element_blank(),       
         legend.background = element_blank(),
         legend.box.background = element_rect(colour = "black"))+
-  ggplot2::xlab("Recreation Engagament Score") +
+  ggplot2::xlab("Recreation Engagement Score") +
   ggplot2::ylab("Recreation Reliance Score") +
   ggplot2::ggtitle("Social Vulnerability in Top Recreational Fishing Communities")+
   #ggplot2::guides(color = FALSE) +

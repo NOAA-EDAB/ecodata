@@ -15,15 +15,16 @@ total_landings <- ecodata::comdat  %>%
 
 total_landings_agg <- total_landings %>%
   dplyr::group_by(EPU,Time) %>%
-  dplyr::summarise(Value = sum(Value)) %>% 
+  dplyr::summarise(Value = sum(Value)/1000) %>% 
   dplyr::mutate(Var = "Total",hline = mean(Value))
 
 managed_landings_agg <- managed_landings %>%
   dplyr::group_by(EPU,Time) %>%
-  dplyr::summarise(Value = sum(Value)) %>% 
+  dplyr::summarise(Value = sum(Value)/1000) %>% 
   dplyr::mutate(Var = "Managed",hline = mean(Value))
 
-landings_agg <- rbind(total_landings_agg, managed_landings_agg) 
+landings_agg <- rbind(total_landings_agg, managed_landings_agg)# %>% 
+#  dplyr::mutate(Value = Value/1000)
 
 gom_total <- landings_agg %>% dplyr::filter(EPU == "GOM") %>% 
 ggplot2::ggplot()+
@@ -37,8 +38,9 @@ ggplot2::ggplot()+
              alpha = trend.alpha, size = trend.size) +
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+  ggplot2::ylim(30,190)+
 
-  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
+#  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
@@ -67,8 +69,8 @@ ggplot2::ggplot()+
              alpha = trend.alpha, size = trend.size) +
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
-
-  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
+  ggplot2::ylim(30,190)+
+#  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +

@@ -12,6 +12,7 @@ gb_zoo_div <- zoo_div %>%
   ecodata::geom_gls() +
   ggplot2::geom_line() +
   ggplot2::geom_point() +
+#  ggplot2::ylim(1,2.8)+
   ggplot2::ylab("Shannon Diversity") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("GB Zooplankton Diversity") +
