@@ -1106,7 +1106,7 @@ asd <- spec_dist %>%
 
 depth <- spec_dist %>% 
   dplyr::filter(Var == "depth") %>% 
-  dplyr::mutate(Value = Value* -1, 
+  dplyr::mutate(Value = Value, 
          hline = mean(Value)) %>% 
   ggplot2::ggplot(aes(x = Time, y = Value,
                group = Var)) + 
@@ -1118,6 +1118,7 @@ depth <- spec_dist %>%
   ggplot2::geom_line() +
   ggplot2::geom_point() +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  ggplot2::scale_y_continuous(trans = "reverse")+
   ggplot2::ggtitle("Depth") +
   ggplot2::ylab(expression("Depth (m)")) +
   ggplot2::xlab("")+

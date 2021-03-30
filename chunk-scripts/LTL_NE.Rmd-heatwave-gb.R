@@ -27,6 +27,7 @@ gb.hw<-hw %>% dplyr::filter(EPU == "GB") %>%
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Georges Bank") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,

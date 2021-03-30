@@ -42,7 +42,9 @@ gb_zoo<-zoo_abund %>%
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("GB Zooplankton abundance") +
   ggplot2::facet_wrap(Var~., ncol = 3) +
+  ggplot2::ylim(5,9)+
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
+ # ggplot2::scale_y_continuous(breaks = c(4,6,8))+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
