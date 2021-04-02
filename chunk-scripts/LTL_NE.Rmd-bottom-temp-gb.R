@@ -18,6 +18,7 @@ ggplot2::ggplot()+ #plot
   ggplot2::geom_line(aes(x = gl_bt$Time, y = gl_bt$Value), color = "red") +
   ggplot2::ylab("Temperature Anomaly (C)") +
   ggplot2::xlab(element_blank())+
+  ggplot2::ylim(-1.4,2)+
   ggplot2::ggtitle("GB Bottom Temperature Anomaly") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
   ggplot2::geom_hline(aes(yintercept = bt$hline),
