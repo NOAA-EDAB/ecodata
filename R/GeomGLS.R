@@ -24,7 +24,7 @@ GeomGLS <- ggplot2::ggproto("GeomGLS",
                        gp = grid::gpar(
                          col = first_row$color,
                          alpha = first_row$alpha,
-                         lwd = first_row$size * .pt,
+                         lwd = first_row$size * ggplot2::.pt,
                          lty = first_row$linetype
                        )
                      )
