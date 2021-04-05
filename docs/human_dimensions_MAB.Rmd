@@ -239,6 +239,7 @@ p1
 
 ``` 
 
+
 ```{r comdat-total-landings, fig.asp=.35, fig.cap = paste0("Total commercial seafood landings (black) shown with ",region," managed seafood landings (red). \\label{total-landings}")}
 
 #Managed landings
