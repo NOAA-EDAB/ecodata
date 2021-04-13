@@ -170,7 +170,7 @@ ESP_seasonal_chl <- rbind(acadian_redfish_both,
                                  atlantic_menhaden_spring,
                                  atlantic_wolffish_both,
                                  barndoor_skate_both,
-                                 black_sea_bass_north_pring,
+                                 black_sea_bass_north_spring,
                                  black_sea_bass_spring,
                                  black_sea_bass_south_spring,
                                  blueback_herring_both,
@@ -216,7 +216,8 @@ ESP_seasonal_chl <- rbind(acadian_redfish_both,
   #dplyr::mutate(#Time = as.numeric(stringr::str_extract(year,"\\d{4}")),
                 #Var = paste(stringr::str_extract(year, "winter|spring|summer|fall"),"OI SST Anomaly")) %>%
   #dplyr::select(-year) %>%
-  dplyr::mutate(Units = "mg m^-3")
+  dplyr::mutate(Units = "mg m^-3") %>%
+  dplyr::rename(Time = year)
 
 
 # metadata ----

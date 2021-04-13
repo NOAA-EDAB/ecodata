@@ -160,7 +160,7 @@ atlantic_menhaden_south_spring<- NULL
 atlantic_menhaden_spring<- NULL
 atlantic_wolffish_both<- NULL
 barndoor_skate_both<- NULL
-black_sea_bass_north_pring <- NULL
+black_sea_bass_north_spring <- NULL
 black_sea_bass_spring <- NULL
 black_sea_bass_south_spring <- NULL
 blueback_herring_both<- NULL
@@ -253,7 +253,7 @@ ESP_seasonal_oisst_anom <- rbind(acadian_redfish_both,
                                  atlantic_menhaden_spring,
                                  atlantic_wolffish_both,
                                  barndoor_skate_both,
-                                 black_sea_bass_north_pring,
+                                 black_sea_bass_north_spring,
                                  black_sea_bass_spring,
                                  black_sea_bass_south_spring,
                                  blueback_herring_both,
