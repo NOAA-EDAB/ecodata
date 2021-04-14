@@ -283,7 +283,22 @@ ESP_seasonal_chl %>%
   ggplot2::ggplot()+
   geom_point(aes(x = Time, y = Value))+
   geom_line(aes(x = Time, y = Value))+
-  ecodata::geom_gls(aes(x = Time, y = Value))+
+  #ecodata::geom_gls(aes(x = Time, y = Value))+
+  facet_grid(ESP~Var)
+```
+
+### PPD
+
+#### Faceted ppd Time series 
+
+```{r}
+
+ESP_seasonal_pp %>% 
+  dplyr::filter(grepl( "black_sea_bass", ESP)) %>% 
+  ggplot2::ggplot()+
+  geom_point(aes(x = Time, y = Value))+
+  geom_line(aes(x = Time, y = Value))+
+  #ecodata::geom_gls(aes(x = Time, y = Value))+
   facet_grid(ESP~Var)
 ```
 
