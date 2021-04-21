@@ -431,7 +431,7 @@ chl_cci
 ```
 
 
-#### Sesonal chlorophyll *a* & primary production
+#### Seasonal chlorophyll *a* & primary production
 
 ```{r chl-weekly,fig.cap = "Weekly chlorophyll concentrations and primary productivity in the Mid-Atlantic are shown for by the colored line for 2020. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
 
