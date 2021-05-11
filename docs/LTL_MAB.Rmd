@@ -2,6 +2,8 @@
 title: "Environmental and LTL Indicators MAB and Shelf-wide"
 output:
   rmarkdown::html_document:
+    self_contained: false
+    lib_dir: libs
     toc: true
     toc_float: true
     theme: lumen
