@@ -5,6 +5,8 @@ output:
     toc: true
     toc_float: true
     theme: lumen
+    self_contained: false
+    lib_dir: libs
 ---
 
 ```{r setup, include=FALSE}
