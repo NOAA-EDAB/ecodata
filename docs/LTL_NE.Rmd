@@ -755,7 +755,7 @@ out_phyto2
 
 ```
 
-```{r}
+```{r seasonal-phyto-size}
 
 micro_chlor <- ecodata::phyto_size %>% 
   dplyr::filter(EPU %in% c("GB", "GOM"),

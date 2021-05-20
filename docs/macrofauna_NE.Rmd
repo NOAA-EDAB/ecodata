@@ -1287,10 +1287,17 @@ gom
 ```{r gom-cf, fig.cap = "Condition factor for species sampled in the Gulf of Maine.", fig.width=50}
 
 
-knitr::include_graphics(c(file.path(image.dir, "GOMcondition_2020_viridis_final.jpg"),file.path(image.dir, "GBcondition_2020_viridis_final.jpg") ))
+knitr::include_graphics(c(file.path(image.dir, "GOMcondition_2020_viridis_final.jpg")))
 
 ```
 
+```{r gb-cf, fig.cap = "Condition factor for species sampled in Georges Bank.", fig.width=50}
+
+
+knitr::include_graphics(c(
+                          file.path(image.dir, "GBcondition_2020_viridis_final.jpg") ))
+
+```
 ### Stomach Fullness
 
 <span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
