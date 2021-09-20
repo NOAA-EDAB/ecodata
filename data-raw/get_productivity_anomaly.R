@@ -31,6 +31,11 @@ attr(productivity_anomaly, "data_files")   <- list(
   productivity_anomaly__epu_rdata  =productivity_anomaly__epu_rdata )
 attr(productivity_anomaly, "data_steward") <- c(
   "Kimberly Bastille <kimberly.bastille@noaa.gov>")
+attr(productivity_anomaly, "plot_script") <- list(
+  `mf_MAB` = "macrofauna_MAB.Rmd-productivity-anomaly.R",
+  `mf_NE_gb` = "macrofauna_NE.Rmd-productivity-anomaly-gb.R",
+  `mf_NE_gom` = "macrofauna_NE.Rmd-productivity-anomaly-gom.R")
+
 usethis::use_data(productivity_anomaly, overwrite = TRUE)
 
 

@@ -12,16 +12,20 @@ get_wind_revenue<- function(save_clean = F){
                                       `Surf Clam (Top 5 Species Revenue from Wind Development Areas)` =
                                         "Surfclam (Top 5 Species Revenue from Wind Development Areas)"))
 
-  if (save_clean){
-    usethis::use_data(wind_revenue, overwrite = TRUE)
-  } else {
-    return(wind_revenue)
-  }
   # metadata ----
   attr(wind_revenue, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc.html"
   attr(wind_revenue, "data_files")   <- list(
     wind_rev_csv = wind_rev_csv)
   attr(wind_revenue, "data_steward") <- c(
     "Geret DePiper <geret.depiper@noaa.gov>")
+  attr(wind_revenue, "plot_script") <- list(
+    `hd_MAB` = "human_dimensions_MAB.Rmd-wind-revenue.R",
+    `hd_NE` = "human_dimensions_NE.Rmd-wind-revenue.R")
+
+  if (save_clean){
+    usethis::use_data(wind_revenue, overwrite = TRUE)
+  } else {
+    return(wind_revenue)
+  }
 }
 get_wind_revenue(save_clean = T)

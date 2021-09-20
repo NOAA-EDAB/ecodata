@@ -30,6 +30,8 @@ get_ch_bay_temp <- function(save_clean = F){
   attr(ch_bay_temp, "data_steward") <- c(
     "Charles Pellerin <charles.pellerin@noaa.gov>",
     "Bruce Vogt <bruce.vogt@noaa.gov")
+  attr(ch_bay_temp, "plot_script") <- list(
+    `ltl_MAB` = "LTL_MAB.Rmd-ch-bay-temp.R")
 
   if (save_clean){
     usethis::use_data(ch_bay_temp, overwrite = T)

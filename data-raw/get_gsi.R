@@ -17,17 +17,20 @@ get_gsi <- function(save_clean = F){
            Units = "latitude anomaly",
            EPU = "All")
 
-  if (save_clean){
-    usethis::use_data(gsi, overwrite = T)
-  } else {
-    return(gsi)
-  }
   # metadata ----
   attr(gsi, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/gulf-stream-index.html"
   attr(gsi, "data_files")   <- list(
     gsi_csv = gsi_csv)
   attr(gsi, "data_steward") <- c(
     "Vincent Saba <vincent.saba@noaa.gov>")
+  attr(gsi, "plot_script") <- list(
+    `ltl_MAB` = "LTL_MAB.Rmd-gsi.R")
+
+  if (save_clean){
+    usethis::use_data(gsi, overwrite = T)
+  } else {
+    return(gsi)
+  }
 }
 get_gsi(save_clean = T)
 
@@ -53,5 +56,6 @@ get_gsi_old <- function(save_clean = F){
   #   gsi_csv = gsi_csv)
   # attr(gsi_old, "data_steward") <- c(
   #   "Vincent Saba <vincent.saba@noaa.gov>")
+
 }
 get_gsi_old(save_clean = T)

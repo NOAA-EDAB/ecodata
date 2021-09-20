@@ -22,11 +22,6 @@ get_hms_cpue <- function(save_clean = F){
     dplyr::rename(Var = Common) %>%
     dplyr::select(Year, Value, EPU, Var)
 
-  if (save_clean){
-    usethis::use_data(hms_cpue, overwrite = T)
-  } else {
-    return(hms_cpue)
-  }
   # metadata ----
   attr(hms_cpue, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc.html"
   attr(hms_cpue, "data_files")   <- list(
@@ -34,6 +29,14 @@ get_hms_cpue <- function(save_clean = F){
     HMS_sp_csv = HMS_sp_csv)
   attr(hms_cpue, "data_steward") <- c(
     "Jennifer Cudney <Jennifer.cudney@noaa.gov>")
+  attr(hms_cpue, "plot_script") <- list(
+    `mf_MAB_sharks` = "macrofauna_MAB.Rmd-hms-cpue-sharks.R")
+
+  if (save_clean){
+    usethis::use_data(hms_cpue, overwrite = T)
+  } else {
+    return(hms_cpue)
+  }
 }
 get_hms_cpue(save_clean = T)
 

@@ -69,6 +69,9 @@ attr(seasonal_sst_anomaly_gridded, "data_files")   <- list(
   seasonal_sst_anomaly_gridded_ltm_nc = seasonal_sst_anomaly_gridded_ltm_nc)
 attr(seasonal_sst_anomaly_gridded, "data_steward") <- c(
   "Kimberly Bastille <kimberly.bastille@noaa.gov>")
+attr(seasonal_sst_anomaly_gridded, "plot_script") <- list(
+  `ltl_MAB_shelf` = "LTL_MAB.Rmd-shelf-seasonal-sst-anomaly-gridded.R",
+  `ltl_NE` = "LTL_NE.Rmd-seasonal-sst-anomaly-gridded.R")
 
 usethis::use_data(seasonal_sst_anomaly_gridded, overwrite = T)
 

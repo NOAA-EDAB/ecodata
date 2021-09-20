@@ -18,16 +18,20 @@ get_stom_fullness <- function(save_clean = F){
     dplyr::mutate(Units = c("anom")) %>%
     dplyr::select(Time, Var, Value, EPU, Units)
 
-  if (save_clean){
-    usethis::use_data(stom_fullness, overwrite = T)
-  } else {
-    return(stom_fullness)
-  }
   # metadata ----
   attr(stom_fullness, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chl-pp.html"
   attr(stom_fullness, "data_files")   <- list(
     stom_fullness_csv = stom_fullness_csv)
   attr(stom_fullness, "data_steward") <- c(
     "Laurel Smith <laurel.smith@noaa.gov>")
+  attr(stom_fullness, "plot_script") <- list(
+    `mf_MAB` = "macrofauna_MAB.Rmd-stom-fullness.R",
+    `mf_NE` = "macrofauna_NE.Rmd-stom-fullness.R")
+
+  if (save_clean){
+    usethis::use_data(stom_fullness, overwrite = T)
+  } else {
+    return(stom_fullness)
+  }
 }
 get_stom_fullness(save_clean = T)

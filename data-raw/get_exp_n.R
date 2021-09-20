@@ -25,18 +25,22 @@ get_exp_n <- function(save_clean = F){
     dplyr::select(-trash1, -trash2, -trash3, -trash4, -trash5, -trash6) %>%
     rbind(exp_n2)
 
-
-
-  if (save_clean){
-    usethis::use_data(exp_n, overwrite = T)
-  } else {
-    return(exp_n)
-  }
   # metadata ----
   attr(exp_n, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc"
   attr(exp_n, "data_files")   <- list(
     exp_n_rdata = exp_n_rdata)
   attr(exp_n, "data_steward") <- c(
     "Sean Lucey <sean.lucey@noaa.gov>")
+  attr(exp_n, "plot_script") <- list(
+    `mf_MAB` = "macrofauna_MAB.Rmd-exp-n.R",
+    `mf_MAB_spring` = "macrofauna_MAB.Rmd-exp-n-spring.R",
+    `mf_NE` = "macrofauna_NE.Rmd-exp-n.R",
+    `mf_NE_spring` = "macrofauna_NE.Rmd-exp-n-spring.R")
+
+  if (save_clean){
+    usethis::use_data(exp_n, overwrite = T)
+  } else {
+    return(exp_n)
+  }
 }
 get_exp_n(save_clean = T)

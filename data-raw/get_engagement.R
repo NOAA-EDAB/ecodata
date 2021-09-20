@@ -35,11 +35,6 @@ get_eng_rel <- function(save_clean = F){
                   ComRel = as.numeric(ComRel))
   colnames(engagement) = col.names
 
-  if (save_clean){
-    usethis::use_data(engagement, overwrite = T)
-  } else {
-    return(engagement)
-  }
   # metadata ----
   attr(engagement, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/community-engagement.html"
   attr(engagement, "data_files")   <- list(
@@ -47,6 +42,19 @@ get_eng_rel <- function(save_clean = F){
   attr(engagement, "data_steward") <- c(
     "Lisa Colburn <lisa.colburn@noaa.gov>",
     "Changhua Weng <changhua.weng@noaa.gov>")
+  attr(engagement, "plot_script") <- list(
+    `hd_MAB` = "human_dimensions_MAB.Rmd-engagement.R",
+    `hd_MAB_commercial` = "human_dimensions_MAB.Rmd-commercial-engagement.R",
+    `hd_MAB_recreational` = "human_dimensions_MAB.Rmd-recreational-engagement.R",
+    `hd_NE` = "human_dimensions_NE.Rmd-engagement.R",
+    `hd_NE_commercial` = "human_dimensions_NE.Rmd-commercial-engagement.R",
+    `hd_NE_recreational` = "human_dimensions_NE.Rmd-recreational-engagement.R")
+
+  if (save_clean){
+    usethis::use_data(engagement, overwrite = T)
+  } else {
+    return(engagement)
+  }
 }
 get_eng_rel(save_clean = T)
 

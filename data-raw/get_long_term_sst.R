@@ -13,11 +13,13 @@ get_long_term_sst <- function(save_clean = F){
            EPU = "All",
            Units = "degreesC")
 
+  attr(long_term_sst, "plot_script") <- list(
+    `ltl_MAB` = "LTL_MAB.Rmd-long-term-sst.R")
+
   if (save_clean) {
     usethis::use_data(long_term_sst, overwrite = T)
   } else {
     return(long_term_sst)
   }
-
 }
 get_long_term_sst(save_clean = T)

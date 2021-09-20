@@ -18,16 +18,20 @@ get_wind_dev_speed <- function(save_clean = F){
     dplyr::select( Time, Value, Var, EPU) %>%
     dplyr::filter(!Value == "NA")
 
-  if (save_clean){
-    usethis::use_data(wind_dev_speed, overwrite = T)
-  } else {
-    return(wind_dev_speed)
-  }
   # metadata ----
   attr(wind_dev_speed, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc.html"
   attr(wind_dev_speed, "data_files")   <- list(
     wind_dev_speed_xlsx = wind_dev_speed_xlsx)
   attr(wind_dev_speed, "data_steward") <- c(
     "Angela Silva <angela.silva@noaa.gov")
+  attr(wind_dev_speed, "plot_script") <- list(
+    `hd_MAB_0` = "human_dimensions_MAB.Rmd-wind-dev-speed0.R",
+    `hd_MAB_0.30` = "human_dimensions_MAB.Rmd-wind-dev-speed0.30.R")
+
+  if (save_clean){
+    usethis::use_data(wind_dev_speed, overwrite = T)
+  } else {
+    return(wind_dev_speed)
+  }
 }
 get_wind_dev_speed(save_clean = T)

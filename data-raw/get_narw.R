@@ -26,17 +26,20 @@ get_narw <- function(save_clean = F){
   #
   # narw <- rbind(narw, calves19) #bind with rest of data
 
-  if (save_clean){
-    usethis::use_data(narw, overwrite = T)
-  } else {
-    return(narw)
-  }
   # metadata ----
   attr(narw, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/right-whale-abundance.html"
   attr(narw, "data_files")   <- list(
     narw_xlsx = narw_xlsx)
   attr(narw, "data_steward") <- c(
     "Chris Orphanides <chris.orphanides@noaa.gov>")
+  attr(narw, "plot_script") <- list(
+    `mf_MAB_abundance` = "macrofauna_MAB.Rmd-narw-abundance.R")
+
+  if (save_clean){
+    usethis::use_data(narw, overwrite = T)
+  } else {
+    return(narw)
+  }
 }
 get_narw(save_clean = T)
 

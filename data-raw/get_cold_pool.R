@@ -4,18 +4,13 @@ library(dplyr)
 library(tidyr)
 library(tidync)
 
-
-
 raw.dir <- here::here("data-raw")
 
-cold_pool_nc<- "Glorys12v1_ColdPool_Extents.nc" #File from Zhoumin
+cold_pool_nc <- list.files(raw.dir, pattern=cold_pool_nc,full.names=TRUE) # "Glorys12v1_ColdPool_Extents.nc" #File from Zhoumin
 
 get_cold_pool_sf <- function(save_clean = F){
 
-
-  cold_pool_file <- list.files(raw.dir, pattern=cold_pool_nc,full.names=TRUE)
-
-  r <- raster::stack(cold_pool_file)
+  r <- raster::stack(cold_pool_nc)
   extent(r) <- c(-78, -63, 35, 45) # fix extent
   min <- 0.00000001
   max <- 2000
@@ -66,7 +61,7 @@ usethis::use_data(cold_pool_sf, overwrite = TRUE)
 ## --------------------------------------------------------------------------------- ##
     ### Cold Pool time series
 get_cold_pool <- function(save_clean = F){
-  cold_pool <- tidync::tidync(cold_pool_file) %>%
+  cold_pool <- tidync::tidync(cold_pool_nc) %>%
     tidync::hyper_tibble() %>%
     dplyr::mutate(Time = c(ny+1992)) %>%
     dplyr::filter(V_max < 100,
@@ -79,19 +74,22 @@ get_cold_pool <- function(save_clean = F){
                      Uncertainty = sd(Value)) %>%
     dplyr::mutate(EPU = c("MAB"))
 
-
-  if(save_clean){
-    usethis::use_data(cold_pool, overwrite = T)
-  } else {
-    return(cold_pool)
-  }
   # metadata ----
   attr(cold_pool, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/cold-pool-index.html"
   attr(cold_pool, "data_files")   <- list(
     cold_pool_nc = cold_pool_nc)
   attr(cold_pool, "data_steward") <- c(
     "Zhuomin Chen <zchen@whoi.edu>")
+  attr(cold_pool, "plot_script") <- list(
+    `ltl_MAB` = "LTL_MAB.Rmd-cold_pool.R",
+    `ltl_MAB_map` = "LTL_MAB.Rmd-cold_pool_map.R",
+    `ltl_MAB_map2` = "LTL_MAB.Rmd-cold_pool_map2.R")
 
+  if(save_clean){
+    usethis::use_data(cold_pool, overwrite = T)
+  } else {
+    return(cold_pool)
+  }
 }
 get_cold_pool(save_clean = T)
 

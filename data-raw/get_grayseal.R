@@ -132,17 +132,20 @@ get_grayseal <- function(save_clean = F){
   grayseal <- history %>%
     dplyr::select(year, pbr, totalest5y, total5yUCI, total5yLCI, totalest1y)
 
-
-  if (save_clean){
-    usethis::use_data(grayseal, overwrite = TRUE)
-  } else {
-    return(grayseal)
-  }
   # metadata ----
   attr(grayseal, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/harbor-porpoise-and-gray-seal-bycatch.html"
   attr(grayseal, "data_files")   <- list(
     grayseal_csv = grayseal_csv)
   attr(grayseal, "data_steward") <- c(
     "Chris Orphanides <chris.orphanides@noaa.gov>")
+  attr(grayseal, "plot_script") <- list(
+    `mf_MAB` = "macrofauna_MAB.Rmd-grayseal.R",
+    `mf_MAB_mab` = "macrofauna_MAB.Rmd-grayseal-mab.R")
+
+  if (save_clean){
+    usethis::use_data(grayseal, overwrite = TRUE)
+  } else {
+    return(grayseal)
+  }
 }
 get_grayseal(save_clean = T)

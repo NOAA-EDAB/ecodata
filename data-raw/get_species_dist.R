@@ -21,16 +21,19 @@ get_species_dist <- function(save_clean = F){
                                      "degreesN",ifelse(stringr::str_detect(Var,"Longitude"),
                                                       "degreesW",ifelse(stringr::str_detect(Var, "depth"),
                                                                         "m",NA)))))
-  if (save_clean){
-    usethis::use_data(species_dist, overwrite = T)
-  } else {
-    return(species_dist)
-  }
   # metadata ----
   attr(species_dist, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/species-distribution-indicators.html"
   attr(species_dist, "data_files")   <- list(
     species_dist_csv = species_dist_csv)
   attr(species_dist, "data_steward") <- c(
     "Kevin Friedland <kevin.freidland@noaa.gov>")
+  attr(species_dist, "plot_script") <- list(
+    `mf_MAB` = "macrofauna_MAB.Rmd-species-dist.R")
+
+  if (save_clean){
+    usethis::use_data(species_dist, overwrite = T)
+  } else {
+    return(species_dist)
+  }
 }
 get_species_dist(save_clean = T)

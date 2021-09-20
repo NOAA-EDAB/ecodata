@@ -19,5 +19,10 @@ attr(phyto_size, "data_files")   <- list(
 )
 attr(phyto_size, "data_steward") <- c(
   "Kimberly Hyde <kimberly.hyde@noaa.gov>")
+attr(phyto_size, "plot_script") <- list(
+  `ltl_MAB_weekly` = "LTL_MAB.Rmd-weekly-phyto-size.R",
+  `ltl_NE_weekly` = "LTL_NE.Rmd-weekly-phyto-size.R",
+  `ltl_NE_weekly-gb` = "LTL_NE.Rmd-weekly-phyto-size-gb.R",
+  `ltl_NE_weekly-gom` = "LTL_NE.Rmd-weekly-phyto-size-gom.R")
 
 usethis::use_data(phyto_size, overwrite = T)
