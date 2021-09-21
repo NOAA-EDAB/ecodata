@@ -23,16 +23,19 @@ get_slopewater <- function(save_clean = F){
     tidyr::unite(.,Var,c(Var,Var2), sep = " ") %>%
     as.data.frame()
 
-  if (save_clean){
-    usethis::use_data(slopewater, overwrite = T)
-  } else {
-    return(slopewater)
-  }
   # metadata ----
   attr(slopewater, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/slopewater-proportions.html"
   attr(slopewater, "data_files")   <- list(
     slopewater_csv = slopewater_csv)
   attr(slopewater, "data_steward") <- c(
     "Paula Frantantoni <paula.fratantoni@noaa.gov>")
+  attr(slopewater, "plot_script") <- list(
+    `ltl_NE` = "LTL_NE.Rmd-slopewater.R")
+
+  if (save_clean){
+    usethis::use_data(slopewater, overwrite = T)
+  } else {
+    return(slopewater)
+  }
 }
 get_slopewater(save_clean = T)

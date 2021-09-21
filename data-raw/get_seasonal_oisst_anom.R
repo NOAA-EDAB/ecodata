@@ -167,6 +167,8 @@ attr(seasonal_oisst_anom, "data_files")   <- list(
   seasonal_oisst_anom_nc = seasonal_oisst_anom_nc)
 attr(seasonal_oisst_anom, "data_steward") <- c(
   "Kimberly Bastille <kimberly.bastille@noaa.gov>")
+attr(seasonal_oisst_anom, "plot_script") <- list(
+  `ltl_NE` = "LTL_NE.Rmd-seasonal-oisst-anom.R")
 
 usethis::use_data(seasonal_oisst_anom, overwrite = TRUE)
 

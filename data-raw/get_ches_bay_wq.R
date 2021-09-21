@@ -15,17 +15,20 @@ get_ches_bay_wq <- function(save_clean =F){
            Units = "estimated attainment, percent",
            EPU = "MAB")
 
-  if (save_clean){
-    usethis::use_data(ches_bay_wq, overwrite = T)
-  } else {
-    return(ches_bay_wq)
-  }
   # metadata ----
   attr(ches_bay_wq, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chesapeake-bay-water-quality-standards-attainment.html"
   attr(ches_bay_wq, "data_files")   <- list(
     ches_bay_wq_csv = ches_bay_wq_csv)
   attr(ches_bay_wq, "data_steward") <- c(
     "Qian Zhang <qian.zhang@chesapeakebay.net>")
+  attr(ches_bay_wq, "plot_script") <- list(
+    `ltl_MAB` = "LTL_MAB.Rmd-ches-bay-wq.R")
+
+  if (save_clean){
+    usethis::use_data(ches_bay_wq, overwrite = T)
+  } else {
+    return(ches_bay_wq)
+  }
 }
 
 get_ches_bay_wq(save_clean = T)

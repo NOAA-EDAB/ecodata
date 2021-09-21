@@ -17,16 +17,19 @@ get_mab_inshore_survey <- function(save_clean = F){
     dplyr::mutate(Units = c("kg tow^-1"),
            EPU = "MAB")
 
-  if (save_clean){
-    usethis::use_data(mab_inshore_survey, overwrite = T)
-  } else {
-    return(mab_inshore_survey)
-  }
   # metadata ----
   attr(mab_inshore_survey, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/inshoresurvdat.html"
   attr(mab_inshore_survey, "data_files")   <- list(
     mab_inshore_survey_xlsx = mab_inshore_survey_xlsx)
   attr(mab_inshore_survey, "data_steward") <- c(
     "James Gartland <jgartlan@vim.edu>")
+  attr(mab_inshore_survey, "plot_script") <- list(
+    `mf_MAB` = "macrofauna_MAB.Rmd-mab-inshore-survey.R")
+
+  if (save_clean){
+    usethis::use_data(mab_inshore_survey, overwrite = T)
+  } else {
+    return(mab_inshore_survey)
+  }
 }
 get_mab_inshore_survey(save_clean = T)

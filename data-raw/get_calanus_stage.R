@@ -13,16 +13,22 @@ get_calanus_stage <- function(save_clean = F){
   calanus_stage<- CalanusStage2 %>%
     dplyr::rename(EPU = epu)
 
-  if (save_clean){
-    usethis::use_data(calanus_stage, overwrite = T)
-  } else {
-    return(calanus_stage)
-  }
   # metadata ----
   attr(calanus_stage, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/zooabund.html"
   attr(calanus_stage, "data_files")   <- list(
     zoo_cal_rdata = zoo_cal_rdata)
   attr(calanus_stage, "data_steward") <- c(
     "Ryan Morse <ryan.morse@noaa.gov>")
+  attr(calanus_stage, "plot_script") <- list(
+    `ltl_MAB` = "LTL_MAB.Rmd-calanus-stage.R",
+    `ltl_NE_gb` = "LTL_NE.Rmd-gb-calanus-stage.R",
+    `ltl_NE_gom` = "LTL_NE.Rmd-gom-calanus-stage.R",
+    `ltl_NE_gom-old` = "LTL_NE.Rmd-gom-calanus-stage-old.R")
+
+  if (save_clean){
+    usethis::use_data(calanus_stage, overwrite = T)
+  } else {
+    return(calanus_stage)
+  }
 }
 get_calanus_stage(save_clean = T)

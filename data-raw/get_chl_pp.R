@@ -50,6 +50,8 @@ attr(chl_pp, "data_files")   <- list(
   ppd_csv = ppd_csv)
 attr(chl_pp, "data_steward") <- c(
   "Kimberly Hyde <kimberly.hyde@noaa.gov>")
+attr(chl_pp, "plot_script") <- list(
+  `ltl_NE_anom` = "LTL_NE.Rmd-chl-pp-anom.R")
 
 usethis::use_data(chl_pp, overwrite = T)
 

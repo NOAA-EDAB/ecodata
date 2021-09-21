@@ -73,17 +73,20 @@ get_ne_inshore_survey_species <- function(save_clean = F){
            Group = SOE.20) %>%
     dplyr::select(-ITISSPP, -COMNAME, -SVSPP, -SCINAME)
 
-  if (save_clean){
-    usethis::use_data(ne_inshore_survey_species, overwrite = T)
-  } else {
-    return(list( ne_inshore_survey_species))
-  }
   # metadata ----
   attr(ne_inshore_survey_species, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/inshoresurvdat.html"
   attr(ne_inshore_survey_species, "data_files")   <- list(
     ne_inshore_survey_species_xlsx = ne_inshore_survey_species_xlsx)
   attr(ne_inshore_survey_species, "data_steward") <- c(
     "Rebecca Peters <rebecca.j.peters@maine.gov>")
+  attr(ne_inshore_survey, "plot_script") <- list(
+    `mf_NE` = "macrofauna_NE.Rmd-ne-inshore-survey.R")
+
+  if (save_clean){
+    usethis::use_data(ne_inshore_survey_species, overwrite = T)
+  } else {
+    return(list( ne_inshore_survey_species))
+  }
 }
 get_ne_inshore_survey(save_clean = T)
 get_ne_inshore_survey_species(save_clean = T)

@@ -20,6 +20,9 @@ get_aggregate_biomass <- function(save_clean = F){
     aggregate_biomass_RData = aggregate_biomass_RData)
   attr(aggregate_biomass, "data_steward") <- c(
     "Sean Lucey <sean.lucey@noaa.gov>")
+  attr(aggregate_biomass, "plot_script") <- list(
+    `mf_MAB` = "macrofauna_MAB.Rmd-aggregate-biomass.R",
+    `mf_NE` = "macrofauna_NE.Rmd-aggregate-biomass.R")
 
   if (save_clean){
     usethis::use_data(aggregate_biomass, overwrite = T)

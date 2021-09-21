@@ -40,12 +40,6 @@ get_bottom_temp <- function(save_clean = F){
     dplyr::summarise(Value = mean(Value)) %>%
     as.data.frame()
 
-  if (save_clean){
-    usethis::use_data(bottom_temp, overwrite = T)
-  } else {
-    return(bottom_temp)
-  }
-
   # metadata ----
   attr(bottom_temp, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/bottom-temperatures.html"
   attr(bottom_temp, "data_files")   <- list(
@@ -55,6 +49,17 @@ get_bottom_temp <- function(save_clean = F){
     bottom_temp_MAB_csv = bottom_temp_MAB_csv)
   attr(bottom_temp, "data_steward") <- c(
     "Paula Fratantoni <paula.fratantoni@noaa.gov>")
+  attr(bottom_temp, "plot_script") <- list(
+    `ltl_MAB` = "LTL_MAB.Rmd-bottom-temp.R",
+    `ltl_NE` = "LTL_NE.Rmd-bottom-temp.R",
+    `ltl_NE_gb` = "LTL_NE.Rmd-bottom-temp-gb.R",
+    `ltl_NE_gom` = "LTL_NE.Rmd-bottom-temp-gom.R")
+
+  if (save_clean){
+    usethis::use_data(bottom_temp, overwrite = T)
+  } else {
+    return(bottom_temp)
+  }
 }
 get_bottom_temp(save_clean = T)
 

@@ -24,6 +24,8 @@ get_ch_bay_sal <- function(save_clean = F){
   attr(ch_bay_sal, "data_steward") <- c(
     "Charles Pellerin <charles.pellerin@noaa.gov>",
     "Bruce Vogt <bruce.vogt@noaa.gov")
+  attr(ch_bay_sal, "plot_script") <- list(
+    `ltl_MAB` = "LTL_MAB.Rmd-ch-bay-sal.R")
 
   if (save_clean){
     usethis::use_data(ch_bay_sal, overwrite = T)

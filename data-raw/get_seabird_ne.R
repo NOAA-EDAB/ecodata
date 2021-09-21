@@ -32,18 +32,23 @@ get_seabird_ne <- function(save_clean = F){
                   Units = ifelse(stringr::str_detect(Var, "Productivity"),
                                  "fledged chicks per nest","N"))
 
-  if (save_clean){
-
-    usethis::use_data(seabird_ne, overwrite = T)
-  } else {
-    return(seabird_ne)
-  }
   # metadata ----
   attr(seabird_ne, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/ne-seabird-diet-and-productivity.html"
   attr(seabird_ne, "data_files")   <- list(
     seabird_ne_xlsx = seabird_ne_xlsx)
   attr(seabird_ne, "data_steward") <- c(
     "Don Lyons <dlyons@audubon.org>")
+  attr(seabird_ne, "plot_script") <- list(
+    `mf_NE_diversity` = "macrofauna_NE.Rmd-seabird-ne-diversity.R",
+    `mf_NE_map` = "macrofauna_NE.Rmd-seabird-ne-map.R",
+    `mf_NE_prey-freq` = "macrofauna_NE.Rmd-seabird-ne-prey-freq.R",
+    `mf_NE_productivity` = "macrofauna_NE.Rmd-seabird-ne-productivity.R")
+
+  if (save_clean){
+    usethis::use_data(seabird_ne, overwrite = T)
+  } else {
+    return(seabird_ne)
+  }
 }
 get_seabird_ne(save_clean = T)
 

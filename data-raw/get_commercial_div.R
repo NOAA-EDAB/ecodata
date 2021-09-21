@@ -23,18 +23,23 @@ get_commercial_div <- function(save_clean = F){
 
   commercial_div$Var <- stringr::str_replace(commercial_div$Var, "diveristy", "diversity")
 
-  if(save_clean){
-    usethis::use_data(commercial_div, overwrite = T)
-  } else {
-    return(commercial_div)
-  }
   # metadata ----
   attr(commercial_div, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc"
   attr(commercial_div, "data_files")   <- list(
     commercial_div_csv = commercial_div_csv)
   attr(commercial_div, "data_steward") <- c(
     "Geret DePiper <geret.depiper@noaa.gov>")
+  attr(commercial_div, "plot_script") <- list(
+    `hd_MAB` = "human_dimensions_MAB.Rmd-commercial-div.R",
+    `hd_MAB_species-div` = "human_dimensions_MAB.Rmd-commercial-div-species-div.R",
+    `hd_NE` = "human_dimensions_NE.Rmd-commercial-div.R",
+    `hd_NE_species-div` = "human_dimensions_NE.Rmd-commercial-div-species-div.R")
 
+  if(save_clean){
+    usethis::use_data(commercial_div, overwrite = T)
+  } else {
+    return(commercial_div)
+  }
 }
 get_commercial_div(save_clean = T)
 
