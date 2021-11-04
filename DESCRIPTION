@@ -21,8 +21,10 @@ Suggests:
 	here,
 	usethis,
 	AICcmodavg,
+	mgcv,
 	zoo
 VignetteBuilder: knitr
 RoxygenNote: 7.1.0
 Depends: 
-    R (>= 2.10)
+    R (>= 2.10), 
+    ggplot2
