@@ -7,8 +7,6 @@ output:
     toc: true
     toc_float: true
     theme: lumen
-    self_contained: false
-    lib_dir: libs
   
 ---
 
@@ -1069,193 +1067,221 @@ cal %>%
 
 ```{r cold_pool, eval = T, echo = F, fig.cap="Cold pool index." }
 
-cp<- ecodata::cold_pool %>% 
-  dplyr::group_by(Var) %>% 
-  dplyr::mutate(hline = mean(Val, na.rm = T)) %>% 
-  ggplot2::ggplot() + 
+cpi<- ecodata::cold_pool %>% 
+  dplyr::filter(stringr::str_detect(Var, pattern = "cold_pool")) %>% 
+  tidyr::pivot_wider(names_from = Var, values_from = Value)  %>% 
+  dplyr::mutate(Upper = cold_pool_index + se_cold_pool_index, 
+                Lower = cold_pool_index - se_cold_pool_index) %>%
+  dplyr::select(!se_cold_pool_index)%>%
+  dplyr::rename(Value = cold_pool_index)%>%
+  dplyr::mutate(Var = c("cold_pool_index"))
+  
+  
+ei<- ecodata::cold_pool %>% 
+  dplyr::filter(stringr::str_detect(Var, pattern = "extent")) %>% 
+  tidyr::pivot_wider(names_from = Var, values_from = Value)  %>% 
+  dplyr::mutate(Upper = extent_index + se_extent_index, 
+                Lower = extent_index - se_extent_index) %>%
+  dplyr::select(!se_extent_index)%>%
+  dplyr::rename(Value = extent_index)%>%
+  dplyr::mutate(Var = c("extent_index"))
+
+pi<- ecodata::cold_pool %>% 
+  dplyr::filter(stringr::str_detect(Var, pattern = "persistence")) %>% 
+  tidyr::pivot_wider(names_from = Var, values_from = Value)  %>% 
+  dplyr::mutate(Upper = persistence_index + se_persistence_index, 
+                Lower = persistence_index - se_persistence_index) %>%
+  dplyr::select(!se_persistence_index)%>%
+  dplyr::rename(Value = persistence_index)%>%
+  dplyr::mutate(Var = c("persistence_index"))
+
+cp<- rbind(cpi, ei, pi)
+
+cp %>% ggplot2::ggplot() + 
  #Highlight last ten years
   #ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
   #    xmin = x.shade.min , xmax = x.shade.max) +
-  ecodata::geom_gls(aes(x = Time, y = Val),
+  ecodata::geom_gls(aes(x = Time, y = Value),
              alpha = trend.alpha, size = trend.size) +
-  ggplot2::geom_line(aes(x = Time, y = Val), size = lwd) +
-  ggplot2::geom_point(aes(x = Time, y = Val), size = pcex) +
-  ggplot2::geom_hline(aes(yintercept = hline),
-     size = hline.size,
-     alpha = hline.alpha,
-     linetype = hline.lty)+
+  ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
+  ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
+  ggplot2::geom_ribbon(aes(x = Time, ymin = Lower, ymax = Upper), fill = "gray")+
+  ggplot2::geom_hline(aes(yintercept = 0))+
+  #   size = hline.size,
+   #  alpha = hline.alpha,
+    # linetype = hline.lty)+
   ggplot2::ggtitle("Cold Pool Index")+
   ggplot2::facet_wrap(~Var, scales = "free")+
   ggplot2::ylab("Cold Pool") +
   ggplot2::xlab("")+
   ecodata::theme_ts()+
   ecodata::theme_title()
-cp
-#plotly::ggplotly(cp) 
+
+
 ```
 
 
-```{r cold_pool_map, eval = T, echo = F, fig.cap="Map of cold pool area. Time series of cold pool spatial extent FROM 1993-2018. Black = 2018 (Last year in time series), Red = 2012 Minimum area, Blue = 2005 Maximum area" }
-cpsf26<- ecodata::cold_pool_sf %>% 
-  mutate(Time = c(1:26)) %>% 
-  filter(Time == 26)
-cpsf<- ecodata::cold_pool_sf %>% 
-  mutate(Time = c(1:26)) %>% 
-  filter(!Time == 26)
-cpmin <- ecodata::cold_pool_sf %>% 
-  mutate(Time = c(1:26)) %>% 
-  filter(Time == 20)
-cpmax <- ecodata::cold_pool_sf %>% 
-  mutate(Time = c(1:26)) %>% 
-  filter(Time == 13)
+<!-- ```{r cold_pool_map, eval = T, echo = F, fig.cap="Map of cold pool area. Time series of cold pool spatial extent FROM 1993-2018. Black = 2018 (Last year in time series), Red = 2012 Minimum area, Blue = 2005 Maximum area" } -->
+<!-- cpsf26<- ecodata::cold_pool_sf %>%  -->
+<!--   mutate(Time = c(1:26)) %>%  -->
+<!--   filter(Time == 26) -->
+<!-- cpsf<- ecodata::cold_pool_sf %>%  -->
+<!--   mutate(Time = c(1:26)) %>%  -->
+<!--   filter(!Time == 26) -->
+<!-- cpmin <- ecodata::cold_pool_sf %>%  -->
+<!--   mutate(Time = c(1:26)) %>%  -->
+<!--   filter(Time == 20) -->
+<!-- cpmax <- ecodata::cold_pool_sf %>%  -->
+<!--   mutate(Time = c(1:26)) %>%  -->
+<!--   filter(Time == 13) -->
 
-#Map line parameters
-map.lwd <- 0.4
+<!-- #Map line parameters -->
+<!-- map.lwd <- 0.4 -->
 
-# Set lat/lon window for maps
-xmin = -78
-xmax = -69
-ymin = 35.5
-ymax = 43
-xlims <- c(xmin, xmax)
-ylims <- c(ymin, ymax)
+<!-- # Set lat/lon window for maps -->
+<!-- xmin = -78 -->
+<!-- xmax = -69 -->
+<!-- ymin = 35.5 -->
+<!-- ymax = 43 -->
+<!-- xlims <- c(xmin, xmax) -->
+<!-- ylims <- c(ymin, ymax) -->
 
-cp_map <- 
-  ggplot2::ggplot() +
-  #ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
-  ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) +
-  ggplot2::geom_sf(data = cpsf, alpha = 0.1)  +
-  ggplot2::geom_sf(data = cpsf26, fill = "transparent", color = "black", size = 1)+
-   ggplot2::geom_sf(data = cpmax, fill = "transparent", color = "blue", size = 0.5)+
-  ggplot2::geom_sf(data = cpmin, fill = "transparent", color = "red", size = 0.5)+
-  ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
-  #ggplot2::scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
-  #                     low = scales::muted("blue"),
-  #                     mid = "white",
-  #                     high = scales::muted("red"),
-  #                     limits = c(-4,4)) +
-  
-  #facet_wrap(Season~.) +
-  ecodata::theme_map() +
-  ggplot2::ggtitle("Cold Pool Area") +
-  ggplot2::xlab("Longitude") +
-  ggplot2::ylab("Latitude") +
-  ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
-        legend.key = element_blank(),
-        axis.title = element_text(size = 11),
-        strip.background = element_blank(),
-        strip.text=element_text(hjust=0),
-        axis.text = element_text(size = 8),
-        axis.title.y = element_text(angle = 90))+
-  ecodata::theme_title()
+<!-- cp_map <-  -->
+<!--   ggplot2::ggplot() + -->
+<!--   #ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) + -->
+<!--   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) + -->
+<!--   ggplot2::geom_sf(data = cpsf, alpha = 0.1)  + -->
+<!--   ggplot2::geom_sf(data = cpsf26, fill = "transparent", color = "black", size = 1)+ -->
+<!--    ggplot2::geom_sf(data = cpmax, fill = "transparent", color = "blue", size = 0.5)+ -->
+<!--   ggplot2::geom_sf(data = cpmin, fill = "transparent", color = "red", size = 0.5)+ -->
+<!--   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) + -->
+<!--   #ggplot2::scale_fill_gradient2(name = "Temp.\nAnomaly (C)", -->
+<!--   #                     low = scales::muted("blue"), -->
+<!--   #                     mid = "white", -->
+<!--   #                     high = scales::muted("red"), -->
+<!--   #                     limits = c(-4,4)) + -->
 
-
-annotation_custom2 <- function (grob, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf) 
-{
-  layer( stat = StatIdentity, position = PositionIdentity, 
-        geom = ggplot2:::GeomCustomAnn,
-        inherit.aes = TRUE, params = list(grob = grob, 
-                                          xmin = xmin, xmax = xmax, 
-                                          ymin = ymin, ymax = ymax))
-}
-
-area<- ecodata::cold_pool_sf %>%
-  mutate(Time = c(1993:2018)) 
-area2<- data.frame(Area = st_area(area))%>% 
-  mutate(Time = c(1993:2018)) %>% 
-  separate(Area, c("Value", "Units"), sep = " ") %>%
-  mutate(Value = as.numeric(Value), 
-         hline = mean(Value)) 
-
-area_ts <-  ggplot2::ggplotGrob(area2 %>% 
-                                      ggplot2::ggplot() +   
-                                      ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
-                                      ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
-                                      ggplot2::geom_hline(aes(yintercept = hline),
-                                                          size = hline.size,
-                                                          alpha = hline.alpha,
-                                                          linetype = hline.lty)+
-                                      ggplot2::scale_x_continuous(breaks = c(1995, 2000, 2005, 2010, 2015),
-                                                                  expand = c(0.01, 0.01)) +
-                                      ggplot2::ggtitle("")+
-                                      ggplot2::ylab((expression("Area (m"^2*")"))) +
-                                      ggplot2::xlab("")+
-                                      ecodata::theme_ts()+
-                              ggplot2::theme(
-                                   axis.text.y = element_text(size = 6),
-                                   axis.text.x = element_text(size = 6),
-                                    panel.background = element_rect(fill = "transparent"),
-                                    plot.background = element_rect(fill = "transparent", color = NA),
-                                    panel.grid.major = element_blank(),
-                                    panel.grid.minor = element_blank(),
-                                    legend.background = element_rect(fill = "transparent"),
-                                    legend.box.background = element_rect(fill = "transparent"),
-                                    legend.key = element_rect(fill = "transparent", colour = NA),
-                                    axis.line = element_blank())#,
-                                    #panel.border = element_blank())
-)
-
-cp_map +
-  annotation_custom(grob = area_ts,  xmin=-78.5, xmax=-71.75,
-                     ymin=40.95, ymax=43.75)
-```
+<!--   #facet_wrap(Season~.) + -->
+<!--   ecodata::theme_map() + -->
+<!--   ggplot2::ggtitle("Cold Pool Area") + -->
+<!--   ggplot2::xlab("Longitude") + -->
+<!--   ggplot2::ylab("Latitude") + -->
+<!--   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75), -->
+<!--         legend.key = element_blank(), -->
+<!--         axis.title = element_text(size = 11), -->
+<!--         strip.background = element_blank(), -->
+<!--         strip.text=element_text(hjust=0), -->
+<!--         axis.text = element_text(size = 8), -->
+<!--         axis.title.y = element_text(angle = 90))+ -->
+<!--   ecodata::theme_title() -->
 
 
+<!-- annotation_custom2 <- function (grob, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf)  -->
+<!-- { -->
+<!--   layer( stat = StatIdentity, position = PositionIdentity,  -->
+<!--         geom = ggplot2:::GeomCustomAnn, -->
+<!--         inherit.aes = TRUE, params = list(grob = grob,  -->
+<!--                                           xmin = xmin, xmax = xmax,  -->
+<!--                                           ymin = ymin, ymax = ymax)) -->
+<!-- } -->
+
+<!-- area<- ecodata::cold_pool_sf %>% -->
+<!--   mutate(Time = c(1993:2018))  -->
+<!-- area2<- data.frame(Area = st_area(area))%>%  -->
+<!--   mutate(Time = c(1993:2018)) %>%  -->
+<!--   separate(Area, c("Value", "Units"), sep = " ") %>% -->
+<!--   mutate(Value = as.numeric(Value),  -->
+<!--          hline = mean(Value))  -->
+
+<!-- area_ts <-  ggplot2::ggplotGrob(area2 %>%  -->
+<!--                                       ggplot2::ggplot() +    -->
+<!--                                       ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) + -->
+<!--                                       ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) + -->
+<!--                                       ggplot2::geom_hline(aes(yintercept = hline), -->
+<!--                                                           size = hline.size, -->
+<!--                                                           alpha = hline.alpha, -->
+<!--                                                           linetype = hline.lty)+ -->
+<!--                                       ggplot2::scale_x_continuous(breaks = c(1995, 2000, 2005, 2010, 2015), -->
+<!--                                                                   expand = c(0.01, 0.01)) + -->
+<!--                                       ggplot2::ggtitle("")+ -->
+<!--                                       ggplot2::ylab((expression("Area (m"^2*")"))) + -->
+<!--                                       ggplot2::xlab("")+ -->
+<!--                                       ecodata::theme_ts()+ -->
+<!--                               ggplot2::theme( -->
+<!--                                    axis.text.y = element_text(size = 6), -->
+<!--                                    axis.text.x = element_text(size = 6), -->
+<!--                                     panel.background = element_rect(fill = "transparent"), -->
+<!--                                     plot.background = element_rect(fill = "transparent", color = NA), -->
+<!--                                     panel.grid.major = element_blank(), -->
+<!--                                     panel.grid.minor = element_blank(), -->
+<!--                                     legend.background = element_rect(fill = "transparent"), -->
+<!--                                     legend.box.background = element_rect(fill = "transparent"), -->
+<!--                                     legend.key = element_rect(fill = "transparent", colour = NA), -->
+<!--                                     axis.line = element_blank())#, -->
+<!--                                     #panel.border = element_blank()) -->
+<!-- ) -->
+
+<!-- cp_map + -->
+<!--   annotation_custom(grob = area_ts,  xmin=-78.5, xmax=-71.75, -->
+<!--                      ymin=40.95, ymax=43.75) -->
+<!-- ``` -->
 
 
 
-```{r cold_pool_map2, eval = T, echo = F, fig.cap="Map of cold pool area." }
-cpsf26<- ecodata::cold_pool_sf %>% 
-  mutate(Time = c(1993:2018)) %>% 
-  filter(Time == 2018)
-cpsf<- ecodata::cold_pool_sf %>% 
-  mutate(Time = c(1993:2018)) %>% 
-  filter(!Time == 2018)
-
-#Map line parameters
-map.lwd <- 0.4
-
-# Set lat/lon window for maps
-xmin = -80
-xmax = -68
-ymin = 35.5
-ymax = 43
-xlims <- c(xmin, xmax)
-ylims <- c(ymin, ymax)
-
-cp_map <- 
-  ggplot2::ggplot() +
-  #ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
-  ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) +
-  ggplot2::geom_sf(data = cpsf, alpha = 0.1, color = "red", size = 1)  +
-  ggplot2::geom_sf(data = cpsf26, fill = "transparent", color = "red", size = 1)+
-  
-  ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
-  #ggplot2::scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
-  #                     low = scales::muted("blue"),
-  #                     mid = "white",
-  #                     high = scales::muted("red"),
-  #                     limits = c(-4,4)) +
-  
-  #facet_wrap(Season~.) +
-  ecodata::theme_map() +
-  ggplot2::facet_wrap(~Time)+
-  ggplot2::ggtitle("Cold Pool Area") +
-  ggplot2::xlab("Longitude") +
-  ggplot2::ylab("Latitude") +
-  ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
-        legend.key = element_blank(),
-        axis.title = element_text(size = 11),
-        axis.ticks = element_blank(),
-        strip.background = element_blank(),
-        strip.text=element_text(hjust=0),
-        axis.text = element_blank(),
-        axis.title.y = element_text(angle = 90))+
-  ecodata::theme_title()
 
 
-cp_map 
-```
+<!-- ```{r cold_pool_map2, eval = T, echo = F, fig.cap="Map of cold pool area." } -->
+<!-- cpsf26<- ecodata::cold_pool_sf %>%  -->
+<!--   mutate(Time = c(1993:2018)) %>%  -->
+<!--   filter(Time == 2018) -->
+<!-- cpsf<- ecodata::cold_pool_sf %>%  -->
+<!--   mutate(Time = c(1993:2018)) %>%  -->
+<!--   filter(!Time == 2018) -->
+
+<!-- #Map line parameters -->
+<!-- map.lwd <- 0.4 -->
+
+<!-- # Set lat/lon window for maps -->
+<!-- xmin = -80 -->
+<!-- xmax = -68 -->
+<!-- ymin = 35.5 -->
+<!-- ymax = 43 -->
+<!-- xlims <- c(xmin, xmax) -->
+<!-- ylims <- c(ymin, ymax) -->
+
+<!-- cp_map <-  -->
+<!--   ggplot2::ggplot() + -->
+<!--   #ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) + -->
+<!--   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) + -->
+<!--   ggplot2::geom_sf(data = cpsf, alpha = 0.1, color = "red", size = 1)  + -->
+<!--   ggplot2::geom_sf(data = cpsf26, fill = "transparent", color = "red", size = 1)+ -->
+
+<!--   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) + -->
+<!--   #ggplot2::scale_fill_gradient2(name = "Temp.\nAnomaly (C)", -->
+<!--   #                     low = scales::muted("blue"), -->
+<!--   #                     mid = "white", -->
+<!--   #                     high = scales::muted("red"), -->
+<!--   #                     limits = c(-4,4)) + -->
+
+<!--   #facet_wrap(Season~.) + -->
+<!--   ecodata::theme_map() + -->
+<!--   ggplot2::facet_wrap(~Time)+ -->
+<!--   ggplot2::ggtitle("Cold Pool Area") + -->
+<!--   ggplot2::xlab("Longitude") + -->
+<!--   ggplot2::ylab("Latitude") + -->
+<!--   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75), -->
+<!--         legend.key = element_blank(), -->
+<!--         axis.title = element_text(size = 11), -->
+<!--         axis.ticks = element_blank(), -->
+<!--         strip.background = element_blank(), -->
+<!--         strip.text=element_text(hjust=0), -->
+<!--         axis.text = element_blank(), -->
+<!--         axis.title.y = element_text(angle = 90))+ -->
+<!--   ecodata::theme_title() -->
+
+
+<!-- cp_map  -->
+<!-- ``` -->
 
 
 
