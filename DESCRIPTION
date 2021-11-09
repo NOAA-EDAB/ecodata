@@ -26,5 +26,4 @@ Suggests:
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 Depends: 
-    R (>= 2.10), 
-    ggplot2
+    R (>= 2.10)
