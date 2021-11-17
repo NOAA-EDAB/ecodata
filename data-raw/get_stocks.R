@@ -7,8 +7,8 @@ library(tidyr)
 library(ggplot2)
 
 data.dir <- here::here('data-raw')
-stock_status_access_csv <- "2020assess - Sarah Gaichas - NOAA Federal.csv"
-stock_status_decoder_csv <-  "2020decoder - Sarah Gaichas - NOAA Federal.csv"
+stock_status_access_csv <- "2021assess - Sarah Gaichas - NOAA Federal.csv"
+stock_status_decoder_csv <-  "2021decoder - Sarah Gaichas - NOAA Federal.csv"
 get_stocks <- function(save_clean = F){
   assess <- read.csv(file.path(data.dir, stock_status_access_csv))
   decode <- read.csv(file.path(data.dir, stock_status_decoder_csv))
