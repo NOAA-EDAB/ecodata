@@ -11,12 +11,12 @@ stock_status <- ecodata::stock_status %>%
     (F.Fmsy < 1 & B.Bmsy > 0.5 & B.Bmsy < 1) ~ "b",
     (F.Fmsy < 1 & B.Bmsy > 1) ~ "c"))
 #Plot constants
-y.max <- 2.0 #1.75 mackerel cut off F/Fmsy is 1.8
+y.max <- 2.1 #1.75 mackerel cut off F/Fmsy is 1.8
 x.max <- 2.6
 #A dataframe that defines custom legend for stocks with unknown status
 unknown <- data.frame(text = c("Unknown Status", "Longfin Squid",
                               "Shortfin Squid", "N. Goosefish", "S. Goosefish", "Blueline Tilefish"),
-                    x = rep(0.9*x.max,6), y = seq(0.93*y.max,1.3,-0.1))
+                    x = rep(0.9*x.max,6), y = seq(0.88*y.max,1.3,-0.1))
 
 # Custom Color
 custom_color<- c("#56B4E9", "#009E73", "#0072B2")
