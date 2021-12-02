@@ -1146,7 +1146,7 @@ com2<-com %>%
 
 ```{r rec_hms, fig.cap="Recreational shark landings from mrip."}
 ecodata::rec_hms %>% 
-  dplyr::filter(Region == "Mid-Atlantic") %>% 
+  dplyr::filter(Region == "MAB") %>% 
   ggplot2::ggplot()+
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+

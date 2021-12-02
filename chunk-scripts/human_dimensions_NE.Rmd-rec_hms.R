@@ -1,6 +1,6 @@
 
 ecodata::rec_hms %>% 
-  dplyr::filter(Region == "New England") %>% 
+  dplyr::filter(Region == "NE") %>% 
   ggplot2::ggplot()+
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+
