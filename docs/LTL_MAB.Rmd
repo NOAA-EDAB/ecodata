@@ -677,7 +677,7 @@ ecodata::ch_bay_temp %>%
 ```
 
 #### Chesapeake SST
-```{r}
+```{r, ches-bay-sst}
 
 sst<- ecodata::ches_bay_sst
 
