@@ -6,7 +6,7 @@
 library(dplyr)
 library(tidyr)
 library(rnaturalearth)
-library(rnaturalearthhires)
+#library(rnaturalearthhires)
 
 raw.dir <- here::here("data-raw")
 
