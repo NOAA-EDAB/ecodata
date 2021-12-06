@@ -6,15 +6,16 @@ library(stringr)
 library(readxl)
 
 raw.dir <- here::here("data-raw")
-HMS_SPUE_xlsx <- "HMS POP CPUE_Cudney - Jennifer Cudney - NOAA Federal.xlsx"
+#HMS_SPUE_xlsx <- "HMS POP CPUE_Cudney - Jennifer Cudney - NOAA Federal.xlsx"
+HMS_SPUE_csv <- "Atlantic HMS POP CPUE - Jennifer Cudney - NOAA Federal.csv"
 HMS_sp_csv <- "HMS_species_pdf.csv"
 
 get_hms_cpue <- function(save_clean = F){
   code_csv<- read.csv(file.path(raw.dir,HMS_sp_csv))
-  hms_cpue <- read_excel(file.path(raw.dir,HMS_SPUE_xlsx)) %>%
-    dplyr::select(-UID,-Count, -Haul_Num) %>%
+  hms_cpue <- read.csv(file.path(raw.dir,HMS_SPUE_csv)) %>%
+    dplyr::select(-X) %>%
     dplyr::rename(Code = Animal_Code,
-                  Value = Num_per_haul) %>%
+                  Value = Count) %>%
     dplyr::mutate(Units =  "n",
                   EPU = "All") %>%
     left_join(code_csv) %>%

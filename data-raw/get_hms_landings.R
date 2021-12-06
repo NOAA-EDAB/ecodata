@@ -4,7 +4,7 @@ library(tidyverse)
 
 
 raw.dir <- here::here("data-raw")
-hms_landings_xlsx<-"HMS_FUS_2015_2019_Cudney - Jennifer Cudney - NOAA Federal.xlsx"
+hms_landings_xlsx<-"HMS Landings Data - Jennifer Cudney - NOAA Federal.xlsx"
 
 get_hms_landings <- function(save_clean = F){
 
