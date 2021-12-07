@@ -1,11 +1,11 @@
 
-df12<-ecodata::heatwave_year %>% 
-  filter(EPU == "GB", 
-         Year == "2012")
+# df12<-ecodata::heatwave_year %>% 
+#   filter(EPU == "GB", 
+#          Year == "2012")
 
 ecodata::heatwave_year %>% 
   filter(EPU == "GB", 
-         Year == "2020") %>% 
+         Year == "2021") %>% 
   ggplot( aes(x = t, y = temp))+
   #geom_flame(aes(y = temp, y2 = thresh, fill = "sienna3"), show.legend = T) +
   #geom_flame(data = df12, aes(y = temp, y2 = thresh, fill = "red"),  show.legend = T) +
@@ -19,7 +19,7 @@ ecodata::heatwave_year %>%
                       labels = c("Climatology","Temperature","Threshold"))+
   ylab("Temperature (C)")+
   xlab(element_blank())+
-  ggtitle("GB Marine Heatwaves 2020")+
+  ggtitle("GB Marine Heatwaves 2021")+
   scale_x_date(date_labels = "%b", breaks = "1 month")+
   theme_bw()+
   theme(legend.title = element_blank(),

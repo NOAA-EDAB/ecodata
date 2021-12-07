@@ -4,9 +4,9 @@ sst<- ecodata::ches_bay_sst
 map.lwd <- 0.4
 
 # Set lat/lon window for maps
-xmin = -78
-xmax = -74
-ymin = 36
+xmin = -77.5
+xmax = -74.5
+ymin = 36.5
 ymax = 40
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
