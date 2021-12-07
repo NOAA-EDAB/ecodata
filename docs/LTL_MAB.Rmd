@@ -684,9 +684,9 @@ sst<- ecodata::ches_bay_sst
 map.lwd <- 0.4
 
 # Set lat/lon window for maps
-xmin = -78
-xmax = -74
-ymin = 36
+xmin = -77.5
+xmax = -74.5
+ymin = 36.5
 ymax = 40
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
@@ -1348,12 +1348,12 @@ cp %>% ggplot2::ggplot() +
 
 ### Marine Heat Wave
 
-[notes here](https://docs.google.com/document/u/1/d/1ik6aAXY85DEgLmz4BaBwxtdEPq6e9xXo/edit?usp=drive_web&ouid=111390006230717850267&rtpof=true)
+[notes here](https://docs.google.com/document/d/1S91IDGC1vxQFZETAIzv-WOva3M8Q2vtd/edit?rtpof=true)
 
 ```{r heatwave-year, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Mid-Atlantic occuring in 2020."}
 ecodata::heatwave_year %>% 
   filter(EPU == "MAB", 
-         str_detect(t, "2020")) %>% 
+         str_detect(t, "2021")) %>% 
   ggplot( aes(x = t, y = temp))+
   geom_flame(aes(y2 = thresh))+ 
   geom_line(aes(x = t, y = seas, color = "a"), size = 1)+

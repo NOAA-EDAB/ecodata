@@ -7,18 +7,18 @@ library(readr)
 
 raw.dir <- here::here("data-raw")
 
-heatwave_gb_csv<-"GB_OISST.csv"
-heatwave_gom_csv<-"GOM_OISSt.csv"
-heatwave_mab_csv<-"MAB_OISST.csv"
+heatwave_gb_xl<-"GB_SST_1982_to_2021 - Vincent Saba - NOAA Federal.xlsx"
+heatwave_gom_xl<-"GOM_SST_1982_to_2021 - Vincent Saba - NOAA Federal.xlsx"
+heatwave_mab_xl<-"MAB_SST_1982_to_2021 - Vincent Saba - NOAA Federal.xlsx"
 
 get_heatwave <- function(save_clean = F){
 
-  gom<-read_csv(file.path(raw.dir,heatwave_gom_csv),
-                 col_types = cols(temp = col_double(),t = col_date()))
-  gb<-read_csv(file.path(raw.dir,heatwave_gb_csv),
-                col_types = cols(temp = col_double(),t = col_date()))
-  mab<-read_csv(file.path(raw.dir,heatwave_mab_csv),
-                col_types = cols(temp = col_double(),t = col_date()))
+  gom<-read_excel(file.path(raw.dir,heatwave_gom_xl)) %>%
+    mutate(t = as.Date(t))
+  gb<-read_excel(file.path(raw.dir,heatwave_gb_xl)) %>%
+    mutate(t = as.Date(t))
+  mab<-read_excel(file.path(raw.dir,heatwave_mab_xl)) %>%
+    mutate(t = as.Date(t))
   #GB
   ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2011-12-31"))
   gb.mhw <- heatwaveR::detect_event(ts)
@@ -58,9 +58,9 @@ get_heatwave <- function(save_clean = F){
   # metadata ----
   attr(heatwave, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/marine-heatwave.html"
   attr(heatwave, "data_files")   <- list(
-    heatwave_gom_csv = heatwave_gom_csv,
-    heatwave_gb_csv = heatwave_gb_csv,
-    heatwave_mab_csv = heatwave_mab_csv)
+    heatwave_gom_xl = heatwave_gom_xl,
+    heatwave_gb_xl = heatwave_gb_xl,
+    heatwave_mab_xl = heatwave_mab_xl)
   attr(heatwave, "data_steward") <- c(
     "Vincent Saba <vincent.saba@noaa.gov>")
   attr(heatwave, "plot_script") <- list(
@@ -89,12 +89,12 @@ get_heatwave(save_clean = T)
 #### get_heatwave_year get single year of heatwave
 get_heatwave_year <- function(save_clean = F){
   # import data
-  gom<-read_csv(file.path(raw.dir,"GOM_OISST.csv"),
-                col_types = cols(temp = col_double(),t = col_date()))
-  gb<-read_csv(file.path(raw.dir,"GB_OISST.csv"),
-               col_types = cols(temp = col_double(),t = col_date()))
-  mab<-read_csv(file.path(raw.dir,"MAB_OISST.csv"),
-                col_types = cols(temp = col_double(),t = col_date()))
+  gom<-read_excel(file.path(raw.dir,heatwave_gom_xl)) %>%
+    mutate(t = as.Date(t))
+  gb<-read_excel(file.path(raw.dir,heatwave_gb_xl)) %>%
+    mutate(t = as.Date(t))
+  mab<-read_excel(file.path(raw.dir,heatwave_mab_xl)) %>%
+    mutate(t = as.Date(t))
   #GB
   ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2011-12-31"))
   gb.mhw <- heatwaveR::detect_event(ts)
@@ -109,39 +109,39 @@ get_heatwave_year <- function(save_clean = F){
   #GB
   mhw<- gb.mhw$clim %>%
     mutate(EPU = c("GB"),
-           Year = c("2020"))# add EPU column
-  mhw.gb.year <- mhw[13880:14223,]## days in 2020 data set only went to dec 9, 2020
+           Year = c("2021"))# add EPU column
+  mhw.gb.year <- mhw[14246:14578,]## days in 2020 data set only went to dec 9, 2020
   #GOM
   mhw<- gom.mhw$clim %>%
     mutate(EPU = c("GOM"),
-           Year = c("2020"))# add EPU column
-  mhw.gom.year <- mhw[13880:14223,]## days in 2020 data set only went to dec 9, 2020
+           Year = c("2021"))# add EPU column
+  mhw.gom.year <- mhw[14246:14578,]## days in 2020 data set only went to dec 9, 2020
   #MAB
   mhw<- mab.mhw$clim %>%
     mutate(EPU = c("MAB"),
-           Year = c("2020"))# add EPU column
-  mhw.mab.year <- mhw[13880:14223,]## days in 2020 data set only went to dec 9, 2020
+           Year = c("2021"))# add EPU column
+  mhw.mab.year <- mhw[14246:14578,]## days in 2020 data set only went to dec 9, 2020
 
   ### 2012
   #GB
-  mhw<- gb.mhw$clim %>%
-    mutate(EPU = c("GB"),
-           Year = c("2012"),
-           DoY = stringr::str_sub(t,-5))# add EPU column
-  mhw.gb.year2012 <- mhw[10958:11301,]## days in 2012
-  #GOM
-  mhw<- gom.mhw$clim %>%
-    mutate(EPU = c("GOM"),
-           Year = c("2012"))# add EPU column
-  mhw.gom.year2012 <- mhw[10958:11301,]## days in 2012
-  mhw<- mab.mhw$clim %>%
-    mutate(EPU = c("MAB"),
-           Year = c("2012"),
-           DoY = stringr::str_sub(t,-5))# add EPU column
-  mhw.mab.year2012 <- mhw[10958:11301,]## days in 2012
+  # mhw<- gb.mhw$clim %>%
+  #   mutate(EPU = c("GB"),
+  #          Year = c("2012"),
+  #          DoY = stringr::str_sub(t,-5))# add EPU column
+  # mhw.gb.year2012 <- mhw[10958:11301,]## days in 2012
+  # #GOM
+  # mhw<- gom.mhw$clim %>%
+  #   mutate(EPU = c("GOM"),
+  #          Year = c("2012"))# add EPU column
+  # mhw.gom.year2012 <- mhw[10958:11301,]## days in 2012
+  # mhw<- mab.mhw$clim %>%
+  #   mutate(EPU = c("MAB"),
+  #          Year = c("2012"),
+  #          DoY = stringr::str_sub(t,-5))# add EPU column
+  # mhw.mab.year2012 <- mhw[10958:11301,]## days in 2012
 
-  heatwave_year<- rbind(mhw.gb.year, mhw.gom.year, mhw.mab.year,
-                        mhw.gb.year2012, mhw.gom.year2012, mhw.mab.year2012)
+  heatwave_year<- rbind(mhw.gb.year, mhw.gom.year, mhw.mab.year)
+
 if (save_clean){
   usethis::use_data(heatwave_year, overwrite = T)
 } else {

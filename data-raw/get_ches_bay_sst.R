@@ -20,7 +20,7 @@ get_ches_bay_sst <- function(save_clean = F){
   ches4<- raster::raster(file.path(raw.dir, ches_4_nc),varname = "sst_anomaly")
 
   sst_rast<- raster::stack(ches1, ches2, ches3, ches4)
-  raster::extent(sst_rast) <- raster::extent(c(-78,-74, 36, 40))
+  raster::extent(sst_rast) <- raster::extent(c(-77.5,-74.5, 36.5, 40))
   crs(sst_rast) <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83"
 
   r <- as(sst_rast, "SpatialPointsDataFrame") #Convert to ggplot-able object

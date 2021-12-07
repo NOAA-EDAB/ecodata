@@ -1280,18 +1280,18 @@ gom_zoo_div
 
 ### Marine Heat Wave {.tabset .tabset-fade}
 
-[notes here](https://docs.google.com/document/u/1/d/1ik6aAXY85DEgLmz4BaBwxtdEPq6e9xXo/edit?usp=drive_web&ouid=111390006230717850267&rtpof=true)
+[notes here](https://docs.google.com/document/d/1S91IDGC1vxQFZETAIzv-WOva3M8Q2vtd/edit?rtpof=true)
 
 #### Monthly time series
 
 ```{r heatwave-year-gb, fig.cap="Georges Bank", eval= T, echo = F}
-df12<-ecodata::heatwave_year %>% 
-  filter(EPU == "GB", 
-         Year == "2012")
+# df12<-ecodata::heatwave_year %>% 
+#   filter(EPU == "GB", 
+#          Year == "2012")
 
 ecodata::heatwave_year %>% 
   filter(EPU == "GB", 
-         Year == "2020") %>% 
+         Year == "2021") %>% 
   ggplot( aes(x = t, y = temp))+
   #geom_flame(aes(y = temp, y2 = thresh, fill = "sienna3"), show.legend = T) +
   #geom_flame(data = df12, aes(y = temp, y2 = thresh, fill = "red"),  show.legend = T) +
@@ -1305,7 +1305,7 @@ ecodata::heatwave_year %>%
                       labels = c("Climatology","Temperature","Threshold"))+
   ylab("Temperature (C)")+
   xlab(element_blank())+
-  ggtitle("GB Marine Heatwaves 2020")+
+  ggtitle("GB Marine Heatwaves 2021")+
   scale_x_date(date_labels = "%b", breaks = "1 month")+
   theme_bw()+
   theme(legend.title = element_blank(),
@@ -1316,7 +1316,7 @@ ecodata::heatwave_year %>%
 ```{r heatwave-year-gom, fig.cap = "Gulf of Maine", eval= T, echo = F}
 ecodata::heatwave_year %>% 
   filter(EPU == "GOM", 
-         Year == "2020") %>% 
+         Year == "2021") %>% 
   ggplot( aes(x = t, y = temp))+
   geom_flame(aes(y2 = thresh))+ 
   geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
@@ -1326,7 +1326,7 @@ ecodata::heatwave_year %>%
                       labels = c("Climatology","Temperature", "Threshold"))+
   ylab("Temperature (C)")+
   xlab(element_blank())+
-  ggtitle("GOM Marine Heatwaves 2020")+
+  ggtitle("GOM Marine Heatwaves 2021")+
   scale_x_date(date_labels = "%b", breaks = "1 month")+
   theme_bw()+
   theme(legend.title = element_blank(),
