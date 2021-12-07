@@ -8,7 +8,7 @@ raw.dir <- here::here("data-raw")
 
 get_rec <- function(save_clean = F){
 
-  files = list.files(raw.dir, pattern = "REC_HARVEST_2020|Rec_angler_effort_2020|Rec_Species_Diversity_2020")
+  files = list.files(raw.dir, pattern = "REC_HARVEST_2022|Rec_angler_effort_2022|Rec_Species_Diversity_2022")
   for (i in 1:length(files)) assign(files[i], read.csv(file.path(raw.dir,files[i])))
 
   recdat <- NULL
