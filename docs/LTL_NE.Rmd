@@ -834,6 +834,9 @@ micro_chlor
 
 #### Euphausiids + Cnidarians
 
+
+<span style="color: red;">NO NEW DATA</span>
+
 ```{r zoo-strat-abun, fig.width = 8, fig.cap="Stratified abundance of cnidarians and euphausiids in Mid-Atlantic Bight."}
 zoo_abund <- ecodata::zoo_strat_abun %>% 
   dplyr::mutate(Value = log10(Value+1)) %>% 
@@ -895,6 +898,8 @@ cowplot::plot_grid(gb_zoo, gom_zoo, nrow = 2)
 
 
 #### Small and Large Calanoid stratified abundance
+
+<span style="color: red;">NO NEW DATA</span>
 
 ```{r ne-sm-lg, fig.width = 8, fig.asp = .35, fig.cap= "Large (red) and small (black) calanoid zooplankton abundance in New England."}
 
@@ -958,6 +963,9 @@ ecodata::zoo_sli_anom %>%
 <!-- # ``` -->
 
 #### Calanus Stage
+
+
+<span style="color: red;">NO NEW DATA</span>
 
 ```{r gom-calanus-stage, fig.cap=""}
 cal <- ecodata::calanus_stage %>% 
@@ -1210,6 +1218,8 @@ cal %>%
 
 #### Zooplankton Diversity
 
+<span style="color: red;">NO NEW DATA</span>
+
 ```{r zoo-diversity-gb, fig.cap="Zooplankton diversity in Georges Bank and Gulf of Maine."}
 zoo_div <- ecodata::zoo_diversity %>% 
   dplyr::filter(EPU %in% c("GOM","GB"))
@@ -1285,22 +1295,17 @@ gom_zoo_div
 #### Monthly time series
 
 ```{r heatwave-year-gb, fig.cap="Georges Bank", eval= T, echo = F}
-# df12<-ecodata::heatwave_year %>% 
-#   filter(EPU == "GB", 
-#          Year == "2012")
+
 
 ecodata::heatwave_year %>% 
   filter(EPU == "GB", 
          Year == "2021") %>% 
   ggplot( aes(x = t, y = temp))+
-  #geom_flame(aes(y = temp, y2 = thresh, fill = "sienna3"), show.legend = T) +
-  #geom_flame(data = df12, aes(y = temp, y2 = thresh, fill = "red"),  show.legend = T) +
   heatwaveR::geom_flame(aes(y2 = thresh))+ 
   #heatwaveR::geom_flame(aes(y2 = df12$thresh))+ 
   geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
   geom_line(aes(x = t, y = thresh, color = "c"), size = 1)+
   geom_line(aes(x = t, y = temp, color = "b"))+
-  #geom_line(aes(x = df12$doy, y = df12$temp, color = "d"))+
   scale_colour_manual(values = c("turquoise4",   "sienna3","black"),
                       labels = c("Climatology","Temperature","Threshold"))+
   ylab("Temperature (C)")+
@@ -1545,3 +1550,14 @@ gom_map
 ### Habitat Vulnerability
 
 [Table to be described in SOE](https://noaa-edab.github.io/ecodata/Hab_table).
+
+
+### Ocean Acidification 
+
+[Report text here](https://docs.google.com/document/d/1k29YZwG1Fc2mJL39ryxzLgs0ly-RiH4h/edit) for MA and NE reports
+
+```{r ne-oa, fig.cap = "Bottom pH (summer only: June-August) on the U.S. Northeast Shelf plotted from available quality-controlled vessel- and glider-based datasets from 2007-present. Right panel: Summer 2021 glider-based pH observations in the Gulf of Maine (data provider: Neal Pettigrew, University of Maine). Glider mission ran from 06/30/2021 to 07/21/2021. "}
+
+knitr::include_graphics(file.path(image.dir, "Saba_Fig_SOE_NEFMC - Grace Saba.png"))
+
+```
