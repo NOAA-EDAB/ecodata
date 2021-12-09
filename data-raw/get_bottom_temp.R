@@ -91,3 +91,81 @@ get_bottom_temp_glorys <- function(save_clean = F){
     "Joseph Caracappa <joseph.caracappa@noaa.gov>")
 }
 get_bottom_temp_glorys(save_clean = T)
+
+
+
+
+
+
+
+
+
+
+bottom_heatwave_xl<-"GB_GOM_MAB_BT_1959_2019 - Vincent Saba - NOAA Federal.xlsx"
+
+get_bottom_heatwave <- function(save_clean = F){
+
+  gom <- read_excel(file.path(raw.dir,bottom_temp_xlsx)) %>%
+    dplyr::select(t, GOM_btemp) %>%
+    dplyr::rename(temp = GOM_btemp) %>%
+    dplyr::mutate(t = as.Date(t))
+  gb <- read_excel(file.path(raw.dir,bottom_temp_xlsx)) %>%
+    dplyr::select(t, GB_btemp) %>%
+    dplyr::rename(temp = GB_btemp)%>%
+    dplyr::mutate(t = as.Date(t))
+  mab <- read_excel(file.path(raw.dir,bottom_temp_xlsx)) %>%
+    dplyr::select(t, MAB_btemp) %>%
+    dplyr::rename(temp = MAB_btemp)%>%
+    dplyr::mutate(t = as.Date(t))
+  #GB
+  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  gb.mhw <- heatwaveR::detect_event(ts)
+  gb.hw<- gb.mhw$event %>%
+    dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative)%>%
+    dplyr::mutate(EPU = "GB")
+  #GOM
+  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  gom.mhw <- heatwaveR::detect_event(ts)
+  gom.hw<- gom.mhw$event %>%
+    dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative) %>%
+    dplyr::mutate(EPU = "GOM")
+  # MAB
+  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  mab.mhw <- heatwaveR::detect_event(ts)
+  mab.hw<- mab.mhw$event %>%
+    dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative) %>%
+    dplyr::mutate(EPU = "MAB")
+  # Cumulative intensity
+  cum.intensity <- rbind(gb.hw, gom.hw, mab.hw) %>%
+    dplyr::mutate(Time = as.numeric(format(as.Date(date_start, format="%Y-%m-%d"),"%Y"))) %>%
+    dplyr::group_by(Time, EPU) %>%
+    dplyr::summarise(Value = as.numeric(sum(intensity_cumulative))) %>%
+    dplyr::mutate(Var = "cumulative intensity") %>%
+    dplyr::ungroup()
+  #Max intensity
+  max.intensity <- rbind(gb.hw, gom.hw, mab.hw) %>%
+    dplyr::mutate(Time = as.numeric(format(as.Date(date_start, format="%Y-%m-%d"),"%Y")))  %>%
+    dplyr::rename(Value = intensity_max) %>%
+    dplyr::mutate(Var = "maximum intensity")%>%
+    dplyr::select(Time, EPU, Value, Var)
+
+  bottom_heatwave<- rbind(cum.intensity, max.intensity) %>%
+    dplyr:: mutate(Units = "degrees C",
+                   Time = as.numeric(Time))
+
+  # metadata ----
+  attr(bottom_heatwave, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/marine-heatwave.html"
+  attr(heatwave, "data_files")   <- list(
+    bottom_heatwave_xl = bottom_heatwave_xl)
+  attr(heatwave, "data_steward") <- c(
+    "Vincent Saba <vincent.saba@noaa.gov>")
+
+  if (save_clean){
+    usethis::use_data(bottom_heatwave, overwrite = T)
+  } else {
+    return(bottom_heatwave)
+  }
+}
+get_bottom_heatwave(save_clean = T)
+
+
