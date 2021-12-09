@@ -35,6 +35,8 @@
 <script src="libs/navigation-1.1/tabsets.js"></script>
 <link href="libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -442,6 +444,10 @@ Wind energy revenue in the Mid-Atlantic
 </p>
 </div>
 </div>
+<div id="total-abcacl" class="section level3">
+<h3>Total ABC/ACL</h3>
+<p><img src="human_dimensions_MAB_files/figure-html/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /><img src="human_dimensions_MAB_files/figure-html/unnamed-chunk-1-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
 </div>
 <div id="shelfwide-indicators" class="section level2">
 <h2>Shelfwide Indicators</h2>
@@ -461,6 +467,139 @@ Summary of single species status for HMS stocks.
 <p><img src="images/NE2021128-01.jpg" width="1591" style="display: block; margin: auto;" /></p>
 <p><img src="images/SurveyMap202133.png" width="1650" style="display: block; margin: auto;" /></p>
 <p><img src="human_dimensions_MAB_files/figure-html/wind-dev-speed0-1.png" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="landings-and-revenue-in-wind-energy-areas" class="section level3">
+<h3>Landings and Revenue in Wind Energy Areas</h3>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Top ten species Landings and Revenue from Wind Energy Areas.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+GARFO and ASMFC Managed Species
+</th>
+<th style="text-align:left;">
+Maximum Percent Total Annual Regional Species Landings
+</th>
+<th style="text-align:left;">
+Maximum Percent Total Annual Regional Species Revenue
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Atlantic surfclam
+</td>
+<td style="text-align:left;">
+21 %
+</td>
+<td style="text-align:left;">
+20 %
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+American eel
+</td>
+<td style="text-align:left;">
+13 %
+</td>
+<td style="text-align:left;">
+18 %
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic menhaden
+</td>
+<td style="text-align:left;">
+17 %
+</td>
+<td style="text-align:left;">
+17 %
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic chub mackerel
+</td>
+<td style="text-align:left;">
+15 %
+</td>
+<td style="text-align:left;">
+16 %
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Yellowtail flounder
+</td>
+<td style="text-align:left;">
+14 %
+</td>
+<td style="text-align:left;">
+15 %
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Offshore hake
+</td>
+<td style="text-align:left;">
+14 %
+</td>
+<td style="text-align:left;">
+14 %
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ocean quahog
+</td>
+<td style="text-align:left;">
+14 %
+</td>
+<td style="text-align:left;">
+13 %
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic sea scallops
+</td>
+<td style="text-align:left;">
+12 %
+</td>
+<td style="text-align:left;">
+10 %
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Skate wings
+</td>
+<td style="text-align:left;">
+10 %
+</td>
+<td style="text-align:left;">
+10 %
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic mackerel
+</td>
+<td style="text-align:left;">
+9 %
+</td>
+<td style="text-align:left;">
+10 %
+</td>
+</tr>
+</tbody>
+</table>
 <!-- ### Wind Sites and Occurrence  -->
 <!-- <span style="color: red;">NO NEW DATA</span> -->
 <!-- These are the five species most likely to occur in the lease areas.  -->
@@ -497,42 +636,6 @@ Summary of single species status for HMS stocks.
 <!--                      "Existing - South" = 2)) %>% -->
 <!--   kable_styling(latex_options = c("hold_position", "scale_down"))  -->
 <!-- ``` -->
-<!-- ```{r wind-map, eval = T, echo = F, fig.cap="Map of BOEM existing (black) and proposed (red) lease areas as of February 2019.", message=FALSE, results=FALSE} -->
-<!-- nesbath <- marmap::fortify.bathy(marmap::getNOAA.bathy(lon1 = -77, lon2 = -65, lat1 = 35, lat2 = 45, -->
-<!--               resolution = 5)) -->
-<!-- lease_s<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesSPoly.shp')) -->
-<!-- lease_n<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesNPoly.shp')) -->
-<!-- lease_m<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_existing_leasesMPoly.shp')) -->
-<!-- prop_n<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_proposed_leases_NPoly.shp')) -->
-<!-- prop_m<-sf::st_read(file.path(gis.dir, 'BOEM lease areas/ne_proposed_leases_MPoly.shp')) -->
-<!-- invisible(sf::st_crs(lease_s)<-crs) -->
-<!-- invisible(sf::st_crs(lease_n)<-crs) -->
-<!-- invisible(sf::st_crs(lease_m)<-crs) -->
-<!-- invisible(sf::st_crs(prop_n)<-crs) -->
-<!-- invisible(sf::st_crs(prop_m)<-crs) -->
-<!-- ggplot2::ggplot() + -->
-<!--   ggplot2::geom_raster(data = nesbath, aes(x=x,y=y, fill = z)) + -->
-<!--   ggplot2::scale_fill_gradientn(colors =c("lightcyan","lightblue4"))+ -->
-<!--   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) + -->
-<!--   ggplot2::geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) + -->
-<!--   ggplot2::geom_sf(data = lease_s, size = map.lwd, color = "black")+ -->
-<!--   ggplot2::geom_sf(data = lease_n, size = map.lwd, color = "black")+ -->
-<!--   ggplot2::geom_sf(data = lease_m, size = map.lwd, color = "black")+ -->
-<!--   ggplot2::geom_sf(data = prop_n, size = map.lwd, color = "red3")+ -->
-<!--   ggplot2::geom_sf(data = prop_m, size = map.lwd, color = "red3")+ -->
-<!--   ggplot2::coord_sf(crs = crs, xlim = c(-77, -69), ylim = c(36,42))+ -->
-<!--   ggplot2::geom_segment(aes(x = -74.6, y = 37.4, xend =-75.4, yend =38), colour = "blue4")+ -->
-<!--   ggplot2::geom_segment(aes(x = -71.1, y = 40.2, xend =-71.6, yend =41.1), colour = "blue4")+ -->
-<!--   ggplot2::annotate("text", x = -74.9, y = 37, label = "S")+ -->
-<!--   ggplot2::annotate("text", x = -73.5, y = 38.7, label = "M")+ -->
-<!--   ggplot2::annotate("text", x = -70.5, y = 40.2, label = "N")+ -->
-<!--   ggspatial::annotation_scale(location = "br", width_hint = 0.4) + -->
-<!--   ggplot2::theme_bw( ) + -->
-<!--   ggplot2::ylab("")+ -->
-<!--   ggplot2::xlab("")+ -->
-<!--   ggplot2::theme(legend.position = "none") + -->
-<!--   ggplot2::ggtitle("BOEM lease areas") -->
-<!-- ```  -->
 </div>
 </div>
 
