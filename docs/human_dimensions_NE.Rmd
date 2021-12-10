@@ -186,7 +186,7 @@ gb_landings <- landings %>% dplyr::filter(EPU == "GB") %>%
   #Axis and theme
   ggplot2::ylim(1,NA)+
   ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
-  ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Landings (10"^3*"metric tons)")) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet() +
@@ -276,7 +276,7 @@ gom_landings<- landings %>%
   #Axis and theme
   ggplot2::ylim(0, NA)+
   ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
-  ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Landings (10"^3*"metric tons)")) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet() +
@@ -382,7 +382,7 @@ ggplot2::ggplot()+
   ggplot2::ylim(30,190)+
 
 #  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
-  ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ylab(expression("Landings (10"^3*"mt)")) +
@@ -412,7 +412,7 @@ ggplot2::ggplot()+
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
   ggplot2::ylim(30,190)+
 #  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
-  ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ylab(expression("Landings (10"^3*"mt)")) +
@@ -487,7 +487,7 @@ ggplot2::ggplot()+
   ggplot2::ggtitle("Gulf of Maine Benthivore Component")+
   ggplot2::ylab(element_blank()) +
   ggplot2::xlab(element_blank())+
-  ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1965, 2020, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), limits = y.lim,
                      expand = c(0.01, 0.01)) +
   ecodata::theme_ts() +
@@ -517,7 +517,7 @@ ggplot2::ggplot()+
   ggplot2::ggtitle("Georges Bank Benthos Component")+
   ggplot2::ylab("Value $1,000,000 ($2015)") + 
   ggplot2::xlab(element_blank())+
-  ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1965, 2020, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), 
                               limits = y.lim, expand = c(0.01, 0.01)) +
   ecodata::theme_ts() +
@@ -658,7 +658,7 @@ ggplot2::ggplot()+
   ggplot2::ggtitle("Bennet Indicator - Total Revenue")+
   ggplot2::labs(y="Value $1,000,000 ($2015)") +
   ggplot2::xlab(element_blank())+
-  ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), 
                               limits = y.lim, expand = c(0.01, 0.01)) +
     ggplot2::theme(legend.position="bottom", legend.direction = "horizontal",
@@ -713,7 +713,7 @@ ggplot2::ggplot() +
 
   #axes
   ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000000})+
-  ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ylab(expression("Revenue (10"^6*"USD)")) +
@@ -745,7 +745,7 @@ ggplot2::ggplot() +
 
   #axes
   ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000000})+
-  ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ylab(expression("Revenue (10"^6*"USD)")) +
@@ -1158,7 +1158,7 @@ rec_landings <- ggplot2::ggplot(data = landings_rec)+
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
   ggplot2::ggtitle("NE Recreational seafood harvest")+
   ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000000})+
-  ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   # Plotly can not use "expression" so follow notes below
@@ -1397,7 +1397,7 @@ com2<-com %>%
 
 ```{r rec_hms, fig.cap="Recreational shark Landings from mrip."}
 ecodata::rec_hms %>% 
-  dplyr::filter(Region == "NE") %>% 
+  dplyr::filter(EPU == "NE") %>% 
   ggplot2::ggplot()+
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+
@@ -1602,31 +1602,31 @@ ecodata::ppr %>%
 
 ### Wind Energy Revenue
 
-```{r wind-revenue, fig.cap="Fisheries revenue from wind lease areas in New England."}
-ecodata::wind_revenue %>% 
-  dplyr::mutate(Value = Value/1000000, 
-                Time = as.numeric(Time)) %>% 
-  tidyr::separate(Var, into=c("Var", "Trash"), sep = "[(]") %>% 
-  dplyr::select(!Trash) %>% 
-  #dplyr::group_by(EPU) %>% 
- # dplyr::mutate(hline = mean(Value)) %>% 
-  dplyr::filter(EPU == "NE") %>% 
-  ggplot2::ggplot() +
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+
-  ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+
-  #ggplot2::facet_wrap(~Var, ncol = 1, scales = "free")+
-  #ggplot2::geom_hline(aes(yintercept = hline),
-  #         size = hline.size,
-  #         alpha = hline.alpha,
-  #         linetype = hline.lty)+
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
-  ggplot2::ggtitle("Fishery Revenue in Wind Lease Areas")+
-  ggplot2::ylab("2019 Constant Million Dollars ")+
-  ggplot2::xlab(element_blank())+
-  ggplot2::theme(legend.title = element_blank())+
-  ecodata::theme_ts()+
-  ecodata::theme_title()
-```
+<!-- ```{r wind-revenue, fig.cap="Fisheries revenue from wind lease areas in New England."} -->
+<!-- ecodata::wind_revenue %>%  -->
+<!--   dplyr::mutate(Value = Value/1000000,  -->
+<!--                 Time = as.numeric(Time)) %>%  -->
+<!--   tidyr::separate(Var, into=c("Var", "Trash"), sep = "[(]") %>%  -->
+<!--   dplyr::select(!Trash) %>%  -->
+<!--   #dplyr::group_by(EPU) %>%  -->
+<!--  # dplyr::mutate(hline = mean(Value)) %>%  -->
+<!--   dplyr::filter(EPU == "NE") %>%  -->
+<!--   ggplot2::ggplot() + -->
+<!--   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+ -->
+<!--   ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+ -->
+<!--   #ggplot2::facet_wrap(~Var, ncol = 1, scales = "free")+ -->
+<!--   #ggplot2::geom_hline(aes(yintercept = hline), -->
+<!--   #         size = hline.size, -->
+<!--   #         alpha = hline.alpha, -->
+<!--   #         linetype = hline.lty)+ -->
+<!--   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) + -->
+<!--   ggplot2::ggtitle("Fishery Revenue in Wind Lease Areas")+ -->
+<!--   ggplot2::ylab("2019 Constant Million Dollars ")+ -->
+<!--   ggplot2::xlab(element_blank())+ -->
+<!--   ggplot2::theme(legend.title = element_blank())+ -->
+<!--   ecodata::theme_ts()+ -->
+<!--   ecodata::theme_title() -->
+<!-- ``` -->

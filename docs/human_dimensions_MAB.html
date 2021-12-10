@@ -437,12 +437,34 @@ reconstructed primary production
 </div>
 <div id="wind-energy-revenue" class="section level3">
 <h3>Wind Energy Revenue</h3>
-<div class="figure" style="text-align: center">
-<img src="human_dimensions_MAB_files/figure-html/wind-revenue-1.png" alt="Wind energy revenue in the Mid-Atlantic" width="672" />
-<p class="caption">
-Wind energy revenue in the Mid-Atlantic
-</p>
-</div>
+<!-- ```{r wind-revenue, fig.cap="Wind energy revenue in the Mid-Atlantic"} -->
+<!-- ecodata::wind_revenue %>%  -->
+<!--   dplyr::mutate(Value = Value/1000000,  -->
+<!--                 Time = as.integer(Time)) %>%  -->
+<!--   tidyr::separate(Var, into=c("Var", "Trash"), sep = "[(]") %>%  -->
+<!--   dplyr::select(!Trash) %>%  -->
+<!--   #dplyr::group_by(EPU) %>%  -->
+<!--  # dplyr::mutate(hline = mean(Value)) %>%  -->
+<!--   dplyr::filter(EPU == "MAB") %>%  -->
+<!--   ggplot2::ggplot() + -->
+<!--   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+ -->
+<!--   ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+ -->
+<!--   #ggplot2::facet_wrap(~Var, ncol = 1, scales = "free")+ -->
+<!--   #ggplot2::geom_hline(aes(yintercept = hline), -->
+<!--   #         size = hline.size, -->
+<!--   #         alpha = hline.alpha, -->
+<!--   #         linetype = hline.lty)+ -->
+<!--   scale_x_continuous(breaks=c(2008,2012,2016, 2020))+ -->
+<!--   ggplot2::ggtitle("Fishery Revenue in Wind Lease Areas")+ -->
+<!--   ggplot2::ylab(expression("2019 Constant 10"^6*"Dollars "))+ -->
+<!--   theme(legend.title = element_blank())+ -->
+<!--   ggplot2::xlab(element_blank())+ -->
+<!--   ecodata::theme_ts()+ -->
+<!--   ecodata::theme_title() -->
+<!-- ``` -->
 </div>
 <div id="total-abcacl" class="section level3">
 <h3>Total ABC/ACL</h3>
@@ -462,10 +484,22 @@ Summary of single species status for HMS stocks.
 </div>
 <div id="wind-development-speed" class="section level3">
 <h3>Wind Development Speed</h3>
-<p><img src="images/All_2021128_needsgraph-01.jpg" width="1275" style="display: block; margin: auto;" /></p>
-<p><img src="images/MidAtlantic_2021128-01.jpg" width="1218" style="display: block; margin: auto;" /></p>
-<p><img src="images/NE2021128-01.jpg" width="1591" style="display: block; margin: auto;" /></p>
-<p><img src="images/SurveyMap202133.png" width="1650" style="display: block; margin: auto;" /></p>
+<!-- ```{r wind-dev-cumul, fig.cap = ""} -->
+<!-- #knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/All_2021119-01.jpg") -->
+<!-- knitr::include_graphics(file.path(image.dir, "All_2021128_needsgraph-01.jpg")) -->
+<!-- ``` -->
+<!-- ```{r wind-dev-cumul-MAB, fig.cap = ""} -->
+<!-- knitr::include_graphics(file.path(image.dir, "MidAtlantic_2021128-01.jpg")) -->
+<!-- #knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/MidAtlantic_2021119-01.jpg") -->
+<!-- ``` -->
+<!-- ```{r wind-dev-NE, fig.cap = ""} -->
+<!-- #knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/NE2021119.jpg") -->
+<!-- knitr::include_graphics(file.path(image.dir, "NE2021128-01.jpg")) -->
+<!-- ``` -->
+<!-- ```{r wind-dev-survey, fig.cap = ""} -->
+<!-- knitr::include_graphics(file.path(image.dir, "SurveyMap202133.png")) -->
+<!-- #knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/SurveysWindFarmAreas_20201229.jpg") -->
+<!-- ``` -->
 <p><img src="human_dimensions_MAB_files/figure-html/wind-dev-speed0-1.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="landings-and-revenue-in-wind-energy-areas" class="section level3">

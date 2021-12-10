@@ -73,7 +73,7 @@ gom_landings<- landings %>%
   #Axis and theme
   ggplot2::ylim(0, NA)+
   ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
-  ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Landings (10"^3*"metric tons)")) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet() +

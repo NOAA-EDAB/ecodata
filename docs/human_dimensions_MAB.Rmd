@@ -187,7 +187,7 @@ p2<- landings %>%
   
   #Axis and theme
   ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
-  ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Landings (10"^3*"metric tons)")) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet() +
@@ -913,7 +913,7 @@ ggplot2::ggplot(data = landings_rec)+
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
 
   ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000000})+
-  ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Recreational seafood harvest") +
@@ -1146,6 +1146,7 @@ com2<-com %>%
 
 ```{r rec_hms, fig.cap="Recreational shark landings from mrip."}
 ecodata::rec_hms %>% 
+  filter(EPU == "MAB") %>% 
   ggplot2::ggplot()+
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+
@@ -1346,34 +1347,34 @@ ecodata::ppr %>%
 
 ### Wind Energy Revenue
 
-```{r wind-revenue, fig.cap="Wind energy revenue in the Mid-Atlantic"}
-ecodata::wind_revenue %>% 
-  dplyr::mutate(Value = Value/1000000, 
-                Time = as.integer(Time)) %>% 
-  tidyr::separate(Var, into=c("Var", "Trash"), sep = "[(]") %>% 
-  dplyr::select(!Trash) %>% 
-  #dplyr::group_by(EPU) %>% 
- # dplyr::mutate(hline = mean(Value)) %>% 
-  dplyr::filter(EPU == "MAB") %>% 
-  ggplot2::ggplot() +
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+
-  ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+
-  #ggplot2::facet_wrap(~Var, ncol = 1, scales = "free")+
-  #ggplot2::geom_hline(aes(yintercept = hline),
-  #         size = hline.size,
-  #         alpha = hline.alpha,
-  #         linetype = hline.lty)+
-  scale_x_continuous(breaks=c(2008,2012,2016, 2020))+
-  ggplot2::ggtitle("Fishery Revenue in Wind Lease Areas")+
-  ggplot2::ylab(expression("2019 Constant 10"^6*"Dollars "))+
-  theme(legend.title = element_blank())+
-  ggplot2::xlab(element_blank())+
-  ecodata::theme_ts()+
-  ecodata::theme_title()
-```
+<!-- ```{r wind-revenue, fig.cap="Wind energy revenue in the Mid-Atlantic"} -->
+<!-- ecodata::wind_revenue %>%  -->
+<!--   dplyr::mutate(Value = Value/1000000,  -->
+<!--                 Time = as.integer(Time)) %>%  -->
+<!--   tidyr::separate(Var, into=c("Var", "Trash"), sep = "[(]") %>%  -->
+<!--   dplyr::select(!Trash) %>%  -->
+<!--   #dplyr::group_by(EPU) %>%  -->
+<!--  # dplyr::mutate(hline = mean(Value)) %>%  -->
+<!--   dplyr::filter(EPU == "MAB") %>%  -->
+<!--   ggplot2::ggplot() + -->
+<!--   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+ -->
+<!--   ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+ -->
+<!--   #ggplot2::facet_wrap(~Var, ncol = 1, scales = "free")+ -->
+<!--   #ggplot2::geom_hline(aes(yintercept = hline), -->
+<!--   #         size = hline.size, -->
+<!--   #         alpha = hline.alpha, -->
+<!--   #         linetype = hline.lty)+ -->
+<!--   scale_x_continuous(breaks=c(2008,2012,2016, 2020))+ -->
+<!--   ggplot2::ggtitle("Fishery Revenue in Wind Lease Areas")+ -->
+<!--   ggplot2::ylab(expression("2019 Constant 10"^6*"Dollars "))+ -->
+<!--   theme(legend.title = element_blank())+ -->
+<!--   ggplot2::xlab(element_blank())+ -->
+<!--   ecodata::theme_ts()+ -->
+<!--   ecodata::theme_title() -->
+<!-- ``` -->
 
 ### Total ABC/ACL
 ```{r}
@@ -1478,29 +1479,29 @@ ggplot2::ggplot(data = stock_status) +
 
 ### Wind Development Speed
 
-```{r wind-dev-cumul, fig.cap = ""}
+<!-- ```{r wind-dev-cumul, fig.cap = ""} -->
 
-#knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/All_2021119-01.jpg")
-knitr::include_graphics(file.path(image.dir, "All_2021128_needsgraph-01.jpg"))
-```
+<!-- #knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/All_2021119-01.jpg") -->
+<!-- knitr::include_graphics(file.path(image.dir, "All_2021128_needsgraph-01.jpg")) -->
+<!-- ``` -->
 
-```{r wind-dev-cumul-MAB, fig.cap = ""}
+<!-- ```{r wind-dev-cumul-MAB, fig.cap = ""} -->
 
-knitr::include_graphics(file.path(image.dir, "MidAtlantic_2021128-01.jpg"))
-#knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/MidAtlantic_2021119-01.jpg")
-```
+<!-- knitr::include_graphics(file.path(image.dir, "MidAtlantic_2021128-01.jpg")) -->
+<!-- #knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/MidAtlantic_2021119-01.jpg") -->
+<!-- ``` -->
 
-```{r wind-dev-NE, fig.cap = ""}
+<!-- ```{r wind-dev-NE, fig.cap = ""} -->
 
-#knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/NE2021119.jpg")
-knitr::include_graphics(file.path(image.dir, "NE2021128-01.jpg"))
-```
+<!-- #knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/NE2021119.jpg") -->
+<!-- knitr::include_graphics(file.path(image.dir, "NE2021128-01.jpg")) -->
+<!-- ``` -->
 
-```{r wind-dev-survey, fig.cap = ""}
+<!-- ```{r wind-dev-survey, fig.cap = ""} -->
 
-knitr::include_graphics(file.path(image.dir, "SurveyMap202133.png"))
-#knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/SurveysWindFarmAreas_20201229.jpg")
-```
+<!-- knitr::include_graphics(file.path(image.dir, "SurveyMap202133.png")) -->
+<!-- #knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/SurveysWindFarmAreas_20201229.jpg") -->
+<!-- ``` -->
 
 ```{r wind-dev-speed0, eval = T, echo = F, fig.cap='', out.width='80%'}
  ecodata::wind_dev_speed %>% mutate(Value = as.numeric(Value)/1000000, 

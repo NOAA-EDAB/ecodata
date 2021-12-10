@@ -48,7 +48,7 @@ ggplot2::ggplot()+
   ggplot2::ggtitle("Gulf of Maine Benthivore Component")+
   ggplot2::ylab(element_blank()) +
   ggplot2::xlab(element_blank())+
-  ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1965, 2020, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), limits = y.lim,
                      expand = c(0.01, 0.01)) +
   ecodata::theme_ts() +
@@ -78,7 +78,7 @@ ggplot2::ggplot()+
   ggplot2::ggtitle("Georges Bank Benthos Component")+
   ggplot2::ylab("Value $1,000,000 ($2015)") + 
   ggplot2::xlab(element_blank())+
-  ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1965, 2020, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), 
                               limits = y.lim, expand = c(0.01, 0.01)) +
   ecodata::theme_ts() +
