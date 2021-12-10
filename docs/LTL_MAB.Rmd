@@ -327,33 +327,6 @@ ggplot2::ggplot() +
 
 
 
-```{r bottom-temp-glorys, fig.width = 6, fig.asp = .55, fig.cap="Annual bottom temperature in the Mid-Atlantic Bight."}
-ecodata::bottom_temp_glorys %>%
-  dplyr::filter(EPU == epu_abbr)%>%
-  dplyr::group_by(EPU) %>%
-  dplyr::mutate(hline = mean(Value)) %>%
-ggplot2::ggplot() +
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_line(aes(x = Time, y = Value)) +
-  #ecodata::geom_gls(aes(x = Time, y = Value)) +
-  ggplot2::geom_point(aes(x = Time, y = Value), size = 1) +
-  ggplot2::ylab("Temperature (C)") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Bottom temperature GLORYS anomaly") +
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
-  ggplot2::theme(strip.text=element_text(hjust=0),
-        plot.title = element_text(size = 12))+
-  ggplot2::geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty) +
-  ecodata::theme_ts()
-
-```
-
-
 ### Chlorophyll and Primary Productivity {.tabset .tabset-fade}
 
 
@@ -612,7 +585,9 @@ micro_chlor
 
 ```
 
-### Chesapeake Bay Water Quality Attainment
+### Chesapeake Bay {.tabset .tabset-fade}
+
+#### Chesapeake Bay Water Quality Attainment
 
 
 ```{r ches-bay-wq,fig.width = 6, fig.asp = 0.55, fig.cap = "Water quality attainment in Chesapeake Bay following rolling three year assessment periods."}
@@ -642,19 +617,11 @@ ecodata::ches_bay_wq %>%
   ecodata::theme_ts()
 ```
 
-### Chesapeake Bay 
+ 
 
-<span style="color: red;">NO NEW DATA, only summary</span>
+#### Chesepeake Bay Salinity Anomolies
 
-Headline:  Warmer-than-average winter water temps in Chesapeake Bay likely help blue crabs, hurt striped bass numbers.
-
-[Details here](https://docs.google.com/document/u/1/d/12Aq9nxrdrtZKESoZ8KtW152i0amf_O54/edit?usp=drive_web&ouid=111390006230717850267&rtpof=true).
-
-<!-- ### Chesepeake Bay Salinity Anomolies -->
-
-
-
-<!-- Write up on anomalies in salinity we saw in 2018,2019 following record breaking rain in 2018.  The low salinities impacted [hypoxia, fish and oysters](https://docs.google.com/document/d/19ikLWKQWiRSrjmQJ2F7EB_ZcieBMk6Ykf1RX_Gissao/edit).  -->
+#### Chesapeake SST
 
 ```{r ch-bay-temp, fig.cap = "Blue = 2020, red = Long term avergae 2010-2019. "}
 
@@ -673,7 +640,7 @@ ecodata::ch_bay_temp %>%
   ecodata::theme_title()
 ```
 
-#### Chesapeake SST
+
 ```{r, ches-bay-sst}
 
 sst<- ecodata::ches_bay_sst
@@ -1167,19 +1134,20 @@ cp<- rbind(cpi, ei, pi)
 
 cp %>% ggplot2::ggplot() + 
  #Highlight last ten years
-  #ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-  #    xmin = x.shade.min , xmax = x.shade.max) +
-  ecodata::geom_gls(aes(x = Time, y = Value),
-             alpha = trend.alpha, size = trend.size) +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf)+
   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
-  ggplot2::geom_ribbon(aes(x = Time, ymin = Lower, ymax = Upper), fill = "gray")+
+  #ggplot2::geom_ribbon(aes(x = Time, ymin = Lower, ymax = Upper), fill = "gray")+
   ggplot2::geom_hline(aes(yintercept = 0))+
   #   size = hline.size,
    #  alpha = hline.alpha,
     # linetype = hline.lty)+
   ggplot2::ggtitle("Cold Pool Index")+
   ggplot2::facet_wrap(~Var, scales = "free")+
+  ecodata::geom_gls(aes(x = Time, y = Value))+#,
+             #alpha = trend.alpha, size = trend.size) 
   ggplot2::ylab("Cold Pool") +
   ggplot2::xlab("")+
   ecodata::theme_ts()+
@@ -1537,12 +1505,6 @@ knitr::include_graphics(file.path(image.dir, "Saba_Fig_SOE_MAFMC - Grace Saba.pn
 
 ```
 
-
-```{r mab-oa-glider, fig.cap = "Glider Transect."}
-
-knitr::include_graphics(file.path(image.dir, "pH glider transect map - Grace Saba.jpg"))
-
-```
 
 ## Shelfwide Indicators {.tabset .tabset-fade}
 

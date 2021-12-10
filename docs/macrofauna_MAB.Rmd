@@ -107,11 +107,10 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 ### Surveys {.tabset .tabset-fade}
 
-<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
+
 
 #### NEFSC BTS & NEAMAP 
 
-<span style="color: red;">NEW DATA ONLY NEAMAP FALL 2020 - NO NEFSC BTS SURVEY IN 2020</span>
 
 ```{r aggregate-biomass, fig.cap = paste0("Spring (left) and fall (right) surveyed biomass in the Mid-Atlantic Bight. Data from the NEFSC Bottom Trawl Survey are shown in black, with NEAMAP shown in red. \\label{nefsc-biomass}")}
 agg<-ecodata::aggregate_biomass %>% 
@@ -404,7 +403,6 @@ neamap %>%
 
 #### Proportion managed species in NEFSC BTS
 
-<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
 
 ```{r nefsc-survey-disaggregated-managed-spp-bts}
 prop <- ecodata::nefsc_survey_disaggregated %>% 
@@ -466,7 +464,6 @@ mab_prop
 
 #### MAFMC Planktivores in NE
 
-<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
 
 ```{r nefsc-survey-disaggregated-mafmc-spp-in-ne}
 mafmc_ne <- ecodata::nefsc_survey_disaggregated %>% 
@@ -627,6 +624,7 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
 #   group_by(EPU) %>% 
 #   dplyr::summarise(m= mean(Value))
 ```
+
 ```{r exp-n-spring}
 
 exp<- ecodata::exp_n %>% filter( EPU == "MAB", 
@@ -678,7 +676,6 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
 
 ### Productivity anomaly
 
-<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
 
 ```{r productivity-anomaly, fig.cap = "Small fish per large fish biomass anomaly in the Mid-Atlantic Bight."}
 
@@ -844,7 +841,7 @@ knitr::include_graphics(file.path(image.dir, "MABcondition_2020_viridis_final.jp
 
 ### Stomach Fullness
 
-<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
+
 
 ```{r stom-fullness, fig.cap= "Stomach fullness anomaly in the Mid-Atlantic Bight." }
 fullness <- ecodata::stom_fullness %>%
@@ -869,7 +866,7 @@ fullness
 
 ### Larval diversity
 
-
+<span style="color: red;">NO NEW DATA</span>
 
 ```{r ichthyo-diversity}
 ma_larv_div <- ecodata::ichthyo_diversity %>%
@@ -938,6 +935,7 @@ bird %>%
 ```
 
 ### Forage Anomaly
+<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
 
 [Taxa include](https://docs.google.com/spreadsheets/d/108snlOTy1wzMGmxbYp1qJuKgqYfYM8MD/edit#gid=966266704)
 
@@ -962,7 +960,7 @@ ecodata::forage_anomaly %>%
 ```
 
 ### Observed Shark Numbers
-
+<span style="color: red;">NO NEW DATA</span>
 ```{r observed-sharks}
 ecodata::observed_sharks %>% 
   filter(EPU == "MAB") %>% 
@@ -981,29 +979,12 @@ ecodata::observed_sharks %>%
 
 ```
 
-### MRIP Sharks
-```{r mrip-sharks}
-ecodata::rec_hms %>% 
-  filter(EPU == "MAB") %>% 
-  #mutate(Value = Value/1000) %>% 
-  ggplot()+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_point(aes(x=Time, y = Value, color = Var))+
-  ggplot2::geom_line(aes(x=Time, y = Value, color = Var))+
-  ggplot2::ggtitle("Rec Shark - Total Catch")+
-  ggplot2::ylab("Number of Fish")+
-  ggplot2::xlab(element_blank())+
-  ggplot2::scale_color_discrete(name = "Category")+
-  ecodata::theme_ts()+
-  ecodata::theme_title()
 
-```
 
 ## Shelfwide Indicators{.tabset .tabset-fade}
 
 ### Protected species 
+<span style="color: red;">NO NEW DATA - No bycatch data this year</span>
 
 ```{r harborporpoise, fig.cap="Estimated Harbor porpoise bycatch (black) and the potential biological removal (red)." }
 
@@ -1082,7 +1063,6 @@ ecodata::grayseal %>%
 ```
 
 
-[Starter text from Chris](https://docs.google.com/document/d/0B1lP7X3GP_hQSWRHV1NGWkFlc0VUNVNPcGJRalVUTEpUSjVz/edit?dls=true)
 
 
 ```{r narw-abundance, fig.cap = "Estimated North Atlanic right whale abundance on the Northeast Shelf."}
@@ -1150,7 +1130,6 @@ ecodata::narw %>%
 
 ### Aggregate species distribution
 
-<span style="color: red;">NO NEW DATA</span>
 
 ```{r species-dist, fig.cap = "Aggregate species distribution metrics for species in the Northeast Large Marine Ecosystem."}
 

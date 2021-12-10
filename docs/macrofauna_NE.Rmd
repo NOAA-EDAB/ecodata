@@ -108,11 +108,11 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 ### Surveys {.tabset .tabset-fade}
 
-<span style="color: red;">ONLY ME/NH NEW DATA</span>
+
 
 #### NEFSC BTS
  
-<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
+
  
 ```{r aggregate-biomass, fig.cap = paste0("Spring (left) and fall (right) NEFSC surveyed biomass in Georges Bank.")}
 agg<-ecodata::aggregate_biomass %>% 
@@ -493,7 +493,7 @@ cowplot::plot_grid(p1, p2, p3, p4, nrow=4)
 
 #### NEFMC Benthivores in MAB
 
-<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
+
 
 ```{r nefsc-survey-disaggregated-NEFMC-ssp-in-mab}
 nefmc_ma <- ecodata::nefsc_survey_disaggregated %>% 
@@ -549,7 +549,6 @@ mab_nefmc_props
 
 #### MA inshore survey
 
-<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
 
 ```{r ma-inshore-survey, fig.cap = "Spring (left) and fall (right) surveyed biomass from the Massachusetts state inshore bottom trawl survey."}
 mass <- ecodata::mass_inshore_survey %>% 
@@ -862,7 +861,6 @@ cowplot::plot_grid(p1, p2, p3, p4, nrow = 4)
 
 #### Proportion managed species in NEFSC BTS
 
-<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
 
 ```{r nefsc-survey-disaggregated-managed-spp-bts-gb}
 prop <- ecodata::nefsc_survey_disaggregated %>% 
@@ -1118,7 +1116,6 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
 
 ### Productivity anomaly
 
-<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
 
 ```{r productivity-anomaly-gb, fig.cap = "Small fish per large fish biomass anomaly in Georges Bank."}
 #### Adjust plot properties -------------------------------
@@ -1300,7 +1297,7 @@ knitr::include_graphics(c(
 ```
 ### Stomach Fullness
 
-<span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span>
+
 
 ```{r stom-fullness, fig.cap=" Stomach Fullness Anomaly in New England." }
 gb_fullness <- ecodata::stom_fullness %>%
@@ -1347,7 +1344,7 @@ gom_fullness
 
 
 ### Larval diversity {.tabset .tabset-fade}
-
+<span style="color: red;">NO NEW DATA</span>
 
 
 ```{r ichthyo-diversity}
@@ -1718,7 +1715,7 @@ aggregate_prod %>%
 ```
 
 ### Forage Anomaly
-
+<span style="color: red;">NO NEW DATA </span>
 [Taxa include](https://docs.google.com/spreadsheets/d/108snlOTy1wzMGmxbYp1qJuKgqYfYM8MD/edit#gid=966266704)
 
 ```{r forage-anomaly}
@@ -1768,28 +1765,10 @@ ecodata::observed_sharks %>%
 
 ```
 
-### MRIP Sharks
-```{r mrip-sharks}
-ecodata::rec_hms %>% 
-  filter(EPU == "NE") %>% 
-  #mutate(Value = Value/1000) %>% 
-  ggplot()+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_point(aes(x=Time, y = Value, color = Var))+
-  ggplot2::geom_line(aes(x=Time, y = Value, color = Var))+
-  ggplot2::ggtitle("Rec Shark - Total Catch")+
-  ggplot2::ylab("Number of Fish")+
-  ggplot2::xlab(element_blank())+
-  ggplot2::scale_color_discrete(name = "Category")+
-  ecodata::theme_ts()+
-  ecodata::theme_title()
 
-```
 
 ### Seal Pups
-
+<span style="color: red;">NO NEW DATA</span>
 ```{r seal-pups}
 ecodata::seal_pups %>% 
   ggplot()+
