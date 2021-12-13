@@ -1647,6 +1647,62 @@ gom.hw
 
 [Table to be described in SOE](https://noaa-edab.github.io/ecodata/Hab_table).
 
+### HABs {.tabset .tabset-fade}
+
+#### Alexandrium
+```{r habs-alex}
+ecodata::habs %>% 
+  filter(Source == "Alexadrium") %>% 
+  ggplot2::ggplot(aes(x = Time, y = Value, color = Var))+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_point()+
+  ggplot2::geom_line()+
+    ecodata::theme_ts()+
+  ggplot2::theme(strip.text=element_text(hjust=0,
+                                face = "italic"), 
+        axis.title.y = element_text(angle = 90)) +
+  ggplot2::scale_color_discrete(name = "Region",
+  labels = c("Bay of Fundy", "West GOM", "East GOM", "GOM all"))+
+  ecodata::theme_title()+
+  ggplot2::ylab(expression("Cyst Abundance (10"^6*"Cells)"))+
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("Gulf of Maine Alexandrium Cyst Abundance")+
+  ecodata::theme_facet()
+  
+```
+```{r habs-alex-distibution, fig.cap = ""}
+
+knitr::include_graphics(file.path(image.dir, "Alexandrium_distribution.jpg"))
+
+```
+
+#### PSP 
+```{r habs-psp}
+ecodata::habs %>% 
+  filter(Source == "PSP") %>% 
+  ggplot2::ggplot(aes(x = Time, y = Value))+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_point()+
+  ggplot2::geom_line()+
+    ecodata::theme_ts()+
+  ggplot2::theme(strip.text=element_text(hjust=0,
+                                face = "italic"), 
+        axis.title.y = element_text(angle = 90)) +
+  ggplot2::scale_color_discrete(name = "Region",
+  labels = c("Bay of Fundy", "West GOM", "East GOM", "GOM all"))+
+  ecodata::theme_title()+
+  ggplot2::ylab(expression("PSP Concentration (ug/100g)"))+
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("Gulf of Maine PSP Toxicity in Blue Mussels")+
+  ecodata::theme_facet()
+  
+```
+
+
 
 ### Ocean Acidification 
 
