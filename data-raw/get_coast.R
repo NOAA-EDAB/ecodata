@@ -56,3 +56,28 @@ get_ches_bay_sf <- function(save_clean = F){
   }
 }
 get_ches_bay_sf (save_clean = T)
+
+
+
+
+
+
+##### Long Line Survey
+gis.dir <- here::here('data-raw','gis')
+get_longlinesurvey_sf <- function(save_clean = F){
+
+  #CRS
+  crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
+
+  #Coastline shapefile
+  longlinesurvey_shp <- rgdal::readOGR(file.path(gis.dir, "LLStrata.shp"), verbose = F)
+  crs(longlinesurvey_shp) <- crs
+  longlinesurvey_sf <- as(longlinesurvey_shp, "sf")
+
+  if (save_clean){
+    usethis::use_data(longlinesurvey_sf, overwrite = T)
+  } else {
+    return(longlinesurvey_sf)
+  }
+}
+get_longlinesurvey_sf (save_clean = T)
