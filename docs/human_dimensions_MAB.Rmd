@@ -843,10 +843,10 @@ ggplot2::ggplot() +
 
 #### Engagement and reliance
 
-```{r commercial-engagement, message=F, fig.cap= "Commercial engagement and reliance for the top top commercial fishing communities in the Mid-Atlantic.", message = FALSE, warning=FALSE}
+```{r commercial-engagement, message=F, fig.cap= "Commercial engagement and reliance for the top top commercial fishing communities in the Mid-Atlantic. (* Scored high (1.00 and above) for both commercial engagement and reliance indicators)", message = FALSE, warning=FALSE}
 
 com<-ecodata::engagement %>% 
-  dplyr::filter(Region == "Mid-Atlantic", 
+  dplyr::filter(Region == "MAB", 
                 Fishery == "Commercial")
 
 com2<-com %>% 
@@ -861,7 +861,7 @@ com2<-com %>%
   ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
                      breaks = com$Rating, 
                      direction = -1) +
-  xlim(-1,12)+
+  xlim(-1,13)+
   ylim(-1,5.5)+
   theme(legend.position=c(0.75, 0.85), 
         legend.title = element_blank(),       
@@ -869,7 +869,7 @@ com2<-com %>%
         legend.box.background = element_rect(colour = "black"))+
   ggplot2::xlab("Commercial Engagement Score") +
   ggplot2::ylab("Commercial Reliance Score") +
-  ggplot2::ggtitle("Social Vulnerability in Top Commercial Fishing Communities")+
+  ggplot2::ggtitle("Environmental Justice in Top Commercial Fishing Communities")+
   #ggplot2::guides(color = FALSE) +
   #theme_bw()
   ecodata::theme_ts()+
@@ -877,9 +877,9 @@ com2<-com %>%
   #ecodata::theme_facet()
   
   
-  gridExtra::grid.arrange(com2, bottom = textGrob("Low <--------------------------------------------------------------------------------------------------------------------------------------> High", 
+  gridExtra::grid.arrange(com2, bottom = textGrob("Low <---------------------------------------------------------------------------------------------------------------------------> High", 
                                      x = 0.5, y = 1, gp = gpar(fontsize = 7)),
-                          left = textGrob("Low <----------------------------------------------------------------------------------------------------------> High", rot = 90,
+                          left = textGrob("Low <--------------------------------------------------------------------------------------> High", rot = 90,
                                    x = 1, y = 0.45, gp = gpar(fontsize = 7)))
 
 
@@ -1102,10 +1102,10 @@ rec_div_catch
 
 #### Recreational Engagement and Reliance
 
-```{r recreational-engagement, message=F, fig.cap= "Commercial engagement and reliance for the top top recreational fishing communities in the Mid-atlantic."}
+```{r recreational-engagement, message=F, fig.cap= "Recreational engagement and reliance for the top top recreational fishing communities in the Mid-atlantic. (* Scored high (1.00 and above) for both recreational engagement and reliance indicators)"}
 
 com<-ecodata::engagement %>% 
-  dplyr::filter(Region == "Mid-Atlantic", 
+  dplyr::filter(Region == "MAB", 
                 Fishery == "Recreational")
 
 com2<-com %>% 
@@ -1119,16 +1119,16 @@ com2<-com %>%
                       color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
   ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
                      breaks = com$Rating, 
-                     direction = -1) +
-  xlim(-1,12)+
-  ylim(-1,16)+
+                     direction = 1) +
+  xlim(-1,13)+
+  ylim(-1,5)+
   theme(legend.position=c(0.75, 0.83), 
         legend.title = element_blank(),       
         legend.background = element_blank(),
         legend.box.background = element_rect(colour = "black"))+
   ggplot2::xlab("Recreation Engagement Score") +
   ggplot2::ylab("Recreation Reliance Score") +
-  ggplot2::ggtitle("Social Vulnerability in Top Recreational Fishing Communities")+
+  ggplot2::ggtitle("Environmental Justice in Top Recreational Fishing Communities")+
   #ggplot2::guides(color = FALSE) +
   ecodata::theme_ts()+
   ecodata::theme_title()
