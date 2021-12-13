@@ -8,10 +8,10 @@ library(tidyr)
 library(lubridate)
 
 raw.dir <- here::here("data-raw")
-gsi_csv<-"GSI_1993_2019.csv"
+gsi_xlsx<-"EN4_T200_GSI_1954_2020_monthly - Zhuomin Chen.xlsx"
 get_gsi <- function(save_clean = F){
 
-  gsi <- read.csv(file.path(raw.dir, gsi_csv)) %>%
+  gsi <- read_excel(file.path(raw.dir, gsi_xlsx)) %>%
     dplyr::rename(Time = Month, Value = GSI) %>%
     dplyr::mutate(Var = "gulf stream index",
            Units = "latitude anomaly",
@@ -20,7 +20,7 @@ get_gsi <- function(save_clean = F){
   # metadata ----
   attr(gsi, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/gulf-stream-index.html"
   attr(gsi, "data_files")   <- list(
-    gsi_csv = gsi_csv)
+    gsi_xlsx = gsi_xlsx)
   attr(gsi, "data_steward") <- c(
     "Vincent Saba <vincent.saba@noaa.gov>")
   attr(gsi, "plot_script") <- list(

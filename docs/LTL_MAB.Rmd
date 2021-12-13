@@ -1586,8 +1586,6 @@ lt_sst %>%
 ### GSI
 
 
-[Notes](https://docs.google.com/document/d/1SgZ9m4pal3ygKnUSYr4UwgOoMJeaKzpO/edit)
-
 ```{r gsi,  fig.width = 5, fig.asp = 0.55, fig.cap="Index representing the north wall  of the Gulf Stream. Positive values represent a more northerly Gulf Stream position."}
 
 ecodata::gsi %>%
@@ -1633,7 +1631,7 @@ ecodata::gsi_old %>%
   ggplot2::geom_point() +
   ggplot2::ylab("Gulf Stream position anomaly") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Gulf Stream Index") +
+  ggplot2::ggtitle("Gulf Stream Index - Old") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
