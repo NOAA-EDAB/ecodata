@@ -13,10 +13,10 @@ rast_prep <- function(r){
   return(r)
 }
 
-raw.dir <- here::here("data-raw/gridded/sst_data")
+raw.dir <- here::here("data-raw/gridded/sst")
 crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40
 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
-heatwave_anom_gridded_day_nc <- "sst.day.mean.2020.nc"
+heatwave_anom_gridded_day_nc <- "sst.day.mean.2021.nc"
 heatwave_anom_gridded_ltm_nc <- "sst.day.mean.ltm.1982-2010.nc"
 #These data are large files that are not included among ecodata source files. They are accessible
 #here: https://www.esrl.noaa.gov/psd/data/gridded/data.noaa.oisst.v2.highres.html

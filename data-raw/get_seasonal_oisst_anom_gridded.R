@@ -13,17 +13,17 @@ rast_prep <- function(r){
   return(r)
 }
 
-ltm.dir <- here::here("data-raw/gridded")
+ltm.dir <- here::here("data-raw/gridded/sst")
 raw.dir <- here::here("data-raw")
 crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40
 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 
-seasonal_sst_anomaly_gridded_day_nc <-"sst.day.mean.2020.nc"
+seasonal_sst_anomaly_gridded_day_nc <-"sst.day.mean.2021.nc"
 seasonal_sst_anomaly_gridded_ltm_nc <- "sst.day.mean.ltm.1982-2010.nc"
 #These data are large files that are not included among ecodata source files. They are accessible
 #here: https://www.esrl.noaa.gov/psd/data/gridded/data.noaa.oisst.v2.highres.html
 # but are removed after use as they are too large to store on github
-sst.2019 <- rast_prep(stack(file.path(raw.dir, seasonal_sst_anomaly_gridded_day_nc)))
+sst.2019 <- rast_prep(stack(file.path(ltm.dir, seasonal_sst_anomaly_gridded_day_nc)))
 ltm <- rast_prep(stack(file.path(ltm.dir, seasonal_sst_anomaly_gridded_ltm_nc)))
 
 winter.ltm <- ltm[[1:90]]

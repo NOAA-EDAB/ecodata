@@ -136,7 +136,7 @@ sst_map <-
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
-  ggplot2::ggtitle("SST anomaly (2020)") +
+  ggplot2::ggtitle("SST anomaly (2021)") +
   ggplot2::xlab("Longitude") +
   ggplot2::ylab("Latitude") +
   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
@@ -157,7 +157,7 @@ sst_map
 ne_anom <- ecodata::seasonal_oisst_anom %>% 
   dplyr::filter(EPU %in% c("GB","GOM")) %>% 
   dplyr::mutate(hline = 0,
-           Var = stringr::str_to_title(stringr::str_extract(Var,"winter|spring|summer|fall")))
+           Var = stringr::str_to_title(stringr::str_extract(Var,"Winter|Spring|Summer|Fall")))
 ne_anom$Var <- factor(ne_anom$Var, levels= c("Winter","Spring","Summer","Fall"))
 
 ne_anom_plt <- ggplot2::ggplot(data = ne_anom, 
@@ -169,7 +169,6 @@ ne_anom_plt <- ggplot2::ggplot(data = ne_anom,
   ggplot2::geom_line()+
   ggplot2::geom_point()+
   ggplot2::ylim(-2,3)+
-  ecodata::geom_gls() +
   ggplot2::ylab(expression("SST Anomaly (C)")) +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Gulf of Maine & Georges Bank SST Anomaly") +
@@ -181,6 +180,7 @@ ne_anom_plt <- ggplot2::ggplot(data = ne_anom,
            linetype = hline.lty) +
   ggplot2::facet_wrap(Var ~., ncol = 2, scales = "free_y")+
   ecodata::theme_facet() +
+  ecodata::geom_gls() +
   ggplot2::theme(strip.text=element_text(hjust=0),
         plot.title = element_text(size = 12))+
   ecodata::theme_title()
@@ -1437,113 +1437,113 @@ gom.hw<-hw %>% dplyr::filter(EPU == "GOM") %>%
 gom.hw
 ```
 
-#### Maps
+<!-- #### Maps -->
 
-```{r heatwave-anom-gridded-gb, fig.cap="Maximum intensity heatwave anomaly in Georges Bank occuring on August 14, 2020."}
-#EPU shapefile
-ne_epu_sf <- ecodata::epu_sf %>% 
-  dplyr::filter(EPU %in% c("GOM","GB"))
+<!-- ```{r heatwave-anom-gridded-gb, fig.cap="Maximum intensity heatwave anomaly in Georges Bank occuring on August 14, 2020."} -->
+<!-- #EPU shapefile -->
+<!-- ne_epu_sf <- ecodata::epu_sf %>%  -->
+<!--   dplyr::filter(EPU %in% c("GOM","GB")) -->
 
-#Map line parameters
-map.lwd <- 0.4
+<!-- #Map line parameters -->
+<!-- map.lwd <- 0.4 -->
 
-# Set lat/lon window for maps
-xmin = -73
-xmax = -65
-ymin = 39
-ymax = 45
-xlims <- c(xmin, xmax)
-ylims <- c(ymin, ymax)
-hw <- ecodata::heatwave_peak_date %>% 
-  dplyr::filter(EPU == "GB")# %>% 
-  #dplyr::mutate(Value = replace(Value, Value > 4, 4))
+<!-- # Set lat/lon window for maps -->
+<!-- xmin = -73 -->
+<!-- xmax = -65 -->
+<!-- ymin = 39 -->
+<!-- ymax = 45 -->
+<!-- xlims <- c(xmin, xmax) -->
+<!-- ylims <- c(ymin, ymax) -->
+<!-- hw <- ecodata::heatwave_peak_date %>%  -->
+<!--   dplyr::filter(EPU == "GB")# %>%  -->
+<!--   #dplyr::mutate(Value = replace(Value, Value > 4, 4)) -->
 
-gb_map <- 
-  ggplot2::ggplot() +
-  ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
-  ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) +
-  ggplot2::geom_sf(data = ne_epu_sf, fill = "transparent", size = map.lwd) +
-  ggplot2::scale_fill_gradientn(name = "Temp.\nAnomaly (C)", 
-                                colours = c(scales::muted("blue"), "white",
-                                            scales::muted("red"), "black"),
-                                values = scales::rescale(c(-4,0,4,8)),
-                                guide = "colorbar", limits=c(-4,8)) +
-  ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
-  #facet_wrap(Season~.) +
-  ecodata::theme_map() +
-  ggplot2::ggtitle("GB heatwave anomaly (Aug 14, 2020)") +
-  ggplot2::xlab("Longitude") +
-  ggplot2::ylab("Latitude") +
-  ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
-        legend.key = element_blank(),
-        axis.title = element_text(size = 11),
-        strip.background = element_blank(),
-        strip.text=element_text(hjust=0),
-        axis.text = element_text(size = 8))+
-  ecodata::theme_title()
-
-
-gb_map 
-
-```
+<!-- gb_map <-  -->
+<!--   ggplot2::ggplot() + -->
+<!--   ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) + -->
+<!--   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) + -->
+<!--   ggplot2::geom_sf(data = ne_epu_sf, fill = "transparent", size = map.lwd) + -->
+<!--   ggplot2::scale_fill_gradientn(name = "Temp.\nAnomaly (C)",  -->
+<!--                                 colours = c(scales::muted("blue"), "white", -->
+<!--                                             scales::muted("red"), "black"), -->
+<!--                                 values = scales::rescale(c(-4,0,4,8)), -->
+<!--                                 guide = "colorbar", limits=c(-4,8)) + -->
+<!--   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) + -->
+<!--   #facet_wrap(Season~.) + -->
+<!--   ecodata::theme_map() + -->
+<!--   ggplot2::ggtitle("GB heatwave anomaly (Aug 14, 2020)") + -->
+<!--   ggplot2::xlab("Longitude") + -->
+<!--   ggplot2::ylab("Latitude") + -->
+<!--   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75), -->
+<!--         legend.key = element_blank(), -->
+<!--         axis.title = element_text(size = 11), -->
+<!--         strip.background = element_blank(), -->
+<!--         strip.text=element_text(hjust=0), -->
+<!--         axis.text = element_text(size = 8))+ -->
+<!--   ecodata::theme_title() -->
 
 
+<!-- gb_map  -->
 
-```{r heatwave-anom-gridded-gom, fig.cap="Maximum intensity heatwave anomaly in Gulf of Maine occuring on August 2, 2020."}
-#EPU shapefile
-ne_epu_sf <- ecodata::epu_sf %>% 
-  dplyr::filter(EPU %in% c("GOM","GB"))
-
-#Map line parameters
-map.lwd <- 0.4
-
-# Set lat/lon window for maps
-xmin = -73
-xmax = -65
-ymin = 39
-ymax = 45
-xlims <- c(xmin, xmax)
-ylims <- c(ymin, ymax)
-hw <- ecodata::heatwave_peak_date%>% 
-  dplyr::filter(EPU == "GOM")# %>% 
-  #dplyr::mutate(Value = replace(Value, Value > 4, 4))
-
-gom_map <- 
-  ggplot2::ggplot() +
-  ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) +
-  ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) +
-  ggplot2::geom_sf(data = ne_epu_sf, fill = "transparent", size = map.lwd) +
-  ggplot2::scale_fill_gradientn(name = "Temp.\nAnomaly (C)", 
-                                colours = c(scales::muted("blue"), "white",
-                                            scales::muted("red"), "black"),
-                                values = scales::rescale(c(-4,0,4,8)),
-                                guide = "colorbar", limits=c(-4,8)) +
-  
-  # ggplot2::scale_fill_gradient2(name = "Temp Anomaly (C)",
-  #                      low = scales::muted("blue"),
-  #                      mid = "white",
-  #                      midpoint = 0,
-  #                      high = scales::muted("red"),
-  #                      guide = "colourbar",
-  #                      limits = c(-4,8)) +
-  ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
-  #facet_wrap(Season~.) +
-  ecodata::theme_map() +
-  ggplot2::ggtitle("GOM heatwave anomaly (Aug 2, 2020)") +
-  ggplot2::xlab("Longitude") +
-  ggplot2::ylab("Latitude") +
-  ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
-        legend.key = element_blank(),
-        axis.title = element_text(size = 11),
-        strip.background = element_blank(),
-        strip.text=element_text(hjust=0),
-        axis.text = element_text(size = 8))+
-  ecodata::theme_title()
+<!-- ``` -->
 
 
-gom_map 
 
-```
+<!-- ```{r heatwave-anom-gridded-gom, fig.cap="Maximum intensity heatwave anomaly in Gulf of Maine occuring on August 2, 2020."} -->
+<!-- #EPU shapefile -->
+<!-- ne_epu_sf <- ecodata::epu_sf %>%  -->
+<!--   dplyr::filter(EPU %in% c("GOM","GB")) -->
+
+<!-- #Map line parameters -->
+<!-- map.lwd <- 0.4 -->
+
+<!-- # Set lat/lon window for maps -->
+<!-- xmin = -73 -->
+<!-- xmax = -65 -->
+<!-- ymin = 39 -->
+<!-- ymax = 45 -->
+<!-- xlims <- c(xmin, xmax) -->
+<!-- ylims <- c(ymin, ymax) -->
+<!-- hw <- ecodata::heatwave_peak_date%>%  -->
+<!--   dplyr::filter(EPU == "GOM")# %>%  -->
+<!--   #dplyr::mutate(Value = replace(Value, Value > 4, 4)) -->
+
+<!-- gom_map <-  -->
+<!--   ggplot2::ggplot() + -->
+<!--   ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) + -->
+<!--   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) + -->
+<!--   ggplot2::geom_sf(data = ne_epu_sf, fill = "transparent", size = map.lwd) + -->
+<!--   ggplot2::scale_fill_gradientn(name = "Temp.\nAnomaly (C)",  -->
+<!--                                 colours = c(scales::muted("blue"), "white", -->
+<!--                                             scales::muted("red"), "black"), -->
+<!--                                 values = scales::rescale(c(-4,0,4,8)), -->
+<!--                                 guide = "colorbar", limits=c(-4,8)) + -->
+
+<!--   # ggplot2::scale_fill_gradient2(name = "Temp Anomaly (C)", -->
+<!--   #                      low = scales::muted("blue"), -->
+<!--   #                      mid = "white", -->
+<!--   #                      midpoint = 0, -->
+<!--   #                      high = scales::muted("red"), -->
+<!--   #                      guide = "colourbar", -->
+<!--   #                      limits = c(-4,8)) + -->
+<!--   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) + -->
+<!--   #facet_wrap(Season~.) + -->
+<!--   ecodata::theme_map() + -->
+<!--   ggplot2::ggtitle("GOM heatwave anomaly (Aug 2, 2020)") + -->
+<!--   ggplot2::xlab("Longitude") + -->
+<!--   ggplot2::ylab("Latitude") + -->
+<!--   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75), -->
+<!--         legend.key = element_blank(), -->
+<!--         axis.title = element_text(size = 11), -->
+<!--         strip.background = element_blank(), -->
+<!--         strip.text=element_text(hjust=0), -->
+<!--         axis.text = element_text(size = 8))+ -->
+<!--   ecodata::theme_title() -->
+
+
+<!-- gom_map  -->
+
+<!-- ``` -->
 
 ### Bottom Temp Heatwaves
 
