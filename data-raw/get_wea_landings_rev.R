@@ -7,6 +7,7 @@ library(readr)
 
 raw.dir <- here::here("data-raw")
 
+## Doug Christel
 wind_xlsx<-"CHRISTEL_2022 State of the Ecosystem Report_Max WEA Species Landings and Revenue - Douglas Christel - NOAA Federal.xlsx"
 
 get_wea_landings_rev <- function(save_clean = F){
@@ -28,6 +29,8 @@ get_wea_landings_rev <- function(save_clean = F){
   }
 }
 get_wea_landings_rev(save_clean = T)
+
+
 
 
 
