@@ -1,6 +1,6 @@
 
 com<-ecodata::engagement %>% 
-  dplyr::filter(Region == "Mid-Atlantic", 
+  dplyr::filter(Region == "MAB", 
                 Fishery == "Recreational")
 
 com2<-com %>% 
@@ -14,16 +14,16 @@ com2<-com %>%
                       color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
   ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
                      breaks = com$Rating, 
-                     direction = -1) +
-  xlim(-1,12)+
-  ylim(-1,16)+
+                     direction = 1) +
+  xlim(-1,13)+
+  ylim(-1,5)+
   theme(legend.position=c(0.75, 0.83), 
         legend.title = element_blank(),       
         legend.background = element_blank(),
         legend.box.background = element_rect(colour = "black"))+
   ggplot2::xlab("Recreation Engagement Score") +
   ggplot2::ylab("Recreation Reliance Score") +
-  ggplot2::ggtitle("Social Vulnerability in Top Recreational Fishing Communities")+
+  ggplot2::ggtitle("Environmental Justice in Top Recreational Fishing Communities")+
   #ggplot2::guides(color = FALSE) +
   ecodata::theme_ts()+
   ecodata::theme_title()

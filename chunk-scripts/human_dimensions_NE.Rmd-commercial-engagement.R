@@ -1,6 +1,6 @@
 
 com<-ecodata::engagement %>% 
-  dplyr::filter(Region == "New England", 
+  dplyr::filter(Region == "NE", 
                 Fishery == "Commercial")
 
 com2<-com %>% 
@@ -16,14 +16,14 @@ com2<-com %>%
                      breaks = com$Rating, 
                      direction = -1) +
   xlim(-1,40)+
-  ylim(-1,6)+
+  ylim(-1,5)+
   theme(legend.position=c(0.8, 0.85), 
         legend.title = element_blank(),       
         legend.background = element_blank(),
         legend.box.background = element_rect(colour = "black"))+
   ggplot2::xlab("Commercial Engagement Score") +
   ggplot2::ylab("Commercial Reliance Score") +
-  ggplot2::ggtitle("Social Vulnerability in Top Commercial Fishing Communities")+
+  ggplot2::ggtitle("Environmental Justice in Top Commercial Fishing Communities")+
   #ggplot2::guides(color = FALSE) +
   ecodata::theme_ts()+
   ecodata::theme_title()
