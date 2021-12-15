@@ -1823,6 +1823,7 @@ ggplot2::ggplot() +
   ggplot2::ggtitle("BlackBelly Rose collected in GOM Long-Line Survey")
 
 ```
+
 ### Sandlance
 
 ```{r sandlance}
