@@ -2,7 +2,7 @@
 ne_anom <- ecodata::seasonal_oisst_anom %>% 
   dplyr::filter(EPU %in% c("GB","GOM")) %>% 
   dplyr::mutate(hline = 0,
-           Var = stringr::str_to_title(stringr::str_extract(Var,"winter|spring|summer|fall")))
+           Var = stringr::str_to_title(stringr::str_extract(Var,"Winter|Spring|Summer|Fall")))
 ne_anom$Var <- factor(ne_anom$Var, levels= c("Winter","Spring","Summer","Fall"))
 
 ne_anom_plt <- ggplot2::ggplot(data = ne_anom, 
@@ -14,7 +14,6 @@ ne_anom_plt <- ggplot2::ggplot(data = ne_anom,
   ggplot2::geom_line()+
   ggplot2::geom_point()+
   ggplot2::ylim(-2,3)+
-  ecodata::geom_gls() +
   ggplot2::ylab(expression("SST Anomaly (C)")) +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Gulf of Maine & Georges Bank SST Anomaly") +
@@ -26,6 +25,7 @@ ne_anom_plt <- ggplot2::ggplot(data = ne_anom,
            linetype = hline.lty) +
   ggplot2::facet_wrap(Var ~., ncol = 2, scales = "free_y")+
   ecodata::theme_facet() +
+  ecodata::geom_gls() +
   ggplot2::theme(strip.text=element_text(hjust=0),
         plot.title = element_text(size = 12))+
   ecodata::theme_title()

@@ -5,17 +5,23 @@ library(readr)
 
 raw.dir <- here::here("data-raw")
 
-ch_bay_sal_csv<-"SR_Salinity.csv"
+ch_bay_sal_csv<-"GR_Salinity_Data - Charles Pellerin - NOAA Federal.csv"
 get_ch_bay_sal <- function(save_clean = F){
 
   ch_bay_sal<-read_csv(file.path(raw.dir,ch_bay_sal_csv), col_names = FALSE) %>%
-    dplyr::mutate(Columns = c("UTCTime", "MinDataLim", "MaxDataLim", "AvgMinLim",
-                              "AvgMaxLim","Daily19", "Daily18")) %>%
-    tidyr::gather(Day, Value, -Columns) %>%
-    dplyr::rename(Var = Columns,
-                  Time = Day) %>%
-    dplyr::mutate(EPU = c("MAB"),
-                  Units = c("degree C"))
+    janitor::row_to_names(1) %>%
+    dplyr::rename("Year" = "2021 Daily",
+                  "YearLTA" = "2010-2020 avg",
+                  "minLTA" = "2010-2020 min",
+                  "maxLTA" = "2010-2020 max") %>%
+    tidyr::pivot_longer(c("Year", "YearLTA", "minLTA", "maxLTA"), names_to = "Var", values_to = "Value") %>%
+    dplyr::mutate(Units = c("C"),
+                  Value = as.numeric(Value))  %>%
+    dplyr::rename(Time = Date) %>%
+    tidyr::separate(Time, c("Time", "Trash"), sep = " ") %>%
+    dplyr::select(-Trash) %>%
+    dplyr::mutate(Time = lubridate::mdy(Time),
+                  EPU = c("MAB"))
 
   # metadata ----
   attr(ch_bay_sal, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chesapeake-bay-salinity.html"

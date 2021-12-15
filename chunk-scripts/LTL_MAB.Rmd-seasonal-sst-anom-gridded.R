@@ -28,6 +28,9 @@ sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Spring",
                                             "Summer",
                                             "Fall"))
+# ma_anom<-ecodata::seasonal_oisst_anom
+# 
+# ma_anom$Var <- factor(ma_anom$Var, levels= c("Winter","Spring","Summer","Fall"))
 sst<- sst %>% dplyr::mutate(Value = replace(Value, Value > 4, 4))
 sst_map <- 
   ggplot2::ggplot() +
@@ -43,7 +46,7 @@ sst_map <-
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
-  ggplot2::ggtitle("SST anomaly (2020)") +
+  ggplot2::ggtitle("SST anomaly (2021)") +
   ggplot2::xlab("Longitude") +
   ggplot2::ylab("Latitude") +
   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
@@ -55,9 +58,9 @@ sst_map <-
         axis.title.y = element_text(angle = 90))+
   ecodata::theme_title()
 
-winter_anom <-  ggplot2::ggplotGrob( seasonal_oisst_anom %>% 
+winter_anom <-  ggplot2::ggplotGrob( ecodata::seasonal_oisst_anom %>% 
                               dplyr::filter(EPU == "MAB",
-                                     stringr::str_detect(Var, "winter")) %>% 
+                                     stringr::str_detect(Var, "Winter")) %>% 
                               dplyr::mutate(hline = mean(Value)) %>% 
                               ggplot2::ggplot(aes(x = Time, y = Value)) +
                               ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -84,9 +87,9 @@ winter_anom <-  ggplot2::ggplotGrob( seasonal_oisst_anom %>%
                                     panel.border = element_blank())
 )
 
-spring_anom <-  ggplot2::ggplotGrob( seasonal_oisst_anom %>% 
+spring_anom <-  ggplot2::ggplotGrob( ecodata::seasonal_oisst_anom %>% 
                               dplyr::filter(EPU == "MAB",
-                                     stringr::str_detect(Var, "spring")) %>% 
+                                     stringr::str_detect(Var, "Spring")) %>% 
                               dplyr::mutate(hline = mean(Value)) %>% 
                               ggplot2::ggplot(aes(x = Time, y = Value)) +
                               ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -113,9 +116,9 @@ spring_anom <-  ggplot2::ggplotGrob( seasonal_oisst_anom %>%
                                     panel.border = element_blank())
 )
 
-summer_anom <-  ggplot2::ggplotGrob( seasonal_oisst_anom %>% 
+summer_anom <-  ggplot2::ggplotGrob( ecodata::seasonal_oisst_anom %>% 
                               dplyr::filter(EPU == "MAB",
-                                     stringr::str_detect(Var, "summer")) %>% 
+                                     stringr::str_detect(Var, "Summer")) %>% 
                               dplyr::mutate(hline = mean(Value)) %>% 
                               ggplot2::ggplot(aes(x = Time, y = Value)) +
                               ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -142,9 +145,9 @@ summer_anom <-  ggplot2::ggplotGrob( seasonal_oisst_anom %>%
                                     panel.border = element_blank())
 )
 
-fall_anom <-  ggplot2::ggplotGrob( seasonal_oisst_anom %>% 
+fall_anom <-  ggplot2::ggplotGrob( ecodata::seasonal_oisst_anom %>% 
                             dplyr::filter(EPU == "MAB",
-                                   stringr::str_detect(Var, "fall")) %>% 
+                                   stringr::str_detect(Var, "Fall")) %>% 
                             dplyr::mutate(hline = mean(Value)) %>% 
                             ggplot2::ggplot(aes(x = Time, y = Value)) +
                             ggplot2::geom_line() +

@@ -308,35 +308,25 @@ Water quality attainment in Chesapeake Bay following rolling three year assessme
 </div>
 <div id="chesepeake-bay-salinity-anomolies" class="section level4">
 <h4>Chesepeake Bay Salinity Anomolies</h4>
-</div>
-<div id="chesapeake-sst" class="section level4">
-<h4>Chesapeake SST</h4>
 <div class="figure" style="text-align: center">
-<img src="docs/images/ch-bay-temp-1.png" alt="Blue = 2020, red = Long term avergae 2010-2019. " width="672" />
+<img src="docs/images/ch-bay-sal-1.png" alt="Blue = 2021, red = Long term avergae 2010-2020. " width="672" />
 <p class="caption">
-Blue = 2020, red = Long term avergae 2010-2019.
+Blue = 2021, red = Long term avergae 2010-2020.
 </p>
 </div>
-<p><img src="docs/images/ches-bay-sst-1.png" width="672" style="display: block; margin: auto;" /></p>
-<!-- ### Chesepeake Bay Salinity Anomolies -->
-<!-- Write up on anomalies in salinity we saw in 2018,2019 following record breaking rain in 2018.  The low salinities impacted [hypoxia, fish and oysters](https://docs.google.com/document/d/19ikLWKQWiRSrjmQJ2F7EB_ZcieBMk6Ykf1RX_Gissao/edit).  -->
-<!-- ```{r ch-bay-sal, fig.cap = "Salinity in Chesapeake Bay throughout 2018 (blue) and 2019 (red)  as well as the daily average 2008-2019 (black). "} -->
-<!-- ches_sal<-ecodata::ch_bay_sal %>%  -->
-<!--   dplyr::filter(!Var == "UTCTime") %>%  -->
-<!--   tidyr::drop_na() %>% -->
-<!--   dplyr::mutate(Time =  as.numeric(str_sub(Time, 2, -1)), -->
-<!--          Time1 = as.Date(Time, origin = "2018-12-31")) %>%  -->
-<!--   tidyr::pivot_wider(names_from = Var, values_from = Value) -->
-<!-- ches_sal %>%  -->
-<!--   ggplot2::ggplot() + -->
-<!--   ggplot2::geom_ribbon(aes(x = Time1, ymin = AvgMinLim, ymax = AvgMaxLim))+ -->
-<!--   ggplot2::geom_ribbon(aes(x = Time1, ymin = MinDataLim, ymax = MaxDataLim), alpha = 0.3)+ -->
-<!--   ggplot2::geom_line(aes(x = Time1, y = Daily18), color = "blue") + -->
-<!--   ggplot2::geom_line(aes(x = Time1, y = Daily19), color = "red") + -->
-<!--   ggplot2::ylab(expression("PSU")) + -->
-<!--   ggplot2::ggtitle("Chesapeake Bay Salinity") + -->
-<!--   ecodata::theme_ts() -->
-<!-- ``` -->
+</div>
+<div id="chesapeake-bay-temperature-anomolies" class="section level4">
+<h4>Chesapeake Bay Temperature Anomolies</h4>
+<div class="figure" style="text-align: center">
+<img src="docs/images/ch-bay-temp-1.png" alt="Blue = 2021, red = Long term avergae 2010-2020. " width="672" />
+<p class="caption">
+Blue = 2021, red = Long term avergae 2010-2020.
+</p>
+</div>
+</div>
+<div id="chesapeake-sst-map" class="section level4">
+<h4>Chesapeake SST Map</h4>
+<p><img src="docs/images/ches-bay-sst-1.png" width="672" style="display: block; margin: auto;" /> #### Submerged Aquatic Vegetation (SAV) <img src="docs/images/sav-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="zooplankton" class="section level3 tabset tabset-fade">
@@ -561,6 +551,7 @@ Zooplankton diversity in the Mid-Atlantic Bight.
 </div>
 <div id="cold-pool-index" class="section level3">
 <h3>Cold Pool Index</h3>
+<p><a href="https://docs.google.com/document/d/1FbbS5bFqwVoN12ibiGwrliIr-gu98KJg/edit?rtpof=true">notes here</a></p>
 <div class="figure" style="text-align: center">
 <img src="docs/images/cold_pool-1.png" alt="Cold pool index." width="672" />
 <p class="caption">
@@ -794,10 +785,6 @@ Marine heatwave cumulative intesity (left) and maximum intensity (right) in the 
 Bottom pH (summer only: June-August) on the U.S. Northeast Shelf plotted from available quality-controlled vessel- and glider-based datasets from 2007-present. Right panel: Summer 2021 glider-based pH observations on the Mid-Atlantic Bight shelf. North track glider mission (data provider: Charles Flagg, Stony Brook University) ran from 07/20/2021 to 08/20/2021. South track glider mission (data provider: Grace Saba, Rutgers University) ran from 07/16/2021 to 08/20/2021.
 </p>
 </div>
-</div>
-<div id="submerged-aquatic-vegetation-sav" class="section level3">
-<h3>Submerged Aquatic Vegetation (SAV)</h3>
-<p><img src="docs/images/sav-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="shelfwide-indicators" class="section level2 tabset tabset-fade">

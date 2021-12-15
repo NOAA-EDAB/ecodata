@@ -14,7 +14,7 @@ ecodata::gsi_old %>%
   ggplot2::geom_point() +
   ggplot2::ylab("Gulf Stream position anomaly") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Gulf Stream Index") +
+  ggplot2::ggtitle("Gulf Stream Index - Old") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,

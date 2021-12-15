@@ -173,7 +173,8 @@ seasonal_oisst_anom<- seasonal_oisst_anom %>%
                       "fall OISST anomaly" = "Fall OISST anomaly"))
 
 seasonal_oisst_anom$Var <- factor(seasonal_oisst_anom$Var,
-                                  levels= c("Winter","Spring","Summer","Fall"))
+                                  levels= c("Winter OISST anomaly","Spring OISST anomaly",
+                                            "Summer OISST anomaly","Fall OISST anomaly"))
 # metadata ----
 attr(seasonal_oisst_anom, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/seasonal-sst-anomalies.html"
 attr(seasonal_oisst_anom, "data_steward") <- c(

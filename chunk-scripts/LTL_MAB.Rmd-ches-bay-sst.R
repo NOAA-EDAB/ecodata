@@ -33,15 +33,17 @@ sst_map <-
   ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
   ggplot2::ggtitle("Chesapeake Bay SST anomaly (2021)") +
-  ggplot2::xlab("Longitude") +
-  ggplot2::ylab("Latitude") +
+  ggplot2::xlab(element_blank()) +
+  ggplot2::ylab(element_blank()) +
+  scale_y_continuous(breaks = seq(37, 40, by = 1))+
+  scale_x_continuous(breaks = seq(-77, -75, by = 1))+
   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
                  legend.key = element_blank(),
-                 axis.title = element_text(size = 11),
+                 axis.title = element_text(size = 6),
                  strip.background = element_blank(),
                  strip.text=element_text(hjust=0),
-                 axis.text = element_text(size = 8),
-                 axis.title.y = element_text(angle = 90))+
+                 axis.text = element_text(size = 6),
+                 axis.title.y = element_text(angle = 90) )+
   ecodata::theme_title()
 
 

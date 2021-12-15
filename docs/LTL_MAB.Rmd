@@ -623,18 +623,33 @@ ecodata::ches_bay_wq %>%
  
 
 #### Chesepeake Bay Salinity Anomolies
+```{r ch-bay-sal, fig.cap = "Blue = 2021, red = Long term avergae 2010-2020. "}
 
-#### Chesapeake SST
+ecodata::ch_bay_sal %>%
+  tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
+  ggplot2::ggplot() +
+  ggplot2::geom_ribbon(aes(x = Time, ymin = minLTA, ymax = maxLTA), fill = "grey", alpha = 0.5)+
+  
+  ggplot2::geom_line(aes(x = Time, y = YearLTA, color= "Long Term Average 2010-2020")) +
+  ggplot2::geom_line(aes(x = Time, y = Year, color = "Daily 2021")) +
+  ggplot2::ylab("Temperature (F)") +
+  ggplot2::ggtitle("Chesapeake Bay Salinity") +
+  ggplot2::theme(legend.position = "bottom", 
+                 legend.title = element_blank())+
+  ecodata::theme_ts()+
+  ecodata::theme_title()
+```
 
-```{r ch-bay-temp, fig.cap = "Blue = 2020, red = Long term avergae 2010-2019. "}
+#### Chesapeake Bay Temperature Anomolies
+```{r ch-bay-temp, fig.cap = "Blue = 2021, red = Long term avergae 2010-2020. "}
 
 ecodata::ch_bay_temp %>%
   tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
   ggplot2::ggplot() +
   ggplot2::geom_ribbon(aes(x = Time, ymin = minLTA, ymax = maxLTA), fill = "grey", alpha = 0.5)+
   
-  ggplot2::geom_line(aes(x = Time, y = YearLTA, color= "Long Term Average 2010-2019")) +
-  ggplot2::geom_line(aes(x = Time, y = Year2020, color = "Daily 2020")) +
+  ggplot2::geom_line(aes(x = Time, y = YearLTA, color= "Long Term Average 2010-2020")) +
+  ggplot2::geom_line(aes(x = Time, y = Year, color = "Daily 2021")) +
   ggplot2::ylab("Temperature (F)") +
   ggplot2::ggtitle("Chesapeake Bay Temperature") +
   ggplot2::theme(legend.position = "bottom", 
@@ -643,6 +658,7 @@ ecodata::ch_bay_temp %>%
   ecodata::theme_title()
 ```
 
+#### Chesapeake SST Map
 
 ```{r, ches-bay-sst}
 
@@ -680,54 +696,44 @@ sst_map <-
   ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
   ggplot2::ggtitle("Chesapeake Bay SST anomaly (2021)") +
-  ggplot2::xlab("Longitude") +
-  ggplot2::ylab("Latitude") +
+  ggplot2::xlab(element_blank()) +
+  ggplot2::ylab(element_blank()) +
+  scale_y_continuous(breaks = seq(37, 40, by = 1))+
+  scale_x_continuous(breaks = seq(-77, -75, by = 1))+
   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
                  legend.key = element_blank(),
-                 axis.title = element_text(size = 11),
+                 axis.title = element_text(size = 6),
                  strip.background = element_blank(),
                  strip.text=element_text(hjust=0),
-                 axis.text = element_text(size = 8),
-                 axis.title.y = element_text(angle = 90))+
+                 axis.text = element_text(size = 6),
+                 axis.title.y = element_text(angle = 90) )+
   ecodata::theme_title()
 
 
 sst_map
 
 ```
-
-
-
-
-
-
-
-
-<!-- ### Chesepeake Bay Salinity Anomolies -->
-
-
-
-<!-- Write up on anomalies in salinity we saw in 2018,2019 following record breaking rain in 2018.  The low salinities impacted [hypoxia, fish and oysters](https://docs.google.com/document/d/19ikLWKQWiRSrjmQJ2F7EB_ZcieBMk6Ykf1RX_Gissao/edit).  -->
-
-<!-- ```{r ch-bay-sal, fig.cap = "Salinity in Chesapeake Bay throughout 2018 (blue) and 2019 (red)  as well as the daily average 2008-2019 (black). "} -->
-
-<!-- ches_sal<-ecodata::ch_bay_sal %>%  -->
-<!--   dplyr::filter(!Var == "UTCTime") %>%  -->
-<!--   tidyr::drop_na() %>% -->
-<!--   dplyr::mutate(Time =  as.numeric(str_sub(Time, 2, -1)), -->
-<!--          Time1 = as.Date(Time, origin = "2018-12-31")) %>%  -->
-<!--   tidyr::pivot_wider(names_from = Var, values_from = Value) -->
-
-<!-- ches_sal %>%  -->
-<!--   ggplot2::ggplot() + -->
-<!--   ggplot2::geom_ribbon(aes(x = Time1, ymin = AvgMinLim, ymax = AvgMaxLim))+ -->
-<!--   ggplot2::geom_ribbon(aes(x = Time1, ymin = MinDataLim, ymax = MaxDataLim), alpha = 0.3)+ -->
-<!--   ggplot2::geom_line(aes(x = Time1, y = Daily18), color = "blue") + -->
-<!--   ggplot2::geom_line(aes(x = Time1, y = Daily19), color = "red") + -->
-<!--   ggplot2::ylab(expression("PSU")) + -->
-<!--   ggplot2::ggtitle("Chesapeake Bay Salinity") + -->
-<!--   ecodata::theme_ts() -->
-<!-- ``` -->
+#### Submerged Aquatic Vegetation (SAV)
+```{r sav}
+ecodata::SAV %>% 
+  ggplot2::ggplot(aes(x = Time, y = Value, color = Var))+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_point()+
+  ggplot2::geom_line()+
+    ecodata::theme_ts()+
+  ggplot2::theme(strip.text=element_text(hjust=0,
+                                face = "italic"), 
+        axis.title.y = element_text(angle = 90)) +
+  ggplot2::scale_color_discrete(name = "",
+  labels = c("Baywide", "Mesohaline","Oligohaline", "Polyhaline",  "Tidal Fresh"))+
+  ecodata::theme_title()+
+  ggplot2::ylab(expression("Acres"))+
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("Submerged Aquatic Vegetation (SAV) Abundance")+
+  ecodata::theme_facet()
+```
 
 ### Zooplankton {.tabset .tabset-fade}
 
@@ -1102,6 +1108,8 @@ cal %>%
 <!-- ``` -->
 
 ### Cold Pool Index
+
+[notes here](https://docs.google.com/document/d/1FbbS5bFqwVoN12ibiGwrliIr-gu98KJg/edit?rtpof=true)
 
 ```{r cold_pool, eval = T, echo = F, fig.cap="Cold pool index." }
 
@@ -1508,27 +1516,7 @@ knitr::include_graphics(file.path(image.dir, "Saba_Fig_SOE_MAFMC - Grace Saba.pn
 
 ```
 
-### Submerged Aquatic Vegetation (SAV)
-```{r sav}
-ecodata::SAV %>% 
-  ggplot2::ggplot(aes(x = Time, y = Value, color = Var))+
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_point()+
-  ggplot2::geom_line()+
-    ecodata::theme_ts()+
-  ggplot2::theme(strip.text=element_text(hjust=0,
-                                face = "italic"), 
-        axis.title.y = element_text(angle = 90)) +
-  ggplot2::scale_color_discrete(name = "",
-  labels = c("Baywide", "Mesohaline","Oligohaline", "Polyhaline",  "Tidal Fresh"))+
-  ecodata::theme_title()+
-  ggplot2::ylab(expression("Acres"))+
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Submerged Aquatic Vegetation (SAV) Abundance")+
-  ecodata::theme_facet()
-```
+
 
 
 ## Shelfwide Indicators {.tabset .tabset-fade}
