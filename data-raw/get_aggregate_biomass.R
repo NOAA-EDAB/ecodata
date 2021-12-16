@@ -6,12 +6,12 @@ library(dplyr)
 
 raw.dir <- here::here("data-raw")
 
-aggregate_biomass_RData <- "Aggregate_Survey_biomass_20 (5).RData"
+aggregate_biomass_RData <- "Aggregate_Survey_biomass_22.RData"
 get_aggregate_biomass <- function(save_clean = F){
 
   load(file.path(raw.dir, aggregate_biomass_RData))
 
-  aggregate_biomass <- survey %>%
+  aggregate_biomass <- survey.data %>%
     dplyr::rename(EPU = Region)
 
   # metadata ----

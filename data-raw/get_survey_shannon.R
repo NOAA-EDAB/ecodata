@@ -4,7 +4,7 @@ library(stringr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-surv_shan_rdata <- "survey_shannon.RData"
+surv_shan_rdata <- "survey_shannon (1).RData"
 get_surv_shan <- function(save_clean = F){
 
   load(file.path(raw.dir, surv_shan_rdata))
