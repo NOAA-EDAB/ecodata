@@ -4,7 +4,7 @@ library(stringr)
 
 
 raw.dir <- here::here("data-raw")
-stom_fullness_csv<- "AnnualStomFullnessEPU_2019.csv"
+stom_fullness_csv<- "AnnualStomFullnessEPU_2020.csv"
 get_stom_fullness <- function(save_clean = F){
 
   stom_fullness <- read.csv(file.path(raw.dir,stom_fullness_csv)) %>%
