@@ -1,2 +1,2 @@
 
-knitr::include_graphics(file.path(image.dir, "MABcondition_2020_viridis_final.jpg"))
+knitr::include_graphics(file.path(image.dir, "MAB_Condition_allsex_2022_viridis.jpg"))

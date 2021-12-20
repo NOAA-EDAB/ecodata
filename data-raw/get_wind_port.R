@@ -13,23 +13,27 @@ wind_port_xlsx<-"SoE2022_Wind_Ports_Social Indicators - Angela Silva - NOAA Affi
 get_wind_port <- function(save_clean = F){
   df<- data.frame(State = c(" ME", " MA", " RI", " CT", " NY", " NJ", " MD", " VA", " NC"),
                   EPU = c("NE", "NE", "MAB", "MAB","MAB","MAB","MAB","MAB","MAB"))
-  port_total<-read_excel(file.path(raw.dir,wind_port_xlsx)) %>%
-    dplyr::select(VTR_PORT_ST,PORT_MAX_WEA_DOLLAR_08_19 ) %>%
-    tidyr::separate(VTR_PORT_ST, into = c("City", "State"), sep = ",") %>%
-    dplyr::rename(port_total = "PORT_MAX_WEA_DOLLAR_08_19")
+
   # import data
   wind_port<-read_excel(file.path(raw.dir,wind_port_xlsx)) %>%
     #tidyr::separate(VTR_PORT_ST, into = c("City", "State"), sep = ",") %>%
     dplyr::rename("perc_rev" ="%MAX_WEA_DOLLAR_08_19",
-                  "City" = "VTR_PORT_ST") %>%
+                  "City" = "VTR_PORT_ST",
+                  "wea_rev" = "PORT_MAX_WEA_DOLLAR_08-19",
+                  "pop_comp" = "Population Composition",
+                  "pers_disr" = "Personal Disruption",
+                  "house_disr" = "Housing Disruption",
+                  "ret_mig" = "Retiree Migration",
+                  "urb_sprawl"="Urban Sprawl") %>%
     mutate(perc_rev = perc_rev*100,
-      perc_remain = 100 - perc_rev) %>%
-    dplyr::select(City, perc_rev, perc_remain) %>%
-    tidyr::pivot_longer(cols = c(perc_rev, perc_remain),
+           total_rev = (wea_rev*100)/perc_rev,
+           EJ = pmax(Poverty, pop_comp, pers_disr ),
+           gentrification = pmax(house_disr, ret_mig, urb_sprawl)) %>%
+    dplyr::select(City, wea_rev, total_rev, EJ, gentrification) %>%
+    tidyr::pivot_longer(cols = c(wea_rev, total_rev, EJ, gentrification),
                         names_to = "Var", values_to = "Value") %>%
     tidyr::separate(City, into = c("City", "State"), sep = ",") %>%
-    left_join(df, by = "State") %>%
-    left_join(port_total)
+    left_join(df, by = "State")
 
 
   if (save_clean){

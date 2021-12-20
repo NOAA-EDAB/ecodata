@@ -20,7 +20,7 @@ get_abc.acl <- function(save_clean = F){
                                  "Catch 2019",     "ABC/ACL 2020",   "Catch 2020"),
                         names_to = "Var", values_to = "Value") %>%
     tidyr::separate(Var, c("Var", "Time"), sep = " ") %>%
-    dplyr::mutate(Var = paste(spec, Var),
+    dplyr::mutate(Var = paste(spec,"-", Var),
                   EPU = c("MAB"))  %>%
     dplyr::select(!c(Notes, spec) ) %>%
     dplyr::filter(! Value == "-",

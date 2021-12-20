@@ -33,6 +33,7 @@ letter_size <- 4
 feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
 x.shade.min <- 2011
 x.shade.max <- 2021
+series.col <- c("indianred","black")
 #Function for custom ggplot facet labels
 label <- function(variable,value){
   return(facet_names[value])

@@ -4,13 +4,13 @@ library(dplyr)
 library(tidyr)
 library(readxl)
 raw.dir <- here::here("data-raw")
-aquaculture_xlsx <- "aqauculture2.xlsx"
+aquaculture_xlsx <- "aqauculture2021.xlsx"
 
 get_aquaculture <- function(save_clean = F){
-  dat <- read_excel(file.path(raw.dir,aquaculture_xlsx))
+  dat <- read_excel(file.path(raw.dir,aquaculture_xlsx), sheet = "NE")
 
   ne_aquaculture<- dat %>%
-    mutate(Pieces = as.numeric(Pieces)) %>%
+    dplyr::mutate(Pieces = as.numeric(Pieces)) %>%
     tidyr::pivot_longer(cols = c(Pieces,`Shellfish lease Acres`, `Production/Acre`),
                         names_to = "Var", values_to = "Value") %>%
     dplyr::rename(Time = Year,

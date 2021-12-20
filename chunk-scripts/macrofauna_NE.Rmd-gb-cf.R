@@ -1,3 +1,3 @@
 
 knitr::include_graphics(c(
-                          file.path(image.dir, "GBcondition_2020_viridis_final.jpg") ))
+                          file.path(image.dir, "GB_Condition_allsex_2022_viridis.jpg") ))
