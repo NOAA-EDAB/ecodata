@@ -21,6 +21,19 @@ get_eng_rel <- function(save_clean = F){
                   "Rel" = "Commercial Reliance Index") %>%
     dplyr::mutate(Fishery = c(rep("Commercial",14),rep("Recreational",16)),
                   Region = c("MAB"))
+
+  d3 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "Mid-Atlantic_Radar Graph")
+
+  dta3 <- d3 %>%
+    dplyr::slice(-(15:17)) %>% # Removes the rows containing new and original names
+    dplyr::rename("Eng" = "Commercial Engagement Index",
+                  "Rel" = "Commercial Reliance Index") %>%
+    dplyr::mutate(Fishery = c(rep("Commercial",14),rep("Recreational",16)),
+                  Region = c("MAB"))%>%
+    left_join(dta)
+
+
+
   ## NE
   d2 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "New England_Bubble Chart")
 
@@ -31,13 +44,38 @@ get_eng_rel <- function(save_clean = F){
     dplyr::mutate(Fishery = c(rep("Commercial",17),rep("Recreational",16)),
                   Region = c("NE"))
 
+  ### NE EJ
+  d4 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "New England_Radar Graph")
 
-  engagement <- dta %>% rbind(dta2) %>%
+  dta4 <- d4 %>%
+    dplyr::slice(-(18:22)) %>% # Removes the rows containing new and original names
+    dplyr::rename("Eng" = "Commercial Engagement Index",
+                  "Rel" = "Commercial Reliance Index") %>%
+    dplyr::mutate(Fishery = c(rep("Commercial",17),rep("Recreational",16)),
+                  Region = c("NE")) %>%
+    left_join(dta2) %>%
+    dplyr::select("Commuity Name","Eng","Rel",
+                  "Personal Disruption Index",
+                  "Population Composition Index",
+                  "Poverty Index" ,"1 std","0.5 std",
+                  "Fishery", "EJ Rating", "Region"  )
+
+
+
+
+
+  engagement <- dta3 %>% rbind(dta4) %>%
     dplyr::rename("Community" = "Commuity Name",
-                  "Rating" = "EJ Rating") %>%
+                  "EJRating" = "EJ Rating",
+                  "PDI" = "Personal Disruption Index",
+                  "PCI" = "Population Composition Index",
+                  "PI" = "Poverty Index") %>%
     dplyr::mutate(Eng = as.numeric(Eng),
-                  Rel = as.numeric(Rel)) %>%
-    dplyr::filter(!Rating == "NA")
+                  Rel = as.numeric(Rel),
+                  PDI = as.numeric(PDI),
+                  PCI = as.numeric(PCI),
+                  PI = as.numeric(PI)) %>%
+    dplyr::filter(!EJRating == "NA")
 
 
   # metadata ----
@@ -64,4 +102,32 @@ get_eng_rel <- function(save_clean = F){
 get_eng_rel(save_clean = T)
 
 
+### spiderplot
+create_beautiful_radarchart <- function(data, color = "#00AFBB",
+                                        vlabels = colnames(data), vlcex = 0.7,
+                                        caxislabels = NULL, title = NULL, ...){
+  radarchart(
+    data, axistype = 1,
+    # Customize the polygon
+    pcol = color, pfcol = scales::alpha(color, 0.5), plwd = 2, plty = 1,
+    # Customize the grid
+    cglcol = "grey", cglty = 1, cglwd = 0.8,
+    # Customize the axis
+    axislabcol = "grey",
+    # Variable labels
+    vlcex = vlcex, vlabels = vlabels,
+    caxislabels = caxislabels, title = title, ...
+  )
+}
+p1<- engagement %>%
+  dplyr::filter(Region == "MAB",
+                Fishery == "Commercial") %>%
+  dplyr::select(Community, PDI ,
+                PCI, PI)  %>%
+  tibble::column_to_rownames(var="Community")
 
+p2<- t(p1)
+p2<- data.frame(p2) %>%
+
+
+fmsb::radarchart(p2)

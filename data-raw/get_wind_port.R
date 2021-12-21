@@ -25,7 +25,19 @@ get_wind_port <- function(save_clean = F){
                   "house_disr" = "Housing Disruption",
                   "ret_mig" = "Retiree Migration",
                   "urb_sprawl"="Urban Sprawl") %>%
-    mutate(perc_rev = perc_rev*100,
+    dplyr::mutate(City = dplyr::recode(City,"DAVISVILLE, RI" = "NORTH KINGSTOWN, RI"),
+           City = dplyr::recode(City,"HAMPTON BAY, NY" ="HAMPTON BAY/SHINNECOCK, NY"),
+           City = dplyr::recode(City,"SHINNECOCK, NY" = "HAMPTON BAY/SHINNECOCK, NY"),
+           City = dplyr::recode(City,"BARNEGAT, NJ" = "BARNEGAT LIGHT, NJ" ),
+           City = dplyr::recode(City,"LONG BEACH, NJ" = "BARNEGAT LIGHT, NJ"),
+           City = dplyr::recode(City,"MENEMSHA, MA" = "CHILMARK, MA"),
+           City = dplyr::recode(City,"BASS RIVER/YARMOUTH, MA" = "BASS RIVER, MA")) %>%
+    dplyr::group_by(City) %>%
+    dplyr::mutate( wea_rev = sum(wea_rev)) %>%
+    dplyr::slice(1) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(
+           perc_rev = perc_rev*100,
            total_rev = (wea_rev*100)/perc_rev,
            EJ = pmax(Poverty, pop_comp, pers_disr ),
            gentrification = pmax(house_disr, ret_mig, urb_sprawl)) %>%

@@ -101,11 +101,11 @@ get_bottom_temp_glorys(save_clean = T)
 
 
 
-bottom_heatwave_xl<-"GB_GOM_MAB_BT_1959_2019 - Vincent Saba - NOAA Federal.xlsx"
+bottom_heatwave_xlxs<-"GB_GOM_MAB_BT_1959_2019 - Vincent Saba - NOAA Federal.xlsx"
 
 get_bottom_heatwave <- function(save_clean = F){
 
-  gom <- read_excel(file.path(raw.dir,bottom_temp_xlsx)) %>%
+  gom <- read_excel(file.path(raw.dir,bottom_heatwave_xlsx)) %>%
     dplyr::select(t, GOM_btemp) %>%
     dplyr::rename(temp = GOM_btemp) %>%
     dplyr::mutate(t = as.Date(t))
