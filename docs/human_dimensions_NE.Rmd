@@ -1638,9 +1638,9 @@ ecodata::ppr %>%
   dplyr::select(City, EJ, gentrification) %>% 
   pivot_longer(cols = c(EJ, gentrification), names_to = "Variable") %>% 
   filter(!value == "NA") %>% 
-  dplyr::mutate(symbol = recode(Variable, EJ = -1, gentrification = -3))
+  dplyr::mutate(symbol = recode(Variable, EJ = -5, gentrification = -10))
 
-df.all<- ecodata::wind_port %>% filter(EPU == "MAB") %>%
+df.all<- ecodata::wind_port %>% filter(EPU == "NE") %>%
   pivot_wider( names_from = Var, values_from = Value) %>%
   dplyr::mutate(ordering = total_rev) %>% 
   pivot_longer(cols = c(wea_rev, total_rev), names_to="Var", values_to = "Value") %>% 
