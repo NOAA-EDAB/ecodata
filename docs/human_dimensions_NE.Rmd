@@ -1654,7 +1654,7 @@ p1<-ggplot2::ggplot()+
   geom_point(data = df.symbol, aes(x = symbol,y = City, shape = Variable)) +
   #scale_shape_manual(values = c(21, 24)) +
   ggplot2::ggtitle("Port Revenue from WEA")+
-  ggplot2::xlab("Port Revenue 10^6")+
+  ggplot2::xlab(expression("Port Revenue (10"^6*"dollars)"))+
   ggplot2::ylab(element_blank())+
   scale_fill_discrete(name = "", labels = c("total revenue", "revenue from WEA"))+
   ecodata::theme_ts()

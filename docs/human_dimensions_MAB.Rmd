@@ -1399,7 +1399,7 @@ p1<-ggplot2::ggplot()+
   geom_point(data = df.symbol, aes(x = symbol,y = City, shape = Variable)) +
   #scale_shape_manual(values = c(21, 24)) +
   ggplot2::ggtitle("Port Revenue from WEA")+
-  ggplot2::xlab("Port Revenue 10^6")+
+  ggplot2::xlab(expression("Port Revenue (10"^6*"dollars)"))+
   ggplot2::ylab(element_blank())+
   scale_fill_discrete(name = "", labels = c("total revenue", "revenue from WEA"))+
   ecodata::theme_ts()
@@ -1495,7 +1495,7 @@ ggplot2::ggplot(data = stock_status) +
   ecodata::theme_ts()
 ```
 
-### Wind Development Speed
+### Proposed Wind Development
 
 <!-- ```{r wind-dev-cumul, fig.cap = ""} -->
 
@@ -1521,7 +1521,7 @@ ggplot2::ggplot(data = stock_status) +
 <!-- #knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/SurveysWindFarmAreas_20201229.jpg") -->
 <!-- ``` -->
 
-```{r wind-dev-speed0, eval = T, echo = F, fig.cap='', out.width='80%'}
+```{r wind-proposed-dev, eval = T, echo = F, fig.cap='', out.width='80%'}
  ecodata::wind_dev_speed %>% mutate(Value = as.numeric(Value)/1000000, 
                                                 Time = as.integer(Time)) %>% 
   dplyr::filter(Var == "Tot_Area_Acres") %>% 
@@ -1532,7 +1532,7 @@ ggplot2::ggplot(data = stock_status) +
   #ggplot2::geom_line(aes(x = Time, y = `2022`))+
   ggplot2::ylab("Total Area (Million Acres)")+
   ggplot2::xlab("Project Construction Year")+
-  ggplot2::ggtitle("Wind Lease Cumulative Area")+
+  ggplot2::ggtitle("Proposed Wind Development")+
   ecodata::theme_ts()+
   #theme(axis.text.x = element_text(angle = 45, hjust = 1))+
   scale_x_continuous(breaks=c(2020,2022, 2024,2026, 2028, 2030))+
