@@ -9,17 +9,17 @@ library(stringr)
 library(readxl)
 
 raw.dir <- here::here("data-raw")
-narw_xlsx <- "RW Abundance & Calves -for2021 report.xlsx"
+narw_xlsx <- "RW Abundance & Calves -for2022 report.xlsx"
 get_narw <- function(save_clean = F){
   narw <- read_excel(file.path(raw.dir,narw_xlsx)) %>%
     dplyr::select(-c(5,7:10)) %>%
-    dplyr::rename(Lower95 = Lower95...2,
-           Median = Median...3,
-           Upper95 = Upper95...4,
-           Time = Year) %>%
+    janitor::row_to_names(1) %>%
+    dplyr::rename(
+           Time = YEAR) %>%
     tidyr::pivot_longer(-Time, names_to = "Var", values_to = "Value") %>%
     dplyr::mutate(Units =  "n",
-           EPU = "All")
+           EPU = "All") %>%
+    dplyr::filter(!Value == "NA")
 
   # calves19<-data.frame(Time = c(2019), Var = c("Calves"),
   #                      Value = c(7), Units = c("n"), EPU = c("All")) #add 7 calves from 2019
