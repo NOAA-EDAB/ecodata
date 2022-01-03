@@ -851,15 +851,15 @@ com<-ecodata::engagement %>%
 
 com2<-com %>% 
   ggplot2::ggplot()+
-  ggplot2::geom_point(aes(x = Eng, y = Rel, color = Rating), size = 2)+
+  ggplot2::geom_point(aes(x = Eng, y = Rel, color = EJRating), size = 2)+
   ggplot2::geom_vline(xintercept = 1, linetype = "dashed",color = "black", size = 0.5)+
   ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black", size = 0.5) +
   ggrepel::geom_text_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
                       y = Rel,
                       label = Community,
-                      color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
+                      color = EJRating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
   ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
-                     breaks = com$Rating, 
+                     breaks = com$EJRating, 
                      direction = -1) +
   xlim(-1,13)+
   ylim(-1,5.5)+
@@ -885,7 +885,32 @@ com2<-com %>%
 
 ```
 
+#### Environmental Justice Spider
 
+```{r commercial-EJ, fig.cap="Environmental Justice indiciators (PDT =Personal Disruption Index, PCI =Population Composition Index, PI = Poverty Index)  "}
+p1<- ecodata::engagement %>%
+  dplyr::filter(Region == "MAB",
+                Fishery == "Commercial") %>%
+  dplyr::select(Community, PDI ,
+                PCI, PI)  %>%
+  dplyr::mutate(Community = stringr::str_remove(Community, pattern = (" ")),
+                Community = stringr::str_remove(Community, pattern = (" ")),
+                Community = stringr::str_remove(Community, pattern = (" "))) %>% 
+  tibble::column_to_rownames(var="Community")
+  
+p2<- t(p1)
+p2<- rbind(rep(4, 14) , rep(0, 14), std1 = rep(1, 14), std0.5 = rep(0.5, 14), p2) 
+p3<- data.frame(p2) 
+
+colors_border <- c("black", "grey49",  "#1B9E77", "#D95F02" ,"#7570B3")
+
+fmsb::radarchart(p3, 
+                 pcol=colors_border , plwd=2 , plty=1,
+                 cglcol="grey", cglty=1, axislabcol="black", cglwd=0.8,
+                 vlcex=0.8, title = "Environmental Justice Vulnerabilty in Top Commercial Fishing Communities (Mid-Atlantic)" )
+legend(x=1.2, y=1, legend = rownames(p3[-c(1,2),]), bty = "n", pch=20 ,
+      col = colors_border, text.col = "black", cex=1.2, pt.cex=1)
+```
 
 ### Recreational fisheries {.tabset .tabset-fade}
 
@@ -1110,15 +1135,15 @@ com<-ecodata::engagement %>%
 
 com2<-com %>% 
   ggplot2::ggplot()+
-  ggplot2::geom_point(aes(x = Eng, y = Rel, color = Rating), size = 2)+
+  ggplot2::geom_point(aes(x = Eng, y = Rel, color = EJRating), size = 2)+
   ggplot2::geom_vline(xintercept = 1, linetype = "dashed", color = "black", size = 0.5)+
   ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black", size = 0.5) +
   ggrepel::geom_text_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
                       y = Rel,
                       label = Community,
-                      color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
+                      color = EJRating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
   ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
-                     breaks = com$Rating, 
+                     breaks = com$EJRating, 
                      direction = 1) +
   xlim(-1,13)+
   ylim(-1,5)+
@@ -1140,6 +1165,33 @@ com2<-com %>%
                                    x = 1, y = 0.5, gp = gpar(fontsize = 7)))
 
 
+```
+
+#### Environmental Justice Spider
+
+```{r recreational-EJ, fig.cap="Environmental Justice indiciators (PDT =Personal Disruption Index, PCI =Population Composition Index, PI = Poverty Index)  "}
+p1<- ecodata::engagement %>%
+  dplyr::filter(Region == "MAB",
+                Fishery == "Recreational") %>%
+  dplyr::select(Community, PDI ,
+                PCI, PI)  %>%
+  dplyr::mutate(Community = stringr::str_remove(Community, pattern = (" ")),
+                Community = stringr::str_remove(Community, pattern = (" ")),
+                Community = stringr::str_remove(Community, pattern = (" "))) %>% 
+  tibble::column_to_rownames(var="Community")
+  
+p2<- t(p1)
+p2<- rbind(rep(1.5, 14) , rep(0, 14), std1 = rep(1, 14), std0.5 = rep(0.5, 14), p2) 
+p3<- data.frame(p2) 
+
+colors_border <- c("black", "grey49",  "#1B9E77", "#D95F02" ,"#7570B3")
+
+fmsb::radarchart(p3, 
+                 pcol=colors_border , plwd=2 , plty=1,
+                 cglcol="grey", cglty=1, axislabcol="black", cglwd=0.8,
+                 vlcex=0.8, title = "Environmental Justice Vulnerabilty in Top Recreational Fishing Communities (Mid-Atlantic)" )
+legend(x=1.2, y=1, legend = rownames(p3[-c(1,2),]), bty = "n", pch=20 ,
+      col = colors_border, text.col = "black", cex=1.2, pt.cex=1)
 ```
 
 #### Recreational Shark Landings
