@@ -5,7 +5,11 @@ ecodata::narw %>%
   dplyr::filter(Var != "Calves") %>% 
   tidyr::spread(Var, Value) %>% 
   dplyr::rename(Value = Median) %>% 
-  dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
+  dplyr::mutate(Value = as.numeric(Value), 
+                Time = as.numeric(Time),
+                Lower95 = as.numeric(Lower95), 
+                Upper95 = as.numeric(Upper95),
+                hline = mean(Value, na.rm = T)) %>% 
   ggplot2::ggplot() +
 #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,

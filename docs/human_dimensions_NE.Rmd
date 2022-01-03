@@ -1067,7 +1067,10 @@ p1<- ecodata::engagement %>%
                 PCI, PI)  %>%
   dplyr::mutate(Community = stringr::str_remove(Community, pattern = (" ")),
                 Community = stringr::str_remove(Community, pattern = (" ")),
-                Community = stringr::str_remove(Community, pattern = (" "))) %>% 
+                Community = stringr::str_remove(Community, pattern = (" ")),
+                Community = stringr::str_remove(Community, pattern = (",")), 
+                Community = stringr::str_remove(Community, pattern = ("-")),
+                Community = stringr::str_remove(Community, pattern = ("/"))) %>% 
   tibble::column_to_rownames(var="Community")
   
 p2<- t(p1)
@@ -1430,7 +1433,10 @@ p1<- ecodata::engagement %>%
                 PCI, PI)  %>%
   dplyr::mutate(Community = stringr::str_remove(Community, pattern = (" ")),
                 Community = stringr::str_remove(Community, pattern = (" ")),
-                Community = stringr::str_remove(Community, pattern = (" "))) %>% 
+                Community = stringr::str_remove(Community, pattern = (" ")), 
+                Community = stringr::str_remove(Community, pattern = (",")), 
+                Community = stringr::str_remove(Community, pattern = ("-")),
+                Community = stringr::str_remove(Community, pattern = ("/"))) %>% 
   tibble::column_to_rownames(var="Community")
   
 p2<- t(p1)

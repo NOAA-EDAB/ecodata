@@ -5,15 +5,15 @@ com<-ecodata::engagement %>%
 
 com2<-com %>% 
   ggplot2::ggplot()+
-  ggplot2::geom_point(aes(x = Eng, y = Rel, color = Rating), size = 2)+
+  ggplot2::geom_point(aes(x = Eng, y = Rel, color = EJRating), size = 2)+
   ggplot2::geom_vline(xintercept = 1, linetype = "dashed", color = "black", size = 0.5)+
   ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black", size = 0.5) +
   ggrepel::geom_text_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
                       y = Rel,
                       label = Community,
-                      color = Rating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
+                      color = EJRating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
   ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
-                     breaks = com$Rating, 
+                     breaks = com$EJRating, 
                      direction = 1) +
   xlim(-1,13)+
   ylim(-1,5)+
