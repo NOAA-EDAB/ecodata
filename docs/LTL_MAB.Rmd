@@ -1102,10 +1102,11 @@ cal %>%
 
 [notes here](https://docs.google.com/document/d/1FbbS5bFqwVoN12ibiGwrliIr-gu98KJg/edit?rtpof=true)
 
-```{r cold_pool, eval = T, echo = F, fig.cap="Cold pool index." }
+```{r cold_pool, eval = T, echo = F, fig.cap="Cold pool index.", fig.width = 10 }
 
 cpi<- ecodata::cold_pool %>% 
   dplyr::filter(stringr::str_detect(Var, pattern = "cold_pool")) %>% 
+  dplyr::mutate(Value = Value*-1) %>% 
   tidyr::pivot_wider(names_from = Var, values_from = Value)  %>% 
   dplyr::mutate(Upper = cold_pool_index + se_cold_pool_index, 
                 Lower = cold_pool_index - se_cold_pool_index) %>%
