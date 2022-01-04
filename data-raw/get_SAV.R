@@ -12,7 +12,9 @@ get_SAV <- function(save_clean = F){
     dplyr::mutate(EPU = c("MAB"),
                   Year =  as.numeric(Year),
                   Value = as.numeric(Value)) %>%
-    dplyr::rename(Time = Year)
+    dplyr::rename(Time = Year) %>%
+    tidyr::separate(Var, into = c("Var", "Null")) %>%
+    dplyr::select(-Null)
 
 
   if (save_clean){
