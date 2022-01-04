@@ -4,15 +4,16 @@ library(dplyr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-species_dist_csv <- "sp dist.csv"
+species_dist_csv <- "species_distribution.xlsx"
 get_species_dist <- function(save_clean = F){
 
-  species_dist <- read.csv(file.path(raw.dir, species_dist_csv))  %>%
+  species_dist <- readxl::read_excel(file.path(raw.dir, species_dist_csv),
+                                     sheet = "sp_dist")  %>%
     dplyr::rename(depth = DEPTH,
                   Latitude = LAT,
                   Longitude = LON,
-                  `along-shelf distance` = ASD,
-                  `distance to coast` = DTC,
+                  `along-shelf distance` = ASDIST,
+                  `distance to coast` = DTEOC,
                   Time = Year) %>%
     tidyr::pivot_longer(-Time, names_to = "Var", values_to = "Value") %>%
     dplyr::mutate(EPU = "All",
