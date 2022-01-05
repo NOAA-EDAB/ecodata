@@ -45,7 +45,7 @@ p1<-mass %>%
   #Facet 
   ggplot2::facet_wrap(Var~., ncol = 2) +
   #Axis and theme
-  ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1980, 2020, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("MA Inshore BTS") +
@@ -85,7 +85,7 @@ p2<-mass %>%
   ggplot2::facet_wrap(Var~., ncol = 2) +
 
   #Axis and theme
-  ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1980, 2020, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
@@ -124,7 +124,7 @@ p3<-mass %>%
   ggplot2::facet_wrap(Var~., ncol = 2) +
  
   #Axis and theme
-  ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1980, 2020, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
@@ -163,7 +163,7 @@ p4<-mass %>%
   ggplot2::facet_wrap(Var~., ncol = 2) +
  
   #Axis and theme
-  ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1980, 2020, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+

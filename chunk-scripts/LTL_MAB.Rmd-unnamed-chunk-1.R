@@ -1,8 +1,7 @@
 
 micro_chlor <- ecodata::phyto_size %>% 
   dplyr::filter(EPU %in% c("MAB"),
-                Var %in% c("CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN", 
-                           "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")) %>% 
+                Var %in% c("CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN")) %>% 
   tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
   dplyr::filter(!Value == "NA") %>% 
   dplyr::select(-Year1, -Year2, -Cat,  -Units) %>% 
@@ -21,4 +20,4 @@ micro_chlor <- ecodata::phyto_size %>%
   #ggplot2::theme(legend.title = element_text("Season"), 
   #               legend.text =element_text("Jan-Mar", "Apr-Jun", "Jul-Sep", "Oct-Dec") )#+
  
-micro_chlor
+#micro_chlor

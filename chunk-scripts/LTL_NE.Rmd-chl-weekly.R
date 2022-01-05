@@ -1,5 +1,5 @@
 
-interp_chl_pp <- function(epu, year = 2020, Variable){
+interp_chl_pp <- function(epu, year = 2021, Variable){
   out <- ecodata::chl_pp %>%
     dplyr::filter(stringr::str_detect(Var,Variable),
            EPU == epu) %>%
@@ -31,24 +31,25 @@ interp_chl_pp <- function(epu, year = 2020, Variable){
 
 GB_chl_weekly <- interp_chl_pp(epu = "GB", Variable = "WEEKLY_CHLOR_A_MEDIAN")
 GOM_chl_weekly <- interp_chl_pp(epu = "GOM", Variable = "WEEKLY_CHLOR_A_MEDIAN")
-ne_chl_weekly<-rbind(GB_chl_weekly, GOM_chl_weekly)
+ne_chl_weekly<-rbind(GB_chl_weekly, GOM_chl_weekly)%>% 
+  dplyr::filter(!Value == "NA")
+# 
+# ne_early<-ne_chl_weekly %>% filter(Time <=26)
+# ne_late<-ne_chl_weekly %>% filter(Time >=26)
 
-ne_early<-ne_chl_weekly %>% filter(Time <=26)
-ne_late<-ne_chl_weekly %>% filter(Time >=26)
-
-ne_chl <- ggplot2::ggplot(data = ne_early) +
+ne_chl <- ggplot2::ggplot(data = ne_chl_weekly) +
   ggplot2::geom_line(aes(x = Time, y = LTM)) +
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(sd.low,0), ymax = sd.high),
               alpha = 0.1,
               fill = "grey1") +
   ggplot2::geom_line(aes(x = Time, y = Value),
             size = 1,color = "#33a02c") +
-    ggplot2::geom_line(data = ne_late, aes(x = Time, y = LTM)) +
-  ggplot2::geom_ribbon(data = ne_late,aes(x = Time, ymin = pmax(sd.low,0), ymax = sd.high),
-              alpha = 0.1,
-              fill = "grey1") +
-  ggplot2::geom_line(data = ne_late,aes(x = Time, y = Value),
-            size = 1,color = "#33a02c", linetype = "dashed") +
+  # ggplot2::geom_line(data = ne_late, aes(x = Time, y = LTM)) +
+  # ggplot2::geom_ribbon(data = ne_late,aes(x = Time, ymin = pmax(sd.low,0), ymax = sd.high),
+  #             alpha = 0.1,
+  #             fill = "grey1") +
+  # ggplot2::geom_line(data = ne_late,aes(x = Time, y = Value),
+  #           size = 1,color = "#33a02c", linetype = "dashed") +
   ggplot2::ggtitle(expression("Chlorophyll"~italic(a)~"")) +
   ggplot2::ylim(c(0, 3))+
   ggplot2::facet_wrap(EPU~., ncol = 2)+

@@ -10,7 +10,7 @@ menh$Var <- factor(menh$Var,levels = c("Piscivore Spring","Piscivore Fall",
                                        "Benthos Spring",  "Benthos Fall"))
 p1<-menh %>% 
   dplyr::filter(str_detect(Var, "Piscivore")) %>% 
-  ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
+  ggplot2::ggplot(aes(x = Time, y = Value)) +
   #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max ,
@@ -19,7 +19,7 @@ p1<-menh %>%
   #Add time series
   ggplot2::geom_line(size = lwd-0.5) +
   ggplot2::geom_point(size = pcex-0.5) +
-  ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
+  #ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::geom_hline(aes(yintercept = hline,
                  group = Var),
@@ -31,7 +31,7 @@ p1<-menh %>%
   ggplot2::facet_wrap(Var~., ncol = 2) +
   
   #Axis and theme
-  ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(2005, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("ME/NH Inshore BTS") +
@@ -41,7 +41,7 @@ p1<-menh %>%
 
 p2<-menh %>% 
   dplyr::filter(str_detect(Var, "Benthivore")) %>% 
-  ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
+  ggplot2::ggplot(aes(x = Time, y = Value)) +
   #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max ,
@@ -50,7 +50,7 @@ p2<-menh %>%
   #Add time series
   ggplot2::geom_line(size = lwd-0.5) +
   ggplot2::geom_point(size = pcex-0.5) +
-  ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
+  #ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::geom_hline(aes(yintercept = hline,
                  group = Var),
@@ -62,7 +62,7 @@ p2<-menh %>%
   ggplot2::facet_wrap(Var~., ncol = 2) +
   
   #Axis and theme
-  ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(2005, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
@@ -71,7 +71,7 @@ p2<-menh %>%
 
 p3<-menh %>% 
   dplyr::filter(str_detect(Var, "Planktivore")) %>% 
-  ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
+  ggplot2::ggplot(aes(x = Time, y = Value)) +
   #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max ,
@@ -80,7 +80,7 @@ p3<-menh %>%
   #Add time series
   ggplot2::geom_line(size = lwd-0.5) +
   ggplot2::geom_point(size = pcex-0.5) +
-  ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
+  #ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::geom_hline(aes(yintercept = hline,
                  group = Var),
@@ -92,7 +92,7 @@ p3<-menh %>%
   ggplot2::facet_wrap(Var~., ncol = 2) +
   
   #Axis and theme
-  ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(2005, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+
@@ -101,7 +101,7 @@ p3<-menh %>%
 
 p4<-menh %>% 
   dplyr::filter(str_detect(Var, "Benthos")) %>% 
-  ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
+  ggplot2::ggplot(aes(x = Time, y = Value)) +
   #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max ,
@@ -110,7 +110,7 @@ p4<-menh %>%
   #Add time series
   ggplot2::geom_line(size = lwd-0.5) +
   ggplot2::geom_point(size = pcex-0.5) +
-  ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
+  #ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::geom_hline(aes(yintercept = hline,
                  group = Var),
@@ -121,7 +121,7 @@ p4<-menh %>%
   #Facet 
   ggplot2::facet_wrap(Var~., ncol = 2) +
   
-  ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(2005, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+

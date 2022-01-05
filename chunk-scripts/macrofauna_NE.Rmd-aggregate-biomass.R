@@ -28,20 +28,7 @@ facet_names <- list("Piscivores" = expression("Piscivores"),
                     "Planktivores" = expression("Planktivores"),
                     "Benthivores" = expression("Benthivores"),
                     "Benthos" = expression("Benthos"))
-#Get NEAMAP
-neamap <- ecodata::mab_inshore_survey %>% 
-  dplyr::group_by(Var) %>% 
-  dplyr::mutate(hline = mean(Value),
-         SD = Value * CV, #calculate SD from CV
-         upper = Value + (2*SD), 
-         lower = Value - (2*SD))
-neamap$Var <- factor(neamap$Var,levels = c("Piscivore Spring","Piscivore Fall",
-                                           "Benthivore Spring", "Benthivore Fall",
-                                           "Planktivore Spring", "Planktivore Fall",  
-                                           "Benthos Spring", "Benthos Fall"))
-## Piscivore 
-neamap.1<-neamap %>% 
-  dplyr::filter(str_detect(Var,"Piscivore"))
+
 p1<-agg_bio %>% 
   dplyr::filter(str_detect(Var,"Piscivore")) %>% 
   ggplot2::ggplot() +
@@ -68,15 +55,6 @@ p1<-agg_bio %>%
              alpha = hline.alpha,
              linetype = hline.lty)+
   ggplot2::facet_wrap(Var~.,ncol = 2) +
-     #Add NEAMAP
-  ggplot2::geom_ribbon(data = neamap.1, aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
-              alpha = 0.5,
-              fill = "pink")+
-  ggplot2::geom_line(data = neamap.1, aes(x = Time, y = Value),
-            color = "#ca0020")+
-  ggplot2::geom_point(data = neamap.1, aes(x = Time, y = Value),
-             size = pcex-0.5,
-             color = "#ca0020")+
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
   #ylim(0, 1200)+
@@ -85,8 +63,7 @@ p1<-agg_bio %>%
   ggplot2::theme(strip.text=element_text(hjust=0), 
         axis.title.x=element_blank())
 ## Benthivore
-neamap.2<-neamap %>% 
-  dplyr::filter(str_detect(Var,"Benthivore"))
+
 p2<-agg_bio %>% 
   dplyr::filter(str_detect(Var,"Benthivore")) %>% 
   ggplot2::ggplot() +
@@ -114,14 +91,7 @@ p2<-agg_bio %>%
              alpha = hline.alpha,
              linetype = hline.lty)+
   ggplot2::facet_wrap(Var~.,ncol = 2) +
-       #Add NEAMAP
-  ggplot2::geom_ribbon(data = neamap.2, aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
-              alpha = 0.5, fill = "pink")+
-  ggplot2::geom_line(data = neamap.2, aes(x = Time, y = Value),
-            color = "#ca0020")+
-  ggplot2::geom_point(data = neamap.2, aes(x = Time, y = Value),
-             size = pcex-0.5,
-             color = "#ca0020")+
+ 
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
@@ -129,8 +99,6 @@ p2<-agg_bio %>%
   ggplot2::theme(strip.text=element_text(hjust=0), 
         axis.title.x=element_blank())
 ### Planktivore
-neamap.3<-neamap %>% 
-  dplyr::filter(str_detect(Var,"Planktivore"))
 p3<-agg_bio %>% 
   dplyr::filter(str_detect(Var,"Planktivore")) %>% 
   ggplot2::ggplot() +
@@ -158,14 +126,6 @@ p3<-agg_bio %>%
              alpha = hline.alpha,
              linetype = hline.lty)+
   ggplot2::facet_wrap(Var~.,ncol = 2) +
-       #Add NEAMAP
-  ggplot2::geom_ribbon(data = neamap.3, aes(ymax = pmax(upper, 0), ymin = lower, x = Time), 
-                fill = "pink", alpha = 0.5) +
-  ggplot2::geom_line(data = neamap.3, aes(x = Time, y = Value),
-            color = "#ca0020")+
-  ggplot2::geom_point(data = neamap.3, aes(x = Time, y = Value),
-             size = pcex-0.5,
-             color = "#ca0020")+
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
   #ylim(0, 600)+
@@ -174,8 +134,6 @@ p3<-agg_bio %>%
   ggplot2::theme(strip.text=element_text(hjust=0), 
         axis.title.x=element_blank())
 ### Benthos
-neamap.4<-neamap %>% 
-  dplyr::filter(str_detect(Var,"Benthos"))
 p4<-agg_bio %>% 
   dplyr::filter(str_detect(Var,"Benthos")) %>% 
   #ggplot(aes(x = Time, y = Mean)) +
@@ -202,14 +160,6 @@ p4<-agg_bio %>%
              alpha = hline.alpha,
              linetype = hline.lty)+
   ggplot2::facet_wrap(Var~.,ncol = 2) +
-       #Add NEAMAP
-  ggplot2::geom_ribbon(data = neamap.4, aes(ymax = pmax(upper, 0), ymin = lower, x = Time),
-              fill = "pink", alpha = 0.5) +
-  ggplot2::geom_line(data = neamap.4, aes(x = Time, y = Value),
-            color = "#ca0020")+
-  ggplot2::geom_point(data = neamap.4, aes(x = Time, y = Value),
-             size = pcex-0.5,
-             color = "#ca0020")+
   ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
   ecodata::theme_facet()+

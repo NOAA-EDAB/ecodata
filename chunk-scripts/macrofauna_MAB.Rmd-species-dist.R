@@ -4,7 +4,8 @@ spec_dist <- ecodata::species_dist %>%
   dplyr::mutate(hline = mean(Value))
 
 asd <- spec_dist %>% 
-  dplyr::filter(Var == "along-shelf distance") %>% 
+  dplyr::filter(Var == "along-shelf distance", 
+                !Time == 2020) %>% 
   ggplot2::ggplot(aes(x = Time, y = Value,
                group = Var)) + 
  #Highlight last ten years
@@ -26,7 +27,8 @@ asd <- spec_dist %>%
   ecodata::theme_title() 
 
 depth <- spec_dist %>% 
-  dplyr::filter(Var == "depth") %>% 
+  dplyr::filter(Var == "depth", 
+                !Time == 2020) %>% 
   dplyr::mutate(Value = Value, 
          hline = mean(Value)) %>% 
   ggplot2::ggplot(aes(x = Time, y = Value,

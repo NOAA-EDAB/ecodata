@@ -12,7 +12,7 @@ ecodata::abc.acl %>%
   ggplot2::ggplot(aes(x = Time, y = Value))+
   geom_boxplot()+
   #geom_point(aes(x = Time, y = Value,color = Fishery))+
-  ggplot2::ggtitle("MAFMC Catch per ABC/ABL")+
+  ggplot2::ggtitle("MAFMC Catch per ABC/ACL")+
   ggplot2::ylab(expression("Ratio of Catch to ABC/ACL"))+
   ggplot2::theme(legend.title = element_blank())+
   ggplot2::xlab(element_blank())+

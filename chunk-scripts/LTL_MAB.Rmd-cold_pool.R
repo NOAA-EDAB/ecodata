@@ -1,6 +1,7 @@
 
 cpi<- ecodata::cold_pool %>% 
   dplyr::filter(stringr::str_detect(Var, pattern = "cold_pool")) %>% 
+  dplyr::mutate(Value = Value*-1) %>% 
   tidyr::pivot_wider(names_from = Var, values_from = Value)  %>% 
   dplyr::mutate(Upper = cold_pool_index + se_cold_pool_index, 
                 Lower = cold_pool_index - se_cold_pool_index) %>%
@@ -23,11 +24,11 @@ cpi<- ecodata::cold_pool %>%
   ecodata::theme_ts()+
   ecodata::theme_title()+
   ggplot2::annotate("segment", x = 2022, xend = 2022, y = 0.05, yend = 2,
-           colour = "blue", size = 0.70, arrow = arrow())+
+           colour = "blue", size = 0.7, arrow = arrow())+
   ggplot2::annotate("segment", x = 2022, xend = 2022, y = -0.05, yend = -2,
-           colour = "red", size = 0.70, arrow = arrow())+
-  ggplot2::annotate("text", x = 2022, y = 2.2, label = "Colder", size = 2,colour = "blue")+
-   ggplot2::annotate("text", x = 2022, y = -2.2, label = "Warmer",size = 2, colour = "red")
+           colour = "red", size = 0.7, arrow = arrow())+
+  ggplot2::annotate("text", x = 2019, y = 2.2, label = "Colder", size = 4,colour = "blue")+
+   ggplot2::annotate("text", x = 2019, y = -2.2, label = "Warmer",size = 4, colour = "red")
 
 
   
@@ -56,8 +57,8 @@ ei<- ecodata::cold_pool %>%
            colour = "blue", size = 0.70, arrow = arrow())+
   ggplot2::annotate("segment", x = 2022, xend = 2022, y = -0.05, yend = -250,
            colour = "red", size = 0.70, arrow = arrow())+
-  ggplot2::annotate("text", x = 2022, y = 52, label = "Larger",size = 2, colour = "blue")+
-   ggplot2::annotate("text", x = 2022, y = -255, label = "Smaller",size = 2, colour = "red")
+  ggplot2::annotate("text", x = 2019, y = 52, label = "Larger",size = 4, colour = "blue")+
+   ggplot2::annotate("text", x = 2019, y = -255, label = "Smaller",size = 4, colour = "red")
 
 
 pi<- ecodata::cold_pool %>% 
@@ -84,8 +85,8 @@ pi<- ecodata::cold_pool %>%
            colour = "blue", size = 0.70, arrow = arrow())+
   ggplot2::annotate("segment", x = 2022, xend = 2022, y = -0.05, yend = -1.5,
            colour = "red", size = 0.70, arrow = arrow())+
-  ggplot2::annotate("text", x = 2022, y = 0.7, label = "Longer", size = 2,colour = "blue")+
-   ggplot2::annotate("text", x = 2022, y = -1.6, label = "Shorter", size = 2, colour = "red")
+  ggplot2::annotate("text", x = 2019, y = 0.7, label = "Longer", size = 4,colour = "blue")+
+   ggplot2::annotate("text", x = 2019, y = -1.6, label = "Shorter", size = 4, colour = "red")
 
 #cowplot::plot_grid(cpi, pi, ei, labels = c('a', 'b', 'c'), align = "h")
 
