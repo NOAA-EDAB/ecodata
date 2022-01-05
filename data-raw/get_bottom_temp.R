@@ -101,7 +101,7 @@ get_bottom_temp_glorys(save_clean = T)
 
 
 
-bottom_heatwave_xlxs<-"GB_GOM_MAB_BT_1959_2019 - Vincent Saba - NOAA Federal.xlsx"
+bottom_heatwave_xlsx<-"GB_GOM_MAB_BT_1959_2019 - Vincent Saba - NOAA Federal.xlsx"
 
 get_bottom_heatwave <- function(save_clean = F){
 
@@ -109,11 +109,11 @@ get_bottom_heatwave <- function(save_clean = F){
     dplyr::select(t, GOM_btemp) %>%
     dplyr::rename(temp = GOM_btemp) %>%
     dplyr::mutate(t = as.Date(t))
-  gb <- read_excel(file.path(raw.dir,bottom_temp_xlsx)) %>%
+  gb <- read_excel(file.path(raw.dir,bottom_heatwave_xlsx)) %>%
     dplyr::select(t, GB_btemp) %>%
     dplyr::rename(temp = GB_btemp)%>%
     dplyr::mutate(t = as.Date(t))
-  mab <- read_excel(file.path(raw.dir,bottom_temp_xlsx)) %>%
+  mab <- read_excel(file.path(raw.dir,bottom_heatwave_xlsx)) %>%
     dplyr::select(t, MAB_btemp) %>%
     dplyr::rename(temp = MAB_btemp)%>%
     dplyr::mutate(t = as.Date(t))
@@ -151,12 +151,14 @@ get_bottom_heatwave <- function(save_clean = F){
 
   bottom_heatwave<- rbind(cum.intensity, max.intensity) %>%
     dplyr:: mutate(Units = "degrees C",
-                   Time = as.numeric(Time))
+                   Time = as.numeric(Time)) %>%
+    group_by(EPU) %>%
+    complete(Var, Time = 1959:2019, fill = list(Value = 0))
 
   # metadata ----
   attr(bottom_heatwave, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/marine-heatwave.html"
   attr(heatwave, "data_files")   <- list(
-    bottom_heatwave_xl = bottom_heatwave_xl)
+    bottom_heatwave_xl = bottom_heatwave_xlsx)
   attr(heatwave, "data_steward") <- c(
     "Vincent Saba <vincent.saba@noaa.gov>")
 
