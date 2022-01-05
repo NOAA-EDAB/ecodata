@@ -1467,7 +1467,7 @@ p1
 
 
 ### Total ABC/ACL
-```{r abc-acl, fig.caption = "Catch per ABC/ACL for MAFMC managed fisheies. Chub mackerel removed due to extremely high catch commpared to limits. Outliers = Recreational Black Sea Bass.  "}
+```{r abc-acl, fig.cap = "Catch divided by ABC/ACL for MAFMC managed fisheies. Chub mackerel removed due extremely low catch. Outliers = Recreational Black Sea Bass.  Possible management success story? - See comment in google doc."}
 ecodata::abc.acl %>% 
   #group_by(Time) %>% 
   tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>% 
@@ -1481,7 +1481,7 @@ ecodata::abc.acl %>%
   ggplot2::ggplot(aes(x = Time, y = Value))+
   geom_boxplot()+
   #geom_point(aes(x = Time, y = Value,color = Fishery))+
-  ggplot2::ggtitle("MAFMC Catch per ABC/ABL")+
+  ggplot2::ggtitle("MAFMC Catch per ABC/ACL")+
   ggplot2::ylab(expression("Ratio of Catch to ABC/ACL"))+
   ggplot2::theme(legend.title = element_blank())+
   ggplot2::xlab(element_blank())+
