@@ -5,7 +5,7 @@ library(stringr)
 raw.dir <- here::here("data-raw")
 
 # input files ----
-phyto_csv <- "1998_2020-OCCCI-PHYSIZE-STATS-NES_EPU_NOESTUARIES-V2021-SOE_FORMAT.csv"
+phyto_csv <- "19980101_20211231-OCCCI-PHYSIZE-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_V2022-SOE_FORMAT.csv"
 
 phyto_size <- read.csv(file.path(raw.dir, phyto_csv)) %>%
   dplyr::select(PERIOD, UNITS, VARIABLE, VALUE, SUBAREA) %>%

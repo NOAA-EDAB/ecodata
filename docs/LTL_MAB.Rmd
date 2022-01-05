@@ -413,9 +413,9 @@ chl_cci
 
 #### Seasonal chlorophyll *a* & primary production
 
-```{r chl-weekly,fig.cap = "Weekly chlorophyll concentrations and primary productivity in the Mid-Atlantic are shown for by the colored line for 2020. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
+```{r chl-weekly,fig.cap = "Weekly chlorophyll concentrations and primary productivity in the Mid-Atlantic are shown for by the colored line for 2021. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
 
-interp_chl_pp <- function(epu, year = 2020, Variable){
+interp_chl_pp <- function(epu, year = 2021, Variable){
   out <- ecodata::chl_pp %>% 
     dplyr::filter(stringr::str_detect(Var,Variable),
            EPU == epu) %>% 
@@ -508,27 +508,29 @@ MAB_pp_weekly + MAB_chl_weekly + plot_layout(ncol = 1)
 #### Phytoplankton Size Class
 
 ```{r weekly-phyto-size, eval = T}
+# 
+# 
+# chlor <- ecodata::chl_pp %>% 
+#   dplyr::filter(EPU == c( "MAB"),
+#                 !Value == "NA", 
+#                 Var == "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")  %>% 
+#   tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
+#   mutate(Value = Value/2)
 
-
-chlor <- ecodata::phyto_size %>% 
-  dplyr::filter(EPU == c( "MAB"),
-                !Value == "NA", 
-                Var == "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")  %>% 
-  tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
-  mutate(Value = Value/2)
-
-month <- seq(as.Date("2020-01-01"), 
-             as.Date("2020-12-01"), 
+month <- seq(as.Date("2021-01-01"), 
+             as.Date("2021-12-01"), 
              by = "1 month")
 month_numeric <- lubridate::yday(month) / 365 * 52 + 1
 month_label <- lubridate::month(month, label = TRUE)
 
 out_phyto2<-  ecodata::phyto_size %>% 
   dplyr::filter(EPU == c("MAB"),
-         stringr::str_detect(Var, ("CLIMATOLOGICAL_WEEK"))) %>% 
+         stringr::str_detect(Var, ("CLIMATOLOGICAL_WEEK")), 
+         !Var == "CLIMATOLOGICAL_WEEK_PICO_MEDIAN",
+         !Var == "CLIMATOLOGICAL_WEEK_NANO_MEDIAN",
+         !Var == "CLIMATOLOGICAL_WEEK_MICRO_MEDIAN") %>% 
   tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
-  dplyr::filter(!Value == "NA", 
-                !Var == "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")  %>%
+  dplyr::filter()  %>%
   dplyr::mutate(Value = Value*100) %>% 
 
   ggplot2::ggplot() +
@@ -560,12 +562,12 @@ out_phyto2
 
 ```
 
+
 ```{r}
 
 micro_chlor <- ecodata::phyto_size %>% 
   dplyr::filter(EPU %in% c("MAB"),
-                Var %in% c("CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN", 
-                           "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")) %>% 
+                Var %in% c("CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN")) %>% 
   tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
   dplyr::filter(!Value == "NA") %>% 
   dplyr::select(-Year1, -Year2, -Cat,  -Units) %>% 
@@ -584,7 +586,7 @@ micro_chlor <- ecodata::phyto_size %>%
   #ggplot2::theme(legend.title = element_text("Season"), 
   #               legend.text =element_text("Jan-Mar", "Apr-Jun", "Jul-Sep", "Oct-Dec") )#+
  
-micro_chlor
+#micro_chlor
 
 ```
 

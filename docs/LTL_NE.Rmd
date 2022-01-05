@@ -521,8 +521,8 @@ pp_cci_gom <- out_pp %>%
 
 #### Seasonal chlorophyll *a* & primary production
 
-```{r pp-weekly, fig.width = 8, fig.cap = "Weekly chlorophyll concentrations and primary productivity for 2020 in Georges Bank and Gulf of Maine are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
-interp_chl_pp <- function(epu, year = 2020, Variable){
+```{r pp-weekly, fig.width = 8, fig.cap = "Weekly chlorophyll concentrations and primary productivity for 2021 in Georges Bank and Gulf of Maine are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
+interp_chl_pp <- function(epu, year = 2021, Variable){
   out <- ecodata::chl_pp %>%
     dplyr::filter(stringr::str_detect(Var,Variable),
            EPU == epu) %>%
@@ -593,8 +593,8 @@ ne_ppd
 
 ```
 
-```{r chl-weekly, fig.width = 8, fig.cap = "Weekly chlorophyll concentrations and primary productivity for 2020 in Georges Bank and Gulf of Maine are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
-interp_chl_pp <- function(epu, year = 2020, Variable){
+```{r chl-weekly, fig.width = 8, fig.cap = "Weekly chlorophyll concentrations and primary productivity for 2021 in Georges Bank and Gulf of Maine are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
+interp_chl_pp <- function(epu, year = 2021, Variable){
   out <- ecodata::chl_pp %>%
     dplyr::filter(stringr::str_detect(Var,Variable),
            EPU == epu) %>%
@@ -667,15 +667,18 @@ ne_chl
 
 ```{r weekly-phyto-size-gb, eval = T}
 
-month <- seq(as.Date("2020-01-01"), 
-             as.Date("2020-12-01"), 
+month <- seq(as.Date("2021-01-01"), 
+             as.Date("2021-12-01"), 
              by = "1 month")
 month_numeric <- lubridate::yday(month) / 365 * 52 + 1
 month_label <- lubridate::month(month, label = TRUE)
 
 out_phyto<-  ecodata::phyto_size %>% 
   dplyr::filter(EPU == c("GB"),
-         stringr::str_detect(Var, ("CLIMATOLOGICAL_WEEK"))) %>% 
+         stringr::str_detect(Var, ("CLIMATOLOGICAL_WEEK")), 
+         !Var == "CLIMATOLOGICAL_WEEK_PICO_MEDIAN",
+         !Var == "CLIMATOLOGICAL_WEEK_NANO_MEDIAN",
+         !Var == "CLIMATOLOGICAL_WEEK_MICRO_MEDIAN") %>% 
   tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
   dplyr::filter(!Value == "NA", 
                 !Var == "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")  %>%
@@ -712,8 +715,8 @@ out_phyto
 
 ```{r weekly-phyto-size-gom, eval = T}
 
-month <- seq(as.Date("2020-01-01"), 
-             as.Date("2020-12-01"), 
+month <- seq(as.Date("2021-01-01"), 
+             as.Date("2021-12-01"), 
              by = "1 month")
 month_numeric <- lubridate::yday(month) / 365 * 52 + 1
 month_label <- lubridate::month(month, label = TRUE)
@@ -721,7 +724,10 @@ month_label <- lubridate::month(month, label = TRUE)
 ### GOM
 out_phyto2<-  ecodata::phyto_size %>% 
   dplyr::filter(EPU == c("GOM"),
-         stringr::str_detect(Var, ("CLIMATOLOGICAL_WEEK"))) %>% 
+         stringr::str_detect(Var, ("CLIMATOLOGICAL_WEEK")), 
+         !Var == "CLIMATOLOGICAL_WEEK_PICO_MEDIAN",
+         !Var == "CLIMATOLOGICAL_WEEK_NANO_MEDIAN",
+         !Var == "CLIMATOLOGICAL_WEEK_MICRO_MEDIAN") %>% 
   tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
   dplyr::filter(!Value == "NA", 
                 !Var == "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")  %>%
@@ -778,7 +784,7 @@ micro_chlor <- ecodata::phyto_size %>%
   ggplot2::xlab("Microplankton % of Total Phytoplankton Composition ") +
   ecodata::theme_facet()+
   ecodata::theme_title()
-micro_chlor
+#micro_chlor
 
 ```
 

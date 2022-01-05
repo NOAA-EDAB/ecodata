@@ -5,8 +5,8 @@ library(stringr)
 raw.dir <- here::here("data-raw")
 
 # input files ----
-ppd_csv <- "1998_2020-OCCCI_MODISA-PPD-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_V2021-SOE_FORMAT.csv"
-chl_csv <- "1998_2020-OCCCI_MODISA-CHLOR_A-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_V2021-SOE_FORMAT.csv"
+ppd_csv <- "19980101_20211231-OCCCI_MODISA-PPD-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_V2022-SOE_FORMAT.csv"
+chl_csv <- "19980101_20211231-OCCCI_MODISA-CHLOR_A-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_V2022-SOE_FORMAT.csv"
 
 # transformation ----
 ppd <- read.csv(file.path(raw.dir, ppd_csv)) %>%
