@@ -5,7 +5,7 @@ library(readr)
 
 raw.dir <- here::here("data-raw")
 
-ch_bay_temp_csv<-"GR_Sea_Water_Temp_Data - Charles Pellerin - NOAA Federal.csv"
+ch_bay_temp_csv<-"GR_Sea_Water_Temp_Data.csv"
 get_ch_bay_temp <- function(save_clean = F){
 
   ch_bay_temp<-read_csv(file.path(raw.dir,ch_bay_temp_csv), col_names = FALSE) %>%
