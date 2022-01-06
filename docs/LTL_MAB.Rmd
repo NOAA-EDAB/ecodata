@@ -766,7 +766,7 @@ ecodata::ches_bay_wq %>%
  
 
 #### Chesepeake Bay Salinity Anomolies
-```{r ch-bay-sal, fig.cap = "Blue = 2021, red = Long term avergae 2010-2020. "}
+```{r ch-bay-sal, fig.cap = "Red = 2021, blue = Long term avergae 2010-2020. "}
 
 ecodata::ch_bay_sal %>%
   tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
@@ -784,7 +784,7 @@ ecodata::ch_bay_sal %>%
 ```
 
 #### Chesapeake Bay Temperature Anomolies
-```{r ch-bay-temp, fig.cap = "Blue = 2021, red = Long term avergae 2010-2020. "}
+```{r ch-bay-temp, fig.cap = "Red = 2021, blue = Long term avergae 2010-2020. "}
 
 ecodata::ch_bay_temp %>%
   tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
