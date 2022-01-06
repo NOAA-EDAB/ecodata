@@ -21,6 +21,6 @@ colors_border <- c("black", "grey49",  "#1B9E77", "#D95F02" ,"#7570B3")
 fmsb::radarchart(p3, 
                  pcol=colors_border , plwd=2 , plty=1,
                  cglcol="grey", cglty=1, axislabcol="black", cglwd=0.8,
-                 vlcex=0.8, title = "Environmental Justice Vulnerabilty in Top Recreational Fishing Communities (Mid-Atlantic)" )
-legend(x=1.2, y=1, legend = rownames(p3[-c(1,2),]), bty = "n", pch=20 ,
-      col = colors_border, text.col = "black", cex=1.2, pt.cex=1)
+                 vlcex=0.6, title = "Environmental Justice Vulnerabilty - Mid-Atlantic Recreational Communities" )
+legend(x=1.5, y=1, legend = rownames(p3[-c(1,2),]), bty = "n", pch=20 ,
+      col = colors_border, text.col = "black", cex=0.5, pt.cex=1)
