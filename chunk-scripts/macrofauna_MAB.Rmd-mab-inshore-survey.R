@@ -1,6 +1,8 @@
 
 #Get NEAMAP
 neamap <- ecodata::mab_inshore_survey %>% 
+  dplyr::mutate(Value = as.numeric(Value), 
+                CV = as.numeric(CV)) %>% 
   dplyr::group_by(Var) %>% 
   dplyr::mutate(hline = mean(Value),
          SD = Value * CV, #calculate SD from CV
