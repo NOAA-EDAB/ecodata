@@ -1,5 +1,5 @@
 
-ecodata::abc.acl %>% 
+mean<- ecodata::abc.acl %>% 
   #group_by(Time) %>% 
   tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>% 
   pivot_wider(names_from = Var, values_from = Value) %>% 
@@ -8,10 +8,27 @@ ecodata::abc.acl %>%
   dplyr::mutate(Value = Catch/abc.acl, 
                 Time = as.character(Time)) %>% 
   filter(!Value == "NA", 
+         !Fishery == "Chub mackerel ") %>%
+  dplyr::group_by(Time) %>% 
+  dplyr::summarise(val = mean(Value)) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(Time = as.numeric(Time))
+
+ecodata::abc.acl %>% 
+  #group_by(Time) %>% 
+  tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>% 
+  pivot_wider(names_from = Var, values_from = Value) %>% 
+  dplyr::rename("abc.acl" = " ABC/ACL", 
+                "Catch" = " Catch") %>% 
+  dplyr::mutate(Value = Catch/abc.acl, 
+                Time = as.numeric(Time)) %>% 
+  filter(!Value == "NA", 
          !Fishery == "Chub mackerel ") %>% 
-  ggplot2::ggplot(aes(x = Time, y = Value))+
-  geom_boxplot()+
-  #geom_point(aes(x = Time, y = Value,color = Fishery))+
+  ggplot2::ggplot()+
+  #geom_boxplot()+
+  geom_point(aes(x = Time, y = Value))+
+  geom_point(data = mean, aes(x = Time, y = val), color = "red")+
+  geom_line(data = mean, aes(x = Time, y = val), color = "red")+
   ggplot2::ggtitle("MAFMC Catch per ABC/ACL")+
   ggplot2::ylab(expression("Ratio of Catch to ABC/ACL"))+
   ggplot2::theme(legend.title = element_blank())+

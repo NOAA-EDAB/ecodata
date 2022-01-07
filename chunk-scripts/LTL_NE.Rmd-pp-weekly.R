@@ -52,7 +52,7 @@ ne_ppd <- ggplot2::ggplot(data = ne_ppd_weekly) +
   #            fill = "grey1") +
   #ggplot2::geom_line(data = ne_pp_late,aes(x = Time, y = Value),
   #          size = 1,color = "#33a02c", linetype = "dashed") +
-  ggplot2::ggtitle(expression("Primary production")) +
+  ggplot2::ggtitle(expression("Primary production 2020 New Data")) +
   guides(color = F) +
   ggplot2::facet_wrap(EPU~., ncol = 2)+
   ggplot2::xlab("")+
