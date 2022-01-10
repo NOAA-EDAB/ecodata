@@ -31,7 +31,7 @@ aggregate_prod %>%
                     ymin = se.low,
                   ymax = se.high), 
                 width = 0.25) +
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01),limits = c(1991,2019)) +
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01),limits = c(1991,2021)) +
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Common tern productivity") +
   ggplot2::ylab(expression("Fledged chicks per nest")) +
