@@ -1095,11 +1095,16 @@ knitr::include_graphics(file.path(image.dir, "EJ_Commercial_NE.png"))
 
 #### Oyster aquaculture
 
-```{r aquaculture, fig.cap = "Oyster aquaculture production in terms pieces, lease area and production by acre. \\label{oyster-aqua}"}
+```{r aquaculture, fig.cap = "Oyster aquaculture production in terms pieces, lease area and production by acre through 2020. \\label{oyster-aqua}"}
 
 aqua <- ecodata::aquaculture %>%
-  dplyr::filter(Region == c("ME", "MA", "NH", "RI")) %>% 
-  dplyr::filter(!Value == "NA") %>% 
+  ungroup() %>% 
+  mutate(Region = as.character(Region)) %>% 
+  dplyr::filter(!Region == "VA",
+                !Region == "NJ",
+                !Region == "MD",
+                !Region == "NA",
+                !Value == "NA") %>% 
   dplyr::mutate(Time = as.integer(Time), 
                 Value = as.numeric(Value))
 
@@ -1120,9 +1125,14 @@ ggplot2::ggplot() +
 ```
 
 ```{r aquaculture-pieces, fig.cap="Oyster aquaculture production in pieces for four New England states (Maine, Massachusettes, New Hampshire and Rhode Island)."}
- ecodata::aquaculture %>%
-  dplyr::filter(Region == c("ME", "MA", "NH", "RI"))  %>% 
-  dplyr::filter(!Value == "NA") %>% 
+ecodata::aquaculture %>%
+  ungroup() %>% 
+  mutate(Region = as.character(Region)) %>% 
+  dplyr::filter(!Region == "VA",
+                !Region == "NJ",
+                !Region == "MD",
+                !Region == "NA",
+                !Value == "NA") %>% 
   dplyr::mutate(Time = as.integer(Time), 
                 Value = as.numeric(Value))%>% 
   filter(Var == "Pieces") %>% 
@@ -1145,9 +1155,14 @@ ggplot2::ggplot() +
 ```
 
 ```{r aquaculture-pa, fig.cap="Oyster aquaculture production in pieces for four New England states (Maine, Massachusettes, New Hampshire and Rhode Island)."}
- ecodata::aquaculture %>%
-  dplyr::filter(Region == c("ME", "MA", "NH", "RI"))  %>% 
-  dplyr::filter(!Value == "NA") %>% 
+ecodata::aquaculture %>%
+  ungroup() %>% 
+  mutate(Region = as.character(Region)) %>% 
+  dplyr::filter(!Region == "VA",
+                !Region == "NJ",
+                !Region == "MD",
+                !Region == "NA",
+                !Value == "NA") %>% 
   dplyr::mutate(Time = as.integer(Time), 
                 Value = as.numeric(Value))%>% 
   filter(Var == "Production/Acre") %>% 
