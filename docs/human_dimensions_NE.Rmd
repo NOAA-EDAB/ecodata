@@ -1063,6 +1063,7 @@ com2<-com %>%
 p1<- ecodata::engagement %>%
   dplyr::filter(Region == "NE",
                 Fishery == "Commercial") %>%
+  dplyr::arrange(desc(Eng)) %>% 
   dplyr::select(Community, PDI ,
                 PCI, PI)  %>%
   dplyr::mutate(Community = stringr::str_remove(Community, pattern = (" ")),
@@ -1071,8 +1072,7 @@ p1<- ecodata::engagement %>%
                 Community = stringr::str_remove(Community, pattern = (",")), 
                 Community = stringr::str_remove(Community, pattern = ("-")),
                 Community = stringr::str_remove(Community, pattern = ("/"))) %>% 
-  tibble::column_to_rownames(var="Community") %>% 
-  dplyr::arrange(desc(PI))
+  tibble::column_to_rownames(var="Community") 
   
 p2<- t(p1)
 p2<- rbind(rep(1.5, 14) , rep(0, 14), std1 = rep(1, 14), std0.5 = rep(0.5, 14), p2) 
@@ -1450,6 +1450,7 @@ gridExtra::grid.arrange(com2, bottom = textGrob("Low <--------------------------
 p1<- ecodata::engagement %>%
   dplyr::filter(Region == "NE",
                 Fishery == "Recreational") %>%
+  dplyr::arrange(desc(Eng)) %>% 
   dplyr::select(Community, PDI ,
                 PCI, PI)  %>%
   dplyr::mutate(Community = stringr::str_remove(Community, pattern = (" ")),
@@ -1458,7 +1459,7 @@ p1<- ecodata::engagement %>%
                 Community = stringr::str_remove(Community, pattern = (",")), 
                 Community = stringr::str_remove(Community, pattern = ("-")),
                 Community = stringr::str_remove(Community, pattern = ("/"))) %>% 
-  tibble::column_to_rownames(var="Community")
+  tibble::column_to_rownames(var="Community") 
   
 p2<- t(p1)
 p2<- rbind(rep(1.5, 14) , rep(0, 14), std1 = rep(1, 14), std0.5 = rep(0.5, 14), p2) 
@@ -1717,14 +1718,14 @@ ecodata::ppr %>%
 <!--   ecodata::theme_title() -->
 <!-- ``` -->
 
-```{r wind-port, fig.cap="Port revenue and social vulnerability indicators from wind energy areas."}
- df.symbol <- ecodata::wind_port %>% filter(EPU == "NE", 
+```{r wind-port, fig.cap="Total (left) and percent (right) of New England port revenue and social vulnerability indicators from wind energy areas."}
+df.symbol <- ecodata::wind_port %>% filter(EPU == "NE", 
                                            Value >= 3) %>% 
    pivot_wider( names_from = Var, values_from = Value) %>%
   dplyr::select(City, EJ, gentrification) %>% 
   pivot_longer(cols = c(EJ, gentrification), names_to = "Variable") %>% 
   filter(!value == "NA") %>% 
-  dplyr::mutate(symbol = recode(Variable, EJ = -5, gentrification = -10))
+  dplyr::mutate(symbol = recode(Variable, EJ = -5, gentrification = -15))
 
 df.all<- ecodata::wind_port %>% filter(EPU == "NE") %>%
   pivot_wider( names_from = Var, values_from = Value) %>%
@@ -1745,5 +1746,35 @@ p1<-ggplot2::ggplot()+
   scale_fill_discrete(name = "", labels = c("total revenue", "revenue from WEA"))+
   ecodata::theme_ts()
 
-p1
+# Percentage plot
+df.all.perc<- ecodata::wind_port %>% filter(EPU == "NE") %>%
+  pivot_wider( names_from = Var, values_from = Value) %>%
+  dplyr::mutate(ordering = total_rev, 
+                perc.wea = wea_rev/total_rev * 100, 
+                perc.total = 100-perc.wea) %>% 
+  pivot_longer(cols = c(perc.wea, perc.total, total_rev), names_to="Var", values_to = "Value") %>% 
+  dplyr::arrange(desc(ordering)) %>%
+  dplyr::mutate(City = factor(City, levels = unique(City))) %>% 
+  dplyr::filter(!Var == "total_rev")
+p2<-ggplot2::ggplot()+
+  ggplot2::geom_bar(data = df.all.perc, aes(fill = Var, y = reorder(City, ordering), x = Value), stat="identity" )+
+  ggplot2::theme(legend.position = "bottom", 
+                 legend.title = element_blank(), 
+                 axis.text.y=element_blank())+
+  #geom_point(data = df.symbol, aes(x = symbol,y = City, shape = Variable)) +
+  #scale_shape_manual(values = c(21, 24)) +
+  ggplot2::ggtitle("")+
+  ggplot2::xlab(expression("Port Revenue (%)"))+
+  ggplot2::ylab(element_blank())+
+  scale_fill_discrete(name = "", labels = c("total revenue", "revenue from WEA"))+
+  ecodata::theme_ts()
+
+
+
+ggpubr::ggarrange(p1, p2,
+                  ncol = 2, 
+                   common.legend = TRUE,
+                  legend = "bottom", 
+                   widths = c(3, 1.5))
+
 ```

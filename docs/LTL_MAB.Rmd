@@ -103,7 +103,7 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 #### SST
 
 
-```{r seasonal-sst-anom-gridded, fig.cap="MAB seasonal sea surface temperature time series overlaid onto 2021 seasonal spatial anomalies."}
+```{r seasonal-sst-anom-gridded, fig.cap="MAB-seasonal sea surface temperature time series overlaid onto 2021 seasonal spatial anomalies."}
 annotation_custom2 <- function (data, ...)
 {
   layer(data = data,
@@ -738,9 +738,8 @@ micro_chlor <- ecodata::phyto_size %>%
 
 ```{r ches-bay-wq,fig.width = 6, fig.asp = 0.55, fig.cap = "Water quality attainment in Chesapeake Bay following rolling three year assessment periods."}
 
-minlab <- seq(1985,2020,5)
-maxlab <- seq(1987,2022,5)
-
+minlab <- seq(1987,2017,5)
+maxlab <- seq(1989,2019,5)
 
 
 ecodata::ches_bay_wq %>% 
