@@ -933,7 +933,7 @@ comm_div %>%
 
 #### Stock status
 
-```{r stock-status, echo=FALSE, warning=F, fig.cap = paste0("Summary of single species status for NEFMC and jointly managed stocks. \\label{stock-status}")}
+```{r stock-status, echo=FALSE, warning=F, fig.cap = paste0("Summary of single species status for NEFMC and jointly managed stocks.   \\label{stock-status}")}
 #Get data, spread for plotting, and filter
 stock_status <- ecodata::stock_status %>%
   dplyr::mutate(Code = dplyr::recode(Code, "Dogfish" = "Sp. Dogfish" )) %>% 
@@ -963,7 +963,7 @@ all.df <- data.frame(text = all_missing$Code,
                     y = seq(1.45,0.7, length.out = 12))
 b.df <- data.frame(text = b_missing$Code,
                     x = rep(x.max*0.7,length(b_missing$Code)),
-                    y = seq(1.45,1.30, length.out = 3))
+                    y = seq(1.45,1.30, length.out = 1))
 f.df <- data.frame(text = f_missing$Code,
                     x = rep(x.max*0.5,length(f_missing$Code)),
                     y = seq(1.45,1, length.out = 7))

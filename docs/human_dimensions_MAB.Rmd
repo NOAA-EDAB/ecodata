@@ -926,7 +926,7 @@ knitr::include_graphics(file.path(image.dir, "EJ_Commercial_MAB.png"))
 
 #### Recreational landings
 
-```{r recdat-landings, fig.cap = paste0("Total recreational landings in the ",region," region. \\label{rec-landings}")}
+```{r recdat-landings, fig.cap = paste0("Total recreational landings (seafood harvest) in the Mid-Atlantic region. \\label{rec-landings}")}
 
 landings_rec <- ecodata::recdat %>% 
   dplyr::filter(EPU == region_abbr,
@@ -952,7 +952,7 @@ ggplot2::ggplot(data = landings_rec)+
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Recreational seafood harvest") +
-  ggplot2::ylab(expression("Landings (N)")) +
+  ggplot2::ylab(expression("Landings (10"^6*"lbs)")) +
   ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline,
                
