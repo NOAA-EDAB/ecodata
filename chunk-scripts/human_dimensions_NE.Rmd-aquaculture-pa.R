@@ -1,7 +1,12 @@
 
- ecodata::aquaculture %>%
-  dplyr::filter(Region == c("ME", "MA", "NH", "RI"))  %>% 
-  dplyr::filter(!Value == "NA") %>% 
+ecodata::aquaculture %>%
+  ungroup() %>% 
+  mutate(Region = as.character(Region)) %>% 
+  dplyr::filter(!Region == "VA",
+                !Region == "NJ",
+                !Region == "MD",
+                !Region == "NA",
+                !Value == "NA") %>% 
   dplyr::mutate(Time = as.integer(Time), 
                 Value = as.numeric(Value))%>% 
   filter(Var == "Production/Acre") %>% 

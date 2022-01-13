@@ -28,7 +28,7 @@ all.df <- data.frame(text = all_missing$Code,
                     y = seq(1.45,0.7, length.out = 12))
 b.df <- data.frame(text = b_missing$Code,
                     x = rep(x.max*0.7,length(b_missing$Code)),
-                    y = seq(1.45,1.30, length.out = 3))
+                    y = seq(1.45,1.30, length.out = 1))
 f.df <- data.frame(text = f_missing$Code,
                     x = rep(x.max*0.5,length(f_missing$Code)),
                     y = seq(1.45,1, length.out = 7))

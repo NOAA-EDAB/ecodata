@@ -1,7 +1,6 @@
 
-minlab <- seq(1985,2020,5)
-maxlab <- seq(1987,2022,5)
-
+minlab <- seq(1987,2017,5)
+maxlab <- seq(1989,2019,5)
 
 
 ecodata::ches_bay_wq %>% 

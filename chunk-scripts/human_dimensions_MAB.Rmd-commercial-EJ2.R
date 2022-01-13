@@ -2,6 +2,7 @@
 p1<- ecodata::engagement %>%
   dplyr::filter(Region == "MAB",
                 Fishery == "Commercial") %>%
+  dplyr::arrange(desc(Eng)) %>% 
   dplyr::select(Community, PDI ,
                 PCI, PI)  %>%
   dplyr::mutate(Community = stringr::str_remove(Community, pattern = (" ")),

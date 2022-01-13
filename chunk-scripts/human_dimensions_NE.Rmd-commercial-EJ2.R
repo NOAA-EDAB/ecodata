@@ -2,6 +2,7 @@
 p1<- ecodata::engagement %>%
   dplyr::filter(Region == "NE",
                 Fishery == "Commercial") %>%
+  dplyr::arrange(desc(Eng)) %>% 
   dplyr::select(Community, PDI ,
                 PCI, PI)  %>%
   dplyr::mutate(Community = stringr::str_remove(Community, pattern = (" ")),
@@ -10,8 +11,7 @@ p1<- ecodata::engagement %>%
                 Community = stringr::str_remove(Community, pattern = (",")), 
                 Community = stringr::str_remove(Community, pattern = ("-")),
                 Community = stringr::str_remove(Community, pattern = ("/"))) %>% 
-  tibble::column_to_rownames(var="Community") %>% 
-  dplyr::arrange(desc(PI))
+  tibble::column_to_rownames(var="Community") 
   
 p2<- t(p1)
 p2<- rbind(rep(1.5, 14) , rep(0, 14), std1 = rep(1, 14), std0.5 = rep(0.5, 14), p2) 
