@@ -249,6 +249,7 @@ managed_landings <- ecodata::comdat  %>%
   dplyr::filter(stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight")),
          !stringr::str_detect(Var, "Other"),
          Time >= 1986,
+         Time <=2019,
          EPU == epu_abbr)
 
 # HMS Landings
@@ -260,7 +261,8 @@ apex<-ecodata::hms_landings %>%
   rename( Time = YEAR) %>% 
   mutate(Var = c("HMS Landings"), 
          Units = c("metric tons"), 
-         EPU = c("MAB"))
+         EPU = c("MAB")) %>% 
+  dplyr::filter(Time <=2019)
 
 #Total landings
 total_landings <- ecodata::comdat  %>%
@@ -269,6 +271,7 @@ total_landings <- ecodata::comdat  %>%
          !stringr::str_detect(Var, "Apex"),
          stringr::str_detect(Var, "Landings"),
          Time >= 1986,
+         Time <=2019,
          EPU == epu_abbr) %>% 
   rbind(apex)
 
@@ -297,7 +300,7 @@ ggplot2::ggplot(data = landings_agg)+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
   ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
-  ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ylab(expression("Landings (10"^3*"mt)")) +
@@ -843,7 +846,7 @@ ggplot2::ggplot() +
 
 #### Engagement and reliance
 
-```{r commercial-engagement, message=F, fig.cap= "Commercial engagement and reliance for the top top commercial fishing communities in the Mid-Atlantic. (* Scored high (1.00 and above) for both commercial engagement and reliance indicators)", message = FALSE, warning=FALSE}
+```{r commercial-engagement, message=F, fig.cap= "Commercial engagement, reliance and environmental justicve vulnerability for the top commercial fishing communities in the Mid-Atlantic. (* Scored high (1.00 and above) for both commercial engagement and reliance indicators)", message = FALSE, warning=FALSE}
 
 com<-ecodata::engagement %>% 
   dplyr::filter(Region == "MAB", 
@@ -887,40 +890,40 @@ com2<-com %>%
 
 #### Environmental Justice Spider
 
-```{r commercial-EJ2, fig.cap="Environmental Justice indiciators (PDT =Personal Disruption Index, PCI =Population Composition Index, PI = Poverty Index) - Use Changhua's version below ", fig.asp=1}
-p1<- ecodata::engagement %>%
-  dplyr::filter(Region == "MAB",
-                Fishery == "Commercial") %>%
-  dplyr::arrange(desc(Eng)) %>% 
-  dplyr::select(Community, PDI ,
-                PCI, PI)  %>%
-  dplyr::rename("PovertyIndex" = PI, 
-                "PersonalDistributionIndex" = PDI, 
-                "PopulationCompositionIndex" = PCI) %>% 
-  dplyr::mutate(Community = stringr::str_remove(Community, pattern = (" ")),
-                Community = stringr::str_remove(Community, pattern = (" ")),
-                Community = stringr::str_remove(Community, pattern = (" ")), 
-                Community = stringr::str_remove(Community, pattern = (",")), 
-                Community = stringr::str_remove(Community, pattern = ("-")),
-                Community = stringr::str_remove(Community, pattern = ("/"))) %>% 
-  tibble::column_to_rownames(var="Community")
-  
-p2<- t(p1)
-p2<- rbind(rep(4, 14) , rep(0, 14), std1 = rep(1, 14), std0.5 = rep(0.5, 14), p2) 
-p3<- data.frame(p2) 
+<!-- ```{r commercial-EJ2, fig.cap="Environmental Justice indiciators (PDT =Personal Disruption Index, PCI =Population Composition Index, PI = Poverty Index) - Use Changhua's version below ", fig.asp=1} -->
+<!-- p1<- ecodata::engagement %>% -->
+<!--   dplyr::filter(Region == "MAB", -->
+<!--                 Fishery == "Commercial") %>% -->
+<!--   dplyr::arrange(desc(Eng)) %>%  -->
+<!--   dplyr::select(Community, PDI , -->
+<!--                 PCI, PI)  %>% -->
+<!--   dplyr::rename("PovertyIndex" = PI,  -->
+<!--                 "PersonalDistributionIndex" = PDI,  -->
+<!--                 "PopulationCompositionIndex" = PCI) %>%  -->
+<!--   dplyr::mutate(Community = stringr::str_remove(Community, pattern = (" ")), -->
+<!--                 Community = stringr::str_remove(Community, pattern = (" ")), -->
+<!--                 Community = stringr::str_remove(Community, pattern = (" ")),  -->
+<!--                 Community = stringr::str_remove(Community, pattern = (",")),  -->
+<!--                 Community = stringr::str_remove(Community, pattern = ("-")), -->
+<!--                 Community = stringr::str_remove(Community, pattern = ("/"))) %>%  -->
+<!--   tibble::column_to_rownames(var="Community") -->
 
-colors_border <- c("black", "grey49",  "#1B9E77", "#D95F02" ,"#7570B3")
+<!-- p2<- t(p1) -->
+<!-- p2<- rbind(rep(4, 14) , rep(0, 14), std1 = rep(1, 14), std0.5 = rep(0.5, 14), p2)  -->
+<!-- p3<- data.frame(p2)  -->
 
-fmsb::radarchart(p3[,c(1, 14:2)], xpd = TRUE,
-                 pcol=colors_border , plwd=2 , plty=1,cex.main = 0.9,
-                 cglcol="grey", cglty=1, axislabcol="black", cglwd=0.8,
-                 vlcex=0.8, title = "Environmental Justice Vulnerabilty in Top Commercial Fishing Communities (Mid-Atlantic)", title.size = 0.7)
-legend(x="top",legend = rownames(p3[-c(1,2),]), bty = "n",  pch=20 , horiz = TRUE, 
-      col = colors_border, text.col = "black", cex=0.8, pt.cex=1)
-```
+<!-- colors_border <- c("black", "grey49",  "#1B9E77", "#D95F02" ,"#7570B3") -->
+
+<!-- fmsb::radarchart(p3[,c(1, 14:2)], xpd = TRUE, -->
+<!--                  pcol=colors_border , plwd=2 , plty=1,cex.main = 0.9, -->
+<!--                  cglcol="grey", cglty=1, axislabcol="black", cglwd=0.8, -->
+<!--                  vlcex=0.8, title = "Environmental Justice Vulnerabilty in Top Commercial Fishing Communities (Mid-Atlantic)", title.size = 0.7) -->
+<!-- legend(x="top",legend = rownames(p3[-c(1,2),]), bty = "n",  pch=20 , horiz = TRUE,  -->
+<!--       col = colors_border, text.col = "black", cex=0.8, pt.cex=1) -->
+<!-- ``` -->
 
 
-```{r commercial-EJ}
+```{r commercial-EJ, fig.cap="Environmental justice indicators (Poverty Index, population composition index, and personal disruption index) for top commercial fishing communities in Mid-Altantic."}
 knitr::include_graphics(file.path(image.dir, "EJ_Commercial_MAB.png"))
 
 ```
@@ -1140,7 +1143,7 @@ rec_div_catch
 
 #### Recreational Engagement and Reliance
 
-```{r recreational-engagement, message=F, fig.cap= "Recreational engagement and reliance for the top top recreational fishing communities in the Mid-atlantic. (* Scored high (1.00 and above) for both recreational engagement and reliance indicators)"}
+```{r recreational-engagement, message=F, fig.cap= "Recreational engagement, reliance and environmental justice vulnerability for the top recreational fishing communities in the Mid-atlantic. (* Scored high (1.00 and above) for both recreational engagement and reliance indicators)"}
 
 com<-ecodata::engagement %>% 
   dplyr::filter(Region == "MAB", 
@@ -1182,39 +1185,39 @@ com2<-com %>%
 
 #### Environmental Justice Spider
 
-```{r recreational-EJ2, fig.cap="Environmental Justice indiciators (PDT =Personal Disruption Index, PCI =Population Composition Index, PI = Poverty Index) - Use Changhua's version below ", fig.asp=1}
-p1<- ecodata::engagement %>%
-  dplyr::filter(Region == "MAB",
-                Fishery == "Recreational") %>%
-  dplyr::arrange(desc(Eng)) %>% 
-  dplyr::select(Community, PDI ,
-                PCI, PI)  %>%
-  dplyr::rename("PovertyIndex" = PI, 
-                "PersonalDistributionIndex" = PDI, 
-                "PopulationCompositionIndex" = PCI) %>% 
-  dplyr::mutate(Community = stringr::str_remove(Community, pattern = (" ")),
-                Community = stringr::str_remove(Community, pattern = (" ")),
-                Community = stringr::str_remove(Community, pattern = (" ")), 
-                Community = stringr::str_remove(Community, pattern = (",")), 
-                Community = stringr::str_remove(Community, pattern = ("-")),
-                Community = stringr::str_remove(Community, pattern = ("/"))) %>% 
-  tibble::column_to_rownames(var="Community")
-  
-p2<- t(p1)
-p2<- rbind(rep(1.5, 14) , rep(0, 14), std1 = rep(1, 14), std0.5 = rep(0.5, 14), p2) 
-p3<- data.frame(p2) 
+<!-- ```{r recreational-EJ2, fig.cap="Environmental Justice indiciators (PDT =Personal Disruption Index, PCI =Population Composition Index, PI = Poverty Index) - Use Changhua's version below ", fig.asp=1} -->
+<!-- p1<- ecodata::engagement %>% -->
+<!--   dplyr::filter(Region == "MAB", -->
+<!--                 Fishery == "Recreational") %>% -->
+<!--   dplyr::arrange(desc(Eng)) %>%  -->
+<!--   dplyr::select(Community, PDI , -->
+<!--                 PCI, PI)  %>% -->
+<!--   dplyr::rename("PovertyIndex" = PI,  -->
+<!--                 "PersonalDistributionIndex" = PDI,  -->
+<!--                 "PopulationCompositionIndex" = PCI) %>%  -->
+<!--   dplyr::mutate(Community = stringr::str_remove(Community, pattern = (" ")), -->
+<!--                 Community = stringr::str_remove(Community, pattern = (" ")), -->
+<!--                 Community = stringr::str_remove(Community, pattern = (" ")),  -->
+<!--                 Community = stringr::str_remove(Community, pattern = (",")),  -->
+<!--                 Community = stringr::str_remove(Community, pattern = ("-")), -->
+<!--                 Community = stringr::str_remove(Community, pattern = ("/"))) %>%  -->
+<!--   tibble::column_to_rownames(var="Community") -->
 
-colors_border <- c("black", "grey49",  "#1B9E77", "#D95F02" ,"#7570B3")
+<!-- p2<- t(p1) -->
+<!-- p2<- rbind(rep(1.5, 14) , rep(0, 14), std1 = rep(1, 14), std0.5 = rep(0.5, 14), p2)  -->
+<!-- p3<- data.frame(p2)  -->
 
-fmsb::radarchart(p3, xpd = TRUE,
-                 pcol=colors_border , plwd=2 , plty=1,cex.main = 0.9,
-                 cglcol="grey", cglty=1, axislabcol="black", cglwd=0.8,
-                 vlcex=0.8, title = "Environmental Justice Vulnerabilty in Top Recreational Fishing Communities (Mid-Atlantic)", title.size = 0.7)
-legend(x=1, y = 1.3,legend = rownames(p3[-c(1,2),]), bty = "n",  pch=20 ,
-      col = colors_border, text.col = "black", cex=0.8, pt.cex=1)
-```
+<!-- colors_border <- c("black", "grey49",  "#1B9E77", "#D95F02" ,"#7570B3") -->
 
-```{r recreational-EJ}
+<!-- fmsb::radarchart(p3, xpd = TRUE, -->
+<!--                  pcol=colors_border , plwd=2 , plty=1,cex.main = 0.9, -->
+<!--                  cglcol="grey", cglty=1, axislabcol="black", cglwd=0.8, -->
+<!--                  vlcex=0.8, title = "Environmental Justice Vulnerabilty in Top Recreational Fishing Communities (Mid-Atlantic)", title.size = 0.7) -->
+<!-- legend(x=1, y = 1.3,legend = rownames(p3[-c(1,2),]), bty = "n",  pch=20 , -->
+<!--       col = colors_border, text.col = "black", cex=0.8, pt.cex=1) -->
+<!-- ``` -->
+
+```{r recreational-EJ, fig.cap="Environmental justice indicators (Poverty Index, population composition index, and personal disruption index) for top recreational fishing communities in Mid-Atlantic."}
 knitr::include_graphics(file.path(image.dir, "EJ_Recreational_MAB.png"))
 
 ```
@@ -1460,26 +1463,28 @@ df.symbol <- ecodata::wind_port %>% filter(EPU == "MAB",
   dplyr::select(City, EJ, gentrification) %>% 
   pivot_longer(cols = c(EJ, gentrification), names_to = "Variable") %>% 
   filter(!value == "NA") %>% 
-  dplyr::mutate(symbol = recode(Variable, EJ = -3, gentrification = -7))
+  dplyr::mutate(symbol = recode(Variable, EJ = -7, gentrification = -3), 
+                Variable = recode(Variable,"EJ"= "Mid-High to High EJ Concerns" , 
+                                  "gentrification" ="Mid-High to High Gentrificaiton Concerns"))
 
-df.all<- ecodata::wind_port %>% filter(EPU == "MAB") %>%
-  pivot_wider( names_from = Var, values_from = Value) %>%
-  dplyr::mutate(ordering = total_rev) %>% 
-  pivot_longer(cols = c(wea_rev, total_rev), names_to="Var", values_to = "Value") %>% 
-  dplyr::arrange(desc(ordering)) %>%
-  dplyr::mutate(City = factor(City, levels = unique(City)),  
-                Value = Value/1000000)
-p1<-ggplot2::ggplot()+
-  ggplot2::geom_bar(data = df.all, aes(fill = Var, y = reorder(City, ordering), x = Value), stat="identity" )+
-  ggplot2::theme(legend.position = "bottom", 
-                 legend.title = element_blank())+
-  geom_point(data = df.symbol, aes(x = symbol,y = City, shape = Variable)) +
-  #scale_shape_manual(values = c(21, 24)) +
-  ggplot2::ggtitle("Port Revenue from WEA")+
-  ggplot2::xlab(expression("Port Revenue (10"^6*"dollars)"))+
-  ggplot2::ylab(element_blank())+
-  scale_fill_discrete(name = "", labels = c("total revenue", "revenue from WEA"))+
-  ecodata::theme_ts()
+# df.all<- ecodata::wind_port %>% filter(EPU == "MAB") %>%
+#   pivot_wider( names_from = Var, values_from = Value) %>%
+#   dplyr::mutate(ordering = total_rev) %>% 
+#   pivot_longer(cols = c(wea_rev, total_rev), names_to="Var", values_to = "Value") %>% 
+#   dplyr::arrange(desc(ordering)) %>%
+#   dplyr::mutate(City = factor(City, levels = unique(City)),  
+#                 Value = Value/1000000)
+# p1<-ggplot2::ggplot()+
+#   ggplot2::geom_bar(data = df.all, aes(fill = Var, y = reorder(City, ordering), x = Value), stat="identity" )+
+#   ggplot2::theme(legend.position = "bottom", 
+#                  legend.title = element_blank())+
+#   geom_point(data = df.symbol, aes(x = symbol,y = City, shape = Variable)) +
+#   #scale_shape_manual(values = c(21, 24)) +
+#   ggplot2::ggtitle("Port Revenue from WEA")+
+#   ggplot2::xlab(expression("Port Revenue (10"^6*"dollars)"))+
+#   ggplot2::ylab(element_blank())+
+#   scale_fill_discrete(name = "", labels = c("total revenue", "revenue from WEA"))+
+#   ecodata::theme_ts()
 
 # Percentage plot
 df.all.perc<- ecodata::wind_port %>% filter(EPU == "MAB") %>%
@@ -1495,22 +1500,26 @@ p2<-ggplot2::ggplot()+
   ggplot2::geom_bar(data = df.all.perc, aes(fill = Var, y = reorder(City, ordering), x = Value), stat="identity" )+
   ggplot2::theme(legend.position = "bottom", 
                  legend.title = element_blank(), 
-                 axis.text.y=element_blank())+
-  #geom_point(data = df.symbol, aes(x = symbol,y = City, shape = Variable)) +
-  #scale_shape_manual(values = c(21, 24)) +
-  ggplot2::ggtitle("")+
+                 legend.box="vertical", legend.margin=margin())+
+  ggplot2::geom_point(data = df.symbol, aes(x = symbol,y = City, shape = Variable)) +
+  scale_shape_manual(values = c(17, 16)) +
+  ggplot2::ggtitle("Port Revenue from Wind Energy Area")+
   ggplot2::xlab(expression("Port Revenue (%)"))+
   ggplot2::ylab(element_blank())+
-  scale_fill_discrete(name = "", labels = c("total revenue", "revenue from WEA"))+
+  scale_fill_discrete(name = "", 
+                      labels = c("Total Revenue", "Revenue from WEA"))+
   ecodata::theme_ts()
+  # guides(fill = guide_legend(nrow = 2), 
+  #        point = guide_legend(nrow = 2)) 
 
 
+p2
 
-ggpubr::ggarrange(p1, p2,
-                  ncol = 2, 
-                   common.legend = TRUE,
-                  legend = "bottom", 
-                   widths = c(3, 1.5))
+# ggpubr::ggarrange(p1, p2,
+#                   ncol = 2, 
+#                    common.legend = TRUE,
+#                   legend = "bottom", 
+#                    widths = c(3, 1.5))
 
 ```
 

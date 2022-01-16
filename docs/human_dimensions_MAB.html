@@ -341,21 +341,48 @@ Oyster aquaculture production in pieces.
 <div id="engagement-and-reliance" class="section level4">
 <h4>Engagement and reliance</h4>
 <div class="figure" style="text-align: center">
-<img src="human_dimensions_MAB_files/figure-html/commercial-engagement-1.png" alt="Commercial engagement and reliance for the top top commercial fishing communities in the Mid-Atlantic. (* Scored high (1.00 and above) for both commercial engagement and reliance indicators)" width="672" />
+<img src="human_dimensions_MAB_files/figure-html/commercial-engagement-1.png" alt="Commercial engagement, reliance and environmental justicve vulnerability for the top commercial fishing communities in the Mid-Atlantic. (* Scored high (1.00 and above) for both commercial engagement and reliance indicators)" width="672" />
 <p class="caption">
-Commercial engagement and reliance for the top top commercial fishing communities in the Mid-Atlantic. (* Scored high (1.00 and above) for both commercial engagement and reliance indicators)
+Commercial engagement, reliance and environmental justicve vulnerability for the top commercial fishing communities in the Mid-Atlantic. (* Scored high (1.00 and above) for both commercial engagement and reliance indicators)
 </p>
 </div>
 </div>
 <div id="environmental-justice-spider" class="section level4">
 <h4>Environmental Justice Spider</h4>
+<!-- ```{r commercial-EJ2, fig.cap="Environmental Justice indiciators (PDT =Personal Disruption Index, PCI =Population Composition Index, PI = Poverty Index) - Use Changhua's version below ", fig.asp=1} -->
+<!-- p1<- ecodata::engagement %>% -->
+<!--   dplyr::filter(Region == "MAB", -->
+<!--                 Fishery == "Commercial") %>% -->
+<!--   dplyr::arrange(desc(Eng)) %>%  -->
+<!--   dplyr::select(Community, PDI , -->
+<!--                 PCI, PI)  %>% -->
+<!--   dplyr::rename("PovertyIndex" = PI,  -->
+<!--                 "PersonalDistributionIndex" = PDI,  -->
+<!--                 "PopulationCompositionIndex" = PCI) %>%  -->
+<!--   dplyr::mutate(Community = stringr::str_remove(Community, pattern = (" ")), -->
+<!--                 Community = stringr::str_remove(Community, pattern = (" ")), -->
+<!--                 Community = stringr::str_remove(Community, pattern = (" ")),  -->
+<!--                 Community = stringr::str_remove(Community, pattern = (",")),  -->
+<!--                 Community = stringr::str_remove(Community, pattern = ("-")), -->
+<!--                 Community = stringr::str_remove(Community, pattern = ("/"))) %>%  -->
+<!--   tibble::column_to_rownames(var="Community") -->
+<!-- p2<- t(p1) -->
+<!-- p2<- rbind(rep(4, 14) , rep(0, 14), std1 = rep(1, 14), std0.5 = rep(0.5, 14), p2)  -->
+<!-- p3<- data.frame(p2)  -->
+<!-- colors_border <- c("black", "grey49",  "#1B9E77", "#D95F02" ,"#7570B3") -->
+<!-- fmsb::radarchart(p3[,c(1, 14:2)], xpd = TRUE, -->
+<!--                  pcol=colors_border , plwd=2 , plty=1,cex.main = 0.9, -->
+<!--                  cglcol="grey", cglty=1, axislabcol="black", cglwd=0.8, -->
+<!--                  vlcex=0.8, title = "Environmental Justice Vulnerabilty in Top Commercial Fishing Communities (Mid-Atlantic)", title.size = 0.7) -->
+<!-- legend(x="top",legend = rownames(p3[-c(1,2),]), bty = "n",  pch=20 , horiz = TRUE,  -->
+<!--       col = colors_border, text.col = "black", cex=0.8, pt.cex=1) -->
+<!-- ``` -->
 <div class="figure" style="text-align: center">
-<img src="human_dimensions_MAB_files/figure-html/commercial-EJ2-1.png" alt="Environmental Justice indiciators (PDT =Personal Disruption Index, PCI =Population Composition Index, PI = Poverty Index) - Use Changhua's version below " width="672" />
+<img src="images/EJ_Commercial_MAB.png" alt="Environmental justice indicators (Poverty Index, population composition index, and personal disruption index) for top commercial fishing communities in Mid-Altantic." width="418" />
 <p class="caption">
-Environmental Justice indiciators (PDT =Personal Disruption Index, PCI =Population Composition Index, PI = Poverty Index) - Use Changhua’s version below
+Environmental justice indicators (Poverty Index, population composition index, and personal disruption index) for top commercial fishing communities in Mid-Altantic.
 </p>
 </div>
-<p><img src="images/EJ_Commercial_MAB.png" width="418" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="recreational-fisheries" class="section level3 tabset tabset-fade">
@@ -383,21 +410,48 @@ Recreational effort, recreational effort diversity, number of recreational angle
 <div id="recreational-engagement-and-reliance" class="section level4">
 <h4>Recreational Engagement and Reliance</h4>
 <div class="figure" style="text-align: center">
-<img src="human_dimensions_MAB_files/figure-html/recreational-engagement-1.png" alt="Recreational engagement and reliance for the top top recreational fishing communities in the Mid-atlantic. (* Scored high (1.00 and above) for both recreational engagement and reliance indicators)" width="672" />
+<img src="human_dimensions_MAB_files/figure-html/recreational-engagement-1.png" alt="Recreational engagement, reliance and environmental justice vulnerability for the top recreational fishing communities in the Mid-atlantic. (* Scored high (1.00 and above) for both recreational engagement and reliance indicators)" width="672" />
 <p class="caption">
-Recreational engagement and reliance for the top top recreational fishing communities in the Mid-atlantic. (* Scored high (1.00 and above) for both recreational engagement and reliance indicators)
+Recreational engagement, reliance and environmental justice vulnerability for the top recreational fishing communities in the Mid-atlantic. (* Scored high (1.00 and above) for both recreational engagement and reliance indicators)
 </p>
 </div>
 </div>
 <div id="environmental-justice-spider-1" class="section level4">
 <h4>Environmental Justice Spider</h4>
+<!-- ```{r recreational-EJ2, fig.cap="Environmental Justice indiciators (PDT =Personal Disruption Index, PCI =Population Composition Index, PI = Poverty Index) - Use Changhua's version below ", fig.asp=1} -->
+<!-- p1<- ecodata::engagement %>% -->
+<!--   dplyr::filter(Region == "MAB", -->
+<!--                 Fishery == "Recreational") %>% -->
+<!--   dplyr::arrange(desc(Eng)) %>%  -->
+<!--   dplyr::select(Community, PDI , -->
+<!--                 PCI, PI)  %>% -->
+<!--   dplyr::rename("PovertyIndex" = PI,  -->
+<!--                 "PersonalDistributionIndex" = PDI,  -->
+<!--                 "PopulationCompositionIndex" = PCI) %>%  -->
+<!--   dplyr::mutate(Community = stringr::str_remove(Community, pattern = (" ")), -->
+<!--                 Community = stringr::str_remove(Community, pattern = (" ")), -->
+<!--                 Community = stringr::str_remove(Community, pattern = (" ")),  -->
+<!--                 Community = stringr::str_remove(Community, pattern = (",")),  -->
+<!--                 Community = stringr::str_remove(Community, pattern = ("-")), -->
+<!--                 Community = stringr::str_remove(Community, pattern = ("/"))) %>%  -->
+<!--   tibble::column_to_rownames(var="Community") -->
+<!-- p2<- t(p1) -->
+<!-- p2<- rbind(rep(1.5, 14) , rep(0, 14), std1 = rep(1, 14), std0.5 = rep(0.5, 14), p2)  -->
+<!-- p3<- data.frame(p2)  -->
+<!-- colors_border <- c("black", "grey49",  "#1B9E77", "#D95F02" ,"#7570B3") -->
+<!-- fmsb::radarchart(p3, xpd = TRUE, -->
+<!--                  pcol=colors_border , plwd=2 , plty=1,cex.main = 0.9, -->
+<!--                  cglcol="grey", cglty=1, axislabcol="black", cglwd=0.8, -->
+<!--                  vlcex=0.8, title = "Environmental Justice Vulnerabilty in Top Recreational Fishing Communities (Mid-Atlantic)", title.size = 0.7) -->
+<!-- legend(x=1, y = 1.3,legend = rownames(p3[-c(1,2),]), bty = "n",  pch=20 , -->
+<!--       col = colors_border, text.col = "black", cex=0.8, pt.cex=1) -->
+<!-- ``` -->
 <div class="figure" style="text-align: center">
-<img src="human_dimensions_MAB_files/figure-html/recreational-EJ2-1.png" alt="Environmental Justice indiciators (PDT =Personal Disruption Index, PCI =Population Composition Index, PI = Poverty Index) - Use Changhua's version below " width="672" />
+<img src="images/EJ_Recreational_MAB.png" alt="Environmental justice indicators (Poverty Index, population composition index, and personal disruption index) for top recreational fishing communities in Mid-Atlantic." width="419" />
 <p class="caption">
-Environmental Justice indiciators (PDT =Personal Disruption Index, PCI =Population Composition Index, PI = Poverty Index) - Use Changhua’s version below
+Environmental justice indicators (Poverty Index, population composition index, and personal disruption index) for top recreational fishing communities in Mid-Atlantic.
 </p>
 </div>
-<p><img src="images/EJ_Recreational_MAB.png" width="419" style="display: block; margin: auto;" /></p>
 </div>
 <div id="recreational-shark-landings" class="section level4">
 <h4>Recreational Shark Landings</h4>
