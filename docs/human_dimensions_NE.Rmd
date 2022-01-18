@@ -1216,7 +1216,7 @@ rec_landings <- ggplot2::ggplot(data = landings_rec)+
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   # Plotly can not use "expression" so follow notes below
-  ggplot2::ylab(expression("Landings (N x 10"^6*")")) + # Use this for HTML version
+  ggplot2::ylab(expression("Landings (10"^6*" lbs)")) + # Use this for HTML version
   
   ggplot2::xlab(element_blank())+
   #ggplot2::ylab(expression("Fish caught (10"^6"*n)")) + #Use this for SOEs and anything pdf 
@@ -1728,7 +1728,7 @@ ecodata::ppr %>%
 <!--   ecodata::theme_title() -->
 <!-- ``` -->
 
-```{r wind-port, fig.cap="Total (left) and percent (right) of New England port revenue and social vulnerability indicators from wind energy areas."}
+```{r wind-port, fig.cap="Percent of port revenue from Wind Energy Areas(WEA) in descending order of most to least port revenue from WEA."}
 
 df.symbol <- ecodata::wind_port %>% filter(EPU == "NE", 
                                            Value >= 3) %>% 
@@ -1745,7 +1745,7 @@ df.symbol <- ecodata::wind_port %>% filter(EPU == "NE",
 # Percentage plot
 df.all.perc<- ecodata::wind_port %>% filter(EPU == "NE") %>%
   pivot_wider( names_from = Var, values_from = Value) %>%
-  dplyr::mutate(ordering = total_rev, 
+  dplyr::mutate(ordering = wea_rev, 
                 perc.wea = wea_rev/total_rev * 100, 
                 perc.total = 100-perc.wea) %>% 
   pivot_longer(cols = c(perc.wea, perc.total, total_rev), names_to="Var", values_to = "Value") %>% 
