@@ -13,8 +13,7 @@ com2<-com %>%
                       label = Community,
                       color = EJRating), show.legend = FALSE, direction = "both", box.padding = 0.3, size = 3)+
   ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
-                     breaks = com$EJRating, 
-                     direction = -1) +
+                     breaks = com$EJRating) +
   xlim(-1,13)+
   ylim(-1,5.5)+
   theme(legend.position=c(0.75, 0.85), 

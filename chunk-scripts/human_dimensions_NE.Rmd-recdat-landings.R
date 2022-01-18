@@ -23,7 +23,7 @@ rec_landings <- ggplot2::ggplot(data = landings_rec)+
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   # Plotly can not use "expression" so follow notes below
-  ggplot2::ylab(expression("Landings (N x 10"^6*")")) + # Use this for HTML version
+  ggplot2::ylab(expression("Landings (10"^6*" lbs)")) + # Use this for HTML version
   
   ggplot2::xlab(element_blank())+
   #ggplot2::ylab(expression("Fish caught (10"^6"*n)")) + #Use this for SOEs and anything pdf 

@@ -29,6 +29,7 @@ ecodata::abc.acl %>%
   geom_point(aes(x = Time, y = Value))+
   geom_point(data = mean, aes(x = Time, y = val), color = "red")+
   geom_line(data = mean, aes(x = Time, y = val), color = "red")+
+  geom_hline(yintercept = 1, linetype='dashed', col = 'gray')+
   ggplot2::ggtitle("MAFMC Catch per ABC/ACL")+
   ggplot2::ylab(expression("Ratio of Catch to ABC/ACL"))+
   ggplot2::theme(legend.title = element_blank())+
