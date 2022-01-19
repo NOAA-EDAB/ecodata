@@ -1733,6 +1733,7 @@ ecodata::ppr %>%
 df.symbol <- ecodata::wind_port %>% filter(EPU == "NE", 
                                            Value >= 3) %>% 
    pivot_wider( names_from = Var, values_from = Value) %>%
+  dplyr::mutate(City = paste0(City, State)) %>% 
   dplyr::select(City, EJ, gentrification) %>% 
   pivot_longer(cols = c(EJ, gentrification), names_to = "Variable") %>% 
   filter(!value == "NA") %>% 
@@ -1747,7 +1748,8 @@ df.all.perc<- ecodata::wind_port %>% filter(EPU == "NE") %>%
   pivot_wider( names_from = Var, values_from = Value) %>%
   dplyr::mutate(ordering = wea_rev, 
                 perc.wea = wea_rev/total_rev * 100, 
-                perc.total = 100-perc.wea) %>% 
+                perc.total = 100-perc.wea, 
+                City = paste0(City, State)) %>% 
   pivot_longer(cols = c(perc.wea, perc.total, total_rev), names_to="Var", values_to = "Value") %>% 
   dplyr::arrange(desc(ordering)) %>%
   dplyr::mutate(City = factor(City, levels = unique(City))) %>% 
@@ -1772,209 +1774,6 @@ p2<-ggplot2::ggplot()+
 p2
 ```
 
-
-### Total ABC/ACL
-```{r abc-acl, fig.cap = "Catch divided by ABC/ACL for MAFMC managed fisheies. Chub mackerel removed due extremely low catch. Outliers = Recreational Black Sea Bass.  Possible management success story? - See comment in google doc."}
-mean<- ecodata::abc.acl %>% 
-  #group_by(Time) %>% 
-  tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>% 
-  pivot_wider(names_from = Var, values_from = Value) %>% 
-  dplyr::rename("abc.acl" = " ABC/ACL", 
-                "Catch" = " Catch") %>% 
-  dplyr::mutate(Value = Catch/abc.acl, 
-                Time = as.character(Time)) %>% 
-  filter(!Value == "NA", 
-         !Fishery == "Chub mackerel ") %>%
-  dplyr::group_by(Time) %>% 
-  dplyr::summarise(val = mean(Value)) %>% 
-  dplyr::ungroup() %>% 
-  dplyr::mutate(Time = as.numeric(Time))
-
-ecodata::abc.acl %>% 
-  #group_by(Time) %>% 
-  tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>% 
-  pivot_wider(names_from = Var, values_from = Value) %>% 
-  dplyr::rename("abc.acl" = " ABC/ACL", 
-                "Catch" = " Catch") %>% 
-  dplyr::mutate(Value = Catch/abc.acl, 
-                Time = as.numeric(Time)) %>% 
-  filter(!Value == "NA", 
-         !Fishery == "Chub mackerel ") %>% 
-  ggplot2::ggplot()+
-  #geom_boxplot()+
-  geom_point(aes(x = Time, y = Value))+
-  geom_point(data = mean, aes(x = Time, y = val), color = "red")+
-  geom_line(data = mean, aes(x = Time, y = val), color = "red")+
-  ggplot2::ggtitle("MAFMC Catch per ABC/ACL")+
-  ggplot2::ylab(expression("Ratio of Catch to ABC/ACL"))+
-  ggplot2::theme(legend.title = element_blank())+
-  ggplot2::xlab(element_blank())+
-  ecodata::theme_ts()+
-  ecodata::theme_title()
-
-
-```
-
-
-## Shelfwide Indicators
-
-### HMS Stock Status
-
-
-```{r hms-stock-status, echo=FALSE, warning=F, fig.cap = paste0("Summary of single species status for HMS stocks.")} 
-
-y.max <- 5
-x.max <- 2
-#Get data, spread for plotting, and filter
-unknown <- data.frame(text = c("Unknown Status", "ATL SBH", "SPF", "WA BFT"),
-                      x = rep(0.9*x.max,4), y = seq(0.88*y.max,3.8,-0.2))
-
-
-
-stock_status<-ecodata::hms_stock_status %>% 
-  tidyr::spread(.,Var,Value) %>% 
-  tidyr::separate(stock, c("species_abr", "spp"), ":") %>% 
-  dplyr::group_by(spp) %>% 
-  dplyr::mutate(score = case_when(
-    (B.Bmsy <0.5) ~"a",
-    (B.Bmsy == 0.5) ~"a", 
-    (F.Fmsy == 1) ~ "a",
-    (F.Fmsy >1) ~ "a", 
-    (F.Fmsy < 1 & B.Bmsy > 0.5 & B.Bmsy < 1) ~ "b",
-    (F.Fmsy < 1 & B.Bmsy > 1) ~ "c"))
-#Plot constants
-
-
-#Plotting code
-ggplot2::ggplot(data = stock_status) +
-  ggplot2::geom_vline(xintercept = 1, linetype = "dotted", color = "grey60")+
-  ggplot2::geom_vline(xintercept = 0.5, linetype = "dashed", color = "grey60")+
-  ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "grey60") +
-  ggplot2::geom_point(aes(x = B.Bmsy,
-                          y = F.Fmsy,
-                          color = stock_status$score)) +
-  ggrepel::geom_text_repel(aes(x = B.Bmsy, #geom_text_repel auto-jitters text around points
-                               y = F.Fmsy,
-                               label = species_abr,
-                               color = stock_status$score), show.legend = FALSE,
-                           nudge_y = -0.01, nudge_x = 0.05) +
-  ggplot2::ylim(0,y.max) +
-  ggplot2::xlim(0,x.max*1.1) +
-  ggplot2::geom_text(data = unknown, aes(x = x, y = y, label = text), #Custom legend for unknown stock status
-                     size = c(4.75,rep(4,3))) +
-  ggplot2::annotate(geom="text", x=0.43, y=5, label="ATL SBN (F/Fmsy = 22.5)",
-                    color="#1B9E77")+
-  ggplot2::annotate("rect", xmin = 0.8*x.max,
-                    xmax = x.max,
-                    ymin = 0.65*y.max,
-                    ymax = 0.90*y.max,
-                    alpha = 0.1) +
-  ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
-                              breaks = stock_status$score) +
-  ggplot2::xlab(expression(~B/B[msy])) +
-  ggplot2::ylab(expression(~F/F[msy])) +
-  ggplot2::guides(color = FALSE) +
-  ecodata::theme_ts()
-```
-
-### Proposed Wind Development
-
-<!-- ```{r wind-dev-cumul, fig.cap = ""} -->
-
-<!-- #knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/All_2021119-01.jpg") -->
-<!-- knitr::include_graphics(file.path(image.dir, "All_2021128_needsgraph-01.jpg")) -->
-<!-- ``` -->
-
-<!-- ```{r wind-dev-cumul-MAB, fig.cap = ""} -->
-
-<!-- knitr::include_graphics(file.path(image.dir, "MidAtlantic_2021128-01.jpg")) -->
-<!-- #knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/MidAtlantic_2021119-01.jpg") -->
-<!-- ``` -->
-
-<!-- ```{r wind-dev-NE, fig.cap = ""} -->
-
-<!-- #knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/NE2021119.jpg") -->
-<!-- knitr::include_graphics(file.path(image.dir, "NE2021128-01.jpg")) -->
-<!-- ``` -->
-
-<!-- ```{r wind-dev-survey, fig.cap = ""} -->
-
-<!-- knitr::include_graphics(file.path(image.dir, "SurveyMap202133.png")) -->
-<!-- #knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/SurveysWindFarmAreas_20201229.jpg") -->
-<!-- ``` -->
-
-```{r wind-proposed-dev, eval = T, echo = F, fig.cap='', out.width='80%'}
- ecodata::wind_dev_speed %>% mutate(Value = as.numeric(Value)/1000000, 
-                                                Time = as.integer(Time)) %>% 
-  dplyr::filter(Var == "Tot_Area_Acres") %>% 
-  ggplot2::ggplot()+
-  ggplot2::geom_point(aes(x = Time, y = Value, color = Report_year))+
-  ggplot2::geom_line(aes(x = Time, y = Value, color = Report_year))+
-  #ggplot2::geom_point(aes(x = Time, y = `2022`))+
-  #ggplot2::geom_line(aes(x = Time, y = `2022`))+
-  ggplot2::ylab("Total Area (Million Acres)")+
-  ggplot2::xlab("Project Construction Year")+
-  ggplot2::ggtitle("Proposed Wind Development")+
-  ecodata::theme_ts()+
-  #theme(axis.text.x = element_text(angle = 45, hjust = 1))+
-  scale_x_continuous(breaks=c(2020,2022, 2024,2026, 2028, 2030))+
-  ecodata::theme_title()+
-  scale_colour_discrete(name="Year Reported", labels=c("2021","2022"))+
-  theme(legend.position = c(0.8, 0.2))
-
-
-```
-
-### Landings and Revenue in Wind Energy Areas
-```{r wea-landings-rev}
-dt<- ecodata::wea_landings_rev[1:10, 1:3] %>% 
-  dplyr::rename("Maximum Percent Total Annual Regional Species Landings"="perc_landings",
-    "Maximum Percent Total Annual Regional Species Revenue"="perc_revenue" ) 
-kable(dt, caption = "Top ten species Landings and Revenue from Wind Energy Areas.") %>% 
-  kable_classic(full_width = F, html_font = "Cambria")
-
-```
-
-<!-- ### Wind Sites and Occurrence  -->
-
-<!-- <span style="color: red;">NO NEW DATA</span> -->
-
-<!-- These are the five species most likely to occur in the lease areas.  -->
-
-<!-- ```{r wind-occupancy, eval = T, echo = F, fig.cap='', out.width='80%'} -->
-<!-- wind1 <- ecodata::wind_occupancy -->
-<!-- wind1$trend<- ifelse(wind1$Trend == "pos",  -->
-<!--                     "$\\nearrow$", -->
-<!--                     ifelse(wind1$Trend == "neg", -->
-<!--                     "$\\searrow$",  -->
-<!--                     " "))  -->
-<!-- wind2<-wind1 %>% dplyr::select(Area, Season, Species, trend) -->
-<!-- names<-c("Area", "Season", "Species", "trend") -->
-<!-- bnew<-c("Area.1", "Season.1", "Species.1", "trend.1") -->
-<!-- cnew<-c("Area.2", "Season.2", "Species.2", "trend.2") -->
-<!-- dnew<-c("Area.3", "Season.3", "Species.3", "trend.3") -->
-<!-- enew<-c("Area.4", "Season.4", "Species.4", "trend.4") -->
-<!-- a<-wind2 %>% dplyr::filter(Area == "Existing-North")  -->
-<!-- b<-wind2 %>% dplyr::filter(Area == "Proposed-North") %>%  -->
-<!--   dplyr::rename_at(vars(names), ~ bnew) -->
-<!-- c<-wind2 %>% dplyr::filter(Area == "Existing-Mid")%>%  -->
-<!--   dplyr::rename_at(vars(names), ~ cnew) -->
-<!-- d<-wind2 %>% dplyr::filter(Area == "Proposed-Mid")%>%  -->
-<!--   dplyr::rename_at(vars(names), ~ dnew) -->
-<!-- e<-wind2 %>% dplyr::filter(Area == "Existing-South")%>%  -->
-<!--   dplyr::rename_at(vars(names), ~ enew) -->
-<!-- all<- a %>% cbind(b,c,d,e) %>%  -->
-<!--   dplyr::select(2:4,7:8,11:12,15:16,19:20) -->
-
-<!-- kable(all, escape = FALSE, -->
-<!--       col.names = c("Season", "Species", "Trend", "Species", "Trend", "Species","Trend", "Species","Trend", "Species", "Trend"), -->
-<!--       caption = "Species with highest probability of occupancy species each season and area, with observed trends", -->
-<!--       booktabs = T) %>% -->
-<!--     add_header_above(c(" " = 1, "Existing - North" = 2, "Proposed - North" = 2,  -->
-<!--                      "Existing - Mid" = 2, "Proposed - Mid" = 2,  -->
-<!--                      "Existing - South" = 2)) %>% -->
-<!--   kable_styling(latex_options = c("hold_position", "scale_down"))  -->
-<!-- ``` -->
 
 
 
