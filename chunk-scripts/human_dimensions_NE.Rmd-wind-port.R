@@ -2,6 +2,7 @@
 df.symbol <- ecodata::wind_port %>% filter(EPU == "NE", 
                                            Value >= 3) %>% 
    pivot_wider( names_from = Var, values_from = Value) %>%
+  dplyr::mutate(City = paste0(City, State)) %>% 
   dplyr::select(City, EJ, gentrification) %>% 
   pivot_longer(cols = c(EJ, gentrification), names_to = "Variable") %>% 
   filter(!value == "NA") %>% 
@@ -16,7 +17,8 @@ df.all.perc<- ecodata::wind_port %>% filter(EPU == "NE") %>%
   pivot_wider( names_from = Var, values_from = Value) %>%
   dplyr::mutate(ordering = wea_rev, 
                 perc.wea = wea_rev/total_rev * 100, 
-                perc.total = 100-perc.wea) %>% 
+                perc.total = 100-perc.wea, 
+                City = paste0(City, State)) %>% 
   pivot_longer(cols = c(perc.wea, perc.total, total_rev), names_to="Var", values_to = "Value") %>% 
   dplyr::arrange(desc(ordering)) %>%
   dplyr::mutate(City = factor(City, levels = unique(City))) %>% 
