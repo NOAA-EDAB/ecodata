@@ -30,4 +30,27 @@ get_aggregate_biomass <- function(save_clean = F){
     return(aggregate_biomass)
   }
 }
-get_aggregate_biomass(save_clean = T)
+get_aggregate_biomass(save_clear)
+
+surv_20_SD<-survey %>% dplyr::filter(stringr::str_detect(Var, "Standard"),
+                                     !stringr::str_detect(Var, "Apex|inshore|offshore|managed|NEFMC|MAFMC|JOINT|NA")) %>%
+  ggplot2::ggplot()+
+  geom_point(aes(x=Time, y=Value))+
+  facet_wrap(~Var)
+surv_22_SD<- ecodata::aggregate_biomass%>% dplyr::filter(stringr::str_detect(Var, "Standard"),
+                                                         !stringr::str_detect(Var, "Apex|inshore|offshore|managed|NEFMC|MAFMC|JOINT|NA")) %>%
+  ggplot2::ggplot()+
+  geom_line(aes(x=Time, y=Value))+
+  facet_wrap(~Var)
+
+
+
+
+
+
+
+
+
+
+
+

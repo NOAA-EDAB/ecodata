@@ -310,7 +310,7 @@ ggplot2::ggplot(data = landings_agg)+
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ggplot2::ggtitle("Total Landings")+
+  ggplot2::ggtitle("Total Landings *No New Data - ends in 2019")+
   ggplot2::theme(axis.title.y = element_text(size = 7))+
   ecodata::theme_ts()+
   ecodata::theme_title()
@@ -529,7 +529,8 @@ Table<- kable(ind2, col.names = c("Time", "Volume", "Price",  "Volume", "Price",
 ```{r comdat-comm-revenue,  fig.cap = "Total revenue for the region (black) and revenue from MAFMC managed species (red). \\label{comm-rev}"}
 ## Apex pred
 apex<-ecodata::hms_landings %>% 
-  dplyr::filter(stringr::str_detect(Var, "Revenue")) %>% 
+  dplyr::filter(stringr::str_detect(Var, "Revenue"), 
+                YEAR<2020) %>% 
   separate(Var, c("Var", "trash"), sep = "_") %>% 
   group_by(YEAR) %>% 
   summarise(Value = sum(Value)) %>% 
@@ -573,7 +574,7 @@ ggplot2::ggplot(data = rev_agg) +
   ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
       scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
-  ggplot2::ggtitle("Total revenue") +
+  ggplot2::ggtitle("Total Revenue *No New Data - ends in 2019") +
   ggplot2::ylab(expression("Revenue (10"^6*"USD)")) +
   ggplot2::geom_hline(aes(yintercept = hline,
                color = Status),
@@ -1507,6 +1508,32 @@ p2
 
 
 ### Total ABC/ACL
+```{r}
+ecodata::abc.acl %>% 
+  tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>% 
+  dplyr::filter(Var == " ABC/ACL") %>% 
+  group_by(Time) %>% 
+  dplyr::mutate(Value = Value/10000) %>% 
+  summarise(Value_mean = mean(Value), 
+            Value_sd = sd(Value)) %>%
+  dplyr::mutate(upper = Value_mean + Value_sd, 
+                lower = Value_mean - Value_sd) %>% 
+  ungroup() %>% 
+  ggplot2::ggplot(aes(x = Time, y=Value_mean))+
+  ggplot2::geom_ribbon(aes(x = Time, ymin = lower, ymax= upper), fill = "grey70")+
+  ggplot2::geom_point()+
+  ggplot2::geom_line()+
+  ggplot2::ggtitle("ABC/ACL for MAFMC Managed Species")+
+  ggplot2::ylab(expression("ABC/ACL (10"^4*")"))+
+  ggplot2::xlab(element_blank())+
+  ecodata::theme_ts()+
+  ecodata::theme_title()
+  
+
+```
+
+### ABC/ACL ratio to Catch
+
 ```{r abc-acl, fig.cap = "Catch divided by ABC/ACL for MAFMC managed fisheies. Chub mackerel removed due extremely low catch. Outliers = Recreational Black Sea Bass.  Possible management success story? - See comment in google doc."}
 mean<- ecodata::abc.acl %>% 
   #group_by(Time) %>% 

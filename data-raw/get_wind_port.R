@@ -12,7 +12,7 @@ wind_port_xlsx<-"SoE2022_Wind_Ports_Social Indicators - Angela Silva - NOAA Affi
 
 get_wind_port <- function(save_clean = F){
   df<- data.frame(State = c(" ME", " MA", " RI", " CT", " NY", " NJ", " MD", " VA", " NC"),
-                  EPU = c("NE", "NE", "MAB", "MAB","MAB","MAB","MAB","MAB","MAB"))
+                  EPU = c("NE", "NE", "NE", "NE","MAB","MAB","MAB","MAB","MAB"))
 
   # import data
   wind_port<-read_excel(file.path(raw.dir,wind_port_xlsx)) %>%
