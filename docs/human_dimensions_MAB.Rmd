@@ -870,8 +870,8 @@ com2<-com %>%
         legend.title = element_blank(),       
         legend.background = element_blank(),
         legend.box.background = element_rect(colour = "black"))+
-  ggplot2::xlab("Commercial Engagement Score") +
-  ggplot2::ylab("Commercial Reliance Score") +
+  ggplot2::xlab("Commercial Engagement Index") +
+  ggplot2::ylab("Commercial Reliance Index") +
   ggplot2::ggtitle("Environmental Justice in Top Commercial Fishing Communities")+
   #ggplot2::guides(color = FALSE) +
   #theme_bw()
@@ -1143,7 +1143,7 @@ rec_div_catch
 
 #### Recreational Engagement and Reliance
 
-```{r recreational-engagement, message=F, fig.cap= "Recreational engagement, reliance and environmental justice vulnerability for the top recreational fishing communities in the Mid-atlantic. (* Scored high (1.00 and above) for both recreational engagement and reliance indicators)"}
+```{r recreational-engagement, message=F, fig.cap= "Recreational engagement, reliance and environmental justice vulnerability for the top recreational fishing communities in the Mid-atlantic. (* Scored high (1.00 and above) for both recreational engagement and reliance indicators). "}
 
 com<-ecodata::engagement %>% 
   dplyr::filter(Region == "MAB", 
@@ -1167,8 +1167,8 @@ com2<-com %>%
         legend.title = element_blank(),       
         legend.background = element_blank(),
         legend.box.background = element_rect(colour = "black"))+
-  ggplot2::xlab("Recreation Engagement Score") +
-  ggplot2::ylab("Recreation Reliance Score") +
+  ggplot2::xlab("Recreation Engagement Index") +
+  ggplot2::ylab("Recreation Reliance Index") +
   ggplot2::ggtitle("Environmental Justice in Top Recreational Fishing Communities")+
   #ggplot2::guides(color = FALSE) +
   ecodata::theme_ts()+
