@@ -1407,7 +1407,7 @@ rec_div_catch
 
 #### Recreational Engagement and Social Vulnerability
 
-```{r recreational-engagement, message=F, warning = FALSE, fig.cap= "Recreational engagement, reliance and vulnerability for the top  recreational fishing communities in New England. (* Scored high (1.00 and above) for both recreational engagement and reliance indicators)"}
+```{r recreational-engagement, message=F, warning = FALSE, fig.cap= "Recreational engagement, reliance and vulnerability for the top  recreational fishing communities in New England. (* Scored high (1.00 and above) for both recreational engagement and reliance indicators). "}
 
 com<-ecodata::engagement %>% 
   dplyr::filter(Region == "NE", 
