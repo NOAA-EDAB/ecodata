@@ -554,7 +554,7 @@ chl_cci
 
 #### Seasonal chlorophyll *a* & primary production
 
-```{r chl-weekly,fig.cap = "Weekly chlorophyll concentrations and primary productivity in the Mid-Atlantic are shown for by the colored line for 2021. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
+```{r chl-weekly,fig.cap = "Weekly chlorophyll concentrations and primary productivity in the Mid-Atlantic are shown for by the colored line for 2021. The long-term mean is shown in black and shading indicates +/- 1 sample SD.  "}
 
 interp_chl_pp <- function(epu, year = 2021, Variable){
   out <- ecodata::chl_pp %>% 
@@ -587,22 +587,22 @@ interp_chl_pp <- function(epu, year = 2021, Variable){
 }
 
 MAB_chl <- interp_chl_pp(epu = "MAB", Variable = "WEEKLY_CHLOR_A_MEDIAN")
-# MAB_early<- MAB_chl %>% filter(Week.x <=26)
-# MAB_late <- MAB_chl %>% filter(Week.x >=26)
+ MAB_early<- MAB_chl %>% filter(Week.x <=18)
+ MAB_late <- MAB_chl %>% filter(Week.x >=18)
 
-MAB_chl_weekly <- ggplot2::ggplot(data = MAB_chl) +
+MAB_chl_weekly <- ggplot2::ggplot(data = MAB_early) +
   ggplot2::geom_line(aes(x = Time, y = LTM)) +
   ggplot2::geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high), 
               alpha = 0.1,
               fill = "grey1") +
-  # ggplot2::geom_line(data = MAB_late,aes(x = Time, y = LTM)) +
-  # ggplot2::geom_ribbon(data = MAB_late,aes(x = Time, ymin = sd.low, ymax = sd.high), 
-  #             alpha = 0.1,
-  #             fill = "grey1")+
+   ggplot2::geom_line(data = MAB_late,aes(x = Time, y = LTM)) +
+   ggplot2::geom_ribbon(data = MAB_late,aes(x = Time, ymin = sd.low, ymax = sd.high), 
+               alpha = 0.1,
+               fill = "grey1")+
   ggplot2::geom_line(aes(x = Time, y = Value),
             size = 1,color = "#33a02c") +
-    # ggplot2::geom_line(data = MAB_late, aes(x = Time, y = Value),
-    #         size = 1,color = "#33a02c", linetype = "dashed")+
+     ggplot2::geom_line(data = MAB_late, aes(x = Time, y = Value),
+             size = 1,color = "#33a02c", linetype = "dashed")+
   ggplot2::ggtitle(expression("Chlorophyll"~italic(a)~"")) +
   ggplot2::guides(color = F) +
   ggplot2::xlab("")+
@@ -615,22 +615,22 @@ MAB_chl_weekly <- ggplot2::ggplot(data = MAB_chl) +
   ecodata::theme_title()
 
 MAB_pp <- interp_chl_pp(epu = "MAB", Variable =  "WEEKLY_PPD_MEDIAN")
-MAB_early<- MAB_pp %>% filter(Week.x <=26)
-MAB_late <- MAB_pp %>% filter(Week.x >=26)
+MAB_early<- MAB_pp %>% filter(Week.x <=18)
+MAB_late <- MAB_pp %>% filter(Week.x >=18)
 
-MAB_pp_weekly <- ggplot2::ggplot(data = MAB_pp) +
+MAB_pp_weekly <- ggplot2::ggplot(data = MAB_early) +
   ggplot2::geom_line(aes(x = Time, y = LTM)) +
   ggplot2::geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high),
               alpha = 0.1,
               fill = "grey1") +
-  # ggplot2::geom_line(data = MAB_late,aes(x = Time, y = LTM)) +
-  # ggplot2::geom_ribbon(data = MAB_late,aes(x = Time, ymin = sd.low, ymax = sd.high), 
-  #             alpha = 0.1,
-  #             fill = "grey1")+
+   ggplot2::geom_line(data = MAB_late,aes(x = Time, y = LTM)) +
+   ggplot2::geom_ribbon(data = MAB_late,aes(x = Time, ymin = sd.low, ymax = sd.high), 
+               alpha = 0.1,
+               fill = "grey1")+
   ggplot2::geom_line(aes(x = Time, y = Value),
             size = 1,color = "#33a02c") +
-  # ggplot2::geom_line(data = MAB_late, aes(x = Time, y = Value),
-  #           size = 1,color = "#33a02c", linetype = "dashed")+
+   ggplot2::geom_line(data = MAB_late, aes(x = Time, y = Value),
+             size = 1,color = "#33a02c", linetype = "dashed")+
   ggplot2::ggtitle(expression("Primary production")) +
   #ggplot2::guides(color = F) +
   ggplot2::xlab("")+
@@ -863,25 +863,30 @@ ecodata::SAV %>%
   dplyr::filter(!Var == "Baywide", 
                 !Var == "Oligohaline", 
                 !Var == "Mesohaline") %>% 
+  dplyr::mutate(Var = recode(Var, 
+                             "Tidal" = "Upper Bay", 
+                             "Polyhaline" = "Lower Bay")) %>% 
   dplyr::mutate(Value = (Value/1000)) %>% 
-  ggplot2::ggplot(aes(x = Time, y = Value, color = Var))+
+  ggplot2::ggplot(aes(x = Time, y = Value))+
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_point()+
   ggplot2::geom_line()+
-  ecodata::geom_gls(aes(x = Time, y = Value, group = Var)) +
+  ggplot2::facet_wrap(~Var)+
+  ecodata::geom_gls(aes(x = Time, y = Value)) +
   ecodata::theme_ts()+
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"), 
         axis.title.y = element_text(angle = 90), 
         legend.title = element_blank()) +
-  ggplot2::scale_color_discrete(name = "",
-  labels = c("Brackish Water",  "Tidal Fresh"))+
+  # ggplot2::scale_color_discrete(name = "",
+  # labels = c("Lower bay",  "Upper Bay"))+
   ecodata::theme_title()+
   ggplot2::ylab(expression("Acres (10"^3*")"))+
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Submerged Aquatic Vegetation (SAV) Abundance")
+  ggplot2::ggtitle("Submerged Aquatic Vegetation (SAV) Abundance")+
+  ecodata::theme_facet()
 ```
 
 ### Zooplankton {.tabset .tabset-fade}
@@ -1277,12 +1282,12 @@ cpi<- ecodata::cold_pool %>%
   ggplot2::xlab("")+
   ecodata::theme_ts()+
   ecodata::theme_title()+
-  ggplot2::annotate("segment", x = 2022, xend = 2022, y = 0.05, yend = 2,
+  ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.05, yend = 2,
            colour = "blue", size = 0.7, arrow = arrow())+
-  ggplot2::annotate("segment", x = 2022, xend = 2022, y = -0.05, yend = -2,
+  ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -2.2,
            colour = "red", size = 0.7, arrow = arrow())+
-  ggplot2::annotate("text", x = 2019, y = 2.2, label = "Colder", size = 4,colour = "blue")+
-   ggplot2::annotate("text", x = 2019, y = -2.2, label = "Warmer",size = 4, colour = "red")
+  ggplot2::annotate("text", x = 2021, y = 2.2, label = "Colder", size = 4,colour = "blue")+
+   ggplot2::annotate("text", x = 2021, y = -2.5, label = "Warmer",size = 4, colour = "red")
 
 
   
@@ -1307,12 +1312,12 @@ ei<- ecodata::cold_pool %>%
   ggplot2::xlab("")+
   ecodata::theme_ts()+
   ecodata::theme_title()+
-  ggplot2::annotate("segment", x = 2022, xend = 2022, y = 0.05, yend = 50,
+  ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.05, yend = 50,
            colour = "blue", size = 0.70, arrow = arrow())+
-  ggplot2::annotate("segment", x = 2022, xend = 2022, y = -0.05, yend = -250,
+  ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -250,
            colour = "red", size = 0.70, arrow = arrow())+
-  ggplot2::annotate("text", x = 2019, y = 52, label = "Larger",size = 4, colour = "blue")+
-   ggplot2::annotate("text", x = 2019, y = -255, label = "Smaller",size = 4, colour = "red")
+  ggplot2::annotate("text", x = 2021, y = 60, label = "Larger",size = 4, colour = "blue")+
+   ggplot2::annotate("text", x = 2021, y = -265, label = "Smaller",size = 4, colour = "red")
 
 
 pi<- ecodata::cold_pool %>% 
@@ -1335,12 +1340,12 @@ pi<- ecodata::cold_pool %>%
   ggplot2::xlab("")+
   ecodata::theme_ts()+
   ecodata::theme_title()+
-  ggplot2::annotate("segment", x = 2022, xend = 2022, y = 0.01, yend = 0.6,
+  ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.01, yend = 0.6,
            colour = "blue", size = 0.70, arrow = arrow())+
-  ggplot2::annotate("segment", x = 2022, xend = 2022, y = -0.05, yend = -1.5,
+  ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -1.6,
            colour = "red", size = 0.70, arrow = arrow())+
-  ggplot2::annotate("text", x = 2019, y = 0.7, label = "Longer", size = 4,colour = "blue")+
-   ggplot2::annotate("text", x = 2019, y = -1.6, label = "Shorter", size = 4, colour = "red")
+  ggplot2::annotate("text", x = 2021, y = 0.7, label = "Longer", size = 4,colour = "blue")+
+   ggplot2::annotate("text", x = 2021, y = -1.8, label = "Shorter", size = 4, colour = "red")
 
 #cowplot::plot_grid(cpi, pi, ei, labels = c('a', 'b', 'c'), align = "h")
 
