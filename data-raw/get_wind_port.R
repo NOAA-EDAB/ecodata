@@ -8,7 +8,7 @@ library(readr)
 raw.dir <- here::here("data-raw")
 
 #### Angela Silva
-wind_port_xlsx<-"SoE2022_Wind_Ports_Social Indicators - Angela Silva - NOAA Affiliate.xlsx"
+wind_port_xlsx<-"SoE2022_Updated data EJ and wind (1).xlsx"
 
 get_wind_port <- function(save_clean = F){
   df<- data.frame(State = c(" ME", " MA", " RI", " CT", " NY", " NJ", " MD", " VA", " NC"),
@@ -17,14 +17,10 @@ get_wind_port <- function(save_clean = F){
   # import data
   wind_port<-read_excel(file.path(raw.dir,wind_port_xlsx)) %>%
     #tidyr::separate(VTR_PORT_ST, into = c("City", "State"), sep = ",") %>%
-    dplyr::rename("perc_rev" ="%MAX_WEA_DOLLAR_08_19",
-                  "City" = "VTR_PORT_ST",
-                  "wea_rev" = "PORT_MAX_WEA_DOLLAR_08-19",
-                  "pop_comp" = "Population Composition",
-                  "pers_disr" = "Personal Disruption",
-                  "house_disr" = "Housing Disruption",
-                  "ret_mig" = "Retiree Migration",
-                  "urb_sprawl"="Urban Sprawl") %>%
+    dplyr::rename("perc_rev_max" ="%MAX_WEA_DOLLAR_08_19",
+                  "perc_rev_min" ="%MIN_WEA_DOLLAR_08_19",
+                  "City" = "PORT_VTR",
+                  "wea_rev" = "PORT_MAX_WEA_DOLLAR_08-19") %>%
     dplyr::mutate(City = dplyr::recode(City,"DAVISVILLE, RI" = "NORTH KINGSTOWN, RI"),
            City = dplyr::recode(City,"HAMPTON BAY, NY" ="HAMPTON BAY/SHINNECOCK, NY"),
            City = dplyr::recode(City,"SHINNECOCK, NY" = "HAMPTON BAY/SHINNECOCK, NY"),
@@ -37,12 +33,11 @@ get_wind_port <- function(save_clean = F){
     dplyr::slice(1) %>%
     dplyr::ungroup() %>%
     dplyr::mutate(
-           perc_rev = perc_rev*100,
-           total_rev = (wea_rev*100)/perc_rev,
-           EJ = pmax(Poverty, pop_comp, pers_disr ),
-           gentrification = pmax(house_disr, ret_mig, urb_sprawl)) %>%
-    dplyr::select(City, wea_rev, total_rev, EJ, gentrification) %>%
-    tidyr::pivot_longer(cols = c(wea_rev, total_rev, EJ, gentrification),
+           perc_rev_max = perc_rev_max*100,
+           perc_rev_min = perc_rev_min*100,
+           total_rev = 100 - perc_rev_min - perc_rev_max) %>%
+    dplyr::select(City, perc_rev_min, perc_rev_max, total_rev, EJ, Gentrification, wea_rev) %>%
+    tidyr::pivot_longer(cols = c(perc_rev_min, perc_rev_max, total_rev, EJ, Gentrification, wea_rev),
                         names_to = "Var", values_to = "Value") %>%
     tidyr::separate(City, into = c("City", "State"), sep = ",") %>%
     left_join(df, by = "State")
