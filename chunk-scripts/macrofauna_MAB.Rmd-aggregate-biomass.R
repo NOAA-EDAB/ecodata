@@ -18,8 +18,11 @@ agg<-ecodata::aggregate_biomass %>%
 agg_bio<-agg %>% dplyr::filter(EPU == epu_abbr,
          Time >= 1968) %>%
   dplyr::group_by(Var, EPU) %>%
-  dplyr::mutate(hline = mean(Mean, na.rm = T)) %>%
-  dplyr::ungroup()
+  dplyr::mutate(hline = mean(Mean, na.rm = T), 
+                 upper = Mean + (2*SD),
+                lower = Mean - (2*SD)) %>%
+  dplyr::ungroup()  
+ 
 
 agg_bio$Var <- factor(agg_bio$Var,levels = c("Piscivore Spring",
                                                    "Piscivore Fall",
@@ -65,9 +68,9 @@ p1<-agg_bio %>%
              alpha = trend.alpha, size = trend.size) +
 
   #Add time series
-  #ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper),
-  #            alpha = 0.5,
-  #            fill = "grey") +
+  ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper),
+              alpha = 0.5,
+              fill = "grey") +
   ggplot2::geom_line(aes(x = Time, y = Mean),size = lwd-0.5) +
   ggplot2::geom_point(aes(x = Time, y = Mean),size = pcex-0.5) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
@@ -113,9 +116,9 @@ p2<-agg_bio %>%
              alpha = trend.alpha, size = trend.size) +
 
   #Add time series
-  #ggplot2::geom_ribbon( aes(x = Time, ymin = pmax(lower,0), ymax = upper),
-  #            alpha = 0.5,
-  #            fill = "grey") +
+  ggplot2::geom_ribbon( aes(x = Time, ymin = pmax(lower,0), ymax = upper),
+              alpha = 0.5,
+              fill = "grey") +
   ggplot2::geom_line(aes(x = Time, y = Mean),size = lwd-0.5) +
   ggplot2::geom_point(aes(x = Time, y = Mean),size = pcex-0.5) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
@@ -160,9 +163,9 @@ p3<-agg_bio %>%
              alpha = trend.alpha, size = trend.size) +
 
   #Add time series
-  #ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper),
-  #            alpha = 0.5,
-  #            fill = "grey") +
+  ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper),
+              alpha = 0.5,
+              fill = "grey") +
   ggplot2::geom_line(aes(x = Time, y = Mean),size = lwd-0.5) +
   ggplot2::geom_point(aes(x = Time, y = Mean),size = pcex-0.5) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
@@ -206,9 +209,9 @@ p4<-agg_bio %>%
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   #Add time series
-  # ggplot2::geom_ribbon( aes(x = Time, ymin = pmax(lower,0), ymax = upper),
-  #             alpha = 0.5,
-  #             fill = "grey") +
+   ggplot2::geom_ribbon( aes(x = Time, ymin = pmax(lower,0), ymax = upper),
+               alpha = 0.5,
+               fill = "grey") +
   ggplot2::geom_line(aes(x = Time, y = Mean),size = lwd-0.5) +
   ggplot2::geom_point(aes(x = Time, y = Mean), size = pcex-0.5) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+

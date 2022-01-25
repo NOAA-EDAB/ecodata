@@ -39,7 +39,7 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   ggplot2::ggtitle("Expected Number of Species - Fall")+
   ecodata::geom_gls() +
   #Axis and theme
-  ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab("n species per 1000 ind") +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet()+

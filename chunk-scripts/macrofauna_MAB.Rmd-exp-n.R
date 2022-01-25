@@ -34,7 +34,7 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   #ggplot2::facet_wrap(Var~.,scales = "free_y", ncol = 2) +
   ggplot2::ggtitle("Expected Number of Species -Fall ")+
   
-  ecodata::geom_gls() +
+  #ecodata::geom_gls() +
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab("n species per 1000 ind") +

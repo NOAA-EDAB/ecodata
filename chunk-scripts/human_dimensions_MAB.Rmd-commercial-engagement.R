@@ -20,8 +20,8 @@ com2<-com %>%
         legend.title = element_blank(),       
         legend.background = element_blank(),
         legend.box.background = element_rect(colour = "black"))+
-  ggplot2::xlab("Commercial Engagement Score") +
-  ggplot2::ylab("Commercial Reliance Score") +
+  ggplot2::xlab("Commercial Engagement Index") +
+  ggplot2::ylab("Commercial Reliance Index") +
   ggplot2::ggtitle("Environmental Justice in Top Commercial Fishing Communities")+
   #ggplot2::guides(color = FALSE) +
   #theme_bw()
