@@ -6,8 +6,8 @@ mass <- ecodata::mass_inshore_survey %>%
   tidyr::unite(.,Var, c("feeding.guild","season"),sep = " ") %>% 
   dplyr::group_by(Time, Var) %>% 
   tidyr::spread(stat, Value) %>% 
-  dplyr::mutate(upper = Index + (2*SD), 
-         lower = Index - (2*SD)) %>% 
+  dplyr::mutate(upper = Index + (2*SE), 
+         lower = Index - (2*SE)) %>% 
   dplyr::group_by(Var) %>% 
   dplyr::mutate(hline = mean(Index))
 mass$Var <- factor(mass$Var,levels = c("Piscivore Spring","Piscivore Fall",
