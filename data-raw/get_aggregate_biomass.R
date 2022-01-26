@@ -6,7 +6,7 @@ library(dplyr)
 
 raw.dir <- here::here("data-raw")
 
-aggregate_biomass_RData <- "Aggregate_Survey_biomass_22.RData"
+aggregate_biomass_RData <- "Aggregate_Survey_biomass_22 (2).RData"
 get_aggregate_biomass <- function(save_clean = F){
 
   load(file.path(raw.dir, aggregate_biomass_RData))
@@ -30,7 +30,7 @@ get_aggregate_biomass <- function(save_clean = F){
     return(aggregate_biomass)
   }
 }
-get_aggregate_biomass(save_clear)
+get_aggregate_biomass(save_clean = T)
 
 surv_20_SD<-survey %>% dplyr::filter(stringr::str_detect(Var, "Standard"),
                                      !stringr::str_detect(Var, "Apex|inshore|offshore|managed|NEFMC|MAFMC|JOINT|NA")) %>%
