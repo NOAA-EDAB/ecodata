@@ -1,21 +1,26 @@
 library(dplyr)
 library(tidyr)
-
+library(readxl)
 raw.dir <- here::here("data-raw")
-wind_rev_csv<- "Wind_Energy_Revenue - Geret DePiper - NOAA Federal.csv"
+wind_rev_xlsx<- "CHRISTEL_2022 State of the Ecosystem Report_Max WEA Species Landings and Revenue (1).xlsx"
 
 get_wind_revenue<- function(save_clean = F){
-  wind_revenue <- read.csv(file.path(raw.dir,wind_rev_csv)) %>%
-    dplyr::select(!X) %>%
-    dplyr::mutate(Var = as.vector(Var),
-                  Var = dplyr::recode(Var,
-                                      `Surf Clam (Top 5 Species Revenue from Wind Development Areas)` =
-                                        "Surfclam (Top 5 Species Revenue from Wind Development Areas)"))
+  ne_wind_revenue <- readxl::read_excel(file.path(raw.dir,wind_rev_xlsx), sheet = "NEFMC Revenue Figures") %>%
+    dplyr::mutate(EPU = "NE")
+  mab_wind_revenue <- readxl::read_excel(file.path(raw.dir,wind_rev_xlsx), sheet = "MAFMC Revenue Figure") %>%
+    dplyr::mutate(EPU = "MAB")
 
+  wind_revenue <- ne_wind_revenue %>%
+    rbind(mab_wind_revenue) %>%
+    tidyr::pivot_longer(cols = c("Sum of WEA_LANDED_TOTAL", "Sum of WEA_DOLLAR_TOTAL"),
+                        names_to = "Var", values_to = "Value") %>%
+    dplyr::rename(Time = Year) %>%
+    dplyr::mutate(Var = paste0(Species,":",Var)) %>%
+    dplyr::select(!Species)
   # metadata ----
   attr(wind_revenue, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc.html"
   attr(wind_revenue, "data_files")   <- list(
-    wind_rev_csv = wind_rev_csv)
+    wind_rev_xlsx = wind_rev_xlsx)
   attr(wind_revenue, "data_steward") <- c(
     "Geret DePiper <geret.depiper@noaa.gov>")
   attr(wind_revenue, "plot_script") <- list(

@@ -511,34 +511,12 @@ reconstructed primary production
 </div>
 <div id="wind-energy-revenue" class="section level3">
 <h3>Wind Energy Revenue</h3>
-<!-- ```{r wind-revenue, fig.cap="Wind energy revenue in the Mid-Atlantic"} -->
-<!-- ecodata::wind_revenue %>%  -->
-<!--   dplyr::mutate(Value = Value/1000000,  -->
-<!--                 Time = as.integer(Time)) %>%  -->
-<!--   tidyr::separate(Var, into=c("Var", "Trash"), sep = "[(]") %>%  -->
-<!--   dplyr::select(!Trash) %>%  -->
-<!--   #dplyr::group_by(EPU) %>%  -->
-<!--  # dplyr::mutate(hline = mean(Value)) %>%  -->
-<!--   dplyr::filter(EPU == "MAB") %>%  -->
-<!--   ggplot2::ggplot() + -->
-<!--   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
-<!--       xmin = x.shade.min , xmax = x.shade.max, -->
-<!--       ymin = -Inf, ymax = Inf) + -->
-<!--   ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+ -->
-<!--   ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+ -->
-<!--   #ggplot2::facet_wrap(~Var, ncol = 1, scales = "free")+ -->
-<!--   #ggplot2::geom_hline(aes(yintercept = hline), -->
-<!--   #         size = hline.size, -->
-<!--   #         alpha = hline.alpha, -->
-<!--   #         linetype = hline.lty)+ -->
-<!--   scale_x_continuous(breaks=c(2008,2012,2016, 2020))+ -->
-<!--   ggplot2::ggtitle("Fishery Revenue in Wind Lease Areas")+ -->
-<!--   ggplot2::ylab(expression("2019 Constant 10"^6*"Dollars "))+ -->
-<!--   theme(legend.title = element_blank())+ -->
-<!--   ggplot2::xlab(element_blank())+ -->
-<!--   ecodata::theme_ts()+ -->
-<!--   ecodata::theme_title() -->
-<!-- ``` -->
+<div class="figure" style="text-align: center">
+<img src="human_dimensions_MAB_files/figure-html/wind-revenue-1.png" alt="Wind energy revenue in the Mid-Atlantic" width="672" />
+<p class="caption">
+Wind energy revenue in the Mid-Atlantic
+</p>
+</div>
 <div class="figure" style="text-align: center">
 <img src="human_dimensions_MAB_files/figure-html/wind-port-1.png" alt="Percent of port revenue from Wind Energy Areas(WEA) in descending order of most to least port revenue from WEA." width="672" />
 <p class="caption">
