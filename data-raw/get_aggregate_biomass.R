@@ -6,7 +6,7 @@ library(dplyr)
 
 raw.dir <- here::here("data-raw")
 
-aggregate_biomass_RData <- "Aggregate_Survey_biomass_22 (2).RData"
+aggregate_biomass_RData <- "Aggregate_Survey_biomass_22 (3).RData"
 get_aggregate_biomass <- function(save_clean = F){
 
   load(file.path(raw.dir, aggregate_biomass_RData))
@@ -32,17 +32,13 @@ get_aggregate_biomass <- function(save_clean = F){
 }
 get_aggregate_biomass(save_clean = T)
 
-surv_20_SD<-survey %>% dplyr::filter(stringr::str_detect(Var, "Standard"),
-                                     !stringr::str_detect(Var, "Apex|inshore|offshore|managed|NEFMC|MAFMC|JOINT|NA")) %>%
-  ggplot2::ggplot()+
-  geom_point(aes(x=Time, y=Value))+
-  facet_wrap(~Var)
-surv_22_SD<- ecodata::aggregate_biomass%>% dplyr::filter(stringr::str_detect(Var, "Standard"),
-                                                         !stringr::str_detect(Var, "Apex|inshore|offshore|managed|NEFMC|MAFMC|JOINT|NA")) %>%
-  ggplot2::ggplot()+
-  geom_line(aes(x=Time, y=Value))+
-  facet_wrap(~Var)
 
+# surv_MAB<- ecodata::aggregate_biomass%>% dplyr::filter(stringr::str_detect(Var, "Index"),
+#                                                          !stringr::str_detect(Var, "Apex|inshore|offshore|managed|NEFMC|MAFMC|JOINT|NA")) %>%
+#   ggplot2::ggplot()+
+#   geom_line(aes(x=Time, y=Value, color = EPU))+
+#   facet_wrap(~Var)
+#
 
 
 
