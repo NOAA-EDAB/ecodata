@@ -36,11 +36,11 @@ gis.dir <- here::here("data-raw","gridded")
 
 #General inline text input for report
 #Council
-council <- "Mid-Atlantic Fishery Management Council"
-council_abbr <- "MAFMC"
+council <- "New England Fishery Management Council"
+council_abbr <- "NEFMC"
 
 #Region identifiers
-epu <- "Mid-Atlantic Bight"
-epu_abbr <- "MAB"
-region <- "Mid-Atlantic"
-region_abbr <- "MA" #Some commercial data organized by "MA" or "NE" regions, not by EPU 
+epu <- "Gulf of Maine and Georges Bank"
+epu_abbr <- c("GB","GOM")
+region <- "New England"
+region_abbr <- "NE" #Some commercial data organized by "MA" or "NE" regions, not by EPU 
