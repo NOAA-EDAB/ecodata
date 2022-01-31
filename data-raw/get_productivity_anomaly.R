@@ -14,7 +14,8 @@ load(file.path(raw.dir,productivity_anomaly__epu_rdata))
 
 #Select and rename
 epu_rec_anom <- dat_spec_rec_epu_forSOE %>%
-  dplyr::select(Time, EPU = Region, Value, Units, -Source,Var)
+  dplyr::select(Time, EPU = Region, Value, Units, -Source,Var) %>%
+  dplyr::filter(!Time == "2020")
 
 #Select, rename, and bind
 productivity_anomaly <- dat_spec_rec_forSOE %>%
