@@ -1144,6 +1144,20 @@ ecodata::narw %>%
 
 
 ```
+### Protected species hotspot maps
+
+```{r rw-hotspot, fig.cap = ""}
+
+knitr::include_graphics(file.path(image.dir, "NARW_hotpsot_persistence_2_1_2022_TPW.png"))
+
+```
+
+```{r ps-hotspot, fig.cap = ""}
+
+knitr::include_graphics(file.path(image.dir, "seabirds_cetaceans_turtles_hotspot_persistence_2_1_2022_TPW.png"))
+
+```
+
 
 ### Aggregate species distribution
 
