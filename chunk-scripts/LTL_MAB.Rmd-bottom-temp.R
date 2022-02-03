@@ -18,6 +18,7 @@ ggplot2::ggplot() +
   ggplot2::geom_point(aes(x = temp_anom$Time, y = temp_anom$Value), size = 1, color = "black") +
   ggplot2::geom_point(aes(x = gl_bt$Time, y = gl_bt$Value), size = 1, color = "red") +
   ggplot2::geom_line(aes(x = gl_bt$Time, y = gl_bt$Value), color = "red") +
+  ggplot2::geom_line(aes(x = temp_anom$Time, y = temp_anom$hline), linetype = "dashed", color = "grey") +
   ecodata::geom_gls(aes(x = temp_anom$Time, y = temp_anom$Value)) +
   ggplot2::ylab("Temperature (C)") +
   ggplot2::xlab(element_blank())+
