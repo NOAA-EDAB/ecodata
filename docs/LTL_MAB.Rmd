@@ -453,6 +453,7 @@ ggplot2::ggplot() +
   ggplot2::geom_point(aes(x = temp_anom$Time, y = temp_anom$Value), size = 1, color = "black") +
   ggplot2::geom_point(aes(x = gl_bt$Time, y = gl_bt$Value), size = 1, color = "red") +
   ggplot2::geom_line(aes(x = gl_bt$Time, y = gl_bt$Value), color = "red") +
+  ggplot2::geom_line(aes(x = temp_anom$Time, y = temp_anom$hline), linetype = "dashed", color = "grey") +
   ecodata::geom_gls(aes(x = temp_anom$Time, y = temp_anom$Value)) +
   ggplot2::ylab("Temperature (C)") +
   ggplot2::xlab(element_blank())+
@@ -774,7 +775,7 @@ ecodata::ch_bay_sal %>%
   
   ggplot2::geom_line(aes(x = Time, y = YearLTA, color= "Long Term Average 2010-2020")) +
   ggplot2::geom_line(aes(x = Time, y = Year, color = "Daily 2021")) +
-  ggplot2::ylab("Temperature (F)") +
+  ggplot2::ylab("Salinity") +
   ggplot2::ggtitle("Chesapeake Bay Salinity") +
   ggplot2::theme(legend.position = "bottom", 
                  legend.title = element_blank())+
@@ -787,12 +788,16 @@ ecodata::ch_bay_sal %>%
 
 ecodata::ch_bay_temp %>%
   tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
+  dplyr::mutate(YearLTAC = (YearLTA - 32)*(5/9),
+                minLTAC = (minLTA - 32)*(5/9),
+                maxLTAC = (maxLTA - 32)*(5/9), 
+                YearC = (Year - 32)*(5/9)) %>% 
   ggplot2::ggplot() +
-  ggplot2::geom_ribbon(aes(x = Time, ymin = minLTA, ymax = maxLTA), fill = "grey", alpha = 0.5)+
+  ggplot2::geom_ribbon(aes(x = Time, ymin = minLTAC, ymax = maxLTAC), fill = "grey", alpha = 0.5)+
   
-  ggplot2::geom_line(aes(x = Time, y = YearLTA, color= "Long Term Average 2010-2020")) +
-  ggplot2::geom_line(aes(x = Time, y = Year, color = "Daily 2021")) +
-  ggplot2::ylab("Temperature (F)") +
+  ggplot2::geom_line(aes(x = Time, y = YearLTAC, color= "Long Term Average 2010-2020")) +
+  ggplot2::geom_line(aes(x = Time, y = YearC, color = "Daily 2021")) +
+  ggplot2::ylab("Temperature (C)") +
   ggplot2::ggtitle("Chesapeake Bay Temperature") +
   ggplot2::theme(legend.position = "bottom", 
                  legend.title = element_blank())+
@@ -864,8 +869,8 @@ ecodata::SAV %>%
                 !Var == "Oligohaline", 
                 !Var == "Mesohaline") %>% 
   dplyr::mutate(Var = recode(Var, 
-                             "Tidal" = "Upper Bay", 
-                             "Polyhaline" = "Lower Bay")) %>% 
+                             "Tidal" = "Tidal Fresh", 
+                             "Polyhaline" = "High Salinity")) %>% 
   dplyr::mutate(Value = (Value/1000)) %>% 
   ggplot2::ggplot(aes(x = Time, y = Value))+
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
