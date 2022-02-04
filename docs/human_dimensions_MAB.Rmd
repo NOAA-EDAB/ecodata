@@ -1623,7 +1623,6 @@ ecodata::abc.acl %>%
 
 ### HMS Stock Status
 
-
 ```{r hms-stock-status, echo=FALSE, warning=F, fig.cap = paste0("Summary of single species status for HMS stocks.")} 
 
 y.max <- 5
