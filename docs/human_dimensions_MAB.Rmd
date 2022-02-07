@@ -1681,11 +1681,10 @@ ggplot2::ggplot(data = stock_status) +
 
 ### Proposed Wind Development
 
-<!-- ```{r wind-dev-cumul, fig.cap = ""} -->
+```{r wind-dev-cumul, fig.cap = ""}
 
-<!-- #knitr::include_url("https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/All_2021119-01.jpg") -->
-<!-- knitr::include_graphics(file.path(image.dir, "All_2021128_needsgraph-01.jpg")) -->
-<!-- ``` -->
+knitr::include_graphics(file.path(image.dir, "offshore_wind_timeline.png"))
+```
 
 <!-- ```{r wind-dev-cumul-MAB, fig.cap = ""} -->
 
