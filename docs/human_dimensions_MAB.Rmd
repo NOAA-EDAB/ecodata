@@ -1428,7 +1428,7 @@ ecodata::ppr %>%
 
 ### Wind Energy Revenue
 
-```{r wind-revenue, fig.cap="Wind energy revenue in the Mid-Atlantic"}
+```{r wea-spp-rev, fig.cap="Wind energy revenue in the Mid-Atlantic"}
 ecodata::wind_revenue %>%
   tidyr::separate(Var, sep = ":", into = c("Species", "Var")) %>% 
   dplyr::filter(Var == "Sum of WEA_DOLLAR_TOTAL") %>% 
@@ -1457,7 +1457,7 @@ ecodata::wind_revenue %>%
   ecodata::theme_title()
 ```
 
-```{r wind-port, fig.cap="Percent of port revenue from Wind Energy Areas(WEA) in descending order of most to least port revenue from WEA."}
+```{r wea-port-rev, fig.cap="Percent of port revenue from Wind Energy Areas(WEA) in descending order of most to least port revenue from WEA."}
 df.symbol <- ecodata::wind_port %>% filter(EPU == "MAB", 
                                            !Var %in% c("wea_rev", "total_rev", 
                                                      "perc_rev_min", "perc_rev_max")) %>% 
@@ -1576,7 +1576,7 @@ ecodata::abc.acl %>%
 
 ### ABC/ACL ratio to Catch
 
-```{r abc-acl, fig.cap = "Catch divided by ABC/ACL for MAFMC managed fisheies. Chub mackerel removed due extremely low catch. Outliers = Recreational Black Sea Bass.  Possible management success story? - See comment in google doc."}
+```{r abcacl-catch, fig.cap = "Catch divided by ABC/ACL for MAFMC managed fisheies. Chub mackerel removed due extremely low catch. Outliers = Recreational Black Sea Bass.  Possible management success story? - See comment in google doc."}
 mean<- ecodata::abc.acl %>% 
   #group_by(Time) %>% 
   tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>% 
@@ -1782,7 +1782,7 @@ kable(dt, caption = "Top ten species Landings and Revenue from Wind Energy Areas
 <!-- ``` -->
 ### Wind and Scientific Surveys
 
-```{r}
+```{r wind-survey-table}
 dat<- data.frame(XSurvey= c("Fall BTS", "Spring BTS", "EcoMon", "Scallop",
                             "Shellfish(Clams)", "Right Whale (Air)", 
                             "Marine Mammal/Turtle (Ship/Air)",

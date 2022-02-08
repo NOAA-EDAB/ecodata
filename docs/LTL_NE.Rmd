@@ -1726,6 +1726,7 @@ gom.hw
 ### HABs {.tabset .tabset-fade}
 
 #### Alexandrium
+
 ```{r habs-alex}
 ecodata::habs %>% 
   filter(Source == "Alexadrium") %>% 
@@ -1748,6 +1749,8 @@ ecodata::habs %>%
   ecodata::theme_facet()
   
 ```
+
+
 ```{r habs-alex-distibution, fig.cap = ""}
 
 knitr::include_graphics(file.path(image.dir, "Alexandrium_distribution.jpg"))
@@ -1776,6 +1779,8 @@ ecodata::habs %>%
   ecodata::theme_facet()
   
 ```
+
+
 ```{r habs-psp-closures, fig.cap = ""}
 
 knitr::include_graphics(file.path(image.dir, "Fisheries_closures_PSP.jpg"))

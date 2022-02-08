@@ -1630,6 +1630,7 @@ ecodata::ppr %>%
   ecodata::theme_facet()
 
 ```
+
 ### Mean Trophic Level
 
 ```{r mtl, fig.cap="Mean tropic level"}
@@ -1656,6 +1657,7 @@ ecodata::ppr %>%
   ecodata::theme_ts()+
   ecodata::theme_title()
 ```
+
 ### PP reconstructed
 
 ```{r pp-reconstructed, fig.cap="FReonstructed primary production"}
@@ -1699,7 +1701,7 @@ ecodata::ppr %>%
 
 ### Wind Energy Revenue
 
-```{r wind-revenue, fig.cap="Wind energy revenue in the New England"}
+```{r wea-spp-rev, fig.cap="Wind energy revenue in the New England"}
 ecodata::wind_revenue %>%
   tidyr::separate(Var, sep = ":", into = c("Species", "Var")) %>% 
   dplyr::filter(Var == "Sum of WEA_DOLLAR_TOTAL") %>% 
@@ -1727,9 +1729,10 @@ ecodata::wind_revenue %>%
   ecodata::theme_ts()+
   ecodata::theme_title()
 ```
-```
 
-```{r wind-port, fig.cap="Percent of port revenue from Wind Energy Areas(WEA) in descending order of most to least port revenue from WEA."}
+
+```{r wea-port-rev, fig.cap="Percent of port revenue from Wind Energy Areas(WEA) in descending order of most to least port revenue from WEA."}
+
 
 df.symbol <- ecodata::wind_port %>% filter(EPU == "NE", 
                                            !Var %in% c("wea_rev", "total_rev", 
