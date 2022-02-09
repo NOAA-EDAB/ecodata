@@ -1,7 +1,8 @@
 
 #Get data, spread for plotting, and filter
 stock_status <- ecodata::stock_status %>%
-  dplyr::mutate(Code = recode(Code, "Dogfish" = "Sp. Dogfish" )) %>% 
+  dplyr::mutate(Code = recode(Code, "Dogfish" = "Sp. Dogfish" ), 
+                Code = recode(Code, "Mackerel" = "At. Mackerel")) %>% 
   tidyr::spread(.,Var,Value) %>% 
   dplyr::filter(Council %in% c("MAFMC","Both")) %>% 
   dplyr::group_by(Stock) %>% 
@@ -15,8 +16,8 @@ y.max <- 2.1 #1.75 mackerel cut off F/Fmsy is 1.8
 x.max <- 2.6
 #A dataframe that defines custom legend for stocks with unknown status
 unknown <- data.frame(text = c("Unknown Status", "Longfin Squid",
-                              "Shortfin Squid", "N. Goosefish", "S. Goosefish", "Blueline Tilefish"),
-                    x = rep(0.9*x.max,6), y = seq(0.88*y.max,1.3,-0.1))
+                              "Shortfin Squid", "N. Goosefish", "S. Goosefish", "Blueline Tilefish", "Chub Mackerel"),
+                    x = rep(0.9*x.max,7), y = seq(0.88*y.max,1.2,-0.1))
 
 # Custom Color
 custom_color<- c("#56B4E9", "#009E73", "#0072B2")
@@ -39,7 +40,7 @@ ggplot2::ggplot(data = stock_status) +
   ggplot2::ylim(0,y.max) +
   ggplot2::xlim(0,x.max) +
   ggplot2::geom_text(data = unknown, aes(x = x, y = y, label = text), #Custom legend for unknown stock status
-            size = c(4.75,rep(4,5))) +
+            size = c(4.75,rep(4,6))) +
   ggplot2::annotate("rect", xmin = 0.8*x.max,
            xmax = x.max,
            ymin = 0.65*y.max,

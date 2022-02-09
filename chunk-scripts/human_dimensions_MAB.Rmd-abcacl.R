@@ -17,8 +17,8 @@ ecodata::abc.acl %>%
                          stat="identity")+
   #ggplot2::geom_point()+
   #ggplot2::geom_line()+
-  ggplot2::ggtitle("ABC/ACL for MAFMC Managed Species")+
+  ggplot2::ggtitle("ABC or ACL for MAFMC Managed Species")+
   #ggplot2::ylab(expression("ABC/ACL"))+
-  ggplot2::xlab("ABC/ACL")+
+  ggplot2::xlab("ABC or ACL")+
   ecodata::theme_ts()+
   ecodata::theme_title()
