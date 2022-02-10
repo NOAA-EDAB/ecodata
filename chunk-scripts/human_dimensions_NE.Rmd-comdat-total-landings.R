@@ -54,7 +54,7 @@ ggplot2::ggplot()+
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts() +
-  ggplot2::ggtitle("Gulf of Maine - Total Landings *No New Data - ends in 2019")+
+  ggplot2::ggtitle("Gulf of Maine - Total Commercial Landings *No New Data")+
   ecodata::theme_title()
 
 gb_total <- landings_agg %>% dplyr::filter(EPU == "GB") %>% 
@@ -84,7 +84,7 @@ ggplot2::ggplot()+
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts() +
-  ggplot2::ggtitle("Georges Bank - Total Landings *No New Data - ends in 2019")+
+  ggplot2::ggtitle("Georges Bank - Total Commercial Landings *No New Data")+
   ecodata::theme_title()
 
 cowplot::plot_grid(gb_total, gom_total, ncol = 2)
