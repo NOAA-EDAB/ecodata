@@ -1492,12 +1492,15 @@ p2<-ggplot2::ggplot()+
   scale_fill_brewer()+
   ggplot2::theme(legend.position = "bottom", 
                  legend.title = element_blank(), 
-                 legend.box="vertical", legend.margin=margin())+
+                 legend.box="vertical", legend.margin=margin(), 
+                 legend.text = element_text(size = 7), 
+                 legend.key.height = unit(2, "mm"))+
   ggplot2::geom_point(data = df.symbol, aes(x = symbol,y = City, shape = Variable)) +
   scale_shape_manual(values = c(17, 16)) +
   ggplot2::ggtitle("Port Revenue from Wind Energy Area")+
   ggplot2::xlab(expression("Port Revenue (%)"))+
   ggplot2::ylab(element_blank())+
+  ggplot2::theme()+
   ecodata::theme_ts()
 
 p2
