@@ -51,8 +51,8 @@ sst_map <- function(season){
   #ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
   ggplot2::ggtitle(season) +
-  ggplot2::xlab("Longitude") +
-  ggplot2::ylab("Latitude") +
+  ggplot2::xlab(element_blank()) +
+  ggplot2::ylab(element_blank()) +
   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
         legend.key = element_blank(),
         axis.title = element_text(size = 11),
@@ -126,4 +126,6 @@ ggpubr::ggarrange(winter, spring, summer, fall,
                   nrow = 2,
                   common.legend = TRUE,
                   legend = "right") %>%
-  ggpubr::annotate_figure(top = "SST anomaly (2021)")
+  ggpubr::annotate_figure(top = "SST anomaly (2021)", 
+                          left = "Latitude", 
+                          bottom = "Longitude")

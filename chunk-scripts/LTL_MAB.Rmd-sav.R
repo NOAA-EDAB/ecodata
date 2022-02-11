@@ -5,7 +5,8 @@ ecodata::SAV %>%
                 !Var == "Mesohaline") %>% 
   dplyr::mutate(Var = recode(Var, 
                              "Tidal" = "Tidal Fresh", 
-                             "Polyhaline" = "High Salinity")) %>% 
+                             "Polyhaline" = "High Salinity"), 
+                Var = factor(Var, levels = c("Tidal Fresh", "High Salinity"))) %>% 
   dplyr::mutate(Value = (Value/1000)) %>% 
   ggplot2::ggplot(aes(x = Time, y = Value))+
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,

@@ -2,12 +2,12 @@
 sw.df <- ecodata::slopewater %>% 
   dplyr::mutate(Var, Var = plyr::mapvalues(Var, from = c("WSW proportion ne channel",
                                                   "LSLW proportion ne channel"),
-                                    to = c("WSW","LSLW"))) %>% 
+                                    to = c("WSW","LSW"))) %>% 
   dplyr::rename(Flavor  = Var) %>% 
   dplyr::group_by(Flavor) %>% 
   dplyr::mutate(hline = mean(Value)) 
 
-sw.df$Origin <- factor(sw.df$Flavor, levels = c("WSW","LSLW"))
+sw.df$Origin <- factor(sw.df$Flavor, levels = c("WSW","LSW"))
 
 ggplot2::ggplot(data = sw.df) +
   ggplot2::geom_line(aes(x = Time, y = Value, color = Origin))+
