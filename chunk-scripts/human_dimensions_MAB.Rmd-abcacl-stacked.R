@@ -12,7 +12,9 @@ ecodata::abc.acl %>%
                 Fishery = recode(Fishery, "Summer Flounder Recreational " = "All Others"),
                 Fishery = recode(Fishery, "Summer Flounder Commercial " = "All Others"),
                 Fishery = recode(Fishery, "Scup Recreational " = "All Others"), 
-                Fishery = recode(Fishery, "Scup Commercial " = "All Others")) %>% 
+                Fishery = recode(Fishery, "Scup Commercial " = "All Others"), 
+                Fishery = recode(Fishery, "Blueline Tilefish Recreational " = "Blueline Tilefish Rec"),
+                Fishery = recode(Fishery, "Blueline Tilefish Commercial " = "Blueline Tilefish Comm")) %>% 
    dplyr::group_by(Fishery, Time) %>% 
    dplyr::summarise(Value = sum(Value)) %>% 
   # dplyr::summarise(Value_mean = mean(Value), 
@@ -28,8 +30,8 @@ ecodata::abc.acl %>%
   #ggplot2::geom_line()+
   ggplot2::ggtitle("ABC or ACL for MAFMC Managed Species")+
   #ggplot2::ylab(expression("ABC/ACL"))+
-  ggplot2::theme(legend.text = element_text(size = 6), 
-                 legend.key.height = unit(0.1, "mm"))+
+  ggplot2::theme(legend.text = element_text(size = 10), 
+                 legend.key.height = unit(2, "mm"))+
   ggplot2::ylab("ABC or ACL")+
   ggplot2::xlab(element_blank())+
   ecodata::theme_ts()+

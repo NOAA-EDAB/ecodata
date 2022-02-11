@@ -1,8 +1,8 @@
 
 #### Adjust plot properties -------------------------------
 adjustAxes <- 
-  ggplot2::theme(axis.title   = element_text(size = 12),
-                 axis.text    = element_text(size = 12),
+  ggplot2::theme(axis.title   = element_text(size = 10),
+                 axis.text    = element_text(size = 10),
                  plot.title   = element_text(size = 15))
 
 
@@ -144,7 +144,7 @@ mid <- plot_stackbarcpts_single(YEAR = bar_dat$Time,
                          width = 9,
                          filt = FALSE,
                          label = "",
-                         y.text = 6,
+                         y.text = 5,
                          aggregate = TRUE)
 
 mid
