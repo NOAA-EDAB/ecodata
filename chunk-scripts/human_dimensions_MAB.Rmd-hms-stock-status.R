@@ -3,7 +3,7 @@ y.max <- 5
 x.max <- 2
 #Get data, spread for plotting, and filter
 unknown <- data.frame(text = c("Unknown Status", "ATL SBH", "SPF", "WA BFT"),
-                      x = rep(0.9*x.max,4), y = seq(0.88*y.max,3.8,-0.2))
+                      x = rep(0.9*x.max,4), y = seq(0.88*y.max,3.5,-0.3))
 
 
 

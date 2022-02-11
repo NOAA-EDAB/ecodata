@@ -574,7 +574,7 @@ ggplot2::ggplot(data = rev_agg) +
   ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
       scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
-  ggplot2::ggtitle("Total Revenue *No New Data - ends in 2019") +
+  ggplot2::ggtitle("Total Commercial Revenue *No New Data") +
   ggplot2::ylab(expression("Revenue (10"^6*"USD)")) +
   ggplot2::geom_hline(aes(yintercept = hline,
                color = Status),
@@ -1232,7 +1232,7 @@ ecodata::rec_hms %>%
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+
   ggplot2::ylab("Catch (N)")+
-  ggplot2::ggtitle("Recreational Shark Landings")
+  ggplot2::ggtitle("Recreational Shark Landings")+
   ggplot2::xlab(element_blank())+
   ggplot2::theme(legend.title = element_blank())+
   ecodata::theme_ts()
@@ -1610,7 +1610,7 @@ ecodata::abc.acl %>%
   geom_line(data = mean, aes(x = Time, y = val), color = "red")+
   geom_hline(yintercept = 1, linetype='dashed', col = 'gray')+
   ggplot2::ggtitle("MAFMC Catch per ABC or ACL")+
-  ggplot2::ylab(expression("Ratio of Catch to ABC or ACL"))+
+  ggplot2::ylab(expression("Catch / ABC or ACL"))+
   ggplot2::theme(legend.title = element_blank())+
   ggplot2::xlab(element_blank())+
   ecodata::theme_ts()+
@@ -1630,7 +1630,7 @@ y.max <- 5
 x.max <- 2
 #Get data, spread for plotting, and filter
 unknown <- data.frame(text = c("Unknown Status", "ATL SBH", "SPF", "WA BFT"),
-                      x = rep(0.9*x.max,4), y = seq(0.88*y.max,3.8,-0.2))
+                      x = rep(0.9*x.max,4), y = seq(0.88*y.max,3.5,-0.3))
 
 
 

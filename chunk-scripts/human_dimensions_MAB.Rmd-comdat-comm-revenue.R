@@ -46,7 +46,7 @@ ggplot2::ggplot(data = rev_agg) +
   ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
       scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
-  ggplot2::ggtitle("Total Revenue *No New Data - ends in 2019") +
+  ggplot2::ggtitle("Total Commercial Revenue *No New Data") +
   ggplot2::ylab(expression("Revenue (10"^6*"USD)")) +
   ggplot2::geom_hline(aes(yintercept = hline,
                color = Status),
