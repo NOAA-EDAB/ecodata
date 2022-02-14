@@ -1,6 +1,6 @@
 
 ecodata::habs %>% 
-  filter(Source == "Alexadrium") %>% 
+  filter(Source == "Alexandrium") %>% 
   ggplot2::ggplot(aes(x = Time, y = Value, color = Var))+
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
@@ -12,7 +12,7 @@ ecodata::habs %>%
                                 face = "italic"), 
         axis.title.y = element_text(angle = 90)) +
   ggplot2::scale_color_discrete(name = "Region",
-  labels = c("Bay of Fundy", "West GOM", "East GOM", "GOM all"))+
+  labels = c("Bay of Fundy",  "East GOM", "GOM all","West GOM"))+
   ecodata::theme_title()+
   ggplot2::ylab(expression("Cyst Abundance (10"^6*"Cells)"))+
   ggplot2::xlab(element_blank())+

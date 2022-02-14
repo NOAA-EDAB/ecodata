@@ -17,7 +17,7 @@ get_habs <- function(save_clean = F){
                           "Bay_of_Fundy","Gulf_of_Maine_All" ),
                  names_to = "Var", values_to = "Value") %>%
     mutate(EPU = c("GOM"),
-           Source = c("Alexadrium")) %>%
+           Source = c("Alexandrium")) %>%
     dplyr::rename(Time = Year)
 
   # PSP
