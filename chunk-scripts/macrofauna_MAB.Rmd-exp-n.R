@@ -1,15 +1,15 @@
 
 exp<- ecodata::exp_n %>% filter( EPU == "MAB", 
                                    Season == "FALL", 
-                                   str_detect(Var, 'AlbatrossSD|BigelowSD')) %>% 
-    rename(VarSD = Var, 
-         ValueSD = Value) 
+                                   str_detect(Var, 'AlbatrossSD|BigelowSD')) %>%
+  dplyr::rename(VarSD = Var, 
+                ValueSD = Value) 
 exp2<- ecodata::exp_n %>% filter(EPU == "MAB", 
                                  Season == "FALL", 
                                  Var %in% c("Albatross", "Bigelow"))   %>% 
 
-  left_join(exp) %>% 
-  mutate(upper = Value+ValueSD, 
+  dplyr::left_join(exp) %>% 
+  dplyr::mutate(upper = Value+ValueSD, 
          lower = Value - ValueSD)
 
 exp2 %>% 
