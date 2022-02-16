@@ -12,6 +12,7 @@ ecodata::aquaculture %>%
   filter(Var == "Pieces") %>% 
   group_by(Time) %>% 
   summarise(Value = sum(Value)) %>% 
+  ungroup() %>% 
   ggplot2::ggplot() +
  #Highlight last ten years
   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
