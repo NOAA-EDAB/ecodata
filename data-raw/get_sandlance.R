@@ -1,8 +1,9 @@
 ## Sandlance from Moe Nelson
 
 sandlance_csv<- "Nelson_sand_lance_collocation_data_Silva_et_al_2020_Table1 - David Nelson - NOAA Federal.csv"
-
+sandlance2_csv <- "stellwagen_sand_lance_survey_summary_data.csv"
 get_sandlance <- function(save_clean = F){
+
   sandlance<- read.csv(file.path(raw.dir,sandlance_csv)) %>%
     janitor::row_to_names(1) %>%
     dplyr::rename("Time" = "Cruise",
@@ -23,8 +24,15 @@ get_sandlance <- function(save_clean = F){
                   Time = Year + seas.num) %>%
     dplyr::select(Time, Var, Value, EPU)
 
+  sandlance2<- read.csv(file.path(raw.dir,sandlance2_csv)) %>%
+    pivot_longer(cols = c("mean_sand_lance","n_samples" ,
+                          "n_samples_w_fish","propn_nonzero_samples"),
+                 names_to = "Var", values_to = "Value") %>%
+    dplyr::rename( "Time" = "year") %>%
+    dplyr::mutate(EPU = c("NE"))
 
-
+  sandlance<- sandlance %>%
+    rbind(sandlance2)
   if (save_clean){
     usethis::use_data(sandlance, overwrite = T)
   } else {
