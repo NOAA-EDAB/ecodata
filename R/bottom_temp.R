@@ -4,7 +4,7 @@
 #' Shelf derived from NEFSC surveys 1977-pres.
 #'
 #'
-#' @format Data contain 648 rows and 5 columns.
+#' @format Data contain 664 rows and 5 columns.
 #' \itemize{
 #'    \item Var: Specifies variable of interest.
 #'    \item Value: Value of variable \code{Var}.

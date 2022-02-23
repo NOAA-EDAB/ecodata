@@ -84,7 +84,7 @@ get_bottom_temp_glorys <- function(save_clean = F){
   }
 
   # metadata ----
-  attr(bottom_temp_glorys, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/bottom-temperatures.html"
+  attr(bottom_temp_glorys, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/bottom-temperature---glorys.html"
   attr(bottom_temp_glorys, "data_files")   <- list(
     bottom_temp_glorys_csv = bottom_temp_glorys_csv)
   attr(bottom_temp_glorys, "data_steward") <- c(

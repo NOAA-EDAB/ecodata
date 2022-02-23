@@ -45,7 +45,7 @@ y <-  m*x + rnorm(30, sd = 0.35)
 data <- data.frame(x = x,
                   y = y)
 
-#Plot series with trend 
+#Plot series with trend
 ggplot(data = data) +
   geom_line(aes(x = x, y = y)) +
   geom_gls(aes(x = x, y = y))

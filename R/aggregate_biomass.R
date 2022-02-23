@@ -3,7 +3,7 @@
 #' These data contain times series of CPUE, kg tow ^-1, of aggregated species groups from NEFSC surveys.
 #'
 #'
-#' @format A data set containing 30572 rows and 6 columns.
+#' @format A data set containing 38008 rows and 6 columns.
 #'
 #' \itemize{
 #'     \item Time: Survey year.

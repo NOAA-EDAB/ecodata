@@ -4,7 +4,7 @@
 #' along with their sum totals for each year and species groupings (i.e. the Bennet indicator). This
 #' metric allows for examining the drivers of revenue change by Ecological Production Unit (EPU).
 #'
-#' @format A data set containing 2240 rows and 5 columns.
+#' @format A data set containing 2510 rows and 6 columns.
 #'
 #' \itemize{
 #'     \item Var: Specifies indicator type (price, volume, or total) and associated species grouping.

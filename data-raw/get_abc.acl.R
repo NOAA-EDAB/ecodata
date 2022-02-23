@@ -28,6 +28,14 @@ get_abc.acl <- function(save_clean = F){
     dplyr::mutate(Value = as.numeric(Value),
                   Time = as.numeric(Time))
 
+  # metadata ----
+  attr(abc.acl, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/mafmc-abcacl-and-catch.html"
+  attr(abc.acl, "data_files")   <- list(
+    abc.acl_xlsx = abc.acl_xlsx)
+  attr(abc.acl, "data_steward") <- c(
+    "Brandon Muffley <bmuffley@mafmc.org>")
+  attr(abc.acl, "plot_script") <- list(
+    `mf_MAB` = "human_dimensions_MAB.Rmd-abc-acl.R")
 
   if (save_clean){
     usethis::use_data(abc.acl, overwrite = T)

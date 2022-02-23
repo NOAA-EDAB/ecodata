@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ecodata</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/ecodata.html">Get started</a>
 </li>
@@ -63,13 +59,13 @@
 
       
 
-      </header><script src="ecodata_maintenance_files/header-attrs-2.3/header-attrs.js"></script><script src="ecodata_maintenance_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>ecodata maintenance</h1>
-                        <h4 class="author">NOAA-EDAB</h4>
+                        <h4 data-toc-skip class="author">NOAA-EDAB</h4>
             
-            <h4 class="date">2020-11-09</h4>
+            <h4 data-toc-skip class="date">2022-02-23</h4>
       
       
       <div class="hidden name"><code>ecodata_maintenance.Rmd</code></div>
@@ -79,31 +75,31 @@
     
     
 <p>The purpose of the <code>ecodata</code> package is to hold and facilitate the use of ecosystem indicator datasets used in the annual State of the Ecosystem reports developed for the New England and Mid-Atlantic Fisheries Management Councils. Since these reports are iterative, the indicators used to develop the reports are added to or changed regularly. To ensure continuity between years and package authors, the following protocols have been established.</p>
-<div id="workflow-overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#workflow-overview" class="anchor"></a>Workflow Overview</h2>
+<div class="section level2">
+<h2 id="workflow-overview">Workflow Overview<a class="anchor" aria-label="anchor" href="#workflow-overview"></a>
+</h2>
 <p><img src="ecodata_schematic.png"></p>
 </div>
-<div id="update-existing-indicator" class="section level2">
-<h2 class="hasAnchor">
-<a href="#update-existing-indicator" class="anchor"></a>Update existing indicator</h2>
+<div class="section level2">
+<h2 id="update-existing-indicator">Update existing indicator<a class="anchor" aria-label="anchor" href="#update-existing-indicator"></a>
+</h2>
 <p>From year to year most datasets will be delivered in the same format using the same name. In this case, ensure delivered .csv/.xls/.Rdata file is in the data-raw folder and run the get_example.R script.</p>
 <p>In some cases the data will not arrive in the same format or naming convention. In this case, ensure the delivered .csv/.xls/.Rdata file is in the data-raw folder and edit the get_example.R script to ensure that the output data frame is structured correctly (i.e. 5 columns (Time, Var, Value, Units, EPU)).</p>
 </div>
-<div id="add-new-indicator" class="section level2">
-<h2 class="hasAnchor">
-<a href="#add-new-indicator" class="anchor"></a>Add new indicator</h2>
+<div class="section level2">
+<h2 id="add-new-indicator">Add new indicator<a class="anchor" aria-label="anchor" href="#add-new-indicator"></a>
+</h2>
 <p>To add a new indicator dataset to the <code>ecodata</code> package, first ensure the delivered .csv/.xls/.Rdata file is in the data-raw folder. Write a get_example.R function which wrangles the raw data set into the desired format. Be sure to include a <code>get_example(save_clean = T)</code> line after closing the function. This will store the data frame in the data folder which is used to lazy load the data when the package is installed.</p>
 <p>The <strong>data-raw</strong> folder should hold contributor datasets, functions for wrangling data into SOE format (get_example.R scripts) and any supplimental functions used to create those datasets.</p>
 <p>The <strong>data</strong> folder should hold only wrangled .rda files.</p>
 </div>
-<div id="document-indicator" class="section level2">
-<h2 class="hasAnchor">
-<a href="#document-indicator" class="anchor"></a>Document indicator</h2>
+<div class="section level2">
+<h2 id="document-indicator">Document indicator<a class="anchor" aria-label="anchor" href="#document-indicator"></a>
+</h2>
 <ol style="list-style-type: decimal">
 <li><p>For each new indicator add a .R file to the <strong>R</strong> folder. This file should include the name of the dataset, a short description of the dataset, a “<span class="citation">@format</span>” section describing the dataframe structure, an itemized list of all of the columns in the dataframe and a “<span class="citation">@details</span>” section which links to the relevant tech doc chapter and any other important information.</p></li>
 <li><p>When the package is built, the files in the <em>R</em> folder will be used to populate the <em>man</em> folder.</p></li>
-<li><p>Ecodata uses <a href="https://pkgdown.r-lib.org/index.html">pkgdown</a> so once the manual documentation is complete run <code><a href="https://pkgdown.r-lib.org/reference/build_site.html">pkgdown::build_site()</a></code>. This will populate the website with is updated indicator dataset information.</p></li>
+<li><p>Ecodata uses <a href="https://pkgdown.r-lib.org/index.html" class="external-link">pkgdown</a> so once the manual documentation is complete run <code><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">pkgdown::build_site()</a></code>. This will populate the website with is updated indicator dataset information.</p></li>
 </ol>
 <p>Website link - <a href="https://noaa-edab.github.io/ecodata/landing_page" class="uri">https://noaa-edab.github.io/ecodata/landing_page</a></p>
 </div>
@@ -120,11 +116,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Kimberly Bastille, Sean Hardison.</p>
+  <p></p>
+<p>Developed by Kimberly Bastille, Sean Hardison.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -132,6 +130,8 @@
 
   
 
+
+  
 
   </body>
 </html>

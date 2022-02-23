@@ -1,4 +1,6 @@
-#
+# Northeast Aquaculture
+
+## States included (Maine, New Hampshire, Massachussets, Rhode Island)
 
 library(dplyr)
 library(tidyr)
@@ -37,7 +39,7 @@ get_aquaculture <- function(save_clean = F){
   attr(aquaculture, "data_steward") <- c(
     "Chris Schillaci <christopher.shillaci@noaa.gov>")
   attr(aquaculture, "plot_script") <- list(
-    `hd_MAB` = "human_dimensions_MAB.Rmd-aquaculture.R",
+#    `hd_MAB` = "human_dimensions_MAB.Rmd-aquaculture.R",
     `hd_NE` = "human_dimensions_NE.Rmd-aquaculture.R",
     `hd_NE_pa` = "human_dimensions_NE.Rmd-aquaculture-pa.R",
     `hd_NE_pieces` = "human_dimensions_NE.Rmd-aquaculture-pieces.R")
