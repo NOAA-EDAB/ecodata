@@ -2,7 +2,7 @@
 #'
 #' Data include catch per unit effort for all HMS species.
 #'
-#' @format 3360 rows and 4 columns.
+#' @format 3480 rows and 4 columns.
 #'
 #' \itemize{
 #'     \item EPU: Ecological Production Unit (EPU) where sampling occurred.

@@ -2,7 +2,7 @@
 #'
 #' Forage fish energy density comparison between studies in the 80s and 90s.
 #'
-#' @format A data set containing 48 rows and 7 columns.
+#' @format A data set containing 72 rows and 6 columns.
 #'
 #' \itemize{
 #'     \item Species: Species included in analysis.

@@ -1,4 +1,4 @@
-#### Chesapeake bay salinity
+#### Chesapeake bay Temperature
 
 library(tidyverse)
 library(readr)
@@ -25,7 +25,7 @@ get_ch_bay_temp <- function(save_clean = F){
 
 
   # metadata ----
-  attr(ch_bay_temp, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chesapeake-bay-salinity.html"
+  attr(ch_bay_temp, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chesapeake-bay-salinity-and-temperature.html"
   attr(ch_bay_temp, "data_files")   <- list(
     ch_bay_temp_csv = ch_bay_temp_csv)
   attr(ch_bay_temp, "data_steward") <- c(

@@ -79,7 +79,7 @@ get_eng_rel <- function(save_clean = F){
 
 
   # metadata ----
-  attr(engagement, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/community-engagement.html"
+  attr(engagement, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/fishery-reliance-and-social-vulnerability.html"
   attr(engagement, "data_files")   <- list(
     engagement_xlsx = engagement_xlsx)
   attr(engagement, "data_steward") <- c(

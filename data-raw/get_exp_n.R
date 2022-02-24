@@ -26,7 +26,7 @@ get_exp_n <- function(save_clean = F){
     rbind(exp_n2)
 
   # metadata ----
-  attr(exp_n, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc"
+  attr(exp_n, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/expected-number-of-species.html"
   attr(exp_n, "data_files")   <- list(
     exp_n_rdata = exp_n_rdata)
   attr(exp_n, "data_steward") <- c(

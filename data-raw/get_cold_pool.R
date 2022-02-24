@@ -2,7 +2,6 @@
 
 library(dplyr)
 library(tidyr)
-library(tidync)
 
 raw.dir <- here::here("data-raw")
 

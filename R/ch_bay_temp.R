@@ -1,4 +1,4 @@
-#' Chesapeake Bay salinity with historical trends for comparison
+#' Chesapeake Bay temperature with historical trends for comparison
 #'
 #'
 #'
@@ -7,11 +7,11 @@
 #' \itemize{
 #'     \item Time: Day
 #'     \item Value: Value of variable \code{Var}
-#'     \item Var: Salinity measurement
+#'     \item Var: Temperature measurement
 #'     \item EPU: Ecological Production Unit (EPU) where data originated. Here "MAB" refers to the Mid-Atlantic Bight.
 #'     \item Units: Units of variable \code{Var}.
 #'
 #' }
 #'
 #' @details More information available at \url{https://noaa-edab.github.io/tech-doc/https://noaa-edab.github.io/tech-doc/chesapeake-bay-salinity-and-temperature.html}
-"ch_bay_sal"
+"ch_bay_temp"

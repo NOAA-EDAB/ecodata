@@ -1,4 +1,4 @@
-## Chesapeake Bay SST
+## Chesapeake Bay SST gridded
 
 library(raster)
 library(tidyverse)
@@ -35,6 +35,19 @@ get_ches_bay_sst <- function(save_clean = F){
     dplyr::rename(Longitude = "y",
                   Latitude = "x") %>%
     filter(!Value == "NaN")
+
+  # metadata ----
+  attr(ches_bay_sst, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chesapeake-bay-seasonal-sst-anomalies.html"
+  attr(ches_bay_sst, "data_files")   <- list(
+    ches_1_nc = ches_1_nc,
+    ches_2_nc = ches_2_nc,
+    ches_3_nc = ches_3_nc,
+    ches_4_nc = ches_4_nc)
+  attr(ches_bay_sst, "data_steward") <- c(
+    "Bruce Vogt <bruce.vogt@noaa.gov>",
+    "Ron Vogel <ronald.vogel@noaa.gov>")
+  attr(ches_bay_sst, "plot_script") <- list(
+    `ltl_MAB` = "LTL_MAB.Rmd-ches-bay-sst.R")
 
 
   if (save_clean){

@@ -24,7 +24,7 @@ get_ch_bay_sal <- function(save_clean = F){
                   EPU = c("MAB"))
 
   # metadata ----
-  attr(ch_bay_sal, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chesapeake-bay-salinity.html"
+  attr(ch_bay_sal, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chesapeake-bay-salinity-and-temperature.html"
   attr(ch_bay_sal, "data_files")   <- list(
     ch_bay_sal_csv = ch_bay_sal_csv)
   attr(ch_bay_sal, "data_steward") <- c(

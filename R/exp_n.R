@@ -3,7 +3,7 @@
 #' Data include mean and standard deviation of expected number of species caught
 #' on the bottom trawl survey per 1000 individuals collected.
 #'
-#' @format 872 rows and 6 columns.
+#' @format 888 rows and 6 columns.
 #'
 #' \itemize{
 #'     \item Value: Value of variable \code{Var}.
