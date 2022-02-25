@@ -13,5 +13,5 @@
 #'
 #' }
 #'
-#' @details Methods used to calculate data are available at \url{https://noaa-edab.github.io/tech-doc/forage-anomaly.html}.
+#' @details Methods used to calculate data are available at \url{https://noaa-edab.github.io/tech-doc/https://noaa-edab.github.io/tech-doc/plankton-diversity.html}.
 "forage_anomaly"

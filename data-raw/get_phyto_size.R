@@ -29,7 +29,7 @@ micro<- read.csv(file.path(raw.dir, micro_csv)) %>%
 phyto_size <- nano %>% rbind( pico, micro)
 
 # metadata ----
-attr(phyto_size, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chl-pp.html"
+attr(phyto_size, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/phytoplankton-size-class.html"
 attr(phyto_size, "data_files")   <- list(
   phyto_csv = phyto_csv
 )

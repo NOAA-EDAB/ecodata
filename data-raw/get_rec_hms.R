@@ -36,7 +36,7 @@ get_rec_hms <- function(save_clean = F){
                                          `5` = "Mid-Atlantic"))
 
   # metadata ----
-  attr(rec_hms, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/slopewater-proportions.html"
+  attr(rec_hms, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/recreational-shark-fishing-indicators.html"
   attr(rec_hms, "data_files")   <- list(
     mrip_csv = mrip_csv,
     hms_cat = hms_cat)

@@ -4,7 +4,7 @@
 #' sea surface temperature data set (ERSST V5). The ERSST V5 dataset is parsed
 #' into 2° x 2° gridded bins between 1854-present with monthly temporal resolution.
 #'
-#' @format Data contain 167 rows and 5 columns.
+#' @format Data contain 168 rows and 5 columns.
 #' \itemize{
 #'    \item Var: Specifies variable of interest.
 #'    \item Value: Value of variable \code{Var}.
@@ -16,7 +16,8 @@
 #' @details Data were interpolated in regions with limited spatial coverage, and heavily
 #' damped during the period between 1854-1880 when collection was inconsistent
 #' (Huang et al. 2017). For this analysis, 19 bins were selected that encompassed
-#' the Northeast US Continental Shelf region (see Friedland and Hare 2007).
+#' the Northeast US Continental Shelf region (see Friedland and Hare 2007). More details
+#' can be found at this link \url{https://noaa-edab.github.io/tech-doc/long-term-sea-surface-temperature.html}
 #'
 #' @references
 #' Huang, Boyin, Peter W. Thorne, Viva F. Banzon, Tim Boyer, Gennady Chepurin, Jay H. Lawrimore, Matthew J. Menne, Thomas M. Smith, Russell S. Vose, and Huai Min Zhang. 2017. “Extended reconstructed Sea surface temperature, Version 5 (ERSSTv5): Upgrades, validations, and intercomparisons.” \emph{Journal of Climate} 30 (20):8179–8205. https://doi.org/10.1175/JCLI-D-16-0836.1.

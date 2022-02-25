@@ -13,6 +13,10 @@ get_long_term_sst <- function(save_clean = F){
            EPU = "All",
            Units = "degreesC")
 
+  # metadata ----
+  attr(long_term_sst, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/long-term-sea-surface-temperature.html"
+  attr(long_term_sst, "data_steward") <- c(
+    "Kevin Friedland <kevin.friedland@noaa.gov>")
   attr(long_term_sst, "plot_script") <- list(
     `ltl_MAB` = "LTL_MAB.Rmd-long-term-sst.R")
 

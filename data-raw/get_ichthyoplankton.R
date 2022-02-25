@@ -25,7 +25,7 @@ get_ichthyo_diversity <- function(save_clean = F){
   }
 
   # metadata ----
-  attr(ichthyo_diversity, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/ichthyoplankton-diversity.html"
+  attr(ichthyo_diversity, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/plankton-diversity.html"
   attr(ichthyo_diversity, "data_files")   <- list(
     ichthyo_diversity_xlsx = ichthyo_diversity_xlsx)
   attr(ichthyo_diversity, "data_steward") <- c(

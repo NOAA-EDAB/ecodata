@@ -12,7 +12,7 @@ get_ppr <- function(save_clean = F){
     dplyr::rename(Time  = Year)
 
   # metadata ----
-  attr(ppr, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/primary-production-required.html"
+  attr(ppr, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/ecosystem-overfishing.html"
   attr(ppr, "data_files")   <- list(
     ppr_rds = ppr_rds)
   attr(ppr, "data_steward") <- c(

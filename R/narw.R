@@ -3,7 +3,7 @@
 #' Data include abundance estimates for the North Atlantic right whale (NARW) provided by the Protected Species
 #' Branch of the NEFSC. Abundance was estimated following the methodology of Pace et. al 2017.
 #'
-#' @format These data include 120 rows and 5 columns.
+#' @format These data include 125 rows and 5 columns.
 #'
 #' \itemize{
 #'     \item Var: Specifies variable of interest, including NARW and calf abundance estimate median and 95% credible

@@ -2,7 +2,7 @@
 #'
 #' Recreational fishing indicators derived from Marine Recreational Information Program data queries.
 #'
-#' @format 304 rows and 5 columns
+#' @format 312 rows and 5 columns
 #'
 #' \itemize{
 #'     \item Var: Specifies variable name.
