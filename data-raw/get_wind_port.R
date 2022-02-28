@@ -43,6 +43,15 @@ get_wind_port <- function(save_clean = F){
     left_join(df, by = "State")
 
 
+  # metadata ----
+  attr(wind_port, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/wea-fishing-port-landings.html"
+  attr(wind_port, "data_files")   <- list(
+    wind_port_xlsx = wind_port_xlsx)
+  attr(wind_port, "data_steward") <- c(
+    "Angela Silva <angela.silva@noaa.gov>")
+  attr(wind_port, "plot_script") <- list(
+    `hd_MAB` = "human_dimensions_MAB.Rmd-wea-port-rev.R")
+
   if (save_clean){
     usethis::use_data(wind_port, overwrite = T)
   } else {

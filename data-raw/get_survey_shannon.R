@@ -12,7 +12,7 @@ get_surv_shan <- function(save_clean = F){
   survey_shannon<-shannon.mean
 
   # metadata ----
-  attr(survey_shannon, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc"
+  attr(survey_shannon, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/survdat.html"
   attr(survey_shannon, "data_files")   <- list(
     surv_shan_rdata = surv_shan_rdata)
   attr(survey_shannon, "data_steward") <- c(
@@ -27,4 +27,4 @@ get_surv_shan <- function(save_clean = F){
     return(exp_n)
   }
 }
-get_surv_shan(save_clean = T)
+get_surv_shan(survey_shannon = T)

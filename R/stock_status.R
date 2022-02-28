@@ -2,7 +2,7 @@
 #'
 #' Stock status for MAFMC and NEFMC managed species in New England and the Mid-Atlantic.
 #'
-#' @format 126 rows and 7 columns
+#' @format 104 rows and 7 columns
 #'
 #' \itemize{
 #'     \item Stock: Stock identifier.

@@ -2,7 +2,7 @@
 #'
 #' Data include shannon diversity values for bottom trawl survey catch.
 #'
-#' @format 436 rows and 4 columns.
+#' @format 436 rows and 5 columns.
 #'
 #' \itemize{
 #'     \item EPU: Ecological Production Unit (EPU) where sampling occurred.
@@ -14,5 +14,5 @@
 #'
 #' @details
 #' More information available at
-#' \url{https://noaa-edab.github.io/tech-doc/expected-number-of-species.html}.
+#' \url{https://noaa-edab.github.io/tech-doc/survdat.html}.
 "survey_shannon"

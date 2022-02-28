@@ -33,6 +33,16 @@ get_sandlance <- function(save_clean = F){
 
   sandlance<- sandlance %>%
     rbind(sandlance2)
+
+
+  # metadata ----
+  attr(sandlance, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/sandlance.html"
+  attr(sandlance, "data_files")   <- list(
+    sandlance_csv  = sandlance_csv,
+    sandlance2_csv = sandlance2_csv)
+  attr(sandlance, "data_steward") <- c(
+    "Moe Nelson <david.moe.nelson@noaa.gov>")
+
   if (save_clean){
     usethis::use_data(sandlance, overwrite = T)
   } else {

@@ -1,11 +1,11 @@
-#' Virginia waterbird productivity
+#' Chesapeake Bay Submerged Aquatic Vegetation
 #'
-#' These data are time series of productivity for groups of Virginia waterbirds
+#' These data are time series Submerged Aquatic Vegetation (SAV) in the
+#' Chesapeake Bay.
 #'
-#' @format Data set contains 24 rows and 5 columns
+#' @format Data set contains 180 rows and 4 columns
 #'
 #' \itemize{
-#'     \item Group: Group of waterbirds.
 #'     \item Value: Value of variable \code{Var}.
 #'     \item Units: Units of variable \code{Var}.
 #'     \item EPU: Ecological Production Unit (EPU) where sampling occurred. All data were sampled in southern Gulf of Maine.
@@ -15,6 +15,6 @@
 #'
 #'
 #' More information including processing and indicator derivation steps are available at
-#' \url{https://noaa-edab.github.io/tech-doc/ma-waterbird-productivity.html}.
+#' \url{https://noaa-edab.github.io/tech-doc/submerged-aquatic-vegetation.html}.
 #'
-"seabird_mab"
+"SAV"

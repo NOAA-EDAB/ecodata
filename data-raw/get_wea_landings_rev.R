@@ -28,6 +28,17 @@ get_wea_landings_rev <- function(save_clean = F){
                   perc_landings_min = paste(as.numeric(perc_landings_min)*100, "%"),
                   perc_revenue_min = paste(as.numeric(perc_revenue_min)*100, "%"))
 
+  # metadata ----
+  attr(wea_landings_rev, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/fisheries-revenue-in-wind-development-areas.html"
+  attr(wea_landings_rev, "data_files")   <- list(
+    wind_xlsx = wind_xlsx)
+  attr(wea_landings_rev, "data_steward") <- c(
+    "Doug Christel <douglas.christel@noaa.gov>")
+  attr(wea_landings_rev, "plot_script") <- list(
+    `hd_MAB_wea_rev` = "human_dimensions_MAB.Rmd-wea-landings-rev.R",
+    `hd_MAB_wea_spp_rev` = "human_dimensions_MAB.Rmd-wea-spp-rev.R")
+
+
   if (save_clean){
     usethis::use_data(wea_landings_rev, overwrite = T)
   } else {

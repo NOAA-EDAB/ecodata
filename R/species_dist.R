@@ -2,7 +2,7 @@
 #'
 #' Data include timeseires of depth, distance from shelf and distance along shelf.
 #'
-#' @format Data set contains 260 rows and 5 columns
+#' @format Data set contains 270 rows and 5 columns
 #'
 #' \itemize{
 #'     \item Time: Year.

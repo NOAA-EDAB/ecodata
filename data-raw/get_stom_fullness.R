@@ -19,7 +19,7 @@ get_stom_fullness <- function(save_clean = F){
     dplyr::select(Time, Var, Value, EPU, Units)
 
   # metadata ----
-  attr(stom_fullness, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chl-pp.html"
+  attr(stom_fullness, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/stomach-fullness.html"
   attr(stom_fullness, "data_files")   <- list(
     stom_fullness_csv = stom_fullness_csv)
   attr(stom_fullness, "data_steward") <- c(

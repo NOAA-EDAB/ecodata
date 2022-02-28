@@ -3,7 +3,7 @@
 #' These data are time series of productivity and diet composition for common tern at different islands in
 #' southern Gulf of Maine.
 #'
-#' @format Data set contains 3060 rows and 5 columns
+#' @format Data set contains 3230 rows and 6 columns
 #'
 #' \itemize{
 #'     \item Var: The first three letters in the variable \code{Var} correspond to the island at which sampling occurred,
@@ -13,6 +13,7 @@
 #'     \item Units: Units of variable \code{Var}.
 #'     \item EPU: Ecological Production Unit (EPU) where sampling occurred. All data were sampled in southern Gulf of Maine.
 #'     \item Time: Year of sampling.
+#'     \item Sum: Sum of all \code{Var}.
 #' }
 #'
 #' @references

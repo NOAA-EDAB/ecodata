@@ -2,7 +2,7 @@
 #'
 #' Percent total of water type observed in the deep Northeast Channel (150-200 m water depth).
 #'
-#' @format 78 rows and 5 columns
+#' @format 80 rows and 5 columns
 #'
 #' \itemize{
 #'     \item Var: Specifies slopewater source (either Labrador Slope Water (LSLW) or Warm Slope Water (WSW))
