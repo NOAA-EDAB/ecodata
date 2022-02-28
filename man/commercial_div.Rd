@@ -5,7 +5,7 @@
 \alias{commercial_div}
 \title{Commercial fisheries diversity}
 \format{
-These data contain 132 rows and 5 columns.
+These data contain 150 rows and 5 columns.
 
 \itemize{
 \item Var: Specifies diversity metric or number of fleets, where fleet is defined by vessel length and gear type.

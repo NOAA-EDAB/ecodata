@@ -5,7 +5,7 @@
 \alias{exp_n}
 \title{Expected Number of Species per 1000 Individuals}
 \format{
-872 rows and 6 columns.
+888 rows and 6 columns.
 
 \itemize{
 \item Value: Value of variable \code{Var}.

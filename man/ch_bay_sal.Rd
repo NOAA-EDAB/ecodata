@@ -3,9 +3,9 @@
 \docType{data}
 \name{ch_bay_sal}
 \alias{ch_bay_sal}
-\title{Chesapeake Bay 2018 - 2019 salinity with historical trends for comapirson}
+\title{Chesapeake Bay salinity with historical trends for comparison}
 \format{
-A data set containing 2555 rows and 5 columns.
+A data set containing 1328 rows and 5 columns.
 
 \itemize{
 \item Time: Day
@@ -20,9 +20,9 @@ A data set containing 2555 rows and 5 columns.
 ch_bay_sal
 }
 \description{
-Chesapeake Bay 2018 - 2019 salinity with historical trends for comapirson
+Chesapeake Bay salinity with historical trends for comparison
 }
 \details{
-More information available at \url{https://noaa-edab.github.io/tech-doc/chesapeake-bay-salinity.html}
+More information available at \url{https://noaa-edab.github.io/tech-doc/https://noaa-edab.github.io/tech-doc/chesapeake-bay-salinity-and-temperature.html}
 }
 \keyword{datasets}

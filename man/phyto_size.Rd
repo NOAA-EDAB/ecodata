@@ -5,7 +5,7 @@
 \alias{phyto_size}
 \title{Phytoplankton size class}
 \format{
-These data contain 960 rows and 5 columns.
+These data contain 28197 rows and 5 columns.
 
 \itemize{
 \item Var: Phytoplankton size category.

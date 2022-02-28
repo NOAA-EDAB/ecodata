@@ -3,14 +3,15 @@
 \docType{data}
 \name{rec_hms}
 \alias{rec_hms}
-\title{Recreational Higly Migratory Species}
+\title{Recreational shark fishing landings}
 \format{
-These data contain 225 rows and 4 columns.
+These data contain 319 rows and 5 columns.
 
 \itemize{
 \item Var: HMS species category.
 \item Value: Value of variable \code{Var}.
 \item Time: Time step of \code{Var}.
+\item Region: Region Classifictaion.
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.
 }
 }
@@ -18,10 +19,10 @@ These data contain 225 rows and 4 columns.
 rec_hms
 }
 \description{
-Recreational Higly Migratory Species
+Shark landings reported using MRIP.
 }
 \details{
 Methods used to calculate data are available
-at \url{https://noaa-edab.github.io/tech-doc/highly-migratory-species-landings.html}.
+at \url{https://noaa-edab.github.io/tech-doc/recreational-shark-fishing-indicators.html}.
 }
 \keyword{datasets}

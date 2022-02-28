@@ -5,7 +5,7 @@
 \alias{stock_status}
 \title{Managed species stock status}
 \format{
-126 rows and 7 columns
+104 rows and 7 columns
 
 \itemize{
 \item Stock: Stock identifier.

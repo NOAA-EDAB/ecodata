@@ -5,7 +5,7 @@
 \alias{ne_inshore_survey}
 \title{New England inshore state survey data}
 \format{
-A data set containing 710 rows and 5 columns.
+A data set containing 252 rows and 6 columns.
 
 \itemize{
 \item Var: Includes SOE species grouping, season that survey occurred (fall or spring), and variable calculated.
@@ -14,6 +14,7 @@ variation, and standard errors.
 \item Time: Year that survey occurred.
 \item Value: Value of variable \code{Var}.
 \item Units: Units of variable \code{Var}.
+\item Source: Survey Source.
 \item EPU: Ecological Production Unit (EPU) where sampling occurred. Here \code{NE} refers to New England.
 }
 }

@@ -5,14 +5,13 @@
 \alias{cold_pool}
 \title{Cold pool index}
 \format{
-A data set containing 104 rows and 5 columns.
+A data set containing 384 rows and 4 columns.
 
 \itemize{
 \item Time: Year
 \item Val: Value of variable.
 \item Var: Cold Pool model Temperature and volume parameters.
 \item EPU: Ecological Production Unit (EPU) where data originated. Here "MAB" refers to the Mid-Atlantic Bight.
-\item Uncertainty: Uncertainty around the Value
 
 }
 }
@@ -20,7 +19,7 @@ A data set containing 104 rows and 5 columns.
 cold_pool
 }
 \description{
-Cold pool index
+The cold pool is an area of relatively cold bottom water that forms on the US northeast shelf in the Mid-Atlantic Bight.
 }
 \details{
 More information available at \url{https://noaa-edab.github.io/tech-doc/cold-pool-index.html}

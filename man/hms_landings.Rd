@@ -5,7 +5,7 @@
 \alias{hms_landings}
 \title{Highly Migratory Species Landings and Revenue}
 \format{
-112 rows and 5 columns.
+132 rows and 5 columns.
 
 \itemize{
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.

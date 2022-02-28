@@ -5,7 +5,7 @@
 \alias{recdat}
 \title{Recreational fishing indicators}
 \format{
-304 rows and 5 columns
+312 rows and 5 columns
 
 \itemize{
 \item Var: Specifies variable name.

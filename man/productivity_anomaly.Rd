@@ -5,6 +5,8 @@
 \alias{productivity_anomaly}
 \title{Small fish per large fish biomass anomaly}
 \format{
+Data frame with 2346 rows and 5 columns.
+
 \itemize{
 \item Var: Common name of surveyed species. If data reflect the aggregated shelf-wide anomaly, then \code{NE LME} is included with the species name.
 \item EPU: EPU where sampling occurred.

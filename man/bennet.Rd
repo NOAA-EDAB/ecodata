@@ -5,7 +5,7 @@
 \alias{bennet}
 \title{Bennet indicator}
 \format{
-A data set containing 2240 rows and 5 columns.
+A data set containing 2510 rows and 6 columns.
 
 \itemize{
 \item Var: Specifies indicator type (price, volume, or total) and associated species grouping.

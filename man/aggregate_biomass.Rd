@@ -5,7 +5,7 @@
 \alias{aggregate_biomass}
 \title{NEFSC survey data broken into season and aggregate group biomass}
 \format{
-A data set containing 30572 rows and 6 columns.
+A data set containing 38008 rows and 6 columns.
 
 \itemize{
 \item Time: Survey year.

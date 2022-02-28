@@ -3,7 +3,7 @@
 \docType{data}
 \name{seabird_mab}
 \alias{seabird_mab}
-\title{Virginia waterbor productivity}
+\title{Virginia waterbird productivity}
 \format{
 Data set contains 24 rows and 5 columns
 

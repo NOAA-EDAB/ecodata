@@ -5,7 +5,7 @@
 \alias{bottom_temp}
 \title{Bottom temperature}
 \format{
-Data contain 648 rows and 5 columns.
+Data contain 664 rows and 5 columns.
 \itemize{
 \item Var: Specifies variable of interest.
 \item Value: Value of variable \code{Var}.

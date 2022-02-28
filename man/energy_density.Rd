@@ -5,7 +5,7 @@
 \alias{energy_density}
 \title{Forage fish energy density}
 \format{
-A data set containing 48 rows and 7 columns.
+A data set containing 72 rows and 6 columns.
 
 \itemize{
 \item Species: Species included in analysis.

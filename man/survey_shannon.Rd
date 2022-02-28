@@ -5,7 +5,7 @@
 \alias{survey_shannon}
 \title{Shannon Diversity of NEFSC Bottom Trawl Survey}
 \format{
-436 rows and 4 columns.
+436 rows and 5 columns.
 
 \itemize{
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.
@@ -23,6 +23,6 @@ Data include shannon diversity values for bottom trawl survey catch.
 }
 \details{
 More information available at
-\url{https://noaa-edab.github.io/tech-doc/expected-number-of-species.html}.
+\url{https://noaa-edab.github.io/tech-doc/survdat.html}.
 }
 \keyword{datasets}

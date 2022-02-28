@@ -3,23 +3,29 @@
 \docType{data}
 \name{heatwave_year}
 \alias{heatwave_year}
-\title{Marine heatwaves within 2019}
+\title{Marine heatwaves within most recent year}
 \format{
-Data set contains 1029 rows and 5 columns
+Data set contains 999 rows and 11 columns
 
 \itemize{
-\item Time: Date.
-\item Var: Marine heatwave value
-\item Value: Value of variable  \code{Var}.
-\item Units: Unit of Variable  \code{Var}.
+\item doy: Day of Year.
+\item t: Date.
+\item temp: Temperature.
+\item seas: Climatological Temperature (1982-2011).
+\item thresh: Climatological threshold indicator anything above is a heatwave.
+\item threshCriterion: If TRUE then temperature is above the 90th percentile of the long term average.
+\item eurationCriterion: If TRUE the temp has been above threshold for 5 or move days.
+\item event: If TRUE indicates heatwave event.
+\item event_no: Heatwave number.
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.
+\item Year: Year
 }
 }
 \usage{
 heatwave_year
 }
 \description{
-Data include daily heatwave anomoly for 2019.
+Data include daily heatwave anomoly for most recent year.
 }
 \details{
 More information including processing and indicator derivation steps are available at

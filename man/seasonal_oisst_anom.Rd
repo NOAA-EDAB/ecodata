@@ -5,7 +5,7 @@
 \alias{seasonal_oisst_anom}
 \title{Sea-surface temperature anomaly time serries}
 \format{
-468 observations in 5 columns
+480 observations in 5 columns
 
 \itemize{
 \item Value: SST anomaly in degrees C.
@@ -26,7 +26,8 @@ These data were derived from the NOAA Optimum Interpolation SST High Resolution 
 \details{
 Seasons are defined as: Fall = October, November, December; Winter = January, February, March; Spring = April,
 May, June; Summer = July, August, September. Methods used to derive these data are available at \url{https://github.com/NOAA-EDAB/ecodata/blob/master/data-raw/get_seasonal_oisst_anom.R}.
-Contact Sean Hardison (sean.hardison@noaa.gov) for source data used in the analysis or query your own at
-\url{https://www.esrl.noaa.gov/psd/data/gridded/data.noaa.oisst.v2.highres.html}.
+Contact Kimberly Bastille (kimberly.bastille@noaa.gov) for source data used in the analysis or query your own at
+\url{https://www.esrl.noaa.gov/psd/data/gridded/data.noaa.oisst.v2.highres.html}. For more details about how this indictaor is calculated,
+use our Technical Documentation. \url{https://noaa-edab.github.io/tech-doc/seasonal-sst-anomalies.html}.
 }
 \keyword{datasets}

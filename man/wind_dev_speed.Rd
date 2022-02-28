@@ -5,13 +5,14 @@
 \alias{wind_dev_speed}
 \title{Wind energy development speed}
 \format{
-Data set contains 9 rows and 4 columns
+Data set contains 58 rows and 5 columns
 
 \itemize{
 \item Time: Year.
 \item Var: Cumulative wind lease area.
 \item Value: Value of variable  \code{Var}.
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.
+\item Report_year: Year values reported.
 }
 }
 \usage{

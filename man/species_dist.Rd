@@ -5,7 +5,7 @@
 \alias{species_dist}
 \title{Species distribution on the NES.}
 \format{
-Data set contains 260 rows and 5 columns
+Data set contains 270 rows and 5 columns
 
 \itemize{
 \item Time: Year.
