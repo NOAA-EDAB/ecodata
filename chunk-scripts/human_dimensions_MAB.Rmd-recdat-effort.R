@@ -46,7 +46,7 @@ rec_effort <- recdat %>%
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Recreational effort")+
-  ggplot2::ylab(expression("Angler Trips (10"^6*" N)")) +
+  ggplot2::ylab(expression(atop("Angler Trips",paste("(Number x 10"^6*")")))) +
   ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline,
                color = Var),

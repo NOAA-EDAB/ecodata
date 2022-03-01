@@ -31,7 +31,7 @@ rec_div <- recdat %>%
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
-  ggplot2::ggtitle("Rec. fleet effort diversity")+
+  ggplot2::ggtitle("Recreational fleet effort diversity")+
   ggplot2::ylab(expression("Effective Shannon")) +
   ggplot2::xlab(element_blank())+
   ggplot2::geom_hline(aes(yintercept = hline,

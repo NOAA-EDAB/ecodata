@@ -39,13 +39,13 @@ ggplot2::ggplot(data = stock_status) +
                      breaks = stock_status$score) +
   ggplot2::ylim(0,y.max) +
   ggplot2::xlim(0,x.max) +
-  ggplot2::geom_text(data = unknown, aes(x = x, y = y, label = text), #Custom legend for unknown stock status
+  ggplot2::geom_text(data = unknown, aes(x = x-0.5, y = y+0.2, label = text), #Custom legend for unknown stock status
             size = c(4.75,rep(4,6))) +
-  ggplot2::annotate("rect", xmin = 0.8*x.max,
-           xmax = x.max,
-           ymin = 0.65*y.max,
-           ymax = 0.90*y.max,
-           alpha = 0.1) +
+  #ggplot2::annotate("rect", xmin = 0.8*x.max,
+  #         xmax = x.max
+  #         ymin = 0.65*y.max,
+  #         ymax = 0.90*y.max,
+  #         alpha = 0.1) +
   ggplot2::xlab(expression(~B/B[msy])) +
   ggplot2::ylab(expression(~F/F[msy])) +
   ggplot2::guides(color = FALSE) +

@@ -8,4 +8,5 @@ ecodata::rec_hms %>%
   ggplot2::ggtitle("Recreational Shark Landings")+
   ggplot2::xlab(element_blank())+
   ggplot2::theme(legend.title = element_blank())+
-  ecodata::theme_ts()
+  ecodata::theme_ts()+
+  ecodata::theme_title()

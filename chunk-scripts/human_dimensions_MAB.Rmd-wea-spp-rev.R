@@ -9,7 +9,7 @@ ecodata::wind_revenue %>%
                                "QUAHOGS/BUSHEL",  "CLAM, SURF/BUSHEL" )) %>%
   dplyr::mutate(Species = recode(Species, "SQUID / LOLIGO"="Longfin Squid", 
                                  "MONK" = "Monkfish", 
-                                 "FLOUNDER, SUMMER / FLUKE" = "Summer FLounder", 
+                                 "FLOUNDER, SUMMER / FLUKE" = "Summer Flounder", 
                                  "QUAHOGS/BUSHEL" = "Ocean Quahog",
                                  "CLAM, SURF/BUSHEL" = "Surfclam")) %>% 
   ggplot2::ggplot() +

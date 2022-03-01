@@ -40,11 +40,11 @@ ggplot2::ggplot(data = stock_status) +
                      size = c(4.75,rep(4,3))) +
   ggplot2::annotate(geom="text", x=0.43, y=5, label="ATL SBN (F/Fmsy = 22.5)",
                     color="#1B9E77")+
-  ggplot2::annotate("rect", xmin = 0.8*x.max,
-                    xmax = x.max,
-                    ymin = 0.65*y.max,
-                    ymax = 0.90*y.max,
-                    alpha = 0.1) +
+  #ggplot2::annotate("rect", xmin = 0.8*x.max,
+  #                  xmax = x.max,
+  #                  ymin = 0.65*y.max,
+  #                  ymax = 0.90*y.max,
+  #                  alpha = 0.1) +
   ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
                               breaks = stock_status$score) +
   ggplot2::xlab(expression(~B/B[msy])) +
