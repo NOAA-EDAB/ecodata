@@ -1,6 +1,6 @@
 ---
 title: "Habitat Vulnerability Tables"
-author: "Sean Lucey"
+author: "Sean Lucey and Sarah Gaichas"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
 ---
@@ -34,9 +34,11 @@ options(knitr.kable.NA = '')
 
 #### Mid-Atlantic Habitat Vulnerability Table
 
+This table aligns species by life stage (rows) with habitats (columns) with the climate vulnerability rankings for both species and habitats. Species dependence on a habitat is indicated in the cells under each habitat; if there is no entry for a species stage, then it is not dependent on that habitat. The table uses color to define a range across low (green), moderate (yellow), high (orange), and very high (red) climate vulnerability for species (first column) and habitats (all other columns). This color scheme also denotes the level of species dependence on a habitat.
+
 ```{r class.source="risktable"}
 #Read in Mid-Atlantic table
-mid <- as.data.table(readxl::read_xlsx(here('data-raw/habitat_vulnerability.xlsx'),
+mid <- as.data.table(readxl::read_xlsx(here('data-raw/habitat_vulnerability_2022.xlsx'),
                          sheet = 'Mid-Atlantic', skip = 1))
 
 #Identify individual species climate vulnerability
@@ -114,8 +116,8 @@ hab.table <- hab.table %>%
     )
 
 colnames(hab.table)[c(3:4)] <- paste0('<span style="box-shadow: -10px 0 0 red, 10px 0 0 red; background-color:red; color:white">',colnames(hab.table)[c(3:4)],'</span>')
-colnames(hab.table)[c(5:10)] <- paste0('<span style="box-shadow: -10px 0 0 orange, 10px 0 0 orange; background-color:',c("orange"),'">',colnames(hab.table)[c(5:10)],'</span>')
-colnames(hab.table)[c(11:15)] <- paste0('<span style="box-shadow: -10px 0 0 yellow, 10px 0 0 yellow; background-color:',c("yellow"),'">',colnames(hab.table)[c(11:15)],'</span>')
+colnames(hab.table)[c(5:11)] <- paste0('<span style="box-shadow: -10px 0 0 orange, 10px 0 0 orange; background-color:',c("orange"),'">',colnames(hab.table)[c(5:11)],'</span>')
+colnames(hab.table)[c(12:16)] <- paste0('<span style="box-shadow: -10px 0 0 yellow, 10px 0 0 yellow; background-color:',c("yellow"),'">',colnames(hab.table)[c(12:16)],'</span>')
 
 dt <- datatable(hab.table, rownames = FALSE, escape = FALSE,
           extensions = c('Scroller', 'FixedColumns'), #add scrolling and fixed column
@@ -129,11 +131,11 @@ dt <- datatable(hab.table, rownames = FALSE, escape = FALSE,
     backgroundColor = '#FF000080'
   ) %>%
   formatStyle(
-    names(hab.table)[5:10],
+    names(hab.table)[5:11],
     backgroundColor = '#FFA50080'
   ) %>%
   formatStyle(
-    names(hab.table)[11:15],
+    names(hab.table)[12:16],
     backgroundColor = '#FFFF0080'
   ) %>%
 
@@ -258,5 +260,10 @@ datatable(hab.table, rownames = FALSE,
 
 ```
 
-#### Data Sourecs
+#### Data Sources
 
+Farr, E. R., Johnson, M. R., Nelson, M. W., Hare, J. A., Morrison, W. E., Lettrich, M. D., Vogt, B., et al. 2021. An assessment of marine, estuarine, and riverine habitat vulnerability to climate change in the Northeast U.S. PLOS ONE, 16: e0260654. Public Library of Science.
+
+Hare, J. A., Morrison, W. E., Nelson, M. W., Stachura, M. M., Teeters, E. J., Griffis, R. B., Alexander, M. A., et al. 2016. A Vulnerability Assessment of Fish and Invertebrates to Climate Change on the Northeast U.S. Continental Shelf. PLOS ONE, 11: e0146756.
+
+Kritzer, J. P., DeLucia, M.-B., Greene, E., Shumway, C., Topolski, M. F., Thomas-Blate, J., Chiarella, L. A., et al. 2016. The Importance of Benthic Habitats for Coastal Fisheries. BioScience, 66: 274–284.
