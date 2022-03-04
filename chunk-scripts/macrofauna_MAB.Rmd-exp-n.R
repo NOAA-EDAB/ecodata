@@ -32,7 +32,7 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   #           alpha = hline.alpha,
   #           linetype = hline.lty)+
   #ggplot2::facet_wrap(Var~.,scales = "free_y", ncol = 2) +
-  ggplot2::ggtitle("Expected Number of Species -Fall ")+
+  ggplot2::ggtitle("Expected Number of Species - Fall")+
   
   #ecodata::geom_gls() +
   #Axis and theme
