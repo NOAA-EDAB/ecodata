@@ -50,7 +50,7 @@ ne_chl <- ggplot2::ggplot(data = ne_early) +
                fill = "grey1") +
    ggplot2::geom_line(data = ne_late,aes(x = Time, y = Value),
              size = 1,color = "#33a02c", linetype = "dashed") +
-  ggplot2::ggtitle(expression("Chlorophyll"~italic(a)~" 2020 New Data")) +
+  ggplot2::ggtitle(expression("Chlorophyll"~italic(a)~"")) +
   ggplot2::ylim(c(0, 3))+
   ggplot2::facet_wrap(EPU~., ncol = 2)+
   ggplot2::guides(color = F) +
@@ -62,6 +62,7 @@ ne_chl <- ggplot2::ggplot(data = ne_early) +
   ggplot2::scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
   ecodata::theme_ts()+
   ecodata::theme_title()+
-  ecodata::theme_facet()
+  ecodata::theme_facet()+
+  ggplot2::theme(panel.spacing = unit(1, "lines"))
 
 ne_chl

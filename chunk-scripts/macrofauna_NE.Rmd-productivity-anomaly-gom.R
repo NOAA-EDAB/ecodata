@@ -1,11 +1,10 @@
 
-## GOM
-bar_dat <- ecodata::productivity_anomaly %>% 
+bar_dat_gom <- ecodata::productivity_anomaly %>% 
   dplyr::filter(EPU == "GOM")
 
-gom <- plot_stackbarcpts_single(YEAR = bar_dat$Time,
-                         var2bar = bar_dat$Var,
-                         x = bar_dat$Value,
+gom <- plot_stackbarcpts_single(YEAR = bar_dat_gom$Time,
+                         var2bar = bar_dat_gom$Var,
+                         x = bar_dat_gom$Value,
                          titl = "Gulf of Maine",
                          xlab = "",
                          ylab = "Small fish per large fish biomass (anomaly)",
@@ -15,4 +14,5 @@ gom <- plot_stackbarcpts_single(YEAR = bar_dat$Time,
                          label = "",
                          y.text = 10,
                          aggregate = TRUE)
+
 gom

@@ -16,7 +16,7 @@ island_loc <- data.frame(Island = c("EER","JI","MR","OGI",
                                        -69.771,-68.742,-70.312))
 
 islands <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = new_england, size = map.lwd) +
+  ggplot2::geom_sf(data = coast, size = map.lwd) +
   ggplot2::geom_point(data = island_loc, aes(x = Longitude, y = Latitude)) +
   ggrepel::geom_label_repel(data = island_loc, aes(x = Longitude, y = Latitude,
                                           label = Island), nudge_y  = -0.1) +
@@ -48,7 +48,7 @@ ylims2 <- c(ymin2, ymax2)
 
 NE <- ggplotGrob(
 ggplot2::ggplot()+
-  ggplot2::geom_sf(data = new_england, size = map.lwd) +
+  ggplot2::geom_sf(data = coast, size = map.lwd) +
   ggplot2::coord_sf(crs = crs, xlim = xlims2, ylim = ylims2) +
   ggplot2::annotate("rect", xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, color = "black",
            size = 0.1, fill = "transparent") +

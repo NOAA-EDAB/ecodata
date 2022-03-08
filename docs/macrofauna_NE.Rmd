@@ -1102,9 +1102,9 @@ gb+gom
 ```{r productivity-anomaly-gb, fig.cap = "Small fish per large fish biomass anomaly in Georges Bank."}
 #### Adjust plot properties -------------------------------
 adjustAxes <- 
-  ggplot2::theme(axis.title   = element_text(size = 18),
-                 axis.text    = element_text(size = 15),
-                 plot.title   = element_text(size = 20))
+  ggplot2::theme(axis.title   = element_text(size = 10),
+                 axis.text    = element_text(size = 10),
+                 plot.title   = element_text(size = 12))
 
 
 #### Plot stacked bar with cpts for single var ------------
@@ -1112,7 +1112,7 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
                                      x, xlab, ylab,
                                      titl,
                                      file_suffix,
-                                     leg_font_size = 10,
+                                     leg_font_size = 6,
                                      remove_leg = FALSE,
                                      leg_ncol = 1,
                                      wcpts = TRUE,
@@ -1205,9 +1205,9 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
     ggplot2::ggtitle(titl) +
     ggplot2::guides(fill = guide_legend(ncol = leg_ncol)) +
     ecodata::theme_ts()+
-    ggplot2::theme(axis.title   = element_text(size = 16),
-          axis.text    = element_text(size = 15),
-          plot.title   = element_text(size = 20),
+    ggplot2::theme(axis.title   = element_text(size = 10),
+          axis.text    = element_text(size = 10),
+          plot.title   = element_text(size = 12),
           legend.text  = element_text(size = leg_font_size),
           legend.title = element_blank()) +
     ggplot2::annotate("text", label = label, x = 1980, y = y.text,size = 8, colour = "black")
@@ -1237,18 +1237,20 @@ gb <- plot_stackbarcpts_single(YEAR = bar_dat$Time,
                          y.text = 10,
                          aggregate = TRUE)
 
+
+
 gb
+
 ```
 
 ```{r productivity-anomaly-gom, fig.cap = "Small fish per large fish biomass anomaly in the Gulf of Maine."}
 
-## GOM
-bar_dat <- ecodata::productivity_anomaly %>% 
+bar_dat_gom <- ecodata::productivity_anomaly %>% 
   dplyr::filter(EPU == "GOM")
 
-gom <- plot_stackbarcpts_single(YEAR = bar_dat$Time,
-                         var2bar = bar_dat$Var,
-                         x = bar_dat$Value,
+gom <- plot_stackbarcpts_single(YEAR = bar_dat_gom$Time,
+                         var2bar = bar_dat_gom$Var,
+                         x = bar_dat_gom$Value,
                          titl = "Gulf of Maine",
                          xlab = "",
                          ylab = "Small fish per large fish biomass (anomaly)",
@@ -1258,6 +1260,7 @@ gom <- plot_stackbarcpts_single(YEAR = bar_dat$Time,
                          label = "",
                          y.text = 10,
                          aggregate = TRUE)
+
 gom
 ```
 
@@ -1590,7 +1593,7 @@ island_loc <- data.frame(Island = c("EER","JI","MR","OGI",
                                        -69.771,-68.742,-70.312))
 
 islands <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = new_england, size = map.lwd) +
+  ggplot2::geom_sf(data = coast, size = map.lwd) +
   ggplot2::geom_point(data = island_loc, aes(x = Longitude, y = Latitude)) +
   ggrepel::geom_label_repel(data = island_loc, aes(x = Longitude, y = Latitude,
                                           label = Island), nudge_y  = -0.1) +
@@ -1622,7 +1625,7 @@ ylims2 <- c(ymin2, ymax2)
 
 NE <- ggplotGrob(
 ggplot2::ggplot()+
-  ggplot2::geom_sf(data = new_england, size = map.lwd) +
+  ggplot2::geom_sf(data = coast, size = map.lwd) +
   ggplot2::coord_sf(crs = crs, xlim = xlims2, ylim = ylims2) +
   ggplot2::annotate("rect", xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, color = "black",
            size = 0.1, fill = "transparent") +

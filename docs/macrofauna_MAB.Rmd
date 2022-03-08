@@ -1400,7 +1400,7 @@ ecodata::hms_cpue %>%
   left_join(sp_cat) %>% 
   group_by(Year, SP_CATEGORY) %>% 
   summarise(Value = sum(Value)) %>% 
-  rename(Var = SP_CATEGORY) %>% 
+  rename("Var" = "SP_CATEGORY") %>% 
   filter(!Var == "NA") %>% 
   ggplot()+
  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,

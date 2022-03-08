@@ -46,7 +46,7 @@ ggplot2::ggplot()+
   ggplot2::guides(color = FALSE) +
   ggplot2::ylab(expression("Landings (10"^3*"mt)")) +
   ggplot2::xlab(element_blank())+
-
+  
   ggplot2::geom_hline(aes(yintercept = hline,
                
                color = Var),
@@ -54,7 +54,7 @@ ggplot2::ggplot()+
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts() +
-  ggplot2::ggtitle("Gulf of Maine - Total Commercial Landings *No New Data")+
+  ggplot2::ggtitle("Gulf of Maine")+
   ecodata::theme_title()
 
 gb_total <- landings_agg %>% dplyr::filter(EPU == "GB") %>% 
@@ -76,7 +76,6 @@ ggplot2::ggplot()+
   ggplot2::guides(color = FALSE) +
   ggplot2::ylab(expression("Landings (10"^3*"mt)")) +
   ggplot2::xlab(element_blank())+
-
   ggplot2::geom_hline(aes(yintercept = hline,
                
                color = Var),
@@ -84,7 +83,22 @@ ggplot2::ggplot()+
            alpha = hline.alpha,
            linetype = hline.lty) +
   ecodata::theme_ts() +
-  ggplot2::ggtitle("Georges Bank - Total Commercial Landings *No New Data")+
+  ggplot2::ggtitle("Georges Bank")+
   ecodata::theme_title()
 
-cowplot::plot_grid(gb_total, gom_total, ncol = 2)
+plot_row<-cowplot::plot_grid( gb_total, gom_total, ncol = 2)
+title <- ggdraw() + 
+  draw_label(
+    "Total Commercial Landings *No New Data",
+    x = 0,
+    hjust = 0
+  ) +
+  theme(
+    # add margin on the left of the drawing canvas,
+    # so title is aligned with left edge of first plot
+    plot.margin = margin(0, 0, 0,1)
+  )
+
+
+cowplot::plot_grid(title, plot_row, ncol = 1, 
+                   rel_heights = c(0.1, 1))

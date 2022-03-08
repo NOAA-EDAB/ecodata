@@ -1,9 +1,9 @@
 
 #### Adjust plot properties -------------------------------
 adjustAxes <- 
-  ggplot2::theme(axis.title   = element_text(size = 18),
-                 axis.text    = element_text(size = 15),
-                 plot.title   = element_text(size = 20))
+  ggplot2::theme(axis.title   = element_text(size = 10),
+                 axis.text    = element_text(size = 10),
+                 plot.title   = element_text(size = 12))
 
 
 #### Plot stacked bar with cpts for single var ------------
@@ -11,7 +11,7 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
                                      x, xlab, ylab,
                                      titl,
                                      file_suffix,
-                                     leg_font_size = 10,
+                                     leg_font_size = 6,
                                      remove_leg = FALSE,
                                      leg_ncol = 1,
                                      wcpts = TRUE,
@@ -104,9 +104,9 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
     ggplot2::ggtitle(titl) +
     ggplot2::guides(fill = guide_legend(ncol = leg_ncol)) +
     ecodata::theme_ts()+
-    ggplot2::theme(axis.title   = element_text(size = 16),
-          axis.text    = element_text(size = 15),
-          plot.title   = element_text(size = 20),
+    ggplot2::theme(axis.title   = element_text(size = 10),
+          axis.text    = element_text(size = 10),
+          plot.title   = element_text(size = 12),
           legend.text  = element_text(size = leg_font_size),
           legend.title = element_blank()) +
     ggplot2::annotate("text", label = label, x = 1980, y = y.text,size = 8, colour = "black")
@@ -135,5 +135,7 @@ gb <- plot_stackbarcpts_single(YEAR = bar_dat$Time,
                          label = "",
                          y.text = 10,
                          aggregate = TRUE)
+
+
 
 gb

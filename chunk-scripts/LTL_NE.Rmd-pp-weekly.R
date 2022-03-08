@@ -52,7 +52,7 @@ ne_ppd <- ggplot2::ggplot(data = ne_pp_early) +
               fill = "grey1") +
   ggplot2::geom_line(data = ne_pp_late,aes(x = Time, y = Value),
             size = 1,color = "#33a02c", linetype = "dashed") +
-  ggplot2::ggtitle(expression("Primary production 2020 New Data")) +
+  ggplot2::ggtitle(expression("Primary Production")) +
   guides(color = F) +
   ggplot2::facet_wrap(EPU~., ncol = 2)+
   ggplot2::xlab("")+
@@ -63,7 +63,8 @@ ne_ppd <- ggplot2::ggplot(data = ne_pp_early) +
   ggplot2::scale_color_manual(values = c("#ef8a62","#2c7fb8","#a1d99b"))+
   ecodata::theme_ts()+
   ecodata::theme_title()+
-  ecodata::theme_facet()
+  ecodata::theme_facet()+
+  ggplot2::theme(panel.spacing = unit(1, "lines"))
 
 
 ne_ppd
