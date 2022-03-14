@@ -15,7 +15,7 @@ gb_zoo_div <- zoo_div %>%
 #  ggplot2::ylim(1,2.8)+
   ggplot2::ylab("Shannon Diversity") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GB Zooplankton Diversity") +
+  ggplot2::ggtitle("GB Zooplankton Diversity *No New Data") +
   ggplot2::facet_wrap(Var~., ncol = 3) +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
   ggplot2::geom_hline(aes(yintercept = mean(Value)),
