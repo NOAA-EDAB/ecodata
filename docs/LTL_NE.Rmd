@@ -190,7 +190,7 @@ ne_anom_plt
 
 #### Bottom temperature
 
-```{r bottom-temp-gom, fig.cap="GB and GOM annual bottom temperature anomalies."}
+```{r bottom-temp, fig.cap="GB and GOM annual bottom temperature anomalies."}
 
 gl_bt<- ecodata::bottom_temp_glorys%>% 
   dplyr::filter(EPU == "GOM")
@@ -680,7 +680,7 @@ ne_chl
 
 #### Phytoplankton Size Class
 
-```{r weekly-phyto-size-gb, eval = T}
+```{r weekly-phyto-size, eval = T}
 
 month <- seq(as.Date("2021-01-01"), 
              as.Date("2021-12-31"), 
