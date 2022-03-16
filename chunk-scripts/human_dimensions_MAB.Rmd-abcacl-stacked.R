@@ -13,8 +13,8 @@ ecodata::abc.acl %>%
                 Fishery = recode(Fishery, "Summer Flounder Commercial " = "All Others"),
                 Fishery = recode(Fishery, "Scup Recreational " = "All Others"), 
                 Fishery = recode(Fishery, "Scup Commercial " = "All Others"), 
-                Fishery = recode(Fishery, "Blueline Tilefish Recreational " = "Blueline Tilefish Rec"),
-                Fishery = recode(Fishery, "Blueline Tilefish Commercial " = "Blueline Tilefish Comm")) %>% 
+                Fishery = recode(Fishery, "Blueline Tilefish Recreational " = "All Others"),
+                Fishery = recode(Fishery, "Blueline Tilefish Commercial " = "All Others")) %>% 
    dplyr::group_by(Fishery, Time) %>% 
    dplyr::summarise(Value = sum(Value)) %>% 
   # dplyr::summarise(Value_mean = mean(Value), 
