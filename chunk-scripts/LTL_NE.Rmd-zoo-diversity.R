@@ -45,6 +45,6 @@ gb_zoo_div <- zoo_div %>%
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_blank())
 
-gb_zoo_div
-gom_zoo_div
-#gb_zoo_div + gom_zoo_div + patchwork::plot_layout(ncol = 2)
+#gb_zoo_div
+#gom_zoo_div
+gb_zoo_div + gom_zoo_div + patchwork::plot_layout(ncol = 2)
