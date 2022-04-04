@@ -33,7 +33,7 @@ rec_div <- recdat %>%
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
   ggplot2::ylim(ylim_rd)+
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.02)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Rec. fleet effort diversity")+

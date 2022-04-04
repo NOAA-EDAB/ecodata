@@ -86,7 +86,7 @@ ggplot2::ggplot()+
   ggplot2::ggtitle("Georges Bank")+
   ecodata::theme_title()
 
-plot_row<-cowplot::plot_grid( gb_total, gom_total, ncol = 2)
+ plot_row<-cowplot::plot_grid( gb_total, gom_total, ncol = 2)
 title <- ggdraw() + 
   draw_label(
     "Total Commercial Landings *No New Data",
