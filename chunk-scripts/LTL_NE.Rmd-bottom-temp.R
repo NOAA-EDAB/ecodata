@@ -61,7 +61,7 @@ gb_bottomtemp<- ggplot2::ggplot()+ #plot
         plot.title = element_text(size = 12))+
   ecodata::theme_title()
 
-plot_row<-cowplot::plot_grid(gom_bottomtemp, gb_bottomtemp, ncol = 2)
+plot_row<-cowplot::plot_grid(gb_bottomtemp, gom_bottomtemp, ncol = 2)
 title <- cowplot::ggdraw() + 
   cowplot::draw_label(
     "Bottom Temperature Anomaly",
