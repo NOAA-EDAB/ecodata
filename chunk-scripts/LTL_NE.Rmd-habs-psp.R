@@ -13,7 +13,7 @@ ecodata::habs %>%
         axis.title.y = element_text(angle = 90)) +
   ggplot2::scale_color_discrete(name = "State")+
   ecodata::theme_title()+
-  ggplot2::ylab(expression("Percent PSP"))+
+  ggplot2::ylab(expression("Percentage of samples that exceed the threshold"))+
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Percent PSP Samples in Blue Mussels")+
   ecodata::theme_facet()
