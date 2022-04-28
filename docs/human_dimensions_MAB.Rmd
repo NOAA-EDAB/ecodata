@@ -925,6 +925,8 @@ com2<-com %>%
 
 
 ```{r commercial-EJ, fig.cap="Environmental justice indicators (Poverty Index, population composition index, and personal disruption index) for top commercial fishing communities in Mid-Altantic."}
+
+
 knitr::include_graphics(file.path(image.dir, "EJ_Commercial_MAB.png"))
 
 ```
