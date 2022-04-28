@@ -13,7 +13,7 @@
 
 <title>Environmental and LTL Indicators MAB and Shelf-wide</title>
 
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -63,6 +63,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -83,6 +84,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -252,7 +256,7 @@ div.tocify {
 <div id="sst" class="section level4">
 <h4>SST</h4>
 <div class="figure" style="text-align: center">
-<img src="docs/images/seasonal-sst-anom-gridded-1.png" alt="MAB-seasonal sea surface temperature time series overlaid onto 2021 seasonal spatial anomalies." width="672" />
+<img src="LTL_MAB_files/figure-html/seasonal-sst-anom-gridded-1.png" alt="MAB-seasonal sea surface temperature time series overlaid onto 2021 seasonal spatial anomalies." width="672" />
 <p class="caption">
 MAB-seasonal sea surface temperature time series overlaid onto 2021 seasonal spatial anomalies.
 </p>
@@ -261,7 +265,7 @@ MAB-seasonal sea surface temperature time series overlaid onto 2021 seasonal spa
 <div id="bottom-temperature" class="section level4">
 <h4>Bottom temperature</h4>
 <div class="figure" style="text-align: center">
-<img src="docs/images/bottom-temp-1.png" alt="Annual bottom temperature in the Mid-Atlantic Bight. (black = Paula's, red = GLORYS)" width="576" />
+<img src="LTL_MAB_files/figure-html/bottom-temp-1.png" alt="Annual bottom temperature in the Mid-Atlantic Bight. (black = Paula's, red = GLORYS)" width="576" />
 <p class="caption">
 Annual bottom temperature in the Mid-Atlantic Bight. (black = Paula’s, red = GLORYS)
 </p>
@@ -273,17 +277,17 @@ Annual bottom temperature in the Mid-Atlantic Bight. (black = Paula’s, red = G
 <div id="primary-production" class="section level4">
 <h4>Primary production</h4>
 <div class="figure" style="text-align: center">
-<img src="docs/images/pp-monthly-1.png" alt="Monthly primary production trends show the annual cycle (i.e. the peak during the summer months) and the changes over time for each month." width="768" />
+<img src="LTL_MAB_files/figure-html/pp-monthly-1.png" alt="Monthly primary production trends show the annual cycle (i.e. the peak during the summer months) and the changes over time for each month." width="768" />
 <p class="caption">
 Monthly primary production trends show the annual cycle (i.e. the peak during the summer months) and the changes over time for each month.
 </p>
 </div>
-<p><img src="docs/images/chl-monthly-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="LTL_MAB_files/figure-html/chl-monthly-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="seasonal-chlorophyll-a-primary-production" class="section level4">
 <h4>Seasonal chlorophyll <em>a</em> &amp; primary production</h4>
 <div class="figure" style="text-align: center">
-<img src="docs/images/chl-weekly-1.png" alt="Weekly chlorophyll concentrations and primary productivity in the Mid-Atlantic are shown for by the colored line for 2021. The long-term mean is shown in black and shading indicates +/- 1 sample SD.  " width="672" />
+<img src="LTL_MAB_files/figure-html/chl-weekly-1.png" alt="Weekly chlorophyll concentrations and primary productivity in the Mid-Atlantic are shown for by the colored line for 2021. The long-term mean is shown in black and shading indicates +/- 1 sample SD.  " width="672" />
 <p class="caption">
 Weekly chlorophyll concentrations and primary productivity in the Mid-Atlantic are shown for by the colored line for 2021. The long-term mean is shown in black and shading indicates +/- 1 sample SD.
 </p>
@@ -291,7 +295,7 @@ Weekly chlorophyll concentrations and primary productivity in the Mid-Atlantic a
 </div>
 <div id="phytoplankton-size-class" class="section level4">
 <h4>Phytoplankton Size Class</h4>
-<p><img src="docs/images/weekly-phyto-size-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="LTL_MAB_files/figure-html/weekly-phyto-size-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="chesapeake-bay" class="section level3 tabset tabset-fade">
@@ -299,7 +303,7 @@ Weekly chlorophyll concentrations and primary productivity in the Mid-Atlantic a
 <div id="chesapeake-bay-water-quality-attainment" class="section level4">
 <h4>Chesapeake Bay Water Quality Attainment</h4>
 <div class="figure" style="text-align: center">
-<img src="docs/images/ches-bay-wq-1.png" alt="Water quality attainment in Chesapeake Bay following rolling three year assessment periods." width="576" />
+<img src="LTL_MAB_files/figure-html/ches-bay-wq-1.png" alt="Water quality attainment in Chesapeake Bay following rolling three year assessment periods." width="576" />
 <p class="caption">
 Water quality attainment in Chesapeake Bay following rolling three year assessment periods.
 </p>
@@ -308,7 +312,7 @@ Water quality attainment in Chesapeake Bay following rolling three year assessme
 <div id="chesepeake-bay-salinity-anomolies" class="section level4">
 <h4>Chesepeake Bay Salinity Anomolies</h4>
 <div class="figure" style="text-align: center">
-<img src="docs/images/ch-bay-sal-1.png" alt="Red = 2021, blue = Long term avergae 2010-2020. " width="672" />
+<img src="LTL_MAB_files/figure-html/ch-bay-sal-1.png" alt="Red = 2021, blue = Long term avergae 2010-2020. " width="672" />
 <p class="caption">
 Red = 2021, blue = Long term avergae 2010-2020.
 </p>
@@ -317,7 +321,7 @@ Red = 2021, blue = Long term avergae 2010-2020.
 <div id="chesapeake-bay-temperature-anomolies" class="section level4">
 <h4>Chesapeake Bay Temperature Anomolies</h4>
 <div class="figure" style="text-align: center">
-<img src="docs/images/ch-bay-temp-1.png" alt="Red = 2021, blue = Long term avergae 2010-2020. " width="672" />
+<img src="LTL_MAB_files/figure-html/ch-bay-temp-1.png" alt="Red = 2021, blue = Long term avergae 2010-2020. " width="672" />
 <p class="caption">
 Red = 2021, blue = Long term avergae 2010-2020.
 </p>
@@ -325,16 +329,16 @@ Red = 2021, blue = Long term avergae 2010-2020.
 </div>
 <div id="chesapeake-sst-map" class="section level4">
 <h4>Chesapeake SST Map</h4>
-<p><img src="docs/images/ches-bay-sst-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="LTL_MAB_files/figure-html/ches-bay-sst-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="submerged-aquatic-vegetation-sav" class="section level4">
 <h4>Submerged Aquatic Vegetation (SAV)</h4>
-<p><img src="docs/images/sav-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="LTL_MAB_files/figure-html/sav-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="husdon-river-flow" class="section level3">
 <h3>Husdon River Flow</h3>
-<p><img src="docs/images/hudson-river-flow-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="LTL_MAB_files/figure-html/hudson-river-flow-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="zooplankton" class="section level3 tabset tabset-fade">
 <h3 class="tabset tabset-fade">Zooplankton</h3>
@@ -342,7 +346,7 @@ Red = 2021, blue = Long term avergae 2010-2020.
 <h4>Euphausiids + Cnidarians</h4>
 <p><span style="color: red;">NO NEW DATA</span></p>
 <div class="figure" style="text-align: center">
-<img src="docs/images/zoo-strat-abun-1.png" alt="Stratified abundance of cnidarians and euphausiids in Mid-Atlantic Bight." width="672" />
+<img src="LTL_MAB_files/figure-html/zoo-strat-abun-1.png" alt="Stratified abundance of cnidarians and euphausiids in Mid-Atlantic Bight." width="672" />
 <p class="caption">
 Stratified abundance of cnidarians and euphausiids in Mid-Atlantic Bight.
 </p>
@@ -383,14 +387,14 @@ Stratified abundance of cnidarians and euphausiids in Mid-Atlantic Bight.
 <h4>Abundance anomaly</h4>
 <p><span style="color: red;">NO NEW DATA</span></p>
 <div class="figure" style="text-align: center">
-<img src="docs/images/zoo-abund-1.png" alt="Large (red) and small-bodied (blue) copepod abundance in the Mid-Atlantic Bight." width="672" />
+<img src="LTL_MAB_files/figure-html/zoo-abund-1.png" alt="Large (red) and small-bodied (blue) copepod abundance in the Mid-Atlantic Bight." width="672" />
 <p class="caption">
 Large (red) and small-bodied (blue) copepod abundance in the Mid-Atlantic Bight.
 </p>
 </div>
 <p><span style="color: red;">NO NEW DATA</span></p>
 <div class="figure" style="text-align: center">
-<img src="docs/images/zoo-sli-anom-1.png" alt="Large (red) and small-bodied (blue) copepod abundance in the Mid-Atlantic Bight." width="672" />
+<img src="LTL_MAB_files/figure-html/zoo-sli-anom-1.png" alt="Large (red) and small-bodied (blue) copepod abundance in the Mid-Atlantic Bight." width="672" />
 <p class="caption">
 Large (red) and small-bodied (blue) copepod abundance in the Mid-Atlantic Bight.
 </p>
@@ -455,7 +459,7 @@ Large (red) and small-bodied (blue) copepod abundance in the Mid-Atlantic Bight.
 <h4>Zooplankton Diversity</h4>
 <p><span style="color: red;">NO NEW DATA</span></p>
 <div class="figure" style="text-align: center">
-<img src="docs/images/zoo-diversity-1.png" alt="Zooplankton diversity in the Mid-Atlantic Bight." width="768" />
+<img src="LTL_MAB_files/figure-html/zoo-diversity-1.png" alt="Zooplankton diversity in the Mid-Atlantic Bight." width="768" />
 <p class="caption">
 Zooplankton diversity in the Mid-Atlantic Bight.
 </p>
@@ -464,7 +468,7 @@ Zooplankton diversity in the Mid-Atlantic Bight.
 <div id="calanus-stage" class="section level4">
 <h4>Calanus Stage</h4>
 <p><span style="color: red;">NO NEW DATA</span></p>
-<p><img src="docs/images/calanus-stage-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="LTL_MAB_files/figure-html/calanus-stage-1.png" width="672" style="display: block; margin: auto;" /></p>
 <!-- zoo_oi_mab <- ecodata::zoo_oi %>%  -->
 <!--   filter(!str_detect(Var,"SD"), -->
 <!--          EPU == "MAB") %>%  -->
@@ -551,7 +555,7 @@ Zooplankton diversity in the Mid-Atlantic Bight.
 <h3>Cold Pool Index</h3>
 <p><a href="https://docs.google.com/document/d/1FbbS5bFqwVoN12ibiGwrliIr-gu98KJg/edit?rtpof=true">notes here</a></p>
 <div class="figure" style="text-align: center">
-<img src="docs/images/cold_pool-1.png" alt="Cold pool index." width="960" />
+<img src="LTL_MAB_files/figure-html/cold_pool-1.png" alt="Cold pool index." width="960" />
 <p class="caption">
 Cold pool index.
 </p>
@@ -701,13 +705,13 @@ Cold pool index.
 <h3>Marine Heat Wave</h3>
 <p><a href="https://docs.google.com/document/d/1S91IDGC1vxQFZETAIzv-WOva3M8Q2vtd/edit?rtpof=true">notes here</a></p>
 <div class="figure" style="text-align: center">
-<img src="docs/images/heatwave-year-1.png" alt="Marine heatwave events (red) in the Mid-Atlantic occuring in 2020." width="80%" />
+<img src="LTL_MAB_files/figure-html/heatwave-year-1.png" alt="Marine heatwave events (red) in the Mid-Atlantic occuring in 2020." width="80%" />
 <p class="caption">
 Marine heatwave events (red) in the Mid-Atlantic occuring in 2020.
 </p>
 </div>
 <div class="figure" style="text-align: center">
-<img src="docs/images/heatwave-1.png" alt="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Mid-Atlantic Bight." width="672" />
+<img src="LTL_MAB_files/figure-html/heatwave-1.png" alt="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Mid-Atlantic Bight." width="672" />
 <p class="caption">
 Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Mid-Atlantic Bight.
 </p>
@@ -764,7 +768,7 @@ Marine heatwave cumulative intesity (left) and maximum intensity (right) in the 
 <div id="bottom-temp-heatwave" class="section level3">
 <h3>Bottom Temp Heatwave</h3>
 <div class="figure" style="text-align: center">
-<img src="docs/images/bottom-heatwave-1.png" alt="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Mid-Atlantic Bight." width="672" />
+<img src="LTL_MAB_files/figure-html/bottom-heatwave-1.png" alt="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Mid-Atlantic Bight." width="672" />
 <p class="caption">
 Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Mid-Atlantic Bight.
 </p>
@@ -790,7 +794,7 @@ Bottom pH (summer only: June-August) on the U.S. Northeast Shelf plotted from av
 <div id="seasonal-sst-anomaly" class="section level3">
 <h3>Seasonal SST anomaly</h3>
 <div class="figure" style="text-align: center">
-<img src="docs/images/shelf-seasonal-sst-anomaly-gridded-1.png" alt="Seasonal sea surface temperature anomalies for 2021 over the Northeast US Shelf." width="672" />
+<img src="LTL_MAB_files/figure-html/shelf-seasonal-sst-anomaly-gridded-1.png" alt="Seasonal sea surface temperature anomalies for 2021 over the Northeast US Shelf." width="672" />
 <p class="caption">
 Seasonal sea surface temperature anomalies for 2021 over the Northeast US Shelf.
 </p>
@@ -799,7 +803,7 @@ Seasonal sea surface temperature anomalies for 2021 over the Northeast US Shelf.
 <div id="long-term-sst" class="section level3">
 <h3>Long-term SST</h3>
 <div class="figure" style="text-align: center">
-<img src="docs/images/long-term-sst-1.png" alt="Average annual sea surface temperature (SST) over the Northeast US Shelf." width="672" />
+<img src="LTL_MAB_files/figure-html/long-term-sst-1.png" alt="Average annual sea surface temperature (SST) over the Northeast US Shelf." width="672" />
 <p class="caption">
 Average annual sea surface temperature (SST) over the Northeast US Shelf.
 </p>
@@ -808,13 +812,13 @@ Average annual sea surface temperature (SST) over the Northeast US Shelf.
 <div id="gsi" class="section level3">
 <h3>GSI</h3>
 <div class="figure" style="text-align: center">
-<img src="docs/images/gsi-1.png" alt="Index representing the north wall  of the Gulf Stream. Positive values represent a more northerly Gulf Stream position." width="480" />
+<img src="LTL_MAB_files/figure-html/gsi-1.png" alt="Index representing the north wall  of the Gulf Stream. Positive values represent a more northerly Gulf Stream position." width="480" />
 <p class="caption">
 Index representing the north wall of the Gulf Stream. Positive values represent a more northerly Gulf Stream position.
 </p>
 </div>
 <div class="figure" style="text-align: center">
-<img src="docs/images/gsi-old-1.png" alt="Index representing the north wall  of the Gulf Stream. Positive values represent a more northerly Gulf Stream position." width="480" />
+<img src="LTL_MAB_files/figure-html/gsi-old-1.png" alt="Index representing the north wall  of the Gulf Stream. Positive values represent a more northerly Gulf Stream position." width="480" />
 <p class="caption">
 Index representing the north wall of the Gulf Stream. Positive values represent a more northerly Gulf Stream position.
 </p>
@@ -823,7 +827,7 @@ Index representing the north wall of the Gulf Stream. Positive values represent 
 <div id="warm-core-rings" class="section level3">
 <h3>Warm Core Rings</h3>
 <div class="figure" style="text-align: center">
-<img src="docs/images/wcr-1.png" alt="Warm core ring formation on the Northeast US Shelf." width="672" />
+<img src="LTL_MAB_files/figure-html/wcr-1.png" alt="Warm core ring formation on the Northeast US Shelf." width="672" />
 <p class="caption">
 Warm core ring formation on the Northeast US Shelf.
 </p>
