@@ -4,8 +4,7 @@ image.dir<- here::here("docs/images")
 knitr::opts_chunk$set(echo = FALSE,
                       message = FALSE,
                       warning = FALSE,
-                      fig.align = 'center', 
-                      fig.path = "docs/images/") #allows for inserting R code into captions
+                      fig.align = 'center') #allows for inserting R code into captions
 
 #Plotting and data libraries
 library(ggplot2)

@@ -929,7 +929,7 @@ comm_div %>%
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
 
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
-  ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
+  ggplot2::scale_color_manual(values = "black", aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Permit revenue species diversity")+
   ggplot2::ylab(expression("Effective Shannon")) +

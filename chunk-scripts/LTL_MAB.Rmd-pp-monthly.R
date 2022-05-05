@@ -27,6 +27,7 @@ pp_cci <- ggplot2::ggplot(out_pp) +
     ggplot2::ggtitle("Monthly median PPD") +
     ggplot2::ylab(expression("PP (gC m"^-2*" d"^-1*")")) +
     ecodata::theme_facet() +
+    ggplot2::ylab("Time")+
     ggplot2::theme(axis.text.x = element_text(angle=45, hjust = 1),
           panel.spacing = unit(0.5, "lines"),
           plot.margin = unit(c(0.1, 0, 0, 0), "cm"))+
