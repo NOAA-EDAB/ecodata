@@ -2,7 +2,7 @@
 
 ## Get mean sst fro each stock area.
 
-## Calculate Marine Heatwave Cumulative and Maximu
+## Calculate Marine Heatwave Cumulative and Maximum
 raw.dir<- here::here("data-raw","gridded","sst_data")
 ltm.dir <- here::here("data-raw","gridded")
 
@@ -264,3 +264,130 @@ ESP_heatwave<- rbind(cum.intensity, max.intensity) %>%
 
 
 usethis::use_data(ESP_heatwave, overwrite = T)
+
+
+
+########################### Cod Stock Areas #############################
+raw.dir<- here::here("data-raw","gridded","sst")
+ltm.dir <- here::here("data-raw","gridded")
+
+library(dplyr)
+library(raster)
+library(sf)
+library(ggplot2)
+library(ncdf4)
+library(reshape2)
+library(ecodata)
+library(stringr)
+library(tidync)
+
+sst80<- raster::stack(file.path(here::here(raw.dir,"1982_1991_ne_sst.nc")))
+sst80 <- raster::crop(sst80, extent(280,300,30,50))
+sst80 <- raster::rotate(sst80)
+sst90<- raster::stack(file.path(here::here(raw.dir,"1992_2001_ne_sst.nc")))
+sst90 <- raster::crop(sst90, extent(280,300,30,50))
+sst90 <- raster::rotate(sst90)
+sst00<- raster::stack(file.path(here::here(raw.dir,"2002_2011_ne_sst.nc")))
+sst00 <- raster::crop(sst00, extent(280,300,30,50))
+sst00 <- raster::rotate(sst00)
+sst12<- raster::stack(file.path(here::here(raw.dir,"sst.day.mean.2012.v2.nc")))
+sst12 <- raster::crop(sst12, extent(280,300,30,50))
+sst12 <- raster::rotate(sst12)
+sst13<- raster::stack(file.path(here::here(raw.dir,"sst.day.mean.2013.v2.nc")))
+sst13 <- raster::crop(sst13, extent(280,300,30,50))
+sst13 <- raster::rotate(sst13)
+sst14<- raster::stack(file.path(here::here(raw.dir,"sst.day.mean.2014.v2.nc")))
+sst14 <- raster::crop(sst14, extent(280,300,30,50))
+sst14 <- raster::rotate(sst14)
+sst15<- raster::stack(file.path(here::here(raw.dir,"sst.day.mean.2015.v2.nc")))
+sst15 <- raster::crop(sst15, extent(280,300,30,50))
+sst15 <- raster::rotate(sst15)
+sst16<- raster::stack(file.path(here::here(raw.dir,"sst.day.mean.2016.v2.nc")))
+sst16 <- raster::crop(sst16, extent(280,300,30,50))
+sst16 <- raster::rotate(sst16)
+sst17<- raster::stack(file.path(here::here(raw.dir,"sst.day.mean.2017.v2.nc")))
+sst17 <- raster::crop(sst17, extent(280,300,30,50))
+sst17 <- raster::rotate(sst17)
+sst18<- raster::stack(file.path(here::here(raw.dir,"sst.day.mean.2018.v2.nc")))
+sst18 <- raster::crop(sst18, extent(280,300,30,50))
+sst18 <- raster::rotate(sst18)
+sst19<- raster::stack(file.path(here::here(raw.dir,"sst.day.mean.2019.v2.nc")))
+sst19 <- raster::crop(sst19, extent(280,300,30,50))
+sst19 <- raster::rotate(sst19)
+sst20<- raster::stack(file.path(here::here(raw.dir,"sst.day.mean.2020.v2.nc")))
+sst20 <- raster::crop(sst20, extent(280,300,30,50))
+sst20 <- raster::rotate(sst20)
+sst21<- raster::stack(file.path(here::here(raw.dir,"sst.day.mean.2021.nc")))
+sst21 <- raster::crop(sst21, extent(280,300,30,50))
+sst21 <- raster::rotate(sst21)
+
+sst<- raster::stack(sst80, sst90, sst00, sst12, sst13,
+                    sst14, sst15, sst16, sst17, sst18,
+                    sst19, sst20, sst21)
+crs(sst) <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
+
+sf_cod<-rgdal::readOGR(file.path(here::here("data-raw", "ESP"), "codstox.shp"), verbose = F)
+crs(sf_cod) <- crs
+sf <- as(sf_cod, "sf") %>%
+  dplyr::mutate(ID = STOCK)
+
+get_stock_heatwave<- function(stock){
+  crop<- mask(sst, sf[sf$ID == stock,])
+  value<- raster::cellStats(crop, stat='mean', na.rm=TRUE)
+  dat<- data.frame(value) %>%
+    dplyr::mutate(temp = as.numeric(value)) %>%
+    tibble::rownames_to_column("t") %>%
+    dplyr::mutate(t = substr(t, 2, 11),
+                  t = lubridate::as_date(t)) %>%
+    dplyr::select(t, temp)
+  dat<-as.tibble(dat)
+  ts <- heatwaveR::ts2clm(dat, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  stock.mhw <- heatwaveR::detect_event(ts)
+  mhw<- stock.mhw$event %>%
+    dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative)%>%
+    dplyr::mutate(stock_id = stock)# add max year ## days in 2020 data set only went to dec 9, 2020
+
+  return(mhw)
+}
+
+#acadian_redfish_both<- get_stock_heatwave("acadian_redfish_both")
+egom <- get_stock_heatwave("EGOM")
+gbk<- get_stock_heatwave("GBK")
+wgom<- get_stock_heatwave("WGOM")
+sne<- get_stock_heatwave("SNE")
+
+cum.intensity <- rbind(egom, gbk, wgom, sne) %>%
+  dplyr::mutate(Time = as.numeric(format(as.Date(date_start, format="%Y-%m-%d"),"%Y"))) %>%
+  dplyr::group_by(Time, stock_id) %>%
+  dplyr::summarise(Value = as.numeric(sum(intensity_cumulative))) %>%
+  dplyr::mutate(Var = "cumulative intensity") %>%
+  dplyr::ungroup()
+#Max intensity
+max.intensity <- rbind(egom, gbk, wgom, sne) %>%
+  dplyr::mutate(Time = as.numeric(format(as.Date(date_start, format="%Y-%m-%d"),"%Y")))  %>%
+  dplyr::rename(Value = intensity_max) %>%
+  dplyr::mutate(Var = "maximum intensity")%>%
+  dplyr::select(Time, stock_id, Value, Var)
+
+
+ESP_heatwave_cod<- rbind(cum.intensity, max.intensity) %>%
+  dplyr:: mutate(Units = "degrees C",
+                 Time = as.numeric(Time))
+
+usethis::use_data(ESP_heatwave_cod, overwrite = T)
+
+
+
+###### testting
+
+sst10<- raster::stack(file.path(here::here(raw.dir,"sst.day.mean.2012.v2.nc")),
+                      file.path(here::here(raw.dir,"sst.day.mean.2013.v2.nc")),
+                      file.path(here::here(raw.dir,"sst.day.mean.2014.v2.nc")),
+                      file.path(here::here(raw.dir,"sst.day.mean.2015.v2.nc")),
+                      file.path(here::here(raw.dir,"sst.day.mean.2016.v2.nc")),
+                      file.path(here::here(raw.dir,"sst.day.mean.2017.v2.nc")),
+                      file.path(here::here(raw.dir,"sst.day.mean.2018.v2.nc")),
+                      file.path(here::here(raw.dir,"sst.day.mean.2019.v2.nc")),
+                      file.path(here::here(raw.dir,"sst.day.mean.2020.v2.nc")),
+                      file.path(here::here(raw.dir,"sst.day.mean.2021.nc")))
+
