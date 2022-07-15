@@ -27,7 +27,7 @@ get_bottom_temp <- function(save_clean = F){
   mab <- read.csv(file.path(raw.dir,bottom_temp_MAB_csv)) %>% mutate(EPU = "MAB")
 
   bottom_temp <- rbind(ss, gom, gb, mab) %>% #bind all
-    dplyr::mutate(Units = "degreesC", Time = as.Date(format(date_decimal(Time), "%Y-%b-%d"), "%Y-%b-%d"),
+    dplyr::mutate(Units = "degreesC", Time = as.Date(format(lubridate::date_decimal(Time), "%Y-%b-%d"), "%Y-%b-%d"),
            Var, Var = plyr::mapvalues(Var, from = c("Tsfc_anom",#Rename variables
                                                     "Tsfc_ref",
                                                     "Tbot_anom",
@@ -36,9 +36,11 @@ get_bottom_temp <- function(save_clean = F){
                                              "reference sst in situ (1981-2010)",
                                              "bottom temp anomaly in situ",
                                              "reference bt in situ (1981-2010)"))) %>%
-    dplyr::group_by(Time = year(Time), EPU, Var, Units) %>%
+    dplyr::group_by(Time = lubridate::year(Time), EPU, Var, Units) %>%
     dplyr::summarise(Value = mean(Value)) %>%
-    as.data.frame()
+    as.data.frame()%>%
+    tibble::as_tibble() %>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   # metadata ----
   attr(bottom_temp, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/bottom-temperatures.html"

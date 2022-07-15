@@ -21,7 +21,8 @@ get_ch_bay_sal <- function(save_clean = F){
     tidyr::separate(Time, c("Time", "Trash"), sep = " ") %>%
     dplyr::select(-Trash) %>%
     dplyr::mutate(Time = lubridate::mdy(Time),
-                  EPU = c("MAB"))
+                  EPU = c("MAB"))%>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   # metadata ----
   attr(ch_bay_sal, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chesapeake-bay-salinity-and-temperature.html"

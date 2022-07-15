@@ -15,7 +15,8 @@ get_gsi <- function(save_clean = F){
     dplyr::rename(Time = Month, Value = GSI) %>%
     dplyr::mutate(Var = "gulf stream index",
            Units = "latitude anomaly",
-           EPU = "All")
+           EPU = "All")%>%
+    dplyr::select(Time, Var, Value, EPU)
 
   # metadata ----
   attr(gsi, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/gulf-stream-index.html"

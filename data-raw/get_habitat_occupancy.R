@@ -16,7 +16,8 @@ get_hab_occupancy <- function(save_clean = F){
     dplyr::rename("Time" = "Year") %>%
     tidyr::gather(key  = "Var", value = "Value", -Time) %>%
     dplyr::mutate(EPU = c("All"),
-           Units = c("10^3km^2"))
+           Units = c("10^3km^2"))%>%
+    dplyr::select(Time, Var, Value, EPU)
 
   if (save_clean){
     usethis::use_data(habitat_occupancy, overwrite = T)

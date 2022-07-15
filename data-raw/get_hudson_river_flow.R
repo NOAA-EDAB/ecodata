@@ -18,7 +18,9 @@ get_hudson_river_flow <- function(save_clean = F){
     dplyr::mutate(EPU = c("MAB"),
                   Var = c("flowrate")) %>%
     dplyr::rename(Time = year,
-                  Value = flowrate)
+                  Value = flowrate)%>%
+    tibble::as_tibble() %>%
+    dplyr::select(Time, Var, Value, EPU)
 
   # metadata ----
   attr(hudson_river_flow, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc.html"

@@ -13,7 +13,9 @@ get_blue_runner <- function(save_clean = F){
    load(file.path(raw.dir, blue_runner_RData))
 
    blue_runner<- blue.soe %>%
-     dplyr::rename(EPU =  Region)
+     dplyr::rename(EPU =  Region)%>%
+     tibble::as_tibble() %>%
+     dplyr::select(Time, Var, Value, EPU, Units)
 
    # metadata ----
    attr(blue_runner, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chl-pp.html"

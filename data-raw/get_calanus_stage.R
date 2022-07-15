@@ -11,7 +11,10 @@ get_calanus_stage <- function(save_clean = F){
   load(file.path(raw.dir, zoo_cal_rdata))
 
   calanus_stage<- CalanusStage2 %>%
-    dplyr::rename(EPU = epu)
+    dplyr::rename(EPU = epu,
+                  Time = Year) %>%
+    dplyr::mutate(Var = paste0(Var, "-", season)) %>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   # metadata ----
   attr(calanus_stage, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/zooabund.html"

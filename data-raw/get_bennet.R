@@ -10,7 +10,9 @@ get_bennet <- function(save_clean = F){
 
   load(file.path(raw.dir, bennet_Rdata))
   bennet <- bennet %>%
-    dplyr::rename(EPU = Region)
+    dplyr::rename(EPU = Region) %>%
+    tibble::as_tibble() %>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   # metadata ----
   attr(bennet, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/bennet-indicator.html"

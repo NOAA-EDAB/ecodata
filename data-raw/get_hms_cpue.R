@@ -20,13 +20,15 @@ get_hms_cpue <- function(save_clean = F){
                   EPU = "All") %>%
     left_join(code_csv) %>%
     dplyr::filter(!Common == "NA") %>%
-    dplyr::rename(Var = Common) %>%
-    dplyr::select(Year, Value, EPU, Var)
+    dplyr::rename(Var = Common,
+                  Time = Year) %>%
+    tibble::as_tibble() %>%
+    dplyr::select(Time, Var, Value, EPU)
 
   # metadata ----
   attr(hms_cpue, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc.html"
   attr(hms_cpue, "data_files")   <- list(
-    HMS_SPUE_xlsx = HMS_SPUE_xlsx,
+    HMS_SPUE_csv = HMS_SPUE_csv,
     HMS_sp_csv = HMS_sp_csv)
   attr(hms_cpue, "data_steward") <- c(
     "Jennifer Cudney <Jennifer.cudney@noaa.gov>")

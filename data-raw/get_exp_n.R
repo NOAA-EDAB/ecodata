@@ -23,7 +23,9 @@ get_exp_n <- function(save_clean = F){
                              `Albatross`="AlbatrossSD",
                              `Bigelow`="BigelowSD")) %>%
     dplyr::select(-trash1, -trash2, -trash3, -trash4, -trash5, -trash6) %>%
-    rbind(exp_n2)
+    rbind(exp_n2)%>%
+    tibble::as_tibble() %>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   # metadata ----
   attr(exp_n, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/expected-number-of-species.html"

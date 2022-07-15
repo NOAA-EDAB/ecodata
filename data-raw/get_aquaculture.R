@@ -30,7 +30,8 @@ get_aquaculture <- function(save_clean = F){
                   Value = Pieces) %>%
     dplyr::mutate(Var = c("Pieces"))
 
-  aquaculture <- rbind(ne_aquaculture, mab_aquaculture)
+  aquaculture <- rbind(ne_aquaculture, mab_aquaculture)%>%
+    dplyr::select(Time, Var, Value, Region)
 
   # metadata ----
   attr(aquaculture, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/aquaculture.html"

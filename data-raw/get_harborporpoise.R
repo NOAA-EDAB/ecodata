@@ -117,7 +117,12 @@ get_harborporpoise <- function(save_clean = F){
 
 
   harborporpoise <- history %>%
-    dplyr::select(year, pbr, totalest5y, total5yUCI, total5yLCI, totalest1y)
+    dplyr::select(year, pbr, totalest5y, total5yUCI, total5yLCI, totalest1y)%>%
+    tidyr::pivot_longer(cols = !c(year),  names_to = "Var", values_to = "Value" ) %>%
+    dplyr::mutate(Time = year,
+                  EPU = c("ALL")) %>%
+    tibble::as_tibble() %>%
+    dplyr::select(Time, Var, Value, EPU)
 
   # metadata ----
   attr(harborporpoise, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/harbor-porpoise-bycatch.html"

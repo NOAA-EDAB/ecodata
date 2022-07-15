@@ -10,7 +10,9 @@ get_forage_anomaly <- function(save_clean = F){
     dplyr::mutate(Forage_Upper = Forage_Mean+Forage_SE,
                   Forage_Lower = Forage_Mean-Forage_SE) %>%
     tidyr::pivot_longer(cols = tidyr::starts_with("Forage"), names_to = "Var", values_to = "Value") %>%
-    dplyr::rename(Time = Year)
+    dplyr::rename(Time = ï..Year)%>%
+    tibble::as_tibble() %>%
+    dplyr::select(Time, Var, Value, EPU)
 
   # metadata ----
   attr(forage_anomaly, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc.html"

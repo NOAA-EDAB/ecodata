@@ -26,7 +26,9 @@ get_abc.acl <- function(save_clean = F){
     dplyr::filter(! Value == "-",
                   !Value == "n/a") %>%
     dplyr::mutate(Value = as.numeric(Value),
-                  Time = as.numeric(Time)) %>%
+                  Time = as.numeric(Time),
+                  Units = c("mt")) %>%
+    dplyr::select(Time, Var, Value, EPU, Units) %>%
     dplyr::filter(!Var %in% c("Blueline Tilefish Commercial - ABC/ACL", "Blueline Tilefish Commercial - Catch",
                               "Blueline Tilefish Recreational - ABC/ACL", "Blueline Tilefish Recreational - Catch"))
 
@@ -50,7 +52,10 @@ get_abc.acl <- function(save_clean = F){
                   Time = as.numeric(Time)) %>%
     dplyr::filter(Var %in% c("Blueline Tilefish Commercial - ABC/ACL", "Blueline Tilefish Commercial - Catch",
                               "Blueline Tilefish Recreational - ABC/ACL", "Blueline Tilefish Recreational - Catch")) %>%
-    dplyr::mutate(Value = Value/1000000)
+    dplyr::mutate(Value = Value/1000000,
+                  Units = c("mt")) %>%
+    dplyr::select(Time, Var, Value, EPU, Units)
+
 
   abc.acl <- abc.acl %>% rbind(blueline)
   # metadata ----

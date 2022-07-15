@@ -19,7 +19,9 @@ get_commercial_div <- function(save_clean = F){
   commercial_div <- read.csv(file.path(raw.dir, commercial_div_csv)) %>%
     dplyr::select(-X, -Source) %>%
     dplyr::rename(EPU = Region) %>%
-    as.data.frame()
+    as.data.frame()%>%
+    tibble::as_tibble() %>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   commercial_div$Var <- stringr::str_replace(commercial_div$Var, "diveristy", "diversity")
 

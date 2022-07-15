@@ -10,7 +10,14 @@ get_forage_energy_density <- function(save_clean = F){
   energy_density <- read_excel(file.path(raw.dir, energy_density_xlsx)) %>%
     dplyr::select(Species, Year, Season, N, "Energy Density (J/GWW)", "StdDev of ED") %>%
     dplyr::rename(Energy.Density_Mean = "Energy Density (J/GWW)",
-                  Energy.Density_SD = "StdDev of ED")
+                  Energy.Density_SD = "StdDev of ED",
+                  Time = Year) %>%
+    dplyr::mutate(Var = paste0(Species, "-", Season)) %>%
+    dplyr::select(-Season, -Species) %>%
+    tidyr::pivot_longer(cols = !c(Time,Var),  names_to = "Var2", values_to = "Value" ) %>%
+    dplyr::mutate(Var = paste0(Var, "-", Var2),
+                  EPU = c("NA")) %>%
+    dplyr::select(Time, Var, Value, EPU)
 
   if (save_clean){
     usethis::use_data(energy_density, overwrite = T)

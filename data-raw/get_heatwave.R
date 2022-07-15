@@ -53,7 +53,8 @@ get_heatwave <- function(save_clean = F){
 
   heatwave<- rbind(cum.intensity, max.intensity) %>%
   dplyr:: mutate(Units = "degrees C",
-            Time = as.numeric(Time))
+            Time = as.numeric(Time)) %>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   # metadata ----
   attr(heatwave, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/marine-heatwave.html"

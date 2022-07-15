@@ -18,7 +18,9 @@ get_comdat <- function(save_clean = F){
 
   comdat <- commercial %>%
     dplyr::rename(EPU = Region) %>%
-    dplyr::select(-Source)
+    dplyr::select(-Source)%>%
+    tibble::as_tibble() %>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   # metadata ----
   attr(comdat, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/comdat.html"

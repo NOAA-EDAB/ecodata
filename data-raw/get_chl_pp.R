@@ -41,7 +41,9 @@ chl <- read.csv(file.path(raw.dir, chl_csv)) %>%
   dplyr::rename(Time = PERIOD, Units = UNITS, Var = VARIABLE,
                 EPU = SUBAREA, Value = VALUE)
 
-chl_pp <- rbind(ppd,chl)
+chl_pp <- rbind(ppd,chl)%>%
+  tibble::as_tibble() %>%
+  dplyr::select(Time, Var, Value, EPU, Units)
 
 # metadata ----
 attr(chl_pp, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chl-pp.html"

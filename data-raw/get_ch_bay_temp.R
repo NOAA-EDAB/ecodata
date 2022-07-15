@@ -21,7 +21,8 @@ get_ch_bay_temp <- function(save_clean = F){
     tidyr::separate(Time, c("Time", "Trash"), sep = " ") %>%
     dplyr::select(-Trash) %>%
     dplyr::mutate(Time = lubridate::mdy(Time),
-                  EPU = c("MAB"))
+                  EPU = c("MAB"))%>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
 
   # metadata ----

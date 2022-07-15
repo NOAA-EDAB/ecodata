@@ -13,7 +13,9 @@ get_ches_bay_wq <- function(save_clean =F){
   dplyr::select(Time = Year.1, Value = Total) %>%
   dplyr::mutate(Var = "chesapeake bay water quality attainment",
            Units = "estimated attainment, percent",
-           EPU = "MAB")
+           EPU = "MAB")%>%
+    tibble::as_tibble() %>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   # metadata ----
   attr(ches_bay_wq, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chesapeake-bay-water-quality-standards-attainment.html"

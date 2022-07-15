@@ -12,7 +12,9 @@ get_aggregate_biomass <- function(save_clean = F){
   load(file.path(raw.dir, aggregate_biomass_RData))
 
   aggregate_biomass <- survey.data %>%
-    dplyr::rename(EPU = Region)
+    dplyr::rename(EPU = Region) %>%
+    tibble::as_tibble()%>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   # metadata ----
   attr(aggregate_biomass, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/aggroups.html"
