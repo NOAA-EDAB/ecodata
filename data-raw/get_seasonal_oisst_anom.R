@@ -37,7 +37,7 @@ raw.dir <- here::here("data-raw")
 # ltm <- raster::crop(ltm, extent(280,300,30,50))
 # ltm <- raster::rotate(ltm)
 #
-# winter.ltm <- ltm[[1:90]]
+# winter.ltm <- -77Wltm[[1:90]]
 # winter.ltm <- raster::stackApply(winter.ltm, indices = rep(1,nlayers(winter.ltm)),mean)
 #
 # spring.ltm <- ltm[[91:181]]
@@ -170,7 +170,8 @@ seasonal_oisst_anom<- seasonal_oisst_anom %>%
   mutate(Var = recode(Var, "winter OISST anomaly" = "Winter OISST anomaly",
                       "spring OISST anomaly" = "Spring OISST anomaly",
                       "summer OISST anomaly" = "Summer OISST anomaly",
-                      "fall OISST anomaly" = "Fall OISST anomaly"))
+                      "fall OISST anomaly" = "Fall OISST anomaly"))%>%
+  dplyr::select(Time, Var, Value, EPU, Units)
 
 seasonal_oisst_anom$Var <- factor(seasonal_oisst_anom$Var,
                                   levels= c("Winter OISST anomaly","Spring OISST anomaly",

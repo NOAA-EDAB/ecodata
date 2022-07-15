@@ -31,9 +31,14 @@ get_rec_hms <- function(save_clean = F){
                    Var = SP_CATEGORY,
                    Region = SUB_REG) %>%
     dplyr::mutate(Region = as.character(Region)) %>%
-    dplyr::mutate(Region = dplyr::recode(Region,
+    dplyr::mutate(EPU = dplyr::recode(Region,
+                                      `4` = "NE",
+                                      `5` = "MAB") ,
+                  Region = dplyr::recode(Region,
                                          `4` = "New England",
-                                         `5` = "Mid-Atlantic"))
+                                         `5` = "Mid-Atlantic")) %>%
+    dplyr::mutate(Var = paste0(Var, "-", EPU)) %>%
+    dplyr::select(Time, Var, Value, EPU)
 
   # metadata ----
   attr(rec_hms, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/recreational-shark-fishing-indicators.html"

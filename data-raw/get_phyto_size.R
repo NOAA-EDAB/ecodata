@@ -26,12 +26,12 @@ micro<- read.csv(file.path(raw.dir, micro_csv)) %>%
                 EPU =SUBAREA, Value = VALUE)
 
 
-phyto_size <- nano %>% rbind( pico, micro)
+phyto_size <- nano %>% rbind( pico, micro)%>%
+  dplyr::select(Time, Var, Value, EPU, Units)
 
 # metadata ----
 attr(phyto_size, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/phytoplankton-size-class.html"
 attr(phyto_size, "data_files")   <- list(
-  phyto_csv = phyto_csv
 )
 attr(phyto_size, "data_steward") <- c(
   "Kimberly Hyde <kimberly.hyde@noaa.gov>")

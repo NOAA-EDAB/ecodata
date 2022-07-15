@@ -48,7 +48,8 @@ get_ne_inshore_survey <- function(save_clean = F){
     dplyr::select(-CV_Weight, - SE_Weight,
                   -Low_CI_Weight, -High_CI_Weight, -Survey ) %>%
     dplyr::mutate(Season = dplyr::recode(Season, "FL"= "Fall","SP" = "Spring" )) %>%
-    tidyr::unite(.,Var, c("Var","Season"),sep = " ")
+    tidyr::unite(.,Var, c("Var","Season"),sep = " ")%>%
+    dplyr::select(Time, Var, Value, EPU, Units)
   if (save_clean){
     usethis::use_data(ne_inshore_survey, overwrite = T)
   } else {

@@ -12,7 +12,8 @@ get_zoo_diversity <- function(save_clean = F){
     dplyr::select(-Source) %>%
     dplyr::rename(Time = Year,
                   EPU = Region) %>%
-    mutate(Value  = as.numeric(Value))
+    mutate(Value  = as.numeric(Value)) %>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   if (save_clean){
     usethis::use_data(zoo_diversity, overwrite = T)

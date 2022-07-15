@@ -15,7 +15,8 @@ get_warm_core_rings <- function(save_clean = F){
     tibble::add_row(Time = 2021, Value = 29) %>% #add 2021 data point
     dplyr::mutate(EPU = c("All"),
            Var = c("Warm Core Rings"),
-           Units = c("n"))
+           Units = c("n")) %>% tibble::as_tibble() %>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   if (save_clean){
     usethis::use_data(wcr, overwrite = T)

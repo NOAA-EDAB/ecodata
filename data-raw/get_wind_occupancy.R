@@ -4,7 +4,8 @@ raw.dir <- here::here("data-raw")
 wind_occupancy_csv <- "wind-occupancy-1.csv"
 get_wind_occupancy <- function(save_clean = F){
 
-  wind_occupancy <- read.csv(file.path(raw.dir, wind_occupancy_csv ))
+  wind_occupancy <- read.csv(file.path(raw.dir, wind_occupancy_csv )) %>%
+    tibble::as_tibble()
 
   # metadata ----
   attr(wind_occupancy, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/wind-lease-areas-and-habitat-occupancy-overlap.html"

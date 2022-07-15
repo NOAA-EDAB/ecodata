@@ -36,7 +36,8 @@ get_lps_sharks <- function(save_clean = F){
     dplyr::summarise(Value = sum(Total_Catch)) %>%
     dplyr::rename( Time = Year,
                    Var = SP_CATEGORY) %>%
-    dplyr::mutate(Units = "N of Fish")
+    dplyr::mutate(Units = "N of Fish")%>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   # metadata ----
   attr(lps_sharks, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/recreational-shark-fishing-indicators.html"

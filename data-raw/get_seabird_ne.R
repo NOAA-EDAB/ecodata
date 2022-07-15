@@ -30,7 +30,8 @@ get_seabird_ne <- function(save_clean = F){
     dplyr::rename(Time = Year) %>%
     dplyr::mutate(EPU = "GOM",
                   Units = ifelse(stringr::str_detect(Var, "Productivity"),
-                                 "fledged chicks per nest","N"))
+                                 "fledged chicks per nest","N"))%>%
+    dplyr::select(Time, Var, Value, EPU)
 
   # metadata ----
   attr(seabird_ne, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/ne-seabird-diet-and-productivity.html"

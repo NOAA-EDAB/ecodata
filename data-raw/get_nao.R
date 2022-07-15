@@ -14,7 +14,9 @@ get_nao <- function(save_clean = F){
     dplyr::mutate(Var = "north atlantic oscillation",
            Units = "unitless",
            EPU = "All") %>%
-    as.data.frame()
+    as.data.frame()%>%
+    tibble::as_tibble() %>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   if (save_clean){
     usethis::use_data(nao, overwrite = T)

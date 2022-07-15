@@ -12,7 +12,8 @@ get_observed_sharks <- function(save_clean = F){
   observed_sharks <- read.csv(file.path(raw.dir,observed_sharks_csv)) %>%
     dplyr::rename(Time = YEAR,
                   Var = SHKGROUP,
-                  Value = NSHARK_HAUL)
+                  Value = NSHARK_HAUL)%>%
+    dplyr::select(Time, Var, Value, EPU)
 
   # metadata ----
   attr(observed_sharks, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc.html"

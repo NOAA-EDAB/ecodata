@@ -53,7 +53,10 @@ get_zoo_abun_anom <- function(save_clean = F){
     dplyr::select(Time, Value, Var, Units, Region)
 
   zoo_abund <- rbind(small, large) %>%
-    dplyr::rename(EPU = Region)
+    dplyr::rename(EPU = Region) %>%
+    tibble::as_tibble() %>%
+    dplyr::select(Time, Var, Value, EPU, Units)
+
   if (save_clean){
     usethis::use_data(zoo_abund, overwrite = T)
   } else {

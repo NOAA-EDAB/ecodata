@@ -19,10 +19,13 @@ get_rec <- function(save_clean = F){
 
       assign('recdat',rbind(recdat, d))
 
+
     }
   }
 
-  recdat <- recdat %>% dplyr::filter(!is.na(EPU))
+  recdat <- recdat %>% dplyr::filter(!is.na(EPU)) %>%
+    tibble::as_tibble() %>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   if (save_clean){
     usethis::use_data(recdat, overwrite = T)

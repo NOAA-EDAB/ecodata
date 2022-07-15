@@ -9,7 +9,9 @@ get_surv_shan <- function(save_clean = F){
 
   load(file.path(raw.dir, surv_shan_rdata))
 
-  survey_shannon<-shannon.mean
+  survey_shannon<-shannon.mean %>%
+    tibble::as_tibble() %>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   # metadata ----
   attr(survey_shannon, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/survdat.html"
@@ -27,4 +29,4 @@ get_surv_shan <- function(save_clean = F){
     return(exp_n)
   }
 }
-get_surv_shan(survey_shannon = T)
+get_surv_shan(save_clean = T)

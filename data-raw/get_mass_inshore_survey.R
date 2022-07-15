@@ -10,7 +10,9 @@ get_mass_survey <- function(save_clean){
   load(file.path(raw.dir,mass_inshore_survey_rdata))
 
   mass_inshore_survey <- mass.survey %>%
-    dplyr::mutate(EPU = c("GB"))
+    dplyr::mutate(EPU = c("GB")) %>%
+    tibble::as_tibble()%>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   if (save_clean){
     usethis::use_data(mass_inshore_survey, overwrite = T)

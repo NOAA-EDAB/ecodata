@@ -15,7 +15,11 @@ get_mab_inshore_survey <- function(save_clean = F){
     dplyr::rename(Time = Year,
                   Value = Index) %>%
     dplyr::mutate(Units = c("kg tow^-1"),
-           EPU = "MAB")
+           EPU = "MAB")%>%
+    tidyr::pivot_longer(cols = !c(Time, Var, Units, EPU),
+                        names_to = "Var2", values_to = "Value" ) %>%
+    dplyr::mutate(Var = paste0(Var, "-", Var2)) %>%
+    dplyr::select(Time, Var, Value, EPU)
 
   # metadata ----
   attr(mab_inshore_survey, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/inshoresurvdat.html"

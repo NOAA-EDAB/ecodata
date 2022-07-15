@@ -10,7 +10,10 @@ get_seabird_mab <- function(save_clean = F){
 
   seabird_mab <- d %>%
     dplyr::mutate(EPU = c("MAB"),
-           Units = c("Number of breeding pairs"))
+           Units = c("Number of breeding pairs"),
+           Var = Group) %>%
+    tibble::as_tibble() %>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   if (save_clean){
     usethis::use_data(seabird_mab, overwrite = T)

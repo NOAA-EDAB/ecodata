@@ -19,7 +19,10 @@ get_narw <- function(save_clean = F){
     tidyr::pivot_longer(-Time, names_to = "Var", values_to = "Value") %>%
     dplyr::mutate(Units =  "n",
            EPU = "All") %>%
-    dplyr::filter(!Value == "NA")
+    dplyr::filter(!Value == "NA") %>%
+    dplyr::mutate(Value == as.numeric(Value),
+                  Time == as.numeric(Time))%>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   # calves19<-data.frame(Time = c(2019), Var = c("Calves"),
   #                      Value = c(7), Units = c("n"), EPU = c("All")) #add 7 calves from 2019

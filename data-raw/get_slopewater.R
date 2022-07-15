@@ -21,7 +21,8 @@ get_slopewater <- function(save_clean = F){
     dplyr::rename(Time = year, Var = water.mass.flavor, Value = prop) %>%
     dplyr::mutate(EPU = "GOM", Units = "unitless", Var2 = "proportion ne channel") %>%
     tidyr::unite(.,Var,c(Var,Var2), sep = " ") %>%
-    as.data.frame()
+    as.data.frame() %>% tibble::as_tibble() %>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   # metadata ----
   attr(slopewater, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/slopewater-proportions.html"

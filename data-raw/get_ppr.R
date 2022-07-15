@@ -9,7 +9,8 @@ ppr_rds<-"PPR_2020.rds"
 get_ppr <- function(save_clean = F){
 
   ppr<-readRDS(file.path(raw.dir, ppr_rds)) %>%
-    dplyr::rename(Time  = Year)
+    dplyr::rename(Time  = Year)%>%
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   # metadata ----
   attr(ppr, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/ecosystem-overfishing.html"

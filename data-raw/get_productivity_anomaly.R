@@ -23,7 +23,9 @@ productivity_anomaly <- dat_spec_rec_forSOE %>%
   dplyr::mutate(EPU = "All",
          Var = paste("NE LME",Var)) %>%
   rbind(.,epu_rec_anom) %>%
-  as.data.frame()
+  as.data.frame()%>%
+  tibble::as_tibble() %>%
+  dplyr::select(Time, Var, Value, EPU, Units)
 
 # metadata ----
 attr(productivity_anomaly, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/fish-productivity-indicator.html"
