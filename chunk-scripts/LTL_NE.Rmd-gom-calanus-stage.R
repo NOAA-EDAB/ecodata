@@ -1,5 +1,7 @@
 
 cal <- ecodata::calanus_stage %>% 
+  
+  tidyr::separate(Var, into = c("Var", "season"), sep = "-") %>% 
   dplyr::filter(EPU == "GOM", 
                 Var %in% c( "c5", "adt")) %>%
   dplyr::mutate(Var = recode(Var, "c5" = "Stage 5", 
@@ -12,7 +14,7 @@ cal$Var <- factor(cal$Var, levels = c( "Stage 5", "Adult"))
 cal$season <- factor(cal$season, levels = c("Spring", "Summer", "Fall"))
 
 cal %>% 
-  ggplot2::ggplot(aes(x = Year, y = Value, color = Var, fill = Var)) +
+  ggplot2::ggplot(aes(x = Time, y = Value, color = Var, fill = Var)) +
     ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf)+

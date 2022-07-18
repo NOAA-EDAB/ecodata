@@ -1,6 +1,8 @@
 
 #Get NEAMAP
-neamap <- ecodata::mab_inshore_survey %>% 
+neamap <- ecodata::mab_inshore_survey %>%
+  tidyr::separate(Var, into = c("Var",  "Val"), sep = "-") %>% 
+  tidyr::pivot_wider(names_from = Val, values_from = Value) %>%  
   dplyr::mutate(Value = as.numeric(Value), 
                 CV = as.numeric(CV)) %>% 
   dplyr::group_by(Var) %>% 

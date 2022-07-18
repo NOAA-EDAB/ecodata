@@ -11,9 +11,8 @@ managed_landings <- ecodata::comdat  %>%
 apex<-ecodata::hms_landings %>% 
   dplyr::filter(stringr::str_detect(Var, "Landings")) %>% 
   separate(Var, c("Var", "trash"), sep = "_") %>% 
-  group_by(YEAR) %>% 
+  group_by(Time) %>% 
   summarise(Value = sum(Value)) %>% 
-  rename( Time = YEAR) %>% 
   mutate(Var = c("HMS Landings"), 
          Units = c("metric tons"), 
          EPU = c("MAB")) %>% 

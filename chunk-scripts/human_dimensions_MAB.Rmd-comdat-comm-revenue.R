@@ -2,11 +2,10 @@
 ## Apex pred
 apex<-ecodata::hms_landings %>% 
   dplyr::filter(stringr::str_detect(Var, "Revenue"), 
-                YEAR<2020) %>% 
+                Time<2020) %>% 
   separate(Var, c("Var", "trash"), sep = "_") %>% 
-  group_by(YEAR) %>% 
+  group_by(Time) %>% 
   summarise(Value = sum(Value)) %>% 
-  rename( Time = YEAR) %>% 
   mutate(Var = c("HMS Revenue"), 
          Units = c("metric tons"), 
          EPU = c("MAB"))

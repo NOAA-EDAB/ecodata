@@ -6,7 +6,7 @@ agg<-ecodata::aggregate_biomass %>%
   tidyr::unite("Var", feeding.guild:season, sep = " ") %>%
   dplyr::mutate(stat = recode(Var1, Index = "Mean",
                       Standard = "SD")) %>%
-  dplyr::select(-Biomass, -Var1, -Null, -Source, -Units) %>%
+  dplyr::select(-Biomass, -Var1, -Null, -Units) %>%
   # dplyr::filter(!Area == "-") %>%
   dplyr::group_by(Var, Time, EPU, Area) %>%
   tidyr::pivot_wider(id_cols = c(Var, Time, EPU, Area),names_from =  stat, values_from =  Value) %>%
@@ -39,6 +39,8 @@ facet_names <- list("Piscivores" = expression("Piscivores"),
                     "Benthos" = expression("Benthos"))
 #Get NEAMAP
 neamap <- ecodata::mab_inshore_survey %>%
+  tidyr::separate(Var, into = c("Var",  "Val"), sep = "-") %>% 
+  tidyr::pivot_wider(names_from = Val, values_from = Value) %>% 
   dplyr::mutate(Value = as.numeric(Value), 
                 CV = as.numeric(CV)) %>% 
   dplyr::group_by(Var) %>%

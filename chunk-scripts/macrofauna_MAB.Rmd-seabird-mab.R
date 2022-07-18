@@ -8,8 +8,8 @@ bird %>%
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_line(aes(x = Time, y = Value, color = Group), size = lwd-0.75) +
-  ggplot2::geom_point(aes(x = Time, y = Value, color = Group), size = pcex-0.75) +
+  ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd-0.75) +
+  ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex-0.75) +
   #geom_gls(aes(x = Time, y = Value)) +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01),limits = c(1991,2018)) +
   ggplot2::ggtitle("Seabird Abundance") +

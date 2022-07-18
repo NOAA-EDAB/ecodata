@@ -1,14 +1,18 @@
 
-exp<- ecodata::exp_n %>% filter( !EPU == "MAB", 
-                                 !EPU == "SS", 
-                                   Season == "FALL", 
-                                   str_detect(Var, 'AlbatrossSD|BigelowSD')) %>% 
+exp<- ecodata::exp_n %>% 
+  tidyr::separate(Var, into = c("Var", "Season"), sep = "-") %>% 
+  filter( !EPU == "MAB", 
+          !EPU == "SS", 
+          Season == "FALL", 
+          str_detect(Var, 'AlbatrossSD|BigelowSD')) %>% 
     rename(VarSD = Var, 
          ValueSD = Value) 
-exp2<- ecodata::exp_n %>% filter(!EPU == "MAB", 
-                                 !EPU == "SS", 
-                                 Season == "FALL", 
-                                 Var %in% c("Albatross", "Bigelow"))   %>% 
+exp2<- ecodata::exp_n %>% 
+  tidyr::separate(Var, into = c("Var", "Season"), sep = "-") %>% 
+  filter(!EPU == "MAB", 
+         !EPU == "SS", 
+         Season == "FALL", 
+         Var %in% c("Albatross", "Bigelow"))   %>% 
 
   left_join(exp) %>% 
   mutate(upper = Value+ValueSD, 

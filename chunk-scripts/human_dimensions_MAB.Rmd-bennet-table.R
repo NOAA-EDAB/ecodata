@@ -17,7 +17,7 @@ indicators<- indicators %>%
 
 ind2<- indicators %>% 
   dplyr::mutate(Name = paste(Guild, Var)) %>% 
-  dplyr::select(-c(Guild, Units, EPU, Source, Var, New)) %>% 
+  dplyr::select(-c(Guild, Units, EPU, Var, New)) %>% 
   tidyr::pivot_wider(names_from = Name, values_from = Value) %>% 
   dplyr::select(Time, `Apex Volume`, `Apex Price`, 
                 `Benthivore Volume`, `Benthivore Price`, 

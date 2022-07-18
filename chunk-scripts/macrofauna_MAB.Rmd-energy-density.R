@@ -1,5 +1,7 @@
 
-d<-ecodata::energy_density
+d<-ecodata::energy_density %>% 
+  tidyr::separate(Var, into = c("Species", "Season", "Var"), sep = "/") %>% 
+  tidyr::pivot_wider(names_from = Var, values_from = Value)
 
 old.ed<- data.frame("Species" = c("Alewife", "Atl. Herring","Atl. Mackerel","Butterfish", "Illex squid", "Loligo squid",  "Sand lance","Silver hake" ,  "Atl. Herring", "Illex squid","Sand lance"),
                     "Year" = c("1980s", "1980s", "1980s", "1980s", "1980s", "1980s","1980s", "1980s", "1990s",
@@ -15,7 +17,7 @@ d %>%
                 upper = Energy.Density_Mean + Energy.Density_SD, 
                 lower = Energy.Density_Mean - Energy.Density_SD) %>% 
   dplyr::group_by(Season, Species) %>% 
-  ggplot2::ggplot(aes(x=Year, y = Energy.Density_Mean, color = Season))+
+  ggplot2::ggplot(aes(x=Time, y = Energy.Density_Mean, color = Season))+
   ggplot2::geom_point()+
   geom_line()+
   ggplot2::geom_errorbar(aes(ymin=lower, ymax=upper), width=.2) + 

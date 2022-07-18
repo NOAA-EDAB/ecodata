@@ -1,9 +1,5 @@
 
 #Filter data into two dataframes for plotting
-
-indicators <- ecodata::bennet %>% 
-  dplyr::filter(EPU == epu_abbr) 
-
 indicators <- ecodata::bennet %>% 
   dplyr::filter(EPU == epu_abbr) 
 

@@ -15,7 +15,7 @@ p1<-apex %>%
   dplyr::mutate(Value = Value/1000000, 
                 hline = mean(Value)) %>% 
 
-  ggplot2::ggplot(aes(x = YEAR, y = Value, color = Var)) +
+  ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
   
   #Add time series
   ggplot2::geom_line(size = lwd) +
