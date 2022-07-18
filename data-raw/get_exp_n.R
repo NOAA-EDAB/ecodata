@@ -25,6 +25,7 @@ get_exp_n <- function(save_clean = F){
     dplyr::select(-trash1, -trash2, -trash3, -trash4, -trash5, -trash6) %>%
     rbind(exp_n2)%>%
     tibble::as_tibble() %>%
+    dplyr::mutate(Var = paste0(Var, "-", Season)) %>%
     dplyr::select(Time, Var, Value, EPU, Units)
 
   # metadata ----
