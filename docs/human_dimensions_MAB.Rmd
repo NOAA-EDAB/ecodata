@@ -209,7 +209,7 @@ p1<-apex %>%
   dplyr::group_by(Var) %>% 
   dplyr::mutate(hline = mean(Value)) %>% 
 
-  ggplot2::ggplot(aes(x = YEAR, y = Value, color = Var)) +
+  ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
   
   #Add time series
   ggplot2::geom_line(size = lwd) +
@@ -256,9 +256,8 @@ managed_landings <- ecodata::comdat  %>%
 apex<-ecodata::hms_landings %>% 
   dplyr::filter(stringr::str_detect(Var, "Landings")) %>% 
   separate(Var, c("Var", "trash"), sep = "_") %>% 
-  group_by(YEAR) %>% 
+  group_by(Time) %>% 
   summarise(Value = sum(Value)) %>% 
-  rename( Time = YEAR) %>% 
   mutate(Var = c("HMS Landings"), 
          Units = c("metric tons"), 
          EPU = c("MAB")) %>% 
@@ -370,10 +369,6 @@ ggplot2::ggplot()+
 ```{r bennet-all, fig.cap = paste0("Revenue change from the 2015 values in dollars (black), Price (PI), and Volume Indicators (VI) for commercial landings in the Mid-Atlantic Bight. \\label{bennet}")}
 
 #Filter data into two dataframes for plotting
-
-indicators <- ecodata::bennet %>% 
-  dplyr::filter(EPU == epu_abbr) 
-
 indicators <- ecodata::bennet %>% 
   dplyr::filter(EPU == epu_abbr) 
 
@@ -505,7 +500,7 @@ indicators<- indicators %>%
 
 ind2<- indicators %>% 
   dplyr::mutate(Name = paste(Guild, Var)) %>% 
-  dplyr::select(-c(Guild, Units, EPU, Source, Var, New)) %>% 
+  dplyr::select(-c(Guild, Units, EPU, Var, New)) %>% 
   tidyr::pivot_wider(names_from = Name, values_from = Value) %>% 
   dplyr::select(Time, `Apex Volume`, `Apex Price`, 
                 `Benthivore Volume`, `Benthivore Price`, 
@@ -530,11 +525,10 @@ Table<- kable(ind2, col.names = c("Time", "Volume", "Price",  "Volume", "Price",
 ## Apex pred
 apex<-ecodata::hms_landings %>% 
   dplyr::filter(stringr::str_detect(Var, "Revenue"), 
-                YEAR<2020) %>% 
+                Time<2020) %>% 
   separate(Var, c("Var", "trash"), sep = "_") %>% 
-  group_by(YEAR) %>% 
+  group_by(Time) %>% 
   summarise(Value = sum(Value)) %>% 
-  rename( Time = YEAR) %>% 
   mutate(Var = c("HMS Revenue"), 
          Units = c("metric tons"), 
          EPU = c("MAB"))
@@ -606,7 +600,7 @@ p1<-apex %>%
   dplyr::mutate(Value = Value/1000000, 
                 hline = mean(Value)) %>% 
 
-  ggplot2::ggplot(aes(x = YEAR, y = Value, color = Var)) +
+  ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
   
   #Add time series
   ggplot2::geom_line(size = lwd) +

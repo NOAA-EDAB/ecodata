@@ -121,7 +121,7 @@ agg<-ecodata::aggregate_biomass %>%
   tidyr::unite("Var", feeding.guild:season, sep = " ") %>%
   dplyr::mutate(stat = recode(Var1, Index = "Mean",
                       Standard = "SD")) %>%
-  dplyr::select(-Biomass, -Var1, -Null, -Source, -Units) %>%
+  dplyr::select(-Biomass, -Var1, -Null, -Units) %>%
   # dplyr::filter(!Area == "-") %>%
   dplyr::group_by(Var, Time, EPU, Area) %>%
   tidyr::pivot_wider(id_cols = c(Var, Time, EPU, Area),names_from =  stat, values_from =  Value) %>%
@@ -154,6 +154,8 @@ facet_names <- list("Piscivores" = expression("Piscivores"),
                     "Benthos" = expression("Benthos"))
 #Get NEAMAP
 neamap <- ecodata::mab_inshore_survey %>%
+  tidyr::separate(Var, into = c("Var",  "Val"), sep = "-") %>% 
+  tidyr::pivot_wider(names_from = Val, values_from = Value) %>% 
   dplyr::mutate(Value = as.numeric(Value), 
                 CV = as.numeric(CV)) %>% 
   dplyr::group_by(Var) %>%
@@ -358,7 +360,9 @@ cowplot::plot_grid(p1, p2, p3, p4, nrow=4)
 #### Just NEAMAP
 ```{r mab-inshore-survey}
 #Get NEAMAP
-neamap <- ecodata::mab_inshore_survey %>% 
+neamap <- ecodata::mab_inshore_survey %>%
+  tidyr::separate(Var, into = c("Var",  "Val"), sep = "-") %>% 
+  tidyr::pivot_wider(names_from = Val, values_from = Value) %>%  
   dplyr::mutate(Value = as.numeric(Value), 
                 CV = as.numeric(CV)) %>% 
   dplyr::group_by(Var) %>% 
@@ -580,14 +584,18 @@ ecodata::survey_shannon %>% filter(EPU == "MAB") %>%
 ### Expected number of Species
 
 ```{r exp-n}
-exp<- ecodata::exp_n %>% filter( EPU == "MAB", 
-                                   Season == "FALL", 
-                                   str_detect(Var, 'AlbatrossSD|BigelowSD')) %>%
+exp<- ecodata::exp_n %>% 
+  tidyr::separate(Var, into = c("Var", "Season"), sep = "-") %>% 
+  dplyr::filter(EPU == "MAB", 
+          Season == "FALL", 
+          str_detect(Var, 'AlbatrossSD|BigelowSD')) %>%
   dplyr::rename(VarSD = Var, 
                 ValueSD = Value) 
-exp2<- ecodata::exp_n %>% filter(EPU == "MAB", 
-                                 Season == "FALL", 
-                                 Var %in% c("Albatross", "Bigelow"))   %>% 
+exp2<- ecodata::exp_n  %>% 
+  tidyr::separate(Var, into = c("Var", "Season"), sep = "-") %>% 
+  filter(EPU == "MAB", 
+         Season == "FALL", 
+         Var %in% c("Albatross", "Bigelow"))   %>% 
 
   dplyr::left_join(exp) %>% 
   dplyr::mutate(upper = Value+ValueSD, 
@@ -638,12 +646,16 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
 
 ```{r exp-n-spring}
 
-exp<- ecodata::exp_n %>% filter( EPU == "MAB", 
+exp<- ecodata::exp_n %>% 
+  tidyr::separate(Var, into = c("Var", "Season"), sep = "-") %>% 
+  filter( EPU == "MAB", 
                                    Season == "SPRING", 
                                    str_detect(Var, 'AlbatrossSD|BigelowSD')) %>% 
     rename(VarSD = Var, 
          ValueSD = Value) 
-exp2<- ecodata::exp_n %>% filter(EPU == "MAB", 
+exp2<- ecodata::exp_n %>% 
+  tidyr::separate(Var, into = c("Var", "Season"), sep = "-") %>% 
+  filter(EPU == "MAB", 
                                  Season == "SPRING", 
                                  Var %in% c("Albatross", "Bigelow"))   %>% 
 
@@ -927,8 +939,8 @@ bird %>%
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_line(aes(x = Time, y = Value, color = Group), size = lwd-0.75) +
-  ggplot2::geom_point(aes(x = Time, y = Value, color = Group), size = pcex-0.75) +
+  ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd-0.75) +
+  ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex-0.75) +
   #geom_gls(aes(x = Time, y = Value)) +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01),limits = c(1991,2018)) +
   ggplot2::ggtitle("Seabird Abundance") +
@@ -1000,13 +1012,13 @@ ecodata::observed_sharks %>%
 ```{r harborporpoise, fig.cap="Estimated Harbor porpoise bycatch (black) and the potential biological removal (red)." }
 
 ecodata::harborporpoise %>% 
-  #tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
+  tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
   ggplot2::ggplot()+
-  ggplot2::geom_line(aes(x=year, y = totalest5y, color = "5yr rolling mean and confidence interval"))+
-  ggplot2::geom_line(aes(x=year, y = totalest1y, color = "Annual estimates"), linetype = "dashed")+
-  ggplot2::geom_line(aes(x=year, y = pbr, color = "PBR"))+
+  ggplot2::geom_line(aes(x=Time, y = totalest5y, color = "5yr rolling mean and confidence interval"))+
+  ggplot2::geom_line(aes(x=Time, y = totalest1y, color = "Annual estimates"), linetype = "dashed")+
+  ggplot2::geom_line(aes(x=Time, y = pbr, color = "PBR"))+
   #ggplot2::geom_line(aes(x=year, y = PBR), color = "red")+
-  ggplot2::geom_ribbon(aes(ymin = total5yLCI, ymax =total5yUCI, x = year), fill = "blue", alpha = 0.2)+
+  ggplot2::geom_ribbon(aes(ymin = total5yLCI, ymax =total5yUCI, x = Time), fill = "blue", alpha = 0.2)+
   ggplot2::ggtitle("Harbor Porpoise Bycatch")+
   ggplot2::ylab("Estimated Bycatch (n)")+
   ggplot2::scale_color_manual(name = element_blank(), values = c('5yr rolling mean and confidence interval' = 'blue', 
@@ -1029,13 +1041,13 @@ ecodata::harborporpoise %>%
 ```{r grayseal, fig.cap="5 year Gray Seal bycatch estimate for NEUS Shelf (Blue) and 1 Year estimate for New England (Black) and the potential biological removal (red)." }
 
 ecodata::grayseal %>% 
-  #tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
+  tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
   ggplot2::ggplot()+
-  ggplot2::geom_line(aes(x=year, y = totalest5y, color = "5yr rolling mean and confidence interval"))+
-  ggplot2::geom_line(aes(x=year, y = totalest1y, color = "NE Annual estimates"), linetype = "dashed")+
-  ggplot2::geom_line(aes(x=year, y = pbr, color = "PBR"))+
+  ggplot2::geom_line(aes(x=Time, y = totalest5y, color = "5yr rolling mean and confidence interval"))+
+  ggplot2::geom_line(aes(x=Time, y = totalest1y, color = "NE Annual estimates"), linetype = "dashed")+
+  ggplot2::geom_line(aes(x=Time, y = pbr, color = "PBR"))+
   #ggplot2::geom_line(aes(x=year, y = PBR), color = "red")+
-  ggplot2::geom_ribbon(aes(ymin = total5yLCI, ymax =total5yUCI, x = year), fill = "blue", alpha = 0.2)+
+  ggplot2::geom_ribbon(aes(ymin = total5yLCI, ymax =total5yUCI, x = Time), fill = "blue", alpha = 0.2)+
   ggplot2::ggtitle("Gray Seal Bycatch")+
   ggplot2::ylab("Estimated Bycatch (n)")+
   ggplot2::xlab(element_blank())+
@@ -1053,13 +1065,13 @@ ecodata::grayseal %>%
 ```{r grayseal-mab, fig.cap="5 year Gray Seal bycatch estimate for NEUS Shelf (Blue) and and the potential biological removal (red)." }
 
 ecodata::grayseal %>% 
-  #tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
+  tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
   ggplot2::ggplot()+
-  ggplot2::geom_line(aes(x=year, y = totalest5y, color = "5yr rolling mean and confidence interval"))+
+  ggplot2::geom_line(aes(x=Time, y = totalest5y, color = "5yr rolling mean and confidence interval"))+
   #ggplot2::geom_line(aes(x=year, y = totalest1y, color = "Annual estimates"), linetype = "dashed")+
-  ggplot2::geom_line(aes(x=year, y = pbr, color = "PBR"))+
+  ggplot2::geom_line(aes(x=Time, y = pbr, color = "PBR"))+
   #ggplot2::geom_line(aes(x=year, y = PBR), color = "red")+
-  ggplot2::geom_ribbon(aes(ymin = total5yLCI, ymax =total5yUCI, x = year), fill = "blue", alpha = 0.2)+
+  ggplot2::geom_ribbon(aes(ymin = total5yLCI, ymax =total5yUCI, x = Time), fill = "blue", alpha = 0.2)+
   ggplot2::ggtitle("Gray Seal Byctach")+
   ggplot2::ylab("Estimated Bycatch (n)")+
   ggplot2::xlab(element_blank())+
@@ -1246,7 +1258,9 @@ asd + depth + patchwork::plot_layout(ncol = 1)
 ### Forage fish energy content
 
 ```{r energy-density, eval=T, echo=F}
-d<-ecodata::energy_density
+d<-ecodata::energy_density %>% 
+  tidyr::separate(Var, into = c("Species", "Season", "Var"), sep = "/") %>% 
+  tidyr::pivot_wider(names_from = Var, values_from = Value)
 
 old.ed<- data.frame("Species" = c("Alewife", "Atl. Herring","Atl. Mackerel","Butterfish", "Illex squid", "Loligo squid",  "Sand lance","Silver hake" ,  "Atl. Herring", "Illex squid","Sand lance"),
                     "Year" = c("1980s", "1980s", "1980s", "1980s", "1980s", "1980s","1980s", "1980s", "1990s",
@@ -1262,7 +1276,7 @@ d %>%
                 upper = Energy.Density_Mean + Energy.Density_SD, 
                 lower = Energy.Density_Mean - Energy.Density_SD) %>% 
   dplyr::group_by(Season, Species) %>% 
-  ggplot2::ggplot(aes(x=Year, y = Energy.Density_Mean, color = Season))+
+  ggplot2::ggplot(aes(x=Time, y = Energy.Density_Mean, color = Season))+
   ggplot2::geom_point()+
   geom_line()+
   ggplot2::geom_errorbar(aes(ymin=lower, ymax=upper), width=.2) + 
@@ -1364,8 +1378,8 @@ ecodata::hms_cpue %>%
  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_point(aes(x=Year, y = Value))+
-  ggplot2::geom_line(aes(x=Year, y = Value))+
+  ggplot2::geom_point(aes(x=Time, y = Value))+
+  ggplot2::geom_line(aes(x=Time, y = Value))+
   ggplot2::facet_wrap(~Var, scales = "free")+
   ggplot2::ggtitle("HMS POP CPUE ALL")+
   ggplot2::ylab("Number per Haul")+
@@ -1381,8 +1395,8 @@ ecodata::hms_cpue %>%
  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_point(aes(x=Year, y = Value))+
-  ggplot2::geom_line(aes(x=Year, y = Value))+
+  ggplot2::geom_point(aes(x=Time, y = Value))+
+  ggplot2::geom_line(aes(x=Time, y = Value))+
   ggplot2::facet_wrap(~Var, scales = "free")+
   ggplot2::ggtitle("HMS POP TUNA CPUE")+
   ggplot2::ylab("Number per Haul")+
@@ -1398,7 +1412,7 @@ ecodata::hms_cpue %>%
   filter(str_detect(Var, "SHARK")) %>% 
   rename(COMMON_POP = Var) %>% 
   left_join(sp_cat) %>% 
-  group_by(Year, SP_CATEGORY) %>% 
+  group_by(Time, SP_CATEGORY) %>% 
   summarise(Value = sum(Value)) %>% 
   rename("Var" = "SP_CATEGORY") %>% 
   filter(!Var == "NA") %>% 
@@ -1406,8 +1420,8 @@ ecodata::hms_cpue %>%
  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_point(aes(x=Year, y = Value, color = Var))+
-  ggplot2::geom_line(aes(x=Year, y = Value, color = Var))+
+  ggplot2::geom_point(aes(x=Time, y = Value, color = Var))+
+  ggplot2::geom_line(aes(x=Time, y = Value, color = Var))+
   ggplot2::scale_color_discrete(name = "Category")+
   #ggplot2::facet_wrap(~Var, scales = "free")+
   ggplot2::ggtitle("HMS POP SHARK CPUE")+
