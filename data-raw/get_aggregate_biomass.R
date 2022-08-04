@@ -7,6 +7,7 @@ library(dplyr)
 raw.dir <- here::here("data-raw")
 
 aggregate_biomass_RData <- "Aggregate_Survey_biomass_22.RData"
+aggregate_biomass_shelf<- "Aggregate_Survey_biomass_shelfwide_22.RData"
 get_aggregate_biomass <- function(save_clean = F){
 
   load(file.path(raw.dir, aggregate_biomass_RData))
@@ -15,6 +16,15 @@ get_aggregate_biomass <- function(save_clean = F){
     dplyr::rename(EPU = Region) %>%
     tibble::as_tibble()%>%
     dplyr::select(Time, Var, Value, EPU, Units)
+
+  load(file.path(raw.dir, aggregate_biomass_shelf))
+
+  aggregate_shelf<- survey.data %>%
+    dplyr::rename(EPU = Region) %>%
+    tibble::as_tibble()%>%
+    dplyr::select(Time, Var, Value, EPU, Units)
+
+  aggregate_biomass<-aggregate_biomass %>% rbind(aggregate_shelf)
 
   # metadata ----
   attr(aggregate_biomass, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/aggroups.html"
@@ -35,12 +45,10 @@ get_aggregate_biomass <- function(save_clean = F){
 get_aggregate_biomass(save_clean = T)
 
 
-# surv_MAB<- ecodata::aggregate_biomass%>% dplyr::filter(stringr::str_detect(Var, "Index"),
-#                                                          !stringr::str_detect(Var, "Apex|inshore|offshore|managed|NEFMC|MAFMC|JOINT|NA")) %>%
-#   ggplot2::ggplot()+
-#   geom_line(aes(x=Time, y=Value, color = EPU))+
-#   facet_wrap(~Var)
-#
+
+
+
+
 
 
 
