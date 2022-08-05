@@ -169,7 +169,8 @@ p2<- landings %>%
   #Test for trend and add lines
   ecodata::geom_gls(aes(x = Time, y = Value,
                group = Var)) +
-  
+  ecodata::geom_lm(aes(x = Time, y = Value,
+               group = Var))+
   #Add time series
   ggplot2::geom_line(size = lwd) +
   ggplot2::geom_point(size = pcex) +
@@ -296,6 +297,8 @@ ggplot2::ggplot(data = landings_agg)+
   ecodata::geom_gls(aes(x = Time, y = Value,
                group = Var),
              alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Value,
+               group = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
   ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
@@ -560,6 +563,8 @@ ggplot2::ggplot(data = rev_agg) +
   ecodata::geom_gls(aes(x = Time, y = Total,
                group = Status),
              alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Total,
+               group = Status))+
   ggplot2::geom_line(aes(x = Time, y = Total, color = Status), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Total, color = Status), size = 1.5) +
 
@@ -669,6 +674,8 @@ fleet_count <- comm_div %>%
 
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
+  ecodata::geom_lm(aes(x = Time, y = Value,
+               group = Var))+
   ggplot2::ylim(ylim_fc)+
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
@@ -700,7 +707,8 @@ fleet_div <- comm_div %>%
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
   ggplot2::ylim(ylim_fd)+
-  
+  ecodata::geom_lm(aes(x = Time, y = Value,
+               group = Var))+
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
@@ -735,7 +743,8 @@ comm_div %>%
   #            alpha = trend.alpha, size = trend.size) +
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
-
+  ecodata::geom_lm(aes(x = Time, y = Value,
+               group = Var))+
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
@@ -947,6 +956,8 @@ ggplot2::ggplot(data = landings_rec)+
   ecodata::geom_gls(aes(x = Time, y = Value,
                group = Var),
              alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Value,
+               group = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
 
@@ -1017,6 +1028,8 @@ rec_effort <- recdat %>%
   ecodata::geom_gls(aes(x = Time, y = Value,
                group = Var),
              alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Value,
+               group = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
   
@@ -1068,6 +1081,8 @@ rec_div <- recdat %>%
   ecodata::geom_gls(aes(x = Time, y = Value,
                group = Var),
              alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Value,
+               group = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
   ggplot2::ylim(ylim_rd)+
@@ -1118,6 +1133,8 @@ rec_div_catch <- recdat %>%
   ecodata::geom_gls(aes(x = Time, y = Value,
                group = Var),
              alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Value,
+               group = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
 
@@ -1227,6 +1244,8 @@ ecodata::rec_hms %>%
   ggplot2::ggplot()+
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+
+  ecodata::geom_lm(aes(x = Time, y = Value,
+               group = Var))+
   ggplot2::ylab("Catch (N)")+
   ggplot2::ggtitle("Recreational Shark Landings")+
   ggplot2::xlab(element_blank())+
@@ -1262,6 +1281,8 @@ ecodata::ppr %>%
   ggplot2::geom_point(aes(x = Time, y = Value))+
   ggplot2::geom_line(aes(x = Time, y = Value))+
   ggplot2::geom_line(data = a, aes(x = Time, y = Value), linetype = "dashed")+
+  ecodata::geom_lm(aes(x = Time, y = Value,
+               group = Var))+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
@@ -1300,6 +1321,8 @@ ecodata::ppr %>%
   #ggplot2::geom_hline(yintercept = 2.5, color = "red", linetype = "dashed")+
   ggplot2::geom_point(aes(x = Time, y = Value))+
   ggplot2::geom_line(aes(x = Time, y = Value))+
+  ecodata::geom_lm(aes(x = Time, y = Value,
+               group = Var))+
   #ggplot2::geom_line(data = a, aes(x = Time, y = Value), linetype = "dashed")+
   #ggplot2::geom_hline(aes(yintercept = hline),
   #         size = hline.size,
@@ -1341,6 +1364,8 @@ ecodata::ppr %>%
   #ggplot2::geom_hline(yintercept = 5, color = "red", linetype = "dashed")+
   ggplot2::geom_point(aes(x = Time, y = Value))+
   ggplot2::geom_line(aes(x = Time, y = Value))+
+  ecodata::geom_lm(aes(x = Time, y = Value,
+               group = Var))+
   #ggplot2::geom_line(data = a, aes(x = Time, y = Value), linetype = "dashed")+
   #ggplot2::geom_hline(aes(yintercept = hline),
   #         size = hline.size,
@@ -1370,6 +1395,8 @@ ecodata::ppr %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_point(aes(x = Time, y = Value))+
   ggplot2::geom_line(aes(x = Time, y = Value))+
+  ecodata::geom_lm(aes(x = Time, y = Value,
+               group = Var))+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
@@ -1412,6 +1439,8 @@ ecodata::ppr %>%
   ggplot2::geom_point(aes(x = Time, y = Value))+
   ggplot2::geom_line(aes(x = Time, y = Value))+
   ggplot2::geom_line(data = a, aes(x = Time, y = Value), linetype = "dashed")+
+  ecodata::geom_lm(aes(x = Time, y = Value,
+               group = Var))+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
