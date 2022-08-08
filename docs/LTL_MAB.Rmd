@@ -266,6 +266,7 @@ ggplot2::ggplot() +
   ggplot2::geom_line(aes(x = gl_bt$Time, y = gl_bt$Value), color = "red") +
   ggplot2::geom_line(aes(x = temp_anom$Time, y = temp_anom$hline), linetype = "dashed", color = "grey") +
   ecodata::geom_gls(aes(x = temp_anom$Time, y = temp_anom$Value)) +
+  ecodata::geom_lm(aes(x = temp_anom$Time, y = temp_anom$Value))+
   ggplot2::ylab("Temperature (C)") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Bottom temperature anomaly") +
@@ -306,7 +307,7 @@ out_pp$Month <- factor(out_pp$Month, levels = month.abb)
 
 
 pp_cci <- ggplot2::ggplot(out_pp) +
-   # geom_gls(aes(x = Year, y = Value, group = Month))+
+    ecodata::geom_lm(aes(x = Year, y = Value, group = Month))+
     ggplot2::geom_point(aes(x = Year, y = Value, group = Month)) +
     ggplot2::geom_line(aes(x = Year, y = Value, group = Month)) +
     ggplot2::scale_x_discrete(name = "", breaks = seq(min(out_pp$Year),max(out_pp$Year),10)) +  
@@ -345,6 +346,7 @@ out_chl$Month <- factor(out_chl$Month, levels = month.abb)
 
 chl_cci <- ggplot2::ggplot(out_chl) +
    # geom_gls(aes(x = Year, y = Value, group = Month))+
+    ecodata::geom_lm(aes(x = Year, y = Value, group = Month))+
     ggplot2::geom_point(aes(x = Year, y = Value, group = Month)) +
     ggplot2::geom_line(aes(x = Year, y = Value, group = Month)) +
     ggplot2::scale_x_discrete(name = "", breaks = seq(min(out_chl$Year),max(out_chl$Year),10)) +  
@@ -700,6 +702,7 @@ ecodata::SAV %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_point()+
   ggplot2::geom_line()+
+  ecodata::geom_lm(aes(x = Time, y = Value))+
   ggplot2::facet_wrap(~Var)+
   ecodata::geom_gls(aes(x = Time, y = Value)) +
   ecodata::theme_ts()+
@@ -727,6 +730,7 @@ ecodata::hudson_river_flow %>%
   ggplot2::geom_point()+
   ggplot2::geom_line()+
   ecodata::geom_gls(aes(x = Time, y = Value)) +
+  ecodata::geom_lm(aes(x = Time, y = Value))+
   ecodata::theme_ts()+
   ecodata::theme_title()+
   ggplot2::ylab(expression("mean flowrate (m"^3*" s"^-1*")"))+
@@ -756,6 +760,7 @@ zoo_abund %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ecodata::geom_gls() +
+  ecodata::geom_lm(aes(x = Time, y = Value))+
   ggplot2::geom_line() +
   ggplot2::geom_point() +
   ggplot2::ylab(expression("Log Stratified Abundance")) +
@@ -954,6 +959,7 @@ zoo_div %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ecodata::geom_gls() +
+  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::geom_line() +
   ggplot2::geom_point() +
   ggplot2::ylab("Shannon Diversity") +
@@ -1124,6 +1130,7 @@ cpi<- ecodata::cold_pool %>%
   # ggplot2::geom_ribbon(aes(x = Time, ymin = Lower, ymax = Upper), fill = "gray")+
   ggplot2::geom_hline(aes(yintercept = 0))+
   ecodata::geom_gls(aes(x = Time, y = Value))+
+  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("Cold Pool Index (x(-1))") +
   #ggplot2::scale_y_reverse()+
   ggplot2::xlab("")+
@@ -1155,6 +1162,7 @@ ei<- ecodata::cold_pool %>%
   ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
   ggplot2::geom_hline(aes(yintercept = 0))+
   ecodata::geom_gls(aes(x = Time, y = Value))+
+  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("Spatial Extent Index") +
   ggplot2::xlab("")+
   ecodata::theme_ts()+
@@ -1183,6 +1191,7 @@ pi<- ecodata::cold_pool %>%
   ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
   ggplot2::geom_hline(aes(yintercept = 0))+
   ecodata::geom_gls(aes(x = Time, y = Value))+
+  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("Persistence Index") +
   ggplot2::xlab("")+
   ecodata::theme_ts()+
@@ -1415,6 +1424,7 @@ mab.hw %>%
   ggplot2::geom_line(aes(x = Time, y = Value)) +
   ggplot2::geom_point(aes(x = Time, y = Value)) +
   ecodata::geom_gls(aes(x = Time, y = Value, group = Var)) +
+  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Mid-Atlantic Marine Heatwave Intesity") +
@@ -1516,6 +1526,7 @@ mab.hw %>%
   ggplot2::geom_line(aes(x = Time, y = Value)) +
   ggplot2::geom_point(aes(x = Time, y = Value)) +
   ecodata::geom_gls(aes(x = Time, y = Value, group = Var)) +
+  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Mid-Atlantic Marine Bottom Temp Heatwave Intesity") +
@@ -1613,6 +1624,7 @@ lt_sst %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ecodata::geom_gls() +
+  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::geom_line() +
   ggplot2::geom_point() +
   ggplot2::geom_hline(aes(yintercept = hline),
@@ -1645,6 +1657,7 @@ ecodata::gsi %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ecodata::geom_gls() +
+  ecodata::geom_lm(aes(x = Time, y = Value))+
   ggplot2::geom_line() +
   ggplot2::geom_point() +
   ggplot2::ylab("Gulf Stream position anomaly") +
@@ -1673,6 +1686,7 @@ ecodata::gsi_old %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ecodata::geom_gls() +
+  ecodata::geom_lm(aes(x = Time, y = Value))+
   ggplot2::geom_line() +
   ggplot2::geom_point() +
   ggplot2::ylab("Gulf Stream position anomaly") +
@@ -1709,6 +1723,7 @@ wcr %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_point()+
   ggplot2::geom_line()+
+  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("Warm Core Ring Births")+
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Warm Core Rings")+
