@@ -34,30 +34,31 @@
 #'   geom_gls(aes(x = x, y = y))
 
 geom_regime <- function(mapping = NULL, data = NULL,
-                       ...,
-                       xintercept = NULL,
+                       stat = "StatREGIME",
+                       #stat = NULL,
+                       #xintercept = NULL,
                        na.rm = FALSE,
                        show.legend = NA) {
 
   # Act like an annotation
-  if (!missing(xintercept)) {
-    # Warn if supplied mapping and/or data is going to be overwritten
-    if (!is.null(mapping)) {
-      cli::cli_warn("{.fn geom_vline}: Ignoring {.arg mapping} because {.arg xintercept} was provided.")
-    }
-    if (!is.null(data)) {
-      cli::cli_warn("{.fn geom_vline}: Ignoring {.arg data} because {.arg xintercept} was provided.")
-    }
+  # if (!missing(xintercept)) {
+  #   # Warn if supplied mapping and/or data is going to be overwritten
+  #   if (!is.null(mapping)) {
+  #     cli::cli_warn("{.fn geom_vline}: Ignoring {.arg mapping} because {.arg xintercept} was provided.")
+  #   }
+  #   if (!is.null(data)) {
+  #     cli::cli_warn("{.fn geom_vline}: Ignoring {.arg data} because {.arg xintercept} was provided.")
+  #   }
 
-    data <- data_frame(xintercept = xintercept)
-    mapping <- ggplot2::aes(xintercept = xintercept)
+    data <- data_frame(xintercept = dat)
+    mapping <- ggplot2::aes(xintercept = data)
     show.legend <- FALSE
-  }
+  #}
 
   layer(
     data = data,
     mapping = mapping,
-    stat = StatIdentity,
+    stat = stat,
     geom = GeomREGIME,
     position = PositionIdentity,
     show.legend = show.legend,
