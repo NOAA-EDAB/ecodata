@@ -1,5 +1,5 @@
 StatREGIME <- ggplot2::ggproto("StatREGIME",
-                            ggplot2::Stat,
+                               ggplot2::Stat,
                             #required_aes = c("x", "y"),
                             compute_group = function(data, scales, warn) {
 
@@ -26,9 +26,10 @@ StatREGIME <- ggplot2::ggproto("StatREGIME",
                               dat<- data %>% left_join(split_ceiling)
 
                               #dat<- as.vector(data1$xintercept)
+                              browser()
 
                               print(dat)
-                              return(dat)
+                              return(tat)
 
                             }
 

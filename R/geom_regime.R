@@ -33,39 +33,29 @@
 #'   geom_line(aes(x = x, y = y)) +
 #'   geom_gls(aes(x = x, y = y))
 
-geom_regime <- function(mapping = NULL, data = NULL,
-                       stat = "StatREGIME",
+geom_regime <- function(data = NULL, mapping = NULL,
+                       stat = "REGIME", position = "identity",
+                       inherit.aes = TRUE,
                        #stat = NULL,
                        #xintercept = NULL,
                        na.rm = FALSE,
                        show.legend = NA) {
 
-  # Act like an annotation
-  # if (!missing(xintercept)) {
-  #   # Warn if supplied mapping and/or data is going to be overwritten
-  #   if (!is.null(mapping)) {
-  #     cli::cli_warn("{.fn geom_vline}: Ignoring {.arg mapping} because {.arg xintercept} was provided.")
-  #   }
-  #   if (!is.null(data)) {
-  #     cli::cli_warn("{.fn geom_vline}: Ignoring {.arg data} because {.arg xintercept} was provided.")
-  #   }
-
-    data <- data_frame(xintercept = dat)
-    mapping <- ggplot2::aes(xintercept = data)
-    show.legend <- FALSE
+    # data <- data_frame(xintercept = dat)
+    # mapping <- ggplot2::aes(xintercept = data)
+    # show.legend <- FALSE
   #}
 
   layer(
     data = data,
     mapping = mapping,
     stat = stat,
-    geom = GeomREGIME,
-    position = PositionIdentity,
+    geom = ecodata:::GeomREGIME,
+    position = position,
     show.legend = show.legend,
-    inherit.aes = FALSE,
+    inherit.aes = inherit.aes,
     params = list(
-      na.rm = na.rm,
-      ...
+      na.rm = na.rm
     )
   )
 }
