@@ -2,7 +2,7 @@
 % Please edit documentation in R/geom_lm.R
 \name{geom_lm}
 \alias{geom_lm}
-\title{A geom to fit a LM model to a time series}
+\title{A geom to fit a LM model to a short time series}
 \usage{
 geom_lm(
   mapping = NULL,
@@ -32,7 +32,7 @@ If slope is significantly different from 0 (p < 0.05), then a line of best fit i
 is \code{NULL}.
 }
 \description{
-A geom to fit a LM model to a time series
+A geom to fit a LM model to a short time series
 }
 \examples{
 library(ggplot2)

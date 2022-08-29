@@ -34,11 +34,14 @@
 #'   geom_gls(aes(x = x, y = y))
 
 geom_regime <- function(data = NULL, mapping = NULL,
-                       stat = "REGIME", position = "identity",
+                       stat = "REGIME",
+                       geom = "vline",
+                       position = "identity",
                        inherit.aes = TRUE,
                        #stat = NULL,
                        #xintercept = NULL,
                        na.rm = FALSE,
+                       color = "red",
                        show.legend = NA) {
 
     # data <- data_frame(xintercept = dat)
@@ -46,16 +49,18 @@ geom_regime <- function(data = NULL, mapping = NULL,
     # show.legend <- FALSE
   #}
 
-  layer(
+  ggplot2::layer(
     data = data,
     mapping = mapping,
     stat = stat,
-    geom = ecodata:::GeomREGIME,
+    geom = geom,
+    #geom = ecodata:::GeomREGIME,
     position = position,
     show.legend = show.legend,
     inherit.aes = inherit.aes,
     params = list(
-      na.rm = na.rm
+      na.rm = na.rm,
+      color = color
     )
   )
 }

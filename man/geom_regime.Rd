@@ -5,23 +5,26 @@
 \title{A geom to fit a GLS model to a time series}
 \usage{
 geom_regime(
-  mapping = NULL,
   data = NULL,
-  ...,
-  xintercept = NULL,
+  mapping = NULL,
+  stat = "REGIME",
+  geom = "vline",
+  position = "identity",
+  inherit.aes = TRUE,
   na.rm = FALSE,
+  color = "red",
   show.legend = NA
 )
 }
 \arguments{
+\item{data}{Input series to be analyzed. If NULL, data is inherited from previous layer or \code{ggplot} call.}
+
 \item{mapping}{Set of aesthetic mappings created by \code{aes()}. By default \code{inherit.aes = TRUE}, which
 assigns the top-level plotting \code{aes()} to the GLS geom.}
 
-\item{data}{Input series to be analyzed. If NULL, data is inherited from previous layer or \code{ggplot} call.}
+\item{warn}{Conditional. If \code{TRUE}, a warning message will be returned when N < 30.}
 
 \item{...}{Other arguments may be passed to the stat, including fixed aesthetics.}
-
-\item{warn}{Conditional. If \code{TRUE}, a warning message will be returned when N < 30.}
 }
 \value{
 If slope is significantly different from 0 (p < 0.05), then a line of best fit is returned. Otherwise output
