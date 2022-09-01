@@ -155,6 +155,9 @@ p1<-agg_bio %>%
   ecodata::geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Mean,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
   #Add time series
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
               alpha = 0.5,
@@ -191,7 +194,9 @@ p2<-agg_bio %>%
   ecodata::geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  
+  ecodata::geom_lm(aes(x = Time, y = Mean,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
   #Add time series
   ggplot2::geom_ribbon( aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
               alpha = 0.5,
@@ -226,7 +231,9 @@ p3<-agg_bio %>%
   ecodata::geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  
+  ecodata::geom_lm(aes(x = Time, y = Mean,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
   #Add time series
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
               alpha = 0.5,
@@ -259,6 +266,9 @@ p4<-agg_bio %>%
       ymin = -Inf, ymax = Inf) +
   #Test for trend and add lines
   ecodata::geom_gls(aes(x = Time, y = Mean,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   #Add time series
@@ -326,6 +336,9 @@ p1<-agg_bio %>%
   ecodata::geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Mean,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
   #Add time series
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
               alpha = 0.5,
@@ -362,7 +375,9 @@ p2<-agg_bio %>%
   ecodata::geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  
+  ecodata::geom_lm(aes(x = Time, y = Mean,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
   #Add time series
   ggplot2::geom_ribbon( aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
               alpha = 0.5,
@@ -397,7 +412,9 @@ p3<-agg_bio %>%
   ecodata::geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  
+  ecodata::geom_lm(aes(x = Time, y = Mean,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
   #Add time series
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
               alpha = 0.5,
@@ -430,6 +447,9 @@ p4<-agg_bio %>%
       ymin = -Inf, ymax = Inf) +
   #Test for trend and add lines
   ecodata::geom_gls(aes(x = Time, y = Mean,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   #Add time series
@@ -489,6 +509,7 @@ mab_nefmc_props <- nefmc_ma %>%
   ggplot2::geom_line(size = lwd-0.5) +
   ggplot2::geom_point(size = pcex-0.5) +
   ecodata::geom_gls(aes(x = Time, y = Value)) +
+  ecodata::geom_lm(aes(x=Time, y = Value))+
   # scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::geom_hline(aes(yintercept = hline,
@@ -544,7 +565,9 @@ p1<-mass %>%
   ecodata::geom_gls(aes(x = Time, y = Index,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  
+  ecodata::geom_lm(aes(x = Time, y = Index,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
   #Add time series
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
               alpha = 0.5,
@@ -583,7 +606,9 @@ p2<-mass %>%
   ecodata::geom_gls(aes(x = Time, y = Index,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  
+  ecodata::geom_lm(aes(x = Time, y = Index,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
   #Add time series
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
               alpha = 0.5,
@@ -622,7 +647,9 @@ p3<-mass %>%
   ecodata::geom_gls(aes(x = Time, y = Index,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  
+  ecodata::geom_lm(aes(x = Time, y = Index,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
   #Add time series
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
               alpha = 0.5,
@@ -661,7 +688,9 @@ p4<-mass %>%
   ecodata::geom_gls(aes(x = Time, y = Index,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  
+  ecodata::geom_lm(aes(x = Time, y = Index,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
   #Add time series
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
               alpha = 0.5,
@@ -951,6 +980,7 @@ ecodata::survey_shannon %>% filter(!EPU == "MAB",
   ggplot2::geom_point()+
   ggplot2::geom_line()+
   ecodata::geom_gls() +
+  ecodata::geom_lm()+
   ggtitle("Survey Shannon Diversity Index")+
   ggplot2::facet_wrap(~EPU)+
   ggplot2::ylab("Shannon")+
@@ -1007,6 +1037,7 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
  # ggplot2::facet_wrap(EPU~.,scales = "free_y", ncol = 2) +
   ggplot2::ggtitle("Expected Number of Species - Fall")+
   ecodata::geom_gls() +
+  ecodata::geom_lm()+
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab("n species per 1000 ind") +
@@ -1066,6 +1097,7 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   #ggplot2::facet_wrap(EPU~.,scales = "free_y", ncol = 2) +
   ggplot2::ggtitle("GOM Expected Number of Species - Spring")+
   ecodata::geom_gls() +
+  ecodata::geom_lm()+
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab(element_blank()) +
@@ -1090,7 +1122,7 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   ggplot2::geom_point(size = pcex-0.5) +
   #ggplot2::facet_wrap(EPU~.,scales = "free_y", ncol = 2) +
   ggplot2::ggtitle("GB Expected Number of Species - Spring")+
-  #ecodata::geom_gls() +
+  ecodata::geom_lm() +
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab("n species per 1000 ind") +
@@ -1354,6 +1386,7 @@ gom_larv_div <- ecodata::ichthyo_diversity %>%
   ggplot2::geom_line() +
   ggplot2::geom_point() +
   ecodata::geom_gls(aes(x = Time, y = mean(Value))) +
+  ecodata::geom_lm(aes(x=Time, y = Value))+
   ggplot2::ggtitle("GOM larval diversity") +
   ggplot2::ylab("Shannon Diversity") +
   ggplot2::xlab(element_blank())+
@@ -1379,6 +1412,7 @@ gb_larv_div <- ecodata::ichthyo_diversity %>%
   ggplot2::geom_line() +
   ggplot2::geom_point() +
   ecodata::geom_gls(aes(x = Time, y = mean(Value))) +
+  ecodata::geom_lm(aes(x=Time, y = Value))+
   ggplot2::ggtitle("GB larval diversity") +
   ylab("Shannon Diversity") +
   ggplot2::xlab(element_blank())+
@@ -1412,6 +1446,7 @@ gom_larv_div <- ecodata::ichthyo_diversity %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ecodata::geom_gls(aes(x = Time, y = mean(Value))) +
+  ecodata::geom_lm(aes(x=Time, y = Value))+
   ggplot2::ggtitle("GOM larval diversity") +
   ggplot2::ylab("Shannon Diversity") +
   ggplot2::xlab(element_blank())+
@@ -1436,6 +1471,7 @@ gb_larv_div <- ecodata::ichthyo_diversity %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ecodata::geom_gls(aes(x = Time, y = mean(Value))) +
+  ecodata::geom_lm(aes(x=Time, y = Value))+
   ggplot2::ggtitle("GB larval diversity") +
   ylab("Shannon Diversity") +
   ggplot2::xlab(element_blank())+
@@ -1490,7 +1526,7 @@ shannon <- diet_div %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_line() +
   ggplot2::geom_point() +
-  #geom_gls() +
+  ecodata::geom_lm() +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01),limits = c(1992,2021)) +
   ggplot2::ggtitle("Common tern diet diversity")+
   ggplot2::ylab(expression("Shannon Diversity")) +
@@ -1688,6 +1724,7 @@ aggregate_prod %>%
   ggplot2::geom_line(aes(x = Time, y = Mean), size = lwd-0.75) +
   ggplot2::geom_point(aes(x = Time, y = Mean), size = pcex-0.75) +
   ecodata::geom_gls(aes(x = Time, y = Mean)) +
+  ecodata::geom_lm(aes(x=Time, y=Mean))+
   ggplot2::geom_errorbar(aes(x = Time,
                     ymin = se.low,
                   ymax = se.high), 
@@ -1722,6 +1759,7 @@ ecodata::forage_anomaly %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_point(aes(x=Time, y = Forage_Mean))+
   ggplot2::geom_line(aes(x=Time, y =Forage_Mean))+
+  ecodata::geom_lm(aes(x=Time, y =Forage_Mean))+
   ggplot2::geom_ribbon(aes(ymin = Forage_Lower, ymax = Forage_Upper, x = Time), alpha = 0.3)+
   ggplot2::geom_hline(yintercept = 0, linetype = "dashed")+
   ggplot2::facet_wrap(~EPU)+

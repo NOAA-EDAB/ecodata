@@ -380,7 +380,7 @@ ggplot2::ggplot()+
   ecodata::geom_gls(aes(x = Time, y = Value,
                group = Var),
              alpha = trend.alpha, size = trend.size) +
-  arfit::geom_lm(aes(x = Time, y = Value))+
+  ecodata::geom_lm(aes(x = Time, y = Value))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
   ggplot2::ylim(30,190)+
@@ -413,7 +413,7 @@ ggplot2::ggplot()+
                group = Var),
              alpha = trend.alpha, size = trend.size) +
   
-  arfit::geom_lm(aes(x = Time, y = Value, group = Var))+
+  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
   ggplot2::ylim(30,190)+
@@ -1173,6 +1173,7 @@ ecodata::aquaculture %>%
  #Highlight last ten years
   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
+  ecodata::geom_lm(aes(x = Time, y = Value))+
   ggplot2::ggtitle("Total Oyster Production in New England")+
   ggplot2::ylab(expression("Oysters production (Pieces)")) +
   ggplot2::xlab("")+
@@ -1203,6 +1204,7 @@ ecodata::aquaculture %>%
  #Highlight last ten years
   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
+  ecodata::geom_lm(aes(x = Time, y = Value))+
   ggplot2::ggtitle("Total Oyster Production in New England")+
   ggplot2::ylab(expression("Production/Acre")) +
   ggplot2::xlab("")+
@@ -1767,6 +1769,7 @@ ecodata::wind_revenue %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Species))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Species))+
+  ecodata::geom_lm(aes(x = Time, y = Value, color = Species))+
   scale_x_continuous(breaks=c(2008,2012,2016, 2020))+
   ggplot2::ggtitle("Fishery Revenue in Wind Lease Areas")+
   ggplot2::ylab(expression("Dollars (10"^6*")"))+

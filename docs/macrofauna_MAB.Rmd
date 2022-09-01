@@ -183,6 +183,9 @@ p1<-agg_bio %>%
   ecodata::geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Mean,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
   #ecodata::geom_lm(aes(x = Time, y = Mean))+
 
   #Add time series
@@ -230,6 +233,9 @@ p2<-agg_bio %>%
       ymin = -Inf, ymax = Inf) +
   #Test for trend and add lines
   ecodata::geom_gls(aes(x = Time, y = Mean,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   #ecodata::geom_lm(aes(x = Time, y = Mean))+
@@ -280,6 +286,9 @@ p3<-agg_bio %>%
   ecodata::geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Mean,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
   #ecodata::geom_lm(aes(x = Time, y = Mean))+
 
   #Add time series
@@ -326,6 +335,9 @@ p4<-agg_bio %>%
       ymin = -Inf, ymax = Inf) +
   #Test for trend and add lines
   ecodata::geom_gls(aes(x = Time, y = Mean,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
   #ecodata::geom_lm(aes(x = Time, y = Mean))+
@@ -389,6 +401,9 @@ neamap %>%
       ymin = -Inf, ymax = Inf) +
   #Test for trend and add lines
   ecodata::geom_gls(aes(x = Time, y = Value,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Value,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
 
@@ -619,7 +634,7 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   ggplot2::geom_line(size = lwd-0.5) +
   ggplot2::geom_point(size = pcex-0.5) +
   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
-  #ecodata::geom_lm()+
+  ecodata::geom_lm()+
   # scale_color_manual(values = series.col, aesthetics = "color")+
   #ggplot2::guides(color = FALSE) +
   #ggplot2::geom_hline(aes(yintercept = hline,
@@ -629,7 +644,7 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   #           linetype = hline.lty)+
   ggplot2::facet_wrap(EPU~.,scales = "free_y", ncol = 2) +
   ggplot2::ggtitle("Expected Number of Species - Spring")+
-  ecodata::geom_gls() +
+  #ecodata::geom_gls() +
   #Axis and theme
   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
   ggplot2::ylab("n species per 1000 ind") +
@@ -898,7 +913,7 @@ ma_larv_div <- ecodata::ichthyo_diversity %>%
   ggplot2::geom_line() +
   ggplot2::geom_point() +
   ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
-       annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ggplot2::ggtitle("Mid-Atlantic larval diversity") +
@@ -1217,6 +1232,7 @@ depth <- spec_dist %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ecodata::geom_gls() +
+  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::geom_line() +
   ggplot2::geom_point() +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
@@ -1231,26 +1247,6 @@ depth <- spec_dist %>%
   ecodata::theme_ts() +
   ecodata::theme_title()
 
-# dtc <- spec_dist %>% 
-#   dplyr::filter(Var == "distance to coast") %>% 
-#   ggplot2::ggplot(aes(x = Time, y = Value,
-#                group = Var)) + 
-#  #Highlight last ten years
-#   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-#       xmin = x.shade.min , xmax = x.shade.max,
-#       ymin = -Inf, ymax = Inf) +
-#   ecodata::geom_gls() +
-#   ggplot2::geom_line() +
-#   ggplot2::geom_point() +
-#   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
-#   ggplot2::ggtitle("Distance to coast")+
-#   ggplot2::ylab(expression("Distance (km)")) +
-#   ggplot2::xlab("Time")+
-#   ggplot2::geom_hline(aes(yintercept = hline),
-#            size = hline.size,
-#            alpha = hline.alpha,
-#            linetype = hline.lty) +
-#   ecodata::theme_ts() 
 
 asd + depth + patchwork::plot_layout(ncol = 1) 
 
