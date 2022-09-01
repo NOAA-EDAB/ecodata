@@ -7,7 +7,8 @@ ma_larv_div <- ecodata::ichthyo_diversity %>%
   ggplot2::ggplot(aes(x = Time, y = Value, group = Var)) +
   ggplot2::geom_line() +
   ggplot2::geom_point() +
-       annotate("rect", fill = shade.fill, alpha = shade.alpha,
+  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
+  annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ggplot2::ggtitle("Mid-Atlantic larval diversity") +

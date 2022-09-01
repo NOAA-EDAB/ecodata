@@ -29,6 +29,7 @@ mab_nefmc_props <- nefmc_ma %>%
   ggplot2::geom_line(size = lwd-0.5) +
   ggplot2::geom_point(size = pcex-0.5) +
   ecodata::geom_gls(aes(x = Time, y = Value)) +
+  ecodata::geom_lm(aes(x=Time, y = Value))+
   # scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::geom_hline(aes(yintercept = hline,

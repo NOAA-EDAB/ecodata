@@ -46,6 +46,7 @@ ggplot2::ggplot() +
   ggplot2::geom_point(aes(x = gl_bt$Time, y = gl_bt$Value), size = 1, color = "red") +
   ggplot2::geom_line(aes(x = gl_bt$Time, y = gl_bt$Value), color = "red") +
   ecodata::geom_gls(aes(x = temp_anom$Time, y = temp_anom$Value)) +
+  ecodata::geom_lm(aes(x = temp_anom$Time, y = temp_anom$Value))+
   ggplot2::ylab("Temperature (C)") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Geroges Bank Bottom temperature anomaly") +
@@ -82,6 +83,7 @@ ggplot2::ggplot() +
   ggplot2::geom_point(aes(x = gl_bt$Time, y = gl_bt$Value), size = 1, color = "red") +
   ggplot2::geom_line(aes(x = gl_bt$Time, y = gl_bt$Value), color = "red") +
   ecodata::geom_gls(aes(x = temp_anom$Time, y = temp_anom$Value)) +
+  ecodata::geom_lm(aes(x = temp_anom$Time, y = temp_anom$Value))+
   ggplot2::ylab("Temperature (C)") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Gulf of Maine Bottom temperature anomaly") +

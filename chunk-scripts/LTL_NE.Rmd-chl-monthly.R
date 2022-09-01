@@ -15,7 +15,7 @@ out_pp$Month <- factor(out_pp$Month, levels = month.abb)
 pp_cci_gom <- out_pp %>% 
   dplyr::filter(EPU == "GOM") %>% 
  ggplot2::ggplot() +
-   # geom_gls(aes(x = Year, y = Value, group = Month))+
+    ecodata::geom_lm(aes(x = Year, y = Value, group = Month))+
     ggplot2::geom_point(aes(x = Year, y = Value, group = Month)) +
     ggplot2::geom_line(aes(x = Year, y = Value, group = Month)) +
     ggplot2::scale_x_discrete(name = "", breaks = seq(min(out_pp$Year),max(out_pp$Year),10)) +  
@@ -36,7 +36,7 @@ pp_cci_gom <- out_pp %>%
  pp_cci_gb <-out_pp %>% 
   dplyr::filter(EPU == "GB") %>% 
  ggplot2::ggplot() +
-   # geom_gls(aes(x = Year, y = Value, group = Month))+
+    ecodata::geom_lm(aes(x = Year, y = Value, group = Month))+
     ggplot2::geom_point(aes(x = Year, y = Value, group = Month)) +
     ggplot2::geom_line(aes(x = Year, y = Value, group = Month)) +
     ggplot2::scale_x_discrete(name = "", breaks = seq(min(out_pp$Year),max(out_pp$Year),10)) +  

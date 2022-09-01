@@ -12,6 +12,7 @@ ecodata::ches_bay_wq %>%
   ggplot2::geom_line() +
   ggplot2::geom_point() +
   ecodata::geom_gls() +
+  #ecodata::geom_lm()+
   ggplot2::ylab(expression("Estimated attainment (%)")) +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Chesapeake Bay Water Quality Attainment") +

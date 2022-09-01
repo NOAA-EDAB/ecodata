@@ -10,6 +10,7 @@ gom_zoo_div <- zoo_div %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ecodata::geom_gls() +
+  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::geom_line() +
   ggplot2::geom_point() +
 #  ylim(1,2.8)+

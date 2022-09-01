@@ -36,6 +36,7 @@ ggplot2::ggplot()+
   ecodata::geom_gls(aes(x = Time, y = Value,
                group = Var),
              alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Value))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
   ggplot2::ylim(30,190)+
@@ -67,6 +68,8 @@ ggplot2::ggplot()+
   ecodata::geom_gls(aes(x = Time, y = Value,
                group = Var),
              alpha = trend.alpha, size = trend.size) +
+  
+  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
   ggplot2::ylim(30,190)+
@@ -86,7 +89,7 @@ ggplot2::ggplot()+
   ggplot2::ggtitle("Georges Bank")+
   ecodata::theme_title()
 
- plot_row<-cowplot::plot_grid( gb_total, gom_total, ncol = 2)
+plot_row<-cowplot::plot_grid( gb_total, gom_total, ncol = 2)
 title <- ggdraw() + 
   draw_label(
     "Total Commercial Landings *No New Data",

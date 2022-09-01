@@ -23,6 +23,7 @@ gom.hw<-hw %>% dplyr::filter(EPU == "GOM") %>%
   ggplot2::geom_line(aes(x = Time, y = Value)) +
   ggplot2::geom_point(aes(x = Time, y = Value)) +
   ecodata::geom_gls(aes(x = Time, y = Value)) +
+  ecodata::geom_lm(aes(x = Time, y = Value))+
   ggplot2::ylab("") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Gulf of Maine - Bottom Temp Heatwave") +

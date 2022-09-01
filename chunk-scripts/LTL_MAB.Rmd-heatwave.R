@@ -21,6 +21,7 @@ mab.hw %>%
   ggplot2::geom_line(aes(x = Time, y = Value)) +
   ggplot2::geom_point(aes(x = Time, y = Value)) +
   ecodata::geom_gls(aes(x = Time, y = Value, group = Var)) +
+  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Mid-Atlantic Marine Heatwave Intesity") +

@@ -18,6 +18,7 @@ ecodata::wind_revenue %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Species))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Species))+
+  ecodata::geom_lm(aes(x = Time, y = Value, color = Species))+
   scale_x_continuous(breaks=c(2008,2012,2016, 2020))+
   ggplot2::ggtitle("Fishery Revenue in Wind Lease Areas")+
   ggplot2::ylab(expression("Dollars (10"^6*")"))+

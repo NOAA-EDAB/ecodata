@@ -11,6 +11,7 @@ gom_larv_div <- ecodata::ichthyo_diversity %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ecodata::geom_gls(aes(x = Time, y = mean(Value))) +
+  ecodata::geom_lm(aes(x=Time, y = Value))+
   ggplot2::ggtitle("GOM larval diversity") +
   ggplot2::ylab("Shannon Diversity") +
   ggplot2::xlab(element_blank())+
@@ -35,6 +36,7 @@ gb_larv_div <- ecodata::ichthyo_diversity %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ecodata::geom_gls(aes(x = Time, y = mean(Value))) +
+  ecodata::geom_lm(aes(x=Time, y = Value))+
   ggplot2::ggtitle("GB larval diversity") +
   ylab("Shannon Diversity") +
   ggplot2::xlab(element_blank())+

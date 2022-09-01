@@ -8,6 +8,7 @@ ecodata::forage_anomaly %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_point(aes(x=Time, y = Forage_Mean))+
   ggplot2::geom_line(aes(x=Time, y =Forage_Mean))+
+  ecodata::geom_lm(aes(x = Time, y = Forage_Mean))+
   ggplot2::geom_ribbon(aes(ymin = Forage_Lower, ymax = Forage_Upper, x = Time), alpha = 0.3)+
   ggplot2::geom_hline(yintercept = 0, linetype = "dashed")+
   ggplot2::ggtitle("Forage Anomalies")+

@@ -28,6 +28,7 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
               alpha = 0.5) +
   ggplot2::geom_line(size = lwd-0.5) +
   ggplot2::geom_point(size = pcex-0.5) +
+  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   # scale_color_manual(values = series.col, aesthetics = "color")+
   #ggplot2::guides(color = FALSE) +
   #ggplot2::geom_hline(aes(yintercept = hline,

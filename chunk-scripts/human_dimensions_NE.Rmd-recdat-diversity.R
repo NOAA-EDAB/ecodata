@@ -30,6 +30,8 @@ rec_div <- recdat %>%
   ecodata::geom_gls(aes(x = Time, y = Value,
                group = Var),
              alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Value,
+               group = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
   ggplot2::ylim(ylim_rd)+

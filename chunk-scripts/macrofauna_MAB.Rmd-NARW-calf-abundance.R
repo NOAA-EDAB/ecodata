@@ -11,6 +11,7 @@ ecodata::narw %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd-0.75) +
   ggplot2::geom_point(aes(x = Time, y = Value), size = pcex-0.75) +
+  ecodata::geom_lm(aes(x = Time, y = Value))+
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("NARW calf abundance") +

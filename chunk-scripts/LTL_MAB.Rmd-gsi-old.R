@@ -10,6 +10,7 @@ ecodata::gsi_old %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ecodata::geom_gls() +
+  ecodata::geom_lm(aes(x = Time, y = Value))+
   ggplot2::geom_line() +
   ggplot2::geom_point() +
   ggplot2::ylab("Gulf Stream position anomaly") +

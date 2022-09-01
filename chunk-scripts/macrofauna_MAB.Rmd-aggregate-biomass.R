@@ -68,6 +68,10 @@ p1<-agg_bio %>%
   ecodata::geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Mean,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
+  #ecodata::geom_lm(aes(x = Time, y = Mean))+
 
   #Add time series
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper),
@@ -116,6 +120,10 @@ p2<-agg_bio %>%
   ecodata::geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Mean,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
+  #ecodata::geom_lm(aes(x = Time, y = Mean))+
 
   #Add time series
   ggplot2::geom_ribbon( aes(x = Time, ymin = pmax(lower,0), ymax = upper),
@@ -163,6 +171,10 @@ p3<-agg_bio %>%
   ecodata::geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Mean,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
+  #ecodata::geom_lm(aes(x = Time, y = Mean))+
 
   #Add time series
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper),
@@ -210,6 +222,10 @@ p4<-agg_bio %>%
   ecodata::geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
+  ecodata::geom_lm(aes(x = Time, y = Mean,
+               color = Var),
+             alpha = trend.alpha, size = trend.size) +
+  #ecodata::geom_lm(aes(x = Time, y = Mean))+
   #Add time series
    ggplot2::geom_ribbon( aes(x = Time, ymin = pmax(lower,0), ymax = upper),
                alpha = 0.5,

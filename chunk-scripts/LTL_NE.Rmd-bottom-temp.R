@@ -13,6 +13,7 @@ gom_bottomtemp<- ggplot2::ggplot()+ #plot
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_line(aes(x = bt$Time, y = bt$Value)) +
   ecodata::geom_gls(aes(x = bt$Time, y = bt$Value)) +
+  ecodata::geom_lm(aes(x = bt$Time, y = bt$Value))+
   ggplot2::geom_point(aes(x = bt$Time, y = bt$Value), size = 1) +
   ggplot2::geom_point(aes(x = gl_bt$Time, y = gl_bt$Value), size = 1, color = "red") +
   ggplot2::geom_line(aes(x = gl_bt$Time, y = gl_bt$Value), color = "red") +
@@ -44,6 +45,7 @@ gb_bottomtemp<- ggplot2::ggplot()+ #plot
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_line(aes(x = gb_bt$Time, y = gb_bt$Value)) +
   ecodata::geom_gls(aes(x = gb_bt$Time, y = gb_bt$Value)) +
+  ecodata::geom_lm(aes(x = gb_bt$Time, y = gb_bt$Value))+
   ggplot2::geom_point(aes(x = gb_bt$Time, y = gb_bt$Value), size = 1) +
   ggplot2::geom_point(aes(x = gb_gl_bt$Time, y = gb_gl_bt$Value), size = 1, color = "red") +
   ggplot2::geom_line(aes(x = gb_gl_bt$Time, y = gb_gl_bt$Value), color = "red") +

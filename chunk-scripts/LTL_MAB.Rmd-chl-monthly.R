@@ -16,6 +16,7 @@ out_chl$Month <- factor(out_chl$Month, levels = month.abb)
 
 chl_cci <- ggplot2::ggplot(out_chl) +
    # geom_gls(aes(x = Year, y = Value, group = Month))+
+    ecodata::geom_lm(aes(x = Year, y = Value, group = Month))+
     ggplot2::geom_point(aes(x = Year, y = Value, group = Month)) +
     ggplot2::geom_line(aes(x = Year, y = Value, group = Month)) +
     ggplot2::scale_x_discrete(name = "", breaks = seq(min(out_chl$Year),max(out_chl$Year),10)) +  

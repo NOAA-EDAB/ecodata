@@ -25,7 +25,7 @@ shannon <- diet_div %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_line() +
   ggplot2::geom_point() +
-  #geom_gls() +
+  ecodata::geom_lm() +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01),limits = c(1992,2021)) +
   ggplot2::ggtitle("Common tern diet diversity")+
   ggplot2::ylab(expression("Shannon Diversity")) +

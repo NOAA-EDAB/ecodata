@@ -20,6 +20,8 @@ ecodata::ppr %>%
   # ggplot2::geom_hline(yintercept = 5, color = "red", linetype = "dashed")+
   ggplot2::geom_point(aes(x = Time, y = Value))+
   ggplot2::geom_line(aes(x = Time, y = Value))+
+  ecodata::geom_lm(aes(x = Time, y = Value,
+               group = Var))+
   #ggplot2::geom_hline(aes(yintercept = hline),
   #         size = hline.size,
   #         alpha = hline.alpha,
