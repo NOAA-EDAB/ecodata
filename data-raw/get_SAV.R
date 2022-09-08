@@ -16,6 +16,7 @@ get_SAV <- function(save_clean = F){
     tidyr::separate(Var, into = c("Var", "Null")) %>%
     dplyr::select(-Null)
 
+
   # metadata ----
   attr(SAV, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/submerged-aquatic-vegetation.html"
   attr(SAV, "data_files")   <- list(
