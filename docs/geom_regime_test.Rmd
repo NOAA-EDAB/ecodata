@@ -1,5 +1,7 @@
 # Regime Shift plotting test
 
+What indicators should be included??
+
 ```{r setup, include=FALSE}
 
 knitr::opts_chunk$set(echo = FALSE,
@@ -68,7 +70,38 @@ ecodata::long_term_sst %>%
 
 ```
 
-#### Bottom Temp
+#### GSI
+
+```{r}
+ecodata::gsi %>%
+  dplyr::mutate(Year = floor(Time)) %>%
+  dplyr::group_by(Year) %>%
+  dplyr::summarise(Value = mean(Value)) %>%
+  dplyr::mutate(hline = mean(Value)) %>%
+  dplyr::rename(Time = Year) %>%
+  ggplot2::ggplot(aes(x = Time, y = Value)) +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ecodata::geom_gls() +
+  ecodata::geom_lm(aes(x = Time, y = Value))+
+  ecodata::geom_regime()+
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::ylab("Gulf Stream position anomaly") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("Gulf Stream Index") +
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
+  ggplot2::geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  ecodata::theme_ts() +
+  ggplot2::theme(strip.text=element_text(hjust=0,
+                                face = "italic"))
+```
+
+#### Bottom Temp Heatwaves
 
 ```{r}
 cumu <- ecodata::bottom_heatwave %>% 
@@ -145,6 +178,40 @@ wcr %>%
 
 ```
 
+
+
+
+#### Zooplankton Diversity
+
+```{r}
+zoo_div <- ecodata::zoo_diversity %>% 
+  dplyr::filter(EPU == "MAB")
+
+zoo_div %>% 
+  ggplot2::ggplot(aes(x = Time, y = Value, group = Var)) +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ecodata::geom_gls() +
+  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
+  ecodata::geom_regime()+
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::ylab("Shannon Diversity") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("Zooplankton Diversity") +
+  ggplot2::facet_wrap(Var~., ncol = 3) +
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
+  ggplot2::geom_hline(aes(yintercept = mean(Value)),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  ecodata::theme_facet() +
+  ggplot2::theme(strip.text=element_blank())+
+  ecodata::theme_title()
+```
+
+
 #### Expected N
 
 ```{r}
@@ -167,17 +234,17 @@ exp2<- ecodata::exp_n  %>%
 
 exp2 %>% 
 ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
-  
+  ecodata::geom_regime(data = exp2, aes(x = Time, y = Value, fill = NULL))+
   #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max ,
       ymin = -Inf, ymax = Inf) +
-  ecodata::geom_regime()+
-
   ggplot2::geom_ribbon(data = exp2, aes(ymax = pmax(upper, 0), ymin = lower, x = Time),
               alpha = 0.5) +
   ggplot2::geom_line(size = lwd-0.5) +
   ggplot2::geom_point(size = pcex-0.5) +
+  
+  
   # scale_color_manual(values = series.col, aesthetics = "color")+
   #ggplot2::guides(color = FALSE) +
   #ggplot2::geom_hline(aes(yintercept = hline,
