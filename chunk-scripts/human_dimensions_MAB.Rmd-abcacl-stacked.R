@@ -3,18 +3,18 @@ ecodata::abc.acl %>%
   tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>% 
   dplyr::filter(Var == " ABC/ACL", 
                 !Fishery == "Atlantic mackerel Comm ") %>% 
-  dplyr::mutate(Fishery = recode(Fishery, "Atlantic mackerel Rec " = "Atlantic Mackerel"),
-                Fishery = recode(Fishery, "Bluefish " = "All Others"), 
-                Fishery = recode(Fishery, "Chub mackerel " = "All Others"),
-                Fishery = recode(Fishery, "Golden Tilefish " = "All Others"),
-                Fishery = recode(Fishery, "Black Sea Bass Recreational " = "All Others"),
-                Fishery = recode(Fishery, "Black Sea Bass Commercial " = "All Others"),
-                Fishery = recode(Fishery, "Summer Flounder Recreational " = "All Others"),
-                Fishery = recode(Fishery, "Summer Flounder Commercial " = "All Others"),
-                Fishery = recode(Fishery, "Scup Recreational " = "All Others"), 
-                Fishery = recode(Fishery, "Scup Commercial " = "All Others"), 
-                Fishery = recode(Fishery, "Blueline Tilefish Recreational " = "All Others"),
-                Fishery = recode(Fishery, "Blueline Tilefish Commercial " = "All Others")) %>% 
+  dplyr::mutate(Fishery = dplyr::recode(Fishery, "Atlantic mackerel Rec " = "Atlantic Mackerel"),
+                Fishery = dplyr::recode(Fishery, "Bluefish " = "All Others"), 
+                Fishery = dplyr::recode(Fishery, "Chub mackerel " = "All Others"),
+                Fishery = dplyr::recode(Fishery, "Golden Tilefish " = "All Others"),
+                Fishery = dplyr::recode(Fishery, "Black Sea Bass Recreational " = "All Others"),
+                Fishery = dplyr::recode(Fishery, "Black Sea Bass Commercial " = "All Others"),
+                Fishery = dplyr::recode(Fishery, "Summer Flounder Recreational " = "All Others"),
+                Fishery = dplyr::recode(Fishery, "Summer Flounder Commercial " = "All Others"),
+                Fishery = dplyr::recode(Fishery, "Scup Recreational " = "All Others"), 
+                Fishery = dplyr::recode(Fishery, "Scup Commercial " = "All Others"), 
+                Fishery = dplyr::recode(Fishery, "Blueline Tilefish Recreational " = "All Others"),
+                Fishery = dplyr::recode(Fishery, "Blueline Tilefish Commercial " = "All Others")) %>% 
    dplyr::group_by(Fishery, Time) %>% 
    dplyr::summarise(Value = sum(Value)) %>% 
   # dplyr::summarise(Value_mean = mean(Value), 
