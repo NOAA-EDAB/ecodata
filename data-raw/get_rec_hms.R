@@ -1,5 +1,15 @@
 ## HMS sharks occurence on the shelf
 # Data from MRIP - https://www.fisheries.noaa.gov/recreational-fishing-data/recreational-fishing-data-downloads
+
+# https://www.st.nmfs.noaa.gov/SASStoredProcess/do? is the data portal
+# 1) Select most recent years to add to total dataset
+# 2) Data Type: "Estimate: Catch"
+# 3) Wave Options: "All Waves"
+# 4) Geographical Area: "Unisted States by State"
+# 5) Select 30 species from list (ecodata/data-raw/hms-mrip/hms_sp_category.csv)
+# 6) Output Form: "Download CSV as Zip File"
+# 7) Submit Query
+
 # Seleted species from categories from Duartes lists from observer data
 library(tidyverse)
 
