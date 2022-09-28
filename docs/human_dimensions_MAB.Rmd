@@ -1538,6 +1538,7 @@ p2
 ```{r abcacl-stacked}
 
 ecodata::abc.acl %>% 
+  dplyr::filter(EPU == "MAB") %>% 
   tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>% 
   dplyr::filter(Var == " ABC/ACL", 
                 !Fishery == "Atlantic mackerel Comm ") %>% 
@@ -1581,6 +1582,7 @@ ecodata::abc.acl %>%
 ```{r abcacl}
 
 ecodata::abc.acl %>% 
+  dplyr::filter(EPU == "MAB") %>% 
   tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>% 
   dplyr::filter(Var == " ABC/ACL", 
                 !Fishery == "Atlantic mackerel Comm ") %>% 
@@ -1611,7 +1613,7 @@ ecodata::abc.acl %>%
 
 ```{r abcacl-catch, fig.cap = "Catch divided by ABC/ACL for MAFMC managed fisheies. Chub mackerel removed due extremely low catch. Outliers = Recreational Black Sea Bass.  Possible management success story? - See comment in google doc."}
 mean<- ecodata::abc.acl %>% 
-  #group_by(Time) %>% 
+  dplyr::filter(EPU == "MAB") %>% 
   tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>% 
   pivot_wider(names_from = Var, values_from = Value) %>% 
   dplyr::rename("abc.acl" = " ABC/ACL", 

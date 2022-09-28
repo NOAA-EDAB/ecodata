@@ -1828,7 +1828,100 @@ p2
 ```
 
 
+### Total Quota (ACL/TAL)
 
+```{r abcacl-stacked}
+groundfish<- abc.acl %>% filter(EPU == "NE") %>%
+  tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>%
+  tidyr::pivot_wider(names_from = "Var", values_from = "Value") %>%
+  filter(stringr::str_detect(Fishery, "Groundfish")) %>%
+  dplyr::group_by(Time) %>%
+  dplyr::summarise(Quota, Catch_Landings) %>%
+  dplyr::mutate(Fishery = "Groundfish",
+                EPU = "NE",
+                Units = "mt")
+
+sm_mesh<- abc.acl %>% filter(EPU == "NE") %>%
+  tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>%
+  tidyr::pivot_wider(names_from = "Var", values_from = "Value") %>%
+  filter(stringr::str_detect(Fishery, "Small Mesh")) %>%
+  dplyr::group_by(Time) %>%
+  dplyr::summarise(Quota, Catch_Landings) %>%
+  dplyr::mutate(Fishery = "Small Mesh",
+                EPU = "NE",
+                Units = "mt")
+
+ecodata::abc.acl %>% filter(EPU == "NE") %>%
+  tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>%
+  tidyr::pivot_wider(names_from = "Var", values_from = "Value") %>%
+  dplyr::filter(!stringr::str_detect(Fishery, "Groundfish"),
+                !stringr::str_detect(Fishery, "Small Mesh")) %>%
+  rbind(groundfish, sm_mesh) %>%
+  dplyr::mutate(Value = Catch_Landings/Quota) %>% 
+
+  ggplot2::ggplot()+
+  ggplot2::geom_bar(aes( y = Quota, x = Time, fill = Fishery), stat="identity", position = "stack" )+
+  ggplot2::ggtitle("Quota for NEFMC Managed Species")+
+  #ggplot2::ylab(expression("ABC/ACL"))+
+  ggplot2::theme(legend.text = element_text(size = 10), 
+                 legend.key.height = unit(2, "mm"))+
+  ggplot2::ylab("Quota")+
+  ggplot2::xlab(element_blank())+
+  ecodata::theme_ts()+
+  ecodata::theme_title()
+  
+
+```
+
+### ABC/ACL ratio to Catch
+
+```{r abcacl-catch, fig.cap = "Catch divided by Quota(ABC/ACL/TAL) for NEFMC managed fisheies. "}
+
+
+mean<- ecodata::abc.acl %>% 
+  dplyr::filter(EPU == "NE", 
+                Time >= 2012) %>% 
+  tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>% 
+  pivot_wider(names_from = Var, values_from = Value) %>% 
+  # dplyr::rename("abc.acl" = " ABC/ACL", 
+  #               "Catch" = " Catch") %>% 
+  dplyr::mutate(Value = Catch_Landings/Quota, 
+                Time = as.character(Time)) %>% 
+  dplyr::group_by(Time) %>% 
+  dplyr::summarise(val = mean(Value)) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(Time = as.numeric(Time))
+
+ecodata::abc.acl %>% 
+  filter(EPU == "NE", 
+         Time >=2012) %>%  
+  tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>% 
+  pivot_wider(names_from = Var, values_from = Value) %>% 
+  dplyr::mutate(Value = Catch_Landings/Quota, 
+                Time = as.numeric(Time)) %>% 
+  ggplot2::ggplot()+
+  #geom_boxplot()+
+  geom_point(aes(x = Time, y = Value))+
+  geom_point(data = mean, aes(x = Time, y = val), color = "red")+
+  geom_line(data = mean, aes(x = Time, y = val), color = "red")+
+  geom_hline(yintercept = 1, linetype='dashed', col = 'gray')+
+  geom_text_repel(aes(x = Time, y = Value,
+                      label=ifelse(Value>1,as.character(Fishery),'')),
+                  hjust=0,vjust=0, size= 2, force= 75,
+                  direction = "both", 
+                  nudge_x = 1, 
+                  nudge_y = 0.5)+
+  ggplot2::ggtitle("NEFMC Catch per Quota")+
+  ggplot2::ylab(expression("Catch / Quota"))+
+  ggplot2::theme(legend.title = element_blank(), 
+                 legend.position = "none")+
+  ggplot2::xlab(element_blank())+
+  scale_x_continuous(breaks=c(2012,2014,2016, 2018,2020,2022))+
+  ecodata::theme_ts()+
+  ecodata::theme_title()
+
+
+```
 
 
 
