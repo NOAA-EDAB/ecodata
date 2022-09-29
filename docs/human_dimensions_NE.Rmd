@@ -1830,6 +1830,17 @@ p2
 
 ### Total Quota (ACL/TAL)
 
+|Fishery                |Quota   |Year Range |Catch vs Landings |
+|-----------------------|--------|-----------|------------------|
+|Atlantic Herring       |ACL     |2017-2022  |Catch|
+|Groundfish             |ACL     |2013-2022  |Catch|
+|Sea Scallop            |ACL     |2012-2022  |Landings|
+|Monkfish               |TAL     |2009-2022  |Landings|
+|Skate                  |Wing TAL|2013-2022  |Landings|
+|Small Mesh Multispecies|TAL     |2019-2022  |Landings|
+|Red Crab               |ABC     |2012-2022  |Landings|
+|Spiny Dogfish          |ABC     |2019-2022  |Landings|
+
 ```{r abcacl-stacked}
 groundfish<- abc.acl %>% filter(EPU == "NE") %>%
   tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>%
