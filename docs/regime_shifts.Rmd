@@ -1,0 +1,207 @@
+# Regime Shifts case studies 
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = FALSE,
+                      message = FALSE,
+                      warning = FALSE,
+                      fig.align = 'center') #allows for inserting R code into captions
+
+#Plotting and data libraries
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(ecodata)
+
+#Time series constants
+shade.alpha <- 0.3
+shade.fill <- "lightgrey"
+lwd <- 1
+pcex <- 2
+trend.alpha <- 0.5
+trend.size <- 2
+hline.size <- 1
+hline.alpha <- 0.35
+hline.lty <- "dashed"
+label.size <- 5
+hjust.label <- 1.5
+letter_size <- 4
+feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
+x.shade.min <- 2011
+x.shade.max <- 2021
+series.col <- c("black","indianred")
+#Function for custom ggplot facet labels
+label <- function(variable,value){
+  return(facet_names[value])
+}
+
+```
+
+## Data included {.tabset .tabset-fade}
+
+Table describing the data included in the regime shift case studies. 
+
+| EPU | Indicator                          | Year_min | ecodata::           |
+|-----|------------------------------------|----------|---------------------|
+| MAB | Fall SST                           | 1982     | seasonal_oisst_anom |
+| MAB | Zooplankton                        | 1977     | zoo_abund           |   
+| MAB | Forage Index                       |          |                     |
+| MAB | Total Productivity                 | 1980     | productivity_anomaly|
+| GOM | Annual Surface Cumulative Heatwave | 1982     | heatwave            |
+| GOM | Zooplankton                        | 1977     | zooabund            |
+| GOM | Forage Index                       |          |                     |
+| GOM | Condition Index                    |          |                     |
+
+
+### Mid-Atlantic
+
+#### Temperature
+
+```{r}
+ecodata::seasonal_oisst_anom %>%
+  dplyr::filter(EPU == "MAB", 
+                Var == "Fall OISST anomaly") %>% 
+  ggplot2::ggplot(aes(x = Time, y = Value)) +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ecodata::geom_regime()+
+  ggplot2::geom_col(aes(fill = ifelse(Value<0, "red", "blue"))) +
+  ggplot2::ylab("Anomaly") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("Fall Temperature anomaly") +
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
+  ecodata::theme_ts() +
+  ggplot2::theme(strip.text=element_text(hjust=0,
+                                face = "italic"), 
+                 legend.position = "none")
+```
+
+
+#### Zooplankton 
+
+```{r}
+zoo_div <- ecodata::zoo_abund %>% 
+  dplyr::filter(EPU == "MAB", 
+                Var == "large") %>% 
+  dplyr::mutate(anom = Value/mean(Value) - 1)
+
+zoo_div %>% 
+  ggplot2::ggplot(aes(x = Time, y = anom)) +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ecodata::geom_regime()+
+  ggplot2::geom_col(aes(fill = ifelse(anom<0, "red", "blue")))+
+  #ggplot2::geom_point() +
+  ggplot2::ylab("Anomaly") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("Large Zooplankton") +
+  ggplot2::facet_wrap(Var~., ncol = 3) +
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
+  ecodata::theme_facet() +
+  ggplot2::theme(strip.text=element_blank(), 
+                 legend.position = "none")+
+  ecodata::theme_title()
+
+```
+
+#### Forage Index
+
+
+#### Productivity
+
+```{r}
+mid <- ecodata::productivity_anomaly %>% 
+  dplyr::filter(EPU == "MAB") %>% 
+  dplyr::group_by(Time) %>%
+     dplyr::summarise(Total = sum(Value, na.rm = T)) %>% 
+     dplyr::mutate(Total = ifelse(Total == 0, NA, Total))
+
+mid %>% ggplot2::ggplot(aes(x = Time, y = Total)) +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ecodata::geom_regime()+
+  ggplot2::geom_col(aes(fill = ifelse(Total<0, "red", "blue"))) +
+  ggplot2::ylab("Anomaly") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("Productivity anomaly") +
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
+  ecodata::theme_ts() +
+  ggplot2::theme(strip.text=element_text(hjust=0,
+                                face = "italic"), 
+                 legend.position = "none")
+```
+
+
+### Gulf of Maine
+
+#### Heatwave
+
+```{r}
+ecodata::heatwave %>%
+  dplyr::filter(EPU == "MAB", 
+                Var == "cumulative intensity") %>% 
+  dplyr::mutate(anom = Value/(mean(Value))-1) %>% 
+  ggplot2::ggplot(aes(x = Time, y = anom)) +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ecodata::geom_regime()+
+  ggplot2::geom_col(aes(fill = ifelse(anom<0, "red", "blue"))) +
+  ggplot2::ylab("Anomaly") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("Cumulative Heatwave Anomaly") +
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
+  ecodata::theme_ts() +
+  ggplot2::theme(strip.text=element_text(hjust=0,
+                                face = "italic"), 
+                 legend.position = "none")
+```
+
+
+#### Zooplankton 
+
+```{r}
+zoo_div <- ecodata::zoo_abund %>% 
+  dplyr::filter(EPU == "MAB", 
+                Var == "large") %>% 
+  dplyr::mutate(anom = Value/mean(Value) - 1)
+
+zoo_div %>% 
+  ggplot2::ggplot(aes(x = Time, y = anom)) +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ecodata::geom_regime()+
+  ggplot2::geom_col(aes(fill = ifelse(anom<0, "red", "blue")))+
+  #ggplot2::geom_point() +
+  ggplot2::ylab("Anomaly") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("Large Zooplankton") +
+  ggplot2::facet_wrap(Var~., ncol = 3) +
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
+  ecodata::theme_facet() +
+  ggplot2::theme(strip.text=element_blank(), 
+                 legend.position = "none")+
+  ecodata::theme_title()
+
+```
+
+#### Forage Index
+#### Condition
+
+
+
+
+
+
+
+
+
+
+
+
+
+
