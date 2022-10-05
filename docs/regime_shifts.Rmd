@@ -189,9 +189,46 @@ zoo_div %>%
 
 ```
 
+```{r}
+
+load(here::here("data-raw/zoo_abun_anom.rdata"))
+
+zoo <- mtest %>%
+  ggplot2::ggplot(aes(x = Time, y = value))+
+  ggplot2::geom_col(aes(fill = ifelse(value<0, "red", "blue")))+
+  ggplot2::facet_wrap(.~variable)+
+  ecodata::geom_regime()+
+  ggplot2::theme(legend.position = "none")
+
+zoo
+```
+
+```{r}
+load(here::here("data-raw/RM_20210120_CalanusAnomaly.rda"))
+
+CalanusAnomaly %>%
+  ggplot2::ggplot(aes(x = year, y = Value))+
+  ggplot2::geom_col(aes(fill = ifelse(Value<0, "red", "blue")))+
+  ggplot2::facet_wrap(.~Var)+
+  ecodata::geom_regime()+
+  ggplot2::theme(legend.position = "none")
+
+```
+
 #### Forage Index
+
 #### Condition
 
+```{r}
+cond<- ecodata::condition %>% 
+  mutate(anom = Value/(mean(Value))-1) %>% 
+  ggplot2::ggplot(aes(x = Time, y = anom))+
+  ggplot2::geom_col(aes(fill = ifelse(anom<0, "red", "blue")))+
+  ggplot2::facet_wrap(.~Var)+
+  ecodata::geom_regime()+
+  ggplot2::theme(legend.position = "none")
+cond
+```
 
 
 
