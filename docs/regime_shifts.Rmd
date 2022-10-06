@@ -231,8 +231,61 @@ cond
 ```
 
 
+```{r}
 
 
+cond1<- ecodata::condition %>% 
+  # dplyr::filter(Var %in% c("Atlantic cod",
+  #                        "Haddock",
+  #                        "Yellowtail flounder",
+  #                        "Pollock",
+  #                        "American plaice",
+  #                        "Witch flounder",
+  #                        "White hake",
+  #                        "Windowpane",
+  #                        "Winter flounder",
+  #                        "Acadian redfish",
+  #                        "Atlantic wolffish",
+  #                        "Ocean pout" )) %>%
+  mutate(anom = Value/(mean(Value))-1) %>%
+  ggplot2::ggplot(aes(x = Time, y = mean))+
+  ggplot2::geom_bar(aes(fill = Var, x = Time, y = anom),
+                    stat = "identity")+
+  ggplot2::theme(legend.position = "none")
+cond1
+
+
+```
+
+```{r}
+condup<- ecodata::condition %>% 
+  dplyr::mutate(anom = Value/(mean(Value))-1) %>% 
+  dplyr::filter(anom > 0) %>% 
+  group_by(Time) %>% 
+  dplyr::mutate(numb = length(unique(Var)), 
+                category = c("above")) %>% 
+  ungroup()
+
+ecodata::condition %>% 
+  dplyr::mutate(anom = Value/(mean(Value))-1) %>% 
+  dplyr::filter(anom < 0) %>% 
+  group_by(Time) %>% 
+  dplyr::mutate(numb = length(unique(Var)), 
+                category = c("below")) %>% 
+  ungroup() %>%
+  rbind(condup) %>% 
+  ggplot2::ggplot(aes(x = Time, y = numb, fill = category ))+
+  # geom_point()+
+  # geom_line()+
+  # geom_point(data = condup, aes(x = Time, y = numb))+
+  # geom_line(data = condup, aes(x = Time, y = numb), color = "blue")+
+  geom_bar(position="fill", stat="identity")+
+  ylab("number of species")+
+  ggtitle("Condition Anomaly Species Count")+
+  theme(legend.title = element_blank())#+
+  #ecodata::geom_regime()
+
+```
 
 
 
