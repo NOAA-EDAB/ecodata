@@ -6,7 +6,7 @@ library(dplyr)
 library(tidyr)
 library(readxl)
 raw.dir <- here::here("data-raw")
-aquaculture_xlsx <- "aqauculture2021.xlsx"
+aquaculture_xlsx <- "aqauculture2022.xlsx"
 
 get_aquaculture <- function(save_clean = F){
   dat <- read_excel(file.path(raw.dir,aquaculture_xlsx), sheet = "NE")
