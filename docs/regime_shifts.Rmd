@@ -45,12 +45,12 @@ Table describing the data included in the regime shift case studies.
 |-----|------------------------------------|----------|---------------------|
 | MAB | Fall SST                           | 1982     | seasonal_oisst_anom |
 | MAB | Zooplankton                        | 1977     | zoo_abund           |   
-| MAB | Forage Index                       |          |                     |
+| MAB | Forage Index                       | 1985     |  forage_index      |
 | MAB | Total Productivity                 | 1980     | productivity_anomaly|
 | GOM | Annual Surface Cumulative Heatwave | 1982     | heatwave            |
 | GOM | Zooplankton                        | 1977     | zooabund            |
-| GOM | Forage Index                       |          |                     |
-| GOM | Condition Index                    |          |                     |
+| GOM | Forage Index                       | 1985     | forage_index       |
+| GOM | Condition Index                    | 1992     | condition          |
 
 
 ### Mid-Atlantic
@@ -108,6 +108,26 @@ zoo_div %>%
 
 #### Forage Index
 
+```{r}
+forage<- ecodata::forage_index %>% 
+  dplyr::filter(EPU == "MAB", 
+                stringr::str_detect(Var,"Fall")) %>% 
+  tidyr::pivot_wider(names_from = "Var", values_from = "Value") %>% 
+  dplyr::rename("estimate" = 'Fall Forage Fish Biomass Estimate', 
+                "se" = 'Fall Forage Fish Biomass Estimate SE') %>% 
+  dplyr::mutate(upper = estimate + se, 
+                lower = estimate - se) %>% 
+  ggplot2::ggplot(aes(x = Time, y = estimate))+
+  ggplot2::geom_point()+
+  ggplot2::geom_line()+
+  ggplot2::geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.5)+
+  ecodata::geom_regime()+
+  ecodata::theme_ts()+
+  ggtitle("Fall Forage Index - Mid- Atlantic")
+  
+forage
+
+```
 
 #### Productivity
 
@@ -216,6 +236,28 @@ CalanusAnomaly %>%
 ```
 
 #### Forage Index
+
+
+```{r}
+forage<- ecodata::forage_index %>% 
+  dplyr::filter(EPU == "GOM", 
+                stringr::str_detect(Var,"Fall")) %>% 
+  tidyr::pivot_wider(names_from = "Var", values_from = "Value") %>% 
+  dplyr::rename("estimate" = 'Fall Forage Fish Biomass Estimate', 
+                "se" = 'Fall Forage Fish Biomass Estimate SE') %>% 
+  dplyr::mutate(upper = estimate + se, 
+                lower = estimate - se) %>% 
+  ggplot2::ggplot(aes(x = Time, y = estimate))+
+  ggplot2::geom_point()+
+  ggplot2::geom_line()+
+  ggplot2::geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.5)+
+  ecodata::geom_regime()+
+  ecodata::theme_ts()+
+  ggtitle("Fall Forage Index - Gulf of Maine")
+  
+forage
+
+```
 
 #### Condition
 
