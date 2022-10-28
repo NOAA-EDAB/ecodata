@@ -44,16 +44,74 @@ Table describing the data included in the regime shift case studies.
 | EPU | Indicator                          | Year_min | ecodata::           |
 |-----|------------------------------------|----------|---------------------|
 | MAB | Fall SST                           | 1982     | seasonal_oisst_anom |
-| MAB | Zooplankton                        | 1977     | zoo_abund           |   
+| MAB | Zooplankton                        | 1977     | zoo_regime           |   
 | MAB | Forage Index                       | 1985     |  forage_index      |
 | MAB | Total Productivity                 | 1980     | productivity_anomaly|
 | GOM | Annual Surface Cumulative Heatwave | 1982     | heatwave            |
-| GOM | Zooplankton                        | 1977     | zooabund            |
+| GOM | Zooplankton                        | 1977     | zoo_regime            |
 | GOM | Forage Index                       | 1985     | forage_index       |
 | GOM | Condition Index                    | 1992     | condition          |
 
 
 ### Mid-Atlantic
+
+```{r}
+temp <- ecodata::seasonal_oisst_anom %>%
+  dplyr::filter(EPU == "MAB", 
+                Var == "Fall OISST anomaly") %>% 
+  dplyr::rename("anom" = "Value") %>% 
+  dplyr::select(!Units) %>% 
+  dplyr::mutate(Var = recode(Var, "Fall OISST anomaly" ="Temperature"))
+
+zoo<- ecodata::zoo_regime %>% 
+  dplyr::filter(EPU == "MAB") %>% 
+  dplyr::group_by(Time) %>% 
+  dplyr::summarise(anom = mean(Value)) %>% 
+  dplyr::mutate(Var = "Zooplankton", 
+                EPU = "MAB")
+
+forage<- ecodata::forage_index %>% 
+         dplyr::filter(EPU == "MAB",
+                       Var == "Fall Forage Fish Biomass Estimate") %>%
+         #dplyr::rename("estimate" = 'Fall Forage Fish Biomass Estimate') %>% 
+         dplyr::mutate(anom = Value - mean(Value)) %>% 
+  dplyr::select(!c(Value,Units))%>% 
+  dplyr::mutate(Var = recode(Var, "Fall Forage Fish Biomass Estimate" ="Forage"))
+
+
+productivity<- ecodata::productivity_anomaly %>% 
+  dplyr::filter(EPU == "MAB") %>% 
+  dplyr::group_by(Time) %>%
+  dplyr::summarise(anom = sum(Value, na.rm = T)) %>% 
+  dplyr::mutate(anom = ifelse(anom == 0, NA, anom), 
+                Var = "Productivity", 
+                EPU = "MAB")
+
+mab <- rbind(temp, zoo, forage, productivity)
+mab$Var <- factor(mab$Var,levels = c("Temperature",
+                                     "Zooplankton", 
+                                     "Forage", 
+                                     "Productivity"))
+
+mab %>% 
+  ggplot2::ggplot(aes(x = Time, y = anom)) +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+                    xmin = x.shade.min , xmax = x.shade.max,
+                    ymin = -Inf, ymax = Inf) +
+  ecodata::geom_regime()+
+  ggplot2::geom_col(aes(fill = ifelse(anom<0, "red", "blue"))) +
+  ggplot2::ylab("Anomaly") +
+  ggplot2::xlab(element_blank())+
+  facet_wrap(.~Var, ncol = 1, scales = "free_y")+
+  #ggplot2::ggtitle("Productivity anomaly") +
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
+  ecodata::theme_ts() +
+  ggplot2::theme(strip.text=element_text(hjust=0,
+                                         face = "italic"), 
+                 legend.position = "none")
+
+```
+
 
 #### Temperature
 
@@ -81,28 +139,20 @@ ecodata::seasonal_oisst_anom %>%
 #### Zooplankton 
 
 ```{r}
-zoo_div <- ecodata::zoo_abund %>% 
-  dplyr::filter(EPU == "MAB", 
-                Var == "large") %>% 
-  dplyr::mutate(anom = Value/mean(Value) - 1)
+reg<- ecodata::zoo_regime %>% 
+  dplyr::filter(EPU == "MAB") %>% 
+  dplyr::group_by(Time) %>% 
+  dplyr::mutate(hline = mean(Value))
 
-zoo_div %>% 
-  ggplot2::ggplot(aes(x = Time, y = anom)) +
+ecodata::zoo_regime %>% 
+  dplyr::filter(EPU == "MAB") %>% 
+   ggplot(aes(x = Time, y = Value, fill = Var)) +
+  ggtitle("Zooplankton Abundance anomaly") + 
+  geom_bar(stat='identity') +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  ecodata::geom_regime()+
-  ggplot2::geom_col(aes(fill = ifelse(anom<0, "red", "blue")))+
-  #ggplot2::geom_point() +
-  ggplot2::ylab("Anomaly") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Large Zooplankton") +
-  ggplot2::facet_wrap(Var~., ncol = 3) +
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
-  ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_blank(), 
-                 legend.position = "none")+
-  ecodata::theme_title()
+  ecodata::geom_regime(data = reg,aes(x = Time, y = Value) )
 
 ```
 
@@ -125,9 +175,34 @@ forage<- ecodata::forage_index %>%
   ecodata::theme_ts()+
   ggtitle("Fall Forage Index - Mid- Atlantic")
   
+  
 forage
 
 ```
+
+```{r}
+forage<- ecodata::forage_index %>% 
+  dplyr::filter(EPU == "MAB",
+                Var == "Fall Forage Fish Biomass Estimate") %>%
+    #dplyr::rename("estimate" = 'Fall Forage Fish Biomass Estimate') %>% 
+  dplyr::mutate(anom = Value - mean(Value)) %>% 
+  ggplot2::ggplot(aes(x = Time, y = anom))+
+  #ggplot2::geom_point()+
+  #ggplot2::geom_line()+
+  ggplot2::geom_col(aes(fill = ifelse(anom<0, "red", "blue"))) +
+  #ggplot2::geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.5)+
+  ecodata::geom_regime()+
+  ecodata::theme_ts()+
+  ggtitle("Fall Forage Index - Mid- Atlantic")+
+  ggplot2::theme(strip.text=element_text(hjust=0,
+                                face = "italic"), 
+                 legend.position = "none")
+  
+forage
+
+```
+
+
 
 #### Productivity
 
@@ -157,6 +232,64 @@ mid %>% ggplot2::ggplot(aes(x = Time, y = Total)) +
 
 ### Gulf of Maine
 
+```{r}
+
+temp<- ecodata::heatwave %>%
+  dplyr::filter(EPU == "GOM", 
+                Var == "cumulative intensity") %>% 
+  dplyr::mutate(anom = Value/(mean(Value))-1) %>% 
+  dplyr::select(!c(Units, Value)) %>% 
+  dplyr::mutate(Var = recode(Var, "cumulative intensity" ="Temperature"))
+
+
+zoo<- ecodata::zoo_regime %>% 
+  dplyr::filter(EPU == "GOM") %>% 
+  dplyr::group_by(Time) %>% 
+  dplyr::summarise(anom = mean(Value)) %>% 
+  dplyr::mutate(Var = "Zooplankton", 
+                EPU = "GOM")
+
+forage<- ecodata::forage_index %>% 
+         dplyr::filter(EPU == "GOM",
+                       Var == "Fall Forage Fish Biomass Estimate") %>%
+         #dplyr::rename("estimate" = 'Fall Forage Fish Biomass Estimate') %>% 
+         dplyr::mutate(anom = Value - mean(Value)) %>% 
+  dplyr::select(!c(Value,Units))%>% 
+  dplyr::mutate(Var = recode(Var, "Fall Forage Fish Biomass Estimate" ="Forage"))
+
+condition<- ecodata::condition %>% 
+  dplyr::group_by(Time) %>% 
+  dplyr::summarise(anom = Value-(mean(Value))) %>% 
+  dplyr::mutate(Var = "Condition", 
+                EPU = "GOM")
+
+gom <- rbind(temp, zoo, forage, condition) 
+
+gom$Var <- factor(gom$Var,levels = c("Temperature",
+                                     "Zooplankton", 
+                                     "Forage", 
+                                     "Condition"))
+gom %>%   ggplot2::ggplot(aes(x = Time, y = anom)) +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+                    xmin = x.shade.min , xmax = x.shade.max,
+                    ymin = -Inf, ymax = Inf) +
+  ecodata::geom_regime()+
+  ggplot2::geom_col(aes(fill = ifelse(anom<0, "red", "blue"))) +
+  ggplot2::ylab("Anomaly") +
+  ggplot2::xlab(element_blank())+
+  facet_wrap(.~Var, ncol = 1, scales = "free_y")+
+  #ggplot2::ggtitle("Productivity anomaly") +
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
+  ecodata::theme_ts() +
+  ggplot2::theme(strip.text=element_text(hjust=0,
+                                         face = "italic"), 
+                 legend.position = "none")
+
+```
+
+
+
+
 #### Heatwave
 
 ```{r}
@@ -183,55 +316,24 @@ ecodata::heatwave %>%
 
 #### Zooplankton 
 
-```{r}
-zoo_div <- ecodata::zoo_abund %>% 
-  dplyr::filter(EPU == "MAB", 
-                Var == "large") %>% 
-  dplyr::mutate(anom = Value/mean(Value) - 1)
 
-zoo_div %>% 
-  ggplot2::ggplot(aes(x = Time, y = anom)) +
+
+```{r}
+reg<- ecodata::zoo_regime %>% 
+  dplyr::filter(EPU == "GOM") %>% 
+  dplyr::group_by(Time) %>% 
+  dplyr::mutate(hline = mean(Value))
+
+ecodata::zoo_regime %>% 
+  dplyr::filter(EPU == "GOM") %>% 
+   ggplot(aes(x = Time, y = Value, fill = Var)) +
+  ggtitle("Zooplankton Abundance anomaly") + 
+  geom_bar(stat='identity') +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  ecodata::geom_regime()+
-  ggplot2::geom_col(aes(fill = ifelse(anom<0, "red", "blue")))+
-  #ggplot2::geom_point() +
-  ggplot2::ylab("Anomaly") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Large Zooplankton") +
-  ggplot2::facet_wrap(Var~., ncol = 3) +
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
-  ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_blank(), 
-                 legend.position = "none")+
-  ecodata::theme_title()
+  ecodata::geom_regime(data = reg,aes(x = Time, y = hline) )
 
-```
-
-```{r}
-
-load(here::here("data-raw/zoo_abun_anom.rdata"))
-
-zoo <- mtest %>%
-  ggplot2::ggplot(aes(x = Time, y = value))+
-  ggplot2::geom_col(aes(fill = ifelse(value<0, "red", "blue")))+
-  ggplot2::facet_wrap(.~variable)+
-  ecodata::geom_regime()+
-  ggplot2::theme(legend.position = "none")
-
-zoo
-```
-
-```{r}
-load(here::here("data-raw/RM_20210120_CalanusAnomaly.rda"))
-
-CalanusAnomaly %>%
-  ggplot2::ggplot(aes(x = year, y = Value))+
-  ggplot2::geom_col(aes(fill = ifelse(Value<0, "red", "blue")))+
-  ggplot2::facet_wrap(.~Var)+
-  ecodata::geom_regime()+
-  ggplot2::theme(legend.position = "none")
 
 ```
 
@@ -257,6 +359,27 @@ forage<- ecodata::forage_index %>%
   
 forage
 
+```
+
+```{r}
+forage<- ecodata::forage_index %>% 
+  dplyr::filter(EPU == "GOM",
+                Var == "Fall Forage Fish Biomass Estimate") %>%
+    #dplyr::rename("estimate" = 'Fall Forage Fish Biomass Estimate') %>% 
+  dplyr::mutate(anom = Value - mean(Value)) %>% 
+  ggplot2::ggplot(aes(x = Time, y = anom))+
+  #ggplot2::geom_point()+
+  #ggplot2::geom_line()+
+  ggplot2::geom_col(aes(fill = ifelse(anom<0, "red", "blue"))) +
+  #ggplot2::geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.5)+
+  ecodata::geom_regime()+
+  ecodata::theme_ts()+
+  ggtitle("Fall Forage Index - Mid- Atlantic")+
+  ggplot2::theme(strip.text=element_text(hjust=0,
+                                face = "italic"), 
+                 legend.position = "none")
+
+forage
 ```
 
 #### Condition
