@@ -294,7 +294,7 @@ gom %>%   ggplot2::ggplot(aes(x = Time, y = anom)) +
 
 ```{r}
 ecodata::heatwave %>%
-  dplyr::filter(EPU == "MAB", 
+  dplyr::filter(EPU == "GOM", 
                 Var == "cumulative intensity") %>% 
   dplyr::mutate(anom = Value/(mean(Value))-1) %>% 
   ggplot2::ggplot(aes(x = Time, y = anom)) +
@@ -451,6 +451,33 @@ ecodata::condition %>%
   #ecodata::geom_regime()
 
 ```
+
+```{r}
+
+ecodata::condition %>% 
+  dplyr::mutate(anom = Value/(mean(Value))-1) %>% 
+  dplyr::filter(anom > 0) %>% 
+  group_by(Time) %>% 
+  dplyr::summarise(numb = length(unique(Var)), 
+                category = c("above")) %>% 
+  ungroup() %>% 
+  dplyr::mutate(anom = numb - mean(numb), 
+                hline = mean(numb)) %>% 
+  ggplot2::ggplot(aes(x = Time, y = numb))+
+  #geom_point()+
+  #geom_line()+
+  ecodata::geom_regime()+
+  ggplot2::geom_col(aes(fill = ifelse(anom<0, "red", "blue")))+ 
+  ylab("# of species")+
+  ggplot2::geom_hline(aes(yintercept = unique(hline)))+
+  ggtitle("Condition Anomaly Species Count - Number above 0")+
+  theme(legend.title = element_blank(), 
+        legend.position = "none")
+
+
+
+```
+
 
 
 
