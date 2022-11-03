@@ -72,11 +72,11 @@ zoo<- ecodata::zoo_regime %>%
 
 forage<- ecodata::forage_index %>% 
          dplyr::filter(EPU == "MAB",
-                       Var == "Fall Forage Fish Biomass Estimate") %>%
+                       Var == "Spring Forage Fish Biomass Estimate") %>%
          #dplyr::rename("estimate" = 'Fall Forage Fish Biomass Estimate') %>% 
          dplyr::mutate(anom = Value - mean(Value)) %>% 
   dplyr::select(!c(Value,Units))%>% 
-  dplyr::mutate(Var = recode(Var, "Fall Forage Fish Biomass Estimate" ="Forage"))
+  dplyr::mutate(Var = recode(Var, "Spring Forage Fish Biomass Estimate" ="Forage"))
 
 
 productivity<- ecodata::productivity_anomaly %>% 
@@ -233,13 +233,20 @@ mid %>% ggplot2::ggplot(aes(x = Time, y = Total)) +
 ### Gulf of Maine
 
 ```{r}
+temp <- ecodata::seasonal_oisst_anom %>%
+  dplyr::filter(EPU == "GOM", 
+                Var == "Fall OISST anomaly") %>% 
+  dplyr::rename("anom" = "Value") %>% 
+  dplyr::select(!Units) %>% 
+  dplyr::mutate(Var = recode(Var, "Fall OISST anomaly" ="Temperature"))
 
-temp<- ecodata::heatwave %>%
+
+hw <- ecodata::heatwave %>%
   dplyr::filter(EPU == "GOM", 
                 Var == "cumulative intensity") %>% 
   dplyr::mutate(anom = Value/(mean(Value))-1) %>% 
   dplyr::select(!c(Units, Value)) %>% 
-  dplyr::mutate(Var = recode(Var, "cumulative intensity" ="Temperature"))
+  dplyr::mutate(Var = recode(Var, "cumulative intensity" ="Heatwave"))
 
 
 zoo<- ecodata::zoo_regime %>% 
@@ -251,21 +258,23 @@ zoo<- ecodata::zoo_regime %>%
 
 forage<- ecodata::forage_index %>% 
          dplyr::filter(EPU == "GOM",
-                       Var == "Fall Forage Fish Biomass Estimate") %>%
+                       Var == "Spring Forage Fish Biomass Estimate") %>%
          #dplyr::rename("estimate" = 'Fall Forage Fish Biomass Estimate') %>% 
          dplyr::mutate(anom = Value - mean(Value)) %>% 
   dplyr::select(!c(Value,Units))%>% 
-  dplyr::mutate(Var = recode(Var, "Fall Forage Fish Biomass Estimate" ="Forage"))
+  dplyr::mutate(Var = recode(Var, "Spring Forage Fish Biomass Estimate" ="Forage"))
 
 condition<- ecodata::condition %>% 
+  ungroup() %>% 
   dplyr::group_by(Time) %>% 
-  dplyr::summarise(anom = Value-(mean(Value))) %>% 
+  dplyr::summarise(anom = mean(Value) - 1)%>% 
   dplyr::mutate(Var = "Condition", 
                 EPU = "GOM")
 
-gom <- rbind(temp, zoo, forage, condition) 
+gom <- rbind(temp, hw, zoo, forage, condition) 
 
 gom$Var <- factor(gom$Var,levels = c("Temperature",
+                                     "Heatwave",  
                                      "Zooplankton", 
                                      "Forage", 
                                      "Condition"))
@@ -374,7 +383,7 @@ forage<- ecodata::forage_index %>%
   #ggplot2::geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.5)+
   ecodata::geom_regime()+
   ecodata::theme_ts()+
-  ggtitle("Fall Forage Index - Mid- Atlantic")+
+  ggtitle("Fall Forage Index - Gulf of Maine")+
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"), 
                  legend.position = "none")
