@@ -13,7 +13,7 @@
 
 <title>Environmental and LTL Indicators MAB and Shelf-wide</title>
 
-<script src="libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -107,8 +107,8 @@ pre code {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -116,16 +116,9 @@ pre code {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -265,6 +258,21 @@ MAB-seasonal sea surface temperature time series overlaid onto 2021 seasonal spa
 <div id="sst-new-ltm" class="section level4">
 <h4>SST new LTM</h4>
 <p><img src="LTL_MAB_files/figure-html/sst-ltm-both-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="sst-transition-dates" class="section level4">
+<h4>SST transition dates</h4>
+<div class="figure" style="text-align: center">
+<img src="LTL_MAB_files/figure-html/transdates-1.png" alt="Annual sea surface transition dates" width="672" />
+<p class="caption">
+Annual sea surface transition dates
+</p>
+</div>
+<div class="figure" style="text-align: center">
+<img src="LTL_MAB_files/figure-html/sumlength-1.png" alt="Annual length of summer transition dates" width="672" />
+<p class="caption">
+Annual length of summer transition dates
+</p>
+</div>
 </div>
 <div id="bottom-temperature" class="section level4">
 <h4>Bottom temperature</h4>
