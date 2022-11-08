@@ -62,7 +62,7 @@ get_abc.acl <- function(save_clean = F){
   ne<- readxl::read_excel(file.path(raw.dir, NEFMC_abc_acl_xlsx)) %>%
     tidyr::pivot_longer(cols = c("Quota", "Catch_Landings"), names_to = "Var",
                         values_to = "Value") %>%
-    dplyr::mutate(Var = paste0(Species, "-", Var),
+    dplyr::mutate(Var = paste0(Species, "-", Var, "-", Quota_Category),
                   EPU = c("NE"),
                   Units = c("mt")) %>%
     dplyr::select(Time, Var, Value, EPU, Units)
