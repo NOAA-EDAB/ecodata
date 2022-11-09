@@ -1,0 +1,26 @@
+
+ecodata::forage_index %>% 
+  dplyr::filter(Var %in% c("Fall Forage Fish Biomass Estimate", 
+                           "Fall Forage Fish Biomass Estimate SE",
+                           "Spring Forage Fish Biomass Estimate",
+                           "Spring Forage Fish Biomass Estimate SE"), 
+                EPU == "MAB") %>% 
+  tidyr::separate(Var, into = c("Season", "A", "B", "C", "D", "Var")) %>% 
+  dplyr::mutate(Var = replace_na(Var, "Mean"), 
+                Value = Value/1000) %>% 
+  tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
+  dplyr::mutate(Upper = Mean + SE, 
+                Lower = Mean - SE) %>% 
+  ggplot2::ggplot(aes(x = Time, y = Mean, group = Season))+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_point()+
+  ggplot2::geom_line()+
+  ggplot2::geom_ribbon(aes(ymin = Lower, ymax = Upper, fill = Season), alpha = 0.5)+
+  ggplot2::ggtitle("Forage Biomass Index")+
+  ggplot2::ylab(expression("Forage Index Estimate (10"^3*")"))+
+  ggplot2::xlab(element_blank())+
+  ecodata::geom_gls()+
+  ecodata::theme_ts()+
+  ecodata::theme_title()

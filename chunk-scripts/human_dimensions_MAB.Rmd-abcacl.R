@@ -1,5 +1,6 @@
 
 ecodata::abc.acl %>% 
+  dplyr::filter(EPU == "MAB") %>% 
   tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>% 
   dplyr::filter(Var == " ABC/ACL", 
                 !Fishery == "Atlantic mackerel Comm ") %>% 

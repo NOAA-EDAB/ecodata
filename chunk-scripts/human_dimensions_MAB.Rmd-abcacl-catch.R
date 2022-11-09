@@ -1,6 +1,6 @@
 
 mean<- ecodata::abc.acl %>% 
-  #group_by(Time) %>% 
+  dplyr::filter(EPU == "MAB") %>% 
   tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>% 
   pivot_wider(names_from = Var, values_from = Value) %>% 
   dplyr::rename("abc.acl" = " ABC/ACL", 
