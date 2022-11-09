@@ -20,19 +20,22 @@ get_heatwave <- function(save_clean = F){
   mab<-read_excel(file.path(raw.dir,heatwave_mab_xl)) %>%
     mutate(t = as.Date(t))
   #GB
-  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  #ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   gb.mhw <- heatwaveR::detect_event(ts)
   gb.hw<- gb.mhw$event %>%
     dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative)%>%
     dplyr::mutate(EPU = "GB")
   #GOM
-  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  #ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   gom.mhw <- heatwaveR::detect_event(ts)
   gom.hw<- gom.mhw$event %>%
     dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative) %>%
     dplyr::mutate(EPU = "GOM")
   # MAB
-  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  #ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   mab.mhw <- heatwaveR::detect_event(ts)
   mab.hw<- mab.mhw$event %>%
     dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative) %>%
@@ -97,13 +100,16 @@ get_heatwave_year <- function(save_clean = F){
   mab<-read_excel(file.path(raw.dir,heatwave_mab_xl)) %>%
     mutate(t = as.Date(t))
   #GB
-  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  #ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   gb.mhw <- heatwaveR::detect_event(ts)
   #GOM
-  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  #ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   gom.mhw <- heatwaveR::detect_event(ts)
   #MAB
-  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  #ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   mab.mhw <- heatwaveR::detect_event(ts)
 
   ### Take just clim
