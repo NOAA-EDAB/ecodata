@@ -2,11 +2,11 @@
 mean<- ecodata::abc.acl %>% 
   dplyr::filter(EPU == "NE", 
                 Time >= 2012) %>% 
-  tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>% 
+  tidyr::separate(col = Var, into = c("FMP", "Species", "Var"), sep = "_") %>% 
   pivot_wider(names_from = Var, values_from = Value) %>% 
   # dplyr::rename("abc.acl" = " ABC/ACL", 
   #               "Catch" = " Catch") %>% 
-  dplyr::mutate(Value = Catch_Landings/Quota, 
+  dplyr::mutate(Value = Catch/ACL, 
                 Time = as.character(Time)) %>% 
   dplyr::group_by(Time) %>% 
   dplyr::summarise(val = mean(Value)) %>% 
@@ -16,18 +16,18 @@ mean<- ecodata::abc.acl %>%
 ecodata::abc.acl %>% 
   filter(EPU == "NE", 
          Time >=2012) %>%  
-  tidyr::separate(col = Var, into = c("Fishery", "Var", "Quota_Category"), sep = "-") %>% 
+  tidyr::separate(col = Var, into = c("FMP", "Species","Var"), sep = "_") %>%   tidyr::separate(col = Species, into = c("Species", "Location"), sep = "-") %>% 
   pivot_wider(names_from = Var, values_from = Value) %>% 
-  dplyr::mutate(Value = Catch_Landings/Quota, 
+  dplyr::mutate(Value = Catch/ACL, 
                 Time = as.numeric(Time)) %>% 
   ggplot2::ggplot()+
   #geom_boxplot()+
-  geom_point(aes(x = Time, y = Value, shape = Quota_Category, color =  Quota_Category))+
+  geom_point(aes(x = Time, y = Value))+
   geom_point(data = mean, aes(x = Time, y = val), color = "black")+
   geom_line(data = mean, aes(x = Time, y = val), color = "black")+
   geom_hline(yintercept = 1, linetype='dashed', col = 'gray')+
   geom_text_repel(aes(x = Time, y = Value,
-                      label=ifelse(Value>1,as.character(Fishery),'')),
+                      label=ifelse(Value>1,as.character(Species),'')),
                   hjust=0,vjust=0, size= 2, force= 75,
                   direction = "both", 
                   nudge_x = 1, 

@@ -70,8 +70,8 @@ label.size <- 5
 hjust.label <- 1.5
 letter_size <- 4
 feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
-x.shade.min <- 2011
-x.shade.max <- 2021
+x.shade.min <- 2012
+x.shade.max <- 2022
 #Function for custom ggplot facet labels
 label <- function(variable,value){
   return(facet_names[value])

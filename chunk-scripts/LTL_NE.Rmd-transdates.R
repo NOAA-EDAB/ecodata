@@ -1,7 +1,7 @@
 
 ecodata::trans_dates %>% 
   dplyr::filter(EPU %in% c("GB", "GOM"), 
-                Var %in% c("falltrans", "sprtrans", "maxday"), 
+                Var %in% c("falltrans", "sprtrans"), 
                 !Value == "NA", 
                 !Var == "NA", 
                 !Time == "NA") %>%
