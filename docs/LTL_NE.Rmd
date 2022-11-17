@@ -221,7 +221,7 @@ ecodata::seasonal_oisst_anom %>%
 ```{r transdates,  fig.cap="Annual sea surface transition dates"}
 ecodata::trans_dates %>% 
   dplyr::filter(EPU %in% c("GB", "GOM"), 
-                Var %in% c("falltrans", "sprtrans", "maxday"), 
+                Var %in% c("falltrans", "sprtrans"), 
                 !Value == "NA", 
                 !Var == "NA", 
                 !Time == "NA") %>%
@@ -271,7 +271,7 @@ ecodata::trans_dates %>%
 
 #### Bottom temperature
 
-```{r bottom-temp, fig.cap="GB and GOM annual bottom temperature anomalies."}
+```{r bottom-temp-insituglorys, fig.cap="GB and GOM annual bottom temperature anomalies."}
 
 gl_bt<- ecodata::bottom_temp_glorys%>% 
   dplyr::filter(EPU == "GOM")

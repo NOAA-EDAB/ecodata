@@ -5,7 +5,7 @@ library(tidyr)
 
 raw.dir <- here::here("data-raw")
 
-cold_pool_csv <- "cold_pool_indices - Hubert du Pontavice.csv" # "Glorys12v1_ColdPool_Extents.nc" #File from Zhoumin
+cold_pool_csv <- "cold_pool_indice_2022 - Hubert duPontavice - NOAA Affiliate.csv" # "Glorys12v1_ColdPool_Extents.nc" #File from Zhoumin
 
 
 ### Cold pool index from Hubert du Pontavice
@@ -17,10 +17,11 @@ get_cold_pool <- function(save_clean = F){
     cold_pool <- read.csv(file.path(raw.dir, cold_pool_csv))  %>%
     tidyr::pivot_longer(cols = c("cold_pool_index" ,     "se_cold_pool_index",
                                  "persistence_index"  ,  "se_persistence_index",
-                                 "extent_index",         "se_extent_index" ), names_to = "Var",values_to = "Value") %>%
+                                 "extent_index",         "se_extent_index" ),
+                        names_to = "Var",values_to = "Value") %>%
     dplyr::mutate(EPU = c("MAB")) %>%
     dplyr::rename(Time = year) %>%
-    dplyr::select(!X) %>%
+    dplyr::select(!X)
 
 
    # metadata ----

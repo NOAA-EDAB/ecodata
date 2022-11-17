@@ -82,8 +82,8 @@ label.size <- 5
 hjust.label <- 1.5
 letter_size <- 4
 feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
-x.shade.min <- 2011
-x.shade.max <- 2021
+x.shade.min <- 2012
+x.shade.max <- 2022
 #Function for custom ggplot facet labels
 label <- function(variable,value){
   return(facet_names[value])
@@ -316,7 +316,7 @@ ecodata::trans_dates %>%
 
 #### Bottom temperature
 
-```{r bottom-temp, fig.width = 6, fig.asp = .55, fig.cap="Annual bottom temperature in the Mid-Atlantic Bight. (black = Paula's, red = GLORYS)"}
+```{r bottom-temp-insituglorys, fig.width = 6, fig.asp = .55, fig.cap="Annual bottom temperature in the Mid-Atlantic Bight. (black = Paula's, red = GLORYS)"}
 temp_anom <- ecodata::bottom_temp %>% 
   dplyr::filter(EPU == epu_abbr) %>% 
   tidyr::complete(Time = tidyr::full_seq(min(bottom_temp$Time):max(bottom_temp$Time),1),
