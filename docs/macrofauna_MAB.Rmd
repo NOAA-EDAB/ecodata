@@ -183,9 +183,9 @@ p1<-agg_bio %>%
   ecodata::geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  ecodata::geom_lm(aes(x = Time, y = Mean,
-               color = Var),
-             alpha = trend.alpha, size = trend.size) +
+  # ecodata::geom_lm(aes(x = Time, y = Mean,
+  #              color = Var),
+  #            alpha = trend.alpha, size = trend.size) +
   #ecodata::geom_lm(aes(x = Time, y = Mean))+
 
   #Add time series
@@ -235,9 +235,9 @@ p2<-agg_bio %>%
   ecodata::geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  ecodata::geom_lm(aes(x = Time, y = Mean,
-               color = Var),
-             alpha = trend.alpha, size = trend.size) +
+  # ecodata::geom_lm(aes(x = Time, y = Mean,
+  #              color = Var),
+  #            alpha = trend.alpha, size = trend.size) +
   #ecodata::geom_lm(aes(x = Time, y = Mean))+
 
   #Add time series
@@ -286,9 +286,9 @@ p3<-agg_bio %>%
   ecodata::geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  ecodata::geom_lm(aes(x = Time, y = Mean,
-               color = Var),
-             alpha = trend.alpha, size = trend.size) +
+  # ecodata::geom_lm(aes(x = Time, y = Mean,
+  #              color = Var),
+  #            alpha = trend.alpha, size = trend.size) +
   #ecodata::geom_lm(aes(x = Time, y = Mean))+
 
   #Add time series
@@ -337,9 +337,9 @@ p4<-agg_bio %>%
   ecodata::geom_gls(aes(x = Time, y = Mean,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  ecodata::geom_lm(aes(x = Time, y = Mean,
-               color = Var),
-             alpha = trend.alpha, size = trend.size) +
+  # ecodata::geom_lm(aes(x = Time, y = Mean,
+  #              color = Var),
+  #            alpha = trend.alpha, size = trend.size) +
   #ecodata::geom_lm(aes(x = Time, y = Mean))+
   #Add time series
    ggplot2::geom_ribbon( aes(x = Time, ymin = pmax(lower,0), ymax = upper),
@@ -403,9 +403,9 @@ neamap %>%
   ecodata::geom_gls(aes(x = Time, y = Value,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  ecodata::geom_lm(aes(x = Time, y = Value,
-               color = Var),
-             alpha = trend.alpha, size = trend.size) +
+  # ecodata::geom_lm(aes(x = Time, y = Value,
+  #              color = Var),
+  #            alpha = trend.alpha, size = trend.size) +
 
   #Add time series
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
@@ -593,7 +593,7 @@ ecodata::survey_shannon %>% filter(EPU == "MAB") %>%
   ggplot2::geom_point()+
   ggplot2::geom_line()+
   ecodata::geom_gls() +
-  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
+  #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggtitle("MAB Survey Shannon Diversity Index")+
   ggplot2::ylab("Shannon")+
   ggplot2::scale_color_discrete(name = "Season", labels = c("Fall", "Spring"))+
@@ -631,7 +631,7 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   ggplot2::geom_line(size = lwd-0.5) +
   ggplot2::geom_point(size = pcex-0.5) +
   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
-  ecodata::geom_lm()+
+  #ecodata::geom_lm()+
   # scale_color_manual(values = series.col, aesthetics = "color")+
   #ggplot2::guides(color = FALSE) +
   #ggplot2::geom_hline(aes(yintercept = hline,
@@ -683,7 +683,7 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
               alpha = 0.5) +
   ggplot2::geom_line(size = lwd-0.5) +
   ggplot2::geom_point(size = pcex-0.5) +
-  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
+  #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   # scale_color_manual(values = series.col, aesthetics = "color")+
   #ggplot2::guides(color = FALSE) +
   #ggplot2::geom_hline(aes(yintercept = hline,
@@ -909,7 +909,7 @@ ma_larv_div <- ecodata::ichthyo_diversity %>%
   ggplot2::ggplot(aes(x = Time, y = Value, group = Var)) +
   ggplot2::geom_line() +
   ggplot2::geom_point() +
-  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
+  #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
@@ -982,7 +982,7 @@ ecodata::forage_anomaly %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_point(aes(x=Time, y = Forage_Mean))+
   ggplot2::geom_line(aes(x=Time, y =Forage_Mean))+
-  ecodata::geom_lm(aes(x = Time, y = Forage_Mean))+
+  #ecodata::geom_lm(aes(x = Time, y = Forage_Mean))+
   ggplot2::geom_ribbon(aes(ymin = Forage_Lower, ymax = Forage_Upper, x = Time), alpha = 0.3)+
   ggplot2::geom_hline(yintercept = 0, linetype = "dashed")+
   ggplot2::ggtitle("Forage Anomalies")+
@@ -1155,7 +1155,7 @@ ecodata::narw %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd-0.75) +
   ggplot2::geom_point(aes(x = Time, y = Value), size = pcex-0.75) +
-  ecodata::geom_lm(aes(x = Time, y = Value))+
+  #ecodata::geom_lm(aes(x = Time, y = Value))+
   ggplot2::geom_ribbon(aes(ymin = Lower95, ymax = Upper95, x = Time), alpha = 0.3)+
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
   ggplot2::guides(color = FALSE) +
@@ -1187,7 +1187,7 @@ ecodata::narw %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd-0.75) +
   ggplot2::geom_point(aes(x = Time, y = Value), size = pcex-0.75) +
-  ecodata::geom_lm(aes(x = Time, y = Value))+
+  #ecodata::geom_lm(aes(x = Time, y = Value))+
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("NARW calf abundance") +
@@ -1240,7 +1240,7 @@ asd <- spec_dist %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ecodata::geom_gls() +
-  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
+  #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::geom_line() +
   ggplot2::geom_point() +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
@@ -1266,7 +1266,7 @@ depth <- spec_dist %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ecodata::geom_gls() +
-  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
+  #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::geom_line() +
   ggplot2::geom_point() +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +

@@ -13,7 +13,7 @@
 
 <title>Human Dimensions MAB and Shelf-wide</title>
 
-<script src="libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -109,8 +109,8 @@ pre code {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -118,16 +118,9 @@ pre code {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -465,8 +458,6 @@ Environmental justice indicators (Poverty Index, population composition index, a
 Recreational shark landings from mrip.
 </p>
 </div>
-<pre><code>## Error in optim(par = rho, fn = likelihood_ar1, gr = NULL, data, hypothesis,  : 
-##   L-BFGS-B needs finite values of &#39;fn&#39;</code></pre>
 <p>Recent pelagic landings coming primarily from Common Thresher and Shortfin Mako.</p>
 </div>
 </div>
