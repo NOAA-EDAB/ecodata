@@ -10,7 +10,7 @@ ecodata::zoo_sli_anom %>%
    #geom_gls() +
    ggplot2::geom_line() +
    ggplot2::geom_point() +
-   ecodata::geom_lm()+
+   #ecodata::geom_lm()+
    ggplot2::ylab("Abundance anomaly") +
    ggplot2::xlab(element_blank())+
    ggplot2::ggtitle("Small and large-bodied copepod abundance anomaly") +

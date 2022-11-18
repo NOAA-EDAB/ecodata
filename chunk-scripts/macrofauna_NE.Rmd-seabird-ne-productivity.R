@@ -27,7 +27,7 @@ aggregate_prod %>%
   ggplot2::geom_line(aes(x = Time, y = Mean), size = lwd-0.75) +
   ggplot2::geom_point(aes(x = Time, y = Mean), size = pcex-0.75) +
   ecodata::geom_gls(aes(x = Time, y = Mean)) +
-  ecodata::geom_lm(aes(x=Time, y=Mean))+
+  #ecodata::geom_lm(aes(x=Time, y=Mean))+
   ggplot2::geom_errorbar(aes(x = Time,
                     ymin = se.low,
                   ymax = se.high), 

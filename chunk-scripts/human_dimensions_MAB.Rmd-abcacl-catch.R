@@ -1,29 +1,29 @@
 
 mean<- ecodata::abc.acl %>% 
   dplyr::filter(EPU == "MAB") %>% 
-  tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>% 
-  pivot_wider(names_from = Var, values_from = Value) %>% 
+  tidyr::separate(col = Var, into = c("FMP", "Var"), sep = "-") %>% 
+  tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
   dplyr::rename("abc.acl" = " ABC/ACL", 
                 "Catch" = " Catch") %>% 
   dplyr::mutate(Value = Catch/abc.acl, 
                 Time = as.character(Time)) %>% 
   filter(!Value == "NA", 
-         !Fishery == "Chub mackerel ") %>%
+         !FMP == "Chub mackerel ") %>%
   dplyr::group_by(Time) %>% 
   dplyr::summarise(val = mean(Value)) %>% 
   dplyr::ungroup() %>% 
   dplyr::mutate(Time = as.numeric(Time))
 
 ecodata::abc.acl %>% 
-  #group_by(Time) %>% 
-  tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>% 
+  dplyr::filter(EPU == "MAB") %>% 
+  tidyr::separate(col = Var, into = c("FMP", "Var"), sep = "-") %>% 
   pivot_wider(names_from = Var, values_from = Value) %>% 
   dplyr::rename("abc.acl" = " ABC/ACL", 
                 "Catch" = " Catch") %>% 
   dplyr::mutate(Value = Catch/abc.acl, 
                 Time = as.numeric(Time)) %>% 
   filter(!Value == "NA", 
-         !Fishery == "Chub mackerel ") %>% 
+         !FMP == "Chub mackerel ") %>% 
   ggplot2::ggplot()+
   #geom_boxplot()+
   geom_point(aes(x = Time, y = Value))+

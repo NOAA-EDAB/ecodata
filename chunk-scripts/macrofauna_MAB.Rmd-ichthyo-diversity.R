@@ -7,7 +7,7 @@ ma_larv_div <- ecodata::ichthyo_diversity %>%
   ggplot2::ggplot(aes(x = Time, y = Value, group = Var)) +
   ggplot2::geom_line() +
   ggplot2::geom_point() +
-  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
+  #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +

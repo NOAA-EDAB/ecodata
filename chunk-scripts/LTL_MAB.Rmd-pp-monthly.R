@@ -15,7 +15,7 @@ out_pp$Month <- factor(out_pp$Month, levels = month.abb)
 
 
 pp_cci <- ggplot2::ggplot(out_pp) +
-    ecodata::geom_lm(aes(x = Year, y = Value, group = Month))+
+    #ecodata::geom_lm(aes(x = Year, y = Value, group = Month))+
     ggplot2::geom_point(aes(x = Year, y = Value, group = Month)) +
     ggplot2::geom_line(aes(x = Year, y = Value, group = Month)) +
     ggplot2::scale_x_discrete(name = "", breaks = seq(min(out_pp$Year),max(out_pp$Year),10)) +  

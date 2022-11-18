@@ -27,9 +27,9 @@ neamap %>%
   ecodata::geom_gls(aes(x = Time, y = Value,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  ecodata::geom_lm(aes(x = Time, y = Value,
-               color = Var),
-             alpha = trend.alpha, size = trend.size) +
+  # ecodata::geom_lm(aes(x = Time, y = Value,
+  #              color = Var),
+  #            alpha = trend.alpha, size = trend.size) +
 
   #Add time series
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 

@@ -52,8 +52,8 @@ gb_landings <- landings %>% dplyr::filter(EPU == "GB") %>%
   #Test for trend and add lines
   ecodata::geom_gls(aes(x = Time, y = Value,
                group = Var)) +
-  ecodata::geom_lm(aes(x = Time, y = Value,
-               group = Var))+
+  #ecodata::geom_lm(aes(x = Time, y = Value,
+  #             group = Var))+
   #Add time series
   ggplot2::geom_line(size = lwd) +
   ggplot2::geom_point(size = pcex) +

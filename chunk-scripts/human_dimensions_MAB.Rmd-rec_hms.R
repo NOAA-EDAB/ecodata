@@ -4,8 +4,8 @@ ecodata::rec_hms %>%
   ggplot2::ggplot()+
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+
-  ecodata::geom_lm(aes(x = Time, y = Value,
-               group = Var))+
+  # ecodata::geom_lm(aes(x = Time, y = Value,
+  #              group = Var))+
   ggplot2::ylab("Catch (N)")+
   ggplot2::ggtitle("Recreational Shark Landings")+
   ggplot2::xlab(element_blank())+

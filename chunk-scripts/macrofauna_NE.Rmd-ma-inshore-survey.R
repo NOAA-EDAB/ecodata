@@ -29,9 +29,9 @@ p1<-mass %>%
   ecodata::geom_gls(aes(x = Time, y = Index,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  ecodata::geom_lm(aes(x = Time, y = Index,
-               color = Var),
-             alpha = trend.alpha, size = trend.size) +
+  # ecodata::geom_lm(aes(x = Time, y = Index,
+  #              color = Var),
+  #            alpha = trend.alpha, size = trend.size) +
   #Add time series
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
               alpha = 0.5,
@@ -70,9 +70,9 @@ p2<-mass %>%
   ecodata::geom_gls(aes(x = Time, y = Index,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  ecodata::geom_lm(aes(x = Time, y = Index,
-               color = Var),
-             alpha = trend.alpha, size = trend.size) +
+  # ecodata::geom_lm(aes(x = Time, y = Index,
+  #              color = Var),
+  #            alpha = trend.alpha, size = trend.size) +
   #Add time series
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
               alpha = 0.5,
@@ -111,9 +111,9 @@ p3<-mass %>%
   ecodata::geom_gls(aes(x = Time, y = Index,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  ecodata::geom_lm(aes(x = Time, y = Index,
-               color = Var),
-             alpha = trend.alpha, size = trend.size) +
+  # ecodata::geom_lm(aes(x = Time, y = Index,
+  #              color = Var),
+  #            alpha = trend.alpha, size = trend.size) +
   #Add time series
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
               alpha = 0.5,
@@ -152,9 +152,9 @@ p4<-mass %>%
   ecodata::geom_gls(aes(x = Time, y = Index,
                color = Var),
              alpha = trend.alpha, size = trend.size) +
-  ecodata::geom_lm(aes(x = Time, y = Index,
-               color = Var),
-             alpha = trend.alpha, size = trend.size) +
+  # ecodata::geom_lm(aes(x = Time, y = Index,
+  #              color = Var),
+  #            alpha = trend.alpha, size = trend.size) +
   #Add time series
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(lower,0), ymax = upper), 
               alpha = 0.5,

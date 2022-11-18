@@ -15,7 +15,7 @@ wcr %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_point()+
   ggplot2::geom_line()+
-  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
+  #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("Warm Core Ring Births")+
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Warm Core Rings")+

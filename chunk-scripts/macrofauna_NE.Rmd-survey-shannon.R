@@ -5,7 +5,7 @@ ecodata::survey_shannon %>% filter(!EPU == "MAB",
   ggplot2::geom_point()+
   ggplot2::geom_line()+
   ecodata::geom_gls() +
-  ecodata::geom_lm()+
+  #ecodata::geom_lm()+
   ggtitle("Survey Shannon Diversity Index")+
   ggplot2::facet_wrap(~EPU)+
   ggplot2::ylab("Shannon")+

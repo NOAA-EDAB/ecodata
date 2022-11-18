@@ -23,8 +23,8 @@ ecodata::ppr %>%
   ggplot2::geom_point(aes(x = Time, y = Value))+
   ggplot2::geom_line(aes(x = Time, y = Value))+
   ggplot2::geom_line(data = a, aes(x = Time, y = Value), linetype = "dashed")+
-  ecodata::geom_lm(aes(x = Time, y = Value,
-               group = Var))+
+  # ecodata::geom_lm(aes(x = Time, y = Value,
+  #              group = Var))+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,

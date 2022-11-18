@@ -29,8 +29,8 @@ fleet_count <- comm_div %>%
   #          size = letter_size) +
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
-  ecodata::geom_lm(aes(x = Time, y = Value,
-               group = Var))+
+  # ecodata::geom_lm(aes(x = Time, y = Value,
+  #              group = Var))+
   ggplot2::ylim(ylim_fc)+
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
@@ -60,8 +60,8 @@ fleet_div <- comm_div %>%
   #          size = letter_size) +
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
-  ecodata::geom_lm(aes(x = Time, y = Value,
-               group = Var))+
+  # ecodata::geom_lm(aes(x = Time, y = Value,
+  #              group = Var))+
   ggplot2::ylim(ylim_fd)+
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+

@@ -27,8 +27,8 @@ ggplot2::ggplot() +
   ecodata::geom_gls(aes(x = Time, y = Total,
                group = Status),
              alpha = trend.alpha, size = trend.size) +
-  ecodata::geom_lm(aes(x = Time, y = Total,
-               group = Status))+
+  #ecodata::geom_lm(aes(x = Time, y = Total,
+  #             group = Status))+
   ggplot2::geom_line(aes(x = Time, y = Total, color = Status), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Total, color = Status), size = pcex) +
 
@@ -61,8 +61,8 @@ ggplot2::ggplot() +
   ecodata::geom_gls(aes(x = Time, y = Total,
                group = Status),
              alpha = trend.alpha, size = trend.size) +
-  ecodata::geom_lm(aes(x = Time, y = Total,
-               group = Status))+
+  # ecodata::geom_lm(aes(x = Time, y = Total,
+  #              group = Status))+
   ggplot2::geom_line(aes(x = Time, y = Total, color = Status), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Total, color = Status), size = pcex) +
 

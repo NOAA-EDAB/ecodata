@@ -14,7 +14,7 @@ ecodata::SAV %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_point()+
   ggplot2::geom_line()+
-  ecodata::geom_lm(aes(x = Time, y = Value))+
+  #ecodata::geom_lm(aes(x = Time, y = Value))+
   ggplot2::facet_wrap(~Var)+
   ecodata::geom_gls(aes(x = Time, y = Value)) +
   ecodata::theme_ts()+

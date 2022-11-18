@@ -16,8 +16,8 @@ comm_div %>%
   #            alpha = trend.alpha, size = trend.size) +
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
-  ecodata::geom_lm(aes(x = Time, y = Value,
-               group = Var))+
+  # ecodata::geom_lm(aes(x = Time, y = Value,
+  #              group = Var))+
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = "black", aesthetics = "color")+
   ggplot2::guides(color = FALSE) +

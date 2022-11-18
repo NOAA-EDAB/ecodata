@@ -18,7 +18,7 @@ cpi<- ecodata::cold_pool %>%
   # ggplot2::geom_ribbon(aes(x = Time, ymin = Lower, ymax = Upper), fill = "gray")+
   ggplot2::geom_hline(aes(yintercept = 0))+
   ecodata::geom_gls(aes(x = Time, y = Value))+
-  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
+  #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("Cold Pool Index (x(-1))") +
   #ggplot2::scale_y_reverse()+
   ggplot2::xlab("")+
@@ -50,7 +50,7 @@ ei<- ecodata::cold_pool %>%
   ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
   ggplot2::geom_hline(aes(yintercept = 0))+
   ecodata::geom_gls(aes(x = Time, y = Value))+
-  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
+  #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("Spatial Extent Index") +
   ggplot2::xlab("")+
   ecodata::theme_ts()+
@@ -79,7 +79,7 @@ pi<- ecodata::cold_pool %>%
   ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
   ggplot2::geom_hline(aes(yintercept = 0))+
   ecodata::geom_gls(aes(x = Time, y = Value))+
-  ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
+  #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("Persistence Index") +
   ggplot2::xlab("")+
   ecodata::theme_ts()+
