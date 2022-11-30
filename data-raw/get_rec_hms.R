@@ -18,7 +18,7 @@ raw.dir <- here::here("data-raw")
 
 get_rec_hms <- function(save_clean = F){
   ## Bring in data
-  mrip_csv <- "mrip_estim_catch_year_1981_2020.csv"
+  mrip_csv <- "mrip_estim_catch_year_1981_2022.csv"
   species_list <- "species_list.csv"
   hms_cat<- "hms_sp_category.csv"
 
