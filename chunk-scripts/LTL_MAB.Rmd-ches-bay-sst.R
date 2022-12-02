@@ -5,8 +5,8 @@ map.lwd <- 0.4
 
 # Set lat/lon window for maps
 xmin = -77.5
-xmax = -74.5
-ymin = 36.5
+xmax = -75
+ymin = 37
 ymax = 40
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
