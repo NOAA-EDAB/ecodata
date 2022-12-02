@@ -15,8 +15,7 @@ rast_prep <- function(r){
 
 ltm.dir <- here::here("data-raw/gridded/sst")
 raw.dir <- here::here("data-raw")
-crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40
-+lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
+crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40+lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 
 seasonal_sst_anomaly_gridded_day_nc <-"sst.day.mean.2021.nc"
 seasonal_sst_anomaly_gridded_ltm_nc <- "sst.day.mean.ltm.1982-2010.nc"

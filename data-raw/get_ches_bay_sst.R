@@ -2,14 +2,14 @@
 
 library(raster)
 library(tidyverse)
-
+library(stars)
 raw.dir <- here::here("data-raw")
 
 # Chesapeake bay sst files from Ron
-ches_1_nc <-"ChesBaySST-seasonal-anomaly_Season1_2021vs2009-2020_RVogel - Ronald Vogel - NOAA Affiliate.nc4"
-ches_2_nc <-"ChesBaySST-seasonal-anomaly_Season2_2021vs2009-2020_RVogel - Ronald Vogel - NOAA Affiliate.nc4"
-ches_3_nc <-"ChesBaySST-seasonal-anomaly_Season3_2021vs2009-2020_RVogel - Ronald Vogel - NOAA Affiliate.nc4"
-ches_4_nc <-"ChesBaySST-seasonal-anomaly_Season4_2021vs2009-2020_RVogel - Ronald Vogel - NOAA Affiliate.nc4"
+ ches_1_nc <-"AVHCW_SEASON-1_ANOMALY-2022vs2009-2021_MULTISAT_SSTMASKED_CD_1KM.nc4"
+ ches_2_nc <-"AVHCW_SEASON-2_ANOMALY-2022vs2009-2021_MULTISAT_SSTMASKED_CD_1KM.nc4"
+ ches_3_nc <-"AVHCW_SEASON-3_ANOMALY-2022vs2009-2021_MULTISAT_SSTMASKED_CD_1KM.nc4"
+ ches_4_nc <-"AVHCW_SEASON-4_ANOMALY-2022vs2009-2021_MULTISAT_SSTMASKED_CD_1KM.nc4"
 
 
 get_ches_bay_sst <- function(save_clean = F){
@@ -19,6 +19,7 @@ get_ches_bay_sst <- function(save_clean = F){
   ches3<- raster::raster(file.path(raw.dir, ches_3_nc),varname = "sst_anomaly")
   ches4<- raster::raster(file.path(raw.dir, ches_4_nc),varname = "sst_anomaly")
 
+
   sst_rast<- raster::stack(ches1, ches2, ches3, ches4)
   raster::extent(sst_rast) <- raster::extent(c(-77.5,-74.5, 36.5, 40))
   crs(sst_rast) <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83"
@@ -27,10 +28,10 @@ get_ches_bay_sst <- function(save_clean = F){
   r <- as.data.frame(r)
 
   ches_bay_sst <- r %>%
-    dplyr::rename(Winter = "sst.anomaly.2021.minus.2009.2020.1",
-                  Spring = "sst.anomaly.2021.minus.2009.2020.2",
-                  Summer = "sst.anomaly.2021.minus.2009.2020.3",
-                  Fall = "sst.anomaly.2021.minus.2009.2020.4") %>%
+    dplyr::rename(Winter = "sst.anomaly.2022.minus.2009.2021.1",
+                  Spring = "sst.anomaly.2022.minus.2009.2021.2",
+                  Summer = "sst.anomaly.2022.minus.2009.2021.3",
+                  Fall = "sst.anomaly.2022.minus.2009.2021.4") %>%
     tidyr::pivot_longer(!c(x, y), names_to = "Season", values_to = "Value") %>%
     dplyr::rename(Longitude = "y",
                   Latitude = "x") %>%
