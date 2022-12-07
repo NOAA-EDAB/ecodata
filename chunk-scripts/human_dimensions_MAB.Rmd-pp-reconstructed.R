@@ -16,15 +16,9 @@ ecodata::ppr %>%
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  #ggplot2::geom_hline(yintercept = .92, color = "green", linetype = "dashed")+
-  #ggplot2::geom_hline(yintercept = .22, color = "green", linetype = "dashed")+
-  #ggplot2::geom_hline(yintercept = 1, color = "red", linetype = "dashed")+
-  #ggplot2::geom_hline(yintercept = 2.5, color = "red", linetype = "dashed")+
   ggplot2::geom_point(aes(x = Time, y = Value))+
   ggplot2::geom_line(aes(x = Time, y = Value))+
   ggplot2::geom_line(data = a, aes(x = Time, y = Value), linetype = "dashed")+
-  # ecodata::geom_lm(aes(x = Time, y = Value,
-  #              group = Var))+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
