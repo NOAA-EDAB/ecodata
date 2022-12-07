@@ -1547,8 +1547,10 @@ ecodata::rec_hms %>%
 
 ```
 
-### Primary Production Required
 
+### Ecosystem Overfishing {.tabset .tabset-fade}
+
+#### Primary Production Required
 
 ```{r ppr, fig.cap="Primary production required to support the commercial landings. Included are the top species accounting for 80% of the landings in each year."}
 
@@ -1590,7 +1592,7 @@ ecodata::ppr %>%
 
 ```
 
-### Fogarty Index
+#### Fogarty Index
 
 ```{r fogarty, fig.cap="Fogarty Index"}
 
@@ -1634,7 +1636,7 @@ ecodata::ppr %>%
 
 ```
 
-### Ryther
+#### Ryther
 
 ```{r ryther, fig.cap="Ryther Index"}
 
@@ -1654,18 +1656,8 @@ ecodata::ppr %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_ribbon( aes(ymin = gr_lw, ymax = gr_up, x = Time), fill = "darkolivegreen3", alpha = 0.5)+
   ggplot2::geom_ribbon( aes(ymin = rd_lw, ymax = rd_up, x = Time), fill = "sandybrown", aplha = 0.5)+
-  # ggplot2::geom_hline(yintercept = 0.3, color = "green", linetype = "dashed")+
-  # ggplot2::geom_hline(yintercept = 1.1, color = "green", linetype = "dashed")+
-  # ggplot2::geom_hline(yintercept = 3, color = "red", linetype = "dashed")+
-  # ggplot2::geom_hline(yintercept = 5, color = "red", linetype = "dashed")+
   ggplot2::geom_point(aes(x = Time, y = Value))+
   ggplot2::geom_line(aes(x = Time, y = Value))+
-  # ecodata::geom_lm(aes(x = Time, y = Value,
-  #              group = Var))+
-  #ggplot2::geom_hline(aes(yintercept = hline),
-  #         size = hline.size,
-  #         alpha = hline.alpha,
-  #         linetype = hline.lty)+
   ggplot2::scale_x_continuous(expand = c(0.05, 0.05)) +
   ggplot2::facet_wrap( ~ EPU)+
   ggplot2::ggtitle("Ryther Index")+
@@ -1677,7 +1669,7 @@ ecodata::ppr %>%
 
 ```
 
-### Mean Trophic Level
+#### Mean Trophic Level
 
 ```{r mtl, fig.cap="Mean tropic level"}
 
@@ -1706,7 +1698,7 @@ ecodata::ppr %>%
   ecodata::theme_title()
 ```
 
-### PP reconstructed
+#### PP reconstructed
 
 ```{r pp-reconstructed, fig.cap="FReonstructed primary production"}
 
@@ -1728,14 +1720,8 @@ ecodata::ppr %>%
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  #ggplot2::geom_hline(yintercept = .92, color = "green", linetype = "dashed")+
-  #ggplot2::geom_hline(yintercept = .22, color = "green", linetype = "dashed")+
-  #ggplot2::geom_hline(yintercept = 1, color = "red", linetype = "dashed")+
-  #ggplot2::geom_hline(yintercept = 2.5, color = "red", linetype = "dashed")+
   ggplot2::geom_point(aes(x = Time, y = Value))+
   ggplot2::geom_line(aes(x = Time, y = Value))+
-  # ecodata::geom_lm(aes(x = Time, y = Value,
-  #              group = Var))+
   ggplot2::geom_line(data = a, aes(x = Time, y = Value), linetype = "dashed")+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
