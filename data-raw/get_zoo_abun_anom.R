@@ -27,7 +27,7 @@ get_zoo_abun_anom <- function(save_clean = F){
   #
 
 
-  small <- read_excel(file.path(raw.dir,zoo_strat_abun_xlsx), sheet = "StratifiedAbundance") %>%
+  small <- readxl::read_excel(file.path(raw.dir,zoo_strat_abun_xlsx), sheet = "StratifiedAbundance") %>%
     dplyr::select(Year, Units, Region, "Centropages typicus", "Temora longicornis", "Pseudocalanus spp.", "Centropages hamatus" ) %>%
     dplyr::rename(Cty = "Centropages typicus",
            Tlo = "Temora longicornis",
@@ -43,7 +43,7 @@ get_zoo_abun_anom <- function(save_clean = F){
     dplyr::select(Time, Value, Var, Units, Region)
 
 
-  large <- read_excel(file.path(raw.dir,zoo_strat_abun_xlsx), sheet = "StratifiedAbundance") %>%
+  large <- readxl::read_excel(file.path(raw.dir,zoo_strat_abun_xlsx), sheet = "StratifiedAbundance") %>%
     dplyr::select(Year, Units, Region, "Calanus finmarchicus" ) %>%
     dplyr::rename(Total = "Calanus finmarchicus",
                   Time = Year) %>%
@@ -55,7 +55,8 @@ get_zoo_abun_anom <- function(save_clean = F){
   zoo_abund <- rbind(small, large) %>%
     dplyr::rename(EPU = Region) %>%
     tibble::as_tibble() %>%
-    dplyr::select(Time, Var, Value, EPU, Units)
+    dplyr::select(Time, Var, Value, EPU, Units) %>%
+    dplyr::mutate(Units = "Anomaly")
 
   if (save_clean){
     usethis::use_data(zoo_abund, overwrite = T)
