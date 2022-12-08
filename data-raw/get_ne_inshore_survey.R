@@ -34,7 +34,7 @@ library(stringr)
 
 raw.dir <- here::here("data-raw")
 ne_inshore_survey_rda <- "MENH_TrawlSurvey_SOE_Data.RData"
-ne_inshore_survey_species_xlsx <- "MENH_TrawlSpeciesinSOE2020.xlsx"
+ne_inshore_survey_species_xlsx <- "MENH_TrawlSpeciesinSOE_2022.xlsx"
 
 get_ne_inshore_survey <- function(save_clean = F){
 
