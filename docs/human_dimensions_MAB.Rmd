@@ -1681,7 +1681,7 @@ ggplot2::ggplot(data = stock_status) +
 
 ```{r wind-dev-cumul, fig.cap = ""}
 
-knitr::include_graphics(file.path(image.dir, "offshore_wind_timeline.png"))
+knitr::include_graphics(file.path(image.dir, "SOEWindFigure20221122maxquality.jpg"))
 ```
 
 <!-- ```{r wind-dev-cumul-MAB, fig.cap = ""} -->

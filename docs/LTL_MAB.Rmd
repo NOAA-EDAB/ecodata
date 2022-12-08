@@ -1763,8 +1763,14 @@ mab.hw %>%
 [Habitat Table found here](https://noaa-edab.github.io/ecodata/Hab_table)
 
 ### Ocean Acidication
+New Literature Available
+- [Blue Mussels](https://doi.org/10.1016/j.ecolind.2020.106675)
+- [Atlantic Surfclam](https://doi.org/10.1016/j.marenvres.2022.105602) - Energy budget modelling
+- [Atlantic surfclam](https://doi.org/10.7755/FB.119.1.8) - Larva in Long Island Sound
+- [Black Sea Bass](https://doi.org/10.1002/mcf2.10200)
+- [Atlantic Sea Scallop](https://docs.google.com/document/d/1Fi_5fXBzXlCNsYEi2oAsGFm0tLyuwdsz/edit)
 
-[Report text here](https://docs.google.com/document/d/1k29YZwG1Fc2mJL39ryxzLgs0ly-RiH4h/edit) for MA and NE reports
+
 
 ```{r mab-oa, fig.cap = "Bottom pH (summer only: June-August) on the U.S. Northeast Shelf plotted from available quality-controlled vessel- and glider-based datasets from 2007-present. Right panel: Summer 2021 glider-based pH observations on the Mid-Atlantic Bight shelf. North track glider mission (data provider: Charles Flagg, Stony Brook University) ran from 07/20/2021 to 08/20/2021. South track glider mission (data provider: Grace Saba, Rutgers University) ran from 07/16/2021 to 08/20/2021."}
 
