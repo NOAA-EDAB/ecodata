@@ -102,7 +102,7 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 #### SST
 
 
-```{r seasonal-sst-anom-gridded, fig.cap="MAB-seasonal sea surface temperature time series overlaid onto 2021 seasonal spatial anomalies."}
+```{r seasonal-sst-anom-gridded, fig.cap="MAB-seasonal sea surface temperature time series overlaid onto 2022 seasonal spatial anomalies."}
 annotation_custom2 <- function (data, ...)
 {
   layer(data = data,
@@ -230,7 +230,7 @@ ggpubr::ggarrange(winter, spring, summer, fall,
                   nrow = 2,
                   common.legend = TRUE,
                   legend = "right") %>%
-  ggpubr::annotate_figure(top = "SST anomaly (2021)", 
+  ggpubr::annotate_figure(top = "SST anomaly (2022)", 
                           left = "Latitude", 
                           bottom = "Longitude")
 

@@ -99,7 +99,7 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 #### SST 
 
-```{r seasonal-sst-anomaly-gridded, fig.width=8, fig.height = 8, fig.cap="GB and GOM 2020 seasonal sea surface temperature spatial anomalies. "}
+```{r seasonal-sst-anomaly-gridded, fig.width=8, fig.height = 8, fig.cap="GB and GOM 2022 seasonal sea surface temperature spatial anomalies. "}
 #EPU shapefile
 ne_epu_sf <- ecodata::epu_sf %>% 
   dplyr::filter(EPU %in% c("GOM","GB"))
@@ -136,7 +136,7 @@ sst_map <-
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
-  ggplot2::ggtitle("SST anomaly (2021)") +
+  ggplot2::ggtitle("SST anomaly (2022)") +
   ggplot2::xlab("Longitude") +
   ggplot2::ylab("Latitude") +
   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),
