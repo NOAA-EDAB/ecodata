@@ -1703,11 +1703,11 @@ New Literature Available
 - [Black Sea Bass](https://doi.org/10.1002/mcf2.10200)
 - [Atlantic Sea Scallop](https://docs.google.com/document/d/1Fi_5fXBzXlCNsYEi2oAsGFm0tLyuwdsz/edit)
 
+[Report text here](https://docs.google.com/document/d/1pyZHnnh3zucug7T7_z6EkoTzR5T-Li2C/edit) for MA and NE reports
 
+```{r mab-oa, fig.cap = "Left panel: Bottom aragonite saturation state (ΩArag; summer only: June-August) on the U.S. Northeast Shelf plotted from available quality-controlled vessel- and glider-based datasets from 2007-present. Right top panel: Map depicting locations where summer bottom ΩArag in the habitat depth range reached or were lower than the laboratory-derived sensitivity level for Atlantic sea scallop (Placopecten magellanicus). The sensitivity value used for Atlantic sea scallop was ΩArag ≤ 1.1, based on reduced adult calcification rate observed at this level in Cameron et al. (2022). Right bottom panel: Map depicting locations where summer bottom ΩArag in the habitat depth range reached or were lower than the laboratory-derived sensitivity level for longfin squid (Doryteuthis pealeii). The sensitivity value used for longfin squid was ΩArag ≤ 0.96, based on embryo and paralarvae malformation, increased time to hatching and decreased hatching success, and changes to mantle length and statolith morphology observed at this level in Zafroff et al. (2019) and Zafroff & Mooney (2020). Gray circles in right top and bottom panels indicate locations where carbonate chemistry samples were collected, but bottom ΩArag values were higher than sensitivity values determined for that species."}
 
-```{r mab-oa, fig.cap = "Bottom pH (summer only: June-August) on the U.S. Northeast Shelf plotted from available quality-controlled vessel- and glider-based datasets from 2007-present. Right panel: Summer 2021 glider-based pH observations on the Mid-Atlantic Bight shelf. North track glider mission (data provider: Charles Flagg, Stony Brook University) ran from 07/20/2021 to 08/20/2021. South track glider mission (data provider: Grace Saba, Rutgers University) ran from 07/16/2021 to 08/20/2021."}
-
-knitr::include_graphics(file.path(image.dir, "Saba_Fig_SOE_MAFMC - Grace Saba.png"))
+knitr::include_graphics(file.path(image.dir, "Saba_Fig_SOE_MAFMC - Grace Saba.jpg"))
 
 ```
 
