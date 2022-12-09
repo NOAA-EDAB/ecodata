@@ -987,10 +987,10 @@ f_missing <- stock_status %>%
 #A dataframe that defines custom legend for stocks with unknown status
 all.df <- data.frame(text = all_missing$Code,
                     x = rep(x.max*0.9,length(all_missing$Code)),
-                    y = seq(1.45,0.7, length.out = 12))
+                    y = seq(1.45,0.7, length.out = 11))
 b.df <- data.frame(text = b_missing$Code,
                     x = rep(x.max*0.7,length(b_missing$Code)),
-                    y = seq(1.45,1.30, length.out = 1))
+                    y = seq(1.45,1.38, length.out = 2))
 f.df <- data.frame(text = f_missing$Code,
                     x = rep(x.max*0.5,length(f_missing$Code)),
                     y = seq(1.45,1, length.out = 7))
