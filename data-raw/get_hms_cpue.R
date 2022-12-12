@@ -7,7 +7,7 @@ library(readxl)
 
 raw.dir <- here::here("data-raw")
 #HMS_SPUE_xlsx <- "HMS POP CPUE_Cudney - Jennifer Cudney - NOAA Federal.xlsx"
-HMS_SPUE_csv <- "Atlantic HMS POP CPUE - Jennifer Cudney - NOAA Federal.csv"
+HMS_SPUE_csv <- "2023 Atlantic HMS POP CPUE Data - Jennifer Cudney - NOAA Federal.csv"
 HMS_sp_csv <- "HMS_species_pdf.csv"
 
 get_hms_cpue <- function(save_clean = F){

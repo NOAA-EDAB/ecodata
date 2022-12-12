@@ -1318,7 +1318,7 @@ d %>%
   ggplot2::theme(axis.title.x=element_blank(), 
                  axis.text.x = element_text(angle = 45,  hjust = 1), 
                  legend.title = element_blank())+
-  scale_x_continuous(breaks=c(2017,2018, 2019, 2020, 2021))+
+  scale_x_continuous(breaks=c(2017,2018, 2019, 2020, 2021, 2022))+
   ggplot2::ggtitle("Forage Fish Energy Density")+
   ecodata::theme_facet()+
   ecodata::theme_title()
@@ -1401,23 +1401,23 @@ knitr::include_graphics(file.path(image.dir, "Condition_matrix.png"))
 
 ### HMS CPUE
 
-```{r, hms-all-cpue}
+<!-- ```{r, hms-all-cpue} -->
 
-knitr::include_graphics(file.path(image.dir, "hms-too-big.png"))
+<!-- #knitr::include_graphics(file.path(image.dir, "hms-too-big.png")) -->
 
-ecodata::hms_cpue %>%
-  ggplot()+
- ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_point(aes(x=Time, y = Value))+
-  ggplot2::geom_line(aes(x=Time, y = Value))+
-  ggplot2::facet_wrap(~Var, scales = "free")+
-  ggplot2::ggtitle("HMS POP CPUE ALL")+
-  ggplot2::ylab("Number per Haul")+
-  ecodata::theme_ts()
+<!-- ecodata::hms_cpue %>% -->
+<!--   ggplot()+ -->
+<!--  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   ggplot2::geom_point(aes(x=Time, y = Value))+ -->
+<!--   ggplot2::geom_line(aes(x=Time, y = Value))+ -->
+<!--   ggplot2::facet_wrap(~Var, scales = "free")+ -->
+<!--   ggplot2::ggtitle("HMS POP CPUE ALL")+ -->
+<!--   ggplot2::ylab("Number per Haul")+ -->
+<!--   ecodata::theme_ts() -->
 
-```
+<!-- ``` -->
 
 
 ```{r, hms-tuna-cpue}
@@ -1433,6 +1433,7 @@ ecodata::hms_cpue %>%
   ggplot2::ggtitle("HMS POP TUNA CPUE")+
   ggplot2::ylab("Number per Haul")+
   ggplot2::xlab(element_blank())+
+  ecodata::geom_gls(aes(x=Time, y = Value))+
   ecodata::theme_ts()+
   ecodata::theme_title()
 

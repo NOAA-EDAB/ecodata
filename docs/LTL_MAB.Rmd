@@ -1718,7 +1718,7 @@ knitr::include_graphics(file.path(image.dir, "Saba_Fig_SOE_MAFMC - Grace Saba.jp
 
 ### Seasonal SST anomaly
 
-```{r shelf-seasonal-sst-anomaly-gridded, fig.height=8, fig.cap="Seasonal sea surface temperature anomalies for 2021 over the Northeast US Shelf."}
+```{r shelf-seasonal-sst-anomaly-gridded, fig.height=8, fig.cap="Seasonal sea surface temperature anomalies for 2022 over the Northeast US Shelf."}
 # Set lat/lon window for maps
 xmin = -77
 xmax = -65
@@ -1749,7 +1749,7 @@ ggplot2::ggplot() +
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
-  ggplot2::ggtitle("SST anomaly (2021)") +
+  ggplot2::ggtitle("SST anomaly (2022)") +
   ggplot2::xlab("Longitude") +
   ggplot2::ylab("Latitude") +
   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75),

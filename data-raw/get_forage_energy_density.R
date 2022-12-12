@@ -4,24 +4,43 @@ library(tidyverse)
 
 
 raw.dir <- here::here("data-raw")
-energy_density_xlsx<-"2022SOE_Forage_ED_summary_Table.xlsx"
+energy_density_xlsx<-"2023SOE_Forage_ED_summary_Table - Mark Wuenschel - NOAA Federal.xlsx"
 get_forage_energy_density <- function(save_clean = F){
 
-  energy_density <- read_excel(file.path(raw.dir, energy_density_xlsx)) %>%
-    dplyr::select(Species, Year, Season, N, "Energy Density (J/GWW)", "StdDev of ED") %>%
-    dplyr::rename(Energy.Density_Mean = "Energy Density (J/GWW)",
-                  Energy.Density_SD = "StdDev of ED",
-                  Time = Year) %>%
-    dplyr::mutate(Var = paste0(Species, "/", Season)) %>%
-    dplyr::select(-Season, -Species) %>%
-    tidyr::pivot_longer(cols = !c(Time,Var),  names_to = "Var2", values_to = "Value" ) %>%
+  energy_density <-
+    read_excel(file.path(raw.dir, energy_density_xlsx)) %>%
+    dplyr::rename(
+      Energy.Density_Mean = "Energy Density (kJ/GWW)",
+      Energy.Density_SD = "StdDev of ED",
+      Species = "...1",
+      Time = Year
+    ) %>%
+    dplyr::select(Species,
+                  Time,
+                  Season,
+                  N,
+                  Energy.Density_Mean,
+                  Energy.Density_SD) %>%
+    dplyr::mutate(
+      Var = paste0(Species, "/", Season),
+      Energy.Density_Mean = as.numeric(Energy.Density_Mean),
+      Energy.Density_SD = as.numeric(Energy.Density_SD),
+      N = as.numeric(N),
+      Time = as.numeric(Time)
+    ) %>%
+    dplyr::select(-Season,-Species) %>%
+    #tidyr::pivot_longer(cols = !c(Time,Var),  names_to = "Var2", values_to = "Value" ) %>%
+    tidyr::pivot_longer(!c(Time, Var),
+                        names_to = "Var2", values_to = "Value") %>%
     dplyr::mutate(Var = paste0(Var, "/", Var2),
                   EPU = c("NA")) %>%
-    dplyr::select(Time, Var, Value, EPU)
+    dplyr::select(Time, Var, Value, EPU) %>%
+    dplyr::filter(!Time == "NA")
 
   if (save_clean){
     usethis::use_data(energy_density, overwrite = T)
   } else {
+
     return(energy_density)
   }
   # metadata ----

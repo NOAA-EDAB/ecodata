@@ -8,7 +8,7 @@ library(tidyr)
 library(lubridate)
 
 raw.dir <- here::here("data-raw")
-gsi_xlsx<-"EN4_T200_GSI_1954_2020_monthly - Zhuomin Chen.xlsx"
+gsi_xlsx<-"Chen_EN4_T200_GSI_1954_2021_monthly - Zhuomin Chen.xlsx"
 get_gsi <- function(save_clean = F){
 
   gsi <- read_excel(file.path(raw.dir, gsi_xlsx)) %>%
