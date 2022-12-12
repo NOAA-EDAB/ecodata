@@ -1206,17 +1206,18 @@ ecodata::narw %>%
 
 
 ```
+
 ### Protected species hotspot maps
 
 ```{r rw-hotspot, fig.cap = ""}
 
-knitr::include_graphics(file.path(image.dir, "NARW_hotpsot_persistence_2_1_2022_TPW.png"))
+knitr::include_graphics(file.path(image.dir, "right_whales.jpg"))
 
 ```
 
-```{r ps-hotspot, fig.cap = ""}
+```{r ps-hotspot, fig.cap = "Seabirds, Turtles, Whales"}
 
-knitr::include_graphics(file.path(image.dir, "seabirds_cetaceans_turtles_hotspot_persistence_2_1_2022_TPW.png"))
+knitr::include_graphics(file.path(image.dir, "seabird_turtle_whale_hotspots.jpeg"))
 
 ```
 
