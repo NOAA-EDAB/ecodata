@@ -7,8 +7,8 @@ library(readxl)
 
 raw.dir <- here::here("data-raw")
 wind_dev_speed_xlsx_2021<- "Tables_Cumulative Totals by Construction Year_01_20_21.xlsx"
-
 wind_dev_speed_xlsx_2022<- "Wind Cumulative Data_SoE2021_2022 differences_12121.xlsx"
+wind_dev_speed_xlsx_2023<- "wind_footprint_2023 - Angela Silva - NOAA Affiliate.xlsx"
 
 get_wind_dev_speed <- function(save_clean = F){
   wind_dev_speed_2021 <- read_excel(file.path(raw.dir,wind_dev_speed_xlsx_2021), sheet = 3) %>%
@@ -39,18 +39,19 @@ get_wind_dev_speed <- function(save_clean = F){
     dplyr::filter(!Value == "NA") %>%
     dplyr::mutate(Report_year = c("year2022"))
 
-  wind_dev_speed<- rbind(wind_dev_speed_2021, wind_dev_speed_2022)
+  wind_dev_speed_2023 <- read_excel(file.path(raw.dir,wind_dev_speed_xlsx_2023)) %>%
+    tidyr::pivot_longer(cols = c("Acres", "Gen_Cap", "Fndns", "Exp_Cab",
+                                 "Inter_Cab", "Cab_Total"),
+                        names_to = "Var", values_to = "Value") %>%
+    dplyr::filter(!Const_Yr == "Beyond 2030 (Planning Areas)") %>%
+    dplyr::mutate(Time = as.numeric(Const_Yr),
+                  EPU = c("All"),
+                  Report_year = c("year2023")) %>%
+    dplyr::select(!Const_Yr)
 
 
-  # metadata ----
-  attr(wind_dev_speed, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/wind-energy-delvelopment-speed.html"
-  attr(wind_dev_speed, "data_files")   <- list(
-    wind_dev_speed_xlsx = wind_dev_speed_xlsx)
-  attr(wind_dev_speed, "data_steward") <- c(
-    "Angela Silva <angela.silva@noaa.gov")
-  attr(wind_dev_speed, "plot_script") <- list(
-    `hd_MAB_0` = "human_dimensions_MAB.Rmd-wind-dev-speed0.R",
-    `hd_MAB_0.30` = "human_dimensions_MAB.Rmd-wind-dev-speed0.30.R")
+    wind_dev_speed<- rbind(wind_dev_speed_2021, wind_dev_speed_2022,
+                           wind_dev_speed_2023)
 
   if (save_clean){
     usethis::use_data(wind_dev_speed, overwrite = T)

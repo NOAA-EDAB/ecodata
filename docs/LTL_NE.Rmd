@@ -1966,13 +1966,89 @@ mab.hw %>%
   ecodata::theme_ts()+
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"))+
-  ecodata::theme_title()
+  ecodata::theme_title()+
+  ecodata::theme_facet()
 
 ```
 
 ### Habitat Vulnerability
 
 [Table to be described in SOE](https://noaa-edab.github.io/ecodata/Hab_table).
+
+### Habitat Diversity
+
+```{r habitat-richness}
+
+ecodata::habitat_diversity %>% 
+  dplyr::filter(!Var == "Shannon",
+                EPU %in% c("GB", "GOM")) %>% 
+  tidyr::separate(Var, into = c("Var", "Richness")) %>% 
+  tidyr::pivot_wider(values_from = "Value", names_from = "Var") %>% 
+  dplyr::group_by(EPU) %>% 
+  dplyr::mutate(mean = as.numeric(mean),
+                lower = as.numeric(lower),
+                upper = as.numeric(upper),
+                Time = as.numeric(Time),
+                hline = mean(mean)) %>% 
+  ggplot2::ggplot(aes(x = Time, y = mean))+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_ribbon(aes(x = Time, ymax = upper, ymin = lower), alpha = 0.3)+
+  ggplot2::geom_point()+
+  ggplot2::geom_line() +
+  ggplot2::ylab("") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::facet_wrap(~EPU)+
+  ggplot2::ggtitle("New England Habitat Richness") +
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
+  ggplot2::geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  ecodata::theme_ts()+
+  ggplot2::theme(strip.text=element_text(hjust=0,
+                                face = "italic"))+
+  ecodata::theme_title()+
+  ecodata::theme_facet()
+  
+
+```
+
+```{r habitat-shannon, message=FALSE, echo=FALSE, warning=FALSE}
+
+ecodata::habitat_diversity %>% 
+  dplyr::filter(Var == "Shannon",
+                EPU %in% c("GB", "GOM")) %>% 
+  dplyr::group_by(EPU) %>% 
+  dplyr::mutate(mean = as.numeric(Value),
+                Time = as.numeric(Time),
+                hline = mean(Value)) %>% 
+  ggplot2::ggplot(aes(x = Time, y = Value))+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_point()+
+  ggplot2::geom_line() +
+  ggplot2::ylab("") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("New England Habitat Shannon Diversity") +
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
+  ggplot2::geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  ecodata::theme_ts()+
+  ggplot2::facet_wrap(~EPU)
+  ggplot2::theme(strip.text=element_text(hjust=0,
+                                face = "italic"))+
+  ecodata::theme_title()+
+  ecodata::theme_facet()
+  
+
+```
+
+
 
 ### HABs {.tabset .tabset-fade}
 

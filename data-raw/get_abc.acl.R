@@ -14,48 +14,34 @@ get_abc.acl <- function(save_clean = F){
   # import data
   ma<-readxl::read_excel(file.path(raw.dir,abc.acl_xlsx)) %>%
     janitor::row_to_names(.,1) %>%
-    dplyr::rename(spec = "Species/Sector") %>%
-    tidyr::pivot_longer(cols = c("ABC/ACL 2012",   "Catch 2012",     "ABC/ACL 2013" ,
-                                 "Catch 2013",     "ABC/ACL 2014" ,  "Catch 2014",     "ABC/ACL 2015",
-                                 "Catch 2015" ,    "ABC/ACL 2016",   "Catch 2016",     "ABC/ACL 2017",
-                                 "Catch 2017",     "ABC/ACL 2018",   "Catch 2018",     "ABC/ACL 2019",
-                                 "Catch 2019",     "ABC/ACL 2020",   "Catch 2020"),
+    dplyr::rename("spec" = "Species/Sector") %>%
+    tidyr::pivot_longer(cols = c("ABC or ACL 2012", "Catch 2012",
+                                 "ABC or ACL 2013", "Catch 2013",
+                                 "ABC or ACL 2014", "Catch 2014",
+                                 "ABC or ACL 2015", "Catch 2015" ,
+                                 "ABC or ACL 2016",   "Catch 2016",
+                                 "ABC or ACL 2017", "Catch 2017",
+                                 "ABC or ACL 2018",   "Catch 2018",
+                                 "ABC or ACL 2019","Catch 2019",
+                                 "ABC or ACL 2020",   "Catch 2020"),
                         names_to = "Var", values_to = "Value") %>%
-    tidyr::separate(Var, c("Var", "Time"), sep = " ") %>%
-    dplyr::mutate(Var = paste(spec,"-", Var),
-                  EPU = c("MAB")) %>%
-    dplyr::select(!c(Notes, spec) ) %>%
-    dplyr::filter(! Value == "-",
-                  !Value == "n/a") %>%
+    #tidyr::separate(Var, c("Var", "Time"), sep = " ") %>%
+    dplyr::mutate(#Var = paste(spec,"-", Var),
+                  Time = stringr::str_extract(Var, pattern = "\\d+"),
+                  Var = stringr::str_extract(Var, pattern = "."),
+                  Var = dplyr::recode(Var, "A" = "Quota",
+                                      "C" = "Catch"),
+                  EPU = c("MAB"),
+                  Var = paste0(spec, "_", Var)) %>%
+    dplyr::select(!c(Notes, spec)) %>%
+    dplyr::filter(!Value == "-",
+                  !Value == "n/a",
+                  !Var == "NA",
+                  !Var == "Ecosystem Component forage species_Catch") %>%
     dplyr::mutate(Value = as.numeric(Value),
                   Time = as.numeric(Time),
-                  Units = c("mt")) %>%
-    dplyr::select(Time, Var, Value, EPU, Units) %>%
-    dplyr::filter(!Var %in% c("Blueline Tilefish Commercial - ABC/ACL", "Blueline Tilefish Commercial - Catch",
-                              "Blueline Tilefish Recreational - ABC/ACL", "Blueline Tilefish Recreational - Catch"))
-
-
-  blueline<-   readxl::read_excel(file.path(raw.dir,abc.acl_xlsx)) %>%
-    janitor::row_to_names(.,1) %>%
-    dplyr::rename(spec = "Species/Sector") %>%
-    tidyr::pivot_longer(cols = c("ABC/ACL 2012",   "Catch 2012",     "ABC/ACL 2013" ,
-                                 "Catch 2013",     "ABC/ACL 2014" ,  "Catch 2014",     "ABC/ACL 2015",
-                                 "Catch 2015" ,    "ABC/ACL 2016",   "Catch 2016",     "ABC/ACL 2017",
-                                 "Catch 2017",     "ABC/ACL 2018",   "Catch 2018",     "ABC/ACL 2019",
-                                 "Catch 2019",     "ABC/ACL 2020",   "Catch 2020"),
-                        names_to = "Var", values_to = "Value") %>%
-    tidyr::separate(Var, c("Var", "Time"), sep = " ") %>%
-    dplyr::mutate(Var = paste(spec,"-", Var),
+                  Units = c("mt"),
                   EPU = c("MAB")) %>%
-    dplyr::select(!c(Notes, spec) ) %>%
-    dplyr::filter(! Value == "-",
-                  !Value == "n/a") %>%
-    dplyr::mutate(Value = as.numeric(Value),
-                  Time = as.numeric(Time)) %>%
-    dplyr::filter(Var %in% c("Blueline Tilefish Commercial - ABC/ACL", "Blueline Tilefish Commercial - Catch",
-                              "Blueline Tilefish Recreational - ABC/ACL", "Blueline Tilefish Recreational - Catch")) %>%
-    dplyr::mutate(Value = Value/1000000,
-                  Units = c("mt")) %>%
     dplyr::select(Time, Var, Value, EPU, Units)
 
 
@@ -67,7 +53,9 @@ get_abc.acl <- function(save_clean = F){
     dplyr::select(Time, Var, Value, EPU, Units)
 
 
-  abc.acl <- ma %>% rbind(blueline, ne)
+  abc.acl <- ma %>% rbind(ma, ne)
+
+
   # metadata ----
   attr(abc.acl, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/mafmc-abcacl-and-catch.html"
   attr(abc.acl, "data_files")   <- list(
