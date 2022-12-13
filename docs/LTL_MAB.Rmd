@@ -1521,12 +1521,13 @@ gridExtra::grid.arrange(cpi, pi,ei, ncol=3)
 
 ### Marine Heat Wave
 
-[notes here](https://docs.google.com/document/d/1S91IDGC1vxQFZETAIzv-WOva3M8Q2vtd/edit?rtpof=true)
+[notes here](https://docs.google.com/document/d/1M0wS9cxiK128ZlkmJpW9p3s9jY5FlCKA4lZX5zrbvmA/edit)
 
-```{r heatwave-year, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Mid-Atlantic occuring in 2020."}
+```{r heatwave-year, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Mid-Atlantic occuring in 2022."}
 ecodata::heatwave_year %>% 
   filter(EPU == "MAB", 
-         str_detect(t, "2021")) %>% 
+         str_detect(t, "2022"), 
+         Var == "Surface") %>% 
   ggplot( aes(x = t, y = temp))+
   geom_flame(aes(y2 = thresh))+ 
   geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
@@ -1545,21 +1546,58 @@ ecodata::heatwave_year %>%
 
 ```
 
+```{r heatwave-year-detrended, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Mid-Atlantic occuring in 2022."}
+ecodata::heatwave_year %>% 
+  filter(EPU == "MAB", 
+         str_detect(t, "2022"), 
+         Var == "SurfaceDetrended") %>% 
+  ggplot( aes(x = t, y = temp))+
+  geom_flame(aes(y2 = thresh))+ 
+  geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
+  geom_line(aes(x = t, y = thresh, color = "c"), size = 1)+
+  geom_line(aes(x = t, y = temp, color = "b"))+
+  scale_colour_manual(values = c("turquoise4", "sienna3", "black"),
+                      labels = c("Climatology","Temperature", "Threshold"))+
+  ylab("Temperature (C)")+
+  xlab(element_blank())+
+  scale_x_date(date_labels = "%b", breaks = "1 month")+
+  theme_bw()+
+  ggplot2::ggtitle("Detrended")+
+  theme(legend.title = element_blank(),
+        legend.position=c(0.2, 0.8))+
+  ecodata::theme_title()
+
+
+```
+
+
 ```{r heatwave, fig.cap="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Mid-Atlantic Bight."}
 
 cumu <- ecodata::heatwave %>% 
-  dplyr::filter(Var == "cumulative intensity") %>% 
-  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity" = "Cumulative Intensity (degree C x days)"))
+  dplyr::filter(Var == "cumulative intensity-Surface") %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-Surface" = "Cumulative Intensity (degree C x days)"))
 
 maxin <- ecodata::heatwave %>% 
-  dplyr::filter(Var == "maximum intensity") %>% 
+  dplyr::filter(Var == "maximum intensity-Surface") %>% 
   dplyr::group_by(Time, EPU, Var, Units) %>% 
   dplyr::summarise(Value = max(Value)) %>% 
   dplyr::ungroup() %>% 
-  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity" = "Maximum Intensity (degree C)"))
+  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-Surface" = "Maximum Intensity (degree C)"))
+
+cumud <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "cumulative intensity-SurfaceDetrended") %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-SurfaceDetrended" = "Cumulative Intensity Detrended (degree C x days)"))
+
+maxind <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "maximum intensity-SurfaceDetrended") %>% 
+  dplyr::group_by(Time, EPU, Var, Units) %>% 
+  dplyr::summarise(Value = max(Value)) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-SurfaceDetrended" = "Maximum Intensity Detrended (degree C)"))
+
 
 hw<- cumu %>%
-  rbind(maxin) %>% 
+  rbind(maxin, cumud, maxind) %>% 
   dplyr::group_by(Var, EPU) %>% 
   dplyr::mutate(hline = mean(Value))
 
@@ -1589,79 +1627,48 @@ mab.hw %>%
 
 ```
 
-<!-- ```{r heatwave-anom-gridded, fig.cap="Maximum intensity heatwave anomaly in the Mid-Atlantic Bight occuring on July 28, 2020."} -->
-<!-- #EPU shapefile -->
-<!-- mab_epu_sf <- ecodata::epu_sf %>%  -->
-<!--   dplyr::filter(EPU %in% c("MAB")) -->
-
-<!-- #Map line parameters -->
-<!-- map.lwd <- 0.4 -->
-
-<!-- # Set lat/lon window for maps -->
-<!-- xmin = -81 -->
-<!-- xmax = -66 -->
-<!-- ymin = 35.5 -->
-<!-- ymax = 43 -->
-<!-- xlims <- c(xmin, xmax) -->
-<!-- ylims <- c(ymin, ymax) -->
-<!-- hw <- ecodata::heatwave_peak_date %>%  -->
-<!--   dplyr::filter(EPU == "MAB") %>%  -->
-<!--   dplyr::mutate(Value = replace(Value, Value > 4, 4)) -->
-
-<!-- mab_map <-  -->
-<!--     ggplot2::ggplot() + -->
-<!--   ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) + -->
-<!--   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) + -->
-<!--   ggplot2::geom_sf(data = mab_epu_sf, fill = "transparent", size = map.lwd) + -->
-<!--   ggplot2::scale_fill_gradientn(name = "Temp.\nAnomaly (C)",  -->
-<!--                                 colours = c(scales::muted("blue"), "white", -->
-<!--                                             scales::muted("red"), "black"), -->
-<!--                                 values = scales::rescale(c(-4,0,4,8)), -->
-<!--                                 guide = "colorbar", limits=c(-4,8)) + -->
-
-<!--   # ggplot2::scale_fill_gradient2(name = "Temp Anomaly (C)", -->
-<!--   #                      low = scales::muted("blue"), -->
-<!--   #                      mid = "white", -->
-<!--   #                      midpoint = 0, -->
-<!--   #                      high = scales::muted("red"), -->
-<!--   #                      guide = "colourbar", -->
-<!--   #                      limits = c(-4,8)) + -->
-<!--   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) + -->
-<!--   #facet_wrap(Season~.) + -->
-<!--   ecodata::theme_map() + -->
-<!--   ggplot2::ggtitle("MAB heatwave anomaly (July 28, 2020)") + -->
-<!--   ggplot2::xlab("Longitude") + -->
-<!--   ggplot2::ylab("Latitude") + -->
-<!--   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75), -->
-<!--         legend.key = element_blank(), -->
-<!--         axis.title = element_text(size = 11), -->
-<!--         strip.background = element_blank(), -->
-<!--         strip.text=element_text(hjust=0), -->
-<!--         axis.text = element_text(size = 8))+ -->
-<!--   ecodata::theme_title() -->
-
-
-<!-- mab_map  -->
-
-<!-- ``` -->
 
 ### Bottom Temp Heatwave
 
-```{r bottom-heatwave, fig.cap="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Mid-Atlantic Bight."}
+```{r bottom-heatwave-year-detrended, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Mid-Atlantic occuring in 2022."}
+ecodata::heatwave_year %>% 
+  filter(EPU == "MAB", 
+         str_detect(t, "2022"), 
+         Var == "BottomDetrended") %>% 
+  ggplot( aes(x = t, y = temp))+
+  geom_flame(aes(y2 = thresh))+ 
+  geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
+  geom_line(aes(x = t, y = thresh, color = "c"), size = 1)+
+  geom_line(aes(x = t, y = temp, color = "b"))+
+  scale_colour_manual(values = c("turquoise4", "sienna3", "black"),
+                      labels = c("Climatology","Temperature", "Threshold"))+
+  ylab("Temperature (C)")+
+  xlab(element_blank())+
+  scale_x_date(date_labels = "%b", breaks = "1 month")+
+  theme_bw()+
+  ggplot2::ggtitle("Detrended")+
+  theme(legend.title = element_blank(),
+        legend.position=c(0.2, 0.8))+
+  ecodata::theme_title()
 
-cumu <- ecodata::bottom_heatwave %>% 
-  dplyr::filter(Var == "cumulative intensity") %>% 
-  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity" = "Cumulative Intensity (degree C x days)"))
 
-maxin <- ecodata::bottom_heatwave %>% 
-  dplyr::filter(Var == "maximum intensity") %>% 
+```
+
+```{r bottom-heatwave, fig.cap="Bottom heatwave cumulative intesity (left) and maximum intensity (right) in the Mid-Atlantic Bight."}
+
+cumud <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "cumulative intensity-BottomDetrended") %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-BottomDetrended" = "Cumulative Intensity Detrended (degree C x days)")) 
+
+maxind <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "maximum intensity-BottomDetrended") %>% 
   dplyr::group_by(Time, EPU, Var, Units) %>% 
   dplyr::summarise(Value = max(Value)) %>% 
   dplyr::ungroup() %>% 
-  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity" = "Maximum Intensity (degree C)"))
+  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-BottomDetrended" = "Maximum Intensity Detrended (degree C)"))
 
-hw<- cumu %>%
-  rbind(maxin) %>% 
+hw<- cumud %>%
+  rbind(maxind) %>% 
   dplyr::group_by(Var, EPU) %>% 
   dplyr::mutate(hline = mean(Value))
 
@@ -1670,7 +1677,7 @@ mab.hw %>%
   ggplot2::ggplot() +
   ggplot2::geom_line(aes(x = Time, y = Value)) +
   ggplot2::geom_point(aes(x = Time, y = Value)) +
-  ecodata::geom_gls(aes(x = Time, y = Value, group = Var)) +
+  ecodata::geom_gls(aes(x = Time, y = Value))+ 
   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("") +
   ggplot2::xlab(element_blank())+

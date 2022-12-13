@@ -674,142 +674,70 @@ Zooplankton diversity in Georges Bank and Gulf of Maine.
 <h3>Storminess</h3>
 <p><img src="LTL_NE_files/figure-html/storminess-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="marine-heat-wave" class="section level3 tabset tabset-fade">
-<h3 class="tabset tabset-fade">Marine Heat Wave</h3>
-<p><a href="https://docs.google.com/document/d/1S91IDGC1vxQFZETAIzv-WOva3M8Q2vtd/edit?rtpof=true">notes here</a></p>
-<div id="monthly-time-series" class="section level4">
-<h4>Monthly time series</h4>
+<div id="marine-heat-wave" class="section level3">
+<h3>Marine Heat Wave</h3>
+<p><a href="https://docs.google.com/document/d/1M0wS9cxiK128ZlkmJpW9p3s9jY5FlCKA4lZX5zrbvmA/edit">notes here</a></p>
 <div class="figure" style="text-align: center">
-<img src="LTL_NE_files/figure-html/heatwave-year-gb-1.png" alt="Georges Bank" width="672" />
+<img src="LTL_NE_files/figure-html/heatwave-year-gb-1.png" alt="Marine heatwave events (red) in Georges Bank occuring in 2022." width="80%" />
 <p class="caption">
-Georges Bank
+Marine heatwave events (red) in Georges Bank occuring in 2022.
 </p>
 </div>
 <div class="figure" style="text-align: center">
-<img src="LTL_NE_files/figure-html/heatwave-year-gom-1.png" alt="Gulf of Maine" width="672" />
+<img src="LTL_NE_files/figure-html/heatwave-year-gom-1.png" alt="Marine heatwave events (red) in Gulf of Maine occuring in 2022." width="80%" />
 <p class="caption">
-Gulf of Maine
-</p>
-</div>
-</div>
-<div id="yearly-timeseries" class="section level4">
-<h4>Yearly timeseries</h4>
-<div class="figure" style="text-align: center">
-<img src="LTL_NE_files/figure-html/heatwave-gb-1.png" alt="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Georges Bank and Gulf of Maine ." width="672" />
-<p class="caption">
-Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Georges Bank and Gulf of Maine .
+Marine heatwave events (red) in Gulf of Maine occuring in 2022.
 </p>
 </div>
 <div class="figure" style="text-align: center">
-<img src="LTL_NE_files/figure-html/heatwave-gom-1.png" alt="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Georges Bank and Gulf of Maine ." width="672" />
+<img src="LTL_NE_files/figure-html/heatwave-year-detrended_gb-1.png" alt="Marine heatwave events (red) in the Georges Bank Detrended occuring in 2022." width="80%" />
 <p class="caption">
-Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Georges Bank and Gulf of Maine .
-</p>
-</div>
-<!-- #### Maps -->
-<!-- ```{r heatwave-anom-gridded-gb, fig.cap="Maximum intensity heatwave anomaly in Georges Bank occuring on August 14, 2020."} -->
-<!-- #EPU shapefile -->
-<!-- ne_epu_sf <- ecodata::epu_sf %>%  -->
-<!--   dplyr::filter(EPU %in% c("GOM","GB")) -->
-<!-- #Map line parameters -->
-<!-- map.lwd <- 0.4 -->
-<!-- # Set lat/lon window for maps -->
-<!-- xmin = -73 -->
-<!-- xmax = -65 -->
-<!-- ymin = 39 -->
-<!-- ymax = 45 -->
-<!-- xlims <- c(xmin, xmax) -->
-<!-- ylims <- c(ymin, ymax) -->
-<!-- hw <- ecodata::heatwave_peak_date %>%  -->
-<!--   dplyr::filter(EPU == "GB")# %>%  -->
-<!--   #dplyr::mutate(Value = replace(Value, Value > 4, 4)) -->
-<!-- gb_map <-  -->
-<!--   ggplot2::ggplot() + -->
-<!--   ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) + -->
-<!--   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) + -->
-<!--   ggplot2::geom_sf(data = ne_epu_sf, fill = "transparent", size = map.lwd) + -->
-<!--   ggplot2::scale_fill_gradientn(name = "Temp.\nAnomaly (C)",  -->
-<!--                                 colours = c(scales::muted("blue"), "white", -->
-<!--                                             scales::muted("red"), "black"), -->
-<!--                                 values = scales::rescale(c(-4,0,4,8)), -->
-<!--                                 guide = "colorbar", limits=c(-4,8)) + -->
-<!--   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) + -->
-<!--   #facet_wrap(Season~.) + -->
-<!--   ecodata::theme_map() + -->
-<!--   ggplot2::ggtitle("GB heatwave anomaly (Aug 14, 2020)") + -->
-<!--   ggplot2::xlab("Longitude") + -->
-<!--   ggplot2::ylab("Latitude") + -->
-<!--   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75), -->
-<!--         legend.key = element_blank(), -->
-<!--         axis.title = element_text(size = 11), -->
-<!--         strip.background = element_blank(), -->
-<!--         strip.text=element_text(hjust=0), -->
-<!--         axis.text = element_text(size = 8))+ -->
-<!--   ecodata::theme_title() -->
-<!-- gb_map  -->
-<!-- ``` -->
-<!-- ```{r heatwave-anom-gridded-gom, fig.cap="Maximum intensity heatwave anomaly in Gulf of Maine occuring on August 2, 2020."} -->
-<!-- #EPU shapefile -->
-<!-- ne_epu_sf <- ecodata::epu_sf %>%  -->
-<!--   dplyr::filter(EPU %in% c("GOM","GB")) -->
-<!-- #Map line parameters -->
-<!-- map.lwd <- 0.4 -->
-<!-- # Set lat/lon window for maps -->
-<!-- xmin = -73 -->
-<!-- xmax = -65 -->
-<!-- ymin = 39 -->
-<!-- ymax = 45 -->
-<!-- xlims <- c(xmin, xmax) -->
-<!-- ylims <- c(ymin, ymax) -->
-<!-- hw <- ecodata::heatwave_peak_date%>%  -->
-<!--   dplyr::filter(EPU == "GOM")# %>%  -->
-<!--   #dplyr::mutate(Value = replace(Value, Value > 4, 4)) -->
-<!-- gom_map <-  -->
-<!--   ggplot2::ggplot() + -->
-<!--   ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) + -->
-<!--   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) + -->
-<!--   ggplot2::geom_sf(data = ne_epu_sf, fill = "transparent", size = map.lwd) + -->
-<!--   ggplot2::scale_fill_gradientn(name = "Temp.\nAnomaly (C)",  -->
-<!--                                 colours = c(scales::muted("blue"), "white", -->
-<!--                                             scales::muted("red"), "black"), -->
-<!--                                 values = scales::rescale(c(-4,0,4,8)), -->
-<!--                                 guide = "colorbar", limits=c(-4,8)) + -->
-<!--   # ggplot2::scale_fill_gradient2(name = "Temp Anomaly (C)", -->
-<!--   #                      low = scales::muted("blue"), -->
-<!--   #                      mid = "white", -->
-<!--   #                      midpoint = 0, -->
-<!--   #                      high = scales::muted("red"), -->
-<!--   #                      guide = "colourbar", -->
-<!--   #                      limits = c(-4,8)) + -->
-<!--   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) + -->
-<!--   #facet_wrap(Season~.) + -->
-<!--   ecodata::theme_map() + -->
-<!--   ggplot2::ggtitle("GOM heatwave anomaly (Aug 2, 2020)") + -->
-<!--   ggplot2::xlab("Longitude") + -->
-<!--   ggplot2::ylab("Latitude") + -->
-<!--   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75), -->
-<!--         legend.key = element_blank(), -->
-<!--         axis.title = element_text(size = 11), -->
-<!--         strip.background = element_blank(), -->
-<!--         strip.text=element_text(hjust=0), -->
-<!--         axis.text = element_text(size = 8))+ -->
-<!--   ecodata::theme_title() -->
-<!-- gom_map  -->
-<!-- ``` -->
-</div>
-</div>
-<div id="bottom-temp-heatwaves" class="section level3">
-<h3>Bottom Temp Heatwaves</h3>
-<div class="figure" style="text-align: center">
-<img src="LTL_NE_files/figure-html/bottom-heatwave-gb-1.png" alt="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Georges Bank and Gulf of Maine ." width="672" />
-<p class="caption">
-Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Georges Bank and Gulf of Maine .
+Marine heatwave events (red) in the Georges Bank Detrended occuring in 2022.
 </p>
 </div>
 <div class="figure" style="text-align: center">
-<img src="LTL_NE_files/figure-html/bottom-heatwave-gom-1.png" alt="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Georges Bank and Gulf of Maine ." width="672" />
+<img src="LTL_NE_files/figure-html/heatwave-year-detrended_gom-1.png" alt="Marine heatwave events (red) in the Gulf of Maine Detrended occuring in 2022." width="80%" />
 <p class="caption">
-Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Georges Bank and Gulf of Maine .
+Marine heatwave events (red) in the Gulf of Maine Detrended occuring in 2022.
+</p>
+</div>
+<div class="figure" style="text-align: center">
+<img src="LTL_NE_files/figure-html/heatwave-gb-1.png" alt="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Georges Bank." width="672" />
+<p class="caption">
+Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Georges Bank.
+</p>
+</div>
+<div class="figure" style="text-align: center">
+<img src="LTL_NE_files/figure-html/heatwave-gom-1.png" alt="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Gulf of Maine." width="672" />
+<p class="caption">
+Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Gulf of Maine.
+</p>
+</div>
+</div>
+<div id="bottom-temp-heatwave" class="section level3">
+<h3>Bottom Temp Heatwave</h3>
+<div class="figure" style="text-align: center">
+<img src="LTL_NE_files/figure-html/bottom-heatwave-year-detrended-gb-1.png" alt="Marine heatwave events (red) in the Georges Bank occuring in 2022." width="80%" />
+<p class="caption">
+Marine heatwave events (red) in the Georges Bank occuring in 2022.
+</p>
+</div>
+<div class="figure" style="text-align: center">
+<img src="LTL_NE_files/figure-html/bottom-heatwave-year-detrended-gom-1.png" alt="Marine heatwave events (red) in the Gulf of Maine occuring in 2022." width="80%" />
+<p class="caption">
+Marine heatwave events (red) in the Gulf of Maine occuring in 2022.
+</p>
+</div>
+<div class="figure" style="text-align: center">
+<img src="LTL_NE_files/figure-html/bottom-heatwave-gb-1.png" alt="Bottom heatwave cumulative intesity (left) and maximum intensity (right) in Georges Bank." width="672" />
+<p class="caption">
+Bottom heatwave cumulative intesity (left) and maximum intensity (right) in Georges Bank.
+</p>
+</div>
+<div class="figure" style="text-align: center">
+<img src="LTL_NE_files/figure-html/bottom-heatwave-gom-1.png" alt="Bottom heatwave cumulative intesity (left) and maximum intensity (right) in Gulf of Maine." width="672" />
+<p class="caption">
+Bottom heatwave cumulative intesity (left) and maximum intensity (right) in Gulf of Maine.
 </p>
 </div>
 </div>

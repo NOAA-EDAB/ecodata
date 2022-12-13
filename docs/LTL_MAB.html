@@ -642,11 +642,17 @@ Cold pool index.
 </div>
 <div id="marine-heat-wave" class="section level3">
 <h3>Marine Heat Wave</h3>
-<p><a href="https://docs.google.com/document/d/1S91IDGC1vxQFZETAIzv-WOva3M8Q2vtd/edit?rtpof=true">notes here</a></p>
+<p><a href="https://docs.google.com/document/d/1M0wS9cxiK128ZlkmJpW9p3s9jY5FlCKA4lZX5zrbvmA/edit">notes here</a></p>
 <div class="figure" style="text-align: center">
-<img src="LTL_MAB_files/figure-html/heatwave-year-1.png" alt="Marine heatwave events (red) in the Mid-Atlantic occuring in 2020." width="80%" />
+<img src="LTL_MAB_files/figure-html/heatwave-year-1.png" alt="Marine heatwave events (red) in the Mid-Atlantic occuring in 2022." width="80%" />
 <p class="caption">
-Marine heatwave events (red) in the Mid-Atlantic occuring in 2020.
+Marine heatwave events (red) in the Mid-Atlantic occuring in 2022.
+</p>
+</div>
+<div class="figure" style="text-align: center">
+<img src="LTL_MAB_files/figure-html/heatwave-year-detrended-1.png" alt="Marine heatwave events (red) in the Mid-Atlantic occuring in 2022." width="80%" />
+<p class="caption">
+Marine heatwave events (red) in the Mid-Atlantic occuring in 2022.
 </p>
 </div>
 <div class="figure" style="text-align: center">
@@ -655,61 +661,19 @@ Marine heatwave events (red) in the Mid-Atlantic occuring in 2020.
 Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Mid-Atlantic Bight.
 </p>
 </div>
-<!-- ```{r heatwave-anom-gridded, fig.cap="Maximum intensity heatwave anomaly in the Mid-Atlantic Bight occuring on July 28, 2020."} -->
-<!-- #EPU shapefile -->
-<!-- mab_epu_sf <- ecodata::epu_sf %>%  -->
-<!--   dplyr::filter(EPU %in% c("MAB")) -->
-<!-- #Map line parameters -->
-<!-- map.lwd <- 0.4 -->
-<!-- # Set lat/lon window for maps -->
-<!-- xmin = -81 -->
-<!-- xmax = -66 -->
-<!-- ymin = 35.5 -->
-<!-- ymax = 43 -->
-<!-- xlims <- c(xmin, xmax) -->
-<!-- ylims <- c(ymin, ymax) -->
-<!-- hw <- ecodata::heatwave_peak_date %>%  -->
-<!--   dplyr::filter(EPU == "MAB") %>%  -->
-<!--   dplyr::mutate(Value = replace(Value, Value > 4, 4)) -->
-<!-- mab_map <-  -->
-<!--     ggplot2::ggplot() + -->
-<!--   ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) + -->
-<!--   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) + -->
-<!--   ggplot2::geom_sf(data = mab_epu_sf, fill = "transparent", size = map.lwd) + -->
-<!--   ggplot2::scale_fill_gradientn(name = "Temp.\nAnomaly (C)",  -->
-<!--                                 colours = c(scales::muted("blue"), "white", -->
-<!--                                             scales::muted("red"), "black"), -->
-<!--                                 values = scales::rescale(c(-4,0,4,8)), -->
-<!--                                 guide = "colorbar", limits=c(-4,8)) + -->
-<!--   # ggplot2::scale_fill_gradient2(name = "Temp Anomaly (C)", -->
-<!--   #                      low = scales::muted("blue"), -->
-<!--   #                      mid = "white", -->
-<!--   #                      midpoint = 0, -->
-<!--   #                      high = scales::muted("red"), -->
-<!--   #                      guide = "colourbar", -->
-<!--   #                      limits = c(-4,8)) + -->
-<!--   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) + -->
-<!--   #facet_wrap(Season~.) + -->
-<!--   ecodata::theme_map() + -->
-<!--   ggplot2::ggtitle("MAB heatwave anomaly (July 28, 2020)") + -->
-<!--   ggplot2::xlab("Longitude") + -->
-<!--   ggplot2::ylab("Latitude") + -->
-<!--   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75), -->
-<!--         legend.key = element_blank(), -->
-<!--         axis.title = element_text(size = 11), -->
-<!--         strip.background = element_blank(), -->
-<!--         strip.text=element_text(hjust=0), -->
-<!--         axis.text = element_text(size = 8))+ -->
-<!--   ecodata::theme_title() -->
-<!-- mab_map  -->
-<!-- ``` -->
 </div>
 <div id="bottom-temp-heatwave" class="section level3">
 <h3>Bottom Temp Heatwave</h3>
 <div class="figure" style="text-align: center">
-<img src="LTL_MAB_files/figure-html/bottom-heatwave-1.png" alt="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Mid-Atlantic Bight." width="672" />
+<img src="LTL_MAB_files/figure-html/bottom-heatwave-year-detrended-1.png" alt="Marine heatwave events (red) in the Mid-Atlantic occuring in 2022." width="80%" />
 <p class="caption">
-Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Mid-Atlantic Bight.
+Marine heatwave events (red) in the Mid-Atlantic occuring in 2022.
+</p>
+</div>
+<div class="figure" style="text-align: center">
+<img src="LTL_MAB_files/figure-html/bottom-heatwave-1.png" alt="Bottom heatwave cumulative intesity (left) and maximum intensity (right) in the Mid-Atlantic Bight." width="672" />
+<p class="caption">
+Bottom heatwave cumulative intesity (left) and maximum intensity (right) in the Mid-Atlantic Bight.
 </p>
 </div>
 </div>
@@ -734,9 +698,9 @@ Left panel: Bottom aragonite saturation state (OArag; summer only: June-August) 
 <div id="seasonal-sst-anomaly" class="section level3">
 <h3>Seasonal SST anomaly</h3>
 <div class="figure" style="text-align: center">
-<img src="LTL_MAB_files/figure-html/shelf-seasonal-sst-anomaly-gridded-1.png" alt="Seasonal sea surface temperature anomalies for 2021 over the Northeast US Shelf." width="672" />
+<img src="LTL_MAB_files/figure-html/shelf-seasonal-sst-anomaly-gridded-1.png" alt="Seasonal sea surface temperature anomalies for 2022 over the Northeast US Shelf." width="672" />
 <p class="caption">
-Seasonal sea surface temperature anomalies for 2021 over the Northeast US Shelf.
+Seasonal sea surface temperature anomalies for 2022 over the Northeast US Shelf.
 </p>
 </div>
 </div>

@@ -1622,40 +1622,15 @@ storm %>%
 
 
 
-### Marine Heat Wave {.tabset .tabset-fade}
+### Marine Heat Wave
 
-[notes here](https://docs.google.com/document/d/1S91IDGC1vxQFZETAIzv-WOva3M8Q2vtd/edit?rtpof=true)
+[notes here](https://docs.google.com/document/d/1M0wS9cxiK128ZlkmJpW9p3s9jY5FlCKA4lZX5zrbvmA/edit)
 
-#### Monthly time series
-
-```{r heatwave-year-gb, fig.cap="Georges Bank", eval= T, echo = F}
-
-
+```{r heatwave-year-gb, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in Georges Bank occuring in 2022."}
 ecodata::heatwave_year %>% 
   filter(EPU == "GB", 
-         Year == "2021") %>% 
-  ggplot( aes(x = t, y = temp))+
-  heatwaveR::geom_flame(aes(y2 = thresh))+ 
-  #heatwaveR::geom_flame(aes(y2 = df12$thresh))+ 
-  geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
-  geom_line(aes(x = t, y = thresh, color = "c"), size = 1)+
-  geom_line(aes(x = t, y = temp, color = "b"))+
-  scale_colour_manual(values = c("turquoise4",   "sienna3","black"),
-                      labels = c("Climatology","Temperature","Threshold"))+
-  ylab("Temperature (C)")+
-  xlab(element_blank())+
-  ggtitle("GB Marine Heatwaves 2021")+
-  scale_x_date(date_labels = "%b", breaks = "1 month")+
-  theme_bw()+
-  theme(legend.title = element_blank(),
-        legend.position=c(0.2, 0.8))+
-  ecodata::theme_title()
-```
-
-```{r heatwave-year-gom, fig.cap = "Gulf of Maine", eval= T, echo = F}
-ecodata::heatwave_year %>% 
-  filter(EPU == "GOM", 
-         Year == "2021") %>% 
+         str_detect(t, "2022"), 
+         Var == "Surface") %>% 
   ggplot( aes(x = t, y = temp))+
   geom_flame(aes(y2 = thresh))+ 
   geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
@@ -1665,320 +1640,334 @@ ecodata::heatwave_year %>%
                       labels = c("Climatology","Temperature", "Threshold"))+
   ylab("Temperature (C)")+
   xlab(element_blank())+
-  ggtitle("GOM Marine Heatwaves 2021")+
   scale_x_date(date_labels = "%b", breaks = "1 month")+
   theme_bw()+
   theme(legend.title = element_blank(),
         legend.position=c(0.2, 0.8))+
   ecodata::theme_title()
+
+
 ```
 
-#### Yearly timeseries
+```{r heatwave-year-gom, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in Gulf of Maine occuring in 2022."}
+ecodata::heatwave_year %>% 
+  filter(EPU == "GOM", 
+         str_detect(t, "2022"), 
+         Var == "Surface") %>% 
+  ggplot( aes(x = t, y = temp))+
+  geom_flame(aes(y2 = thresh))+ 
+  geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
+  geom_line(aes(x = t, y = thresh, color = "c"), size = 1)+
+  geom_line(aes(x = t, y = temp, color = "b"))+
+  scale_colour_manual(values = c("turquoise4", "sienna3", "black"),
+                      labels = c("Climatology","Temperature", "Threshold"))+
+  ylab("Temperature (C)")+
+  xlab(element_blank())+
+  scale_x_date(date_labels = "%b", breaks = "1 month")+
+  theme_bw()+
+  theme(legend.title = element_blank(),
+        legend.position=c(0.2, 0.8))+
+  ecodata::theme_title()
 
-```{r heatwave-gb, eval= T, echo = F, fig.cap="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Georges Bank and Gulf of Maine ."}
+
+```
+
+```{r heatwave-year-detrended_gb, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Georges Bank Detrended occuring in 2022."}
+ecodata::heatwave_year %>% 
+  filter(EPU == "GB", 
+         str_detect(t, "2022"), 
+         Var == "SurfaceDetrended") %>% 
+  ggplot( aes(x = t, y = temp))+
+  geom_flame(aes(y2 = thresh))+ 
+  geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
+  geom_line(aes(x = t, y = thresh, color = "c"), size = 1)+
+  geom_line(aes(x = t, y = temp, color = "b"))+
+  scale_colour_manual(values = c("turquoise4", "sienna3", "black"),
+                      labels = c("Climatology","Temperature", "Threshold"))+
+  ylab("Temperature (C)")+
+  xlab(element_blank())+
+  scale_x_date(date_labels = "%b", breaks = "1 month")+
+  theme_bw()+
+  ggplot2::ggtitle("Detrended")+
+  theme(legend.title = element_blank(),
+        legend.position=c(0.2, 0.8))+
+  ecodata::theme_title()
+
+
+```
+
+```{r heatwave-year-detrended_gom, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Gulf of Maine Detrended occuring in 2022."}
+ecodata::heatwave_year %>% 
+  filter(EPU == "GOM", 
+         str_detect(t, "2022"), 
+         Var == "SurfaceDetrended") %>% 
+  ggplot( aes(x = t, y = temp))+
+  geom_flame(aes(y2 = thresh))+ 
+  geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
+  geom_line(aes(x = t, y = thresh, color = "c"), size = 1)+
+  geom_line(aes(x = t, y = temp, color = "b"))+
+  scale_colour_manual(values = c("turquoise4", "sienna3", "black"),
+                      labels = c("Climatology","Temperature", "Threshold"))+
+  ylab("Temperature (C)")+
+  xlab(element_blank())+
+  scale_x_date(date_labels = "%b", breaks = "1 month")+
+  theme_bw()+
+  ggplot2::ggtitle("Detrended")+
+  theme(legend.title = element_blank(),
+        legend.position=c(0.2, 0.8))+
+  ecodata::theme_title()
+
+
+```
+
+```{r heatwave-gb, fig.cap="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Georges Bank."}
+
 cumu <- ecodata::heatwave %>% 
-  dplyr::filter(Var == "cumulative intensity") %>% 
-  dplyr::mutate(Var = recode(Var, "cumulative intensity" = "Cumulative Intensity (degree C x days)"))
+  dplyr::filter(Var == "cumulative intensity-Surface") %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-Surface" = "Cumulative Intensity (degree C x days)"))
 
 maxin <- ecodata::heatwave %>% 
-  dplyr::filter(Var == "maximum intensity") %>% 
+  dplyr::filter(Var == "maximum intensity-Surface") %>% 
   dplyr::group_by(Time, EPU, Var, Units) %>% 
   dplyr::summarise(Value = max(Value)) %>% 
   dplyr::ungroup() %>% 
-  dplyr::mutate(Var = recode(Var, "maximum intensity" = "Maximum Intensity (degree C)"))
+  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-Surface" = "Maximum Intensity (degree C)"))
+
+cumud <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "cumulative intensity-SurfaceDetrended") %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-SurfaceDetrended" = "Cumulative Intensity Detrended (degree C x days)"))
+
+maxind <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "maximum intensity-SurfaceDetrended") %>% 
+  dplyr::group_by(Time, EPU, Var, Units) %>% 
+  dplyr::summarise(Value = max(Value)) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-SurfaceDetrended" = "Maximum Intensity Detrended (degree C)"))
+
 
 hw<- cumu %>%
-  rbind(maxin) %>% 
+  rbind(maxin, cumud, maxind) %>% 
   dplyr::group_by(Var, EPU) %>% 
   dplyr::mutate(hline = mean(Value))
 
-gb.hw<-hw %>% dplyr::filter(EPU == "GB") %>% 
+gb.hw<- hw %>% dplyr::filter(EPU == "GB")
+gb.hw %>% 
   ggplot2::ggplot() +
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
   ggplot2::geom_line(aes(x = Time, y = Value)) +
   ggplot2::geom_point(aes(x = Time, y = Value)) +
-  ecodata::geom_gls(aes(x = Time, y = Value)) +
-  #ecodata::geom_lm(aes(x = Time, y = Value))+
+  ecodata::geom_gls(aes(x = Time, y = Value, group = Var)) +
+  #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Georges Bank") +
+  ggplot2::ggtitle("Georges Bank Marine Heatwave Intesity") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
-
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+
-  ggplot2::facet_wrap(~Var, scales = "free") +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::facet_wrap(~Var, scales = "free")+
   ecodata::theme_ts()+
   ggplot2::theme(strip.text=element_text(hjust=0,
-                                face = "italic"), 
-        axis.title.y = element_text(angle = 90))+
-  ecodata::theme_title()+
-  ecodata::theme_facet()
+                                face = "italic"))+
+  ecodata::theme_title()
 
-gb.hw
 ```
 
+```{r heatwave-gom, fig.cap="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Gulf of Maine."}
 
-```{r heatwave-gom, eval= T, echo = F, fig.cap="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Georges Bank and Gulf of Maine ."}
 cumu <- ecodata::heatwave %>% 
-  dplyr::filter(Var == "cumulative intensity") %>% 
-  dplyr::mutate(Var = recode(Var, "cumulative intensity" = "Cumulative Intensity (degree C x days)"))
+  dplyr::filter(Var == "cumulative intensity-Surface") %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-Surface" = "Cumulative Intensity (degree C x days)"))
 
 maxin <- ecodata::heatwave %>% 
-  dplyr::filter(Var == "maximum intensity") %>% 
+  dplyr::filter(Var == "maximum intensity-Surface") %>% 
   dplyr::group_by(Time, EPU, Var, Units) %>% 
   dplyr::summarise(Value = max(Value)) %>% 
   dplyr::ungroup() %>% 
-  dplyr::mutate(Var = recode(Var, "maximum intensity" = "Maximum Intensity (degree C)"))
+  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-Surface" = "Maximum Intensity (degree C)"))
+
+cumud <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "cumulative intensity-SurfaceDetrended") %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-SurfaceDetrended" = "Cumulative Intensity Detrended (degree C x days)"))
+
+maxind <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "maximum intensity-SurfaceDetrended") %>% 
+  dplyr::group_by(Time, EPU, Var, Units) %>% 
+  dplyr::summarise(Value = max(Value)) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-SurfaceDetrended" = "Maximum Intensity Detrended (degree C)"))
+
 
 hw<- cumu %>%
-  rbind(maxin) %>% 
+  rbind(maxin, cumud, maxind) %>% 
   dplyr::group_by(Var, EPU) %>% 
   dplyr::mutate(hline = mean(Value))
-                    
-gom.hw<-hw %>% dplyr::filter(EPU == "GOM") %>% 
+
+gb.hw<- hw %>% dplyr::filter(EPU == "GOM")
+gb.hw %>% 
   ggplot2::ggplot() +
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
   ggplot2::geom_line(aes(x = Time, y = Value)) +
   ggplot2::geom_point(aes(x = Time, y = Value)) +
-  ecodata::geom_gls(aes(x = Time, y = Value)) +
-  #ecodata::geom_lm(aes(x = Time, y = Value))+
+  ecodata::geom_gls(aes(x = Time, y = Value, group = Var)) +
+  #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Gulf of Maine") +
+  ggplot2::ggtitle("Gulf of Maine Marine Heatwave Intesity") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+
-  #ggplot2::geom_hline(aes(yintercept = 0),
-  #         size = hline.size,
-  #         alpha = hline.alpha,
-  #         linetype = hline.lty)+
-  ylab("Heatwave Intensity")+
-  ggplot2::facet_wrap(~Var, scales = "free") +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::facet_wrap(~Var, scales = "free")+
   ecodata::theme_ts()+
   ggplot2::theme(strip.text=element_text(hjust=0,
-                                face = "italic"), 
-        axis.title.y = element_text(angle = 90)) +
-  ecodata::theme_title()+
-  ecodata::theme_facet()
+                                face = "italic"))+
+  ecodata::theme_title()
 
-
-gom.hw
 ```
 
-<!-- #### Maps -->
+### Bottom Temp Heatwave
 
-<!-- ```{r heatwave-anom-gridded-gb, fig.cap="Maximum intensity heatwave anomaly in Georges Bank occuring on August 14, 2020."} -->
-<!-- #EPU shapefile -->
-<!-- ne_epu_sf <- ecodata::epu_sf %>%  -->
-<!--   dplyr::filter(EPU %in% c("GOM","GB")) -->
-
-<!-- #Map line parameters -->
-<!-- map.lwd <- 0.4 -->
-
-<!-- # Set lat/lon window for maps -->
-<!-- xmin = -73 -->
-<!-- xmax = -65 -->
-<!-- ymin = 39 -->
-<!-- ymax = 45 -->
-<!-- xlims <- c(xmin, xmax) -->
-<!-- ylims <- c(ymin, ymax) -->
-<!-- hw <- ecodata::heatwave_peak_date %>%  -->
-<!--   dplyr::filter(EPU == "GB")# %>%  -->
-<!--   #dplyr::mutate(Value = replace(Value, Value > 4, 4)) -->
-
-<!-- gb_map <-  -->
-<!--   ggplot2::ggplot() + -->
-<!--   ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) + -->
-<!--   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) + -->
-<!--   ggplot2::geom_sf(data = ne_epu_sf, fill = "transparent", size = map.lwd) + -->
-<!--   ggplot2::scale_fill_gradientn(name = "Temp.\nAnomaly (C)",  -->
-<!--                                 colours = c(scales::muted("blue"), "white", -->
-<!--                                             scales::muted("red"), "black"), -->
-<!--                                 values = scales::rescale(c(-4,0,4,8)), -->
-<!--                                 guide = "colorbar", limits=c(-4,8)) + -->
-<!--   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) + -->
-<!--   #facet_wrap(Season~.) + -->
-<!--   ecodata::theme_map() + -->
-<!--   ggplot2::ggtitle("GB heatwave anomaly (Aug 14, 2020)") + -->
-<!--   ggplot2::xlab("Longitude") + -->
-<!--   ggplot2::ylab("Latitude") + -->
-<!--   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75), -->
-<!--         legend.key = element_blank(), -->
-<!--         axis.title = element_text(size = 11), -->
-<!--         strip.background = element_blank(), -->
-<!--         strip.text=element_text(hjust=0), -->
-<!--         axis.text = element_text(size = 8))+ -->
-<!--   ecodata::theme_title() -->
+```{r bottom-heatwave-year-detrended-gb, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Georges Bank occuring in 2022."}
+ecodata::heatwave_year %>% 
+  filter(EPU == "GB", 
+         str_detect(t, "2022"), 
+         Var == "BottomDetrended") %>% 
+  ggplot( aes(x = t, y = temp))+
+  geom_flame(aes(y2 = thresh))+ 
+  geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
+  geom_line(aes(x = t, y = thresh, color = "c"), size = 1)+
+  geom_line(aes(x = t, y = temp, color = "b"))+
+  scale_colour_manual(values = c("turquoise4", "sienna3", "black"),
+                      labels = c("Climatology","Temperature", "Threshold"))+
+  ylab("Temperature (C)")+
+  xlab(element_blank())+
+  scale_x_date(date_labels = "%b", breaks = "1 month")+
+  theme_bw()+
+  ggplot2::ggtitle("Detrended")+
+  theme(legend.title = element_blank(),
+        legend.position=c(0.2, 0.8))+
+  ecodata::theme_title()
 
 
-<!-- gb_map  -->
-
-<!-- ``` -->
-
-
-
-<!-- ```{r heatwave-anom-gridded-gom, fig.cap="Maximum intensity heatwave anomaly in Gulf of Maine occuring on August 2, 2020."} -->
-<!-- #EPU shapefile -->
-<!-- ne_epu_sf <- ecodata::epu_sf %>%  -->
-<!--   dplyr::filter(EPU %in% c("GOM","GB")) -->
-
-<!-- #Map line parameters -->
-<!-- map.lwd <- 0.4 -->
-
-<!-- # Set lat/lon window for maps -->
-<!-- xmin = -73 -->
-<!-- xmax = -65 -->
-<!-- ymin = 39 -->
-<!-- ymax = 45 -->
-<!-- xlims <- c(xmin, xmax) -->
-<!-- ylims <- c(ymin, ymax) -->
-<!-- hw <- ecodata::heatwave_peak_date%>%  -->
-<!--   dplyr::filter(EPU == "GOM")# %>%  -->
-<!--   #dplyr::mutate(Value = replace(Value, Value > 4, 4)) -->
-
-<!-- gom_map <-  -->
-<!--   ggplot2::ggplot() + -->
-<!--   ggplot2::geom_tile(data =hw, aes(x = Longitude, y = Latitude,fill = Value)) + -->
-<!--   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) + -->
-<!--   ggplot2::geom_sf(data = ne_epu_sf, fill = "transparent", size = map.lwd) + -->
-<!--   ggplot2::scale_fill_gradientn(name = "Temp.\nAnomaly (C)",  -->
-<!--                                 colours = c(scales::muted("blue"), "white", -->
-<!--                                             scales::muted("red"), "black"), -->
-<!--                                 values = scales::rescale(c(-4,0,4,8)), -->
-<!--                                 guide = "colorbar", limits=c(-4,8)) + -->
-
-<!--   # ggplot2::scale_fill_gradient2(name = "Temp Anomaly (C)", -->
-<!--   #                      low = scales::muted("blue"), -->
-<!--   #                      mid = "white", -->
-<!--   #                      midpoint = 0, -->
-<!--   #                      high = scales::muted("red"), -->
-<!--   #                      guide = "colourbar", -->
-<!--   #                      limits = c(-4,8)) + -->
-<!--   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) + -->
-<!--   #facet_wrap(Season~.) + -->
-<!--   ecodata::theme_map() + -->
-<!--   ggplot2::ggtitle("GOM heatwave anomaly (Aug 2, 2020)") + -->
-<!--   ggplot2::xlab("Longitude") + -->
-<!--   ggplot2::ylab("Latitude") + -->
-<!--   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75), -->
-<!--         legend.key = element_blank(), -->
-<!--         axis.title = element_text(size = 11), -->
-<!--         strip.background = element_blank(), -->
-<!--         strip.text=element_text(hjust=0), -->
-<!--         axis.text = element_text(size = 8))+ -->
-<!--   ecodata::theme_title() -->
-
-
-<!-- gom_map  -->
-
-<!-- ``` -->
-
-### Bottom Temp Heatwaves
-
-```{r bottom-heatwave-gb, eval= T, echo = F, fig.cap="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Georges Bank and Gulf of Maine ."}
-cumu <- ecodata::bottom_heatwave %>% 
-  dplyr::filter(Var == "cumulative intensity") %>% 
-  dplyr::mutate(Var = recode(Var, "cumulative intensity" = "Cumulative Intensity (degree C x days)"))
-
-maxin <- ecodata::bottom_heatwave %>% 
-  dplyr::filter(Var == "maximum intensity") %>% 
-  dplyr::group_by(Time, EPU, Var, Units) %>% 
-  dplyr::summarise(Value = max(Value)) %>% 
-  dplyr::ungroup() %>% 
-  dplyr::mutate(Var = recode(Var, "maximum intensity" = "Maximum Intensity (degree C)"))
-
-hw<- cumu %>%
-  rbind(maxin) %>% 
-  dplyr::group_by(Var, EPU) %>% 
-  dplyr::mutate(hline = mean(Value))
-
-gb.hw<-hw %>% dplyr::filter(EPU == "GB") %>% 
-  ggplot2::ggplot() +
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_line(aes(x = Time, y = Value)) +
-  ggplot2::geom_point(aes(x = Time, y = Value)) +
-  ecodata::geom_gls(aes(x = Time, y = Value)) +
-  #ecodata::geom_lm(aes(x = Time, y = Value))+
-  ggplot2::ylab("") +
-  ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Georges Bank - Bottom Temp Heatwave") +
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
-
-  ggplot2::geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
-  ggplot2::facet_wrap(~Var, scales = "free") +
-  ecodata::theme_ts()+
-  ggplot2::theme(strip.text=element_text(hjust=0,
-                                face = "italic"), 
-        axis.title.y = element_text(angle = 90))+
-  ecodata::theme_title()+
-  ecodata::theme_facet()
-
-gb.hw
 ```
 
+```{r bottom-heatwave-year-detrended-gom, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Gulf of Maine occuring in 2022."}
+ecodata::heatwave_year %>% 
+  filter(EPU == "GOM", 
+         str_detect(t, "2022"), 
+         Var == "BottomDetrended") %>% 
+  ggplot( aes(x = t, y = temp))+
+  geom_flame(aes(y2 = thresh))+ 
+  geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
+  geom_line(aes(x = t, y = thresh, color = "c"), size = 1)+
+  geom_line(aes(x = t, y = temp, color = "b"))+
+  scale_colour_manual(values = c("turquoise4", "sienna3", "black"),
+                      labels = c("Climatology","Temperature", "Threshold"))+
+  ylab("Temperature (C)")+
+  xlab(element_blank())+
+  scale_x_date(date_labels = "%b", breaks = "1 month")+
+  theme_bw()+
+  ggplot2::ggtitle("Detrended")+
+  theme(legend.title = element_blank(),
+        legend.position=c(0.3, 0.8))+
+  ecodata::theme_title()
 
-```{r bottom-heatwave-gom, eval= T, echo = F, fig.cap="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Georges Bank and Gulf of Maine ."}
-cumu <- ecodata::bottom_heatwave %>% 
-  dplyr::filter(Var == "cumulative intensity") %>% 
-  dplyr::mutate(Var = recode(Var, "cumulative intensity" = "Cumulative Intensity (degree C x days)"))
 
-maxin <- ecodata::bottom_heatwave %>% 
-  dplyr::filter(Var == "maximum intensity") %>% 
+```
+
+```{r bottom-heatwave-gb, fig.cap="Bottom heatwave cumulative intesity (left) and maximum intensity (right) in Georges Bank."}
+
+cumud <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "cumulative intensity-BottomDetrended") %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-BottomDetrended" = "Cumulative Intensity Detrended (degree C x days)"))
+
+maxind <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "maximum intensity-BottomDetrended") %>% 
   dplyr::group_by(Time, EPU, Var, Units) %>% 
   dplyr::summarise(Value = max(Value)) %>% 
   dplyr::ungroup() %>% 
-  dplyr::mutate(Var = recode(Var, "maximum intensity" = "Maximum Intensity (degree C)"))
+  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-BottomDetrended" = "Maximum Intensity Detrended (degree C)"))
 
-hw<- cumu %>%
-  rbind(maxin) %>% 
+hw<- cumud %>%
+  rbind(maxind) %>% 
   dplyr::group_by(Var, EPU) %>% 
   dplyr::mutate(hline = mean(Value))
-                    
-gom.hw<-hw %>% dplyr::filter(EPU == "GOM") %>% 
+
+mab.hw<- hw %>% dplyr::filter(EPU == "GB")
+mab.hw %>% 
   ggplot2::ggplot() +
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
   ggplot2::geom_line(aes(x = Time, y = Value)) +
   ggplot2::geom_point(aes(x = Time, y = Value)) +
-  ecodata::geom_gls(aes(x = Time, y = Value)) +
-  #ecodata::geom_lm(aes(x = Time, y = Value))+
+  ecodata::geom_gls(aes(x = Time, y = Value))+ 
+  #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Gulf of Maine - Bottom Temp Heatwave") +
+  ggplot2::ggtitle("Georges Bank Marine Bottom Temp Heatwave Intesity") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+
-  #ggplot2::geom_hline(aes(yintercept = 0),
-  #         size = hline.size,
-  #         alpha = hline.alpha,
-  #         linetype = hline.lty)+
-  ylab("Heatwave Intensity")+
-  ggplot2::facet_wrap(~Var, scales = "free") +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::facet_wrap(~Var, scales = "free")+
   ecodata::theme_ts()+
   ggplot2::theme(strip.text=element_text(hjust=0,
-                                face = "italic"), 
-        axis.title.y = element_text(angle = 90)) +
-  ecodata::theme_title()+
-  ecodata::theme_facet()
+                                face = "italic"))+
+  ecodata::theme_title()
 
+```
 
-gom.hw
+```{r bottom-heatwave-gom, fig.cap="Bottom heatwave cumulative intesity (left) and maximum intensity (right) in Gulf of Maine."}
+
+cumud <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "cumulative intensity-BottomDetrended") %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-BottomDetrended" = "Cumulative Intensity Detrended (degree C x days)"))
+
+maxind <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "maximum intensity-BottomDetrended") %>% 
+  dplyr::group_by(Time, EPU, Var, Units) %>% 
+  dplyr::summarise(Value = max(Value)) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-BottomDetrended" = "Maximum Intensity Detrended (degree C)"))
+
+hw<- cumud %>%
+  rbind(maxind) %>% 
+  dplyr::group_by(Var, EPU) %>% 
+  dplyr::mutate(hline = mean(Value))
+
+mab.hw<- hw %>% dplyr::filter(EPU == "GOM")
+mab.hw %>% 
+  ggplot2::ggplot() +
+  ggplot2::geom_line(aes(x = Time, y = Value)) +
+  ggplot2::geom_point(aes(x = Time, y = Value)) +
+  ecodata::geom_gls(aes(x = Time, y = Value))+ 
+  #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
+  ggplot2::ylab("") +
+  ggplot2::xlab(element_blank())+
+  ggplot2::ggtitle("Gulf of Maine Marine Bottom Temp Heatwave Intesity") +
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
+  ggplot2::geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::facet_wrap(~Var, scales = "free")+
+  ecodata::theme_ts()+
+  ggplot2::theme(strip.text=element_text(hjust=0,
+                                face = "italic"))+
+  ecodata::theme_title()
+
 ```
 
 ### Habitat Vulnerability
