@@ -115,7 +115,7 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
-  dplyr::filter(stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight")),
+  dplyr::filter(stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight| JOINT managed species - Landings weight")),
          !stringr::str_detect(Var, "Other"),
          Time >= 1986)
 
@@ -1118,7 +1118,7 @@ ggplot2::ggplot() +
   ggplot2::xlab(element_blank())+
   theme(legend.position="bottom", 
         legend.title = element_blank())+
-  scale_x_continuous(breaks=c(2009,2011,2013,2015, 2017, 2019))+
+  scale_x_continuous(breaks=c(2009,2011,2013,2015, 2017, 2019, 2021))+
   ecodata::theme_ts()+
   ecodata::theme_title()
 

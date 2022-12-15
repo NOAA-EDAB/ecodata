@@ -115,10 +115,9 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 ```{r comdat-commercial-landings, fig.cap="MAFMC managed species landings (red) and total commercial landings (black) by feeding guild. \\label{comm-landings}"}
 
 
-
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
-  dplyr::filter(stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight")),
+  dplyr::filter(stringr::str_detect(Var, paste0(council_abbr,"managed species - Landings weight|JOINT managed species - Landings weight")),
          !stringr::str_detect(Var, "Other"),
          Time >= 1986,
          EPU == epu_abbr)
@@ -136,8 +135,7 @@ landings <-
   rbind(managed_landings, total_landings) %>%
   dplyr::filter(Var != "Apex Predator Landings") %>% 
   dplyr::mutate(feeding.guild = stringr::str_extract(Var,paste(feeding.guilds, collapse = "|")),
-         grouping = factor(ifelse(stringr::str_detect(Var,council_abbr), "managed",
-                                  ifelse(stringr::str_detect(Var, "JOINT"), "joint","total"))),
+         grouping = factor(ifelse(stringr::str_detect(Var,council_abbr), "managed",                       ifelse(stringr::str_detect(Var, "JOINT"), "joint","total"))),
          Var = paste(word(feeding.guild), grouping)) %>% 
   dplyr::mutate(feeding.guild = factor(feeding.guild, levels = feeding.guilds))
 
@@ -250,7 +248,7 @@ managed_landings <- ecodata::comdat  %>%
   dplyr::filter(stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight")),
          !stringr::str_detect(Var, "Other"),
          Time >= 1986,
-         Time <=2019,
+         Time <=2021,
          EPU == epu_abbr)
 
 # HMS Landings
@@ -262,7 +260,7 @@ apex<-ecodata::hms_landings %>%
   mutate(Var = c("HMS Landings"), 
          Units = c("metric tons"), 
          EPU = c("MAB")) %>% 
-  dplyr::filter(Time <=2019)
+  dplyr::filter(Time <=2021)
 
 #Total landings
 total_landings <- ecodata::comdat  %>%
@@ -271,7 +269,7 @@ total_landings <- ecodata::comdat  %>%
          !stringr::str_detect(Var, "Apex"),
          stringr::str_detect(Var, "Landings"),
          Time >= 1986,
-         Time <=2019,
+         Time <=2021,
          EPU == epu_abbr) %>% 
   rbind(apex)
 
