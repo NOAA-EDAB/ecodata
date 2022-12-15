@@ -799,7 +799,7 @@ ecodata::ches_bay_wq %>%
 
 #### Chesepeake Bay Salinity Anomolies
 
-```{r ch-bay-sal, fig.cap = "Red = 2021, blue = Long term avergae 2010-2020. "}
+```{r ch-bay-sal, fig.cap = "Red = 2022, blue = Long term avergae 2010-2020. "}
 
 ecodata::ch_bay_sal %>%
   tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
@@ -807,7 +807,7 @@ ecodata::ch_bay_sal %>%
   ggplot2::geom_ribbon(aes(x = Time, ymin = minLTA, ymax = maxLTA), fill = "grey", alpha = 0.5)+
   
   ggplot2::geom_line(aes(x = Time, y = YearLTA, color= "Long Term Average 2010-2020")) +
-  ggplot2::geom_line(aes(x = Time, y = Year, color = "Daily 2021")) +
+  ggplot2::geom_line(aes(x = Time, y = Year, color = "Daily 2022")) +
   ggplot2::ylab("Salinity") +
   ggplot2::ggtitle("Chesapeake Bay Salinity") +
   ggplot2::theme(legend.position = "bottom", 
@@ -818,7 +818,7 @@ ecodata::ch_bay_sal %>%
 
 #### Chesapeake Bay Temperature Anomolies
 
-```{r ch-bay-temp, fig.cap = "Red = 2021, blue = Long term avergae 2010-2020. "}
+```{r ch-bay-temp, fig.cap = "Red = 2022, blue = Long term avergae 2010-2020. "}
 
 ecodata::ch_bay_temp %>%
   tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
@@ -830,7 +830,7 @@ ecodata::ch_bay_temp %>%
   ggplot2::geom_ribbon(aes(x = Time, ymin = minLTAC, ymax = maxLTAC), fill = "grey", alpha = 0.5)+
   
   ggplot2::geom_line(aes(x = Time, y = YearLTAC, color= "Long Term Average 2010-2020")) +
-  ggplot2::geom_line(aes(x = Time, y = YearC, color = "Daily 2021")) +
+  ggplot2::geom_line(aes(x = Time, y = YearC, color = "Daily 2022")) +
   ggplot2::ylab("Temperature (C)") +
   ggplot2::ggtitle("Chesapeake Bay Temperature") +
   ggplot2::theme(legend.position = "bottom", 
@@ -876,7 +876,7 @@ sst_map <-
   ggplot2::geom_tile(data = sst, aes(x = Latitude, y = Longitude,fill = Value)) +
   ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
-  ggplot2::ggtitle("Chesapeake Bay SST anomaly (2021)") +
+  ggplot2::ggtitle("Chesapeake Bay SST anomaly (2022)") +
   ggplot2::xlab(element_blank()) +
   ggplot2::ylab(element_blank()) +
   scale_y_continuous(breaks = seq(37, 40, by = 1))+
@@ -1225,9 +1225,9 @@ cal %>%
 
 ```
 
-### Storminess
+###  Storminess
 
-```{r storminess}
+```{r storminess, fig.cap="Wind Counts = Gale wind >34kt, Wave Hight Counts = >5m)"}
 ecodata::storminess %>% 
   dplyr::filter(EPU == "MAB") %>%
   dplyr::mutate(Time = as.numeric(Year), 
@@ -1241,7 +1241,10 @@ ecodata::storminess %>%
   ggplot2::geom_point()+
   ggplot2::geom_line()+
   ggplot2::facet_wrap(~Var)+
-  ggplot2::geom_hline(aes(yintercept = hline))+
+  ggplot2::geom_hline(aes(yintercept = hline),
+                      size = hline.size, 
+                      alpha = hline.alpha,
+                      linetype = hline.lty)+
   ecodata::geom_gls()+
   ggplot2::ylab("Number of Events") +
   ggplot2::xlab(element_blank())+
@@ -1705,9 +1708,8 @@ mab.hw %>%
 ### Habitat Diversity
 
 ```{r habitat-richness}
-
-ecodata::habitat_diversity %>% 
-  dplyr::filter(!Var == "Shannon",
+MAB<- ecodata::habitat_diversity %>% 
+  dplyr::filter(!Var == "Shannon", 
                 EPU == "MAB") %>% 
   tidyr::separate(Var, into = c("Var", "Richness")) %>% 
   tidyr::pivot_wider(values_from = "Value", names_from = "Var") %>% 
@@ -1716,22 +1718,35 @@ ecodata::habitat_diversity %>%
                 lower = as.numeric(lower),
                 upper = as.numeric(upper),
                 Time = as.numeric(Time),
+                hline = mean(mean))
+
+ecodata::habitat_diversity %>% 
+  dplyr::filter(!Var == "Shannon") %>% 
+  tidyr::separate(Var, into = c("Var", "Richness")) %>% 
+  tidyr::pivot_wider(values_from = "Value", names_from = "Var") %>% 
+  dplyr::group_by(EPU) %>% 
+  dplyr::mutate(mean = as.numeric(mean),
+                lower = as.numeric(lower),
+                upper = as.numeric(upper),
+                Time = as.numeric(Time),
                 hline = mean(mean)) %>% 
-  ggplot2::ggplot(aes(x = Time, y = mean))+
+  ggplot2::ggplot(aes(x = Time, y = mean, fill = EPU, color = EPU))+
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_ribbon(aes(x = Time, ymax = upper, ymin = lower), alpha = 0.3)+
   ggplot2::geom_point()+
   ggplot2::geom_line() +
+  ggplot2::geom_point(data = MAB, aes(x = Time, y = mean), size = 2)+
+  ggplot2::geom_line(data = MAB, aes(x = Time, y = mean), size = 2) +
   ggplot2::ylab("") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Mid-Atlantic Habitat Richness") +
+  ggplot2::ggtitle("Mid-Atlantic Species Richness from Habitat Survey") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
-  ggplot2::geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
+  # ggplot2::geom_hline(aes(yintercept = hline),
+  #          size = hline.size,
+  #          alpha = hline.alpha,
+  #          linetype = hline.lty)+
   ecodata::theme_ts()+
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"))+
@@ -1742,27 +1757,36 @@ ecodata::habitat_diversity %>%
 
 ```{r habitat-shannon}
 
-ecodata::habitat_diversity %>% 
+MAB<- ecodata::habitat_diversity %>% 
   dplyr::filter(Var == "Shannon",
                 EPU == "MAB") %>% 
   dplyr::group_by(EPU) %>% 
   dplyr::mutate(mean = as.numeric(Value),
                 Time = as.numeric(Time),
+                hline = mean(Value))
+
+ecodata::habitat_diversity %>% 
+  dplyr::filter(Var == "Shannon") %>% 
+  dplyr::group_by(EPU) %>% 
+  dplyr::mutate(mean = as.numeric(Value),
+                Time = as.numeric(Time),
                 hline = mean(Value)) %>% 
-  ggplot2::ggplot(aes(x = Time, y = Value))+
+  ggplot2::ggplot(aes(x = Time, y = Value, color = EPU))+
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_point()+
   ggplot2::geom_line() +
+  ggplot2::geom_point(data = MAB, aes(x = Time, y = mean), size = 2)+
+  ggplot2::geom_line(data = MAB, aes(x = Time, y = mean), size = 2) +
   ggplot2::ylab("") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Mid-Atlantic Habitat Shannon Diversity") +
+  ggplot2::ggtitle("Mid-Atlantic Species Shannon Diversity from Habitat Assessment") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
-  ggplot2::geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
+  # ggplot2::geom_hline(aes(yintercept = hline),
+  #          size = hline.size,
+  #          alpha = hline.alpha,
+  #          linetype = hline.lty)+
   ecodata::theme_ts()+
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"))+

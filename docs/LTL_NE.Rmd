@@ -1590,7 +1590,7 @@ gom_zoo_div
 
 ### Storminess
 
-```{r storminess}
+```{r storminess, fig.cap="Wind Counts = Gale wind >34kt, Wave Hight Counts = >5m"}
 storm<- ecodata::storminess %>% 
   dplyr::filter(EPU %in% c("GB", "GOM")) %>%
   dplyr::mutate(Time = as.numeric(Year), 
@@ -1598,10 +1598,10 @@ storm<- ecodata::storminess %>%
   group_by(Var) %>% 
   dplyr::mutate(hline = mean(Value))
 
-storm$Var <- factor(storm$Var, 
-                       levels = c("Georges Bank", 
-                                  "Western Gulf of Maine",
-                                  "Eastern Gulf of Maine"))
+#storm$Var <- factor(storm$Var, 
+#                       levels = c("Georges Bank", 
+#                                  "Western Gulf of Maine",
+#                                  "Eastern Gulf of Maine"))
 storm %>% 
   ggplot2::ggplot(aes(x = Time, y = Value))+
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -1609,8 +1609,11 @@ storm %>%
       ymin = -Inf, ymax = Inf)+
   ggplot2::geom_point()+
   ggplot2::geom_line()+
-  ggplot2::facet_wrap(~Var)+
-  ggplot2::geom_hline(aes(yintercept = hline))+
+  ggplot2::facet_wrap(~Var, ncol = 2)+
+  ggplot2::geom_hline(aes(yintercept = hline),
+           size = hline.size,
+           alpha = hline.alpha,
+           linetype = hline.lty)+
   ecodata::geom_gls()+
   ggplot2::ylab("Number of Events") +
   ggplot2::xlab(element_blank())+
@@ -1978,8 +1981,7 @@ mab.hw %>%
 ### Habitat Diversity
 
 ```{r habitat-richness}
-
-ecodata::habitat_diversity %>% 
+NE<- ecodata::habitat_diversity %>% 
   dplyr::filter(!Var == "Shannon",
                 EPU %in% c("GB", "GOM")) %>% 
   tidyr::separate(Var, into = c("Var", "Richness")) %>% 
@@ -1989,23 +1991,32 @@ ecodata::habitat_diversity %>%
                 lower = as.numeric(lower),
                 upper = as.numeric(upper),
                 Time = as.numeric(Time),
+                hline = mean(mean))
+
+ecodata::habitat_diversity %>% 
+  dplyr::filter(!Var == "Shannon") %>% 
+  tidyr::separate(Var, into = c("Var", "Richness")) %>% 
+  tidyr::pivot_wider(values_from = "Value", names_from = "Var") %>% 
+  dplyr::group_by(EPU) %>% 
+  dplyr::mutate(mean = as.numeric(mean),
+                lower = as.numeric(lower),
+                upper = as.numeric(upper),
+                Time = as.numeric(Time),
                 hline = mean(mean)) %>% 
-  ggplot2::ggplot(aes(x = Time, y = mean))+
+  ggplot2::ggplot(aes(x = Time, y = mean, fill = EPU))+
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_ribbon(aes(x = Time, ymax = upper, ymin = lower), alpha = 0.3)+
   ggplot2::geom_point()+
   ggplot2::geom_line() +
+  ggplot2::geom_point(data = NE, aes(x=Time, y=mean), size = 2)+
+  ggplot2::geom_line(data = NE, aes(x=Time, y=mean), size = 2) +
   ggplot2::ylab("") +
   ggplot2::xlab(element_blank())+
-  ggplot2::facet_wrap(~EPU)+
-  ggplot2::ggtitle("New England Habitat Richness") +
+  #ggplot2::facet_wrap(~EPU)+
+  ggplot2::ggtitle("New England Species Richness from Habitat Assessment") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
-  ggplot2::geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
   ecodata::theme_ts()+
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"))+
@@ -2016,30 +2027,38 @@ ecodata::habitat_diversity %>%
 ```
 
 ```{r habitat-shannon, message=FALSE, echo=FALSE, warning=FALSE}
-
-ecodata::habitat_diversity %>% 
+NE<- ecodata::habitat_diversity %>% 
   dplyr::filter(Var == "Shannon",
                 EPU %in% c("GB", "GOM")) %>% 
   dplyr::group_by(EPU) %>% 
   dplyr::mutate(mean = as.numeric(Value),
                 Time = as.numeric(Time),
+                hline = mean(Value)) 
+
+ecodata::habitat_diversity %>% 
+  dplyr::filter(Var == "Shannon") %>% 
+  dplyr::group_by(EPU) %>% 
+  dplyr::mutate(mean = as.numeric(Value),
+                Time = as.numeric(Time),
                 hline = mean(Value)) %>% 
-  ggplot2::ggplot(aes(x = Time, y = Value))+
+  ggplot2::ggplot(aes(x = Time, y = Value, color = EPU))+
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_point()+
   ggplot2::geom_line() +
+  ggplot2::geom_point(data = NE, aes(x = Time, y = mean), size = 2)+
+  ggplot2::geom_line(data = NE, aes(x = Time, y = mean), size = 2) +
   ggplot2::ylab("") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("New England Habitat Shannon Diversity") +
+  ggplot2::ggtitle("New England Species Shannon Diversity from Habitat Assessment") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
-  ggplot2::geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
+  # ggplot2::geom_hline(aes(yintercept = hline),
+  #          size = hline.size,
+  #          alpha = hline.alpha,
+  #          linetype = hline.lty)+
   ecodata::theme_ts()+
-  ggplot2::facet_wrap(~EPU)
+  #ggplot2::facet_wrap(~EPU)
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"))+
   ecodata::theme_title()+
