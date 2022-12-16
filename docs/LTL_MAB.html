@@ -255,10 +255,6 @@ MAB-seasonal sea surface temperature time series overlaid onto 2022 seasonal spa
 </p>
 </div>
 </div>
-<div id="sst-new-ltm" class="section level4">
-<h4>SST new LTM</h4>
-<p><img src="LTL_MAB_files/figure-html/sst-ltm-both-1.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
 <div id="sst-transition-dates" class="section level4">
 <h4>SST transition dates</h4>
 <div class="figure" style="text-align: center">
@@ -362,120 +358,24 @@ Red = 2022, blue = Long term avergae 2010-2020.
 <h3 class="tabset tabset-fade">Zooplankton</h3>
 <div id="euphausiids-cnidarians" class="section level4">
 <h4>Euphausiids + Cnidarians</h4>
-<p><span style="color: red;">NO NEW DATA</span></p>
 <div class="figure" style="text-align: center">
-<img src="LTL_MAB_files/figure-html/zoo-strat-abun-1.png" alt="Stratified abundance of cnidarians and euphausiids in Mid-Atlantic Bight." width="672" />
+<img src="LTL_MAB_files/figure-html/zoo-euph-cnid-1.png" alt="Abundance Annomalies of cnidarians and euphausiids in Mid-Atlantic Bight." width="672" />
 <p class="caption">
-Stratified abundance of cnidarians and euphausiids in Mid-Atlantic Bight.
+Abundance Annomalies of cnidarians and euphausiids in Mid-Atlantic Bight.
 </p>
 </div>
-<!--#### Small and Large Calanoid stratified abundance -->
-<!-- ```{r MAB-sm-lg, fig.cap= "Large (red) and small (black) copepod zooplankton abundance in the Mid-Atlantic Bight."} -->
-<!-- zoo_abund <- ecodata::zoo_strat_abun %>%  -->
-<!--   filter(EPU == epu_abbr, -->
-<!--          str_detect(Var, "Small|Large")) %>%  -->
-<!--   mutate(Value = Value/10^8) %>%  -->
-<!--   group_by(Var, EPU) %>%  -->
-<!--   mutate(hline = mean(Value))  -->
-<!-- zoo_abund %>%  -->
-<!--   ggplot() + -->
-<!--   annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
-<!--       xmin = x.shade.min , xmax = x.shade.max, -->
-<!--       ymin = -Inf, ymax = Inf) + -->
-<!--   geom_line(aes(x = Time, y = Value, color = Var)) + -->
-<!--   geom_point(aes(x = Time, y = Value, color = Var)) + -->
-<!--   geom_gls(aes(x = Time, y = Value, group = Var)) + -->
-<!--   scale_color_manual(values = c("#ca0020", "black"))+ -->
-<!--   ylab(expression("Stratified Abundance" (10^"8"))) + -->
-<!--   xlab(element_blank())+ -->
-<!--   ggtitle("Small and large copepod abundance") + -->
-<!--   scale_x_continuous(expand = c(0.01, 0.01))+ -->
-<!--   geom_hline(aes(yintercept = hline, -->
-<!--            color = Var),  -->
-<!--            size = hline.size, -->
-<!--            alpha = hline.alpha, -->
-<!--            linetype = hline.lty)+ -->
-<!--   theme_facet() + -->
-<!--   theme(strip.text=element_text(hjust=0, -->
-<!--                                 face = "italic"), -->
-<!--         legend.position = "none") -->
-<!-- ``` -->
 </div>
-<div id="abundance-anomaly" class="section level4">
-<h4>Abundance anomaly</h4>
-<p><span style="color: red;">NO NEW DATA</span></p>
+<div id="small-to-large-anomaly" class="section level4">
+<h4>Small to Large anomaly</h4>
 <div class="figure" style="text-align: center">
 <img src="LTL_MAB_files/figure-html/zoo-abund-1.png" alt="Large (red) and small-bodied (blue) copepod abundance in the Mid-Atlantic Bight." width="672" />
 <p class="caption">
 Large (red) and small-bodied (blue) copepod abundance in the Mid-Atlantic Bight.
 </p>
 </div>
-<p><span style="color: red;">NO NEW DATA</span></p>
-<div class="figure" style="text-align: center">
-<img src="LTL_MAB_files/figure-html/zoo-sli-anom-1.png" alt="Large (red) and small-bodied (blue) copepod abundance in the Mid-Atlantic Bight." width="672" />
-<p class="caption">
-Large (red) and small-bodied (blue) copepod abundance in the Mid-Atlantic Bight.
-</p>
-</div>
-<!-- #### Small-large index -->
-<!-- ```{r MAB-sli} -->
-<!-- sli <- ecodata::zoo_sli_anom %>%  -->
-<!--   filter(EPU == epu_abbr, -->
-<!--          str_detect(Var, "Sm-Lg copepod anom")) %>%  -->
-<!--   mutate(hline = 0)  -->
-<!-- pp_anom <- ecodata::chl_pp %>%  -->
-<!--   filter(str_detect(Var, "ANNUAL_PPD_RATIO_ANOMALY"), -->
-<!--          EPU == "MAB") %>%  -->
-<!--   mutate(hline = 1, -->
-<!--          Time = as.numeric(as.character(Time)), -->
-<!--          Var = "ANNUAL_PPD_RATIO_ANOMALY") -->
-<!-- sli_plt <- sli %>%  -->
-<!--   ggplot(aes(x = Time, y = Value, group = Var)) + -->
-<!--          annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
-<!--       xmin = x.shade.min , xmax = x.shade.max, -->
-<!--       ymin = -Inf, ymax = Inf) + -->
-<!--   geom_line() + -->
-<!--   geom_point() + -->
-<!--   guides(color = F) + -->
-<!--   xlab("")+ -->
-<!--   ylab("Small-large abundance") + -->
-<!--   ggtitle("Small-large copepod abundance") + -->
-<!--     scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+ -->
-<!--       geom_hline(aes(yintercept = hline, -->
-<!--                      group = Var), -->
-<!--            size = hline.size, -->
-<!--            alpha = hline.alpha, -->
-<!--            linetype = hline.lty)+ -->
-<!--   theme_ts() + -->
-<!--   theme(strip.text=element_text(hjust=0, -->
-<!--                                 face = "italic")) -->
-<!-- pp_anom_plt <- pp_anom %>%  -->
-<!--     ggplot(aes(x = Time, y = Value, group = Var)) + -->
-<!--          annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
-<!--       xmin = x.shade.min , xmax = x.shade.max, -->
-<!--       ymin = -Inf, ymax = Inf) + -->
-<!--   geom_line() + -->
-<!--   geom_point() + -->
-<!--   guides(color = F) + -->
-<!--   ylab("Anomaly ratio") + -->
-<!--   xlab(element_blank())+ -->
-<!--   ggtitle("Primary production anomaly ratio") + -->
-<!--     scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+ -->
-<!--     scale_y_continuous(limits = c(0.8,1.2)) + -->
-<!--       geom_hline(aes(yintercept = hline, -->
-<!--                      group = Var), -->
-<!--            size = hline.size, -->
-<!--            alpha = hline.alpha, -->
-<!--            linetype = hline.lty)+ -->
-<!--   theme_ts() + -->
-<!--   theme(strip.text=element_text(hjust=0, -->
-<!--                                 face = "italic")) -->
-<!-- sli_plt + pp_anom_plt + plot_layout(ncol = 1) & theme(plot.margin = margin(t = 0)) -->
-<!-- ``` -->
 </div>
 <div id="zooplankton-diversity" class="section level4">
 <h4>Zooplankton Diversity</h4>
-<p><span style="color: red;">NO NEW DATA</span></p>
 <div class="figure" style="text-align: center">
 <img src="LTL_MAB_files/figure-html/zoo-diversity-1.png" alt="Zooplankton diversity in the Mid-Atlantic Bight." width="768" />
 <p class="caption">

@@ -4,11 +4,11 @@ library(readxl)
 library(stringr)
 
 raw.dir <- here::here("data-raw")
-zoo_diversity_xlsx <- "NEFSCZooplankton_v3_7_v2019.xlsx"
+zoo_diversity_xlsx <- "NEFSCZooplankton_v3_8_species_diversity.xlsx"
 ### Zooplankton Diversity
 get_zoo_diversity <- function(save_clean = F){
 
-  zoo_diversity <- read_excel(file.path(raw.dir,zoo_diversity_xlsx), sheet = "Diversity") %>%
+  zoo_diversity <- read_excel(file.path(raw.dir,zoo_diversity_xlsx)) %>%
     dplyr::select(-Source) %>%
     dplyr::rename(Time = Year,
                   EPU = Region) %>%

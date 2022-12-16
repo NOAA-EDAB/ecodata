@@ -237,33 +237,6 @@ ggpubr::ggarrange(winter, spring, summer, fall,
 ```
 
 
-#### SST new LTM
-
-```{r sst-ltm-both }
-new<- read.csv(here::here("data-raw/SST_ltm9220.csv")) %>% 
-  dplyr::filter(EPU == "MAB") %>% 
-  dplyr::mutate(ltm = c("91-20")) %>% 
-  dplyr::select(-X)
-ecodata::seasonal_oisst_anom %>%
-  dplyr::mutate(ltm = c("82-10")) %>% 
-  dplyr::filter(EPU  == "MAB") %>%
-  rbind(new) %>% 
-  tidyr::separate(Var, into = c("Var", "OI","SST", "anom")) %>% 
-  dplyr::mutate(Var = recode(Var, "winter" = "Winter"), 
-         Var = recode(Var, "spring" = "Spring"),
-         Var = recode(Var, "summer" = "Summer"),
-         Var = recode(Var, "fall" = "Fall")) %>% 
-  ggplot(aes(x= Time, y = Value, color = ltm))+
-  geom_point()+
-  geom_line()+
-  ecodata::geom_gls()+
-  facet_wrap(.~Var, ncol = 2)+
-  ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_text(hjust=0),
-                 plot.title = element_text(size = 12))+
-  ecodata::theme_title()
-```
-
 
 #### SST transition dates
 
@@ -955,15 +928,14 @@ ecodata::hudson_river_flow %>%
 
 #### Euphausiids + Cnidarians
 
-<span style="color: red;">NO NEW DATA</span>
-
-```{r zoo-strat-abun, fig.cap="Stratified abundance of cnidarians and euphausiids in Mid-Atlantic Bight."}
-zoo_abund <- ecodata::zoo_strat_abun %>% 
-  dplyr::filter(EPU == epu_abbr,
-         !stringr::str_detect(Var, "Small|Large")) %>% 
-  dplyr::mutate(Value = log10(Value+1)) %>% 
+```{r zoo-euph-cnid, fig.cap="Abundance Annomalies of cnidarians and euphausiids in Mid-Atlantic Bight."}
+zoo_abund <- ecodata::zoo_abundance_anom %>% 
+  dplyr::filter(EPU == "MAB",
+         stringr::str_detect(Var, "Euphausiacea|Cnidaria")) %>% 
+  #dplyr::mutate(Value = log10(Value+1)) %>% 
   dplyr::group_by(Var, EPU) %>% 
-  dplyr::mutate(hline = mean(Value)) 
+  dplyr::mutate(Value = as.numeric(Value), 
+                hline = mean(Value)) 
 
 zoo_abund %>% 
   ggplot2::ggplot(aes(x = Time, y = Value)) +
@@ -974,12 +946,12 @@ zoo_abund %>%
   #ecodata::geom_lm(aes(x = Time, y = Value))+
   ggplot2::geom_line() +
   ggplot2::geom_point() +
-  ggplot2::ylab(expression("Log Stratified Abundance")) +
+  ggplot2::ylab(expression("Anomaly")) +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Zooplankton abundance") +
+  ggplot2::ggtitle("Zooplankton abundance anomaly") +
   ggplot2::facet_wrap(Var~., ncol = 3) +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
-  ggplot2::geom_hline(aes(yintercept = hline),
+  ggplot2::geom_hline(aes(yintercept = 0),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+
@@ -992,52 +964,17 @@ zoo_abund %>%
 ```
 
 
-<!--#### Small and Large Calanoid stratified abundance -->
-
-<!-- ```{r MAB-sm-lg, fig.cap= "Large (red) and small (black) copepod zooplankton abundance in the Mid-Atlantic Bight."} -->
-<!-- zoo_abund <- ecodata::zoo_strat_abun %>%  -->
-<!--   filter(EPU == epu_abbr, -->
-<!--          str_detect(Var, "Small|Large")) %>%  -->
-<!--   mutate(Value = Value/10^8) %>%  -->
-<!--   group_by(Var, EPU) %>%  -->
-<!--   mutate(hline = mean(Value))  -->
-
-<!-- zoo_abund %>%  -->
-<!--   ggplot() + -->
-<!--   annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
-<!--       xmin = x.shade.min , xmax = x.shade.max, -->
-<!--       ymin = -Inf, ymax = Inf) + -->
-<!--   geom_line(aes(x = Time, y = Value, color = Var)) + -->
-<!--   geom_point(aes(x = Time, y = Value, color = Var)) + -->
-<!--   geom_gls(aes(x = Time, y = Value, group = Var)) + -->
-<!--   scale_color_manual(values = c("#ca0020", "black"))+ -->
-<!--   ylab(expression("Stratified Abundance" (10^"8"))) + -->
-<!--   xlab(element_blank())+ -->
-<!--   ggtitle("Small and large copepod abundance") + -->
-<!--   scale_x_continuous(expand = c(0.01, 0.01))+ -->
-<!--   geom_hline(aes(yintercept = hline, -->
-<!--            color = Var),  -->
-<!--            size = hline.size, -->
-<!--            alpha = hline.alpha, -->
-<!--            linetype = hline.lty)+ -->
-<!--   theme_facet() + -->
-<!--   theme(strip.text=element_text(hjust=0, -->
-<!--                                 face = "italic"), -->
-<!--         legend.position = "none") -->
 
 
-<!-- ``` -->
-
-
-#### Abundance anomaly
-
-<span style="color: red;">NO NEW DATA</span>
+#### Small to Large anomaly
 
 ```{r zoo-abund,  fig.cap= "Large (red) and small-bodied (blue) copepod abundance in the Mid-Atlantic Bight." }
-ecodata::zoo_sli_anom %>%
-   dplyr::filter(EPU == epu_abbr) %>%
+ecodata::zoo_abundance_anom %>%
+   dplyr::filter(EPU == "MAB", 
+                 stringr::str_detect(Var, "LgCopepods|SmCopepods")) %>%
    dplyr::group_by(Time) %>% 
-   dplyr::mutate(hline = 0) %>% 
+   dplyr::mutate(Value = as.numeric(Value), 
+                 hline = 0) %>% 
    ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
    ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
        xmin = x.shade.min , xmax = x.shade.max,
@@ -1063,103 +1000,12 @@ ecodata::zoo_sli_anom %>%
 
 ```
 
-<span style="color: red;">NO NEW DATA</span>
-
-```{r zoo-sli-anom,  fig.cap= "Large (red) and small-bodied (blue) copepod abundance in the Mid-Atlantic Bight." }
-ecodata::zoo_sli_anom %>%
-   dplyr::filter(EPU == epu_abbr) %>%
-   dplyr::group_by(Time) %>% 
-   dplyr::mutate(hline = 0) %>% 
-   ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
-   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-       xmin = x.shade.min , xmax = x.shade.max,
-       ymin = -Inf, ymax = Inf) +
-   #geom_gls() +
-   ggplot2::geom_line() +
-   ggplot2::geom_point() +
-   #ecodata::geom_lm()+
-   ggplot2::ylab("Abundance anomaly") +
-   ggplot2::xlab(element_blank())+
-   ggplot2::ggtitle("Small and large-bodied copepod abundance anomaly") +
-   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
-   ggplot2::geom_hline(aes(yintercept = hline),
-            size = hline.size,
-            alpha = hline.alpha,
-            linetype = hline.lty)+
-   ecodata::theme_ts()+
-   ggplot2::theme(plot.title = element_text(size = 7),
-                  strip.text=element_text(hjust=0,
-                                 face = "italic"), 
-         legend.title = element_blank())+
-  ecodata::theme_title()
 
 
-```
-<!-- #### Small-large index -->
 
-<!-- ```{r MAB-sli} -->
-<!-- sli <- ecodata::zoo_sli_anom %>%  -->
-<!--   filter(EPU == epu_abbr, -->
-<!--          str_detect(Var, "Sm-Lg copepod anom")) %>%  -->
-<!--   mutate(hline = 0)  -->
-
-<!-- pp_anom <- ecodata::chl_pp %>%  -->
-<!--   filter(str_detect(Var, "ANNUAL_PPD_RATIO_ANOMALY"), -->
-<!--          EPU == "MAB") %>%  -->
-<!--   mutate(hline = 1, -->
-<!--          Time = as.numeric(as.character(Time)), -->
-<!--          Var = "ANNUAL_PPD_RATIO_ANOMALY") -->
-
-<!-- sli_plt <- sli %>%  -->
-<!--   ggplot(aes(x = Time, y = Value, group = Var)) + -->
-<!--          annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
-<!--       xmin = x.shade.min , xmax = x.shade.max, -->
-<!--       ymin = -Inf, ymax = Inf) + -->
-<!--   geom_line() + -->
-<!--   geom_point() + -->
-<!--   guides(color = F) + -->
-<!--   xlab("")+ -->
-<!--   ylab("Small-large abundance") + -->
-<!--   ggtitle("Small-large copepod abundance") + -->
-<!--     scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+ -->
-<!--       geom_hline(aes(yintercept = hline, -->
-<!--                      group = Var), -->
-<!--            size = hline.size, -->
-<!--            alpha = hline.alpha, -->
-<!--            linetype = hline.lty)+ -->
-<!--   theme_ts() + -->
-<!--   theme(strip.text=element_text(hjust=0, -->
-<!--                                 face = "italic")) -->
-
-<!-- pp_anom_plt <- pp_anom %>%  -->
-<!--     ggplot(aes(x = Time, y = Value, group = Var)) + -->
-<!--          annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
-<!--       xmin = x.shade.min , xmax = x.shade.max, -->
-<!--       ymin = -Inf, ymax = Inf) + -->
-<!--   geom_line() + -->
-<!--   geom_point() + -->
-<!--   guides(color = F) + -->
-<!--   ylab("Anomaly ratio") + -->
-<!--   xlab(element_blank())+ -->
-<!--   ggtitle("Primary production anomaly ratio") + -->
-<!--     scale_x_continuous(expand = c(0.01, 0.01), limits = c(1998, 2018))+ -->
-<!--     scale_y_continuous(limits = c(0.8,1.2)) + -->
-<!--       geom_hline(aes(yintercept = hline, -->
-<!--                      group = Var), -->
-<!--            size = hline.size, -->
-<!--            alpha = hline.alpha, -->
-<!--            linetype = hline.lty)+ -->
-<!--   theme_ts() + -->
-<!--   theme(strip.text=element_text(hjust=0, -->
-<!--                                 face = "italic")) -->
-
-
-<!-- sli_plt + pp_anom_plt + plot_layout(ncol = 1) & theme(plot.margin = margin(t = 0)) -->
-<!-- ``` -->
 
 #### Zooplankton Diversity
 
-<span style="color: red;">NO NEW DATA</span>
 
 ```{r zoo-diversity, fig.width = 8, fig.asp = .35, fig.cap="Zooplankton diversity in the Mid-Atlantic Bight."}
 zoo_div <- ecodata::zoo_diversity %>% 
@@ -1186,11 +1032,6 @@ zoo_div %>%
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_blank())+
   ecodata::theme_title()
-  
-
-
-
-
 ```
 
 #### Calanus Stage

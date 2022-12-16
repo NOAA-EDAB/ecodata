@@ -188,32 +188,6 @@ ne_anom_plt <- ggplot2::ggplot(data = ne_anom,
 ne_anom_plt
 ```
 
-#### SST new LTM
-
-```{r sst-ltm-both }
-new<- read.csv(here::here("data-raw/SST_ltm9220.csv")) %>% 
-  dplyr::filter(EPU == c("GB", "GOM")) %>% 
-  dplyr::mutate(ltm = c("91-20")) %>% 
-  dplyr::select(-X)
-ecodata::seasonal_oisst_anom %>%
-  dplyr::mutate(ltm = c("82-10")) %>% 
-  dplyr::filter(EPU  == c("GB", "GOM")) %>%
-  rbind(new) %>% 
-  tidyr::separate(Var, into = c("Var", "OI","SST", "anom")) %>% 
-  dplyr::mutate(Var = recode(Var, "winter" = "Winter"), 
-         Var = recode(Var, "spring" = "Spring"),
-         Var = recode(Var, "summer" = "Summer"),
-         Var = recode(Var, "fall" = "Fall")) %>% 
-  ggplot(aes(x= Time, y = Value, color = ltm))+
-  geom_point()+
-  geom_line()+
-  ecodata::geom_gls()+
-  facet_grid(EPU~Var)+
-  ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_text(hjust=0),
-                 plot.title = element_text(size = 12))+
-  ecodata::theme_title()
-```
 
 
 #### SST transition dates
@@ -1128,16 +1102,14 @@ micro_chlor <- ecodata::phyto_size %>%
 
 #### Euphausiids + Cnidarians
 
-
-<span style="color: red;">NO NEW DATA</span>
-
-```{r zoo-strat-abun, fig.width = 8, fig.cap="Stratified abundance of cnidarians and euphausiids in Mid-Atlantic Bight."}
-zoo_abund <- ecodata::zoo_strat_abun %>% 
-  dplyr::mutate(Value = log10(Value+1)) %>% 
+```{r zoo-euph-cnid, fig.width = 8, fig.cap="Abundance Anomalies of cnidarians and euphausiids in Mid-Atlantic Bight."}
+zoo_abund <- ecodata::zoo_abundance_anom %>% 
+  #dplyr::mutate(Value = log10(Value+1)) %>% 
   dplyr::filter(EPU %in% c("GOM", "GB"),
-         !stringr::str_detect(Var, "Small|Large")) %>% 
+         stringr::str_detect(Var, "Euphausiacea|Cnidaria")) %>% 
   dplyr::group_by(Var, EPU) %>% 
-  dplyr::mutate(hline = mean(Value)) 
+  dplyr::mutate(Value = as.numeric(Value), 
+                hline = mean(Value)) 
 
 gom_zoo<-zoo_abund %>% 
   dplyr::filter(EPU == "GOM") %>% 
@@ -1149,9 +1121,9 @@ gom_zoo<-zoo_abund %>%
   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value)) +
   ggplot2::geom_point(aes(x = Time, y = Value)) +
-  ggplot2::ylab(expression("Log Stratified Abundance")) +
+  ggplot2::ylab(expression("Anomaly")) +
   ggplot2::xlab(element_blank())+
-  ggtitle("GOM Zooplankton abundance") +
+  ggtitle("GOM Zooplankton Abundance Anomaly") +
   ggplot2::facet_wrap(Var~., ncol = 3) +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
   ggplot2::geom_hline(aes(yintercept = hline),
@@ -1165,21 +1137,19 @@ gom_zoo<-zoo_abund %>%
   
 gb_zoo<-zoo_abund %>% 
   dplyr::filter(EPU == "GB") %>% 
-  ggplot2::ggplot(aes(x = Time, y = Value)) +
+  ggplot2::ggplot() +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
-  ecodata::geom_gls() +
+  ecodata::geom_gls(aes(x = Time, y = Value, group = Var)) +
   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
-  ggplot2::geom_line() +
-  ggplot2::geom_point() +
-  ggplot2::ylab(expression("Log Stratified Abundance")) +
+  ggplot2::geom_line(aes(x = Time, y = Value)) +
+  ggplot2::geom_point(aes(x = Time, y = Value)) +
+  ggplot2::ylab(expression("Anomaly")) +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GB Zooplankton abundance") +
+  ggtitle("GB Zooplankton Abundance Anomaly") +
   ggplot2::facet_wrap(Var~., ncol = 3) +
-  ggplot2::ylim(5,9)+
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
- # ggplot2::scale_y_continuous(breaks = c(4,6,8))+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
@@ -1188,20 +1158,22 @@ gb_zoo<-zoo_abund %>%
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"))+
   ecodata::theme_title()
-  
+ 
 cowplot::plot_grid(gb_zoo, gom_zoo, nrow = 2)
+
 ```
 
 
-#### Small and Large Calanoid stratified abundance
+#### Small and Large Calanoid abundance anomalies
 
-<span style="color: red;">NO NEW DATA</span>
 
 ```{r ne-sm-lg, fig.width = 8, fig.asp = .35, fig.cap= "Large (red) and small (black) calanoid zooplankton abundance in New England."}
 
-ecodata::zoo_sli_anom %>%
-  filter(EPU %in% c("GOM","GB")) %>%
-  mutate(hline = 0) %>% 
+ecodata::zoo_abundance_anom %>%
+  dplyr::filter(EPU %in% c("GOM","GB"), 
+         stringr::str_detect(Var, "LgCopepods|SmCopepods")) %>%
+  dplyr::mutate(Value = as.numeric(Value), 
+         hline = 0) %>% 
   ggplot(aes(x = Time, y = Value, color = Var)) +
          annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
@@ -1228,38 +1200,7 @@ ecodata::zoo_sli_anom %>%
 ```
 
 
-#### Abundance anomaly
-
-<!-- # ```{r zoo-abund, fig.cap= "Large (red) and small-bodied (blue) copepod zooplankton abundance in New England."} -->
-<!-- # ecodata::zoo_abund %>% -->
-<!-- #   dplyr::filter(EPU %in% c("GOM","GB")) %>% -->
-<!-- #   dplyr::mutate(hline = 0) %>%  -->
-<!-- #   ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) + -->
-<!-- #   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
-<!-- #       xmin = x.shade.min , xmax = x.shade.max, -->
-<!-- #       ymin = -Inf, ymax = Inf) + -->
-<!-- #   #geom_gls() + -->
-<!-- #   ggplot2::geom_line() + -->
-<!-- #   ggplot2::geom_point() + -->
-<!-- #   ggplot2::ylab("Abundance anomaly") + -->
-<!-- #   ggplot2::xlab(element_blank())+ -->
-<!-- #   ggplot2::ggtitle("Small and large-bodied copepod abundance anomaly") + -->
-<!-- #   ggplot2::facet_wrap(EPU~., nrow = 2) + -->
-<!-- #   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+ -->
-<!-- #   ggplot2::geom_hline(aes(yintercept = hline), -->
-<!-- #            size = hline.size, -->
-<!-- #            alpha = hline.alpha, -->
-<!-- #            linetype = hline.lty)+ -->
-<!-- #   ecodata::theme_facet() + -->
-<!-- #   ggplot2::theme(strip.text=element_text(hjust=0, -->
-<!-- #                                 face = "italic"),  -->
-<!-- #         legend.title = element_blank()) -->
-<!-- #  -->
-<!-- #  -->
-<!-- # ``` -->
-
 #### Calanus Stage
-
 
 <span style="color: red;">NO NEW DATA</span>
 
