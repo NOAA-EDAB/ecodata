@@ -6,11 +6,11 @@ library(stringr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-mab_inshore_survey_xlsx <- "NEAMAP_SOE INDICES_2021.xlsx"
+mab_inshore_survey_csv <- "NEAMAP_SOE INDICES_2022.csv"
 get_mab_inshore_survey <- function(save_clean = F){
 
-  mab_inshore_survey <- read_excel(file.path(raw.dir,
-                                             mab_inshore_survey_xlsx)) %>%
+  mab_inshore_survey <- read.csv(file.path(raw.dir,
+                                             mab_inshore_survey_csv)) %>%
     tidyr::unite(Var, "Category","Season", sep = " ") %>%
     dplyr::rename(Time = Year,
                   Value = Index) %>%
@@ -24,7 +24,7 @@ get_mab_inshore_survey <- function(save_clean = F){
   # metadata ----
   attr(mab_inshore_survey, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/inshoresurvdat.html"
   attr(mab_inshore_survey, "data_files")   <- list(
-    mab_inshore_survey_xlsx = mab_inshore_survey_xlsx)
+    mab_inshore_survey_csv = mab_inshore_survey_csv)
   attr(mab_inshore_survey, "data_steward") <- c(
     "James Gartland <jgartlan@vim.edu>")
   attr(mab_inshore_survey, "plot_script") <- list(
