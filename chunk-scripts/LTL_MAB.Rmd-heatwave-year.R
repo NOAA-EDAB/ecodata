@@ -1,7 +1,8 @@
 
 ecodata::heatwave_year %>% 
   filter(EPU == "MAB", 
-         str_detect(t, "2021")) %>% 
+         str_detect(t, "2022"), 
+         Var == "Surface") %>% 
   ggplot( aes(x = t, y = temp))+
   geom_flame(aes(y2 = thresh))+ 
   geom_line(aes(x = t, y = seas, color = "a"), size = 1)+

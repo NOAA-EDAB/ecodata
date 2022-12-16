@@ -1,6 +1,7 @@
 
 bar_dat_gom <- ecodata::productivity_anomaly %>% 
-  dplyr::filter(EPU == "GOM")
+  dplyr::filter(EPU == "GOM") %>% 
+  tidyr::separate(Var, into = c("Var", "Survey"), sep = "_")
 
 gom <- plot_stackbarcpts_single(YEAR = bar_dat_gom$Time,
                          var2bar = bar_dat_gom$Var,

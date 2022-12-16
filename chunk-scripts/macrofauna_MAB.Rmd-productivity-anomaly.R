@@ -119,7 +119,8 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
 }
 
 bar_dat <- ecodata::productivity_anomaly %>% 
-  dplyr::filter(EPU == "MAB")
+  dplyr::filter(EPU == "MAB") %>% 
+  tidyr::separate(Var, into = c("Var", "Survey"), sep = "_")
 
 # mafmc <-plot_stackbarcpts_single(YEAR = bar_dat$Time,
 #                          var2bar = bar_dat$Var,

@@ -1,49 +1,52 @@
 
 cumu <- ecodata::heatwave %>% 
-  dplyr::filter(Var == "cumulative intensity") %>% 
-  dplyr::mutate(Var = recode(Var, "cumulative intensity" = "Cumulative Intensity (degree C x days)"))
+  dplyr::filter(Var == "cumulative intensity-Surface") %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-Surface" = "Cumulative Intensity (degree C x days)"))
 
 maxin <- ecodata::heatwave %>% 
-  dplyr::filter(Var == "maximum intensity") %>% 
+  dplyr::filter(Var == "maximum intensity-Surface") %>% 
   dplyr::group_by(Time, EPU, Var, Units) %>% 
   dplyr::summarise(Value = max(Value)) %>% 
   dplyr::ungroup() %>% 
-  dplyr::mutate(Var = recode(Var, "maximum intensity" = "Maximum Intensity (degree C)"))
+  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-Surface" = "Maximum Intensity (degree C)"))
+
+cumud <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "cumulative intensity-SurfaceDetrended") %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-SurfaceDetrended" = "Cumulative Intensity Detrended (degree C x days)"))
+
+maxind <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "maximum intensity-SurfaceDetrended") %>% 
+  dplyr::group_by(Time, EPU, Var, Units) %>% 
+  dplyr::summarise(Value = max(Value)) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-SurfaceDetrended" = "Maximum Intensity Detrended (degree C)"))
+
 
 hw<- cumu %>%
-  rbind(maxin) %>% 
+  rbind(maxin, cumud, maxind) %>% 
   dplyr::group_by(Var, EPU) %>% 
   dplyr::mutate(hline = mean(Value))
-                    
-gom.hw<-hw %>% dplyr::filter(EPU == "GOM") %>% 
+
+gb.hw<- hw %>% dplyr::filter(EPU == "GOM")
+gb.hw %>% 
   ggplot2::ggplot() +
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
   ggplot2::geom_line(aes(x = Time, y = Value)) +
   ggplot2::geom_point(aes(x = Time, y = Value)) +
-  ecodata::geom_gls(aes(x = Time, y = Value)) +
-  #ecodata::geom_lm(aes(x = Time, y = Value))+
+  ecodata::geom_gls(aes(x = Time, y = Value, group = Var)) +
+  #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Gulf of Maine") +
+  ggplot2::ggtitle("Gulf of Maine Marine Heatwave Intesity") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
   ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+
-  #ggplot2::geom_hline(aes(yintercept = 0),
-  #         size = hline.size,
-  #         alpha = hline.alpha,
-  #         linetype = hline.lty)+
-  ylab("Heatwave Intensity")+
-  ggplot2::facet_wrap(~Var, scales = "free") +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
+  ggplot2::facet_wrap(~Var, scales = "free")+
   ecodata::theme_ts()+
   ggplot2::theme(strip.text=element_text(hjust=0,
-                                face = "italic"), 
-        axis.title.y = element_text(angle = 90)) +
-  ecodata::theme_title()+
-  ecodata::theme_facet()
-
-
-gom.hw
+                                face = "italic"))+
+  ecodata::theme_title()

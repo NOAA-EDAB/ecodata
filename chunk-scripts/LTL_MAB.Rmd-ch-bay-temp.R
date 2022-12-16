@@ -9,7 +9,7 @@ ecodata::ch_bay_temp %>%
   ggplot2::geom_ribbon(aes(x = Time, ymin = minLTAC, ymax = maxLTAC), fill = "grey", alpha = 0.5)+
   
   ggplot2::geom_line(aes(x = Time, y = YearLTAC, color= "Long Term Average 2010-2020")) +
-  ggplot2::geom_line(aes(x = Time, y = YearC, color = "Daily 2021")) +
+  ggplot2::geom_line(aes(x = Time, y = YearC, color = "Daily 2022")) +
   ggplot2::ylab("Temperature (C)") +
   ggplot2::ggtitle("Chesapeake Bay Temperature") +
   ggplot2::theme(legend.position = "bottom", 

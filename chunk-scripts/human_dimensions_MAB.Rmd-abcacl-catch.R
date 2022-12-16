@@ -1,14 +1,14 @@
 
 mean<- ecodata::abc.acl %>% 
   dplyr::filter(EPU == "MAB") %>% 
-  tidyr::separate(col = Var, into = c("FMP", "Var"), sep = "-") %>% 
-  tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
-  dplyr::rename("abc.acl" = " ABC/ACL", 
-                "Catch" = " Catch") %>% 
-  dplyr::mutate(Value = Catch/abc.acl, 
+  tidyr::separate(col = Var, into = c("FMP", "Var"), sep = "_") %>% 
+  tidyr::pivot_wider(names_from = Var, values_from = Value)  %>% 
+  #tidyr::separate(Catch, into = c("Catch", "X"), sep = ",") %>% 
+  dplyr::mutate(Catch = as.numeric(stringr::str_extract(Catch, pattern = "\\d+")), 
+                Quota = as.numeric(stringr::str_extract(Quota, pattern = "\\d+")),
+                Value = Catch/Quota, 
                 Time = as.character(Time)) %>% 
-  filter(!Value == "NA", 
-         !FMP == "Chub mackerel ") %>%
+  filter(!Value == "NA") %>%
   dplyr::group_by(Time) %>% 
   dplyr::summarise(val = mean(Value)) %>% 
   dplyr::ungroup() %>% 
@@ -16,14 +16,14 @@ mean<- ecodata::abc.acl %>%
 
 ecodata::abc.acl %>% 
   dplyr::filter(EPU == "MAB") %>% 
-  tidyr::separate(col = Var, into = c("FMP", "Var"), sep = "-") %>% 
-  pivot_wider(names_from = Var, values_from = Value) %>% 
-  dplyr::rename("abc.acl" = " ABC/ACL", 
-                "Catch" = " Catch") %>% 
-  dplyr::mutate(Value = Catch/abc.acl, 
-                Time = as.numeric(Time)) %>% 
-  filter(!Value == "NA", 
-         !FMP == "Chub mackerel ") %>% 
+  tidyr::separate(col = Var, into = c("FMP", "Var"), sep = "_") %>% 
+  tidyr::pivot_wider(names_from = Var, values_from = Value)  %>% 
+  #tidyr::separate(Catch, into = c("Catch", "X"), sep = ",") %>% 
+  dplyr::mutate(Catch = as.numeric(stringr::str_extract(Catch, pattern = "\\d+")), 
+                Quota = as.numeric(stringr::str_extract(Quota, pattern = "\\d+")),
+                Value = Catch/Quota, 
+                Time = as.numeric(Time))%>% 
+  filter(!Value == "NA") %>% 
   ggplot2::ggplot()+
   #geom_boxplot()+
   geom_point(aes(x = Time, y = Value))+

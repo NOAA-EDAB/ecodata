@@ -32,7 +32,7 @@ sst_map <-
   ggplot2::geom_tile(data = sst, aes(x = Latitude, y = Longitude,fill = Value)) +
   ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
-  ggplot2::ggtitle("Chesapeake Bay SST anomaly (2021)") +
+  ggplot2::ggtitle("Chesapeake Bay SST anomaly (2022)") +
   ggplot2::xlab(element_blank()) +
   ggplot2::ylab(element_blank()) +
   scale_y_continuous(breaks = seq(37, 40, by = 1))+

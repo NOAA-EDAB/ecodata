@@ -1,17 +1,29 @@
 
 cumu <- ecodata::heatwave %>% 
-  dplyr::filter(Var == "cumulative intensity") %>% 
-  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity" = "Cumulative Intensity (degree C x days)"))
+  dplyr::filter(Var == "cumulative intensity-Surface") %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-Surface" = "Cumulative Intensity (degree C x days)"))
 
 maxin <- ecodata::heatwave %>% 
-  dplyr::filter(Var == "maximum intensity") %>% 
+  dplyr::filter(Var == "maximum intensity-Surface") %>% 
   dplyr::group_by(Time, EPU, Var, Units) %>% 
   dplyr::summarise(Value = max(Value)) %>% 
   dplyr::ungroup() %>% 
-  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity" = "Maximum Intensity (degree C)"))
+  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-Surface" = "Maximum Intensity (degree C)"))
+
+cumud <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "cumulative intensity-SurfaceDetrended") %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-SurfaceDetrended" = "Cumulative Intensity Detrended (degree C x days)"))
+
+maxind <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "maximum intensity-SurfaceDetrended") %>% 
+  dplyr::group_by(Time, EPU, Var, Units) %>% 
+  dplyr::summarise(Value = max(Value)) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-SurfaceDetrended" = "Maximum Intensity Detrended (degree C)"))
+
 
 hw<- cumu %>%
-  rbind(maxin) %>% 
+  rbind(maxin, cumud, maxind) %>% 
   dplyr::group_by(Var, EPU) %>% 
   dplyr::mutate(hline = mean(Value))
 

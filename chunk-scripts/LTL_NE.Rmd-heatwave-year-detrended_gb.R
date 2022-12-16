@@ -1,8 +1,8 @@
 
 ecodata::heatwave_year %>% 
-  filter(EPU == "GOM", 
+  filter(EPU == "GB", 
          str_detect(t, "2022"), 
-         Var == "Surface") %>% 
+         Var == "SurfaceDetrended") %>% 
   ggplot( aes(x = t, y = temp))+
   geom_flame(aes(y2 = thresh))+ 
   geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
@@ -14,6 +14,7 @@ ecodata::heatwave_year %>%
   xlab(element_blank())+
   scale_x_date(date_labels = "%b", breaks = "1 month")+
   theme_bw()+
+  ggplot2::ggtitle("Detrended")+
   theme(legend.title = element_blank(),
         legend.position=c(0.2, 0.8))+
   ecodata::theme_title()

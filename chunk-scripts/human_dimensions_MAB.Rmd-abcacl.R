@@ -1,10 +1,8 @@
 
 ecodata::abc.acl %>% 
   dplyr::filter(EPU == "MAB") %>% 
-  tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>% 
-  dplyr::filter(Var == " ABC/ACL", 
-                !Fishery == "Atlantic mackerel Comm ") %>% 
-  dplyr::mutate(Fishery = recode(Fishery, "Atlantic mackerel Rec " = "Atlantic Mackerel")) %>% 
+  tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "_") %>% 
+  dplyr::filter(Var == "Quota") %>% 
   dplyr::group_by(Fishery) %>% 
   #dplyr::mutate(Value = Value/10000) %>% 
   dplyr::summarise(Value_mean = mean(Value), 

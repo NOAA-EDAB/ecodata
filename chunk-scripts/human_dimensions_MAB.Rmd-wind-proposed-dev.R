@@ -1,8 +1,8 @@
 
  ecodata::wind_dev_speed %>% mutate(Value = as.numeric(Value)/1000000, 
                                                 Time = as.integer(Time)) %>% 
-  dplyr::filter(Var == "Tot_Area_Acres", 
-                Report_year == "year2022") %>% 
+  dplyr::filter(Var == "Acres", 
+                Report_year == "year2023") %>% 
   ggplot2::ggplot()+
   ggplot2::geom_point(aes(x = Time, y = Value))+
   ggplot2::geom_line(aes(x = Time, y = Value))+

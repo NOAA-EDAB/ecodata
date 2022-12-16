@@ -1,18 +1,17 @@
 
 ecodata::heatwave_year %>% 
   filter(EPU == "GB", 
-         Year == "2021") %>% 
+         str_detect(t, "2022"), 
+         Var == "Surface") %>% 
   ggplot( aes(x = t, y = temp))+
-  heatwaveR::geom_flame(aes(y2 = thresh))+ 
-  #heatwaveR::geom_flame(aes(y2 = df12$thresh))+ 
+  geom_flame(aes(y2 = thresh))+ 
   geom_line(aes(x = t, y = seas, color = "a"), size = 1)+
   geom_line(aes(x = t, y = thresh, color = "c"), size = 1)+
   geom_line(aes(x = t, y = temp, color = "b"))+
-  scale_colour_manual(values = c("turquoise4",   "sienna3","black"),
-                      labels = c("Climatology","Temperature","Threshold"))+
+  scale_colour_manual(values = c("turquoise4", "sienna3", "black"),
+                      labels = c("Climatology","Temperature", "Threshold"))+
   ylab("Temperature (C)")+
   xlab(element_blank())+
-  ggtitle("GB Marine Heatwaves 2021")+
   scale_x_date(date_labels = "%b", breaks = "1 month")+
   theme_bw()+
   theme(legend.title = element_blank(),

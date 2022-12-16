@@ -4,7 +4,7 @@ managed_landings <- ecodata::comdat  %>%
   dplyr::filter(stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight")),
          !stringr::str_detect(Var, "Other"),
          Time >= 1986,
-         Time <=2019,
+         Time <=2021,
          EPU == epu_abbr)
 
 # HMS Landings
@@ -16,7 +16,7 @@ apex<-ecodata::hms_landings %>%
   mutate(Var = c("HMS Landings"), 
          Units = c("metric tons"), 
          EPU = c("MAB")) %>% 
-  dplyr::filter(Time <=2019)
+  dplyr::filter(Time <=2021)
 
 #Total landings
 total_landings <- ecodata::comdat  %>%
@@ -25,7 +25,7 @@ total_landings <- ecodata::comdat  %>%
          !stringr::str_detect(Var, "Apex"),
          stringr::str_detect(Var, "Landings"),
          Time >= 1986,
-         Time <=2019,
+         Time <=2021,
          EPU == epu_abbr) %>% 
   rbind(apex)
 

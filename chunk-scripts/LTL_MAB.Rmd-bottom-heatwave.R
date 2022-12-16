@@ -1,17 +1,17 @@
 
-cumu <- ecodata::bottom_heatwave %>% 
-  dplyr::filter(Var == "cumulative intensity") %>% 
-  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity" = "Cumulative Intensity (degree C x days)"))
+cumud <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "cumulative intensity-BottomDetrended") %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-BottomDetrended" = "Cumulative Intensity Detrended (degree C x days)")) 
 
-maxin <- ecodata::bottom_heatwave %>% 
-  dplyr::filter(Var == "maximum intensity") %>% 
+maxind <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "maximum intensity-BottomDetrended") %>% 
   dplyr::group_by(Time, EPU, Var, Units) %>% 
   dplyr::summarise(Value = max(Value)) %>% 
   dplyr::ungroup() %>% 
-  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity" = "Maximum Intensity (degree C)"))
+  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-BottomDetrended" = "Maximum Intensity Detrended (degree C)"))
 
-hw<- cumu %>%
-  rbind(maxin) %>% 
+hw<- cumud %>%
+  rbind(maxind) %>% 
   dplyr::group_by(Var, EPU) %>% 
   dplyr::mutate(hline = mean(Value))
 
@@ -20,7 +20,7 @@ mab.hw %>%
   ggplot2::ggplot() +
   ggplot2::geom_line(aes(x = Time, y = Value)) +
   ggplot2::geom_point(aes(x = Time, y = Value)) +
-  ecodata::geom_gls(aes(x = Time, y = Value, group = Var)) +
+  ecodata::geom_gls(aes(x = Time, y = Value))+ 
   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("") +
   ggplot2::xlab(element_blank())+

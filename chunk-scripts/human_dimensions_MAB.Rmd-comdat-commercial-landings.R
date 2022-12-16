@@ -1,7 +1,7 @@
 
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
-  dplyr::filter(stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight")),
+  dplyr::filter(stringr::str_detect(Var, paste0(council_abbr,"managed species - Landings weight|JOINT managed species - Landings weight")),
          !stringr::str_detect(Var, "Other"),
          Time >= 1986,
          EPU == epu_abbr)
@@ -19,8 +19,7 @@ landings <-
   rbind(managed_landings, total_landings) %>%
   dplyr::filter(Var != "Apex Predator Landings") %>% 
   dplyr::mutate(feeding.guild = stringr::str_extract(Var,paste(feeding.guilds, collapse = "|")),
-         grouping = factor(ifelse(stringr::str_detect(Var,council_abbr), "managed",
-                                  ifelse(stringr::str_detect(Var, "JOINT"), "joint","total"))),
+         grouping = factor(ifelse(stringr::str_detect(Var,council_abbr), "managed",                       ifelse(stringr::str_detect(Var, "JOINT"), "joint","total"))),
          Var = paste(word(feeding.guild), grouping)) %>% 
   dplyr::mutate(feeding.guild = factor(feeding.guild, levels = feeding.guilds))
 

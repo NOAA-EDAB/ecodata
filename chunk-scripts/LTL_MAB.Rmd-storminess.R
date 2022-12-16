@@ -12,7 +12,10 @@ ecodata::storminess %>%
   ggplot2::geom_point()+
   ggplot2::geom_line()+
   ggplot2::facet_wrap(~Var)+
-  ggplot2::geom_hline(aes(yintercept = hline))+
+  ggplot2::geom_hline(aes(yintercept = hline),
+                      size = hline.size, 
+                      alpha = hline.alpha,
+                      linetype = hline.lty)+
   ecodata::geom_gls()+
   ggplot2::ylab("Number of Events") +
   ggplot2::xlab(element_blank())+

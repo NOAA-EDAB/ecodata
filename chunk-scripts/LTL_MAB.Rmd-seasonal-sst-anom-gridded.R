@@ -126,6 +126,6 @@ ggpubr::ggarrange(winter, spring, summer, fall,
                   nrow = 2,
                   common.legend = TRUE,
                   legend = "right") %>%
-  ggpubr::annotate_figure(top = "SST anomaly (2021)", 
+  ggpubr::annotate_figure(top = "SST anomaly (2022)", 
                           left = "Latitude", 
                           bottom = "Longitude")

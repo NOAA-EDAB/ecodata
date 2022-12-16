@@ -1,7 +1,9 @@
 
-ecodata::zoo_sli_anom %>%
-  filter(EPU %in% c("GOM","GB")) %>%
-  mutate(hline = 0) %>% 
+ecodata::zoo_abundance_anom %>%
+  dplyr::filter(EPU %in% c("GOM","GB"), 
+         stringr::str_detect(Var, "LgCopepods|SmCopepods")) %>%
+  dplyr::mutate(Value = as.numeric(Value), 
+         hline = 0) %>% 
   ggplot(aes(x = Time, y = Value, color = Var)) +
          annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,

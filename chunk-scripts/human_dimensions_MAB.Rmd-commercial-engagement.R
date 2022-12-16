@@ -1,7 +1,8 @@
 
 com<-ecodata::engagement %>% 
   dplyr::filter(Region == "MAB", 
-                Fishery == "Commercial")
+                Fishery == "Commercial") %>% 
+  dplyr::rename("EJRating" = "EJ Rating")
 
 com2<-com %>% 
   ggplot2::ggplot()+
