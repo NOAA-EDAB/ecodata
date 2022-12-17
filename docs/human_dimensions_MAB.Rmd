@@ -117,7 +117,7 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
-  dplyr::filter(stringr::str_detect(Var, paste0(council_abbr,"managed species - Landings weight|JOINT managed species - Landings weight")),
+  dplyr::filter(stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight| JOINT managed species - Landings weight")),
          !stringr::str_detect(Var, "Other"),
          Time >= 1986,
          EPU == epu_abbr)
@@ -310,7 +310,7 @@ ggplot2::ggplot(data = landings_agg)+
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ggplot2::ggtitle("Total Commercial Landings *No New Data")+
+  ggplot2::ggtitle("Total Commercial Landings")+
   ggplot2::theme(axis.title.y = element_text(size = 7))+
   ecodata::theme_ts()+
   ecodata::theme_title()
@@ -571,7 +571,7 @@ ggplot2::ggplot(data = rev_agg) +
   ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
       scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
-  ggplot2::ggtitle("Total Commercial Revenue *No New Data") +
+  ggplot2::ggtitle("Total Commercial Revenue") +
   ggplot2::ylab(expression("Revenue (10"^6*"USD)")) +
   ggplot2::geom_hline(aes(yintercept = hline,
                color = Status),

@@ -932,8 +932,6 @@ fullness
 
 ### Larval diversity
 
-<span style="color: red;">NO NEW DATA</span>
-
 ```{r ichthyo-diversity}
 ma_larv_div <- ecodata::ichthyo_diversity %>%
   dplyr::filter(EPU == "MAB") %>%
