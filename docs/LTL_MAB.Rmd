@@ -136,7 +136,7 @@ sst$Season <- factor(sst$Season, levels = c("Winter",
 # ma_anom<-ecodata::seasonal_oisst_anom
 # 
 # ma_anom$Var <- factor(ma_anom$Var, levels= c("Winter","Spring","Summer","Fall"))
-sst<- sst %>% dplyr::mutate(Value = replace(Value, Value > 4, 4))
+sst<- sst %>% dplyr::mutate(Value = replace(Value, Value > 5, 5))
 
 #functions
 sst_map <- function(season){
@@ -149,8 +149,8 @@ sst_map <- function(season){
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
-                       limits = c(-4,4),
-                       labels = c("<-4", "-2", "0", "2", ">4")) +
+                       limits = c(-5,5),
+                       labels = c("<-5", "-2", "0", "2", ">5")) +
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   #ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
@@ -279,7 +279,7 @@ ecodata::trans_dates %>%
   ggplot2::theme(strip.text=element_text(hjust=0),
                  plot.title = element_text(size = 12))+
   ecodata::theme_title()+
-  ylab("Length of Summer")+
+  ylab("# of Days")+
   xlab(element_blank())+
   ecodata::theme_ts()
   

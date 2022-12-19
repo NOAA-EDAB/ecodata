@@ -1044,19 +1044,15 @@ ecodata::forage_index %>%
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
+  ggplot2::geom_ribbon(aes(ymin = Lower, ymax = Upper, fill = Season), alpha = 0.5)+
   ggplot2::geom_point()+
   ggplot2::geom_line()+
-  ggplot2::geom_ribbon(aes(ymin = Lower, ymax = Upper, fill = Season), alpha = 0.5)+
   ggplot2::ggtitle("Forage Biomass Index")+
   ggplot2::ylab(expression("Forage Index Estimate (10"^3*")"))+
   ggplot2::xlab(element_blank())+
   ecodata::geom_gls()+
   ecodata::theme_ts()+
   ecodata::theme_title()
-
-  
-  
-
 ```
 
 
@@ -1500,7 +1496,7 @@ ecodata::hms_cpue %>%
 
 ### HMS Distribution Shifts
 
-```{r hms-dist-shifts, fig.cap = "Species distribution shifts between 2010 and 2017." }
+```{r protectedspp-dist-shifts, fig.cap = "Species distribution shifts between 2010 and 2017." }
 hms10<- ecodata::HMS_species_distribution %>%
   tidyr::separate(Var, into = c("Var", "species", "season"), sep = "_") %>% 
   tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
@@ -1543,7 +1539,7 @@ hms_map <- hms %>% ggplot2::ggplot() +
   #ggplot2::scale_color_manual(values = c("blue", "black", "red"))+ 
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) + 
   ecodata::theme_map() + 
-  ggplot2::ggtitle("HMS Species Distibution") + 
+  ggplot2::ggtitle("Protected Species Distibution Shifts") + 
   ggplot2::xlab("") + 
   ggplot2::ylab("") +
   scale_x_continuous(breaks=c(-76,-72, -68) )+

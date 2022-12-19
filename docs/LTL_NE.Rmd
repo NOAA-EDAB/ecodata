@@ -121,7 +121,7 @@ sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Summer",
                                             "Fall"))
 
-sst<- sst %>% dplyr::mutate(Value = replace(Value, Value > 4, 4))
+sst<- sst %>% dplyr::mutate(Value = replace(Value, Value > 5, 5))
 sst_map <- 
   ggplot2::ggplot() +
   ggplot2::geom_tile(data = sst, aes(x = Longitude, y = Latitude,fill = Value)) +
@@ -131,8 +131,8 @@ sst_map <-
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
-                       limits = c(-4,4), 
-                       labels = c("<-4", "-2", "0", "2", ">4")) +
+                       limits = c(-5,5), 
+                       labels = c("<-5", "-2", "0", "2", ">5")) +
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
@@ -232,7 +232,7 @@ ecodata::trans_dates %>%
   ggplot2::theme(strip.text=element_text(hjust=0),
                  plot.title = element_text(size = 12))+
   ecodata::theme_title()+
-  ylab("Length of Summer")+
+  ylab("Number of Days")+
   xlab(element_blank())+
   ecodata::theme_ts()+
   ggplot2::facet_wrap(.~EPU)+
@@ -1457,7 +1457,6 @@ cal %>%
 
 #### Zooplankton Diversity
 
-<span style="color: red;">NO NEW DATA</span>
 
 ```{r zoo-diversity-gb, fig.cap="Zooplankton diversity in Georges Bank and Gulf of Maine."}
 zoo_div <- ecodata::zoo_diversity %>% 
@@ -1477,7 +1476,7 @@ gb_zoo_div <- zoo_div %>%
 #  ggplot2::ylim(1,2.8)+
   ggplot2::ylab("Shannon Diversity") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GB Zooplankton Diversity *No New Data") +
+  ggplot2::ggtitle("GB Zooplankton Diversity") +
   ggplot2::facet_wrap(Var~., ncol = 3) +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
   ggplot2::geom_hline(aes(yintercept = mean(Value)),
@@ -1503,7 +1502,6 @@ zoo_div <- ecodata::zoo_diversity %>%
 
 gom_zoo_div <- zoo_div %>% 
   dplyr::filter(EPU == "GOM") %>% 
-  tidyr::drop_na() %>% 
   ggplot2::ggplot(aes(x = Time, y = Value, group = Var)) +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
@@ -1512,13 +1510,13 @@ gom_zoo_div <- zoo_div %>%
   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::geom_line() +
   ggplot2::geom_point() +
-#  ylim(1,2.8)+
+#  ggplot2::ylim(1,2.8)+
   ggplot2::ylab("Shannon Diversity") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("GOM Zooplankton Diversity *No New Data") +
+  ggplot2::ggtitle("GB Zooplankton Diversity") +
   ggplot2::facet_wrap(Var~., ncol = 3) +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
-  ggplot2::geom_hline(aes(yintercept = mean(Value, na.rm = T)),
+  ggplot2::geom_hline(aes(yintercept = mean(Value)),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+
@@ -1924,7 +1922,8 @@ mab.hw %>%
 ```{r habitat-richness}
 NE<- ecodata::habitat_diversity %>% 
   dplyr::filter(!Var == "Shannon",
-                EPU %in% c("GB", "GOM")) %>% 
+                EPU %in% c("GB", "GOM"),
+                !EPU == "SS") %>% 
   tidyr::separate(Var, into = c("Var", "Richness")) %>% 
   tidyr::pivot_wider(values_from = "Value", names_from = "Var") %>% 
   dplyr::group_by(EPU) %>% 
@@ -1935,7 +1934,8 @@ NE<- ecodata::habitat_diversity %>%
                 hline = mean(mean))
 
 ecodata::habitat_diversity %>% 
-  dplyr::filter(!Var == "Shannon") %>% 
+  dplyr::filter(!Var == "Shannon", 
+                !EPU == "SS") %>% 
   tidyr::separate(Var, into = c("Var", "Richness")) %>% 
   tidyr::pivot_wider(values_from = "Value", names_from = "Var") %>% 
   dplyr::group_by(EPU) %>% 
@@ -1944,15 +1944,15 @@ ecodata::habitat_diversity %>%
                 upper = as.numeric(upper),
                 Time = as.numeric(Time),
                 hline = mean(mean)) %>% 
-  ggplot2::ggplot(aes(x = Time, y = mean, fill = EPU))+
+  ggplot2::ggplot(aes(x = Time, y = mean, fill = EPU, color = EPU))+
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_ribbon(aes(x = Time, ymax = upper, ymin = lower), alpha = 0.3)+
   ggplot2::geom_point()+
   ggplot2::geom_line() +
-  ggplot2::geom_point(data = NE, aes(x=Time, y=mean), size = 2)+
-  ggplot2::geom_line(data = NE, aes(x=Time, y=mean), size = 2) +
+  ggplot2::geom_point(data = NE, aes(x=Time, y=mean, color = EPU), size = 2)+
+  ggplot2::geom_line(data = NE, aes(x=Time, y=mean, color = EPU), size = 2) +
   ggplot2::ylab("") +
   ggplot2::xlab(element_blank())+
   #ggplot2::facet_wrap(~EPU)+
