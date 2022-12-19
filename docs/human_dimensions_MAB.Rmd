@@ -729,6 +729,11 @@ cowplot::plot_grid(fleet_count, fleet_div, ncol = 1, align = "hv") +
 
 
 ```{r commercial-div-species-div,  fig.cap = paste0("Species revenue diversity in the ",region,". \\label{spec-div}")}
+comm_div <- ecodata::commercial_div %>% 
+  dplyr::filter(EPU == region_abbr) %>% 
+  dplyr::group_by(Var) %>% 
+  dplyr::mutate(hline = mean(Value))
+
 comm_div %>% 
   dplyr::filter(Var == "Permit revenue species diversity") %>% 
   ggplot2::ggplot() + 
