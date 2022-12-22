@@ -968,10 +968,10 @@ stock_status <- ecodata::stock_status %>%
   dplyr::filter(Council %in% c("NEFMC","Both")) %>% 
   dplyr::group_by(Stock) %>% 
   dplyr::mutate(score = case_when(
-    (B.Bmsy <0.5) ~"a",
-    (F.Fmsy >1) ~ "a", 
+    (F.Fmsy > 1 & B.Bmsy > 0.5 & B.Bmsy < 1) ~ "a", 
     (F.Fmsy < 1 & B.Bmsy > 0.5 & B.Bmsy < 1) ~ "b",
-    (F.Fmsy < 1 & B.Bmsy > 1) ~ "c"))
+    (F.Fmsy < 1 & B.Bmsy > 1) ~ "c", 
+    (F.Fmsy > 1 & B.Bmsy < 0.5) ~ "d"))
 #Plot constants
 y.max <- 1.5
 x.max <- 5
@@ -986,17 +986,17 @@ f_missing <- stock_status %>%
   dplyr::select(Code, Council)
 #A dataframe that defines custom legend for stocks with unknown status
 all.df <- data.frame(text = all_missing$Code,
-                    x = rep(x.max*0.9,length(all_missing$Code)),
+                    x = rep(x.max*0.95,length(all_missing$Code)),
                     y = seq(1.45,0.7, length.out = 11))
 b.df <- data.frame(text = b_missing$Code,
-                    x = rep(x.max*0.5,length(b_missing$Code)),
+                    x = rep(x.max*0.55,length(b_missing$Code)),
                     y = seq(1.45,1.38, length.out = 2))
 f.df <- data.frame(text = f_missing$Code,
-                    x = rep(x.max*0.7,length(f_missing$Code)),
+                    x = rep(x.max*0.75,length(f_missing$Code)),
                     y = seq(1.45,1, length.out = 7))
 
 #Plotting code
-test<- ggplot2::ggplot(data = stock_status) +
+ggplot2::ggplot(data = stock_status) +
   ggplot2::geom_vline(xintercept = 1, linetype = "dotted", color = "grey60")+
   ggplot2::geom_vline(xintercept = 0.5, linetype = "dashed", color = "grey60")+
   ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "grey60") +
@@ -1019,20 +1019,20 @@ test<- ggplot2::ggplot(data = stock_status) +
            ymin = 0.645*y.max,
            ymax = 0.98*y.max,
            alpha = 0.01) +
-  ggplot2::annotate("text", x = 4.5, y = 1.5, label = "F and B missing", fontface =2, size = 3)+
+  ggplot2::annotate("text", x = 4.7, y = 1.5, label = "F and B missing", fontface =2, size = 3)+
   ggplot2::annotate("rect",  
              xmin = 0.70*x.max,
              xmax = 0.85*x.max,
              ymin = 0.30*y.max,
              ymax = 0.98*y.max,
              alpha = 0.01) +
-  ggplot2::annotate("text", x = 2.5, y = 1.5, label = "B missing", fontface =2, size = 3)+
+  ggplot2::annotate("text", x = 2.7, y = 1.5, label = "B missing", fontface =2, size = 3)+
   ggplot2::annotate("rect", xmin = 0.509*x.max,
            xmax = 0.681*x.max,
            ymin = 0.65*y.max,
            ymax = 0.98*y.max,
            alpha = 0.01) +
-  ggplot2::annotate("text", x = 3.5, y = 1.5, label = "F missing", fontface =2, size = 3)+
+  ggplot2::annotate("text", x = 3.7, y = 1.5, label = "F missing", fontface =2, size = 3)+
   ggplot2::xlab(expression(~B/B[msy])) +
   ggplot2::ylab(expression(~F/F[msy])) +
   ggplot2::guides(color = FALSE) +
