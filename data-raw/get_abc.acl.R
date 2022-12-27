@@ -46,7 +46,12 @@ get_abc.acl <- function(save_clean = F){
 
 
   ne<- readxl::read_excel(file.path(raw.dir, NEFMC_abc_acl_xlsx), sheet = 3) %>%
-    tidyr::pivot_longer(cols = c("Catch", "ABC", "ACL"), names_to = "Var",
+    dplyr::mutate(Catch = as.numeric(Catch),
+                  ABC = as.numeric(ABC),
+                  ACL = as.numeric(ACL),
+                  TAL = as.numeric(TAL)) %>%
+    dplyr::filter(!FMP == "NA") %>%
+    tidyr::pivot_longer(cols = c("Catch", "ABC", "ACL", "TAL"), names_to = "Var",
                         values_to = "Value") %>%
     dplyr::mutate(Var = paste0(FMP, "_", Species, "_", Var),
                   EPU = c("NE")) %>%
