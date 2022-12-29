@@ -326,7 +326,7 @@ bt$Season <- factor(bt$Season, levels = c("Winter",
 # ma_anom<-ecodata::seasonal_oisst_anom
 # 
 # ma_anom$Var <- factor(ma_anom$Var, levels= c("Winter","Spring","Summer","Fall"))
-bt<- bt %>% dplyr::mutate(Value = replace(Value, Value > 4, 4))
+bt<- bt %>% dplyr::mutate(Value = replace(Value, Value > 5, 5))
 
 #functions
 bt_map <- function(season){
@@ -340,8 +340,8 @@ bt_map <- function(season){
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
-                       limits = c(-4,4),
-                       labels = c("<-4", "-2", "0", "2", ">4")) +
+                       limits = c(-5,5),
+                       labels = c("<-5", "-2", "0", "2", ">5")) +
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   #ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
@@ -1095,6 +1095,7 @@ ecodata::storminess %>%
   ecodata::theme_facet()
 
 ```
+
 ### Cold Pool Index
 
 [notes here](https://docs.google.com/document/d/1FbbS5bFqwVoN12ibiGwrliIr-gu98KJg/edit?rtpof=true)
@@ -1126,12 +1127,12 @@ cpi<- ecodata::cold_pool %>%
   ggplot2::xlab("")+
   ecodata::theme_ts()+
   ecodata::theme_title()+
-  ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.05, yend = 2,
-           colour = "blue", size = 0.7, arrow = arrow())+
-  ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -2.2,
-           colour = "red", size = 0.7, arrow = arrow())+
-  ggplot2::annotate("text", x = 2021, y = 2.2, label = "Colder", size = 4,colour = "blue")+
-   ggplot2::annotate("text", x = 2021, y = -2.5, label = "Warmer",size = 4, colour = "red")
+  # ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.05, yend = 2,
+  #          colour = "blue", size = 0.7, arrow = arrow())+
+  # ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -2.2,
+  #          colour = "red", size = 0.7, arrow = arrow())+
+  ggplot2::annotate("text", x = 1990, y = 2.2, label = "Colder", size = 4,colour = "blue")+
+   ggplot2::annotate("text", x = 1990, y = -2.5, label = "Warmer",size = 4, colour = "red")
 
 
   
@@ -1157,12 +1158,12 @@ ei<- ecodata::cold_pool %>%
   ggplot2::xlab("")+
   ecodata::theme_ts()+
   ecodata::theme_title()+
-  ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.05, yend = 50,
-           colour = "blue", size = 0.70, arrow = arrow())+
-  ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -250,
-           colour = "red", size = 0.70, arrow = arrow())+
-  ggplot2::annotate("text", x = 2021, y = 60, label = "Larger",size = 4, colour = "blue")+
-   ggplot2::annotate("text", x = 2021, y = -265, label = "Smaller",size = 4, colour = "red")
+  # ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.05, yend = 50,
+  #          colour = "blue", size = 0.70, arrow = arrow())+
+  # ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -250,
+  #          colour = "red", size = 0.70, arrow = arrow())+
+  ggplot2::annotate("text", x = 1990, y = 125, label = "Larger",size = 4, colour = "blue")+
+   ggplot2::annotate("text", x = 1990, y = -350, label = "Smaller",size = 4, colour = "red")
 
 
 pi<- ecodata::cold_pool %>% 
@@ -1186,12 +1187,12 @@ pi<- ecodata::cold_pool %>%
   ggplot2::xlab("")+
   ecodata::theme_ts()+
   ecodata::theme_title()+
-  ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.01, yend = 0.6,
-           colour = "blue", size = 0.70, arrow = arrow())+
-  ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -1.6,
-           colour = "red", size = 0.70, arrow = arrow())+
-  ggplot2::annotate("text", x = 2021, y = 0.7, label = "Longer", size = 4,colour = "blue")+
-   ggplot2::annotate("text", x = 2021, y = -1.8, label = "Shorter", size = 4, colour = "red")
+  # ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.01, yend = 0.6,
+  #          colour = "blue", size = 0.70, arrow = arrow())+
+  # ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -1.6,
+  #          colour = "red", size = 0.70, arrow = arrow())+
+  ggplot2::annotate("text", x = 1990, y = 0.8, label = "Longer", size = 4,colour = "blue")+
+   ggplot2::annotate("text", x = 1990, y = -1.8, label = "Shorter", size = 4, colour = "red")
 
 #cowplot::plot_grid(cpi, pi, ei, labels = c('a', 'b', 'c'), align = "h")
 
@@ -1675,7 +1676,7 @@ sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Summer",
                                             "Fall"))
 
-sst<- sst %>% dplyr::mutate(Value = replace(Value, Value > 4, 4))
+sst<- sst %>% dplyr::mutate(Value = replace(Value, Value > 5, 5))
 epu_sf <- ecodata::epu_sf[ecodata::epu_sf$EPU != "SS",]
 
 ggplot2::ggplot() +
@@ -1686,8 +1687,8 @@ ggplot2::ggplot() +
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
-                       limits = c(-4,4), 
-                       labels = c("<-4", "-2", "0", "2", ">4")) +
+                       limits = c(-5,5), 
+                       labels = c("<-5", "-2", "0", "2", ">5")) +
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
@@ -1718,7 +1719,7 @@ lt_sst %>%
       ymin = -Inf, ymax = Inf) +
   ecodata::geom_gls() +
   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
-  ecodata::geom_regime()+
+  #ecodata::geom_regime()+
   ggplot2::geom_line() +
   ggplot2::geom_point() +
   ggplot2::geom_hline(aes(yintercept = hline),
