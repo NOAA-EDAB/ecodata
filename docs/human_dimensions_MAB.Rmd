@@ -357,7 +357,7 @@ ggplot2::ggplot()+
   ggplot2::scale_colour_grey(name ="Revenue Change") +
   ggplot2::ggtitle("Bennet Indicator")+
   ggplot2::labs(y="Value $1,000,000 ($2015)") +
-  ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
   #::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), 
   #                            limits = y.lim, expand = c(0.01, 0.01)) +
   ecodata::theme_ts() +
@@ -568,7 +568,7 @@ ggplot2::ggplot(data = rev_agg) +
 
   #axes
   ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000000})+
-  ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
       scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Total Commercial Revenue") +
