@@ -321,7 +321,7 @@ ggplot2::ggplot(data = landings_agg)+
 
 #### Commercial revenue 
 
-```{r bennet, fig.cap = paste0("Revenue change from the 2015 values in dollars (black), Price (PI), and Volume Indicators (VI) for commercial landings in the Mid-Atlantic Bight. \\label{bennet}")}
+```{r bennet, fig.cap = paste0("Revenue change from the 2015 values in dollars (black), Price (PI), and Volume Indicators (VI) for commercial  landings in the Mid-Atlantic Bight. \\label{bennet}")}
 
 #Filter data into two dataframes for plotting
 

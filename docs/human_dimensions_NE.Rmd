@@ -454,7 +454,7 @@ cowplot::plot_grid(title, plot_row, ncol = 1,
 
 #### Commercial Revenue
 
-```{r bennet, echo = FALSE, message=FALSE, results='hide', fig.cap = paste0("Revenue change from the long-term mean in 2015 dollars (black), Price (PI), and Volume Indicators (VI) for commercial landings in Georges Bank (left) and Gulf of Maine (right). \\label{bennet}")}
+```{r bennet, echo = FALSE, message=FALSE, results='hide', fig.cap = paste0("Revenue change from the long-term mean in 2015 dollars (black), Price (PI) , and Volume Indicators (VI) for commercial landings in Georges Bank (left) and Gulf of Maine (right). \\label{bennet}")}
 
 #Filter data into two dataframes for plotting
 
@@ -535,7 +535,7 @@ ggplot2::ggplot()+
   ggplot2::ggtitle("Georges Bank Benthos Component")+
   ggplot2::ylab("Value $1,000,000 ($2015)") + 
   ggplot2::xlab(element_blank())+
-  ggplot2::scale_x_continuous(breaks = seq(1965, 2020, by = 10), expand = c(0.01, 0.01)) +
+  ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
   #ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), 
   #                            limits = y.lim, expand = c(0.01, 0.01)) +
   ecodata::theme_ts() +
