@@ -95,7 +95,7 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 ## Gulf of Maine & Georges Bank
 
-### Ocean Temperature {.tabset .tabset-fade}
+### Ocean temperature {.tabset .tabset-fade}
 
 #### SST 
 
