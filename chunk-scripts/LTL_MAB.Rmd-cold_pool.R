@@ -24,12 +24,12 @@ cpi<- ecodata::cold_pool %>%
   ggplot2::xlab("")+
   ecodata::theme_ts()+
   ecodata::theme_title()+
-  ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.05, yend = 2,
-           colour = "blue", size = 0.7, arrow = arrow())+
-  ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -2.2,
-           colour = "red", size = 0.7, arrow = arrow())+
-  ggplot2::annotate("text", x = 2021, y = 2.2, label = "Colder", size = 4,colour = "blue")+
-   ggplot2::annotate("text", x = 2021, y = -2.5, label = "Warmer",size = 4, colour = "red")
+  # ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.05, yend = 2,
+  #          colour = "blue", size = 0.7, arrow = arrow())+
+  # ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -2.2,
+  #          colour = "red", size = 0.7, arrow = arrow())+
+  ggplot2::annotate("text", x = 1990, y = 2.2, label = "Colder", size = 4,colour = "blue")+
+   ggplot2::annotate("text", x = 1990, y = -2.5, label = "Warmer",size = 4, colour = "red")
 
 
   
@@ -55,12 +55,12 @@ ei<- ecodata::cold_pool %>%
   ggplot2::xlab("")+
   ecodata::theme_ts()+
   ecodata::theme_title()+
-  ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.05, yend = 50,
-           colour = "blue", size = 0.70, arrow = arrow())+
-  ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -250,
-           colour = "red", size = 0.70, arrow = arrow())+
-  ggplot2::annotate("text", x = 2021, y = 60, label = "Larger",size = 4, colour = "blue")+
-   ggplot2::annotate("text", x = 2021, y = -265, label = "Smaller",size = 4, colour = "red")
+  # ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.05, yend = 50,
+  #          colour = "blue", size = 0.70, arrow = arrow())+
+  # ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -250,
+  #          colour = "red", size = 0.70, arrow = arrow())+
+  ggplot2::annotate("text", x = 1990, y = 125, label = "Larger",size = 4, colour = "blue")+
+   ggplot2::annotate("text", x = 1990, y = -350, label = "Smaller",size = 4, colour = "red")
 
 
 pi<- ecodata::cold_pool %>% 
@@ -84,12 +84,12 @@ pi<- ecodata::cold_pool %>%
   ggplot2::xlab("")+
   ecodata::theme_ts()+
   ecodata::theme_title()+
-  ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.01, yend = 0.6,
-           colour = "blue", size = 0.70, arrow = arrow())+
-  ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -1.6,
-           colour = "red", size = 0.70, arrow = arrow())+
-  ggplot2::annotate("text", x = 2021, y = 0.7, label = "Longer", size = 4,colour = "blue")+
-   ggplot2::annotate("text", x = 2021, y = -1.8, label = "Shorter", size = 4, colour = "red")
+  # ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.01, yend = 0.6,
+  #          colour = "blue", size = 0.70, arrow = arrow())+
+  # ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -1.6,
+  #          colour = "red", size = 0.70, arrow = arrow())+
+  ggplot2::annotate("text", x = 1990, y = 0.8, label = "Longer", size = 4,colour = "blue")+
+   ggplot2::annotate("text", x = 1990, y = -1.8, label = "Shorter", size = 4, colour = "red")
 
 #cowplot::plot_grid(cpi, pi, ei, labels = c('a', 'b', 'c'), align = "h")
 

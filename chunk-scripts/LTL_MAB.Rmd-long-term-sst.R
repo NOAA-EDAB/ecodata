@@ -11,7 +11,7 @@ lt_sst %>%
       ymin = -Inf, ymax = Inf) +
   ecodata::geom_gls() +
   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
-  ecodata::geom_regime()+
+  #ecodata::geom_regime()+
   ggplot2::geom_line() +
   ggplot2::geom_point() +
   ggplot2::geom_hline(aes(yintercept = hline),
@@ -21,7 +21,7 @@ lt_sst %>%
   ggplot2::ylab("Temperature (C)") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Long-term SST") +
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01), breaks = seq(1840,2010,10))+
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01), breaks = seq(1840,2020,10))+
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"))+

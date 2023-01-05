@@ -33,7 +33,7 @@ bt$Season <- factor(bt$Season, levels = c("Winter",
 # ma_anom<-ecodata::seasonal_oisst_anom
 # 
 # ma_anom$Var <- factor(ma_anom$Var, levels= c("Winter","Spring","Summer","Fall"))
-bt<- bt %>% dplyr::mutate(Value = replace(Value, Value > 4, 4))
+bt<- bt %>% dplyr::mutate(Value = replace(Value, Value > 5, 5))
 
 #functions
 bt_map <- function(season){
@@ -47,8 +47,8 @@ bt_map <- function(season){
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
-                       limits = c(-4,4),
-                       labels = c("<-4", "-2", "0", "2", ">4")) +
+                       limits = c(-5,5),
+                       labels = c("<-5", "-2", "0", "2", ">5")) +
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   #ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +

@@ -40,8 +40,8 @@ ggplot2::ggplot()+
   ggplot2::labs(y="Value $1,000,000 ($2015)") +
   ggplot2::xlab(element_blank())+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
-  ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), 
-                              limits = y.lim, expand = c(0.01, 0.01)) +
+  #ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), 
+  #                            limits = y.lim, expand = c(0.01, 0.01)) +
     ggplot2::theme(legend.position="bottom", legend.direction = "horizontal",
         legend.background = element_rect(fill = "transparent"), 
         legend.title = element_text(size = 8), 

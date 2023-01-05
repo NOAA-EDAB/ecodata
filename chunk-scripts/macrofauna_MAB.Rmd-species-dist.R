@@ -1,7 +1,10 @@
 
 spec_dist <- ecodata::species_dist %>% 
+  #dplyr::filter(!Var == "Season") %>% 
+  dplyr::mutate(Value = as.numeric(Value)) %>% 
   dplyr::group_by(Var) %>% 
-  dplyr::mutate(hline = mean(Value))
+  dplyr::mutate(hline = mean(Value)) %>% 
+  ungroup()
 
 asd <- spec_dist %>% 
   dplyr::filter(Var == "along-shelf distance", 

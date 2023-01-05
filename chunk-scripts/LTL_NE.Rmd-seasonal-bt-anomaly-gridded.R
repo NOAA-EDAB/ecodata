@@ -20,7 +20,7 @@ bt$Season <- factor(bt$Season, levels = c("Winter",
                                             "Summer",
                                             "Fall"))
 
-bt<- bt %>% dplyr::mutate(Value = replace(Value, Value > 4, 4))
+bt<- bt %>% dplyr::mutate(Value = replace(Value, Value > 5, 5))
 bt_map <- 
   ggplot2::ggplot() +
   ggplot2::geom_tile(data = bt, aes(x = Longitude, y = Latitude,fill = Value)) +
@@ -30,8 +30,8 @@ bt_map <-
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
-                       limits = c(-4,4), 
-                       labels = c("<-4", "-2", "0", "2", ">4")) +
+                       limits = c(-5,5), 
+                       labels = c("<-5", "-2", "0", "2", ">5")) +
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +

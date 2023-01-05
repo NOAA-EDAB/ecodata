@@ -39,7 +39,7 @@ ggplot2::ggplot()+
   #ecodata::geom_lm(aes(x = Time, y = Value))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
-  ggplot2::ylim(30,190)+
+  ggplot2::ylim(15,190)+
 
 #  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
@@ -72,7 +72,7 @@ ggplot2::ggplot()+
   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
-  ggplot2::ylim(30,190)+
+  ggplot2::ylim(15,190)+
 #  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
@@ -92,7 +92,7 @@ ggplot2::ggplot()+
 plot_row<-cowplot::plot_grid( gb_total, gom_total, ncol = 2)
 title <- ggdraw() + 
   draw_label(
-    "Total Commercial Landings *No New Data",
+    "Total Commercial Landings",
     x = 0,
     hjust = 0
   ) +

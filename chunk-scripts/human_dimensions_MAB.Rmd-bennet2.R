@@ -37,8 +37,8 @@ ggplot2::ggplot()+
   ggplot2::ggtitle("Bennet Indicator")+
   ggplot2::labs(y="Value $1,000,000 ($2015)") +
   ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 10), expand = c(0.01, 0.01)) +
-  ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), 
-                              limits = y.lim, expand = c(0.01, 0.01)) +
+  #ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100), 
+  #                            limits = y.lim, expand = c(0.01, 0.01)) +
   ecodata::theme_ts() +
   ggplot2::facet_wrap(~Guild)+
   ggplot2::theme(title = element_text(size = 10), 

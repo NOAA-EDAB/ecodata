@@ -13,7 +13,7 @@ ecodata::trans_dates %>%
   ggplot2::theme(strip.text=element_text(hjust=0),
                  plot.title = element_text(size = 12))+
   ecodata::theme_title()+
-  ylab("Length of Summer")+
+  ylab("Number of Days")+
   xlab(element_blank())+
   ecodata::theme_ts()+
   ggplot2::facet_wrap(.~EPU)+

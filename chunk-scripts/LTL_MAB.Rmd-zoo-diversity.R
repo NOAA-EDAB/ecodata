@@ -1,6 +1,7 @@
 
 zoo_div <- ecodata::zoo_diversity %>% 
-  dplyr::filter(EPU == epu_abbr)
+  dplyr::filter(EPU == epu_abbr) %>% 
+  dplyr::mutate(hline = mean(Value, na.rm = TRUE))
 
 zoo_div %>% 
   ggplot2::ggplot(aes(x = Time, y = Value, group = Var)) +
@@ -14,12 +15,12 @@ zoo_div %>%
   ggplot2::ylab("Shannon Diversity") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Zooplankton Diversity") +
-  ggplot2::facet_wrap(Var~., ncol = 3) +
+  #ggplot2::facet_wrap(Var~., ncol = 3) +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
-  ggplot2::geom_hline(aes(yintercept = mean(Value)),
+  ggplot2::geom_hline(aes(yintercept = hline),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+
-  ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_blank())+
-  ecodata::theme_title()
+  #ggplot2::theme(strip.text=element_blank())+
+  ecodata::theme_title()+
+  ecodata::theme_ts()

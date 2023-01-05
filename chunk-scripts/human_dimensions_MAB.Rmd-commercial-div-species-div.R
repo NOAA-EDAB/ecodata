@@ -1,4 +1,9 @@
 
+comm_div <- ecodata::commercial_div %>% 
+  dplyr::filter(EPU == region_abbr) %>% 
+  dplyr::group_by(Var) %>% 
+  dplyr::mutate(hline = mean(Value))
+
 comm_div %>% 
   dplyr::filter(Var == "Permit revenue species diversity") %>% 
   ggplot2::ggplot() + 

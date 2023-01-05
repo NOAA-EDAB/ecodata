@@ -1,7 +1,7 @@
 
 ecodata::trans_dates %>% 
   dplyr::filter(EPU == "MAB", 
-                Var == "sumlen", 
+                Var %in% c("sumlen30"), 
                 !Value == "NA") %>% 
   ggplot(aes(x= Time, y = Value))+
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -13,6 +13,6 @@ ecodata::trans_dates %>%
   ggplot2::theme(strip.text=element_text(hjust=0),
                  plot.title = element_text(size = 12))+
   ecodata::theme_title()+
-  ylab("Length of Summer")+
+  ylab("# of Days")+
   xlab(element_blank())+
   ecodata::theme_ts()

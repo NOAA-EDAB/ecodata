@@ -13,7 +13,7 @@ sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Summer",
                                             "Fall"))
 
-sst<- sst %>% dplyr::mutate(Value = replace(Value, Value > 4, 4))
+sst<- sst %>% dplyr::mutate(Value = replace(Value, Value > 5, 5))
 epu_sf <- ecodata::epu_sf[ecodata::epu_sf$EPU != "SS",]
 
 ggplot2::ggplot() +
@@ -24,8 +24,8 @@ ggplot2::ggplot() +
                        low = scales::muted("blue"),
                        mid = "white",
                        high = scales::muted("red"),
-                       limits = c(-4,4), 
-                       labels = c("<-4", "-2", "0", "2", ">4")) +
+                       limits = c(-5,5), 
+                       labels = c("<-5", "-2", "0", "2", ">5")) +
   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
