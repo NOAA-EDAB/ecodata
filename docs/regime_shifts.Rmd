@@ -58,10 +58,10 @@ Table describing the data included in the regime shift case studies.
 ```{r}
 temp <- ecodata::seasonal_oisst_anom %>%
   dplyr::filter(EPU == "MAB", 
-                Var == "Fall OISST anomaly") %>% 
+                Var == "Fall") %>% 
   dplyr::rename("anom" = "Value") %>% 
-  dplyr::select(!Units) %>% 
-  dplyr::mutate(Var = recode(Var, "Fall OISST anomaly" ="Temperature"))
+  #dplyr::select(!Units) %>% 
+  dplyr::mutate(Var = recode(Var, "Fall" ="Temperature"))
 
 zoo<- ecodata::zoo_regime %>% 
   dplyr::filter(EPU == "MAB") %>% 
@@ -118,7 +118,7 @@ mab %>%
 ```{r}
 ecodata::seasonal_oisst_anom %>%
   dplyr::filter(EPU == "MAB", 
-                Var == "Fall OISST anomaly") %>% 
+                Var == "Fall") %>% 
   ggplot2::ggplot(aes(x = Time, y = Value)) +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
@@ -127,7 +127,7 @@ ecodata::seasonal_oisst_anom %>%
   ggplot2::geom_col(aes(fill = ifelse(Value<0, "red", "blue"))) +
   ggplot2::ylab("Anomaly") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Fall Temperature anomaly") +
+  ggplot2::ggtitle("Fall") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
   ecodata::theme_ts() +
   ggplot2::theme(strip.text=element_text(hjust=0,
@@ -235,18 +235,18 @@ mid %>% ggplot2::ggplot(aes(x = Time, y = Total)) +
 ```{r}
 temp <- ecodata::seasonal_oisst_anom %>%
   dplyr::filter(EPU == "GOM", 
-                Var == "Fall OISST anomaly") %>% 
+                Var == "Fall") %>% 
   dplyr::rename("anom" = "Value") %>% 
-  dplyr::select(!Units) %>% 
-  dplyr::mutate(Var = recode(Var, "Fall OISST anomaly" ="Temperature"))
+  #dplyr::select(!Units) %>% 
+  dplyr::mutate(Var = recode(Var, "Fall" ="Temperature"))
 
 
 hw <- ecodata::heatwave %>%
   dplyr::filter(EPU == "GOM", 
-                Var == "cumulative intensity") %>% 
+                Var == "cumulative intensity-Surface") %>% 
   dplyr::mutate(anom = Value/(mean(Value))-1) %>% 
   dplyr::select(!c(Units, Value)) %>% 
-  dplyr::mutate(Var = recode(Var, "cumulative intensity" ="Heatwave"))
+  dplyr::mutate(Var = recode(Var, "cumulative intensity-Surface" ="Heatwave"))
 
 
 zoo<- ecodata::zoo_regime %>% 

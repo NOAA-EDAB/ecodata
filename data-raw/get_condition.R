@@ -6,7 +6,7 @@ library(dplyr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-condition_csv <- "AnnualRelCond2021_GOM.csv"
+condition_csv <- "RelCond2022_Year - Laurel Smith - NOAA Federal.csv"
 
 get_condition <- function(save_clean = F){
   dat <- read.csv(file.path(raw.dir,condition_csv))
@@ -14,7 +14,7 @@ get_condition <- function(save_clean = F){
   condition <- dat %>%
     tidyr::pivot_longer(cols = c(MeanCond),
                         names_to = "Var", values_to = "Value") %>%
-    dplyr::select(YEAR, Species, Value, EPU) %>%
+    dplyr::select(YEAR, Species, Value) %>%
     dplyr::rename(Time = YEAR,
                   Var = Species) %>%
     dplyr::mutate(Units = c("MeanCond"))
