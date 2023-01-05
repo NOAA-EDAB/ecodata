@@ -1256,8 +1256,11 @@ knitr::include_graphics(file.path(image.dir, "seabird_turtle_whale_hotspots.jpeg
 ```{r species-dist, fig.cap = "Aggregate species distribution metrics for species in the Northeast Large Marine Ecosystem."}
 
 spec_dist <- ecodata::species_dist %>% 
+  #dplyr::filter(!Var == "Season") %>% 
+  dplyr::mutate(Value = as.numeric(Value)) %>% 
   dplyr::group_by(Var) %>% 
-  dplyr::mutate(hline = mean(Value))
+  dplyr::mutate(hline = mean(Value)) %>% 
+  ungroup()
 
 asd <- spec_dist %>% 
   dplyr::filter(Var == "along-shelf distance", 

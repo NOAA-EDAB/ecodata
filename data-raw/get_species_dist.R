@@ -4,11 +4,10 @@ library(dplyr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-species_dist_csv <- "species_distribution.xlsx"
+species_dist_csv <- "soe dist data.xlsx"
 get_species_dist <- function(save_clean = F){
 
-  species_dist <- readxl::read_excel(file.path(raw.dir, species_dist_csv),
-                                     sheet = "sp_dist")  %>%
+  species_dist <- readxl::read_excel(file.path(raw.dir, species_dist_csv))  %>%
     dplyr::rename(depth = DEPTH,
                   Latitude = LAT,
                   Longitude = LON,
