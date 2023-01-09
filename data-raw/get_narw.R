@@ -11,7 +11,7 @@ library(readxl)
 raw.dir <- here::here("data-raw")
 narw_xlsx <- "RW Abundance & Calves -for2022 report.xlsx"
 get_narw <- function(save_clean = F){
-  narw <- read_excel(file.path(raw.dir,narw_xlsx)) %>%
+  narw <- readxl::read_excel(file.path(raw.dir,narw_xlsx)) %>%
     dplyr::select(-c(5,7:10)) %>%
     janitor::row_to_names(1) %>%
     dplyr::rename(
