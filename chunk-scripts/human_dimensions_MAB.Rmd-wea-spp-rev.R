@@ -1,17 +1,20 @@
 
 ecodata::wind_revenue %>%
-  tidyr::separate(Var, sep = ":", into = c("Species", "Var")) %>% 
-  dplyr::filter(Var == "Sum of WEA_DOLLAR_TOTAL") %>% 
-  dplyr::mutate(Value = Value/1000000,
+  tidyr::separate(Var, sep = "-", into = c("Species", "Var")) %>% 
+  dplyr::filter(Var == "sum_landing") %>% 
+  dplyr::mutate(Value = as.numeric(Value), 
+                Value = Value/1000000,
                 Time = as.integer(Time)) %>%
   dplyr::filter(EPU == "MAB", 
-                Species %in% c("SQUID / LOLIGO","MONK","FLOUNDER, SUMMER / FLUKE",
-                               "QUAHOGS/BUSHEL",  "CLAM, SURF/BUSHEL" )) %>%
-  dplyr::mutate(Species = recode(Species, "SQUID / LOLIGO"="Longfin Squid", 
-                                 "MONK" = "Monkfish", 
-                                 "FLOUNDER, SUMMER / FLUKE" = "Summer Flounder", 
-                                 "QUAHOGS/BUSHEL" = "Ocean Quahog",
-                                 "CLAM, SURF/BUSHEL" = "Surfclam")) %>% 
+                Species %in% c("LONGFIN SQUID", "MONKFISH", "SUMMER FLOUNDER",
+                               "OCEAN QUAHOG", "SURFCLAM")) %>% 
+                # Species %in% c("SQUID / LOLIGO","MONK","FLOUNDER, SUMMER / FLUKE",
+                #                "QUAHOGS/BUSHEL",  "CLAM, SURF/BUSHEL" )) %>%
+  dplyr::mutate(Species = recode(Species, "LONGFIN SQUID"="Longfin Squid", 
+                                 "MONKFISH" = "Monkfish", 
+                                 "SUMMER FLOUNDER" = "Summer Flounder", 
+                                 "OCEAN QUAHOG" = "Ocean Quahog",
+                                 "SURFCLAM" = "Surfclam")) %>% 
   ggplot2::ggplot() +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
