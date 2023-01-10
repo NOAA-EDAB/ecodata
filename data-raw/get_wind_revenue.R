@@ -2,20 +2,30 @@ library(dplyr)
 library(tidyr)
 library(readxl)
 raw.dir <- here::here("data-raw")
-wind_rev_xlsx<- "CHRISTEL_2022 State of the Ecosystem Report_Max WEA Species Landings and Revenue (1).xlsx"
+wind_rev_xlsx<- "SOE 2023 update_Offshore Wind Fishery Data_Christel.xlsx"
 
 get_wind_revenue<- function(save_clean = F){
-  ne_wind_revenue <- readxl::read_excel(file.path(raw.dir,wind_rev_xlsx), sheet = "NEFMC Revenue Figures") %>%
+  ne_wind_revenue <- readxl::read_excel(file.path(raw.dir,wind_rev_xlsx), sheet = "NEFMC Rev Figure") %>%
+    janitor::row_to_names(.,1) %>%
+    dplyr::select("Species","Year",
+                  "Sum of Nominal Value ($)",
+                  "Sum of Landings (pounds*)") %>%
     dplyr::mutate(EPU = "NE")
-  mab_wind_revenue <- readxl::read_excel(file.path(raw.dir,wind_rev_xlsx), sheet = "MAFMC Revenue Figure") %>%
-    dplyr::mutate(EPU = "MAB")
+  mab_wind_revenue <- readxl::read_excel(file.path(raw.dir,wind_rev_xlsx), sheet = "MAFMC Rev Figure") %>%
+    janitor::row_to_names(.,1) %>%
+    dplyr::mutate(EPU = "MAB") %>%
+    dplyr::select("Species","Year", "EPU",
+                  "Sum of Nominal Value ($)",
+                  "Sum of Landings (pounds*)")
 
   wind_revenue <- ne_wind_revenue %>%
     rbind(mab_wind_revenue) %>%
-    tidyr::pivot_longer(cols = c("Sum of WEA_LANDED_TOTAL", "Sum of WEA_DOLLAR_TOTAL"),
+    dplyr::rename(Time = Year,
+                 sum_value = "Sum of Nominal Value ($)",
+                 sum_landing = "Sum of Landings (pounds*)") %>%
+    tidyr::pivot_longer(cols = c(sum_landing, sum_value),
                         names_to = "Var", values_to = "Value") %>%
-    dplyr::rename(Time = Year) %>%
-    dplyr::mutate(Var = paste0(Species,":",Var)) %>%
+    dplyr::mutate(Var = paste0(Species, "-", Var)) %>%
     dplyr::select(!Species) %>%
     tibble::as_tibble() %>%
     dplyr::select(Time, Var, Value, EPU)

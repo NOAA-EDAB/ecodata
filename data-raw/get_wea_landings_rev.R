@@ -8,25 +8,24 @@ library(readr)
 raw.dir <- here::here("data-raw")
 
 ## Doug Christel
-wind_xlsx<-"CHRISTEL_2022 State of the Ecosystem Report_Max WEA Species Landings and Revenue.xlsx"
-
+#wind_xlsx<-"CHRISTEL_2022 State of the Ecosystem Report_Max WEA Species Landings and Revenue.xlsx"
+wind_xlsx<-"SOE 2023 update_Offshore Wind Fishery Data_Christel.xlsx"
 get_wea_landings_rev <- function(save_clean = F){
   # import data
-  wea_landings_rev<-read_excel(file.path(raw.dir,wind_xlsx)) %>%
-    janitor::row_to_names(.,1) %>%
-    dplyr::select( "GARFO and ASMFC Managed Species",
+   wea_landings_rev<-readxl::read_excel(file.path(raw.dir,wind_xlsx), sheet = "Highest % Rev Table") %>%
+    # janitor::row_to_names(.,1) %>%
+    #  select("Max % Regional Revenue and Landings of fisheries managed by the Atlantic States Marine Fisheries Commission and the New England and Mid-Atlantic Fishery Management Council within Existing Lease Areas and the Draft Primary and Secondary Central Atlantic Call Areas")
+
+     janitor::row_to_names(.,3) %>%
+    dplyr::select( "NEFMC, MAFMC, and ASMFC Managed Species",
                    "Maximum Percent Total Annual Regional Species Landings",
-                   "Maximum Percent Total Annual Regional Species Revenue",
-                   "Minimum Percent Total Annual Regional Species Landings",
-                   "Minimum Percent Total Annual Regional Species Revenue" ) %>%
+                   "Maximum Percent Total Annual Regional Species Revenue") %>%
     dplyr::rename("perc_landings_max" = "Maximum Percent Total Annual Regional Species Landings",
-                  "perc_revenue_max" = "Maximum Percent Total Annual Regional Species Revenue" ,
-                  "perc_landings_min" = "Minimum Percent Total Annual Regional Species Landings",
-                  "perc_revenue_min" = "Minimum Percent Total Annual Regional Species Revenue") %>%
-    dplyr::mutate(perc_landings_max = paste(as.numeric(perc_landings_max)*100, "%"),
-                  perc_revenue_max = paste(as.numeric(perc_revenue_max)*100, "%"),
-                  perc_landings_min = paste(as.numeric(perc_landings_min)*100, "%"),
-                  perc_revenue_min = paste(as.numeric(perc_revenue_min)*100, "%"))
+                  "perc_revenue_max" = "Maximum Percent Total Annual Regional Species Revenue" ) %>%
+    tidyr::drop_na() %>%
+    dplyr::mutate(perc_landings_max = as.numeric(perc_landings_max)*100,
+                  perc_revenue_max = as.numeric(perc_revenue_max)*100,
+                  Units = c("Percent"))
 
   # metadata ----
   attr(wea_landings_rev, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/fisheries-revenue-in-wind-development-areas.html"

@@ -1365,18 +1365,21 @@ ecodata::ppr %>%
 
 ```{r wea-spp-rev, fig.cap="Wind energy revenue in the Mid-Atlantic"}
 ecodata::wind_revenue %>%
-  tidyr::separate(Var, sep = ":", into = c("Species", "Var")) %>% 
-  dplyr::filter(Var == "Sum of WEA_DOLLAR_TOTAL") %>% 
-  dplyr::mutate(Value = Value/1000000,
+  tidyr::separate(Var, sep = "-", into = c("Species", "Var")) %>% 
+  dplyr::filter(Var == "sum_landing") %>% 
+  dplyr::mutate(Value = as.numeric(Value), 
+                Value = Value/1000000,
                 Time = as.integer(Time)) %>%
   dplyr::filter(EPU == "MAB", 
-                Species %in% c("SQUID / LOLIGO","MONK","FLOUNDER, SUMMER / FLUKE",
-                               "QUAHOGS/BUSHEL",  "CLAM, SURF/BUSHEL" )) %>%
-  dplyr::mutate(Species = recode(Species, "SQUID / LOLIGO"="Longfin Squid", 
-                                 "MONK" = "Monkfish", 
-                                 "FLOUNDER, SUMMER / FLUKE" = "Summer Flounder", 
-                                 "QUAHOGS/BUSHEL" = "Ocean Quahog",
-                                 "CLAM, SURF/BUSHEL" = "Surfclam")) %>% 
+                Species %in% c("LONGFIN SQUID", "MONKFISH", "SUMMER FLOUNDER",
+                               "OCEAN QUAHOG", "SURFCLAM")) %>% 
+                # Species %in% c("SQUID / LOLIGO","MONK","FLOUNDER, SUMMER / FLUKE",
+                #                "QUAHOGS/BUSHEL",  "CLAM, SURF/BUSHEL" )) %>%
+  dplyr::mutate(Species = recode(Species, "LONGFIN SQUID"="Longfin Squid", 
+                                 "MONKFISH" = "Monkfish", 
+                                 "SUMMER FLOUNDER" = "Summer Flounder", 
+                                 "OCEAN QUAHOG" = "Ocean Quahog",
+                                 "SURFCLAM" = "Surfclam")) %>% 
   ggplot2::ggplot() +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
@@ -1642,15 +1645,20 @@ knitr::include_graphics(file.path(image.dir, "SOEWindFigure20221122maxquality.jp
 
 ### Landings and Revenue in Wind Energy Areas
 
-```{r wea-landings-rev, fig.cap="Percent Landings and Revenue from wind energy areas. Data from GARFO VTR."}
-dt<- ecodata::wea_landings_rev[1:10, 1:5] %>% 
-  dplyr::select("GARFO and ASMFC Managed Species", "perc_landings_max"  ,"perc_landings_min",
-                "perc_revenue_max","perc_revenue_min" ) %>% 
+Notes - Percent Landings and Revenue from wind energy areas. Data from GARFO VTR. 
+\* Landings and revenue for these species are likely underestimated due to limited coverage of these fisheries in historic reporting requirements for vessels issued federal permits by the NMFS Greater Atlantic Regional Fisheries Office.  However, such limitations also suggest an inaccurately higher proportion of such landings and revenues in existing lease areas. ** Clearnose skates were reported separately from skates, which is presumed to include all skates managed under the Northeast skate complex. *** Based on comparison with other data sources, the high values for Illex squid are likely overestimates affected by the methods used to model logbook data to estimate spatial overlap of fishign operations with wind energy areas."
+
+```{r wea-landings-rev, fig.cap="Percent Landings and Revenue from wind energy areas. Data from GARFO VTR. *Landings and revenue for these species are likely underestimated due to limited coverage of these fisheries in historic reporting requirements for vessels issued federal permits by the NMFS Greater Atlantic Regional Fisheries Office.  However, such limitations also suggest an inaccurately higher proportion of such landings and revenues in existing lease areas. **Clearnose skates were reported separately from skates, which is presumed to include all skates managed under the Northeast skate complex. ***Based on comparison with other data sources, the high values for Illex squid are likely overestimates affected by the methods used to model logbook data to estimate spatial overlap of fishign operations with wind energy areas.	"}
+#dt<- ecodata::wea_landings_rev[1:10, 1:5] %>% 
+dt<- ecodata::wea_landings_rev %>% 
+  dplyr::select("NEFMC, MAFMC, and ASMFC Managed Species", 
+                "perc_landings_max","perc_revenue_max" ) %>% 
+ dplyr::slice_head(n =10) %>% 
+  dplyr::mutate(perc_landings_max = paste0(perc_landings_max, " %"),
+                perc_revenue_max = paste0(perc_revenue_max, " %")) %>% 
   dplyr::rename("Maximum Percent Total Annual Regional Species Landings"="perc_landings_max",
-    "Maximum Percent Total Annual Regional Species Revenue"="perc_revenue_max",
-    "Minimum Percent Total Annual Regional Species Landings"="perc_landings_min",
-    "Minimum Percent Total Annual Regional Species Revenue"="perc_revenue_min",) 
-kable(dt, caption = "Top ten species Landings and Revenue from Wind Energy Areas.") %>% 
+    "Maximum Percent Total Annual Regional Species Revenue"="perc_revenue_max") 
+kable(dt, caption = "Top ten species Landings and Revenue from Wind Energy Areas." ) %>% 
   kable_classic(full_width = F, html_font = "Cambria")
 
 ```
