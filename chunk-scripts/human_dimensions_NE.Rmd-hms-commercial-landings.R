@@ -2,9 +2,10 @@
 #Get data for plotting
 ## Apex pred
 apex<-ecodata::hms_landings %>% 
-  dplyr::filter(stringr::str_detect(Var, "Landings")) %>% 
-  separate(Var, c("Var", "trash"), sep = "_")
-
+  dplyr::filter(stringr::str_detect(Var, "Landings")) %>%
+  #dplyr::mutate(Value = as.numeric(Value)) %>% 
+  separate(Var, c("Var", "trash"), sep = "_") #%>% 
+  #dplyr::filter(!Var == "Smoothhound Sharks")
 
 ##Plot
 p1<-apex %>% 
@@ -13,26 +14,14 @@ p1<-apex %>%
   dplyr::mutate(hline = mean(Value)) %>% 
 
   ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
-  
-  #Add time series
   ggplot2::geom_line(size = lwd) +
   ggplot2::geom_point(size = pcex) +
-  #ggplot2::stat_summary(fun.y = sum, color = "black", geom = "line")+
-  #scale_color_manual(values = series.col, aesthetics = "color")+
-  #guides(color = FALSE) +
-  ggplot2::geom_hline(aes(yintercept = hline,
-                 color = Var,
-                 size = Var),
-             size = hline.size,
-             alpha = hline.alpha,
-             linetype = hline.lty)+
-  #Highlight last ten years
-  # ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-  #     xmin = x.shade.min , xmax = x.shade.max,
-  #     ymin = -Inf, ymax = Inf) +
-  #Axis and theme
- # ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
-  #ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), limits = c(1985, 2018)) +
+  # ggplot2::geom_hline(aes(yintercept = hline,
+  #                color = Var,
+  #                size = Var),
+  #            size = hline.size,
+  #            alpha = hline.alpha,
+  #            linetype = hline.lty)+
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0), 
         legend.position = "bottom", 

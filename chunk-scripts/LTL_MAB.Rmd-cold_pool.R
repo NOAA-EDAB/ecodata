@@ -60,7 +60,7 @@ ei<- ecodata::cold_pool %>%
   # ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -250,
   #          colour = "red", size = 0.70, arrow = arrow())+
   ggplot2::annotate("text", x = 1990, y = 125, label = "Larger",size = 4, colour = "blue")+
-   ggplot2::annotate("text", x = 1990, y = -350, label = "Smaller",size = 4, colour = "red")
+   ggplot2::annotate("text", x = 1990, y = -400, label = "Smaller",size = 4, colour = "red")
 
 
 pi<- ecodata::cold_pool %>% 

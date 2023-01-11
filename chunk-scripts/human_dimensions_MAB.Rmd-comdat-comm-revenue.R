@@ -2,7 +2,7 @@
 ## Apex pred
 apex<-ecodata::hms_landings %>% 
   dplyr::filter(stringr::str_detect(Var, "Revenue"), 
-                Time<2020) %>% 
+                Time<2021) %>% 
   separate(Var, c("Var", "trash"), sep = "_") %>% 
   group_by(Time) %>% 
   summarise(Value = sum(Value)) %>% 
