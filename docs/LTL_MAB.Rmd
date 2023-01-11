@@ -291,7 +291,7 @@ ecodata::trans_dates %>%
 
 
 
-```{r seasonal-bt-anom-gridded, fig.cap="MAB-seasonal bottom temperature time series overlaid onto 2022 seasonal spatial anomalies."}
+```{r seasonal-bt-anom-gridded, fig.cap="MAB-seasonal Bottom Temperature time series overlaid onto 2022 seasonal spatial anomalies."}
 annotation_custom2 <- function (data, ...)
 {
   layer(data = data,

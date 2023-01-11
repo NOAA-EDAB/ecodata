@@ -299,7 +299,7 @@ bt_map
 
 ```
 
-```{r seasonal-bt-anom, fig.width = 8, fig.cap="GB and GOM seasonal bottom temperature anomaly time series."}
+```{r seasonal-bt-anom, fig.width = 8, fig.cap="GB and GOM seasonal Bottom Temperature anomaly time series."}
 ne_anom <- ecodata::bottom_temp_comp %>% 
   dplyr::filter(EPU %in% c("GB","GOM")) %>% 
   dplyr::mutate(Time = as.numeric(Time),
