@@ -11,8 +11,10 @@ get_hms_landings <- function(save_clean = F){
   hms_landings<- read_excel(file.path(raw.dir, hms_landings_xlsx))
 
   hms_landings<-hms_landings %>%
+    dplyr::mutate(HMS_Groups = recode(HMS_Groups, "BAYS (Bigeye, Albacore, Yellowfin, Skipjack) tunas" = "BAYS")) %>%
     tidyr::unite(Var, HMS_Groups, Var, sep = "_")%>%
     dplyr::rename(Time = YEAR) %>%
+    dplyr::mutate(Value = as.numeric(Value)) %>%
     dplyr::select(Time, Var, Value, EPU)
 
 

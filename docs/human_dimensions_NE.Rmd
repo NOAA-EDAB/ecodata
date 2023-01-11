@@ -291,13 +291,14 @@ gom_landings
 ```
 
 
-```{r hms-commercial-landings, warning=F, fig.length = 24, fig.cap = "HMS groups include “Bluefin Tuna”, “BAYS”, “Swordfish”, “Large Coastal Sharks”, “Small Coastal Sharks”, “Pelagic Sharks”, “Smoothhound Sharks”. “BAYS” includes bigeye, albacore, yellowfin and skipjack tunas. “Large Coastal Sharks” includes blacktip, bull, great hammerhead, scalloped hammerhead, smooth hammerhead, lemon, nurse, sandbar, silky, spinner, and tiger sharks. “Small Coastal Sharks” includes Atlantic sharpnose, blacknose, bonnethead, finetooth sharks. “Pelagic Sharks” includes blue, porbeagle, shortfin mako, and thresher sharks. “Smoothhound Sharks” includes smooth dogfish shark."}
+```{r hms-commercial-landings, warning=F, fig.length = 24, fig.cap = "HMS groups include “Bluefin Tuna”, “BAYS”, “Swordfish”, “Large Coastal Sharks”, “Small Coastal Sharks”, “Pelagic Sharks”, “Smoothhound Sharks”. “BAYS” includes bigeye, albacore, yellowfin and skipjack tunas. “Smoothhound Sharks” includes smooth dogfish shark."}
 #Get data for plotting
 ## Apex pred
 apex<-ecodata::hms_landings %>% 
-  dplyr::filter(stringr::str_detect(Var, "Landings")) %>% 
-  separate(Var, c("Var", "trash"), sep = "_")
-
+  dplyr::filter(stringr::str_detect(Var, "Landings")) %>%
+  #dplyr::mutate(Value = as.numeric(Value)) %>% 
+  separate(Var, c("Var", "trash"), sep = "_") #%>% 
+  #dplyr::filter(!Var == "Smoothhound Sharks")
 
 ##Plot
 p1<-apex %>% 
@@ -306,26 +307,14 @@ p1<-apex %>%
   dplyr::mutate(hline = mean(Value)) %>% 
 
   ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
-  
-  #Add time series
   ggplot2::geom_line(size = lwd) +
   ggplot2::geom_point(size = pcex) +
-  #ggplot2::stat_summary(fun.y = sum, color = "black", geom = "line")+
-  #scale_color_manual(values = series.col, aesthetics = "color")+
-  #guides(color = FALSE) +
-  ggplot2::geom_hline(aes(yintercept = hline,
-                 color = Var,
-                 size = Var),
-             size = hline.size,
-             alpha = hline.alpha,
-             linetype = hline.lty)+
-  #Highlight last ten years
-  # ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-  #     xmin = x.shade.min , xmax = x.shade.max,
-  #     ymin = -Inf, ymax = Inf) +
-  #Axis and theme
- # ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
-  #ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), limits = c(1985, 2018)) +
+  # ggplot2::geom_hline(aes(yintercept = hline,
+  #                color = Var,
+  #                size = Var),
+  #            size = hline.size,
+  #            alpha = hline.alpha,
+  #            linetype = hline.lty)+
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0), 
         legend.position = "bottom", 
@@ -790,7 +779,9 @@ cowplot::plot_grid(gb_rev_agg, gom_rev_agg, ncol = 2)
 ## Apex pred
 apex<-ecodata::hms_landings %>% 
   dplyr::filter(stringr::str_detect(Var, "Revenue")) %>% 
-  separate(Var, c("Var", "trash"), sep = "_")
+  tidyr::separate(Var, c("Var", "trash"), sep = "_") %>% 
+  #dplyr::mutate(Value = as.numeric(Value))%>% 
+  dplyr::filter(!Var == "Smoothhound Sharks")
 
 
 #Define constants for figure plot
@@ -805,8 +796,6 @@ p1<-apex %>%
     hline = mean(Value)) %>% 
 
   ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
-  
-  #Add time series
   ggplot2::geom_line(size = lwd) +
   ggplot2::geom_point(size = pcex) +
   ggplot2::geom_hline(aes(yintercept = hline,
@@ -815,13 +804,6 @@ p1<-apex %>%
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-  #Highlight last ten years
-  # ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-  #     xmin = x.shade.min , xmax = x.shade.max,
-  #     ymin = -Inf, ymax = Inf) +
-  # #Axis and theme
-  #ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
-  #ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), limits = c(1985, 2020)) +
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0), 
         legend.position = "bottom", 

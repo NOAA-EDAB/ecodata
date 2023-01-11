@@ -209,8 +209,6 @@ p1<-apex %>%
   dplyr::mutate(hline = mean(Value)) %>% 
 
   ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
-  
-  #Add time series
   ggplot2::geom_line(size = lwd) +
   ggplot2::geom_point(size = pcex) +
   ggplot2::geom_hline(aes(yintercept = hline,
@@ -219,13 +217,6 @@ p1<-apex %>%
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-  #Highlight last ten years
-  # ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-  #     xmin = x.shade.min , xmax = x.shade.max,
-  #     ymin = -Inf, ymax = Inf) +
-  # #Axis and theme
-  #ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
-  #ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), limits = c(1985, 2020)) +
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0), 
         legend.position = "bottom", 
@@ -241,7 +232,7 @@ p1
 ``` 
 
 
-```{r comdat-total-landings, fig.asp=.35, fig.cap = paste0("Total commercial seafood landings (black) shown with ",region," managed seafood landings (red). \\label{total-landings}")}
+```{r comdat-total-landings, fig.asp=.35, fig.cap = paste0("total commercial seafood landings (black) shown with ",region," managed seafood landings (red). \\label{total-landings}")}
 
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
@@ -526,7 +517,7 @@ Table<- kable(ind2, col.names = c("Time", "Volume", "Price",  "Volume", "Price",
 ## Apex pred
 apex<-ecodata::hms_landings %>% 
   dplyr::filter(stringr::str_detect(Var, "Revenue"), 
-                Time<2020) %>% 
+                Time<2021) %>% 
   separate(Var, c("Var", "trash"), sep = "_") %>% 
   group_by(Time) %>% 
   summarise(Value = sum(Value)) %>% 
@@ -614,13 +605,6 @@ p1<-apex %>%
              size = hline.size,
              alpha = hline.alpha,
              linetype = hline.lty)+
-  #Highlight last ten years
-  # ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-  #     xmin = x.shade.min , xmax = x.shade.max,
-  #     ymin = -Inf, ymax = Inf) +
-  # #Axis and theme
-  #ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
-  #ggplot2::scale_x_continuous(breaks = seq(1985, 2015, by = 5), limits = c(1985, 2020)) +
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0), 
         legend.position = "bottom", 
