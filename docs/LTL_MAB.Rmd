@@ -1098,9 +1098,9 @@ ecodata::storminess %>%
 
 ### Cold Pool Index
 
-[notes here](https://docs.google.com/document/d/1FbbS5bFqwVoN12ibiGwrliIr-gu98KJg/edit?rtpof=true)
+[notes here](https://drive.google.com/drive/u/1/folders/1R3fgWuJ9yC7Zy7hvpKNfnQiqwsVf8G0M-PG8B5PVrZZlH97bMFUNBl_vQVbR7ujA8S14VA3Y) - cold_indicies_soe_jan2023
 
-```{r cold_pool, eval = T, echo = F, fig.cap="Cold pool index.", fig.width = 10 }
+```{r cold_pool, eval = T, echo = F, fig.cap="Cold Pool index.", fig.width = 10 }
 
 cpi<- ecodata::cold_pool %>% 
   dplyr::filter(stringr::str_detect(Var, pattern = "cold_pool")) %>% 
@@ -1163,7 +1163,7 @@ ei<- ecodata::cold_pool %>%
   # ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -250,
   #          colour = "red", size = 0.70, arrow = arrow())+
   ggplot2::annotate("text", x = 1990, y = 125, label = "Larger",size = 4, colour = "blue")+
-   ggplot2::annotate("text", x = 1990, y = -350, label = "Smaller",size = 4, colour = "red")
+   ggplot2::annotate("text", x = 1990, y = -400, label = "Smaller",size = 4, colour = "red")
 
 
 pi<- ecodata::cold_pool %>% 

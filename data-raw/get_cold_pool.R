@@ -5,7 +5,7 @@ library(tidyr)
 
 raw.dir <- here::here("data-raw")
 
-cold_pool_csv <- "cold_pool_indice_2022 - Hubert duPontavice - NOAA Affiliate.csv" # "Glorys12v1_ColdPool_Extents.nc" #File from Zhoumin
+cold_pool_csv <- "cold_pool_indice_jan2023.csv" # "Glorys12v1_ColdPool_Extents.nc" #File from Zhoumin
 
 
 ### Cold pool index from Hubert du Pontavice
