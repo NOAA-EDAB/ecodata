@@ -1469,47 +1469,47 @@ ecodata::rec_hms %>%
 
 ### Ecosystem Overfishing {.tabset .tabset-fade}
 
-#### Primary Production Required
+<!-- #### Primary Production Required -->
 
-```{r ppr, fig.cap="Primary production required to support the commercial landings. Included are the top species accounting for 80% of the landings in each year."}
+<!-- ```{r ppr, fig.cap="Primary production required to support the commercial landings. Included are the top species accounting for 80% of the landings in each year."} -->
 
 
-a<-ecodata::ppr %>% 
-  dplyr::filter(Var == "PPR") %>% 
-  dplyr::group_by(EPU) %>% 
-  dplyr::mutate(hline = mean(Value)) %>% 
-  dplyr::filter(EPU != "MAB", 
-                Time <=1997) 
+<!-- a<-ecodata::ppr %>%  -->
+<!--   dplyr::filter(Var == "PPR") %>%  -->
+<!--   dplyr::group_by(EPU) %>%  -->
+<!--   dplyr::mutate(hline = mean(Value)) %>%  -->
+<!--   dplyr::filter(EPU != "MAB",  -->
+<!--                 Time <=1997)  -->
 
-ecodata::ppr %>% 
-  dplyr::filter(Var == "PPR") %>% 
-  dplyr::group_by(EPU) %>% 
-  dplyr::mutate(hline = mean(Value)) %>% 
-  dplyr::filter(EPU != "MAB", 
-                Time >=1997) %>% 
-  ggplot2::ggplot() +
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_point(aes(x = Time, y = Value))+
-  ggplot2::geom_line(aes(x = Time, y = Value))+
-  # ecodata::geom_lm(aes(x = Time, y = Value,
-  #              group = Var))+
-  ggplot2::geom_line(data = a, aes(x = Time, y = Value), linetype = "dashed")+
-  ggplot2::geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
-  ggplot2::scale_x_continuous(expand = c(0.05, 0.05)) +
-  ggplot2::facet_wrap( ~ EPU)+
-  ggplot2::ggtitle("Primary Production Required")+
-  ggplot2::ylab("Proportion of Total PPD")+
-  ggplot2::xlab(element_blank())+
-  ecodata::theme_ts()+
-  ecodata::theme_title()+
-  ecodata::theme_facet()
+<!-- ecodata::ppr %>%  -->
+<!--   dplyr::filter(Var == "PPR") %>%  -->
+<!--   dplyr::group_by(EPU) %>%  -->
+<!--   dplyr::mutate(hline = mean(Value)) %>%  -->
+<!--   dplyr::filter(EPU != "MAB",  -->
+<!--                 Time >=1997) %>%  -->
+<!--   ggplot2::ggplot() + -->
+<!--   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   ggplot2::geom_point(aes(x = Time, y = Value))+ -->
+<!--   ggplot2::geom_line(aes(x = Time, y = Value))+ -->
+<!--   # ecodata::geom_lm(aes(x = Time, y = Value, -->
+<!--   #              group = Var))+ -->
+<!--   ggplot2::geom_line(data = a, aes(x = Time, y = Value), linetype = "dashed")+ -->
+<!--   ggplot2::geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty)+ -->
+<!--   ggplot2::scale_x_continuous(expand = c(0.05, 0.05)) + -->
+<!--   ggplot2::facet_wrap(.~EPU)+ -->
+<!--   ggplot2::ggtitle("Primary Production Required")+ -->
+<!--   ggplot2::ylab("Proportion of Total PPD")+ -->
+<!--   ggplot2::xlab(element_blank())+ -->
+<!--   ecodata::theme_ts()+ -->
+<!--   ecodata::theme_title()+ -->
+<!--   ecodata::theme_facet() -->
 
-```
+<!-- ``` -->
 
 #### Fogarty Index
 
@@ -1531,19 +1531,8 @@ ecodata::ppr %>%
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_ribbon( aes(ymin = gr_lw, ymax = gr_up, x = Time), fill = "darkolivegreen3", alpha = 0.5)+
   ggplot2::geom_ribbon( aes(ymin = rd_lw, ymax = rd_up, x = Time), fill = "sandybrown", aplha = 0.5)+
-  # ggplot2::geom_hline(yintercept = .92, color = "green", linetype = "dashed")+
-  # ggplot2::geom_hline(yintercept = .22, color = "green", linetype = "dashed")+
-  # ggplot2::geom_hline(yintercept = 1, color = "red", linetype = "dashed")+
-  # ggplot2::geom_hline(yintercept = 2.5, color = "red", linetype = "dashed")+
   ggplot2::geom_point(aes(x = Time, y = Value))+
   ggplot2::geom_line(aes(x = Time, y = Value))+
-  # ecodata::geom_lm(aes(x = Time, y = Value,
-  #              group = Var))+
-  #ggplot2::geom_line(data = a, aes(x = Time, y = Value), linetype = "dashed")+
-  #ggplot2::geom_hline(aes(yintercept = hline),
-  #         size = hline.size,
-  #         alpha = hline.alpha,
-  #         linetype = hline.lty)+
   ggplot2::scale_x_continuous(expand = c(0.05, 0.05)) +
   ggplot2::facet_wrap( ~ EPU)+
   ggplot2::ggtitle("Fogarty Index")+
@@ -1588,53 +1577,53 @@ ecodata::ppr %>%
 
 ```
 
-#### Mean Trophic Level
+<!-- #### Mean Trophic Level -->
 
-```{r mtl, fig.cap="Mean tropic level"}
+<!-- ```{r mtl, fig.cap="Mean tropic level"} -->
 
-ecodata::ppr %>% 
-  dplyr::filter(Var == "MTL") %>% 
-  dplyr::group_by(EPU) %>% 
-  dplyr::mutate(hline = mean(Value)) %>% 
-  dplyr::filter(EPU != "MAB") %>% 
-  ggplot2::ggplot() +
-  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-      xmin = x.shade.min , xmax = x.shade.max,
-      ymin = -Inf, ymax = Inf) +
-  ggplot2::geom_point(aes(x = Time, y = Value))+
-  ggplot2::geom_line(aes(x = Time, y = Value))+
-  # ecodata::geom_lm(aes(x = Time, y = Value,
-  #              group = Var))+
-  ggplot2::geom_hline(aes(yintercept = hline),
-           size = hline.size,
-           alpha = hline.alpha,
-           linetype = hline.lty)+
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
-  ggplot2::facet_wrap( ~ EPU)+
-  ggplot2::ggtitle("Mean Trophic Level")+
-  ggplot2::ylab("")+
-  ecodata::theme_ts()+
-  ecodata::theme_title()
-```
+<!-- ecodata::ppr %>%  -->
+<!--   dplyr::filter(Var == "MTL") %>%  -->
+<!--   dplyr::group_by(EPU) %>%  -->
+<!--   dplyr::mutate(hline = mean(Value)) %>%  -->
+<!--   dplyr::filter(EPU != "MAB") %>%  -->
+<!--   ggplot2::ggplot() + -->
+<!--   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   ggplot2::geom_point(aes(x = Time, y = Value))+ -->
+<!--   ggplot2::geom_line(aes(x = Time, y = Value))+ -->
+<!--   # ecodata::geom_lm(aes(x = Time, y = Value, -->
+<!--   #              group = Var))+ -->
+<!--   ggplot2::geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty)+ -->
+<!--   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) + -->
+<!--   ggplot2::facet_wrap( ~ EPU)+ -->
+<!--   ggplot2::ggtitle("Mean Trophic Level")+ -->
+<!--   ggplot2::ylab("")+ -->
+<!--   ecodata::theme_ts()+ -->
+<!--   ecodata::theme_title() -->
+<!-- ``` -->
 
 #### PP reconstructed
 
 ```{r pp-reconstructed, fig.cap="FReonstructed primary production"}
 
 
-a<-ecodata::ppr %>% 
-  dplyr::filter(Var == "PP") %>% 
-  dplyr::group_by(EPU) %>% 
-  dplyr::mutate(hline = mean(Value)) %>% 
-  dplyr::filter(EPU != "MAB", 
-                Time <=1997) 
+a<-ecodata::ppr %>%
+  dplyr::filter(Var == "PP") %>%
+  dplyr::group_by(EPU) %>%
+  dplyr::mutate(hline = mean(Value)) %>%
+  dplyr::filter(EPU != "MAB",
+                Time <=1997)
 
-ecodata::ppr %>% 
-  dplyr::filter(Var == "PP") %>% 
-  dplyr::group_by(EPU) %>% 
-  dplyr::mutate(hline = mean(Value)) %>% 
-  dplyr::filter(EPU != "MAB", 
-                Time >=1997) %>% 
+ecodata::ppr %>%
+  dplyr::filter(Var == "PP") %>%
+  dplyr::group_by(EPU) %>%
+  dplyr::mutate(hline = mean(Value)) %>%
+  dplyr::filter(EPU != "MAB",
+                Time >=1997) %>%
   ggplot2::ggplot() +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,

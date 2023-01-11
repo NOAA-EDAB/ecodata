@@ -407,15 +407,40 @@ Recreational shark landings from mrip.
 </div>
 <div id="ecosystem-overfishing" class="section level3 tabset tabset-fade">
 <h3 class="tabset tabset-fade">Ecosystem Overfishing</h3>
-<div id="primary-production-required" class="section level4">
-<h4>Primary Production Required</h4>
-<div class="figure" style="text-align: center">
-<img src="human_dimensions_MAB_files/figure-html/ppr-1.png" alt="Primary production required to support the commercial landings. Included are the top species accounting for 80% of the landings in each year." width="672" />
-<p class="caption">
-Primary production required to support the commercial landings. Included are the top species accounting for 80% of the landings in each year.
-</p>
-</div>
-</div>
+<!-- #### Primary Production Required -->
+<!-- ```{r ppr, fig.cap="Primary production required to support the commercial landings. Included are the top species accounting for 80% of the landings in each year."} -->
+<!-- a<- ecodata::ppr %>%  -->
+<!--   dplyr::group_by(EPU) %>%  -->
+<!--   dplyr::mutate(hline = mean(Value)) %>%  -->
+<!--   dplyr::filter(Var == "PPR", -->
+<!--                 EPU == "MAB",  -->
+<!--                 Time <= 1997)  -->
+<!-- ecodata::ppr %>%  -->
+<!--   dplyr::group_by(EPU) %>%  -->
+<!--   dplyr::mutate(hline = mean(Value)) %>%  -->
+<!--   dplyr::filter(Var == "PPR", -->
+<!--                 EPU == "MAB",  -->
+<!--                 Time >= 1997) %>%  -->
+<!--   ggplot2::ggplot() + -->
+<!--   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   ggplot2::geom_point(aes(x = Time, y = Value))+ -->
+<!--   ggplot2::geom_line(aes(x = Time, y = Value))+ -->
+<!--   ggplot2::geom_line(data = a, aes(x = Time, y = Value), linetype = "dashed")+ -->
+<!--   # ecodata::geom_lm(aes(x = Time, y = Value, -->
+<!--   #              group = Var))+ -->
+<!--   ggplot2::geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty)+ -->
+<!--   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) + -->
+<!--   ggplot2::ggtitle("Primary Production Required")+ -->
+<!--   ggplot2::ylab("Proportion of Total PPD ")+ -->
+<!--   ggplot2::xlab(element_blank())+ -->
+<!--   ecodata::theme_ts()+ -->
+<!--   ecodata::theme_title() -->
+<!-- ``` -->
 <div id="fogarty-index" class="section level4">
 <h4>Fogarty Index</h4>
 <div class="figure" style="text-align: center">
@@ -433,15 +458,31 @@ Fogarty Index
 Ryther Index
 </p>
 </div>
-</div>
-<div id="mean-trophic-level" class="section level4">
-<h4>Mean Trophic Level</h4>
-<div class="figure" style="text-align: center">
-<img src="human_dimensions_MAB_files/figure-html/mtl-1.png" alt="Mean trophic level" width="672" />
-<p class="caption">
-Mean trophic level
-</p>
-</div>
+<!-- #### Mean Trophic Level -->
+<!-- ```{r mtl, fig.cap="Mean trophic level"} -->
+<!-- ecodata::ppr %>%  -->
+<!--   dplyr::filter(Var == "MTL") %>%  -->
+<!--   dplyr::group_by(EPU) %>%  -->
+<!--   dplyr::mutate(hline = mean(Value)) %>%  -->
+<!--   dplyr::filter(EPU == "MAB") %>%  -->
+<!--   ggplot2::ggplot() + -->
+<!--   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   ggplot2::geom_point(aes(x = Time, y = Value))+ -->
+<!--   ggplot2::geom_line(aes(x = Time, y = Value))+ -->
+<!--   ggplot2::geom_hline(aes(yintercept = hline), -->
+<!--            size = hline.size, -->
+<!--            alpha = hline.alpha, -->
+<!--            linetype = hline.lty)+ -->
+<!--   ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) + -->
+<!--   #ggplot2::facet_wrap( ~ EPU)+ -->
+<!--   ggplot2::ggtitle("Mean Trophic Level")+ -->
+<!--   ggplot2::ylab("")+ -->
+<!--   ggplot2::xlab(element_blank())+ -->
+<!--   ecodata::theme_ts()+ -->
+<!--   ecodata::theme_title() -->
+<!-- ``` -->
 </div>
 <div id="pp-reconstructed" class="section level4">
 <h4>PP reconstructed</h4>
