@@ -13,6 +13,7 @@ get_warm_core_rings <- function(save_clean = F){
     dplyr::rename(Value = WCR) %>%
     tibble::add_row(Time = 2020, Value = 21) %>% #add 2020 data point
     tibble::add_row(Time = 2021, Value = 29) %>% #add 2021 data point
+    tibble::add_row(Time = 2022, Value = 29) %>% #add 2022 data point
     dplyr::mutate(EPU = c("All"),
            Var = c("Warm Core Rings"),
            Units = c("n")) %>% tibble::as_tibble() %>%

@@ -1801,7 +1801,7 @@ ecodata::gsi_old %>%
 ### Warm Core Rings
 
 
-```{r wcr, fig.cap= "Warm core ring formation on the Northeast US Shelf."}
+```{r wcr, fig.cap= "Warm core ring formation on the Northeast US shelf."}
 upper.line<-ecodata::wcr %>%
   dplyr::filter(Time>2000) %>% 
   dplyr::mutate(hline = c(mean(Value)))
