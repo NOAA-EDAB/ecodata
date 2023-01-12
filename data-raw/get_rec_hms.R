@@ -69,31 +69,27 @@ get_rec_hms <- function(save_clean = F){
 }
 get_rec_hms(save_clean = T)
 
-#############
-# test<- rec_hms %>% filter(SP_CATEGORY == "Pelagic",
-#                           SUB_REG == 4)  %>%
-#   ggplot()+
-#   geom_bar(aes(x = YEAR, y = LANDING, fill = COMMON_NAME), stat = "identity")
-#
+
+# rec_hms %>%
+#   dplyr::filter(EPU == "MAB") %>%
+#   tidyr::separate(Var, c("Var", "X"), sep = "-") %>%
+#   dplyr::mutate(Value = Value/10000) %>%
+#   ggplot2::ggplot()+
+#   ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+
+#   ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+
+#   ggplot2::ylab(expression("Catch (N"^4*")"))+
+#   ggplot2::ggtitle("Recreational Shark Landings")+
+#   ggplot2::xlab(element_blank())+
+#   ggplot2::theme(legend.title = element_blank())+
+#   ecodata::theme_ts()+
+#   ecodata::theme_title()
 
 
 
-###### Test plot for individual spp
-# rec_hms<- d %>%
-#   dplyr::filter(SUB_REG <= 5) %>%  # 4 = North Atlantic, 5 = Mid atlantic
-#   left_join(sp_cat, by= "SP_CODE") %>% # merge catch year with common names and category
-#   dplyr::group_by(YEAR, COMMON_NAME, SUB_REG) %>%
-#   dplyr::summarise(Value = sum(LANDING)) %>% #  Definition of Landings. The total number of fish removed from the fishery resource.
-#   #May be obtained by summing catch types A (CLAIM) and B1 (HARVEST).
-#   dplyr::rename( Time = YEAR,
-#                  Var = COMMON_NAME,
-#                  Region = SUB_REG) %>%
-#   dplyr::mutate(Region = as.character(Region)) %>%
-#   dplyr::mutate(Region = dplyr::recode(Region,
-#                                        `4` = "New England",
-#                                        `5` = "Mid-Atlantic")) %>%
-#   filter(Region == "Mid-Atlantic") %>%
-#   ggplot(aes(x=Time, y=Value))+
-#   geom_point()+
-#   geom_line()+
-#   facet_wrap(~Var, scale = "free")
+
+
+
+
+
+
+
