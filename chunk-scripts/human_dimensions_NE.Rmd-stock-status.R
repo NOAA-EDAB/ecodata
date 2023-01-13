@@ -9,7 +9,9 @@ stock_status <- ecodata::stock_status %>%
     (F.Fmsy > 1 & B.Bmsy > 0.5 & B.Bmsy < 1) ~ "a", 
     (F.Fmsy < 1 & B.Bmsy > 0.5 & B.Bmsy < 1) ~ "b",
     (F.Fmsy < 1 & B.Bmsy > 1) ~ "c", 
-    (F.Fmsy > 1 & B.Bmsy < 0.5) ~ "d"))
+    (F.Fmsy > 1 & B.Bmsy < 0.5) ~ "d",
+    (F.Fmsy < 1 & B.Bmsy < 0.5) ~ "b",
+    (F.Fmsy > 1 & B.Bmsy > 1) ~ "c"))
 #Plot constants
 y.max <- 1.5
 x.max <- 5

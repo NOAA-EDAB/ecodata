@@ -12,12 +12,12 @@ com2<-com %>%
   ggrepel::geom_text_repel(aes(x = Eng, #geom_text_repel auto-jitters text around points
                       y = Rel,
                       label = Community,
-                      color = EJRating), show.legend = FALSE, direction = "both", box.padding = 0.4, size = 3)+
+                      color = EJRating), show.legend = FALSE, direction = "both", box.padding = 0.2, size = 3)+
   ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
                      breaks = com$EJRating, 
                      direction = 1) +
-  xlim(-1,40)+
-  ylim(-1,6)+
+  xlim(-1,35)+
+  ylim(-1,4.1)+
   theme(legend.position=c(0.8, 0.85), 
         legend.title = element_blank(),       
         legend.background = element_blank(),
