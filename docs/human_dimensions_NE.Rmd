@@ -1546,7 +1546,7 @@ ecodata::ppr %>%
 
 ```
 
-#### Ryther
+#### Ryther Index
 
 ```{r ryther, fig.cap="Ryther Index"}
 

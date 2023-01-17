@@ -1,5 +1,5 @@
 
-interp_chl_pp <- function(epu, year = 2021, Variable){
+interp_chl_pp <- function(epu, year = 2022, Variable){
   out <- ecodata::chl_pp %>%
     dplyr::filter(stringr::str_detect(Var,Variable),
            EPU == epu) %>%
@@ -34,8 +34,8 @@ GOM_chl_weekly <- interp_chl_pp(epu = "GOM", Variable = "WEEKLY_CHLOR_A_MEDIAN")
 ne_chl_weekly<-rbind(GB_chl_weekly, GOM_chl_weekly)%>% 
   dplyr::filter(!Value == "NA")
 # 
- ne_early<-ne_chl_weekly %>% filter(Time <=18)
- ne_late<-ne_chl_weekly %>% filter(Time >=18)
+ ne_early<-ne_chl_weekly %>% filter(Time <=26)
+ ne_late<-ne_chl_weekly %>% filter(Time >=26)
 
 ne_chl <- ggplot2::ggplot(data = ne_early) +
   ggplot2::geom_line(aes(x = Time, y = LTM)) +

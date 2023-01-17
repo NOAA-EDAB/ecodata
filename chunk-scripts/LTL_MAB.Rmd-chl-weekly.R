@@ -1,5 +1,5 @@
 
-interp_chl_pp <- function(epu, year = 2021, Variable){
+interp_chl_pp <- function(epu, year = 2022, Variable){
   out <- ecodata::chl_pp %>% 
     dplyr::filter(stringr::str_detect(Var,Variable),
            EPU == epu) %>% 
@@ -30,8 +30,8 @@ interp_chl_pp <- function(epu, year = 2021, Variable){
 }
 
 MAB_chl <- interp_chl_pp(epu = "MAB", Variable = "WEEKLY_CHLOR_A_MEDIAN")
- MAB_early<- MAB_chl %>% filter(Week.x <=18)
- MAB_late <- MAB_chl %>% filter(Week.x >=18)
+ MAB_early<- MAB_chl %>% filter(Week.x <=26)
+ MAB_late <- MAB_chl %>% filter(Week.x >=26)
 
 MAB_chl_weekly <- ggplot2::ggplot(data = MAB_early) +
   ggplot2::geom_line(aes(x = Time, y = LTM)) +
@@ -58,8 +58,8 @@ MAB_chl_weekly <- ggplot2::ggplot(data = MAB_early) +
   ecodata::theme_title()
 
 MAB_pp <- interp_chl_pp(epu = "MAB", Variable =  "WEEKLY_PPD_MEDIAN")
-MAB_early<- MAB_pp %>% filter(Week.x <=18)
-MAB_late <- MAB_pp %>% filter(Week.x >=18)
+MAB_early<- MAB_pp %>% filter(Week.x <=26)
+MAB_late <- MAB_pp %>% filter(Week.x >=26)
 
 MAB_pp_weekly <- ggplot2::ggplot(data = MAB_early) +
   ggplot2::geom_line(aes(x = Time, y = LTM)) +
