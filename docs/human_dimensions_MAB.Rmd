@@ -1345,7 +1345,7 @@ ecodata::ppr %>%
   ecodata::theme_title()
 ```
 
-### Wind Energy Revenue
+### Wind Energy Area Revenue
 
 ```{r wea-spp-rev, fig.cap="Wind energy revenue in the Mid-Atlantic"}
 ecodata::wind_revenue %>%
@@ -1381,8 +1381,8 @@ ecodata::wind_revenue %>%
 
 ```{r wea-port-rev, fig.cap="Percent of port revenue from Wind Energy Areas(WEA) in descending order of most to least port revenue from WEA."}
 df.symbol <- ecodata::wind_port %>% filter(EPU == "MAB", 
-                                           !Var %in% c("wea_rev", "TOT_MAX", 
-                                                     "perc_rev_min", "perc_rev_max")) %>% 
+                                           !Var %in% c("WEA_MAX", "TOT_MAX", 
+                                                     "perc_MIN", "perc_MAX")) %>% 
    pivot_wider( names_from = Var, values_from = Value) %>%
   dplyr::mutate(City = paste0(City,State)) %>% 
   dplyr::select(City, EJ, Gent) %>% 
@@ -1396,15 +1396,15 @@ df.symbol <- ecodata::wind_port %>% filter(EPU == "MAB",
 
 df.all.perc<- ecodata::wind_port %>% filter(EPU == "MAB") %>%
   pivot_wider( names_from = Var, values_from = Value) %>%
-  dplyr::mutate(ordering = wea_rev,  
+  dplyr::mutate(ordering = WEA_MAX,  
                 City = paste0(City, State), 
-                TOT_MAX = c(100 - perc_rev_min - perc_rev_max)) %>% 
-  pivot_longer(cols = c(perc_rev_min,  perc_rev_max, TOT_MAX), names_to="Var", values_to = "Value") %>% 
+                TOT_MAX = c(100 - perc_MIN - perc_MAX)) %>% 
+  pivot_longer(cols = c(perc_MIN,  perc_MAX, TOT_MAX), names_to="Var", values_to = "Value") %>% 
   dplyr::arrange(desc(ordering)) %>%
   dplyr::mutate(City = factor(City, levels = unique(City))) %>% 
-  dplyr::filter(!Var %in% c("wea_rev", "EJ", "Gent")) %>% 
-  dplyr::mutate(Var = recode(Var,"perc_rev_min"= "WEA Revenue" , 
-                                  "perc_rev_max" ="WEA Revenue Min-Max Range", 
+  dplyr::filter(!Var %in% c("WEA_MAX", "EJ", "Gent")) %>% 
+  dplyr::mutate(Var = recode(Var,"perc_MIN"= "WEA Revenue" , 
+                                  "perc_MAX" ="WEA Revenue Min-Max Range", 
                              "TOT_MAX" = "Non-WEA Revenue"), 
                 Var = factor(Var, levels = c("Non-WEA Revenue", 
                                              "WEA Revenue Min-Max Range", 
