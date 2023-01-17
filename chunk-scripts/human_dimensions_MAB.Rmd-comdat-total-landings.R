@@ -4,7 +4,7 @@ managed_landings <- ecodata::comdat  %>%
   dplyr::filter(stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight")),
          !stringr::str_detect(Var, "Other"),
          Time >= 1986,
-         Time <=2021,
+         Time <=2022,
          EPU == epu_abbr)
 
 # HMS Landings
@@ -16,7 +16,7 @@ apex<-ecodata::hms_landings %>%
   mutate(Var = c("HMS Landings"), 
          Units = c("metric tons"), 
          EPU = c("MAB")) %>% 
-  dplyr::filter(Time <=2021)
+  dplyr::filter(Time <=2022)
 
 #Total landings
 total_landings <- ecodata::comdat  %>%
@@ -25,14 +25,16 @@ total_landings <- ecodata::comdat  %>%
          !stringr::str_detect(Var, "Apex"),
          stringr::str_detect(Var, "Landings"),
          Time >= 1986,
-         Time <=2021,
+         Time <=2022,
          EPU == epu_abbr) %>% 
-  rbind(apex)
+  rbind(apex) %>% 
+  dplyr::filter(!Value == "NA")
 
 total_landings_agg <- total_landings %>%
   dplyr::group_by(Time) %>%
   dplyr::summarise(Value = sum(Value)) %>% 
-  dplyr::mutate(Var = "Total",hline = mean(Value))
+  dplyr::mutate(Var = "Total",
+                hline = mean(as.numeric(Value)))
 
 managed_landings_agg <- managed_landings %>%
   dplyr::group_by(Time) %>%
