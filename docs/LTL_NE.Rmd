@@ -687,10 +687,10 @@ pp_cci_gom <- out_pp %>%
  
 ```
 
-#### Seasonal chlorophyll *a* & primary production
+#### Seasonal Chlorophyll *a* & Primary Production
 
 ```{r pp-weekly, fig.width = 8, fig.cap = "Weekly chlorophyll concentrations and primary productivity for 2021 in Georges Bank and Gulf of Maine are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD."}
-interp_chl_pp <- function(epu, year = 2021, Variable){
+interp_chl_pp <- function(epu, year = 2022, Variable){
   out <- ecodata::chl_pp %>%
     dplyr::filter(stringr::str_detect(Var,Variable),
            EPU == epu) %>%
@@ -727,8 +727,8 @@ GOM_ppd_weekly <- interp_chl_pp(epu = "GOM", Variable = "WEEKLY_PPD_MEDIAN")
 ne_ppd_weekly<-rbind(GB_ppd_weekly, GOM_ppd_weekly) %>% 
   dplyr::filter(!Value == "NA")
 
- ne_pp_early<-ne_ppd_weekly %>% filter(Time<=18)
- ne_pp_late<-ne_ppd_weekly %>% filter(Time >=18)
+ ne_pp_early<-ne_ppd_weekly %>% filter(Time<=26)
+ ne_pp_late<-ne_ppd_weekly %>% filter(Time >=26)
 
 ne_ppd <- ggplot2::ggplot(data = ne_pp_early) +
   ggplot2::geom_line(aes(x = Time, y = LTM)) +
@@ -764,7 +764,7 @@ ne_ppd
 ```
 
 ```{r chl-weekly, fig.width = 8, fig.cap = "Weekly chlorophyll concentrations and primary productivity for 2021 in Georges Bank and Gulf of Maine are shown by the colored lines in the above figures. The long-term mean is shown in black and shading indicates +/- 1 sample SD..."}
-interp_chl_pp <- function(epu, year = 2021, Variable){
+interp_chl_pp <- function(epu, year = 2022, Variable){
   out <- ecodata::chl_pp %>%
     dplyr::filter(stringr::str_detect(Var,Variable),
            EPU == epu) %>%
@@ -799,8 +799,8 @@ GOM_chl_weekly <- interp_chl_pp(epu = "GOM", Variable = "WEEKLY_CHLOR_A_MEDIAN")
 ne_chl_weekly<-rbind(GB_chl_weekly, GOM_chl_weekly)%>% 
   dplyr::filter(!Value == "NA")
 # 
- ne_early<-ne_chl_weekly %>% filter(Time <=18)
- ne_late<-ne_chl_weekly %>% filter(Time >=18)
+ ne_early<-ne_chl_weekly %>% filter(Time <=26)
+ ne_late<-ne_chl_weekly %>% filter(Time >=26)
 
 ne_chl <- ggplot2::ggplot(data = ne_early) +
   ggplot2::geom_line(aes(x = Time, y = LTM)) +
@@ -835,69 +835,71 @@ ne_chl
 ```
 
 
-#### Phytoplankton Size Class
+#### Phytoplankton Size class
 
 ```{r weekly-phyto-size, eval = T}
 
-month <- seq(as.Date("2021-01-01"), 
-             as.Date("2021-12-31"), 
+month <- seq(as.Date("2022-01-01"), 
+             as.Date("2022-12-31"), 
              by = "1 month")
 month_numeric <- lubridate::yday(month) / 365 * 52 + 1
 month_label <- lubridate::month(month, label = TRUE)
 
 phyto_year_nano<- ecodata::phyto_size %>% 
   dplyr::filter(EPU == c("GB"),
-                Var %in% c("WEEKLY_NANO_PERCENTAGE_MEDIAN", 
-                           "WEEKLY_MICRO_PERCENTAGE_MEDIAN")) %>% 
+                Var %in% c("WEEKLY_PSC_FNANO_MEDIAN", 
+                           "WEEKLY_PSC_FMICRO_MEDIAN")) %>% 
   mutate(Value = as.numeric(Value)) %>% 
-  dplyr::filter(!Value == "NA") %>% 
+  # dplyr::mutate(filter_me = 1:2600) %>% 
+  # dplyr::filter(!filter_me == 2463,
+  #               !filter_me == 1214) %>%
+  # dplyr::select(!filter_me) %>% 
   tidyr::pivot_wider(names_from = "Var", values_from = "Value") %>%
-  group_by(Time) %>% 
-  dplyr::mutate(nano = as.numeric(WEEKLY_NANO_PERCENTAGE_MEDIAN[1]) +
-                  as.numeric(WEEKLY_MICRO_PERCENTAGE_MEDIAN[1])) %>% 
+  dplyr::mutate(nano = as.numeric(WEEKLY_PSC_FNANO_MEDIAN) +
+                  as.numeric(WEEKLY_PSC_FMICRO_MEDIAN)) %>% 
   tidyr::separate(.,Time, into = c("Cat", "WEEK"), sep = "_") %>%
   dplyr::mutate(year = stringr::str_sub(WEEK, 1,4), 
                 wk = stringr::str_sub(WEEK, 5,6)) %>% 
   tidyr::pivot_longer(cols = c("nano"), 
                       names_to = "Var", values_to = "Value") %>% 
-  dplyr::filter(year == 2021, 
+  dplyr::filter(year == 2022, 
                 !Value == "NA") %>% 
   dplyr::mutate(Value = Value*100)
 
 
 phyto_year_micro<- ecodata::phyto_size %>% 
   dplyr::filter(EPU == c("GB"),
-                Var == c("WEEKLY_MICRO_PERCENTAGE_MEDIAN")) %>% 
+                Var == c("WEEKLY_PSC_FMICRO_MEDIAN")) %>% 
   mutate(Value = as.numeric(Value)) %>% 
   tidyr::separate(.,Time, into = c("Cat", "WEEK"), sep = "_") %>%
   dplyr::mutate(year = stringr::str_sub(WEEK, 1,4), 
                 wk = stringr::str_sub(WEEK, 5,6)) %>% 
-  dplyr::filter(year == 2021, 
+  dplyr::filter(year == 2022, 
                 !Value == "NA") %>% 
   dplyr::mutate(Value = Value*100)
 
 out_phyto<-  ecodata::phyto_size %>% 
   dplyr::filter(EPU == c("GB"),
-                stringr::str_detect(Var, ("CLIMATOLOGICAL_WEEK")), 
-                !Var == "CLIMATOLOGICAL_WEEK_PICO_MEDIAN",
-                !Var == "CLIMATOLOGICAL_WEEK_NANO_MEDIAN",
-                !Var == "CLIMATOLOGICAL_WEEK_MICRO_MEDIAN") %>% 
+                stringr::str_detect(Var, ("CLIMATOLOGICAL_WEEK"))) %>% #, 
+                #!Var == "CLIMATOLOGICAL_WEEK_PSC_PICO_MEDIAN",
+                #!Var == "CLIMATOLOGICAL_WEEK_PSC_NANO_MEDIAN",
+                #!Var == "CLIMATOLOGICAL_WEEK_PSC_MICRO_MEDIAN") %>% 
   #tidyr::pivot_longer(cols = Var, names_to = "Var2", values_to = "Vaue2" )
   tidyr::separate(Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
   dplyr::filter(!Value == "NA", 
                 !Var == "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")  %>%
   dplyr::mutate(Value = Value*100) 
   
-
+  
 p<-  ggplot2::ggplot() +
-  geom_area(aes(x=as.numeric(out_phyto$WEEK), y=out_phyto$Value,
-                fill = factor(out_phyto$Var, c("CLIMATOLOGICAL_WEEK_PICO_PERCENTAGE_MEDIAN",
-                                     "CLIMATOLOGICAL_WEEK_NANO_PERCENTAGE_MEDIAN",
-                                     "CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN"))), alpha=0.6)+
+  geom_area(aes(x=as.numeric(out_phyto$WEEK), y=out_phyto$Value, 
+                fill = factor(out_phyto$Var, c("CLIMATOLOGICAL_WEEK_PSC_FPICO_MEDIAN",
+                                               "CLIMATOLOGICAL_WEEK_PSC_FNANO_MEDIAN",
+                                               "CLIMATOLOGICAL_WEEK_PSC_FMICRO_MEDIAN"))), alpha=0.6)+
   #ggplot2::geom_point(data = chlor, aes(x = as.numeric(WEEK), y = Value)) +
-  ggplot2::geom_line( aes(x = as.numeric(phyto_year_nano$wk),
+  ggplot2::geom_line( aes(x = as.numeric(phyto_year_nano$wk), 
                           y = phyto_year_nano$Value), color = "#FC8D62", size = 1.5)+
-  ggplot2::geom_line( aes(x = as.numeric(phyto_year_micro$wk),
+  ggplot2::geom_line( aes(x = as.numeric(phyto_year_micro$wk), 
                           y = phyto_year_micro$Value), color = "#66C2A5", size = 1.5)+
   #ggplot2::facet_wrap(EPU~., ncol = 2)+
   ggplot2::ggtitle("Georges Bank") +
@@ -906,13 +908,13 @@ p<-  ggplot2::ggplot() +
   ecodata::theme_facet() +
   ggplot2::theme(axis.text.x = element_text(angle=45, hjust = 1),
                  panel.spacing = unit(.5, "lines"),
-                 plot.margin = unit(c(0.1, 0.1, 0, 0), "cm"),
+                 plot.margin = unit(c(0.1, 0, 0, 0), "cm"), 
                  legend.position= "none")+
   scale_fill_manual(values=c("#8DA0CB", "#FC8D62","#66C2A5"), name = "",
                     labels = c("Picoplankton",
                                "Nanoplankton", "Microplankton"))+
   #scale_y_continuous( name = "Phytoplankton Size Fraction", sec.axis = sec_axis(~.*2, name="Chlorophyll a (mg m^-3)"))+
-  scale_x_continuous(breaks = month_numeric,
+  scale_x_continuous(breaks = month_numeric, 
                      labels = month_label)+
   ecodata::theme_title()
 
@@ -923,43 +925,45 @@ month_numeric <- lubridate::yday(month) / 365 * 52 + 1
 month_label <- lubridate::month(month, label = TRUE)
 
 ### GOM
-phyto_year_nano_gom<- ecodata::phyto_size %>% 
+phyto_year_nano2<- ecodata::phyto_size %>% 
   dplyr::filter(EPU == c("GOM"),
-                Var %in% c("WEEKLY_NANO_PERCENTAGE_MEDIAN", 
-                           "WEEKLY_MICRO_PERCENTAGE_MEDIAN")) %>% 
+                Var %in% c("WEEKLY_PSC_FNANO_MEDIAN", 
+                           "WEEKLY_PSC_FMICRO_MEDIAN")) %>% 
   mutate(Value = as.numeric(Value)) %>% 
-  dplyr::filter(!Value == "NA") %>% 
+  # dplyr::mutate(filter_me = 1:2600) %>% 
+  # dplyr::filter(!filter_me == 2463,
+  #               !filter_me == 1214) %>%
+  # dplyr::select(!filter_me) %>% 
   tidyr::pivot_wider(names_from = "Var", values_from = "Value") %>%
-  group_by(Time) %>% 
-  dplyr::mutate(nano = as.numeric(WEEKLY_NANO_PERCENTAGE_MEDIAN[1]) +
-                  as.numeric(WEEKLY_MICRO_PERCENTAGE_MEDIAN[1])) %>% 
+  dplyr::mutate(nano = as.numeric(WEEKLY_PSC_FNANO_MEDIAN) +
+                  as.numeric(WEEKLY_PSC_FMICRO_MEDIAN)) %>% 
   tidyr::separate(.,Time, into = c("Cat", "WEEK"), sep = "_") %>%
   dplyr::mutate(year = stringr::str_sub(WEEK, 1,4), 
                 wk = stringr::str_sub(WEEK, 5,6)) %>% 
   tidyr::pivot_longer(cols = c("nano"), 
                       names_to = "Var", values_to = "Value") %>% 
-  dplyr::filter(year == 2021, 
+  dplyr::filter(year == 2022, 
                 !Value == "NA") %>% 
   dplyr::mutate(Value = Value*100)
 
 
-phyto_year_micro_gom<- ecodata::phyto_size %>% 
+phyto_year_micro2<- ecodata::phyto_size %>% 
   dplyr::filter(EPU == c("GOM"),
-                Var == c("WEEKLY_MICRO_PERCENTAGE_MEDIAN")) %>% 
+                Var == c("WEEKLY_PSC_FMICRO_MEDIAN")) %>% 
   mutate(Value = as.numeric(Value)) %>% 
   tidyr::separate(.,Time, into = c("Cat", "WEEK"), sep = "_") %>%
   dplyr::mutate(year = stringr::str_sub(WEEK, 1,4), 
                 wk = stringr::str_sub(WEEK, 5,6)) %>% 
-  dplyr::filter(year == 2021, 
+  dplyr::filter(year == 2022, 
                 !Value == "NA") %>% 
   dplyr::mutate(Value = Value*100)
 
-out_phyto_gom<-  ecodata::phyto_size %>% 
+out_phyto2<-  ecodata::phyto_size %>% 
   dplyr::filter(EPU == c("GOM"),
-                stringr::str_detect(Var, ("CLIMATOLOGICAL_WEEK")), 
-                !Var == "CLIMATOLOGICAL_WEEK_PICO_MEDIAN",
-                !Var == "CLIMATOLOGICAL_WEEK_NANO_MEDIAN",
-                !Var == "CLIMATOLOGICAL_WEEK_MICRO_MEDIAN") %>% 
+                stringr::str_detect(Var, ("CLIMATOLOGICAL_WEEK"))) %>% #, 
+                #!Var == "CLIMATOLOGICAL_WEEK_PSC_PICO_MEDIAN",
+                #!Var == "CLIMATOLOGICAL_WEEK_PSC_NANO_MEDIAN",
+                #!Var == "CLIMATOLOGICAL_WEEK_PSC_MICRO_MEDIAN") %>% 
   #tidyr::pivot_longer(cols = Var, names_to = "Var2", values_to = "Vaue2" )
   tidyr::separate(Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
   dplyr::filter(!Value == "NA", 
@@ -968,15 +972,15 @@ out_phyto_gom<-  ecodata::phyto_size %>%
   
   
 p2<-  ggplot2::ggplot() +
-  geom_area(aes(x=as.numeric(out_phyto_gom$WEEK), y=out_phyto_gom$Value, 
-                fill = factor(out_phyto_gom$Var, c("CLIMATOLOGICAL_WEEK_PICO_PERCENTAGE_MEDIAN",
-                                     "CLIMATOLOGICAL_WEEK_NANO_PERCENTAGE_MEDIAN", 
-                                     "CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN"))), alpha=0.6)+
+  geom_area(aes(x=as.numeric(out_phyto2$WEEK), y=out_phyto2$Value, 
+                fill = factor(out_phyto2$Var, c("CLIMATOLOGICAL_WEEK_PSC_FPICO_MEDIAN",
+                                               "CLIMATOLOGICAL_WEEK_PSC_FNANO_MEDIAN",
+                                               "CLIMATOLOGICAL_WEEK_PSC_FMICRO_MEDIAN"))), alpha=0.6)+
   #ggplot2::geom_point(data = chlor, aes(x = as.numeric(WEEK), y = Value)) +
-  ggplot2::geom_line( aes(x = as.numeric(phyto_year_nano_gom$wk), 
-                          y = phyto_year_nano_gom$Value), color = "#FC8D62", size = 1.5)+
-  ggplot2::geom_line( aes(x = as.numeric(phyto_year_micro_gom$wk), 
-                          y = phyto_year_micro_gom$Value), color =  "#66C2A5", size = 1.5)+
+  ggplot2::geom_line( aes(x = as.numeric(phyto_year_nano2$wk), 
+                          y = phyto_year_nano2$Value), color = "#FC8D62", size = 1.5)+
+  ggplot2::geom_line( aes(x = as.numeric(phyto_year_micro2$wk), 
+                          y = phyto_year_micro2$Value), color = "#66C2A5", size = 1.5)+
   #ggplot2::facet_wrap(EPU~., ncol = 2)+
   ggplot2::ggtitle("Gulf of Maine") +
   ggplot2::ylab(element_blank()) +
@@ -984,8 +988,8 @@ p2<-  ggplot2::ggplot() +
   ecodata::theme_facet() +
   ggplot2::theme(axis.text.x = element_text(angle=45, hjust = 1),
                  panel.spacing = unit(.5, "lines"),
-                 plot.margin = unit(c(0.1, 0.1, 0, 0), "cm"),
-  legend.position= "none", 
+                 plot.margin = unit(c(0.1, 0, 0, 0), "cm"), 
+                 legend.position= "none", 
   axis.text.y = element_blank(), 
   axis.ticks.y = element_blank())+
   scale_fill_manual(values=c("#8DA0CB", "#FC8D62","#66C2A5"), name = "",
@@ -995,6 +999,7 @@ p2<-  ggplot2::ggplot() +
   scale_x_continuous(breaks = month_numeric, 
                      labels = month_label)+
   ecodata::theme_title()
+
 
 plot_row<- cowplot::plot_grid(p, p2, ncol = 2)
 title <- cowplot::ggdraw() + 
@@ -1023,32 +1028,32 @@ cowplot::plot_grid(plot_w_title, legend_b, ncol = 1,rel_heights = c(1, 0.1) )
 
 
 
-```{r seasonal-phyto-size}
+<!-- ```{r seasonal-phyto-size} -->
 
-micro_chlor <- ecodata::phyto_size %>% 
-  dplyr::filter(EPU %in% c("GB", "GOM"),
-                Var %in% c("CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN", 
-                           "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")) %>% 
-  tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>% 
-  dplyr::filter(!Value == "NA") %>% 
-  dplyr::select(-Year1, -Year2, -Cat,  -Units) %>% 
-  tidyr::pivot_wider(id_cols= c(EPU, WEEK), names_from = Var, values_from = Value) %>% 
-  dplyr::mutate(Month = rep(1:4, each = 26)) %>% 
-  ggplot2::ggplot() +
-  ggplot2::geom_point( aes(x = CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN, 
-                           y = CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN, color = factor(Month))) +
-  
-  
-  ggplot2::scale_color_discrete(name = "Season", labels=c("Jan-Mar", "Apr-Jun", "Jul-Sep", "Oct-Dec"))+
-  ggplot2::ggtitle("") +
-  ggplot2::facet_wrap(~EPU)+
-  ggplot2::ylab("Chlorophyll a (mg m^-3)") +
-  ggplot2::xlab("Microplankton % of Total Phytoplankton Composition ") +
-  ecodata::theme_facet()+
-  ecodata::theme_title()
-#micro_chlor
+<!-- micro_chlor <- ecodata::phyto_size %>%  -->
+<!--   dplyr::filter(EPU %in% c("GB", "GOM"), -->
+<!--                 Var %in% c("CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN",  -->
+<!--                            "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")) %>%  -->
+<!--   tidyr::separate(.,Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") %>%  -->
+<!--   dplyr::filter(!Value == "NA") %>%  -->
+<!--   dplyr::select(-Year1, -Year2, -Cat,  -Units) %>%  -->
+<!--   tidyr::pivot_wider(id_cols= c(EPU, WEEK), names_from = Var, values_from = Value) %>%  -->
+<!--   dplyr::mutate(Month = rep(1:4, each = 26)) %>%  -->
+<!--   ggplot2::ggplot() + -->
+<!--   ggplot2::geom_point( aes(x = CLIMATOLOGICAL_WEEK_MICRO_PERCENTAGE_MEDIAN,  -->
+<!--                            y = CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN, color = factor(Month))) + -->
 
-```
+
+<!--   ggplot2::scale_color_discrete(name = "Season", labels=c("Jan-Mar", "Apr-Jun", "Jul-Sep", "Oct-Dec"))+ -->
+<!--   ggplot2::ggtitle("") + -->
+<!--   ggplot2::facet_wrap(~EPU)+ -->
+<!--   ggplot2::ylab("Chlorophyll a (mg m^-3)") + -->
+<!--   ggplot2::xlab("Microplankton % of Total Phytoplankton Composition ") + -->
+<!--   ecodata::theme_facet()+ -->
+<!--   ecodata::theme_title() -->
+<!-- #micro_chlor -->
+
+<!-- ``` -->
 
 
 <!-- ```{r chl-monthly, fig.width = 8, fig.height=8, eval = F} -->
