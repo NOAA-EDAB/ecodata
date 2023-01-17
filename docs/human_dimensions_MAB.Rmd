@@ -1250,7 +1250,7 @@ ecodata::ppr %>%
   ecodata::theme_title()
 ```
 
-#### Ryther
+#### Ryther index
 
 ```{r ryther, fig.cap="Ryther Index"}
 
