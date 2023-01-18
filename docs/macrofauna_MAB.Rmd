@@ -1208,7 +1208,7 @@ ecodata::narw %>%
 
 ```
 
-```{r NARW-calf-abundance, fig.cap = "Number of North Atlantic right whale calf births, 1990 - 2021."}
+```{r NARW-calf-abundance, fig.cap = "Number of North Atlantic right whale calf births, 1990 - 2022."}
 
 ecodata::narw %>% 
   dplyr::filter(Var == "Calves") %>%

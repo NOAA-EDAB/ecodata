@@ -17,7 +17,7 @@ com2<-com %>%
                      breaks = com$EJRating, 
                      direction = 1) +
   xlim(-1,13)+
-  ylim(-1,5)+
+  ylim(-1,14)+
   theme(legend.position=c(0.75, 0.83), 
         legend.title = element_blank(),       
         legend.background = element_blank(),
