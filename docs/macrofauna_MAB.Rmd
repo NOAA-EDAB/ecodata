@@ -1246,13 +1246,13 @@ ecodata::narw %>%
 
 ```{r rw-hotspot, fig.cap = ""}
 
-knitr::include_graphics(file.path(image.dir, "right_whales.jpg"))
+knitr::include_graphics(file.path(image.dir, "NARW_hotspots_1_18_2023.jpg"))
 
 ```
 
 ```{r ps-hotspot, fig.cap = "Seabirds, Turtles, Whales"}
 
-knitr::include_graphics(file.path(image.dir, "seabird_turtle_whale_hotspots.jpeg"))
+knitr::include_graphics(file.path(image.dir, "SOE_hotspots_v2.jpeg"))
 
 ```
 
