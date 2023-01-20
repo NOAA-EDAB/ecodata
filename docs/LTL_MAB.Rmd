@@ -1365,7 +1365,7 @@ gridExtra::grid.arrange(cpi, pi,ei, ncol=3)
 
 
 
-### Marine Heat Wave
+### Marine Heatwave
 
 [notes here](https://docs.google.com/document/d/1M0wS9cxiK128ZlkmJpW9p3s9jY5FlCKA4lZX5zrbvmA/edit)
 

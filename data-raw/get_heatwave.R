@@ -223,8 +223,18 @@ get_heatwave <- function(save_clean = F){
     dplyr::select(Time, Var, Value, EPU, Units)
 
 
-  heatwave<- rbind(heatwave_surface, heatwave_detrended, bheatwave_detrended)
+  heatwave<- rbind(heatwave_surface, heatwave_detrended,
+                   bheatwave_detrended)
 
+  heatwave_zeros <- expand.grid(Time = unique(heatwave$Time),
+                                Var = unique(heatwave$Var),
+                                EPU = unique(heatwave$EPU)) %>%
+    dplyr::mutate(Value2 = 0)
+
+  heatwave<- heatwave %>% right_join(heatwave_zeros) %>%
+    dplyr::mutate(Value = case_when(is.na(Value)~Value2,
+                                    TRUE ~ Value)) %>%
+    dplyr::select(!Value2)
 
   if (save_clean){
     usethis::use_data(heatwave, overwrite = T)
