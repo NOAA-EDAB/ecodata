@@ -137,6 +137,14 @@ get_grayseal <- function(save_clean = F){
     tibble::as_tibble() %>%
     dplyr::select(Time, Var, Value, EPU)
 
+  gs20_21<- data.frame(Time = c(2021, 2021, 2021, 2021, 2021,
+                                2020, 2020, 2020, 2020, 2020),
+                       Var = c("pbr","totalest5y", "total5yUCI", "total5yLCI", "totalest1y",
+                               "pbr","totalest5y", "total5yUCI", "total5yLCI", "totalest1y"),
+                       Value = c(1389, 1351, 1577, 1158, 109,
+                                 1389, 1248, 1420, 1097, 1418),
+                       EPU = c("ALL"))
+  grayseal<- grayseal %>% rbind(gs20_21)
   # metadata ----
   attr(grayseal, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/harbor-porpoise-and-gray-seal-bycatch.html"
   attr(grayseal, "data_files")   <- list(

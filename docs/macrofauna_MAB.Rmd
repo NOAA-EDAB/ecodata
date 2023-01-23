@@ -1090,7 +1090,6 @@ ecodata::observed_sharks %>%
 ## Shelfwide Indicators{.tabset .tabset-fade}
 
 ### Protected species 
-<span style="color: red;">NO NEW DATA - No bycatch data this year</span>
 
 ```{r harborporpoise, fig.cap="Estimated Harbor porpoise bycatch (black) and the potential biological removal (red)." }
 

@@ -124,7 +124,15 @@ get_harborporpoise <- function(save_clean = F){
     tibble::as_tibble() %>%
     dplyr::select(Time, Var, Value, EPU)
 
-  # metadata ----
+  hp20_21<- data.frame(Time = c(2021, 2021, 2021, 2021, 2021,
+                                2020, 2020, 2020, 2020, 2020),
+                       Var = c("pbr","totalest5y", "total5yUCI", "total5yLCI", "totalest1y",
+                               "pbr","totalest5y", "total5yUCI", "total5yLCI", "totalest1y"),
+                       Value = c(649, 145, 183, 115, 121,
+                                 851, 149, 176, 126, 137),
+                       EPU = c("ALL"))
+  harborporpoise<- harborporpoise %>% rbind(hp20_21)
+  # metadata ---
   attr(harborporpoise, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/harbor-porpoise-bycatch.html"
   attr(harborporpoise, "data_files")   <- list(
     harborporpoise_csv = harborporpoise_csv)
