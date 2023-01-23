@@ -17,9 +17,9 @@ heatwave_gomd<-"GOM_SST_1982_to_2022_detrended.csv"
 heatwave_mabd<-"MAB_SST_1982_to_2022_detrended.csv"
 
 ## Bottom Detrended
-bheatwave_gbd<-"GB_BT_1982_to_2022_detrended.csv"
-bheatwave_gomd<-"GOM_BT_1982_to_2022_detrended.csv"
-bheatwave_mabd<-"MAB_BT_1982_to_2022_detrended.csv"
+bheatwave_gbd<-"GB_BT_1982_to_2022_detrended_v2.csv"
+bheatwave_gomd<-"GOM_BT_1982_to_2022_detrended_v2.csv"
+bheatwave_mabd<-"MAB_BT_1982_to_2022_detrended_v2.csv"
 
 get_heatwave <- function(save_clean = F){
 

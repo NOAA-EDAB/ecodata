@@ -39,9 +39,9 @@ get_bottom_temp_comp <- function(save_clean = F){
 get_bottom_temp_comp(save_clean = T)
 
 
-bt_nc <- "bt_temp_anomaly_season_2022.nc"
+bt_nc <- "bt_temp_anomaly_season_2022_soe.nc"
 
-get_bottom_temp_seasnonal_gridded <- function(save_clean = F){
+get_bottom_temp_seasonal_gridded <- function(save_clean = F){
 
   b1<- raster::stack(file.path(raw.dir,bt_nc))
   seasonal_bt_anomaly_gridded<- as.data.frame(b1) %>%
@@ -62,5 +62,5 @@ get_bottom_temp_seasnonal_gridded <- function(save_clean = F){
     return(seasonal_bt_anomaly_gridded)
   }
 }
-get_bottom_temp_seasnonal_gridded(save_clean = T)
+get_bottom_temp_seasonal_gridded(save_clean = T)
 

@@ -300,7 +300,16 @@ bt_map
 ```
 
 ```{r seasonal-bt-anom, fig.width = 8, fig.cap="GB and GOM seasonal Bottom Temperature anomaly time series."}
-ne_anom <- ecodata::bottom_temp_comp %>% 
+
+bt1<- ecodata::bottom_temp_comp %>%
+  dplyr::filter(Time >= 2021) %>% 
+  dplyr::mutate(Source = c("PSY"))
+bt_ts<- ecodata::bottom_temp_comp %>% 
+  dplyr::filter(Time <= 2020) %>% 
+  dplyr::mutate(Source = c("Glorys")) %>% 
+  rbind(bt1) 
+
+ne_anom <- bt_ts %>% 
   dplyr::filter(EPU %in% c("GB","GOM")) %>% 
   dplyr::mutate(Time = as.numeric(Time),
                 hline = 0,
@@ -315,7 +324,8 @@ ne_anom_plt <- ggplot2::ggplot(data = ne_anom,
                     xmin = x.shade.min , xmax = x.shade.max,
                     ymin = -Inf, ymax = Inf) +
   ggplot2::geom_line()+
-  ggplot2::geom_point()+
+  ggplot2::geom_point(aes(shape = Source))+
+  ggplot2::scale_shape_manual(values = c(16, 1)) + 
   ggplot2::ylim(-2,3)+
   ggplot2::ylab(expression("BT Anomaly (C)")) +
   ggplot2::xlab(element_blank())+
@@ -1833,14 +1843,21 @@ ecodata::heatwave_year %>%
 ```
 
 ```{r bottom-heatwave-gb, fig.cap="Bottom heatwave cumulative intesity (left) and maximum intensity (right) in Georges Bank."}
+hw1<- ecodata::heatwave %>%
+  dplyr::filter(Time >= 2021) %>% 
+  dplyr::mutate(Source = c("PSY"))
+hwts<- ecodata::heatwave %>% 
+  dplyr::filter(Time <= 2020) %>% 
+  dplyr::mutate(Source = c("Glorys")) %>% 
+  rbind(hw1) 
 
-cumud <- ecodata::heatwave %>% 
+cumud <- hwts %>% 
   dplyr::filter(Var == "cumulative intensity-BottomDetrended") %>% 
   dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-BottomDetrended" = "Cumulative Intensity Detrended (degree C x days)"))
 
-maxind <- ecodata::heatwave %>% 
+maxind <- hwts %>% 
   dplyr::filter(Var == "maximum intensity-BottomDetrended") %>% 
-  dplyr::group_by(Time, EPU, Var, Units) %>% 
+  dplyr::group_by(Time, EPU, Var, Units, Source) %>% 
   dplyr::summarise(Value = max(Value)) %>% 
   dplyr::ungroup() %>% 
   dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-BottomDetrended" = "Maximum Intensity Detrended (degree C)"))
@@ -1854,7 +1871,8 @@ mab.hw<- hw %>% dplyr::filter(EPU == "GB")
 mab.hw %>% 
   ggplot2::ggplot() +
   ggplot2::geom_line(aes(x = Time, y = Value)) +
-  ggplot2::geom_point(aes(x = Time, y = Value)) +
+  ggplot2::geom_point(aes(x = Time, y = Value, shape = Source)) +
+  ggplot2::scale_shape_manual(values = c(16, 1)) + 
   ecodata::geom_gls(aes(x = Time, y = Value))+ 
   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("") +
@@ -1877,14 +1895,21 @@ mab.hw %>%
 ```
 
 ```{r bottom-heatwave-gom, fig.cap="Bottom heatwave cumulative intesity (left) and maximum intensity (right) in Gulf of Maine."}
+hw1<- ecodata::heatwave %>%
+  dplyr::filter(Time >= 2021) %>% 
+  dplyr::mutate(Source = c("PSY"))
+hwts<- ecodata::heatwave %>% 
+  dplyr::filter(Time <= 2020) %>% 
+  dplyr::mutate(Source = c("Glorys")) %>% 
+  rbind(hw1) 
 
-cumud <- ecodata::heatwave %>% 
+cumud <- hwts %>% 
   dplyr::filter(Var == "cumulative intensity-BottomDetrended") %>% 
   dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-BottomDetrended" = "Cumulative Intensity Detrended (degree C x days)"))
 
-maxind <- ecodata::heatwave %>% 
+maxind <- hwts %>% 
   dplyr::filter(Var == "maximum intensity-BottomDetrended") %>% 
-  dplyr::group_by(Time, EPU, Var, Units) %>% 
+  dplyr::group_by(Time, EPU, Var, Units, Source) %>% 
   dplyr::summarise(Value = max(Value)) %>% 
   dplyr::ungroup() %>% 
   dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-BottomDetrended" = "Maximum Intensity Detrended (degree C)"))
@@ -1898,7 +1923,8 @@ mab.hw<- hw %>% dplyr::filter(EPU == "GOM")
 mab.hw %>% 
   ggplot2::ggplot() +
   ggplot2::geom_line(aes(x = Time, y = Value)) +
-  ggplot2::geom_point(aes(x = Time, y = Value)) +
+  ggplot2::geom_point(aes(x = Time, y = Value,  shape = Source)) +
+  ggplot2::scale_shape_manual(values = c(16, 1)) + 
   ecodata::geom_gls(aes(x = Time, y = Value))+ 
   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("") +
