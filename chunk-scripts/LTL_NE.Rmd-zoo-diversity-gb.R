@@ -1,10 +1,12 @@
 
 zoo_div <- ecodata::zoo_diversity %>% 
-  dplyr::filter(EPU %in% c("GOM","GB"))
+  dplyr::filter(EPU %in% c("GOM","GB"), 
+                Time > 1991)
 
 
 gb_zoo_div <- zoo_div %>% 
   dplyr::filter(EPU == "GB") %>% 
+  #dplyr::mutate(hline = mean(Value)) %>% 
   ggplot2::ggplot(aes(x = Time, y = Value, group = Var)) +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
@@ -19,7 +21,7 @@ gb_zoo_div <- zoo_div %>%
   ggplot2::ggtitle("GB Zooplankton Diversity") +
   ggplot2::facet_wrap(Var~., ncol = 3) +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
-  ggplot2::geom_hline(aes(yintercept = mean(Value)),
+  ggplot2::geom_hline(aes(yintercept = mean(Value, na.rm = TRUE)),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+

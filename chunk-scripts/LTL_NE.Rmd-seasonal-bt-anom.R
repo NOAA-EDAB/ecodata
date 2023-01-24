@@ -1,5 +1,13 @@
 
-ne_anom <- ecodata::bottom_temp_comp %>% 
+bt1<- ecodata::bottom_temp_comp %>%
+  dplyr::filter(Time >= 2021) %>% 
+  dplyr::mutate(Source = c("PSY"))
+bt_ts<- ecodata::bottom_temp_comp %>% 
+  dplyr::filter(Time <= 2020) %>% 
+  dplyr::mutate(Source = c("Glorys")) %>% 
+  rbind(bt1) 
+
+ne_anom <- bt_ts %>% 
   dplyr::filter(EPU %in% c("GB","GOM")) %>% 
   dplyr::mutate(Time = as.numeric(Time),
                 hline = 0,
@@ -14,7 +22,8 @@ ne_anom_plt <- ggplot2::ggplot(data = ne_anom,
                     xmin = x.shade.min , xmax = x.shade.max,
                     ymin = -Inf, ymax = Inf) +
   ggplot2::geom_line()+
-  ggplot2::geom_point()+
+  ggplot2::geom_point(aes(shape = Source))+
+  ggplot2::scale_shape_manual(values = c(16, 1)) + 
   ggplot2::ylim(-2,3)+
   ggplot2::ylab(expression("BT Anomaly (C)")) +
   ggplot2::xlab(element_blank())+

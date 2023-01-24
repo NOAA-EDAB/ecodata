@@ -1,11 +1,19 @@
 
-cumud <- ecodata::heatwave %>% 
+hw1<- ecodata::heatwave %>%
+  dplyr::filter(Time >= 2021) %>% 
+  dplyr::mutate(Source = c("PSY"))
+hwts<- ecodata::heatwave %>% 
+  dplyr::filter(Time <= 2020) %>% 
+  dplyr::mutate(Source = c("Glorys")) %>% 
+  rbind(hw1) 
+
+cumud <- hwts %>% 
   dplyr::filter(Var == "cumulative intensity-BottomDetrended") %>% 
   dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-BottomDetrended" = "Cumulative Intensity Detrended (degree C x days)"))
 
-maxind <- ecodata::heatwave %>% 
+maxind <- hwts %>% 
   dplyr::filter(Var == "maximum intensity-BottomDetrended") %>% 
-  dplyr::group_by(Time, EPU, Var, Units) %>% 
+  dplyr::group_by(Time, EPU, Var, Units, Source) %>% 
   dplyr::summarise(Value = max(Value)) %>% 
   dplyr::ungroup() %>% 
   dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-BottomDetrended" = "Maximum Intensity Detrended (degree C)"))
@@ -19,7 +27,8 @@ mab.hw<- hw %>% dplyr::filter(EPU == "GOM")
 mab.hw %>% 
   ggplot2::ggplot() +
   ggplot2::geom_line(aes(x = Time, y = Value)) +
-  ggplot2::geom_point(aes(x = Time, y = Value)) +
+  ggplot2::geom_point(aes(x = Time, y = Value,  shape = Source)) +
+  ggplot2::scale_shape_manual(values = c(16, 1)) + 
   ecodata::geom_gls(aes(x = Time, y = Value))+ 
   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
   ggplot2::ylab("") +

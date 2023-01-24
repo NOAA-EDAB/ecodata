@@ -23,10 +23,10 @@ df.all.perc<- ecodata::wind_port %>% filter(EPU == "MAB") %>%
   dplyr::mutate(City = factor(City, levels = unique(City))) %>% 
   dplyr::filter(!Var %in% c("WEA_MAX", "EJ", "Gent")) %>% 
   dplyr::mutate(Var = recode(Var,"perc_MIN"= "WEA Revenue" , 
-                                  "perc_MAX" ="WEA Revenue Min-Max Range", 
+                                  "perc_MAX" ="WEA Revenue Range", 
                              "TOT_MAX" = "Non-WEA Revenue"), 
                 Var = factor(Var, levels = c("Non-WEA Revenue", 
-                                             "WEA Revenue Min-Max Range", 
+                                             "WEA Revenue Range", 
                                              "WEA Revenue")))
 p2<-ggplot2::ggplot()+
   ggplot2::geom_bar(data = df.all.perc, aes(fill = Var, y = reorder(City, ordering), x = Value), stat="identity" )+

@@ -1,7 +1,7 @@
 
 ecodata::wind_revenue %>%
   tidyr::separate(Var, sep = "-", into = c("Species", "Var")) %>% 
-  dplyr::filter(Var == "sum_landing") %>% 
+  dplyr::filter(Var == "sum_value") %>% 
   dplyr::mutate(Value = as.numeric(Value), 
                 Value = Value/1000000,
                 Time = as.integer(Time)) %>%

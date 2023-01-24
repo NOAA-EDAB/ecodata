@@ -1,6 +1,7 @@
 
 zoo_div <- ecodata::zoo_diversity %>% 
-  dplyr::filter(EPU == epu_abbr) %>% 
+  dplyr::filter(EPU == epu_abbr, 
+                Time > 1991) %>% 
   dplyr::mutate(hline = mean(Value, na.rm = TRUE))
 
 zoo_div %>% 

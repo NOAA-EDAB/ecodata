@@ -1,4 +1,15 @@
 
+cumu <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "cumulative intensity-Surface") %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-Surface" = "Cumulative Intensity (degree C x days)"))
+
+maxin <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "maximum intensity-Surface") %>% 
+  dplyr::group_by(Time, EPU, Var, Units) %>% 
+  dplyr::summarise(Value = max(Value)) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-Surface" = "Maximum Intensity (degree C)"))
+
 cumud <- ecodata::heatwave %>% 
   dplyr::filter(Var == "cumulative intensity-SurfaceDetrended") %>% 
   dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-SurfaceDetrended" = "Cumulative Intensity Detrended (degree C x days)"))
@@ -11,8 +22,8 @@ maxind <- ecodata::heatwave %>%
   dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-SurfaceDetrended" = "Maximum Intensity Detrended (degree C)"))
 
 
-hw<- cumud %>%
-  rbind( maxind) %>% 
+hw<- cumu %>%
+  rbind(maxin, cumud, maxind) %>% 
   dplyr::group_by(Var, EPU) %>% 
   dplyr::mutate(hline = mean(Value))
 
@@ -35,7 +46,7 @@ mab.hw %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ggplot2::facet_wrap(~Var, scales = "free")+
-  ecodata::theme_facet()+
+  ecodata::theme_ts()+
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"))+
   ecodata::theme_title()

@@ -64,9 +64,17 @@ bt_map <- function(season){
         axis.title.y = element_text(angle = 90))+
   ecodata::theme_title()
 }
+bt1<- ecodata::bottom_temp_comp %>%
+  dplyr::filter(Time >= 2021) %>% 
+  dplyr::mutate(Source = c("PSY"))
+bt_ts<- ecodata::bottom_temp_comp %>% 
+  dplyr::filter(Time <= 2020) %>% 
+  dplyr::mutate(Source = c("Glorys")) %>% 
+  rbind(bt1) 
+
 
 season_anom <- function(season){
-  ggplot2::ggplotGrob(ecodata::bottom_temp_comp %>%  
+  ggplot2::ggplotGrob(bt_ts %>%  
                               dplyr::filter(EPU == "MAB",
                                      stringr::str_detect(Var, season)) %>% 
                               dplyr::mutate(hline = mean(Value), 
@@ -76,7 +84,8 @@ season_anom <- function(season){
                                        xmin = x.shade.min , xmax = x.shade.max,
                                        ymin = -Inf, ymax = Inf) +
                               ggplot2::geom_line() +
-                              ggplot2::geom_point() +
+                              ggplot2::geom_point(aes(shape = Source)) +
+                              ggplot2::scale_shape_manual(values = c(16, 1))+
                               ecodata::geom_gls(alpha = trend.alpha + 0.25) +
                               ggplot2::ylab("BT anomaly (C)")+
                               ggplot2::xlab(element_blank())+
@@ -93,7 +102,8 @@ season_anom <- function(season){
                                     legend.box.background = element_rect(fill = "transparent"), 
                                     legend.key = element_rect(fill = "transparent", colour = NA), 
                                     axis.line = element_blank(),
-                                    panel.border = element_blank())
+                                    panel.border = element_blank(), 
+                                    legend.position = "none")
   )
 }
 

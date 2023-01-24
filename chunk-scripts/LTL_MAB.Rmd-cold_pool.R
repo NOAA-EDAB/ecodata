@@ -1,5 +1,15 @@
 
-cpi<- ecodata::cold_pool %>% 
+cp1<- ecodata::cold_pool %>%
+  dplyr::filter(Time >= 2021) %>% 
+  dplyr::mutate(Source = c("PSY"))
+cpts<- ecodata::cold_pool %>% 
+  dplyr::filter(Time <= 2020) %>% 
+  dplyr::mutate(Source = c("Glorys")) %>% 
+  rbind(cp1) 
+
+
+
+cpi<- cpts %>% 
   dplyr::filter(stringr::str_detect(Var, pattern = "cold_pool")) %>% 
   dplyr::mutate(Value = Value*-1) %>% 
   tidyr::pivot_wider(names_from = Var, values_from = Value)  %>% 
@@ -14,7 +24,9 @@ cpi<- ecodata::cold_pool %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf)+
   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
-  ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
+  ggplot2::geom_point(aes(x = Time, y = Value, shape = Source), size = pcex) +
+  ggplot2::scale_shape_manual(values = c(16, 1))+
+  ggplot2::theme(legend.position = "none")+
   # ggplot2::geom_ribbon(aes(x = Time, ymin = Lower, ymax = Upper), fill = "gray")+
   ggplot2::geom_hline(aes(yintercept = 0))+
   ecodata::geom_gls(aes(x = Time, y = Value))+
@@ -24,17 +36,13 @@ cpi<- ecodata::cold_pool %>%
   ggplot2::xlab("")+
   ecodata::theme_ts()+
   ecodata::theme_title()+
-  # ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.05, yend = 2,
-  #          colour = "blue", size = 0.7, arrow = arrow())+
-  # ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -2.2,
-  #          colour = "red", size = 0.7, arrow = arrow())+
   ggplot2::annotate("text", x = 1990, y = 2.2, label = "Colder", size = 4,colour = "blue")+
    ggplot2::annotate("text", x = 1990, y = -2.5, label = "Warmer",size = 4, colour = "red")
 
 
   
   
-ei<- ecodata::cold_pool %>% 
+ei<- cpts %>% 
   dplyr::filter(stringr::str_detect(Var, pattern = "extent")) %>% 
   tidyr::pivot_wider(names_from = Var, values_from = Value)  %>% 
   dplyr::mutate(Upper = extent_index + se_extent_index, 
@@ -47,7 +55,9 @@ ei<- ecodata::cold_pool %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf)+
   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
-  ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
+  ggplot2::geom_point(aes(x = Time, y = Value, shape = Source), size = pcex) +
+  ggplot2::scale_shape_manual(values = c(16, 1))+
+  ggplot2::theme(legend.position = "none")+
   ggplot2::geom_hline(aes(yintercept = 0))+
   ecodata::geom_gls(aes(x = Time, y = Value))+
   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
@@ -63,7 +73,7 @@ ei<- ecodata::cold_pool %>%
    ggplot2::annotate("text", x = 1990, y = -400, label = "Smaller",size = 4, colour = "red")
 
 
-pi<- ecodata::cold_pool %>% 
+pi<- cpts %>% 
   dplyr::filter(stringr::str_detect(Var, pattern = "persistence")) %>% 
   tidyr::pivot_wider(names_from = Var, values_from = Value)  %>% 
   dplyr::mutate(Upper = persistence_index + se_persistence_index, 
@@ -76,7 +86,9 @@ pi<- ecodata::cold_pool %>%
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf)+
   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
-  ggplot2::geom_point(aes(x = Time, y = Value), size = pcex) +
+  ggplot2::geom_point(aes(x = Time, y = Value, shape = Source), size = pcex) +
+  ggplot2::scale_shape_manual(values = c(16, 1))+
+  ggplot2::theme(legend.position = "none")+
   ggplot2::geom_hline(aes(yintercept = 0))+
   ecodata::geom_gls(aes(x = Time, y = Value))+
   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
@@ -93,4 +105,4 @@ pi<- ecodata::cold_pool %>%
 
 #cowplot::plot_grid(cpi, pi, ei, labels = c('a', 'b', 'c'), align = "h")
 
-gridExtra::grid.arrange(cpi, pi,ei, ncol=3)
+gridExtra::grid.arrange(cpi, pi,ei, ncol=3) 
