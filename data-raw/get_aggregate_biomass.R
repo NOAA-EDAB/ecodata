@@ -26,6 +26,12 @@ get_aggregate_biomass <- function(save_clean = F){
 
   aggregate_biomass<-aggregate_biomass %>% rbind(aggregate_shelf)
 
+  agg_nas <- expand.grid(Time = 2020,
+                         Var = unique(ecodata::aggregate_biomass$Var),
+                         EPU = unique(ecodata::aggregate_biomass$EPU),
+                         Units = NA,
+                         Value = NA)
+  aggregate_biomass <- aggregate_biomass %>% rbind(agg_nas)
   # metadata ----
   attr(aggregate_biomass, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/aggroups.html"
   attr(aggregate_biomass, "data_files")   <- list(

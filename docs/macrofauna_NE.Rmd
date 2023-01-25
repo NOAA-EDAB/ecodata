@@ -1047,17 +1047,6 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
                  legend.title = element_blank())+
   ecodata::theme_title()
 
-# exp2 %>% 
-#   dplyr::filter(Time %in% c(max(Time), max(Time-1))) %>% 
-#   group_by(EPU) %>% 
-#   dplyr::summarise(m = mean(Value))
-# 
-# exp2 %>% 
-#   dplyr::filter(Time %in% c(max(Time-2), max(Time-3),  max(Time-4))) %>% 
-#   group_by(EPU) %>% 
-#   dplyr::summarise(m= mean(Value))
-
-
 ```
 
 
@@ -1882,15 +1871,17 @@ ecodata::observed_sharks %>%
 ```{r seal-pups, fig.cap="Pup counts at the 4 modeled sites: Monomoy, Muskeget, Nomans Land, and Seal. Left represents absolute counts; right represents natural log counts."}
 ecodata::seal_pups %>%
   tidyr::separate(Var, into = c("Var", "colony"), sep = "-") %>% 
-  dplyr::filter(!colony == "Green") %>% 
-  dplyr::mutate(Var = dplyr::recode(Var, "log" = "Log Counts", "count" = "Counts"), 
+  dplyr::filter(!colony == "Green", 
+                Var == "count") %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "count" = "Counts"), 
                 colony = dplyr::recode(colony, "Nomans.Land" = "Nomans Land")) %>% 
   ggplot()+
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_point(aes(x=Time, y = Value,color = colony, shape = colony))+
-  ggplot2::facet_wrap(~Var, scales = "free")+
+  ggplot2::geom_line(aes(x=Time, y = Value,color = colony))+
+  #ggplot2::facet_wrap(~Var, scales = "free")+
   ggplot2::ggtitle("Estimated Gray Seal Pup Births")+
   ggplot2::ylab("Pup Count")+
   ggplot2::xlab(element_blank())+
