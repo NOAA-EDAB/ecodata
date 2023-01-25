@@ -1,7 +1,8 @@
 
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
-  dplyr::filter(stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight")),
+  dplyr::filter(stringr::str_detect(Var, "US only"),
+                stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight")),
          !stringr::str_detect(Var, "Other"),
          Time >= 1986,
          Time <=2022,
@@ -20,7 +21,8 @@ apex<-ecodata::hms_landings %>%
 
 #Total landings
 total_landings <- ecodata::comdat  %>%
-  dplyr::filter(!stringr::str_detect(Var, "managed species"),
+  dplyr::filter(stringr::str_detect(Var, "US only"),
+                !stringr::str_detect(Var, "managed species"),
          !stringr::str_detect(Var, "Other"),
          !stringr::str_detect(Var, "Apex"),
          stringr::str_detect(Var, "Landings"),

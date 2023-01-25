@@ -11,7 +11,8 @@ apex<-ecodata::hms_landings %>%
          EPU = c("MAB"))
 #Filtering and aggregation step
 rev_agg <- ecodata::comdat %>% 
-  dplyr::filter(stringr::str_detect(Var, "Revenue"),
+  dplyr::filter(stringr::str_detect(Var, "US only"),
+                stringr::str_detect(Var, "Revenue"),
          !stringr::str_detect(Var, "Apex|prop|Other|NEFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
          EPU == epu_abbr,
          Time >= 1986) %>% 

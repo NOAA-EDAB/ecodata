@@ -1,13 +1,15 @@
 
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
-  dplyr::filter(stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight| JOINT managed species - Landings weight")),
+  dplyr::filter(stringr::str_detect(Var, "US only"),
+                stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight| JOINT managed species - Landings weight")),
          !stringr::str_detect(Var, "Other"),
          Time >= 1986)
 
 # #Total landings
 total_landings <- ecodata::comdat  %>%
-  dplyr::filter(!stringr::str_detect(Var, "managed species"),
+  dplyr::filter(stringr::str_detect(Var, "US only"),
+                !stringr::str_detect(Var, "managed species"),
          !stringr::str_detect(Var, "Other"),
          stringr::str_detect(Var, "Landings"),
          Time >= 1986)
@@ -15,7 +17,7 @@ total_landings <- ecodata::comdat  %>%
 # #Assign feeding guild column for plotting with ggplot
 landings <-
   rbind(managed_landings, total_landings) %>%
-  dplyr::filter(Var != "Apex Predator Landings") %>%
+  dplyr::filter(!stringr::str_detect(Var, "Apex")) %>%
   dplyr::mutate(feeding.guild = stringr::str_extract(Var,paste(feeding.guilds, collapse = "|")),
          grouping = factor(ifelse(stringr::str_detect(Var,council_abbr), "managed",
                                   ifelse(stringr::str_detect(Var, "JOINT"), "joint","total"))),

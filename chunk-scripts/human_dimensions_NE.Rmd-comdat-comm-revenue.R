@@ -1,8 +1,9 @@
 
 #Filtering and aggation step
 rev_agg <- ecodata::comdat %>% 
-  dplyr::filter(stringr::str_detect(Var, "Revenue"),
-         !stringr::str_detect(Var, "Apex|prop|Other|MAFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
+  dplyr::filter(stringr::str_detect(Var, "US only"),
+                stringr::str_detect(Var, "Revenue"),
+                !stringr::str_detect(Var, "Apex|prop|Other|MAFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
          EPU %in% c("GOM", "GB"),
          Time >= 1986) %>% 
   dplyr::mutate(Status = ifelse(str_detect(Var, "managed"), 
