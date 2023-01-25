@@ -51,13 +51,3 @@ ggplot2::ggplot(aes(x = Time, y = Value, fill = Var)) +
   ggplot2::theme(strip.text=element_text(hjust=0), 
                  legend.title = element_blank())+
   ecodata::theme_title()
-
-# exp2 %>% 
-#   dplyr::filter(Time %in% c(max(Time), max(Time-1))) %>% 
-#   group_by(EPU) %>% 
-#   dplyr::summarise(m = mean(Value))
-# 
-# exp2 %>% 
-#   dplyr::filter(Time %in% c(max(Time-2), max(Time-3),  max(Time-4))) %>% 
-#   group_by(EPU) %>% 
-#   dplyr::summarise(m= mean(Value))
