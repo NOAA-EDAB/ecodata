@@ -5,13 +5,15 @@ raw.dir <- here::here("data-raw")
 wind_rev_xlsx<- "SOE 2023 update_Offshore Wind Fishery Data_Christel.xlsx"
 
 get_wind_revenue<- function(save_clean = F){
-  ne_wind_revenue <- readxl::read_excel(file.path(raw.dir,wind_rev_xlsx), sheet = "NEFMC Rev Figure") %>%
+  ne_wind_revenue <- readxl::read_excel(file.path(raw.dir,wind_rev_xlsx),
+                                        sheet = "NEFMC Rev Figure Current Leases") %>%
     janitor::row_to_names(.,1) %>%
     dplyr::select("Species","Year",
                   "Sum of Nominal Value ($)",
                   "Sum of Landings (pounds*)") %>%
     dplyr::mutate(EPU = "NE")
-  mab_wind_revenue <- readxl::read_excel(file.path(raw.dir,wind_rev_xlsx), sheet = "MAFMC Rev Figure") %>%
+  mab_wind_revenue <- readxl::read_excel(file.path(raw.dir,wind_rev_xlsx),
+                                         sheet = "MAFMC Rev Figure Current Leases") %>%
     janitor::row_to_names(.,1) %>%
     dplyr::mutate(EPU = "MAB") %>%
     dplyr::select("Species","Year", "EPU",

@@ -1645,7 +1645,7 @@ ecodata::ppr %>%
   ecodata::theme_title()
 ```
 
-### Wind Energy Area revenue
+### Wind Energy Area Revenue
 
 ```{r wea-spp-rev, fig.cap="Wind energy revenue in the New England"}
 ecodata::wind_revenue %>%
