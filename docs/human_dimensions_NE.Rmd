@@ -115,13 +115,15 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
-  dplyr::filter(stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight| JOINT managed species - Landings weight")),
+  dplyr::filter(stringr::str_detect(Var, "US only"),
+                stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight| JOINT managed species - Landings weight")),
          !stringr::str_detect(Var, "Other"),
          Time >= 1986)
 
 # #Total landings
 total_landings <- ecodata::comdat  %>%
-  dplyr::filter(!stringr::str_detect(Var, "managed species"),
+  dplyr::filter(stringr::str_detect(Var, "US only"),
+                !stringr::str_detect(Var, "managed species"),
          !stringr::str_detect(Var, "Other"),
          stringr::str_detect(Var, "Landings"),
          Time >= 1986)
@@ -129,7 +131,7 @@ total_landings <- ecodata::comdat  %>%
 # #Assign feeding guild column for plotting with ggplot
 landings <-
   rbind(managed_landings, total_landings) %>%
-  dplyr::filter(Var != "Apex Predator Landings") %>%
+  dplyr::filter(!stringr::str_detect(Var, "Apex")) %>%
   dplyr::mutate(feeding.guild = stringr::str_extract(Var,paste(feeding.guilds, collapse = "|")),
          grouping = factor(ifelse(stringr::str_detect(Var,council_abbr), "managed",
                                   ifelse(stringr::str_detect(Var, "JOINT"), "joint","total"))),
@@ -205,13 +207,15 @@ gb_landings
 
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
-  dplyr::filter(stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight")),
+  dplyr::filter(stringr::str_detect(Var, "US only"),
+                stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight")),
          !stringr::str_detect(Var, "Other"),
          Time >= 1986)
 
 # #Total landings
 total_landings <- ecodata::comdat  %>%
-  dplyr::filter(!stringr::str_detect(Var, "managed species"),
+  dplyr::filter(stringr::str_detect(Var, "US only"),
+                !stringr::str_detect(Var, "managed species"),
          !stringr::str_detect(Var, "Other"),
          stringr::str_detect(Var, "Landings"),
          Time >= 1986)
@@ -219,7 +223,7 @@ total_landings <- ecodata::comdat  %>%
 # #Assign feeding guild column for plotting with ggplot
 landings <-
   rbind(managed_landings, total_landings) %>%
-  dplyr::filter(Var != "Apex Predator Landings") %>%
+  dplyr::filter(!stringr::str_detect(Var, "Apex")) %>%
   dplyr::mutate(feeding.guild = stringr::str_extract(Var,paste(feeding.guilds, collapse = "|")),
          grouping = factor(ifelse(stringr::str_detect(Var,council_abbr), "managed",
                                   ifelse(stringr::str_detect(Var, "JOINT"), "joint","total"))),
@@ -335,13 +339,15 @@ p1
 council_abbr <- "NEFMC"
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
-  dplyr::filter(stringr::str_detect(Var, "NEFMC managed species - Landings weight|JOINT managed species - Landings weight"),
+  dplyr::filter(stringr::str_detect(Var, "US only"),
+                stringr::str_detect(Var, "NEFMC managed species - Landings weight|JOINT managed species - Landings weight"),
          !stringr::str_detect(Var, "Other"),
          Time >= 1986)
 
 # #Total landings
 total_landings <- ecodata::comdat  %>%
-  dplyr::filter(!stringr::str_detect(Var, "managed species"),
+  dplyr::filter(stringr::str_detect(Var, "US only"),
+                !stringr::str_detect(Var, "managed species"),
          !stringr::str_detect(Var, "Other"),
          stringr::str_detect(Var, "Landings"),
          Time >= 1986)
@@ -689,8 +695,9 @@ ggplot2::ggplot()+
 
 #Filtering and aggation step
 rev_agg <- ecodata::comdat %>% 
-  dplyr::filter(stringr::str_detect(Var, "Revenue"),
-         !stringr::str_detect(Var, "Apex|prop|Other|MAFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
+  dplyr::filter(stringr::str_detect(Var, "US only"),
+                stringr::str_detect(Var, "Revenue"),
+                !stringr::str_detect(Var, "Apex|prop|Other|MAFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
          EPU %in% c("GOM", "GB"),
          Time >= 1986) %>% 
   dplyr::mutate(Status = ifelse(str_detect(Var, "managed"), 
