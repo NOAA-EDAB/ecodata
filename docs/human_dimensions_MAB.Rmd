@@ -281,7 +281,7 @@ managed_landings_agg <- managed_landings %>%
 
 landings_agg <- rbind(total_landings_agg, managed_landings_agg, us_total_landings_agg)# %>% 
 #  dplyr::mutate(Value = Value/1000)
-series.col2 <- c("indianred",  "black", "blue")
+series.col2 <- c("indianred",  "black", "steelblue4")
   
 mab_total <- landings_agg %>% dplyr::filter(EPU == "MAB") %>% 
 ggplot2::ggplot()+

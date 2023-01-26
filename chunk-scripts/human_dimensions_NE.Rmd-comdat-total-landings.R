@@ -3,13 +3,19 @@ council_abbr <- "NEFMC"
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
   dplyr::filter(stringr::str_detect(Var, "US only"),
-                stringr::str_detect(Var, "NEFMC managed species - Landings weight|JOINT managed species - Landings weight"),
+                stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight - US only|JOINT managed species - Landings weight - US only| JOINT managed species - Landings weight - US only")),
          !stringr::str_detect(Var, "Other"),
          Time >= 1986)
 
+US_landings <- ecodata::comdat  %>%
+  dplyr::filter(stringr::str_detect(Var, "US only"),
+                !stringr::str_detect(Var, paste0(council_abbr,"managed species")),
+                stringr::str_detect(Var, "Landings weight"),
+         !stringr::str_detect(Var, "Other"),
+         Time >= 1986)
 # #Total landings
 total_landings <- ecodata::comdat  %>%
-  dplyr::filter(stringr::str_detect(Var, "US only"),
+  dplyr::filter(!stringr::str_detect(Var, "US only"),
                 !stringr::str_detect(Var, "managed species"),
          !stringr::str_detect(Var, "Other"),
          stringr::str_detect(Var, "Landings"),
@@ -20,14 +26,20 @@ total_landings_agg <- total_landings %>%
   dplyr::summarise(Value = sum(Value)/1000) %>% 
   dplyr::mutate(Var = "Total",hline = mean(Value))
 
+us_total_landings_agg <- US_landings %>%
+  dplyr::group_by(EPU,Time) %>%
+  dplyr::summarise(Value = sum(Value)/1000) %>% 
+  dplyr::mutate(Var = "USTotal",hline = mean(Value))
+
 managed_landings_agg <- managed_landings %>%
   dplyr::group_by(EPU,Time) %>%
   dplyr::summarise(Value = sum(Value)/1000) %>% 
   dplyr::mutate(Var = "Managed",hline = mean(Value))
 
-landings_agg <- rbind(total_landings_agg, managed_landings_agg)# %>% 
+landings_agg <- rbind(total_landings_agg, managed_landings_agg, us_total_landings_agg)# %>% 
 #  dplyr::mutate(Value = Value/1000)
-
+series.col2 <- c("indianred",  "black", "steelblue4")
+  
 gom_total <- landings_agg %>% dplyr::filter(EPU == "GOM") %>% 
 ggplot2::ggplot()+
   
@@ -45,11 +57,11 @@ ggplot2::ggplot()+
 
 #  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
-  ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
+  ggplot2::scale_color_manual(values = series.col2, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ylab(expression("Landings (10"^3*"mt)")) +
   ggplot2::xlab(element_blank())+
-  
+  ggplot2::theme(legend.position = "left")+
   ggplot2::geom_hline(aes(yintercept = hline,
                
                color = Var),
@@ -77,7 +89,7 @@ ggplot2::ggplot()+
   ggplot2::ylim(15,190)+
 #  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
-  ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
+  ggplot2::scale_color_manual(values = series.col2, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ylab(expression("Landings (10"^3*"mt)")) +
   ggplot2::xlab(element_blank())+
