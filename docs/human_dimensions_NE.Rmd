@@ -110,19 +110,17 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 #### Commercial Landings
 
 
-```{r comdat-commercial-landings-gb, warning=F, fig.length = 24, fig.cap = "NEFMC managed species landings (red) and total commercial landings (black) by feeding guild in Gulf of Maine (left) and Georges Bank (right)."}
-
-
+```{r comdat-commercial-landings-gb, warning=F, fig.length = 24, fig.cap = "NEFMC managed species landings from US (red) and total commercial landings (black) by feeding guild in Georges Bank (right)."}
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
   dplyr::filter(stringr::str_detect(Var, "US only"),
-                stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight| JOINT managed species - Landings weight")),
+                stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight - US only|JOINT managed species - Landings weight - US only| JOINT managed species - Landings weight - US only")),
          !stringr::str_detect(Var, "Other"),
          Time >= 1986)
 
 # #Total landings
 total_landings <- ecodata::comdat  %>%
-  dplyr::filter(stringr::str_detect(Var, "US only"),
+  dplyr::filter(!stringr::str_detect(Var, "US only"),
                 !stringr::str_detect(Var, "managed species"),
          !stringr::str_detect(Var, "Other"),
          stringr::str_detect(Var, "Landings"),
@@ -203,12 +201,12 @@ gb_landings
 
 ```
 
-```{r comdat-commercial-landings-gom, warning=F, fig.length = 24, fig.cap = "NEFMC managed species landings (red) and total commercial landings (black) by feeding guild in Gulf of Maine (left) and Georges Bank (right)."}
+```{r comdat-commercial-landings-gom, warning=F, fig.length = 24, fig.cap = "NEFMC managed species landings in US (red) and total commercial landings (black) by feeding guild in Gulf of Maine."}
 
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
   dplyr::filter(stringr::str_detect(Var, "US only"),
-                stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight")),
+                stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight - US only|JOINT managed species - Landings weight - US only| JOINT managed species - Landings weight - US only")),
          !stringr::str_detect(Var, "Other"),
          Time >= 1986)
 
@@ -335,18 +333,24 @@ p1
 ```
 
 
-```{r comdat-total-landings, fig.cap = paste0("Total commercial seafood landings (black) shown with NEFMC managed seafood landings (red) in Gulf of Maine (left) and Georges Bank (right). \\label{total-landings}")}
+```{r comdat-total-landings, fig.cap = paste0("Total commercial landings (black), total US landings (blue), and  NEFMC managed seafood landings from US (red) in Gulf of Maine (left) and Georges Bank (right). \\label{total-landings}")}
 council_abbr <- "NEFMC"
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
   dplyr::filter(stringr::str_detect(Var, "US only"),
-                stringr::str_detect(Var, "NEFMC managed species - Landings weight|JOINT managed species - Landings weight"),
+                stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight - US only|JOINT managed species - Landings weight - US only| JOINT managed species - Landings weight - US only")),
          !stringr::str_detect(Var, "Other"),
          Time >= 1986)
 
+US_landings <- ecodata::comdat  %>%
+  dplyr::filter(stringr::str_detect(Var, "US only"),
+                !stringr::str_detect(Var, paste0(council_abbr,"managed species")),
+                stringr::str_detect(Var, "Landings weight"),
+         !stringr::str_detect(Var, "Other"),
+         Time >= 1986)
 # #Total landings
 total_landings <- ecodata::comdat  %>%
-  dplyr::filter(stringr::str_detect(Var, "US only"),
+  dplyr::filter(!stringr::str_detect(Var, "US only"),
                 !stringr::str_detect(Var, "managed species"),
          !stringr::str_detect(Var, "Other"),
          stringr::str_detect(Var, "Landings"),
@@ -357,14 +361,20 @@ total_landings_agg <- total_landings %>%
   dplyr::summarise(Value = sum(Value)/1000) %>% 
   dplyr::mutate(Var = "Total",hline = mean(Value))
 
+us_total_landings_agg <- US_landings %>%
+  dplyr::group_by(EPU,Time) %>%
+  dplyr::summarise(Value = sum(Value)/1000) %>% 
+  dplyr::mutate(Var = "USTotal",hline = mean(Value))
+
 managed_landings_agg <- managed_landings %>%
   dplyr::group_by(EPU,Time) %>%
   dplyr::summarise(Value = sum(Value)/1000) %>% 
   dplyr::mutate(Var = "Managed",hline = mean(Value))
 
-landings_agg <- rbind(total_landings_agg, managed_landings_agg)# %>% 
+landings_agg <- rbind(total_landings_agg, managed_landings_agg, us_total_landings_agg)# %>% 
 #  dplyr::mutate(Value = Value/1000)
-
+series.col <- c("indianred",  "black", "blue")
+  
 gom_total <- landings_agg %>% dplyr::filter(EPU == "GOM") %>% 
 ggplot2::ggplot()+
   
@@ -386,7 +396,7 @@ ggplot2::ggplot()+
   ggplot2::guides(color = FALSE) +
   ggplot2::ylab(expression("Landings (10"^3*"mt)")) +
   ggplot2::xlab(element_blank())+
-  
+  ggplot2::theme(legend.position = "left")+
   ggplot2::geom_hline(aes(yintercept = hline,
                
                color = Var),

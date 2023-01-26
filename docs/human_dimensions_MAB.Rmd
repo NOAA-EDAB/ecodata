@@ -112,43 +112,44 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 
 
-```{r comdat-commercial-landings, fig.cap="MAFMC managed species landings (red) and total commercial landings (black) by feeding guild. \\label{comm-landings}"}
+```{r comdat-commercial-landings, fig.cap="MAFMC managed species landings in US (red) and total commercial landings (black) by feeding guild. \\label{comm-landings}"}
 
 
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
   dplyr::filter(stringr::str_detect(Var, "US only"),
-    stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight| JOINT managed species - Landings weight")),
+                stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight - US only|JOINT managed species - Landings weight - US only| JOINT managed species - Landings weight - US only")),
          !stringr::str_detect(Var, "Other"),
-         Time >= 1986,
-         EPU == epu_abbr)
+         Time >= 1986)
 
-#Total landings
+# #Total landings
 total_landings <- ecodata::comdat  %>%
   dplyr::filter(stringr::str_detect(Var, "US only"),
                 !stringr::str_detect(Var, "managed species"),
          !stringr::str_detect(Var, "Other"),
          stringr::str_detect(Var, "Landings"),
-         Time >= 1986,
-         EPU == epu_abbr)
+         Time >= 1986)
 
-#Assign feeding guild column for plotting with ggplot
-landings <- 
+# #Assign feeding guild column for plotting with ggplot
+landings <-
   rbind(managed_landings, total_landings) %>%
-  dplyr::filter(Var != "Apex Predator Landings") %>% 
+  dplyr::filter(!stringr::str_detect(Var, "Apex")) %>%
   dplyr::mutate(feeding.guild = stringr::str_extract(Var,paste(feeding.guilds, collapse = "|")),
-         grouping = factor(ifelse(stringr::str_detect(Var,council_abbr), "managed",                       ifelse(stringr::str_detect(Var, "JOINT"), "joint","total"))),
-         Var = paste(word(feeding.guild), grouping)) %>% 
+         grouping = factor(ifelse(stringr::str_detect(Var,council_abbr), "managed",
+                                  ifelse(stringr::str_detect(Var, "JOINT"), "joint","total"))),
+         Var = paste(word(feeding.guild), grouping)) %>%
   dplyr::mutate(feeding.guild = factor(feeding.guild, levels = feeding.guilds))
-
-#Add JOINT landings to MANAGED landings and remove
-landings[landings$Var ==  "Piscivore managed",]$Value <- landings[landings$Var ==  "Piscivore managed",]$Value + landings[landings$Var ==  "Piscivore joint",]$Value
+ 
+# #Add JOINT landings to MANAGED landings and remove
+# landings[landings$Var ==  "Piscivore managed",]$Value <- landings[landings$Var ==  "Piscivore managed",]$Value + landings[landings$Var ==  "Piscivore joint",]$Value
 
 landings <- landings %>%
-  dplyr::filter(Var != "Piscivore joint")  %>% 
-  dplyr::group_by(Var) %>% 
+  dplyr::filter(Var != "Piscivore joint")  %>%
+  dplyr::group_by(Var, EPU) %>%
   dplyr::mutate(hline = mean(Value))
 
+#Define constants for figure plot
+series.col <- c("indianred","black") 
 
 #facet names for titles
 facet_names <- list("Apex" = expression("Apex"),
@@ -157,7 +158,8 @@ facet_names <- list("Apex" = expression("Apex"),
                     "Benthivores" = expression("Benthivores"),
                     "Benthos" = expression("Benthos"))
 
-p2<- landings %>% 
+
+mab_landings<- landings %>% 
   dplyr::filter(EPU == "MAB") %>% 
   ggplot2::ggplot(aes(x = Time, y = Value, color = grouping)) +
   
@@ -171,6 +173,7 @@ p2<- landings %>%
                group = Var)) +
   # ecodata::geom_lm(aes(x = Time, y = Value,
   #              group = Var))+
+  
   #Add time series
   ggplot2::geom_line(size = lwd) +
   ggplot2::geom_point(size = pcex) +
@@ -184,17 +187,21 @@ p2<- landings %>%
              linetype = hline.lty)+
 
   #Facet 
-  ggplot2::facet_wrap(feeding.guild~., scales = "free", labeller = label, ncol = 1)+
-  
+  #facet_wrap(feeding.guild~., scales = "free", labeller = label, ncol = 1)+
+  ggplot2::facet_wrap(~feeding.guild, ncol = 1)+
+  #ggplot2::facet_wrap(~feeding.guild, ncol = 1, scales = "free")+
   #Axis and theme
+  ggplot2::ylim(0, NA)+
   ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::ylab(expression("Landings (10"^3*"metric tons)")) +
   ggplot2::xlab(element_blank())+
   ecodata::theme_facet() +
-  ggplot2::theme(strip.text=element_text(hjust=0))
+  ggplot2::theme(strip.text=element_text(hjust=0))+
+  ggplot2::ggtitle("Mid-Atlantic Bight")+
+  ecodata::theme_title()
 
-p2
+mab_landings 
 ```
 
 ```{r hms-landings-comdat-commercial_landings, warning=F, fig.cap = ("HMS groups include “Bluefin Tuna”, “BAYS”, “Swordfish”, “Large Coastal Sharks”, “Small Coastal Sharks”, “Pelagic Sharks”, “Smoothhound Sharks”. “BAYS” includes bigeye, albacore, yellowfin and skipjack tunas. “Large Coastal Sharks” includes blacktip, bull, great hammerhead, scalloped hammerhead, smooth hammerhead, lemon, nurse, sandbar, silky, spinner, and tiger sharks. “Small Coastal Sharks” includes Atlantic sharpnose, blacknose, bonnethead, finetooth sharks. “Pelagic Sharks” includes blue, porbeagle, shortfin mako, and thresher sharks. “Smoothhound Sharks” includes smooth dogfish shark.")}
@@ -234,56 +241,50 @@ p1
 ``` 
 
 
-```{r comdat-total-landings, fig.asp=.35, fig.cap = paste0("Total commercial seafood landings (black) shown with ",region," managed seafood landings (red). \\label{total-landings}")}
-
+```{r comdat-total-landings, fig.asp=.35, fig.cap = paste0("Total commercial seafood landings (black), Total US landings (blue), and MAFMC managed seafood landings from US (red). \\label{total-landings}")}
+council_abbr <- "MAFMC"
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
   dplyr::filter(stringr::str_detect(Var, "US only"),
-                stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight|JOINT managed species - Landings weight")),
+                stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight - US only|JOINT managed species - Landings weight - US only| JOINT managed species - Landings weight - US only")),
          !stringr::str_detect(Var, "Other"),
-         Time >= 1986,
-         Time <=2022,
-         EPU == epu_abbr)
+         Time >= 1986)
 
-# HMS Landings
-apex<-ecodata::hms_landings %>% 
-  dplyr::filter(stringr::str_detect(Var, "Landings")) %>% 
-  separate(Var, c("Var", "trash"), sep = "_") %>% 
-  group_by(Time) %>% 
-  summarise(Value = sum(Value)) %>% 
-  mutate(Var = c("HMS Landings"), 
-         Units = c("metric tons"), 
-         EPU = c("MAB")) %>% 
-  dplyr::filter(Time <=2022)
-
-#Total landings
-total_landings <- ecodata::comdat  %>%
+US_landings <- ecodata::comdat  %>%
   dplyr::filter(stringr::str_detect(Var, "US only"),
+                !stringr::str_detect(Var, paste0(council_abbr,"managed species")),
+                stringr::str_detect(Var, "Landings weight"),
+         !stringr::str_detect(Var, "Other"),
+         Time >= 1986)
+# #Total landings
+total_landings <- ecodata::comdat  %>%
+  dplyr::filter(!stringr::str_detect(Var, "US only"),
                 !stringr::str_detect(Var, "managed species"),
          !stringr::str_detect(Var, "Other"),
-         !stringr::str_detect(Var, "Apex"),
          stringr::str_detect(Var, "Landings"),
-         Time >= 1986,
-         Time <=2022,
-         EPU == epu_abbr) %>% 
-  rbind(apex) %>% 
-  dplyr::filter(!Value == "NA")
+         Time >= 1986)
 
 total_landings_agg <- total_landings %>%
-  dplyr::group_by(Time) %>%
-  dplyr::summarise(Value = sum(Value)) %>% 
-  dplyr::mutate(Var = "Total",
-                hline = mean(as.numeric(Value)))
+  dplyr::group_by(EPU,Time) %>%
+  dplyr::summarise(Value = sum(Value)/1000) %>% 
+  dplyr::mutate(Var = "Total",hline = mean(Value))
+
+us_total_landings_agg <- US_landings %>%
+  dplyr::group_by(EPU,Time) %>%
+  dplyr::summarise(Value = sum(Value)/1000) %>% 
+  dplyr::mutate(Var = "USTotal",hline = mean(Value))
 
 managed_landings_agg <- managed_landings %>%
-  dplyr::group_by(Time) %>%
-  dplyr::summarise(Value = sum(Value)) %>% 
+  dplyr::group_by(EPU,Time) %>%
+  dplyr::summarise(Value = sum(Value)/1000) %>% 
   dplyr::mutate(Var = "Managed",hline = mean(Value))
 
-landings_agg <- rbind(total_landings_agg, managed_landings_agg)
-
-
-ggplot2::ggplot(data = landings_agg)+
+landings_agg <- rbind(total_landings_agg, managed_landings_agg, us_total_landings_agg)# %>% 
+#  dplyr::mutate(Value = Value/1000)
+series.col2 <- c("indianred",  "black", "blue")
+  
+mab_total <- landings_agg %>% dplyr::filter(EPU == "MAB") %>% 
+ggplot2::ggplot()+
   
   #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -292,28 +293,29 @@ ggplot2::ggplot(data = landings_agg)+
   ecodata::geom_gls(aes(x = Time, y = Value,
                group = Var),
              alpha = trend.alpha, size = trend.size) +
-  # ecodata::geom_lm(aes(x = Time, y = Value,
-  #              group = Var))+
+  #ecodata::geom_lm(aes(x = Time, y = Value))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
-  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
+  ggplot2::ylim(15,270)+
+
+#  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
-  ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
+  ggplot2::scale_color_manual(values = series.col2, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::ylab(expression("Landings (10"^3*"mt)")) +
   ggplot2::xlab(element_blank())+
+  ggplot2::theme(legend.position = "left")+
   ggplot2::geom_hline(aes(yintercept = hline,
+               
                color = Var),
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty) +
-  ggplot2::ggtitle("Total Commercial Landings")+
-  ggplot2::theme(axis.title.y = element_text(size = 7))+
-  ecodata::theme_ts()+
+  ecodata::theme_ts() +
+  ggplot2::ggtitle("Mid-Atlantic")+
   ecodata::theme_title()
 
-
-
+mab_total
 ```
 
 #### Commercial Revenue 
