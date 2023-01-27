@@ -40,7 +40,15 @@ landings_agg <- rbind(total_landings_agg, managed_landings_agg, us_total_landing
 #  dplyr::mutate(Value = Value/1000)
 series.col2 <- c("indianred",  "black", "steelblue4")
   
-gom_total <- landings_agg %>% dplyr::filter(EPU == "GOM") %>% 
+landings_agg_pre2018<- landings_agg %>% 
+  dplyr::filter(Time <=2018, 
+                EPU == "GOM")
+
+landings_agg_post2018<- landings_agg %>% 
+  dplyr::filter(Time >2018, 
+                EPU == "GOM")
+
+gom_total <- landings_agg_pre2018 %>% 
 ggplot2::ggplot()+
   
   #Highlight last ten years
@@ -54,6 +62,8 @@ ggplot2::ggplot()+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
   ggplot2::ylim(15,190)+
+  ggplot2::geom_line(data =landings_agg_post2018, aes(x = Time, y = Value, color = Var), size = lwd) +
+  ggplot2::geom_point(data =landings_agg_post2018,aes(x = Time, y = Value, color = Var), size = pcex, shape = 1)+
 
 #  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
@@ -72,7 +82,15 @@ ggplot2::ggplot()+
   ggplot2::ggtitle("Gulf of Maine")+
   ecodata::theme_title()
 
-gb_total <- landings_agg %>% dplyr::filter(EPU == "GB") %>% 
+landings_agg_pre2018<- landings_agg %>% 
+  dplyr::filter(Time <=2018, 
+                EPU == "GB")
+
+landings_agg_post2018<- landings_agg %>% 
+  dplyr::filter(Time >2018, 
+                EPU == "GB")
+
+gb_total <- landings_agg_pre2018 %>% 
 ggplot2::ggplot()+
   
   #Highlight last ten years
@@ -87,6 +105,8 @@ ggplot2::ggplot()+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
   ggplot2::ylim(15,190)+
+  ggplot2::geom_line(data =landings_agg_post2018, aes(x = Time, y = Value, color = Var), size = lwd) +
+  ggplot2::geom_point(data =landings_agg_post2018,aes(x = Time, y = Value, color = Var), size = pcex, shape = 1)+
 #  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col2, aesthetics = "color")+
