@@ -106,7 +106,7 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 
 ## Mid-Atlantic
 
-### Commercial {.tabset .tabset-fade}
+### Commercial Fisheries {.tabset .tabset-fade}
 
 #### Commercial Landings
 
