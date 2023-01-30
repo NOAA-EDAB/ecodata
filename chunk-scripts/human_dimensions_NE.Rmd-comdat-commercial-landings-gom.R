@@ -42,15 +42,8 @@ facet_names <- list("Apex" = expression("Apex"),
                     "Benthivores" = expression("Benthivores"),
                     "Benthos" = expression("Benthos"))
 
-landings_pre2018<- landings %>% 
-  dplyr::filter(Time <=2018, 
-                EPU == "GOM")
-
-landings_post2018<- landings %>% 
-  dplyr::filter(Time >2018, 
-                EPU == "GOM")
-
-gom_landings<- landings_pre2018 %>% 
+gom_landings<- landings %>%
+  dplyr::filter(EPU == "GOM") %>% 
   ggplot2::ggplot(aes(x = Time, y = Value, color = grouping)) +
   
   #Highlight last ten years
@@ -62,9 +55,6 @@ gom_landings<- landings_pre2018 %>%
   #Add time series
   ggplot2::geom_line(size = lwd) +
   ggplot2::geom_point(size = pcex) +
-  
-  ggplot2::geom_line(data =landings_post2018, aes(x = Time, y = Value, group = Var), size = lwd) +
-  ggplot2::geom_point(data =landings_post2018,aes(x = Time, y = Value, group = Var), size = pcex, shape = 1)+
   ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
   ggplot2::guides(color = FALSE) +
   ggplot2::geom_hline(aes(yintercept = hline,

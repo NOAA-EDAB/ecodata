@@ -42,13 +42,18 @@ series.col2 <- c("indianred",  "black", "steelblue4")
   
 landings_agg_pre2018<- landings_agg %>% 
   dplyr::filter(Time <=2018, 
-                EPU == "GOM")
+                EPU == "GOM", 
+                Var == "Total")
 
 landings_agg_post2018<- landings_agg %>% 
   dplyr::filter(Time >2018, 
-                EPU == "GOM")
+                EPU == "GOM", 
+                Var == "Total")
+landings_aggx<- landings_agg %>% 
+  dplyr::filter(EPU == "GOM", 
+                !Var == "Total")
 
-gom_total <- landings_agg_pre2018 %>% 
+gom_total <- landings_aggx %>% 
 ggplot2::ggplot()+
   
   #Highlight last ten years
@@ -64,6 +69,8 @@ ggplot2::ggplot()+
   ggplot2::ylim(15,190)+
   ggplot2::geom_line(data =landings_agg_post2018, aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(data =landings_agg_post2018,aes(x = Time, y = Value, color = Var), size = pcex, shape = 1)+
+  ggplot2::geom_line(data =landings_agg_pre2018, aes(x = Time, y = Value, color = Var), size = lwd) +
+  ggplot2::geom_point(data =landings_agg_pre2018,aes(x = Time, y = Value, color = Var), size = pcex, shape = 16)+
 
 #  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
@@ -84,13 +91,18 @@ ggplot2::ggplot()+
 
 landings_agg_pre2018<- landings_agg %>% 
   dplyr::filter(Time <=2018, 
-                EPU == "GB")
+                EPU == "GB", 
+                Var == "Total")
 
 landings_agg_post2018<- landings_agg %>% 
   dplyr::filter(Time >2018, 
-                EPU == "GB")
+                EPU == "GB", 
+                Var == "Total")
+landings_aggx<- landings_agg %>% 
+  dplyr::filter(EPU == "GB", 
+                !Var == "Total")
 
-gb_total <- landings_agg_pre2018 %>% 
+gb_total <- landings_aggx %>% 
 ggplot2::ggplot()+
   
   #Highlight last ten years
@@ -107,6 +119,8 @@ ggplot2::ggplot()+
   ggplot2::ylim(15,190)+
   ggplot2::geom_line(data =landings_agg_post2018, aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(data =landings_agg_post2018,aes(x = Time, y = Value, color = Var), size = pcex, shape = 1)+
+  ggplot2::geom_line(data =landings_agg_pre2018, aes(x = Time, y = Value, color = Var), size = lwd) +
+  ggplot2::geom_point(data =landings_agg_pre2018,aes(x = Time, y = Value, color = Var), size = pcex, shape = 16)+
 #  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col2, aesthetics = "color")+
