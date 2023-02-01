@@ -1,39 +1,46 @@
 
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
-  dplyr::filter(stringr::str_detect(Var, "US only"),
-                stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight - US only|JOINT managed species - Landings weight - US only| JOINT managed species - Landings weight - US only")),
-         !stringr::str_detect(Var, "Other"),
-         Time >= 1986)
+  dplyr::filter(Var %in% c("Planktivore NEFMC managed species - Seafood Landings",
+                           "Piscivore NEFMC managed species - Seafood Landings",
+                           "Benthivore NEFMC managed species - Seafood Landings",
+                           "Apex Predator NEFMC managed species - Seafood Landings",
+                           "Benthos NEFMC managed species - Seafood Landings"),
+         Time >= 1986) %>% 
+  dplyr::mutate(grouping = c("managed")) %>% 
+  tidyr::separate(Var, into = c("feeding.guild"), sep = " ")
 
-# #Total landings
-total_landings <- ecodata::comdat  %>%
-  dplyr::filter(stringr::str_detect(Var, "US only"),
-                !stringr::str_detect(Var, "managed species"),
-         !stringr::str_detect(Var, "Other"),
-         stringr::str_detect(Var, "Landings"),
-         Time >= 1986)
+#Total landings
+total_landings <- ecodata::comdat  %>% 
+  dplyr::filter(Var %in% c("Planktivore Landings - US only",
+                           "Piscivore Landings - US only",
+                           "Benthivore Landings - US only",
+                           "Apex Predator Landings - US only",
+                           "Benthos Landings - US only"),
+         Time >= 1986) %>% 
+  dplyr::mutate(grouping = c("total")) %>% 
+  tidyr::separate(Var, into = c("feeding.guild"), sep = " ")
 
 # #Assign feeding guild column for plotting with ggplot
 landings <-
   rbind(managed_landings, total_landings) %>%
-  dplyr::filter(!stringr::str_detect(Var, "Apex")) %>%
-  dplyr::mutate(feeding.guild = stringr::str_extract(Var,paste(feeding.guilds, collapse = "|")),
-         grouping = factor(ifelse(stringr::str_detect(Var,council_abbr), "managed",
-                                  ifelse(stringr::str_detect(Var, "JOINT"), "joint","total"))),
-         Var = paste(word(feeding.guild), grouping)) %>%
+  dplyr::filter(!stringr::str_detect(feeding.guild, "Apex")) %>%
+  #tidyr::separate(Var, into = c("feeding.guild", "a", "grouping"), sep = " ") %>% 
+  dplyr::mutate(#feeding.guild = stringr::str_extract(Var,c(feeding.guilds)),
+         #grouping = recode(grouping, "Landings" = "total"),
+         Var = paste(feeding.guild, grouping)) %>%
   dplyr::mutate(feeding.guild = factor(feeding.guild, levels = feeding.guilds))
  
 # #Add JOINT landings to MANAGED landings and remove
-landings[landings$Var ==  "Piscivore managed",]$Value <- landings[landings$Var ==  "Piscivore managed",]$Value + landings[landings$Var ==  "Piscivore joint",]$Value
+# landings[landings$Var ==  "Piscivore managed",]$Value <- landings[landings$Var ==  "Piscivore managed",]$Value + landings[landings$Var ==  "Piscivore joint",]$Value
 
-landings <- landings %>%
-  dplyr::filter(Var != "Piscivore joint")  %>%
+landings <- landings   %>%
   dplyr::group_by(Var, EPU) %>%
   dplyr::mutate(hline = mean(Value))
 
 #Define constants for figure plot
-series.col <- c("indianred","black") 
+series.col <- c("indianred","steelblue4") 
+
 
 #facet names for titles
 facet_names <- list("Apex" = expression("Apex"),

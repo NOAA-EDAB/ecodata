@@ -17,4 +17,5 @@ ecodata::trans_dates %>%
     ecodata::theme_title()+
     ylab("Day of Year")+
     xlab(element_blank())+
+  ggplot2::ggtitle("SST Transition Dates")
     ecodata::theme_ts()

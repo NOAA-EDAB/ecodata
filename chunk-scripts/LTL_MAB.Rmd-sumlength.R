@@ -15,4 +15,5 @@ ecodata::trans_dates %>%
   ecodata::theme_title()+
   ylab("# of Days")+
   xlab(element_blank())+
+  ggplot2::ggtitle("Number of Days betwen Spring and Fall Transition Dates")
   ecodata::theme_ts()

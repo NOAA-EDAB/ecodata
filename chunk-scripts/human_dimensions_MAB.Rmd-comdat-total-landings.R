@@ -2,23 +2,19 @@
 council_abbr <- "MAFMC"
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
-  dplyr::filter(stringr::str_detect(Var, "US only"),
-                stringr::str_detect(Var, paste0(council_abbr," managed species - Landings weight - US only|JOINT managed species - Landings weight - US only| JOINT managed species - Landings weight - US only")),
-         !stringr::str_detect(Var, "Other"),
-         Time >= 1986)
+  dplyr::filter(Var %in% c("Planktivore MAFMC managed species - Seafood Landings",
+                           "Piscivore MAFMC managed species - Seafood Landings",
+                           "Benthivore MAFMC managed species - Seafood Landings",
+                           "Apex Predator MAFMC managed species - Seafood Landings",
+                           "Benthos MAFMC managed species - Seafood Landings"),
+         Time >= 1986) 
 
 US_landings <- ecodata::comdat  %>%
-  dplyr::filter(stringr::str_detect(Var, "US only"),
-                !stringr::str_detect(Var, paste0(council_abbr,"managed species")),
-                stringr::str_detect(Var, "Landings weight"),
-         !stringr::str_detect(Var, "Other"),
+  dplyr::filter(Var == "Seafood Landings",
          Time >= 1986)
 # #Total landings
 total_landings <- ecodata::comdat  %>%
-  dplyr::filter(!stringr::str_detect(Var, "US only"),
-                !stringr::str_detect(Var, "managed species"),
-         !stringr::str_detect(Var, "Other"),
-         stringr::str_detect(Var, "Landings"),
+  dplyr::filter(Var == "Landings",
          Time >= 1986)
 
 total_landings_agg <- total_landings %>%
@@ -66,7 +62,7 @@ ggplot2::ggplot()+
   #ecodata::geom_lm(aes(x = Time, y = Value))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
-  ggplot2::ylim(15,270)+
+  ggplot2::ylim(15,600)+
   ggplot2::geom_line(data =landings_agg_post2018, aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(data =landings_agg_post2018,aes(x = Time, y = Value, color = Var), size = pcex, shape = 1)+
   ggplot2::geom_line(data =landings_agg_pre2018, aes(x = Time, y = Value, color = Var), size = lwd) +

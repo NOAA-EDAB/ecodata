@@ -11,23 +11,32 @@ apex<-ecodata::hms_landings %>%
          EPU = c("MAB"))
 #Filtering and aggregation step
 rev_agg <- ecodata::comdat %>% 
-  dplyr::filter(stringr::str_detect(Var, "US only"),
-                stringr::str_detect(Var, "Revenue"),
-         !stringr::str_detect(Var, "Apex|prop|Other|NEFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
-         EPU == epu_abbr,
-         Time >= 1986) %>% 
+  dplyr::filter(Var %in% c("Piscivore Revenue",
+                           "Planktivore Revenue",
+                           "Benthivore Revenue", 
+                           "BenthosRevenue")) %>% 
   rbind(apex) %>% 
-  dplyr::mutate(Status = ifelse(str_detect(Var, "managed"), 
-                         "Managed","Total")) %>% #Create groups for aggregation
-  dplyr::group_by(Status, Time) %>% 
+  dplyr::mutate(Status = c("Managed")) %>% #Create groups for 
+  dplyr::group_by(Status, Time, EPU) %>% 
   dplyr::summarise(Total = sum(Value)) %>% 
-  dplyr::group_by(Status) %>% 
+  dplyr::group_by(Status, EPU) %>% 
   dplyr::mutate(hline = mean(Total))
 
+rev_total<- ecodata::comdat %>% 
+  dplyr::filter(Var == "Revenue") %>% 
+  dplyr::mutate(Status = c("Total")) %>% 
+  dplyr::group_by(Status, Time, EPU) %>% 
+  dplyr::summarise(Total = sum(Value)) %>% 
+  dplyr::group_by(Status, EPU) %>% 
+  dplyr::mutate(hline = mean(Total))
+  
 series.col <- c("indianred","black")
 
+rev<- rbind(rev_agg, rev_total) %>% 
+  dplyr::filter(EPU == "MAB", 
+                Time >1986)
 #Plotting
-ggplot2::ggplot(data = rev_agg) +
+ggplot2::ggplot(data = rev) +
   
   #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,

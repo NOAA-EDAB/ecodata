@@ -1,23 +1,31 @@
 
-#Filtering and aggation step
+#Filtering and aggregation step
 rev_agg <- ecodata::comdat %>% 
-  dplyr::filter(stringr::str_detect(Var, "US only"),
-                stringr::str_detect(Var, "Revenue"),
-                !stringr::str_detect(Var, "Apex|prop|Other|MAFMC"), #Remove proportions, "Other" category species, NEFMC managed species in MAB
-         EPU %in% c("GOM", "GB"),
-         Time >= 1986) %>% 
-  dplyr::mutate(Status = ifelse(str_detect(Var, "managed"), 
-                         "Managed","Total")) %>% #Create groups for aggregation
-  dplyr::group_by(EPU,Status, Time) %>% 
+  dplyr::filter(Var %in% c("Piscivore Revenue",
+                           "Planktivore Revenue",
+                           "Benthivore Revenue", 
+                           "BenthosRevenue")) %>% 
+  #rbind(apex) %>% 
+  dplyr::mutate(Status = c("Managed")) %>% #Create groups for 
+  dplyr::group_by(Status, Time, EPU) %>% 
   dplyr::summarise(Total = sum(Value)) %>% 
-  dplyr::group_by(EPU,Status) %>% 
+  dplyr::group_by(Status, EPU) %>% 
   dplyr::mutate(hline = mean(Total))
 
+rev_total<- ecodata::comdat %>% 
+  dplyr::filter(Var == "Revenue") %>% 
+  dplyr::mutate(Status = c("Total")) %>% 
+  dplyr::group_by(Status, Time, EPU) %>% 
+  dplyr::summarise(Total = sum(Value)) %>% 
+  dplyr::group_by(Status, EPU) %>% 
+  dplyr::mutate(hline = mean(Total))
+  
 series.col <- c("indianred","black")
-
+rev<- rbind(rev_agg, rev_total) %>% 
+  dplyr::filter(Time >1986)
 #Plotting
-gom_rev_agg <- rev_agg %>% dplyr::filter(EPU == "GOM") %>% 
-ggplot2::ggplot() +
+gom_rev_agg <- rev %>% dplyr::filter(EPU == "GOM") %>% 
+  ggplot2::ggplot() +
   
   #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -50,7 +58,7 @@ ggplot2::ggplot() +
     ggtitle("Gulf of Maine")+
   ecodata::theme_title()
 
-gb_rev_agg <- rev_agg %>% dplyr::filter(EPU == "GB") %>% 
+gb_rev_agg <- rev %>% dplyr::filter(EPU == "GB") %>% 
 ggplot2::ggplot() +
   
   #Highlight last ten years
