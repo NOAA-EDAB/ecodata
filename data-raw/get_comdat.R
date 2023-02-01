@@ -10,13 +10,13 @@ library(dplyr)
 
 raw.dir <- here::here("data-raw")
 
-comdat_RData<-"Commercial_data_pull_23.RData"
+comdat_RData<-"Commercial_data_pull_23 (6).RData"
 
 get_comdat <- function(save_clean = F){
 
   load(file.path(raw.dir, comdat_RData))
 
-  comdat2 <- commercial %>%
+  comdat <- commercial %>%
     dplyr::rename(EPU = Region) %>%
     dplyr::select(-Source)%>%
     tibble::as_tibble() %>%

@@ -259,12 +259,13 @@ ecodata::trans_dates %>%
     ecodata::theme_title()+
     ylab("Day of Year")+
     xlab(element_blank())+
+  ggplot2::ggtitle("SST Transition Dates")
     ecodata::theme_ts()
   
 
 ```
 
-```{r sumlength,  fig.cap="Annual number of days between srping and fall transition dates"}
+```{r sumlength,  fig.cap="Annual number of days between spring and fall transition dates"}
 ecodata::trans_dates %>% 
   dplyr::filter(EPU == "MAB", 
                 Var %in% c("sumlen30"), 
@@ -281,6 +282,7 @@ ecodata::trans_dates %>%
   ecodata::theme_title()+
   ylab("# of Days")+
   xlab(element_blank())+
+  ggplot2::ggtitle("Number of Days betwen Spring and Fall Transition Dates")
   ecodata::theme_ts()
   
 
