@@ -6,7 +6,11 @@ managed_landings <- ecodata::comdat  %>%
                            "Piscivore MAFMC managed species - Seafood Landings",
                            "Benthivore MAFMC managed species - Seafood Landings",
                            "Apex Predator MAFMC managed species - Seafood Landings",
-                           "Benthos MAFMC managed species - Seafood Landings"),
+                           "Benthos MAFMC managed species - Seafood Landings", "Planktivore JOINT managed species - Seafood Landings",
+                           "Piscivore JOINT managed species - Seafood Landings",
+                           "Benthivore JOINT managed species - Seafood Landings",
+                           "Apex Predator JOINT managed species - Seafood Landings",
+                           "Benthos JOINT managed species - Seafood Landings"),
          Time >= 1986) 
 
 US_landings <- ecodata::comdat  %>%

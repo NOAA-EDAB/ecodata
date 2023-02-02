@@ -5,10 +5,19 @@ managed_landings <- ecodata::comdat  %>%
                            "Piscivore NEFMC managed species - Seafood Landings",
                            "Benthivore NEFMC managed species - Seafood Landings",
                            "Apex Predator NEFMC managed species - Seafood Landings",
-                           "Benthos NEFMC managed species - Seafood Landings"),
+                           "Benthos NEFMC managed species - Seafood Landings", "Planktivore JOINT managed species - Seafood Landings",
+                           "Piscivore JOINT managed species - Seafood Landings",
+                           "Benthivore JOINT managed species - Seafood Landings",
+                           "Apex Predator JOINT managed species - Seafood Landings",
+                           "Benthos JOINT managed species - Seafood Landings"),
          Time >= 1986) %>% 
   dplyr::mutate(grouping = c("managed")) %>% 
-  tidyr::separate(Var, into = c("feeding.guild"), sep = " ")
+  tidyr::separate(Var, into = c("feeding.guild"), sep = " ")%>% 
+  dplyr::group_by(feeding.guild, EPU, Time) %>% 
+  dplyr::summarise(Value = sum(Value)) %>% 
+  dplyr::mutate(grouping = c("managed"), 
+                Units = c("metric tons")) %>% 
+  dplyr::ungroup()
 
 #Total landings
 total_landings <- ecodata::comdat  %>% 
