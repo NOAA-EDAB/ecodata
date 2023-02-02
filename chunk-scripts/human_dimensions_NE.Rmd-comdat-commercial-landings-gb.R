@@ -12,11 +12,11 @@ managed_landings <- ecodata::comdat  %>%
 
 #Total landings
 total_landings <- ecodata::comdat  %>% 
-  dplyr::filter(Var %in% c("Planktivore Landings - US only",
-                           "Piscivore Landings - US only",
-                           "Benthivore Landings - US only",
-                           "Apex Predator Landings - US only",
-                           "Benthos Landings - US only"),
+  dplyr::filter(Var %in% c("Planktivore Landings",
+                           "Piscivore Landings",
+                           "Benthivore Landings",
+                           "Apex Predator Landings",
+                           "Benthos Landings"),
          Time >= 1986) %>% 
   dplyr::mutate(grouping = c("total")) %>% 
   tidyr::separate(Var, into = c("feeding.guild"), sep = " ")
@@ -39,7 +39,7 @@ landings <- landings   %>%
   dplyr::mutate(hline = mean(Value))
 
 #Define constants for figure plot
-series.col <- c("indianred","steelblue4") 
+series.col <- c("indianred","black") 
 
 #facet names for titles
 facet_names <- list("Apex" = expression("Apex"),

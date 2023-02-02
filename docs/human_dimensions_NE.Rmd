@@ -110,7 +110,7 @@ Trend lines are shown when slope is significantly different from 0 at the p < 0.
 #### Commercial Landings
 
 
-```{r comdat-commercial-landings-gb, warning=F, fig.length = 24, fig.cap = "NEFMC managed species landings from US (red) and total commercial landings (black) by feeding guild in Georges Bank (right)."}
+```{r comdat-commercial-landings-gb, warning=F, fig.length = 24, fig.cap = "NEFMC managed seafood landings from US (red) and total  landings (black) by feeding guild in Georges Bank."}
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
   dplyr::filter(Var %in% c("Planktivore NEFMC managed species - Seafood Landings",
@@ -124,11 +124,11 @@ managed_landings <- ecodata::comdat  %>%
 
 #Total landings
 total_landings <- ecodata::comdat  %>% 
-  dplyr::filter(Var %in% c("Planktivore Landings - US only",
-                           "Piscivore Landings - US only",
-                           "Benthivore Landings - US only",
-                           "Apex Predator Landings - US only",
-                           "Benthos Landings - US only"),
+  dplyr::filter(Var %in% c("Planktivore Landings",
+                           "Piscivore Landings",
+                           "Benthivore Landings",
+                           "Apex Predator Landings",
+                           "Benthos Landings"),
          Time >= 1986) %>% 
   dplyr::mutate(grouping = c("total")) %>% 
   tidyr::separate(Var, into = c("feeding.guild"), sep = " ")
@@ -151,7 +151,7 @@ landings <- landings   %>%
   dplyr::mutate(hline = mean(Value))
 
 #Define constants for figure plot
-series.col <- c("indianred","steelblue4") 
+series.col <- c("indianred","black") 
 
 #facet names for titles
 facet_names <- list("Apex" = expression("Apex"),
@@ -208,7 +208,7 @@ gb_landings
 
 ```
 
-```{r comdat-commercial-landings-gom, warning=F, fig.length = 24, fig.cap = "NEFMC managed species landings in US (red) and total commercial landings (black) by feeding guild in Gulf of Maine."}
+```{r comdat-commercial-landings-gom, warning=F, fig.length = 24, fig.cap = "NEFMC managed seafood landings in US (red) and total  landings (black) by feeding guild in Gulf of Maine."}
 
 #Managed landings
 managed_landings <- ecodata::comdat  %>%
@@ -223,11 +223,11 @@ managed_landings <- ecodata::comdat  %>%
 
 #Total landings
 total_landings <- ecodata::comdat  %>% 
-  dplyr::filter(Var %in% c("Planktivore Landings - US only",
-                           "Piscivore Landings - US only",
-                           "Benthivore Landings - US only",
-                           "Apex Predator Landings - US only",
-                           "Benthos Landings - US only"),
+  dplyr::filter(Var %in% c("Planktivore Landings",
+                           "Piscivore Landings",
+                           "Benthivore Landings",
+                           "Apex Predator Landings",
+                           "Benthos Landings"),
          Time >= 1986) %>% 
   dplyr::mutate(grouping = c("total")) %>% 
   tidyr::separate(Var, into = c("feeding.guild"), sep = " ")
@@ -250,7 +250,7 @@ landings <- landings   %>%
   dplyr::mutate(hline = mean(Value))
 
 #Define constants for figure plot
-series.col <- c("indianred","steelblue4") 
+series.col <- c("indianred","black") 
 
 
 #facet names for titles
