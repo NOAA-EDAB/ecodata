@@ -10,9 +10,11 @@ agg<-ecodata::aggregate_biomass %>%
   # dplyr::filter(!Area == "-") %>%
   dplyr::group_by(Var, Time, EPU, Area) %>%
   tidyr::pivot_wider(id_cols = c(Var, Time, EPU, Area),names_from =  stat, values_from =  Value) %>%
-  dplyr::filter(!Mean == "NULL") %>%
+  dplyr::filter(!Mean == "NULL", 
+                !Time == 2020) %>%
   dplyr::ungroup() %>%
-  dplyr::mutate(Mean = as.numeric(Mean))
+  dplyr::mutate(Mean = as.numeric(Mean), 
+                SD = as.numeric(SD))
 
 
 agg_bio<-agg %>% dplyr::filter(EPU == epu_abbr,
