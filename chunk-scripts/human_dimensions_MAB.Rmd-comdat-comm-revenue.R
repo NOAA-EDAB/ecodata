@@ -11,10 +11,14 @@ apex<-ecodata::hms_landings %>%
          EPU = c("MAB"))
 #Filtering and aggregation step
 rev_agg <- ecodata::comdat %>% 
-  dplyr::filter(Var %in% c("Piscivore Revenue",
-                           "Planktivore Revenue",
-                           "Benthivore Revenue", 
-                           "BenthosRevenue")) %>% 
+  dplyr::filter(Var %in% c("Piscivore NEFMC managed species - Revenue",
+                           "Planktivore NEFMC managed species - Revenue",
+                           "Benthivore NEFMC managed species - Revenue", 
+                           "Benthos NEFMC managed species - Revenue", 
+                           "Piscivore JOINT managed species - Revenue",
+                           "Planktivore JOINT managed species - Revenue",
+                           "Benthivore JOINT managed species - Revenue", 
+                           "Benthos JOINT managed species - Revenue")) %>% 
   rbind(apex) %>% 
   dplyr::mutate(Status = c("Managed")) %>% #Create groups for 
   dplyr::group_by(Status, Time, EPU) %>% 
