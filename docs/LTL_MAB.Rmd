@@ -1668,7 +1668,7 @@ mab.hw %>%
 
 ### Habitat Diversity
 
-```{r habitat-richness}
+```{r habitat-richness, fig.cap=" Data of 55 Commonly Sampled Species."}
 MAB<- ecodata::habitat_diversity %>% 
   dplyr::filter(!Var == "Shannon", 
                 EPU == "MAB") %>% 
@@ -1691,18 +1691,18 @@ ecodata::habitat_diversity %>%
                 upper = as.numeric(upper),
                 Time = as.numeric(Time),
                 hline = mean(mean)) %>% 
-  ggplot2::ggplot(aes(x = Time, y = mean, fill = EPU, color = EPU))+
+  ggplot2::ggplot(aes(x = Time, y = mean, fill = EPU))+
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
   ggplot2::geom_ribbon(aes(x = Time, ymax = upper, ymin = lower), alpha = 0.3)+
-  ggplot2::geom_point()+
-  ggplot2::geom_line() +
-  ggplot2::geom_point(data = MAB, aes(x = Time, y = mean), size = 2)+
-  ggplot2::geom_line(data = MAB, aes(x = Time, y = mean), size = 2) +
+  ggplot2::geom_point(aes(color = EPU))+
+  ggplot2::geom_line(aes(color = EPU)) +
+  ggplot2::geom_point(data = MAB, aes(x = Time, y = mean, color = EPU), size = 1)+
+  ggplot2::geom_line(data = MAB, aes(x = Time, y = mean,color = EPU), size = 1) +
   ggplot2::ylab("") +
   ggplot2::xlab(element_blank())+
-  ggplot2::ggtitle("Mid-Atlantic Species Richness from Habitat Survey") +
+  ggplot2::ggtitle("Species Richness from NEFSC Bottom Trawl Survey") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
   # ggplot2::geom_hline(aes(yintercept = hline),
   #          size = hline.size,

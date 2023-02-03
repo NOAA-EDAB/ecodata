@@ -125,9 +125,11 @@ agg<-ecodata::aggregate_biomass %>%
   # dplyr::filter(!Area == "-") %>%
   dplyr::group_by(Var, Time, EPU, Area) %>%
   tidyr::pivot_wider(id_cols = c(Var, Time, EPU, Area),names_from =  stat, values_from =  Value) %>%
-  dplyr::filter(!Mean == "NULL") %>%
+  dplyr::filter(!Mean == "NULL", 
+                !Time == 2020) %>%
   dplyr::ungroup() %>%
-  dplyr::mutate(Mean = as.numeric(Mean))
+  dplyr::mutate(Mean = as.numeric(Mean), 
+                SD = as.numeric(SD))
 
 
 agg_bio<-agg %>% dplyr::filter(EPU == epu_abbr,
@@ -1245,13 +1247,13 @@ ecodata::narw %>%
 
 ```{r rw-hotspot, fig.cap = ""}
 
-knitr::include_graphics(file.path(image.dir, "NARW_hotspots_1_18_2023.jpg"))
+knitr::include_graphics(file.path(image.dir, "SOE_2023_right_whales_hatteras_frame_v3.jpg"))
 
 ```
 
 ```{r ps-hotspot, fig.cap = "Seabirds, Turtles, Whales"}
 
-knitr::include_graphics(file.path(image.dir, "SOE_hotspots_v2.jpeg"))
+knitr::include_graphics(file.path(image.dir, "SOE_2023_birds_mammals_turtles_v3.pdf"))
 
 ```
 
