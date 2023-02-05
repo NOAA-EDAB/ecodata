@@ -24,6 +24,13 @@ get_slopewater <- function(save_clean = F){
     as.data.frame() %>% tibble::as_tibble() %>%
     dplyr::select(Time, Var, Value, EPU, Units)
 
+  dat.fill<- expand.grid(Time = c(1978, 1988, 1989,
+                                  1990, 2020),
+                         Var = unique(slopewater$Var),
+                         EPU = unique(slopewater$EPU),
+                         Value = NA,
+                         Units = "unitless")
+  slopewater<- rbind(slopewater, dat.fill)
   # metadata ----
   attr(slopewater, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/slopewater-proportions.html"
   attr(slopewater, "data_files")   <- list(

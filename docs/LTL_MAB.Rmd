@@ -259,7 +259,7 @@ ecodata::trans_dates %>%
     ecodata::theme_title()+
     ylab("Day of Year")+
     xlab(element_blank())+
-  ggplot2::ggtitle("SST Transition Dates")
+  ggplot2::ggtitle("SST Transition Dates")+
     ecodata::theme_ts()
   
 
@@ -282,7 +282,7 @@ ecodata::trans_dates %>%
   ecodata::theme_title()+
   ylab("# of Days")+
   xlab(element_blank())+
-  ggplot2::ggtitle("Number of Days betwen Spring and Fall Transition Dates")
+  ggplot2::ggtitle("Number of Days betwen Spring and Fall Transition Dates")+
   ecodata::theme_ts()
   
 

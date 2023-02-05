@@ -549,7 +549,7 @@ sw.df <- ecodata::slopewater %>%
                                     to = c("WSW","LSW"))) %>% 
   dplyr::rename(Flavor  = Var) %>% 
   dplyr::group_by(Flavor) %>% 
-  dplyr::mutate(hline = mean(Value)) 
+  dplyr::mutate(hline = mean(Value, na.rm = TRUE)) 
 
 sw.df$Origin <- factor(sw.df$Flavor, levels = c("WSW","LSW"))
 
