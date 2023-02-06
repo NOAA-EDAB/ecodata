@@ -1428,7 +1428,7 @@ gom_larv_div <- ecodata::ichthyo_diversity %>%
            alpha = hline.alpha,
            linetype = hline.lty)+
   ecodata::theme_facet() +
-  ggplot2::ylim(0.35,NA)+
+  #ggplot2::ylim(0.35,NA)+
   ggplot2::theme(strip.text=element_text(hjust=0))+
   ecodata::theme_title()
 
@@ -1453,7 +1453,7 @@ gb_larv_div <- ecodata::ichthyo_diversity %>%
            size = hline.size,
            alpha = hline.alpha,
            linetype = hline.lty)+
-  ggplot2::ylim(0.35,NA)+
+  #ggplot2::ylim(0.35,NA)+
   ecodata::theme_facet() +
   ggplot2::theme(strip.text=element_text(hjust=0))+
   ecodata::theme_title()

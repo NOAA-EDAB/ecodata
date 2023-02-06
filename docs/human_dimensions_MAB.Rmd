@@ -298,18 +298,8 @@ landings_agg <- rbind(total_landings_agg, managed_landings_agg, us_total_landing
 #  dplyr::mutate(Value = Value/1000)
 series.col2 <- c("indianred",  "black", "steelblue4")
 
-landings_agg_pre2018<- landings_agg %>% 
-  dplyr::filter(Time <=2018, 
-                EPU == "MAB", 
-                Var == "Total")
-
-landings_agg_post2018<- landings_agg %>% 
-  dplyr::filter(Time >2018, 
-                EPU == "MAB", 
-                Var == "Total")
 landings_aggx<- landings_agg %>% 
-  dplyr::filter(EPU == "MAB", 
-                !Var == "Total")
+  dplyr::filter(EPU == "MAB")
 
 mab_total <- landings_aggx  %>% 
 ggplot2::ggplot()+
@@ -325,10 +315,10 @@ ggplot2::ggplot()+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var), size = lwd) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
   ggplot2::ylim(15,600)+
-  ggplot2::geom_line(data =landings_agg_post2018, aes(x = Time, y = Value, color = Var), size = lwd) +
-  ggplot2::geom_point(data =landings_agg_post2018,aes(x = Time, y = Value, color = Var), size = pcex, shape = 1)+
-  ggplot2::geom_line(data =landings_agg_pre2018, aes(x = Time, y = Value, color = Var), size = lwd) +
-  ggplot2::geom_point(data =landings_agg_pre2018,aes(x = Time, y = Value, color = Var), size = pcex, shape = 16)+
+  # ggplot2::geom_line(data =landings_agg_post2018, aes(x = Time, y = Value, color = Var), size = lwd) +
+  # ggplot2::geom_point(data =landings_agg_post2018,aes(x = Time, y = Value, color = Var), size = pcex, shape = 1)+
+  # ggplot2::geom_line(data =landings_agg_pre2018, aes(x = Time, y = Value, color = Var), size = lwd) +
+  # ggplot2::geom_point(data =landings_agg_pre2018,aes(x = Time, y = Value, color = Var), size = pcex, shape = 16)+
 #  ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
   ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
   ggplot2::scale_color_manual(values = series.col2, aesthetics = "color")+

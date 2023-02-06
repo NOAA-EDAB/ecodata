@@ -3,9 +3,8 @@ zoo_div <- ecodata::zoo_diversity %>%
   dplyr::filter(EPU %in% c("GOM","GB"))
 
 gom_zoo_div <- zoo_div %>% 
-  dplyr::filter(EPU == "GOM", 
-                !is.nan(Value)) %>% 
-  #dplyr::mutate(hline = mean(Value, rm.na = TRUE))
+  dplyr::filter(EPU == "GOM") %>% 
+  dplyr::mutate(hline = mean(Value, rm.na = TRUE)) %>% 
   ggplot2::ggplot(aes(x = Time, y = Value, group = Var)) +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
