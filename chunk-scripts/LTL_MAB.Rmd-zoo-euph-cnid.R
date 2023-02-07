@@ -1,6 +1,7 @@
 
 zoo_abund <- ecodata::zoo_strat_abun %>% 
-  dplyr::filter(EPU == "MAB") %>% 
+  dplyr::filter(EPU == "MAB", 
+                Time > 1991) %>% 
          #stringr::str_detect(Var, "Euphausiacea|Cnidaria")) %>% 
   dplyr::mutate(Value = log10(Value+1)) %>% 
   dplyr::group_by(Var, EPU) %>% 

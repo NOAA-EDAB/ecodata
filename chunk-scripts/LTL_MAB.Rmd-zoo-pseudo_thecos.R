@@ -6,6 +6,7 @@ zoo_fill <- expand.grid(Time = 2020,
 zoo_abund <- ecodata::zoo_regime %>% 
   dplyr::filter(EPU == "MAB",
          stringr::str_detect(Var, "thecos_100m3|pseudo_100m3"), 
+         Time > 1991, 
          !Time == 2020) %>% 
   rbind(zoo_fill) %>% 
   dplyr::mutate(Var = dplyr::recode(Var, "thecos_100m3" = "Pteropods", 

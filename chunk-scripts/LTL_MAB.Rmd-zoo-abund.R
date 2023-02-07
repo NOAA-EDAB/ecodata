@@ -1,7 +1,8 @@
 
 ecodata::zoo_abundance_anom %>%
    dplyr::filter(EPU == "MAB", 
-                 stringr::str_detect(Var, "LgCopepods|SmCopepods")) %>%
+                 stringr::str_detect(Var, "LgCopepods|SmCopepods"), 
+                 Time > 1991) %>%
    dplyr::group_by(Time) %>% 
    dplyr::mutate(Value = as.numeric(Value), 
                  hline = 0) %>% 
