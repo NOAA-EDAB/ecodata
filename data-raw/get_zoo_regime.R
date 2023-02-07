@@ -5,9 +5,9 @@ library(tidyverse)
 
 
 raw.dir <- here::here("data-raw")
-gom_zoo <- "GOM_mean_annual_anomalies.rdata"
-gb_zoo <- "GBK_mean_annual_anomalies.rdata"
-mab_zoo <- "MAB_mean_annual_anomalies.rdata"
+gom_zoo <- "GOM_mean_annual_anomalies (1).rdata"
+gb_zoo <- "GBK_mean_annual_anomalies (1).rdata"
+mab_zoo <- "MAB_mean_annual_anomalies (1).rdata"
 
 
 get_zoo_regime <- function(save_clean = F){

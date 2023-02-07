@@ -1,12 +1,19 @@
 
+zoo_fill <- expand.grid(Time = 2020, 
+                       Value = NA, 
+                       EPU = "MAB", 
+                       Var = c("thecos_100m3", "pseudo_100m3"))
 zoo_abund <- ecodata::zoo_regime %>% 
   dplyr::filter(EPU == "MAB",
-         stringr::str_detect(Var, "thecos_100m3|pseudo_100m3")) %>% 
+         stringr::str_detect(Var, "thecos_100m3|pseudo_100m3"), 
+         !Time == 2020) %>% 
+  rbind(zoo_fill) %>% 
   dplyr::mutate(Var = dplyr::recode(Var, "thecos_100m3" = "Pteropods", 
               "pseudo_100m3" = "Pseudocalanus")) %>% 
   dplyr::group_by(Var, EPU) %>% 
   dplyr::mutate(Value = as.numeric(Value), 
-                hline = mean(Value)) 
+                hline = mean(Value))
+
 
 zoo_abund %>% 
   ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
