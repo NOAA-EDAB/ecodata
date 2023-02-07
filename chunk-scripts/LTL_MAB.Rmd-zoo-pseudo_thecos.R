@@ -16,7 +16,7 @@ zoo_abund <- ecodata::zoo_regime %>%
 
 
 zoo_abund %>% 
-  ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
+  ggplot2::ggplot(aes(x = Time, y = Value)) +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
       ymin = -Inf, ymax = Inf) +
@@ -27,7 +27,7 @@ zoo_abund %>%
   ggplot2::ylab(expression("Abundance Anomaly")) +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Zooplankton abundance anomaly") +
-  #ggplot2::facet_wrap(Var~., ncol = 3) +
+  ggplot2::facet_wrap(Var~., ncol = 3) +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
   ggplot2::geom_hline(aes(yintercept = 0),
            size = hline.size,

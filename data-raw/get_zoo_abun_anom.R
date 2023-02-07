@@ -23,30 +23,32 @@ get_zoo_abundance <- function(save_clean = F){
 get_zoo_abundance(save_clean = T)
 
 
-## Stratified Abundance for Small and Large Calanoids, euphasids and cnidarians
-# get_zoo_strat_abun <- function(save_clean = F){
-#
-#   zoo_strat_abun <- read_excel(file.path(raw.dir,zoo_strat_abun_xlsx), sheet = "StratifiedAbundance") %>%
-#     dplyr::select(Year, Units, Region, SmallCalanoida, LargeCalanoida, Euphausiacea, Cnidaria) %>%
-#     dplyr::rename(Time = Year,
-#                   EPU = Region) %>%
-#     gather(Var, Value, SmallCalanoida:Cnidaria)
-#
-#   if (save_clean){
-#     usethis::use_data(zoo_strat_abun, overwrite = T)
-#   } else {
-#     return(zoo_strat_abun)
-#   }
-#   # metadata ----
-#   attr(zoo_strat_abun, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chl-pp.html"
-#   attr(zoo_strat_abun, "data_files")   <- list(
-#     zoo_strat_abun_xlsx = zoo_strat_abun_xlsx)
-#   attr(zoo_strat_abun, "data_steward") <- c(
-#     "Harvey Walsh <harvey.walsh@noaa.gov>",
-#     "Mike Jones <michael.jones@noaa.gov>",
-#     "Ryan Morse <ryan.morse@noaa.gov>")
-# }
-# get_zoo_strat_abun(save_clean = T)
+# Stratified Abundance euphasids and cnidarians
+
+zoo_strat_abun_xlsx <- "NEFSCZooplankton_v3_8_abundance_krill_cnidaria.xlsx"
+get_zoo_strat_abun <- function(save_clean = F){
+
+  zoo_strat_abun <- readxl::read_excel(file.path(raw.dir,zoo_strat_abun_xlsx)) %>%
+    dplyr::select(Year, Units, Region, Euphausiacea, Cnidaria) %>%
+    dplyr::rename(Time = Year,
+                  EPU = Region) %>%
+    tidyr::pivot_longer(c("Euphausiacea","Cnidaria"),names_to = "Var", values_to = "Value")
+
+  if (save_clean){
+    usethis::use_data(zoo_strat_abun, overwrite = T)
+  } else {
+    return(zoo_strat_abun)
+  }
+  # metadata ----
+  attr(zoo_strat_abun, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chl-pp.html"
+  attr(zoo_strat_abun, "data_files")   <- list(
+    zoo_strat_abun_xlsx = zoo_strat_abun_xlsx)
+  attr(zoo_strat_abun, "data_steward") <- c(
+    "Harvey Walsh <harvey.walsh@noaa.gov>",
+    "Mike Jones <michael.jones@noaa.gov>",
+    "Ryan Morse <ryan.morse@noaa.gov>")
+}
+get_zoo_strat_abun(save_clean = T)
 
 ### Tried to plot up mean of all the anomalies but this is incorrect because
 ## We don't have orig data should be anom of mean not mean of anom.
