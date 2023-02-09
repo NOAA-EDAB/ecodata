@@ -1518,7 +1518,7 @@ ecodata::heatwave_year %>%
   xlab(element_blank())+
   scale_x_date(date_labels = "%b", breaks = "1 month")+
   theme_bw()+
-  ggplot2::ggtitle("Detrended")+
+  ggplot2::ggtitle("Mid-Atlantic")+
   theme(legend.title = element_blank(),
         legend.position=c(0.2, 0.8))+
   ecodata::theme_title()
@@ -1584,13 +1584,14 @@ mab.hw %>%
 
 
 
-```{r heatwave, fig.cap="Marine heatwave cumulative intesity (left) and maximum intensity (right) in the Mid-Atlantic Bight."}
+```{r heatwave, fig.cap="Marine heatwave duration (left) and maximum intensity (right) in the Mid-Atlantic Bight."}
 
-
-
-cumud <- ecodata::heatwave %>% 
-  dplyr::filter(Var == "cumulative intensity-SurfaceDetrended") %>% 
-  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-SurfaceDetrended" = "Cumulative Intensity Detrended (degree C x days)"))
+durd <- ecodata::heatwave %>% 
+  dplyr::filter(Var == "duration-SurfaceDetrended") %>% 
+  dplyr::group_by(Time, EPU, Var, Units) %>% 
+  dplyr::summarise(Value = sum(Value)) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "duration-SurfaceDetrended" = "Total Days Detrended (N days)"))
 
 maxind <- ecodata::heatwave %>% 
   dplyr::filter(Var == "maximum intensity-SurfaceDetrended") %>% 
@@ -1600,7 +1601,7 @@ maxind <- ecodata::heatwave %>%
   dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-SurfaceDetrended" = "Maximum Intensity Detrended (degree C)"))
 
 
-hw<- cumud %>%
+hw<- durd %>%
   rbind( maxind) %>% 
   dplyr::group_by(Var, EPU) %>% 
   dplyr::mutate(hline = mean(Value))
@@ -1650,7 +1651,7 @@ ecodata::heatwave_year %>%
   xlab(element_blank())+
   scale_x_date(date_labels = "%b", breaks = "1 month")+
   theme_bw()+
-  ggplot2::ggtitle("Detrended")+
+  ggplot2::ggtitle("Mid-Atlantic - Bottom")+
   theme(legend.title = element_blank(),
         legend.position=c(0.2, 0.8))+
   ecodata::theme_title()
@@ -1658,7 +1659,7 @@ ecodata::heatwave_year %>%
 
 ```
 
-```{r bottom-heatwave, fig.cap="Bottom heatwave cumulative intesity (left) and maximum intensity (right) in the Mid-Atlantic Bight."}
+```{r bottom-heatwave, fig.cap="Bottom heatwave duration (left) and maximum intensity (right) in the Mid-Atlantic Bight."}
 hw1<- ecodata::heatwave %>%
   dplyr::filter(Time >= 2021) %>% 
   dplyr::mutate(Source = c("PSY"))
@@ -1667,9 +1668,13 @@ hwts<- ecodata::heatwave %>%
   dplyr::mutate(Source = c("Glorys")) %>% 
   rbind(hw1) 
 
-cumud <- hwts %>% 
-  dplyr::filter(Var == "cumulative intensity-BottomDetrended") %>% 
-  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-BottomDetrended" = "Cumulative Intensity Detrended (degree C x days)")) 
+durd <- hwts %>% 
+  dplyr::filter(Var == "duration-BottomDetrended") %>% 
+  dplyr::group_by(Time, EPU, Var, Units, Source) %>% 
+  dplyr::summarise(Value = sum(Value)) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "duration-BottomDetrended" = "Total Days Detrended (N days)"))
+
 
 maxind <- hwts %>% 
   dplyr::filter(Var == "maximum intensity-BottomDetrended") %>% 
@@ -1678,7 +1683,7 @@ maxind <- hwts %>%
   dplyr::ungroup() %>% 
   dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-BottomDetrended" = "Maximum Intensity Detrended (degree C)"))
 
-hw<- cumud %>%
+hw<- durd %>%
   rbind(maxind) %>% 
   dplyr::group_by(Var, EPU) %>% 
   dplyr::mutate(hline = mean(Value))

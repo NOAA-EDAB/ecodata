@@ -14,7 +14,7 @@ ecodata::heatwave_year %>%
   xlab(element_blank())+
   scale_x_date(date_labels = "%b", breaks = "1 month")+
   theme_bw()+
-  ggplot2::ggtitle("Detrended")+
+  ggplot2::ggtitle("Gulf of Maine - Bottom")+
   theme(legend.title = element_blank(),
         legend.position=c(0.3, 0.8))+
   ecodata::theme_title()

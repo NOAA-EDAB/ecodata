@@ -7,9 +7,13 @@ hwts<- ecodata::heatwave %>%
   dplyr::mutate(Source = c("Glorys")) %>% 
   rbind(hw1) 
 
-cumud <- hwts %>% 
-  dplyr::filter(Var == "cumulative intensity-BottomDetrended") %>% 
-  dplyr::mutate(Var = dplyr::recode(Var, "cumulative intensity-BottomDetrended" = "Cumulative Intensity Detrended (degree C x days)"))
+durd <- hwts %>% 
+  dplyr::filter(Var == "duration-BottomDetrended") %>% 
+  dplyr::group_by(Time, EPU, Var, Units, Source) %>% 
+  dplyr::summarise(Value = sum(Value)) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(Var = dplyr::recode(Var, "duration-BottomDetrended" = "Total Days Detrended (N days)"))
+
 
 maxind <- hwts %>% 
   dplyr::filter(Var == "maximum intensity-BottomDetrended") %>% 
@@ -18,7 +22,7 @@ maxind <- hwts %>%
   dplyr::ungroup() %>% 
   dplyr::mutate(Var = dplyr::recode(Var, "maximum intensity-BottomDetrended" = "Maximum Intensity Detrended (degree C)"))
 
-hw<- cumud %>%
+hw<- durd %>%
   rbind(maxind) %>% 
   dplyr::group_by(Var, EPU) %>% 
   dplyr::mutate(hline = mean(Value))

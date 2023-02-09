@@ -82,11 +82,24 @@ get_heatwave <- function(save_clean = F){
     dplyr::group_by(Time, EPU, Var) %>%
     dplyr::summarise(Value = max(Value)) %>%
     dplyr::ungroup()
+  duration <- rbind(gb.hw, gom.hw, mab.hw) %>%
+    dplyr::mutate(Time = as.numeric(format(as.Date(date_start, format="%Y-%m-%d"),"%Y")))  %>%
+    dplyr::rename(Value = duration) %>%
+    dplyr::mutate(Var = "duration")%>%
+    dplyr::select(Time, EPU, Value, Var) %>%
+    dplyr::group_by(Time, EPU, Var) %>%
+    dplyr::summarise(Value = max(Value)) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(Units = "N days",
+                  Time = as.numeric(Time),
+                  Var  = paste0(Var, "-Surface"))
+
 
   heatwave_surface<- rbind(cum.intensity, max.intensity) %>%
   dplyr:: mutate(Units = "degrees C",
             Time = as.numeric(Time),
             Var  = paste0(Var, "-Surface")) %>%
+    rbind(duration) %>%
     dplyr::select(Time, Var, Value, EPU, Units)
 
 
@@ -150,10 +163,23 @@ get_heatwave <- function(save_clean = F){
     dplyr::summarise(Value = max(Value)) %>%
     dplyr::ungroup()
 
+  duration <- rbind(gb.hw, gom.hw, mab.hw) %>%
+    dplyr::mutate(Time = as.numeric(format(as.Date(date_start, format="%Y-%m-%d"),"%Y")))  %>%
+    dplyr::rename(Value = duration) %>%
+    dplyr::mutate(Var = "duration")%>%
+    dplyr::select(Time, EPU, Value, Var) %>%
+    dplyr::group_by(Time, EPU, Var) %>%
+    dplyr::summarise(Value = max(Value)) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(Units = "N days",
+                  Time = as.numeric(Time),
+                  Var  = paste0(Var, "-SurfaceDetrended"))
+
   heatwave_detrended<- rbind(cum.intensity, max.intensity) %>%
     dplyr:: mutate(Units = "degrees C",
                    Time = as.numeric(Time),
                    Var  = paste0(Var, "-SurfaceDetrended")) %>%
+    rbind(duration) %>%
     dplyr::select(Time, Var, Value, EPU, Units)
 
   # BOTTOM DETRENDED
@@ -215,11 +241,23 @@ get_heatwave <- function(save_clean = F){
     dplyr::group_by(Time, EPU, Var) %>%
     dplyr::summarise(Value = max(Value)) %>%
     dplyr::ungroup()
+  duration <- rbind(gb.hw, gom.hw, mab.hw) %>%
+    dplyr::mutate(Time = as.numeric(format(as.Date(date_start, format="%Y-%m-%d"),"%Y")))  %>%
+    dplyr::rename(Value = duration) %>%
+    dplyr::mutate(Var = "duration")%>%
+    dplyr::select(Time, EPU, Value, Var) %>%
+    dplyr::group_by(Time, EPU, Var) %>%
+    dplyr::summarise(Value = max(Value)) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(Units = "N days",
+                  Time = as.numeric(Time),
+                  Var  = paste0(Var, "-BottomDetrended"))
 
   bheatwave_detrended<- rbind(cum.intensity, max.intensity) %>%
     dplyr:: mutate(Units = "degrees C",
                    Time = as.numeric(Time),
                    Var  = paste0(Var, "-BottomDetrended")) %>%
+    rbind(duration) %>%
     dplyr::select(Time, Var, Value, EPU, Units)
 
 

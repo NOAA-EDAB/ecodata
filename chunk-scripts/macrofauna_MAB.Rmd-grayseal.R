@@ -2,7 +2,7 @@
 ecodata::grayseal %>% 
   tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
   ggplot2::ggplot()+
-  ggplot2::geom_line(aes(x=Time, y = totalest5y, color = "5yr rolling mean and confidence interval"))+
+  ggplot2::geom_line(aes(x=Time, y = totalest5y, color = "5yr rolling mean and CI"))+
   ggplot2::geom_line(aes(x=Time, y = totalest1y, color = "NE Annual estimates"), linetype = "dashed")+
   ggplot2::geom_line(aes(x=Time, y = pbr, color = "PBR"))+
   #ggplot2::geom_line(aes(x=year, y = PBR), color = "red")+
@@ -11,9 +11,10 @@ ecodata::grayseal %>%
   ggplot2::ylab("Estimated Bycatch (n)")+
   ggplot2::xlab(element_blank())+
   ggplot2::scale_color_manual(name = element_blank(), 
-                              values = c('5yr rolling mean and confidence interval' = 'blue',
+                              values = c('5yr rolling mean and CI' = 'blue',
                                          'NE Annual estimates' = 'black',
                                          'PBR' = 'red'))+
-  theme(legend.position = c(0.3, 0.75))+
+  theme(legend.position = c(0.25, 0.75), 
+        legend.text = element_text(size = 8)) +
   ecodata::theme_ts()+
   ecodata::theme_title()
