@@ -17,7 +17,7 @@ com2<-com %>%
                      breaks = com$EJRating) +
   xlim(-2,12.7)+
   ylim(-1,3.0)+
-  theme(legend.position=c(0.75, 0.85), 
+  theme(legend.position=c(0.85, 0.15), 
         legend.title = element_blank(),       
         legend.background = element_blank(),
         legend.box.background = element_rect(colour = "black"))+
@@ -31,7 +31,7 @@ com2<-com %>%
   #ecodata::theme_facet()
   
   
-  gridExtra::grid.arrange(com2, bottom = textGrob("Low <---------------------------------------------------------------------------------------------------------------------------> High", 
+gridExtra::grid.arrange(com2, bottom = textGrob("Low <---------------------------------------------------------------------------------------------------------------------------> High", 
                                      x = 0.5, y = 1, gp = gpar(fontsize = 7)),
                           left = textGrob("Low <--------------------------------------------------------------------------------------> High", rot = 90,
                                    x = 1, y = 0.45, gp = gpar(fontsize = 7)))

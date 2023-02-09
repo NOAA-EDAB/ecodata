@@ -11,10 +11,10 @@ apex<-ecodata::hms_landings %>%
          EPU = c("MAB"))
 #Filtering and aggregation step
 rev_agg <- ecodata::comdat %>% 
-  dplyr::filter(Var %in% c("Piscivore NEFMC managed species - Revenue",
-                           "Planktivore NEFMC managed species - Revenue",
-                           "Benthivore NEFMC managed species - Revenue", 
-                           "Benthos NEFMC managed species - Revenue", 
+  dplyr::filter(Var %in% c("Piscivore MAFMC managed species - Revenue",
+                           "Planktivore MAFMC managed species - Revenue",
+                           "Benthivore MAFMC managed species - Revenue", 
+                           "Benthos MAFMC managed species - Revenue", 
                            "Piscivore JOINT managed species - Revenue",
                            "Planktivore JOINT managed species - Revenue",
                            "Benthivore JOINT managed species - Revenue", 
