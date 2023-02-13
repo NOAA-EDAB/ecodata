@@ -47,21 +47,21 @@ get_heatwave <- function(save_clean = F){
     tidyr::drop_na()
   #GB
   #ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2011-12-31"))
-  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2022-12-05"))
   gb.mhw <- heatwaveR::detect_event(ts)
   gb.hw<- gb.mhw$event %>%
     dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative)%>%
     dplyr::mutate(EPU = "GB")
   #GOM
   #ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2011-12-31"))
-  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2022-12-05"))
   gom.mhw <- heatwaveR::detect_event(ts)
   gom.hw<- gom.mhw$event %>%
     dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative) %>%
     dplyr::mutate(EPU = "GOM")
   # MAB
   #ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2011-12-31"))
-  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2022-12-05"))
   mab.mhw <- heatwaveR::detect_event(ts)
   mab.hw<- mab.mhw$event %>%
     dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative) %>%
@@ -127,21 +127,21 @@ get_heatwave <- function(save_clean = F){
     tidyr::drop_na()
   #GB
   #ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2011-12-31"))
-  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2022-12-05"))
   gb.mhw <- heatwaveR::detect_event(ts)
   gb.hw<- gb.mhw$event %>%
     dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative)%>%
     dplyr::mutate(EPU = "GB")
   #GOM
   #ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2011-12-31"))
-  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2022-12-05"))
   gom.mhw <- heatwaveR::detect_event(ts)
   gom.hw<- gom.mhw$event %>%
     dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative) %>%
     dplyr::mutate(EPU = "GOM")
   # MAB
   #ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2011-12-31"))
-  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2022-12-05"))
   mab.mhw <- heatwaveR::detect_event(ts)
   mab.hw<- mab.mhw$event %>%
     dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative) %>%
@@ -206,22 +206,22 @@ get_heatwave <- function(save_clean = F){
     tidyr::drop_na()
   #GB
   #ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2011-12-31"))
-  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2011-12-31"))
-  gb.mhw <- heatwaveR::detect_event(ts)
+  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2022-12-31"))
+  gb.mhw <- heatwaveR::detect_event(ts, minDuration = 30)
   gb.hw<- gb.mhw$event %>%
     dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative)%>%
     dplyr::mutate(EPU = "GB")
   #GOM
   #ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2011-12-31"))
-  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2011-12-31"))
-  gom.mhw <- heatwaveR::detect_event(ts)
+  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2022-12-31"))
+  gom.mhw <- heatwaveR::detect_event(ts, minDuration = 30)
   gom.hw<- gom.mhw$event %>%
     dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative) %>%
     dplyr::mutate(EPU = "GOM")
   # MAB
   #ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2011-12-31"))
-  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2011-12-31"))
-  mab.mhw <- heatwaveR::detect_event(ts)
+  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2022-12-31"))
+  mab.mhw <- heatwaveR::detect_event(ts, minDuration = 30)
   mab.hw<- mab.mhw$event %>%
     dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative) %>%
     dplyr::mutate(EPU = "MAB")
@@ -326,15 +326,15 @@ get_heatwave_year <- function(save_clean = F){
                   t = as.Date(t, "%m/%d/%y")) %>%
     tidyr::drop_na()
   #GB
-  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2022-12-05"))
   #ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   gb.mhw <- heatwaveR::detect_event(ts)
   #GOM
-  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2022-12-05"))
   #ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   gom.mhw <- heatwaveR::detect_event(ts)
   #MAB
-  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2022-12-05"))
   #ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   mab.mhw <- heatwaveR::detect_event(ts)
 
@@ -383,15 +383,15 @@ get_heatwave_year <- function(save_clean = F){
     tidyr::drop_na()
 
   #GB
-  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2022-12-05"))
   #ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   gb.mhw <- heatwaveR::detect_event(ts)
   #GOM
-  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2022-12-05"))
   #ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   gom.mhw <- heatwaveR::detect_event(ts)
   #MAB
-  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2022-12-05"))
   #ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   mab.mhw <- heatwaveR::detect_event(ts)
 
@@ -440,34 +440,34 @@ get_heatwave_year <- function(save_clean = F){
     tidyr::drop_na()
 
   #GB
-  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2022-12-31"))
   #ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1991-01-01", "2020-12-31"))
-  gb.mhw <- heatwaveR::detect_event(ts)
+  gb.mhw <- heatwaveR::detect_event(ts, minDuration = 30)
   #GOM
-  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2022-12-31"))
   #ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1991-01-01", "2020-12-31"))
-  gom.mhw <- heatwaveR::detect_event(ts)
+  gom.mhw <- heatwaveR::detect_event(ts, minDuration = 30)
   #MAB
-  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2011-12-31"))
+  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2022-12-31"))
   #ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1991-01-01", "2020-12-31"))
-  mab.mhw <- heatwaveR::detect_event(ts)
+  mab.mhw <- heatwaveR::detect_event(ts, minDuration = 30)
 
   ### Take just clim
   #GB
   mhw<- gb.mhw$clim %>%
     mutate(EPU = c("GB"),
            Year = c("2022"))# add EPU column
-  mhw.gb.year <- mhw[14611:14949,]## days in 2020 data set only went to dec 9, 2020
+  mhw.gb.year <- mhw[14611:14975,]## days in 2020 data set only went to dec 9, 2020
   #GOM
   mhw<- gom.mhw$clim %>%
     mutate(EPU = c("GOM"),
            Year = c("2022"))# add EPU column
-  mhw.gom.year <- mhw[14611:14949,]## days in 2020 data set only went to dec 9, 2020
+  mhw.gom.year <- mhw[14611:14975,]## days in 2020 data set only went to dec 9, 2020
   #MAB
   mhw<- mab.mhw$clim %>%
     mutate(EPU = c("MAB"),
            Year = c("2022"))# add EPU column
-  mhw.mab.year <- mhw[14611:14949,]## days in 2020 data set only went to dec 9, 2020
+  mhw.mab.year <- mhw[14611:14975,]## days in 2020 data set only went to dec 9, 2020
 
 
   bheatwave_year_detrended<- rbind(mhw.gb.year, mhw.gom.year, mhw.mab.year) %>%
