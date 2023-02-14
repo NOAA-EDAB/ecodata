@@ -1,5 +1,4 @@
 
-#dt<- ecodata::wea_landings_rev[1:10, 1:5] %>% 
 dt<- ecodata::wea_landings_rev %>% 
   dplyr::select("NEFMC, MAFMC, and ASMFC Managed Species", 
                 "perc_landings_max","perc_revenue_max" ) %>% 
