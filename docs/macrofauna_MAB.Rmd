@@ -1037,6 +1037,14 @@ ecodata::forage_anomaly %>%
 ### Forage Index
 
 ```{r forage-index}
+
+
+resca<- ecodata::forage_index %>% 
+  dplyr::filter(Var %in% c("Fall Forage Fish Biomass Estimate", 
+                           "Spring Forage Fish Biomass Estimate"), 
+                EPU == "MAB") %>% 
+  dplyr::summarise(max = max(Value)) 
+
 ecodata::forage_index %>% 
   dplyr::filter(Var %in% c("Fall Forage Fish Biomass Estimate", 
                            "Fall Forage Fish Biomass Estimate SE",
@@ -1045,9 +1053,13 @@ ecodata::forage_index %>%
                 EPU == "MAB") %>% 
   tidyr::separate(Var, into = c("Season", "A", "B", "C", "D", "Var")) %>% 
   dplyr::mutate(Var = replace_na(Var, "Mean"), 
-                Value = Value/1000) %>% 
+                max = as.numeric(resca)) %>% 
   tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
-  dplyr::mutate(Upper = Mean + SE, 
+  dplyr::mutate(#Value = Value/resca, 
+    Mean = as.numeric(Mean), 
+                Mean = Mean/max,
+                SE = SE/max,
+                Upper = Mean + SE, 
                 Lower = Mean - SE) %>% 
   ggplot2::ggplot(aes(x = Time, y = Mean, group = Season))+
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -1057,7 +1069,7 @@ ecodata::forage_index %>%
   ggplot2::geom_point()+
   ggplot2::geom_line()+
   ggplot2::ggtitle("Forage Biomass Index")+
-  ggplot2::ylab(expression("Forage Index Estimate (10"^3*")"))+
+  ggplot2::ylab(expression("Relative forage biomass"))+
   ggplot2::xlab(element_blank())+
   ecodata::geom_gls()+
   ecodata::theme_ts()+
