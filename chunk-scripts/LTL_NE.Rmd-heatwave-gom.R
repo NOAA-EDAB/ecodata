@@ -21,8 +21,8 @@ hw<- durd %>%
   dplyr::group_by(Var, EPU) %>% 
   dplyr::mutate(hline = mean(Value))
 
-gb.hw<- hw %>% dplyr::filter(EPU == "GOM")
-gb.hw %>% 
+gom.hw<- hw %>% dplyr::filter(EPU == "GOM")
+gom.hw %>% 
   ggplot2::ggplot() +
   ggplot2::geom_line(aes(x = Time, y = Value)) +
   ggplot2::geom_point(aes(x = Time, y = Value)) +

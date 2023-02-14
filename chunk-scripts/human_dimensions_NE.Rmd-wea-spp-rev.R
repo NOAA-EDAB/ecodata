@@ -6,10 +6,10 @@ ecodata::wind_revenue %>%
                 Value = Value/1000000,
                 Time = as.integer(Time)) %>%
   dplyr::filter(EPU == "NE", 
-                Species %in% c("ATLANTIC HERRING","MONKFISH","SEA SCALLOP",
+                Species %in% c("ATLANTIC HERRING","MONK","SEA SCALLOP",
                                "SILVER HAKE",  "SKATES"   )) %>% 
   dplyr::mutate(Species = recode(Species, "ATLANTIC HERRING"="Atlantic Herring", 
-                                 "MONKFISH" = "Monkfish", 
+                                 "MONK" = "Monkfish", 
                                  "SEA SCALLOP" = "Sea Scallop", 
                                  "SILVER HAKE" = "Silver Hake",
                                  "SKATES" = "Skates")) %>% 
