@@ -1398,15 +1398,15 @@ ecodata::wind_revenue %>%
                 Value = Value/1000000,
                 Time = as.integer(Time)) %>%
   dplyr::filter(EPU == "MAB", 
-                Species %in% c("LONGFIN SQUID", "MONKFISH", "SUMMER FLOUNDER",
-                               "OCEAN QUAHOG", "SURFCLAM")) %>% 
+                Species %in% c("LONGFIN SQUID", "MONK", "SUMMER FLOUNDER",
+                               "OCEAN QUAHOG", "SURF CLAM")) %>% 
                 # Species %in% c("SQUID / LOLIGO","MONK","FLOUNDER, SUMMER / FLUKE",
                 #                "QUAHOGS/BUSHEL",  "CLAM, SURF/BUSHEL" )) %>%
   dplyr::mutate(Species = recode(Species, "LONGFIN SQUID"="Longfin Squid", 
-                                 "MONKFISH" = "Monkfish", 
+                                 "MONK" = "Monkfish", 
                                  "SUMMER FLOUNDER" = "Summer Flounder", 
                                  "OCEAN QUAHOG" = "Ocean Quahog",
-                                 "SURFCLAM" = "Surfclam")) %>% 
+                                 "SURF CLAM" = "Surfclam")) %>% 
   ggplot2::ggplot() +
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,

@@ -9,7 +9,7 @@ raw.dir <- here::here("data-raw")
 
 ## Doug Christel
 #wind_xlsx<-"CHRISTEL_2022 State of the Ecosystem Report_Max WEA Species Landings and Revenue.xlsx"
-wind_xlsx<-"SOE 2023 update_Offshore Wind Fishery Data_Christel.xlsx"
+wind_xlsx<-"SOE 2023 update_Offshore Wind Fishery Data_Christel (3).xlsx"
 get_wea_landings_rev <- function(save_clean = F){
   # import data
    wea_landings_rev<-readxl::read_excel(file.path(raw.dir,wind_xlsx), sheet = "Highest % Rev Table") %>%
