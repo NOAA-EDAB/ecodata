@@ -30,7 +30,7 @@ facet_names <- list("Piscivores" = expression("Piscivores"),
                     "Benthos" = expression("Benthos"))
 
 p1<-agg_bio %>% 
-  dplyr::filter(str_detect(Var,"Piscivore")) %>% 
+  dplyr::filter(stringr::str_detect(Var,"Piscivore")) %>% 
   ggplot2::ggplot() +
   
   #Highlight last ten years
@@ -69,7 +69,7 @@ p1<-agg_bio %>%
 ## Benthivore
 
 p2<-agg_bio %>% 
-  dplyr::filter(str_detect(Var,"Benthivore")) %>% 
+  dplyr::filter(stringr::str_detect(Var,"Benthivore")) %>% 
   ggplot2::ggplot() +
   
   #Highlight last ten years
@@ -106,7 +106,7 @@ p2<-agg_bio %>%
         axis.title.x=element_blank())
 ### Planktivore
 p3<-agg_bio %>% 
-  dplyr::filter(str_detect(Var,"Planktivore")) %>% 
+  dplyr::filter(stringr::str_detect(Var,"Planktivore")) %>% 
   ggplot2::ggplot() +
   
   #Highlight last ten years
@@ -143,7 +143,7 @@ p3<-agg_bio %>%
         axis.title.x=element_blank())
 ### Benthos
 p4<-agg_bio %>% 
-  dplyr::filter(str_detect(Var,"Benthos")) %>% 
+  dplyr::filter(stringr::str_detect(Var,"Benthos")) %>% 
   #ggplot(aes(x = Time, y = Mean)) +
   ggplot2::ggplot() +
   #Highlight last ten years

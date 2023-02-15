@@ -1,6 +1,6 @@
 
 ecodata::hms_cpue %>% 
-  filter(str_detect(Var, "TUNA")) %>% 
+  filter(stringr::str_detect(Var, "TUNA")) %>% 
   ggplot()+
  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,

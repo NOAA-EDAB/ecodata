@@ -172,9 +172,9 @@ neamap$Var <- factor(neamap$Var,levels = c("Piscivore Spring","Piscivore Fall",
                                            "Benthos Spring", "Benthos Fall"))
 ## Piscivore
 neamap.1<-neamap %>%
-  dplyr::filter(str_detect(Var,"Piscivore"))
+  dplyr::filter(stringr::str_detect(Var,"Piscivore"))
 p1<-agg_bio %>%
-  dplyr::filter(str_detect(Var,"Piscivore")) %>%
+  dplyr::filter(stringr::str_detect(Var,"Piscivore")) %>%
   ggplot2::ggplot() +
 
   #Highlight last ten years
@@ -224,9 +224,9 @@ p1<-agg_bio %>%
 
 ## Benthivore
 neamap.2<-neamap %>%
-  dplyr::filter(str_detect(Var,"Benthivore"))
+  dplyr::filter(stringr::str_detect(Var,"Benthivore"))
 p2<-agg_bio %>%
-  dplyr::filter(str_detect(Var,"Benthivore")) %>%
+  dplyr::filter(stringr::str_detect(Var,"Benthivore")) %>%
   ggplot2::ggplot() +
 
   #Highlight last ten years
@@ -275,9 +275,9 @@ p2<-agg_bio %>%
 
 ### Planktivore
 neamap.3<-neamap %>%
-  dplyr::filter(str_detect(Var,"Planktivore"))
+  dplyr::filter(stringr::str_detect(Var,"Planktivore"))
 p3<-agg_bio %>%
-  dplyr::filter(str_detect(Var,"Planktivore")) %>%
+  dplyr::filter(stringr::str_detect(Var,"Planktivore")) %>%
   ggplot2::ggplot() +
 
   #Highlight last ten years
@@ -326,9 +326,9 @@ p3<-agg_bio %>%
 
 ### Benthos
 neamap.4<-neamap %>%
-  dplyr::filter(str_detect(Var,"Benthos"))
+  dplyr::filter(stringr::str_detect(Var,"Benthos"))
 p4<-agg_bio %>%
-  dplyr::filter(str_detect(Var,"Benthos")) %>%
+  dplyr::filter(stringr::str_detect(Var,"Benthos")) %>%
   #ggplot(aes(x = Time, y = Mean)) +
   ggplot2::ggplot() +
   #Highlight last ten years
@@ -513,7 +513,7 @@ mafmc_ne <- ecodata::nefsc_survey_disaggregated %>%
   tidyr::unite(.,Var,c("Feeding guild","Season"), sep = " ") %>% 
   dplyr::group_by(EPU,Var) %>% 
   dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
-  dplyr::filter(str_detect(Var,"Planktivore")) %>% 
+  dplyr::filter(stringr::str_detect(Var,"Planktivore")) %>% 
   dplyr::ungroup() %>% 
   dplyr::mutate(Var = paste(stringr::str_to_title(stringr::str_extract(Var, "fall|spring")),
          "survey"))
@@ -660,7 +660,7 @@ exp<- ecodata::exp_n %>%
   tidyr::separate(Var, into = c("Var", "Season"), sep = "-") %>% 
   filter( EPU == "MAB", 
                                    Season == "SPRING", 
-                                   str_detect(Var, 'AlbatrossSD|BigelowSD')) %>% 
+                                   stringr::str_detect(Var, 'AlbatrossSD|BigelowSD')) %>% 
     rename(VarSD = Var, 
          ValueSD = Value) 
 exp2<- ecodata::exp_n %>% 
@@ -1470,7 +1470,7 @@ knitr::include_graphics(file.path(image.dir, "Condition_matrix.png"))
 
 ```{r, hms-tuna-cpue}
 ecodata::hms_cpue %>% 
-  filter(str_detect(Var, "TUNA")) %>% 
+  filter(stringr::str_detect(Var, "TUNA")) %>% 
   ggplot()+
  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
       xmin = x.shade.min , xmax = x.shade.max,
@@ -1490,7 +1490,7 @@ ecodata::hms_cpue %>%
 ```{r hms-cpue-sharks, fig.cap="Species groupings based on list from Debbie Duarte - missing Boonethead, Atlantic Angel shark, Sixgill shark, sevengill shark, nurse shark, white shark, basking shark, lemon shark." }
 sp_cat<- ecodata::hms_category
 ecodata::hms_cpue %>% 
-  filter(str_detect(Var, "SHARK")) %>% 
+  filter(stringr::str_detect(Var, "SHARK")) %>% 
   rename(COMMON_POP = Var) %>% 
   left_join(sp_cat) %>% 
   group_by(Time, SP_CATEGORY) %>% 

@@ -1,7 +1,7 @@
 
 sp_cat<- ecodata::hms_category
 ecodata::hms_cpue %>% 
-  filter(str_detect(Var, "SHARK")) %>% 
+  filter(stringr::str_detect(Var, "SHARK")) %>% 
   rename(COMMON_POP = Var) %>% 
   left_join(sp_cat) %>% 
   group_by(Time, SP_CATEGORY) %>% 

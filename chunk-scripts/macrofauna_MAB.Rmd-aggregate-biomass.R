@@ -57,9 +57,9 @@ neamap$Var <- factor(neamap$Var,levels = c("Piscivore Spring","Piscivore Fall",
                                            "Benthos Spring", "Benthos Fall"))
 ## Piscivore
 neamap.1<-neamap %>%
-  dplyr::filter(str_detect(Var,"Piscivore"))
+  dplyr::filter(stringr::str_detect(Var,"Piscivore"))
 p1<-agg_bio %>%
-  dplyr::filter(str_detect(Var,"Piscivore")) %>%
+  dplyr::filter(stringr::str_detect(Var,"Piscivore")) %>%
   ggplot2::ggplot() +
 
   #Highlight last ten years
@@ -109,9 +109,9 @@ p1<-agg_bio %>%
 
 ## Benthivore
 neamap.2<-neamap %>%
-  dplyr::filter(str_detect(Var,"Benthivore"))
+  dplyr::filter(stringr::str_detect(Var,"Benthivore"))
 p2<-agg_bio %>%
-  dplyr::filter(str_detect(Var,"Benthivore")) %>%
+  dplyr::filter(stringr::str_detect(Var,"Benthivore")) %>%
   ggplot2::ggplot() +
 
   #Highlight last ten years
@@ -160,9 +160,9 @@ p2<-agg_bio %>%
 
 ### Planktivore
 neamap.3<-neamap %>%
-  dplyr::filter(str_detect(Var,"Planktivore"))
+  dplyr::filter(stringr::str_detect(Var,"Planktivore"))
 p3<-agg_bio %>%
-  dplyr::filter(str_detect(Var,"Planktivore")) %>%
+  dplyr::filter(stringr::str_detect(Var,"Planktivore")) %>%
   ggplot2::ggplot() +
 
   #Highlight last ten years
@@ -211,9 +211,9 @@ p3<-agg_bio %>%
 
 ### Benthos
 neamap.4<-neamap %>%
-  dplyr::filter(str_detect(Var,"Benthos"))
+  dplyr::filter(stringr::str_detect(Var,"Benthos"))
 p4<-agg_bio %>%
-  dplyr::filter(str_detect(Var,"Benthos")) %>%
+  dplyr::filter(stringr::str_detect(Var,"Benthos")) %>%
   #ggplot(aes(x = Time, y = Mean)) +
   ggplot2::ggplot() +
   #Highlight last ten years

@@ -9,7 +9,7 @@ menh$Var <- factor(menh$Var,levels = c("Piscivore Spring","Piscivore Fall",
                                        "Planktivore Spring","Planktivore Fall",             
                                        "Benthos Spring",  "Benthos Fall"))
 p1<-menh %>% 
-  dplyr::filter(str_detect(Var, "Piscivore")) %>% 
+  dplyr::filter(stringr::str_detect(Var, "Piscivore")) %>% 
   ggplot2::ggplot(aes(x = Time, y = Value)) +
   #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -40,7 +40,7 @@ p1<-menh %>%
         axis.title.x=element_blank())
 
 p2<-menh %>% 
-  dplyr::filter(str_detect(Var, "Benthivore")) %>% 
+  dplyr::filter(stringr::str_detect(Var, "Benthivore")) %>% 
   ggplot2::ggplot(aes(x = Time, y = Value)) +
   #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -70,7 +70,7 @@ p2<-menh %>%
         axis.title.x=element_blank())
 
 p3<-menh %>% 
-  dplyr::filter(str_detect(Var, "Planktivore")) %>% 
+  dplyr::filter(stringr::str_detect(Var, "Planktivore")) %>% 
   ggplot2::ggplot(aes(x = Time, y = Value)) +
   #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
@@ -100,7 +100,7 @@ p3<-menh %>%
         axis.title.x=element_blank())
 
 p4<-menh %>% 
-  dplyr::filter(str_detect(Var, "Benthos")) %>% 
+  dplyr::filter(stringr::str_detect(Var, "Benthos")) %>% 
   ggplot2::ggplot(aes(x = Time, y = Value)) +
   #Highlight last ten years
   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,

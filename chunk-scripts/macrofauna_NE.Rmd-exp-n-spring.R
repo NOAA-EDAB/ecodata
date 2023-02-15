@@ -4,7 +4,7 @@ exp<- ecodata::exp_n %>%
   filter( !EPU == "MAB", 
                                  !EPU == "SS", 
                                    Season == "SPRING", 
-                                   str_detect(Var, 'AlbatrossSD|BigelowSD')) %>% 
+                                   stringr::str_detect(Var, 'AlbatrossSD|BigelowSD')) %>% 
     rename(VarSD = Var, 
          ValueSD = Value) 
 exp2<- ecodata::exp_n %>% 

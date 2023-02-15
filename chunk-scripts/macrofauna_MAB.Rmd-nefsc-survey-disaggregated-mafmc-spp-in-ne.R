@@ -10,7 +10,7 @@ mafmc_ne <- ecodata::nefsc_survey_disaggregated %>%
   tidyr::unite(.,Var,c("Feeding guild","Season"), sep = " ") %>% 
   dplyr::group_by(EPU,Var) %>% 
   dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
-  dplyr::filter(str_detect(Var,"Planktivore")) %>% 
+  dplyr::filter(stringr::str_detect(Var,"Planktivore")) %>% 
   dplyr::ungroup() %>% 
   dplyr::mutate(Var = paste(stringr::str_to_title(stringr::str_extract(Var, "fall|spring")),
          "survey"))

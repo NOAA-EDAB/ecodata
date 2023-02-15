@@ -58,7 +58,7 @@ p1<-mass %>%
 ###Plot 2
 p2<-mass %>% 
   dplyr::filter(!is.na(Var), 
-         str_detect(Var, "Benthivore")) %>% 
+         stringr::str_detect(Var, "Benthivore")) %>% 
   ggplot2::ggplot(aes(x = Time, y = Index)) +
   
   #Highlight last ten years
@@ -99,7 +99,7 @@ p2<-mass %>%
 ###Plot 3
 p3<-mass %>% 
   dplyr::filter(!is.na(Var), 
-         str_detect(Var, "Planktivore")) %>% 
+         stringr::str_detect(Var, "Planktivore")) %>% 
   ggplot2::ggplot(aes(x = Time, y = Index)) +
   
   #Highlight last ten years
@@ -140,7 +140,7 @@ p3<-mass %>%
 ###Plot 4
 p4<-mass %>% 
   dplyr::filter(!is.na(Var), 
-         str_detect(Var, "Benthos")) %>% 
+         stringr::str_detect(Var, "Benthos")) %>% 
   ggplot2::ggplot(aes(x = Time, y = Index)) +
   
   #Highlight last ten years
