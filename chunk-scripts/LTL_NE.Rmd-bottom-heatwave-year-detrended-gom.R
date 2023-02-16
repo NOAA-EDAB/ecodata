@@ -9,8 +9,8 @@ ecodata::heatwave_year %>%
   geom_line(aes(x = t, y = thresh, color = "c"), size = 1)+
   geom_line(aes(x = t, y = temp, color = "b"))+
   scale_colour_manual(values = c("turquoise4", "sienna3", "black"),
-                      labels = c("Climatology","Temperature", "Threshold"))+
-  ylab("Temperature (C)")+
+                      labels = c("Shifted Climatology","Temperature", "Threshold"))+
+  ylab("Temperature - Trend (C)")+
   xlab(element_blank())+
   scale_x_date(date_labels = "%b", breaks = "1 month")+
   theme_bw()+
