@@ -1,7 +1,7 @@
 
 ecodata::heatwave_year %>% 
   filter(EPU == "GB", 
-         str_detect(t, "2022"), 
+         stringr::str_detect(t, "2022"), 
          Var == "BottomDetrended") %>% 
   ggplot( aes(x = t, y = temp))+
   geom_flame(aes(y2 = thresh))+ 
