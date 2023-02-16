@@ -1482,7 +1482,7 @@ gridExtra::grid.arrange(cpi, pi,ei, ncol=3)
 ```{r heatwave-year, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Mid-Atlantic occuring in 2022."}
 ecodata::heatwave_year %>% 
   filter(EPU == "MAB", 
-         str_detect(t, "2022"), 
+         stringr::str_detect(t, "2022"), 
          Var == "Surface") %>% 
   ggplot( aes(x = t, y = temp))+
   geom_flame(aes(y2 = thresh))+ 
@@ -1505,7 +1505,7 @@ ecodata::heatwave_year %>%
 ```{r heatwave-year-detrended, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Mid-Atlantic occuring in 2022."}
 ecodata::heatwave_year %>% 
   filter(EPU == "MAB", 
-         str_detect(t, "2022"), 
+         stringr::str_detect(t, "2022"), 
          Var == "SurfaceDetrended") %>% 
   ggplot( aes(x = t, y = temp))+
   geom_flame(aes(y2 = thresh))+ 
@@ -1638,7 +1638,7 @@ mab.hw %>%
 ```{r bottom-heatwave-year-detrended, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Mid-Atlantic occuring in 2022."}
 ecodata::heatwave_year %>% 
   filter(EPU == "MAB", 
-         str_detect(t, "2022"), 
+         stringr::str_detect(t, "2022"), 
          Var == "BottomDetrended") %>% 
   ggplot( aes(x = t, y = temp))+
   geom_flame(aes(y2 = thresh))+ 

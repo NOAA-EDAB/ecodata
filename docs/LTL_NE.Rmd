@@ -1466,7 +1466,7 @@ storm %>%
 ```{r heatwave-year-gb, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in Georges Bank occuring in 2022."}
 ecodata::heatwave_year %>% 
   filter(EPU == "GB", 
-         str_detect(t, "2022"), 
+         stringr::str_detect(t, "2022"), 
          Var == "Surface") %>% 
   ggplot( aes(x = t, y = temp))+
   geom_flame(aes(y2 = thresh))+ 
@@ -1489,7 +1489,7 @@ ecodata::heatwave_year %>%
 ```{r heatwave-year-gom, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in Gulf of Maine occuring in 2022."}
 ecodata::heatwave_year %>% 
   filter(EPU == "GOM", 
-         str_detect(t, "2022"), 
+         stringr::str_detect(t, "2022"), 
          Var == "Surface") %>% 
   ggplot( aes(x = t, y = temp))+
   geom_flame(aes(y2 = thresh))+ 
@@ -1512,7 +1512,7 @@ ecodata::heatwave_year %>%
 ```{r heatwave-year-detrended_gb, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Georges Bank Detrended occuring in 2022."}
 ecodata::heatwave_year %>% 
   filter(EPU == "GB", 
-         str_detect(t, "2022"), 
+         stringr::str_detect(t, "2022"), 
          Var == "SurfaceDetrended") %>% 
   ggplot( aes(x = t, y = temp))+
   geom_flame(aes(y2 = thresh))+ 
@@ -1536,7 +1536,7 @@ ecodata::heatwave_year %>%
 ```{r heatwave-year-detrended_gom, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Gulf of Maine Detrended occuring in 2022."}
 ecodata::heatwave_year %>% 
   filter(EPU == "GOM", 
-         str_detect(t, "2022"), 
+         stringr::str_detect(t, "2022"), 
          Var == "SurfaceDetrended") %>% 
   ggplot( aes(x = t, y = temp))+
   geom_flame(aes(y2 = thresh))+ 
@@ -1666,7 +1666,7 @@ gom.hw %>%
 ```{r bottom-heatwave-year-detrended-gb, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Georges Bank occuring in 2022."}
 ecodata::heatwave_year %>% 
   filter(EPU == "GB", 
-         str_detect(t, "2022"), 
+         stringr::str_detect(t, "2022"), 
          Var == "BottomDetrended") %>% 
   ggplot( aes(x = t, y = temp))+
   geom_flame(aes(y2 = thresh))+ 
@@ -1690,7 +1690,7 @@ ecodata::heatwave_year %>%
 ```{r bottom-heatwave-year-detrended-gom, eval= T, echo = F, out.width = "80%", fig.cap="Marine heatwave events (red) in the Gulf of Maine occuring in 2022."}
 ecodata::heatwave_year %>% 
   filter(EPU == "GOM", 
-         str_detect(t, "2022"), 
+         stringr::str_detect(t, "2022"), 
          Var == "BottomDetrended") %>% 
   ggplot( aes(x = t, y = temp))+
   geom_flame(aes(y2 = thresh))+ 
