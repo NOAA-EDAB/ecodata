@@ -2,8 +2,8 @@
 diet_div <- ecodata::seabird_ne %>% 
   dplyr::filter(!stringr::str_detect(Var, "Productvity"),
          !stringr::str_detect(Var, "Sum")) %>% 
-  dplyr::mutate(Island = word(Var, 1),
-         Var = word(Var, 4)) %>% 
+  dplyr::mutate(Island = stringr::word(Var, 1),
+         Var = stringr::word(Var, 4)) %>% 
   dplyr::group_by(Island, Time) %>%
   dplyr::summarise(evenness = vegan::diversity(Value)/log(specnumber(Value)),
                    shannon = vegan::diversity(Value),

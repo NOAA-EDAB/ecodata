@@ -1,7 +1,7 @@
 
 ma_larv_div <- ecodata::ichthyo_diversity %>%
   dplyr::filter(EPU == "MAB") %>%
-  dplyr::mutate(Var = word(Var,1)) %>% 
+  dplyr::mutate(Var = stringr::word(Var,1)) %>% 
   dplyr::group_by(Var) %>% 
   dplyr::mutate(hline = mean(Value, na.rm = T)) %>% 
   ggplot2::ggplot(aes(x = Time, y = Value, group = Var)) +
