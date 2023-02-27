@@ -331,6 +331,9 @@ p1<-apex %>%
   dplyr::mutate(hline = mean(Value)) %>% 
 
   ggplot2::ggplot(aes(x = Time, y = Value, color = Var)) +
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
   ggplot2::geom_line(size = lwd) +
   ggplot2::geom_point(size = pcex) +
   # ggplot2::geom_hline(aes(yintercept = hline,

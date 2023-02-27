@@ -11,7 +11,8 @@ stock_status <- ecodata::stock_status %>%
     (F.Fmsy > 1 & B.Bmsy > 0.5 & B.Bmsy < 1) ~ "a", 
     (F.Fmsy < 1 & B.Bmsy > 0.5 & B.Bmsy < 1) ~ "b",
     (F.Fmsy < 1 & B.Bmsy > 1) ~ "c", 
-    (F.Fmsy > 1 & B.Bmsy < 0.5) ~ "d")) 
+    (F.Fmsy > 1 & B.Bmsy < 0.5) ~ "d")) %>% 
+  dplyr::mutate(Council = dplyr::recode(Council, "Both" = "MAFMC/NEFMC"))
     
 #Plot constants
 y.max <- 2.1 #1.75 mackerel cut off F/Fmsy is 1.8

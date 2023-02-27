@@ -805,7 +805,8 @@ stock_status <- ecodata::stock_status %>%
     (F.Fmsy > 1 & B.Bmsy > 0.5 & B.Bmsy < 1) ~ "a", 
     (F.Fmsy < 1 & B.Bmsy > 0.5 & B.Bmsy < 1) ~ "b",
     (F.Fmsy < 1 & B.Bmsy > 1) ~ "c", 
-    (F.Fmsy > 1 & B.Bmsy < 0.5) ~ "d")) 
+    (F.Fmsy > 1 & B.Bmsy < 0.5) ~ "d")) %>% 
+  dplyr::mutate(Council = dplyr::recode(Council, "Both" = "MAFMC/NEFMC"))
     
 #Plot constants
 y.max <- 2.1 #1.75 mackerel cut off F/Fmsy is 1.8
@@ -1208,6 +1209,9 @@ ecodata::rec_hms %>%
   tidyr::separate(Var, c("Var", "X"), sep = "-") %>%
   dplyr::mutate(Value = Value/10000) %>% 
   ggplot2::ggplot()+
+  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+      xmin = x.shade.min , xmax = x.shade.max,
+      ymin = -Inf, ymax = Inf) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var))+
   ggplot2::geom_line(aes(x = Time, y = Value, color = Var))+
   ggplot2::ylab(expression("Landings (N"^4*")"))+
