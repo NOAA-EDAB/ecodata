@@ -15,6 +15,7 @@ ecodata::grayseal %>%
                                          'NE Annual estimates' = 'black',
                                          'PBR' = 'red'))+
   theme(legend.position = c(0.25, 0.75), 
-        legend.text = element_text(size = 8)) +
+        legend.text = element_text(size = 8), 
+        legend.background = element_rect(colour = "transparent", fill = "transparent"))+
   ecodata::theme_ts()+
   ecodata::theme_title()
