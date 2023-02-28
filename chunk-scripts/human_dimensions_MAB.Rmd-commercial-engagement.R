@@ -18,9 +18,10 @@ com2<-com %>%
   xlim(-2,12.7)+
   ylim(-1,3.0)+
   theme(legend.position=c(0.85, 0.15), 
-        legend.title = element_blank(),       
+        #legend.title = element_blank(),       
         legend.background = element_blank(),
         legend.box.background = element_rect(colour = "black"))+
+  labs(color = "EJ Vulnerability")+
   ggplot2::xlab("Commercial Engagement Index") +
   ggplot2::ylab("Commercial Reliance Index") +
   ggplot2::ggtitle("Environmental Justice in Top Commercial Fishing Communities")+
