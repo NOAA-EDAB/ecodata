@@ -19,9 +19,10 @@ com2<-com %>%
   xlim(-1,35)+
   ylim(-1,4.1)+
   theme(legend.position=c(0.8, 0.85), 
-        legend.title = element_blank(),       
+        #legend.title = element_blank(),       
         legend.background = element_blank(),
         legend.box.background = element_rect(colour = "black"))+
+  labs(color = "EJ Vulnerability")+
   ggplot2::xlab("Commercial Engagement Index") +
   ggplot2::ylab("Commercial Reliance Index") +
   ggplot2::ggtitle("Social Vulnerability in Top Commercial Fishing Communities")+

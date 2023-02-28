@@ -18,10 +18,11 @@ com2<-com %>%
                      direction = -1) +
   xlim(-0.1,4.5)+
   ylim(-0.1,1)+
-  theme(legend.position=c(0.8, 0.85), 
-        legend.title = element_blank(),       
+  theme(legend.position=c(0.8, 0.55), 
+        #legend.title = element_blank(),       
         legend.background = element_blank(),
         legend.box.background = element_rect(colour = "black"))+
+  labs(color = "EJ Vulnerability")+
   ggplot2::xlab("Recreation Engagement Index") +
   ggplot2::ylab("Recreation Reliance Index") +
   ggplot2::ggtitle("Environmental Justice in Top Recreational Fishing Communities")+
