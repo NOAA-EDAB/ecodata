@@ -1816,7 +1816,7 @@ fix<- ecodata::forage_index %>%
   dplyr::group_by(EPU) %>% 
   dplyr::summarise(max = max(Value)) 
 
-plot<- ecodata::forage_index %>% 
+ecodata::forage_index %>% 
   dplyr::filter(Var %in% c("Fall Forage Fish Biomass Estimate", 
                            "Fall Forage Fish Biomass Estimate SE",
                            "Spring Forage Fish Biomass Estimate",
