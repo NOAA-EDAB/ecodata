@@ -1558,7 +1558,7 @@ hms_map <- hms %>% ggplot2::ggplot() +
 
   #ggplot2::scale_shape_manual(values=c(16, 3, 17))+ 
   #ggplot2::scale_color_manual(values = c("blue", "black", "red"))+ 
-  ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) + 
+  ggplot2::coord_sf( xlim = xlims, ylim = ylims) + 
   ecodata::theme_map() + 
   ggplot2::ggtitle("Protected Species Distibution Shifts") + 
   ggplot2::xlab("") + 

@@ -50,4 +50,5 @@ mab.hw %>%
   ecodata::theme_ts()+
   ggplot2::theme(strip.text=element_text(hjust=0,
                                 face = "italic"))+
-  ecodata::theme_title()
+  ecodata::theme_title()+
+  ecodata::theme_facet()

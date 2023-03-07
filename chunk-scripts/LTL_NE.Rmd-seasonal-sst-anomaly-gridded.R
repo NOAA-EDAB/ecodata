@@ -32,7 +32,7 @@ sst_map <-
                        high = scales::muted("red"),
                        limits = c(-5,5), 
                        labels = c("<-5", "-2", "0", "2", ">5")) +
-  ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
+  ggplot2::coord_sf(xlim = xlims, ylim = ylims) +
   ggplot2::facet_wrap(Season~.) +
   ecodata::theme_map() +
   ggplot2::ggtitle("SST anomaly (2022)") +
