@@ -77,7 +77,8 @@ bottom_temp_glorys_csv<-"GLORYS12v1_bottom_temp_anomaly_EPU - Joseph Caracappa -
 
 get_bottom_temp_glorys <- function(save_clean = F){
 
-  bottom_temp_glorys <- read.csv(file.path(raw.dir,bottom_temp_glorys_csv))
+  bottom_temp_glorys <- read.csv(file.path(raw.dir,bottom_temp_glorys_csv)) %>%
+    tibble::as_tibble()
 
   if (save_clean){
     usethis::use_data(bottom_temp_glorys, overwrite = T)

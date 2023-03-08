@@ -1,4 +1,4 @@
-#### get ABC/ACL Catch from MAFMC
+#### get ABC/ACL Catch
 
 library(tidyverse)
 library(readxl)
@@ -58,7 +58,8 @@ get_abc.acl <- function(save_clean = F){
     dplyr::select(Time, Var, Value, EPU, Units)
 
 
-  abc.acl <- ma %>% rbind(ma, ne)
+  abc.acl <- ma %>% rbind(ma, ne) %>%
+    tibble::as_tibble()
 
 
   # metadata ----

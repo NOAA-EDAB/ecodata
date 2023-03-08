@@ -28,7 +28,8 @@ get_bottom_temp_comp <- function(save_clean = F){
                   Units = c("degree C")) %>%
     dplyr::select(Time, Value, Var, EPU, Units)
 
-  bottom_temp_comp<- rbind(bottom_temp_comp, bottom_temp_comp_seasonal)
+  bottom_temp_comp<- rbind(bottom_temp_comp, bottom_temp_comp_seasonal) %>%
+    tibble::as_tibble()
 
   if (save_clean){
     usethis::use_data(bottom_temp_comp, overwrite = T)

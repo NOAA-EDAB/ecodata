@@ -3,7 +3,7 @@
 #' These data contain time series of number of oysters, the area of oyster
 #' lease areas and number of oysters per area for States in the Northeast.
 #'
-#' @format A data set containing 180 rows and 4 columns.
+#' @format A data set containing 192 rows and 4 columns.
 #'
 #' \itemize{
 #'     \item Var: Category of oyster data, production (Pieces), Shellfish lease Acres (Area), Production/Area.
