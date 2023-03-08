@@ -2,7 +2,7 @@
 #'
 #'
 #'
-#' @format A data set containing 1328 rows and 5 columns.
+#' @format A data set containing 1376 rows and 5 columns.
 #'
 #' \itemize{
 #'     \item Time: Day

@@ -2,7 +2,7 @@
 #'
 #'
 #'
-#' @format A data set containing 120740 rows and 4 columns.
+#' @format A data set containing 119577 rows and 4 columns.
 #'
 #' \itemize{
 #'     \item Latitude: Latitude of sea surface grid.

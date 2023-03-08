@@ -5,7 +5,7 @@
 #' and major VTR gear by permit. Here "MA" and "NE" refer to the Mid-Atlantic and New England regions respectively, and are
 #' not derived by Ecological Production Unit.
 #'
-#' @format These data contain 150 rows and 5 columns.
+#' @format These data contain 156 rows and 5 columns.
 #'
 #' \itemize{
 #'    \item Var: Specifies diversity metric or number of fleets, where fleet is defined by vessel length and gear type.

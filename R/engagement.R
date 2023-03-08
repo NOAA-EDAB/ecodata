@@ -3,21 +3,15 @@
 #' Data include commercial and recreational fishery engagement and
 #' reliance rankings for coastal communities in the Northeast US.
 #'
-#' @format 62 rows and 11 columns.
+#' @format 68 rows and 6 columns.
 #'
 #' \itemize{
 #'     \item Community: Fishing community.
 #'     \item Eng: Value of fishing community engagement.
 #'     \item Rel: Value of fishing community reliance.
-#'     \item PDI: Personal Disruption Index.
-#'     \item PCI: Population Composition Index.
-#'     \item PI: Poverty Index.
-#'     \item 1 std: One Standard Deviation.
-#'     \item 0.5 std: One Half Standand Deviation.
+#'     \item EJ Rating: Category of social vulnerability.
 #'     \item Fishery: Fishery classification.
 #'     \item Region: Ecological Production Unit (EPU) where sampling occurred.
-#'     \item EJRating: Category of social vulnerability.
-#'
 #' }
 #'
 #' @details

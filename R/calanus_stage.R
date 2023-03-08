@@ -2,7 +2,7 @@
 #'
 #' Time series of calanus abundance by life stage.
 #'
-#' @format A data set containing 4042 rows and 9 columns.
+#' @format A data set containing 1006 rows and 5 columns.
 #'
 #' \itemize{
 #'     \item Year: Time
@@ -10,7 +10,6 @@
 #'     \item Value: Value of variable.
 #'     \item Var: calanus stage
 #'     \item Units: Number of calanus/meter cubed.
-#'     \item season: Time of year.
 #'
 #' }
 #'

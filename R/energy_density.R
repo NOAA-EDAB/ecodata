@@ -2,15 +2,13 @@
 #'
 #' Forage fish energy density comparison between studies in the 80s and 90s.
 #'
-#' @format A data set containing 72 rows and 6 columns.
+#' @format A data set containing 264 rows and 4 columns.
 #'
 #' \itemize{
-#'     \item Species: Species included in analysis.
 #'     \item Year: Time.
-#'     \item Season: Survey season.
-#'     \item N: Number of samples included in the analysis.
-#'     \item Energy.Density_Mean: Mean forage fish energy density.
-#'     \item Energy.Density_SD: Standard Deviation of forage fish energy density.
+#'     \item Var: Species / Season / Variable
+#'     \item Value: Value of Variable
+#'     \item EPU: Ecological Production Unit (NA).
 #' }
 #'
 #' @details More information available at \url{https://noaa-edab.github.io/tech-doc/forage-fish-energy-density.html}

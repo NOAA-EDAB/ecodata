@@ -5,7 +5,7 @@ library(stringr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-exp_n_rdata <- "Expected_number_of_species_22.RData"
+exp_n_rdata <- "Expected_number_of_species_23.RData"
 get_exp_n <- function(save_clean = F){
 
   load(file.path(raw.dir, exp_n_rdata))

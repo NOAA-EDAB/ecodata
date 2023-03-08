@@ -5,7 +5,7 @@
 #' phytoplankton size class. Data from multiple sensors (OC-CCI, SeaWiFS, MODIS-Aqua) and algorithms (see
 #' \url{https://noaa-edab.github.io/tech-doc/chl-pp.html}) are presented.
 #'
-#' @format These data contain 18900 rows and 5 columns.
+#' @format These data contain 19872 rows and 5 columns.
 #'
 #' \itemize{
 #'     \item Var: Specifies temporal sampling resolution (\code{ANNUAL},\code{MONTHLY},\code{WEEKLY}), variable type (\code{MEDIAN},
