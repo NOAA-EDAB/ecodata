@@ -9,13 +9,11 @@ library(stringr)
 library(readxl)
 
 raw.dir <- here::here("data-raw")
-narw_xlsx <- "RW Abundance & Calves -for2022 report.xlsx"
+narw_csv <- "NARW_N_1990-2021.csv"
 get_narw <- function(save_clean = F){
-  narw <- readxl::read_excel(file.path(raw.dir,narw_xlsx)) %>%
-    dplyr::select(-c(5,7:10)) %>%
-    janitor::row_to_names(1) %>%
-    dplyr::rename(
-           Time = YEAR) %>%
+
+  narw<- read.csv(file.path(here::here(raw.dir,narw_csv))) %>%
+    dplyr::rename(Time = Year) %>%
     tidyr::pivot_longer(-Time, names_to = "Var", values_to = "Value") %>%
     dplyr::mutate(Units =  "n",
            EPU = "All") %>%
@@ -23,11 +21,6 @@ get_narw <- function(save_clean = F){
     dplyr::mutate(Value == as.numeric(Value),
                   Time == as.numeric(Time))%>%
     dplyr::select(Time, Var, Value, EPU, Units)
-
-  # calves19<-data.frame(Time = c(2019), Var = c("Calves"),
-  #                      Value = c(7), Units = c("n"), EPU = c("All")) #add 7 calves from 2019
-  #
-  # narw <- rbind(narw, calves19) #bind with rest of data
 
   # metadata ----
   attr(narw, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/right-whale-abundance.html"
