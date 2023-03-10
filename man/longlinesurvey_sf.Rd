@@ -17,9 +17,6 @@ Data contain 6 rows and 6 columns.
 \item geometry: Shape discription.
 }
 }
-\source{
-
-}
 \usage{
 longlinesurvey_sf
 }
@@ -29,8 +26,5 @@ Gulf of Maine long-line survey strata.
 \details{
 More information including processing and indicator derivation steps are available at
 \url{https://noaa-edab.github.io/tech-doc.html}.
-}
-\references{
-
 }
 \keyword{datasets}

@@ -2,7 +2,7 @@
 #'
 #' Annual time series of the Paralytic Shellfish Poisoning (PSP) and Alexandrium toxins in the Gulf of Maine.
 #'
-#' @format
+#' @format Time series with 155 rows and 5 columns
 #'
 #' \itemize{
 #'     \item Var: Regions of interest.
@@ -16,5 +16,5 @@
 #' @details \url{https://noaa-edab.github.io/tech-doc/habs_alexandrium.html}.
 #' \url{https://noaa-edab.github.io/tech-doc/habs_psp.html}.
 #'
-#' @references
+#'
 "habs"

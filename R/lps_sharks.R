@@ -14,7 +14,5 @@
 #'     \item Units: Units of variable \code{Var}.
 #' }
 #'
-#' @details
-#'
 #'
 "lps_sharks"

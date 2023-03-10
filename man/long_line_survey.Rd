@@ -17,19 +17,10 @@ Data contain 96 rows and 8 columns.
 \item categ: Grouping category for plotting.
 }
 }
-\source{
-
-}
 \usage{
 long_line_survey
 }
 \description{
 Gulf of Maine long line survey data
-}
-\details{
-
-}
-\references{
-
 }
 \keyword{datasets}

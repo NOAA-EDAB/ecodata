@@ -24,7 +24,4 @@ Annual time series of the Paralytic Shellfish Poisoning (PSP) and Alexandrium to
 \url{https://noaa-edab.github.io/tech-doc/habs_alexandrium.html}.
 \url{https://noaa-edab.github.io/tech-doc/habs_psp.html}.
 }
-\references{
-
-}
 \keyword{datasets}

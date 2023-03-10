@@ -14,9 +14,4 @@
 #'    \item categ: Grouping category for plotting.
 #'  }
 #'
-#' @details
-#'
-#' @references
-#'
-#' @source
 "long_line_survey"

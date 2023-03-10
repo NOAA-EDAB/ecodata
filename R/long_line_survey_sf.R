@@ -14,10 +14,6 @@
 #'    \item geometry: Shape discription.
 #'  }
 #'
-#' @details
-#'
-#' More information including processing and indicator derivation steps are available at
+#' @details More information including processing and indicator derivation steps are available at
 #' \url{https://noaa-edab.github.io/tech-doc.html}.
-#' @references
-#' @source
 "longlinesurvey_sf"

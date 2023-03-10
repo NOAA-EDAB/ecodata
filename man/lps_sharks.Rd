@@ -23,7 +23,4 @@ lps_sharks
 \description{
 Large Pelagics Survey (LPS) shark abundance count.
 }
-\details{
-
-}
 \keyword{datasets}
