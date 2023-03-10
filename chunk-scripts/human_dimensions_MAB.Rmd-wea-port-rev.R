@@ -17,13 +17,14 @@ df.all.perc<- ecodata::wind_port %>% filter(EPU == "MAB") %>%
   pivot_wider( names_from = Var, values_from = Value) %>%
   dplyr::mutate(ordering = WEA_MAX,  
                 City = paste0(City, State), 
-                TOT_MAX = c(100 - perc_MIN - perc_MAX)) %>% 
-  pivot_longer(cols = c(perc_MIN,  perc_MAX, TOT_MAX), names_to="Var", values_to = "Value") %>% 
+                perc_dif =  c(perc_MAX - perc_MIN), 
+                TOT_MAX = c(100 - perc_dif - perc_MIN)) %>% 
+  pivot_longer(cols = c(perc_MIN,  perc_dif, TOT_MAX), names_to="Var", values_to = "Value") %>% 
   dplyr::arrange(desc(ordering)) %>%
   dplyr::mutate(City = factor(City, levels = unique(City))) %>% 
   dplyr::filter(!Var %in% c("WEA_MAX", "EJ", "Gent")) %>% 
   dplyr::mutate(Var = recode(Var,"perc_MIN"= "WEA Revenue" , 
-                                  "perc_MAX" ="WEA Revenue Range", 
+                                  "perc_dif" ="WEA Revenue Range", 
                              "TOT_MAX" = "Non-WEA Revenue"), 
                 Var = factor(Var, levels = c("Non-WEA Revenue", 
                                              "WEA Revenue Range", 
