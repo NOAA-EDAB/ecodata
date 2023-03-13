@@ -25,7 +25,7 @@ get_narw <- function(save_clean = F){
   # metadata ----
   attr(narw, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/right-whale-abundance.html"
   attr(narw, "data_files")   <- list(
-    narw_xlsx = narw_xlsx)
+    narw_csv = narw_csv)
   attr(narw, "data_steward") <- c(
     "Chris Orphanides <chris.orphanides@noaa.gov>")
   attr(narw, "plot_script") <- list(
