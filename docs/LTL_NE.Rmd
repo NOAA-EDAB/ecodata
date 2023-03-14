@@ -1995,6 +1995,6 @@ knitr::include_graphics(file.path(image.dir, "PSP_closures_in_Massachusetts_1990
 
 ```{r ne-oa, fig.cap = "Left panel: Bottom aragonite saturation state (ΩArag; summer only: June-August) on the U.S. Northeast Shelf plotted from available quality-controlled vessel- and glider-based datasets from 2007-present. Right top panel: Map depicting locations where summer bottom ΩArag in the habitat depth range reached or were lower than the laboratory-derived sensitivity level for Atlantic cod (Gadus morhua). The sensitivity value used for Atlantic cod was ΩArag ≤ 1.31, based on decreased larval survival observed at this level in Stiasny et al. (2016). Right bottom panel: Map depicting locations where summer bottom ΩArag in the habitat depth range reached or were lower than the laboratory-derived sensitivity level for American lobster (Homarus americanus). The sensitivity value used for American lobster was ΩArag ≤ 1.09, based on decreased stage V and VI juvenile survival observed at this level in Noisette et al. (2021). Gray circles in right top and bottom panels indicate locations where carbonate chemistry samples were collected, but bottom ΩArag values were higher than sensitivity values determined for that species."}
 
-knitr::include_graphics(file.path(image.dir, "Saba_Fig_SOE_NEFMC - Grace Saba.jpg"))
+knitr::include_graphics(file.path(image.dir, "Saba_Fig_SOE_NEFMC.jpg"))
 
 ```
