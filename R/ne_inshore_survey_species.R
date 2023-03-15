@@ -1,21 +1,17 @@
-#' New England inshore state survey data
+#' New England inshore state survey data species
 #'
-#' These data contain time series of inshore (within 12 miles) fishery-independent survey data collected by the Maine Department of Marine Resources
+#' These data contain species categories of inshore (within 12 miles) fishery-independent survey data collected by the Maine Department of Marine Resources
 #' and New Hampshire Fish & Game Department. Time series are grouped by State of the Ecosystem feeding guild. Species assignments
 #' within groupings are available through \code{inshore_survdat_species}.
 #'
-#' @format A data set containing 264 rows and 6 columns.
+#' @format A data set containing 208 rows and 4 columns.
 #'
 #'  \itemize{
-#'       \item Var: Includes SOE species grouping, season that survey occurred (fall or spring), and variable calculated.
-#'       The specific variables included are stratified mean biomass with associated confidence intervals, coefficients of
-#'       variation, and standard errors.
-#'       \item Time: Year that survey occurred.
-#'       \item Value: Value of variable \code{Var}.
-#'       \item Units: Units of variable \code{Var}.
-#'       \item Source: Survey Source.
-#'       \item EPU: Ecological Production Unit (EPU) where sampling occurred. Here \code{NE} refers to New England.
-#'  }
+#'       \item ...1: Number.
+#'       \item Species: List of species.
+#'       \item Group: Species groupings.
+#'       \item Var: Survey source.
+#' }
 #'
 #' @details
 #' Metrics for biomass were calculated by:
@@ -31,4 +27,4 @@
 #'
 #' Read more about inshore surveys at \url{https://wildlife.state.nh.us/marine/research.html} and
 #' \url{https://www.maine.gov/dmr/science-research/projects/trawlsurvey/index.html}
-"ne_inshore_survey"
+"ne_inshore_survey_species"

@@ -5,16 +5,14 @@
 #' Assessment Program (NEAMAP), covering the inshore region between Cape Cod, MA and Cape Hatteras, NC. Cooperative survey
 #' efforts are led by scientists at the Virginia Institute of Marine Science.
 #'
-#' @format These data contain 116 rows and 6 columns
+#' @format These data contain 248 rows and 4 columns
 #'
 #' \itemize{
 #'     \item Var: Specifies variable type, including SOE species groupings and sampling season with stratified mean biomass per tow ("index")
 #'     or sample coefficient of variation ("cv").
 #'     \item Value: Value of variable \code{Var}.
 #'     \item Time: Sampling year.
-#'     \item CV: Uncertainty estimate.
 #'     \item EPU: Ecological Production Unit (EPU) where sampling occurred.
-#'     \item Units: Units of variable \code{Var}.
 #' }
 #'
 #' @details

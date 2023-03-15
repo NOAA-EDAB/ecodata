@@ -6,7 +6,7 @@
 #' identification of larvae. Both species counts and estimates of Shannon-Wiener diversity are included
 #' in this data set.
 #'
-#' @format 63 rows and 5 columns
+#' @format 69 rows and 5 columns
 #'
 #' \itemize{
 #'     \item Var: Specifies variable of interest and sampling season.

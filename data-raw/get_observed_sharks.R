@@ -13,7 +13,8 @@ get_observed_sharks <- function(save_clean = F){
     dplyr::rename(Time = YEAR,
                   Var = SHKGROUP,
                   Value = NSHARK_HAUL)%>%
-    dplyr::select(Time, Var, Value, EPU)
+    dplyr::select(Time, Var, Value, EPU) %>%
+    tibble::as_tibble()
 
   # metadata ----
   attr(observed_sharks, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc.html"

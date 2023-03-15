@@ -11,7 +11,8 @@ get_long_term_sst <- function(save_clean = F){
                   Value = Mean) %>%
     dplyr::mutate(Var = "long-term sst",
            EPU = "All",
-           Units = "degreesC")
+           Units = "degreesC") %>%
+    tibble::as_tibble()
 
   # metadata ----
   attr(long_term_sst, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/long-term-sea-surface-temperature.html"
