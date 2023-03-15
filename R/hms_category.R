@@ -1,6 +1,6 @@
 #' Highly Migratory Species Category
 #'
-#' Data include landing weight and revenue from group HMS species.
+#' Data include Species codes and names from HMS species groups.
 #'
 #' @format 30 rows and 4 columns.
 #'

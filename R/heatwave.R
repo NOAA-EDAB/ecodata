@@ -1,6 +1,7 @@
 #' Marine Heatwaves
 #'
-#' Data include cumulative and maximum intensity marine heatwaves on the NES.
+#' Data include cumulative intensity, maximum intensity and duration of
+#' surface and bottom water marine heatwaves on the NES.
 #'
 #' @format 648 rows and 5 columns.
 #'

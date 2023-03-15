@@ -14,5 +14,5 @@
 #'
 #' }
 #'
-#' @details Methods used to calculate data are available at \url{https://noaa-edab.github.io/tech-doc/habitat-vulnerability.html}.
+#' @details Methods used to calculate data are available at \url{https://noaa-edab.github.io/tech-doc}.
 "habitat_diversity"

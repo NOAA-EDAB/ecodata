@@ -8,7 +8,7 @@
 #'
 #' \itemize{
 #'     \item Time: Year
-#'     \item Var: Bycath variable
+#'     \item Var: Bycatch variable
 #'     \item Value: Value of variable
 #'     \item EPU: Shelfwide indicator
 #' }

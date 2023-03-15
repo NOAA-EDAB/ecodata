@@ -53,7 +53,8 @@ raw.dir <- here::here("data-raw")
 HMS_sp_cat_csv <- "hms-mrip/hms_sp_category.csv"
 
 get_hms_category <- function(save_clean = F){
-  hms_category<- read.csv(file.path(raw.dir,HMS_sp_cat_csv))
+  hms_category<- read.csv(file.path(raw.dir,HMS_sp_cat_csv)) %>%
+    tibble::as_tibble()
 
   if (save_clean){
     usethis::use_data(hms_category, overwrite = T)
