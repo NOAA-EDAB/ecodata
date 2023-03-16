@@ -3,7 +3,7 @@
 #' Data include important fishing communities and the percent landing and revenue from wind energy areas.
 #' Data also include social vulnerability scores for the fishing communities.
 #'
-#' @format Data set contains 330 rows and 5 columns
+#' @format Data set contains 312 rows and 5 columns
 #'
 #' \itemize{
 #'     \item City: Fishing Community.

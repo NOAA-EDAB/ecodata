@@ -2,7 +2,7 @@
 #'
 #' Data include the planned wind development areas on the Northeast US shelf.
 #'
-#' @format Data set contains 58 rows and 5 columns
+#' @format Data set contains 94 rows and 5 columns
 #'
 #' \itemize{
 #'     \item Time: Year.

@@ -2,7 +2,7 @@
 #'
 #' Data include Top 5 Species Revenue from Wind Development Areas
 #'
-#' @format Data set contains 788 rows and 4 columns
+#' @format Data set contains 1026 rows and 4 columns
 #'
 #' \itemize{
 #'     \item Time: Year.

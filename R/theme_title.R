@@ -1,4 +1,4 @@
-#'A ggplot2 ggtitle formmatting for SOE figures
+#'A ggplot2 ggtitle formatting for SOE figure titles
 #'
 #' @export
 #'

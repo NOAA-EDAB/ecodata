@@ -1,8 +1,8 @@
-#' Warm core rings spun off of gulf stream
+#' Warm core ring births
 #'
-#' Data include timeseires of stomach fullness index for 22 species sampled in the NEFSC fall bottom trawl survey.
+#' Data include timeseries of warm core ring births on the Northeast U.S. Shelf.
 #'
-#' @format Data set contains 42 rows and 5 columns
+#' @format Data set contains 43 rows and 5 columns
 #'
 #' \itemize{
 #'     \item Time: Year.
