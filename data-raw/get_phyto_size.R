@@ -4,10 +4,6 @@ library(stringr)
 
 raw.dir <- here::here("data-raw")
 
-# input files ----
-#phyto_csv <- "19980101_20211231-OCCCI-PHYSIZE-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_V2022-SOE_FORMAT.csv"
-
-
 nano_csv<- "19980101_20221231-OCCCI_GLOBCOLOUR-PSC_FNANO-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_V2023-SOE_FORMAT.csv"
 pico_csv<- "19980101_20221231-OCCCI_GLOBCOLOUR-PSC_FPICO-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_V2023-SOE_FORMAT.csv"
 micro_csv<- "19980101_20221231-OCCCI_GLOBCOLOUR-PSC_FMICRO-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_V2023-SOE_FORMAT.csv"
@@ -27,7 +23,8 @@ micro<- read.csv(file.path(raw.dir, micro_csv)) %>%
 
 
 phyto_size <- nano %>% rbind( pico, micro)%>%
-  dplyr::select(Time, Var, Value, EPU, Units)
+  dplyr::select(Time, Var, Value, EPU, Units) %>%
+  tibble::as_tibble()
 
 # metadata ----
 attr(phyto_size, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/phytoplankton-size-class.html"

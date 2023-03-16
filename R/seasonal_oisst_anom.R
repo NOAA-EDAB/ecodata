@@ -4,14 +4,13 @@
 #' These data were derived from the NOAA Optimum Interpolation SST High Resolution data set (NOAA OISST V2). The
 #' 1982-2010 climatology was used to calculate anomalies.
 #'
-#' @format 480 observations in 5 columns
+#' @format 492 observations in 4 columns
 #'
 #' \itemize{
 #'     \item Value: SST anomaly in degrees C.
 #'     \item EPU: Ecological Production Unit that data were collected from.
 #'     \item Var: Specifies season of anomaly.
 #'     \item Time: Year.
-#'     \item Units: Units.
 #' }
 #'
 #' @details Seasons are defined as: Fall = October, November, December; Winter = January, February, March; Spring = April,

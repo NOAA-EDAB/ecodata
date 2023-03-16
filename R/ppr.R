@@ -1,9 +1,9 @@
-#' Ecosystem Overfishing Inidcators
+#' Ecosystem Overfishing Indicators
 #'
 #' Data include ecosystem overfishing indicators (Primary Production Required,
 #' Ryther, Fogarty).
 #'
-#' @format 897 rows and 5 columns.
+#' @format 550 rows and 5 columns.
 #'
 #' \itemize{
 #'     \item EPU: Ecological Production Unit (EPU) where sampling occurred.

@@ -1,8 +1,8 @@
 #' Species distribution on the NES.
 #'
-#' Data include timeseires of depth, distance from shelf and distance along shelf.
+#' Data include timeseries of depth, distance from shelf and distance along shelf.
 #'
-#' @format Data set contains 270 rows and 5 columns
+#' @format Data set contains 275 rows and 5 columns
 #'
 #' \itemize{
 #'     \item Time: Year.

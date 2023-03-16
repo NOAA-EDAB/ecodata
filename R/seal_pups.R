@@ -1,16 +1,14 @@
-#' Seal Pups
+#' Seal Pups counts in New England
 #'
-#' Data include timeseires of seal pup count on four colonies.
+#' Data include timeseries of seal pup count on four colonies.
 #'
-#' @format Data set contains 77 rows and 6 columns
+#' @format Data set contains 340 rows and 4 columns
 #'
 #' \itemize{
 #'     \item Time: Year.
-#'     \item Count: Number of seal pups.
-#'     \item Colony: Colony name..
-#'     \item fitted: GLM modelled values.
-#'     \item upper: Upper CV.
-#'     \item lower: Lower CV.
+#'     \item Var: Variable and colony name.
+#'     \item Value: Value of variable \code{Var}.
+#'     \item EPU: Ecological Production Unit (EPU) where sampling occurred. All data were sampled in southern Gulf of Maine.
 #' }
 #'
 #' @details

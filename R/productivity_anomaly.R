@@ -1,9 +1,9 @@
 #' Small fish per large fish biomass anomaly
 #'
 #' These data represent estimates of recruitment success for species sampled
-#' in the NEFSC Bottom Trawl Survey.
+#' in the NEFSC Bottom Trawl Survey and those calculated for stock assessments.
 #'
-#' @format Data frame with 2346 rows and 5 columns.
+#' @format Data frame with 8241 rows and 5 columns.
 #'
 #' \itemize{
 #'    \item Var: Common name of surveyed species. If data reflect the aggregated shelf-wide anomaly, then \code{NE LME} is included with the species name.

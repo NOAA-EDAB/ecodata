@@ -1,14 +1,13 @@
 #' Recreational shark fishing landings
 #'
-#' Shark landings reported using MRIP.
+#' Shark landings reported using Marine Recreational Information Program (MRIP).
 #'
-#' @format These data contain 319 rows and 5 columns.
+#' @format These data contain 246 rows and 4 columns.
 #'
 #' \itemize{
 #'     \item Var: HMS species category.
 #'     \item Value: Value of variable \code{Var}.
 #'     \item Time: Time step of \code{Var}.
-#'     \item Region: Region Classifictaion.
 #'     \item EPU: Ecological Production Unit (EPU) where sampling occurred.
 #' }
 #'

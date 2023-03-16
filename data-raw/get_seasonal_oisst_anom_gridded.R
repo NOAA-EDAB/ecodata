@@ -59,7 +59,8 @@ seasonal_sst_anomaly_gridded <-
   rbind(rast_process(winter.anom,season = "Winter"),
       rast_process(spring.anom,season = "Spring"),
       rast_process(summer.anom, season = "Summer"),
-      rast_process(fall.anom, season = "Fall"))
+      rast_process(fall.anom, season = "Fall")) %>%
+  tibble::as_tibble()
 
 # metadata ----
 attr(seasonal_sst_anomaly_gridded, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/seasonal-sst-anomalies.html"

@@ -1,8 +1,8 @@
 #' Stomach fullness index calculated from NEFSC fall bottom trawl surveys
 #'
-#' Data include timeseires of stomach fullness index for 22 species sampled in the NEFSC fall bottom trawl survey.
+#' Data include timeseries of stomach fullness index for 22 species sampled in the NEFSC fall bottom trawl survey.
 #'
-#' @format Data set contains 2068 rows and 5 columns
+#' @format Data set contains 6064 rows and 5 columns
 #'
 #' \itemize{
 #'     \item Time: Year sampled.
