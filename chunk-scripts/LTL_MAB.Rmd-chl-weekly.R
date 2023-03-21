@@ -30,22 +30,22 @@ interp_chl_pp <- function(epu, year = 2022, Variable){
 }
 
 MAB_chl <- interp_chl_pp(epu = "MAB", Variable = "WEEKLY_CHLOR_A_MEDIAN")
- MAB_early<- MAB_chl %>% filter(Week.x <=26)
- MAB_late <- MAB_chl %>% filter(Week.x >=26)
+ #MAB_early<- MAB_chl %>% filter(Week.x <=26)
+ #MAB_late <- MAB_chl %>% filter(Week.x >=26)
 
-MAB_chl_weekly <- ggplot2::ggplot(data = MAB_early) +
+MAB_chl_weekly <- ggplot2::ggplot(data = MAB_chl) +
   ggplot2::geom_line(aes(x = Time, y = LTM)) +
   ggplot2::geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high), 
               alpha = 0.1,
               fill = "grey1") +
-   ggplot2::geom_line(data = MAB_late,aes(x = Time, y = LTM)) +
-   ggplot2::geom_ribbon(data = MAB_late,aes(x = Time, ymin = sd.low, ymax = sd.high), 
-               alpha = 0.1,
-               fill = "grey1")+
+   #ggplot2::geom_line(data = MAB_late,aes(x = Time, y = LTM)) +
+   #ggplot2::geom_ribbon(data = MAB_late,aes(x = Time, ymin = sd.low, ymax = sd.high), 
+  #             alpha = 0.1,
+  #             fill = "grey1")+
   ggplot2::geom_line(aes(x = Time, y = Value),
             size = 1,color = "#33a02c") +
-     ggplot2::geom_line(data = MAB_late, aes(x = Time, y = Value),
-             size = 1,color = "#33a02c", linetype = "dashed")+
+     #ggplot2::geom_line(data = MAB_late, aes(x = Time, y = Value),
+    #         size = 1,color = "#33a02c", linetype = "dashed")+
   ggplot2::ggtitle(expression("Chlorophyll"~italic(a)~"")) +
   ggplot2::guides(color = F) +
   ggplot2::xlab("")+
@@ -58,22 +58,22 @@ MAB_chl_weekly <- ggplot2::ggplot(data = MAB_early) +
   ecodata::theme_title()
 
 MAB_pp <- interp_chl_pp(epu = "MAB", Variable =  "WEEKLY_PPD_MEDIAN")
-MAB_early<- MAB_pp %>% filter(Week.x <=26)
-MAB_late <- MAB_pp %>% filter(Week.x >=26)
+#MAB_early<- MAB_pp %>% filter(Week.x <=26)
+#MAB_late <- MAB_pp %>% filter(Week.x >=26)
 
-MAB_pp_weekly <- ggplot2::ggplot(data = MAB_early) +
+MAB_pp_weekly <- ggplot2::ggplot(data = MAB_pp) +
   ggplot2::geom_line(aes(x = Time, y = LTM)) +
   ggplot2::geom_ribbon(aes(x = Time, ymin = sd.low, ymax = sd.high),
               alpha = 0.1,
               fill = "grey1") +
-   ggplot2::geom_line(data = MAB_late,aes(x = Time, y = LTM)) +
-   ggplot2::geom_ribbon(data = MAB_late,aes(x = Time, ymin = sd.low, ymax = sd.high), 
-               alpha = 0.1,
-               fill = "grey1")+
+   # ggplot2::geom_line(data = MAB_late,aes(x = Time, y = LTM)) +
+   # ggplot2::geom_ribbon(data = MAB_late,aes(x = Time, ymin = sd.low, ymax = sd.high), 
+   #             alpha = 0.1,
+   #             fill = "grey1")+
   ggplot2::geom_line(aes(x = Time, y = Value),
             size = 1,color = "#33a02c") +
-   ggplot2::geom_line(data = MAB_late, aes(x = Time, y = Value),
-             size = 1,color = "#33a02c", linetype = "dashed")+
+   # ggplot2::geom_line(data = MAB_late, aes(x = Time, y = Value),
+   #           size = 1,color = "#33a02c", linetype = "dashed")+
   ggplot2::ggtitle(expression("Primary production")) +
   #ggplot2::guides(color = F) +
   ggplot2::xlab("")+

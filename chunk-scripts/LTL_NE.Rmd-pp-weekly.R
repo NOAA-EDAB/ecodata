@@ -36,22 +36,22 @@ GOM_ppd_weekly <- interp_chl_pp(epu = "GOM", Variable = "WEEKLY_PPD_MEDIAN")
 ne_ppd_weekly<-rbind(GB_ppd_weekly, GOM_ppd_weekly) %>% 
   dplyr::filter(!Value == "NA")
 
- ne_pp_early<-ne_ppd_weekly %>% filter(Time<=26)
- ne_pp_late<-ne_ppd_weekly %>% filter(Time >=26)
+ #ne_pp_early<-ne_ppd_weekly %>% filter(Time<=26)
+ #ne_pp_late<-ne_ppd_weekly %>% filter(Time >=26)
 
-ne_ppd <- ggplot2::ggplot(data = ne_pp_early) +
+ne_ppd <- ggplot2::ggplot(data = ne_ppd_weekly) +
   ggplot2::geom_line(aes(x = Time, y = LTM)) +
   ggplot2::geom_ribbon(aes(x = Time, ymin = pmax(sd.low,0), ymax = sd.high),
               alpha = 0.1,
               fill = "grey1") +
   ggplot2::geom_line(aes(x = Time, y = Value),
             size = 1,color = "#33a02c") +
-  ggplot2::geom_line(data = ne_pp_late, aes(x = Time, y = LTM)) +
-  ggplot2::geom_ribbon(data = ne_pp_late,aes(x = Time, ymin = pmax(sd.low,0), ymax = sd.high),
-              alpha = 0.1,
-              fill = "grey1") +
-  ggplot2::geom_line(data = ne_pp_late,aes(x = Time, y = Value),
-            size = 1,color = "#33a02c", linetype = "dashed") +
+  # ggplot2::geom_line(data = ne_pp_late, aes(x = Time, y = LTM)) +
+  # ggplot2::geom_ribbon(data = ne_pp_late,aes(x = Time, ymin = pmax(sd.low,0), ymax = sd.high),
+  #             alpha = 0.1,
+  #             fill = "grey1") +
+  # ggplot2::geom_line(data = ne_pp_late,aes(x = Time, y = Value),
+  #           size = 1,color = "#33a02c", linetype = "dashed") +
   ggplot2::ggtitle(expression("Primary Production")) +
   guides(color = F) +
   ggplot2::facet_wrap(EPU~., ncol = 2)+
