@@ -33,7 +33,7 @@ ecodata::forage_index %>%
   ggplot2::geom_point()+
   ggplot2::geom_line()+
   ggplot2::ggtitle("")+
-  ggplot2::ylab(element_blank())+
+  ggplot2::ylab(expression("Relative forage biomass"))+
   ggplot2::xlab(element_blank())+
   ggplot2::facet_wrap(.~EPU)+
   ggplot2::theme(legend.position = "bottom", 
