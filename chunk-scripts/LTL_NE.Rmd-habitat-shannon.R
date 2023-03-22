@@ -21,7 +21,7 @@ ecodata::habitat_diversity %>%
   ggplot2::geom_line() +
   ggplot2::geom_point(data = NE, aes(x = Time, y = mean), size = 2)+
   ggplot2::geom_line(data = NE, aes(x = Time, y = mean), size = 2) +
-  ggplot2::ylab("") +
+  ggplot2::ylab("Shannon Diversity") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("New England Species Shannon Diversity from Habitat Assessment") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+

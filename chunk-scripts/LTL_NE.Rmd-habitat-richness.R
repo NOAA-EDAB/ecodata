@@ -32,7 +32,7 @@ ecodata::habitat_diversity %>%
   ggplot2::geom_line() +
   ggplot2::geom_point(data = NE, aes(x=Time, y=mean, color = EPU), size = 2)+
   ggplot2::geom_line(data = NE, aes(x=Time, y=mean, color = EPU), size = 2) +
-  ggplot2::ylab("") +
+  ggplot2::ylab("Richness") +
   ggplot2::xlab(element_blank())+
   #ggplot2::facet_wrap(~EPU)+
   ggplot2::ggtitle("New England Species Richness from Habitat Assessment") +

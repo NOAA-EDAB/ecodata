@@ -21,7 +21,7 @@ ecodata::habitat_diversity %>%
   ggplot2::geom_line() +
   ggplot2::geom_point(data = MAB, aes(x = Time, y = mean), size = 2)+
   ggplot2::geom_line(data = MAB, aes(x = Time, y = mean), size = 2) +
-  ggplot2::ylab("") +
+  ggplot2::ylab("Shannon Diversity") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Mid-Atlantic Species Shannon Diversity from Habitat Assessment") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+

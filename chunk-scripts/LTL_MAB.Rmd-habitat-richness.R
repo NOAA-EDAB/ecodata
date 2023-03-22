@@ -30,7 +30,7 @@ ecodata::habitat_diversity %>%
   ggplot2::geom_line(aes(color = EPU)) +
   ggplot2::geom_point(data = MAB, aes(x = Time, y = mean, color = EPU), size = 1)+
   ggplot2::geom_line(data = MAB, aes(x = Time, y = mean,color = EPU), size = 1) +
-  ggplot2::ylab("") +
+  ggplot2::ylab("Richness") +
   ggplot2::xlab(element_blank())+
   ggplot2::ggtitle("Species Richness from NEFSC Bottom Trawl Survey") +
   ggplot2::scale_x_continuous(expand = c(0.01, 0.01))+
