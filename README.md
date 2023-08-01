@@ -4,8 +4,7 @@
 # ecodata <img src="https://github.com/NOAA-EDAB/ecodata/blob/master/ecodata_logo.png" align="right" width="120" />
 
 <!-- badges: start -->
-
-![gitleaks](https://github.com/NOAA-EDAB/ecodata/workflows/gitleaks/badge.svg)
+[![gitleaks](https://github.com/NOAA-EDAB/ecodata/actions/workflows/secretScan.yml/badge.svg)](https://github.com/NOAA-EDAB/ecodata/actions/workflows/secretScan.yml)
 <!-- badges: end -->
 
 ## Overview
