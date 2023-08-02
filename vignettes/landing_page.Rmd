@@ -14,10 +14,6 @@ vignette: >
 
 
 ```{r, echo=FALSE}
-htmltools::img(src = knitr::image_uri(here::here("man/figures/ecodata_logo.png")), 
-               alt = 'logo', 
-               style = 'position:absolute; top:0; right:0; height:175px; padding-right:20px;')
-
 library(magrittr)
 ```
 
