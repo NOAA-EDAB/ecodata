@@ -1,9 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ecodata <img src="https://github.com/NOAA-EDAB/ecodata/blob/master/ecodata_logo.png" align="right" width="120" />
+# ecodata <img src="man/figures/ecodata_logo.png" align="right" width="120" />
 
 <!-- badges: start -->
+
 [![gitleaks](https://github.com/NOAA-EDAB/ecodata/actions/workflows/secretScan.yml/badge.svg)](https://github.com/NOAA-EDAB/ecodata/actions/workflows/secretScan.yml)
 <!-- badges: end -->
 
@@ -41,13 +42,13 @@ Shelf are included when available, but this is not always the case.
 <img src="https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/ecodata1.gif">
 </p>
 
-## Using geom\_gls()
+## Using geom_gls()
 
 Also included in this package is a “geom” extension of `ggplot2` for
 assessing trends in time series. This function fits four trend models to
 each series, uses AICc to select the best model fit, and then implements
 a likelihood-ratio test to determine if a trend is present. If a
-significant trend is present (*P* &lt; 0.05), then the trend line is
+significant trend is present (*P* \< 0.05), then the trend line is
 plotted with the series. By default, a purple line color is assigned to
 negative trends and orange to positive trends. More detailed information
 about this method is available
