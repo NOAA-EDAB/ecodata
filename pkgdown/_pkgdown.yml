@@ -1,14 +1,16 @@
-pandoc: 2.9.2
-pkgdown: 1.5.0
-pkgdown_sha: ~
-articles:
-  ecodata: ecodata.html
-  ecodata_maintenance: ecodata_maintenance.html
-last_built: 2020-05-14T18:47Z
-
-
-
 url: https://noaa-edab.github.io/ecodata/
+
+
+navbar:
+ components:
+  articles:
+   text: Articles
+   menu:
+   - text: ecodata_maintenance
+     href: articles/ecodata_maintenance.html
+   - text: landing_page
+     href: articles/landing_page.html
+
 
 reference:
   - title: "Plotting and modeling functions"
@@ -17,13 +19,18 @@ reference:
     - ecodata
     - coast
     - cold_pool_sf
+    - ches_bay_sf
     - epu_sf
     - geom_gls
+    - geom_lm
+    - geom_regime
     - longlinesurvey_sf
+    - StatLM
     - theme_facet
     - theme_map
     - theme_title
     - theme_ts
+    - trans_dates
   - title: "Synthetic Indicators"
     desc: "Data files containing synthetic indicators used in the State of the Ecosystem Reports"
     contents:
@@ -51,8 +58,10 @@ reference:
     contents:
     - aggregate_biomass
     - blue_runner
+    - condition
     - energy_density
     - exp_n
+    - forage_index
     - grayseal
     - harborporpoise
     - hms_category
@@ -64,8 +73,7 @@ reference:
     - mass_inshore_survey
     - narw
     - ne_inshore_survey
-    - nefsc_survey
-    - nefsc_survey_disaggregated
+    - ne_inshore_survey_species
     - observed_sharks
     - productivity_anomaly
     - sandlance
@@ -80,9 +88,11 @@ reference:
   - title: "LTL/Hab/Env Indicators"
     desc: "Data files containing Low Trophic Level, Habitat and Environmental indicators used in the State of the Ecosystem Reports"
     contents:
-    - bottom_heatwave
     - bottom_temp
+    - bottom_temp_comp
+    - bottom_temp_seasonal_gridded
     - bottom_temp_glorys
+    - seasonal_bt_anomaly_gridded
     - calanus_stage
     - ches_bay_sst
     - ch_bay_sal
@@ -92,12 +102,11 @@ reference:
     - cold_pool
     - gsi
     - forage_anomaly
+    - habitat_diversity
     - habitat_occupancy
     - habitat_vulnerability
     - habs
     - heatwave
-    - heatwave_anom_gridded
-    - heatwave_peak_date
     - heatwave_year
     - hudson_river_flow
     - ichthyo_diversity
@@ -108,8 +117,8 @@ reference:
     - seasonal_sst_anomaly_gridded
     - slopewater
     - wcr
-    - zoo_abund
     - zoo_diversity
-    - zoo_sli_anom
+    - zoo_abundance_anom
+    - zoo_regime
     - zoo_strat_abun
-    - zoo_oi
+
