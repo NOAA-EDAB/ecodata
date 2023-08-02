@@ -5,7 +5,7 @@
 \alias{species_dist}
 \title{Species distribution on the NES.}
 \format{
-Data set contains 270 rows and 5 columns
+Data set contains 275 rows and 5 columns
 
 \itemize{
 \item Time: Year.
@@ -19,7 +19,7 @@ Data set contains 270 rows and 5 columns
 species_dist
 }
 \description{
-Data include timeseires of depth, distance from shelf and distance along shelf.
+Data include timeseries of depth, distance from shelf and distance along shelf.
 }
 \details{
 More information including processing and indicator derivation steps are available at

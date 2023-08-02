@@ -20,7 +20,7 @@ The purpose of the `ecodata` package is to hold and facilitate the use of ecosys
 
 ## Workflow Overview
 
-![](ecodata_schematic.png)
+![](figures/ecodata_schematic.png)
 
 
 
