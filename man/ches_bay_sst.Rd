@@ -5,7 +5,7 @@
 \alias{ches_bay_sst}
 \title{Chesapeake Bay Gridded Sea Surface Temperature}
 \format{
-A data set containing 120740 rows and 4 columns.
+A data set containing 119577 rows and 4 columns.
 
 \itemize{
 \item Latitude: Latitude of sea surface grid.

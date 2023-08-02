@@ -8,9 +8,9 @@
 These data contain 232 rows and 4 columns.
 
 \itemize{
-\item Var: Phytoplankton size category.
+\item Var: Shark category.
 \item Value: Value of variable \code{Var}.
-\item Time: Time step of \code{Var}. Time format is given as YYYYMM for monthly time steps and YYYYWW for weekly data.
+\item Time: Time step of \code{Var}.
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.
 }
 }

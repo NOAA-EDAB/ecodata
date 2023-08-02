@@ -5,7 +5,7 @@
 \alias{aggregate_biomass}
 \title{NEFSC survey data broken into season and aggregate group biomass}
 \format{
-A data set containing 38008 rows and 6 columns.
+A data set containing 52286 rows and 5 columns.
 
 \itemize{
 \item Time: Survey year.
@@ -13,7 +13,6 @@ A data set containing 38008 rows and 6 columns.
 \item Var: Includes SOE species grouping, season that survey occurred (fall or spring), and variable calculated. The specific variables included are stratified mean biomass with associated confidence intervals, coefficients of variation, and standard errors.
 \item EPU: Ecological Production Unit (EPU) where data originated. Here "MAB" refers to the Mid-Atlantic Bight.
 \item Units: Units of variable \code{Var}.
-\item Source: Survdat.
 }
 }
 \usage{

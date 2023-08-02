@@ -5,7 +5,7 @@
 \alias{bennet}
 \title{Bennet indicator}
 \format{
-A data set containing 2510 rows and 6 columns.
+A data set containing 2600 rows and 5 columns.
 
 \itemize{
 \item Var: Specifies indicator type (price, volume, or total) and associated species grouping.
@@ -13,7 +13,6 @@ A data set containing 2510 rows and 6 columns.
 \item Time: Year.
 \item Units: Units of variable \code{Var}.
 \item EPU: Ecological Production Unit (EPU) from which data were drawn.
-\item Source: Source data from comland (Commercial Landings).
 }
 }
 \usage{

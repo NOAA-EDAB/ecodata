@@ -5,7 +5,7 @@
 \alias{species_groupings}
 \title{Species groupings}
 \format{
-1023 rows and 12 columns
+1022 rows and 15 columns
 
 \itemize{
 \item COMNAME: Common name of listed species.
@@ -13,13 +13,16 @@
 \item ITISSPP: Integrated Taxonomic Information System (ITIS) species identifier.
 \item NESPP3: Species codes used in CFDBS.
 \item SCINAME: Scientific name of listed species.
-\item Fed_managed: Management body. One of \code{NEFMC}, \code{MAFMC}, \code{JOINT} (MAFMC/NEFMC), or \code{NA}.
-\item SOE_17: Feeding guild groupings used in 2017-2018 SOE reports.
+\item Fed.managed: Management body. One of \code{NEFMC}, \code{MAFMC}, \code{JOINT} (MAFMC/NEFMC), or \code{NA}.
+\item SOE.17: Feeding guild groupings used in 2017-2018 SOE reports.
 \item EMAX: Groupings adapted from Link et al. 2006.
 \item RPATH: Groupings from Rpath - the R version of the Ecopath with Ecosim model.
-\item SOE_18: Feeding guild groupings used in 2018-2019 SOE reports.
-\item Garrison_Link: Groupings adapted from Garrison and Link 2000.
+\item SOE.18: Feeding guild groupings used in 2018-2019 SOE reports.
+\item SizeCat: Size category.
+\item Min.size: Minimum size.
+\item Garrison.Link: Groupings adapted from Garrison and Link 2000.
 \item NEIEA: Simplified feeding guilds for NE-IEA website.
+\item SOE.20: Feeding guild groupings used in 2020+ SOE reports.
 }
 }
 \usage{

@@ -5,14 +5,13 @@
 \alias{hms_landings}
 \title{Highly Migratory Species Landings and Revenue}
 \format{
-132 rows and 5 columns.
+156 rows and 4 columns.
 
 \itemize{
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.
 \item Time: Year.
 \item Var: Species weight or revenue landings.
 \item Value: Value of variable \code{Var}.
-\item Units: Units of variable \code{Var}.
 }
 }
 \usage{

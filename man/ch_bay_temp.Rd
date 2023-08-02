@@ -5,7 +5,7 @@
 \alias{ch_bay_temp}
 \title{Chesapeake Bay temperature with historical trends for comparison}
 \format{
-A data set containing 1328 rows and 5 columns.
+A data set containing 1376 rows and 5 columns.
 
 \itemize{
 \item Time: Day

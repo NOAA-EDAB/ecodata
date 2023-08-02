@@ -5,6 +5,8 @@
 \alias{habs}
 \title{Harmful Algal Blooms - Alexandrium and Paralitic Shellfish Poisoning}
 \format{
+Time series with 155 rows and 5 columns
+
 \itemize{
 \item Var: Regions of interest.
 \item Source: Harmful bloom source (PSP or Alexandrium).
