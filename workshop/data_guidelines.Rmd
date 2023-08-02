@@ -1,0 +1,155 @@
+---
+title: "SOE Data Structure Guidelines"
+author: "Kimberly Bastille"
+date: "12/1/2020"
+output: html_document
+---
+
+The NEFSC State of the Ecosystem (SOE) report is a collection of indicators that track the status and trend of the Northeast US Large Marine Ecosystem. The report is broken into two separate regional reports to be delivered to the two Fishery Management Councils that the Center serves: Mid-Atlantic and New England. The SOE contains a diverse range of indicators from revenue and commercial fisheries reliance through biomass of aggregate species groups to primary production and climate drivers. 
+
+### Data Format
+
+There are two different formats for structuring data: wide format and long format. Most people are familiar with the wide format that structures data like this: 
+
+
+Table 1: The wide format for data frames (4 columns, 4 rows)
+
+| Year | Var A  | Var B | Var C |
+|------|--------|-------|-------|
+| 2010 | 3      | 4     | 11    |
+| 2011 | 5      | 6     | 12    |
+| 2012 | 7      | 8     | 13    |
+
+While this is convenient for reading and human interpretation, many analyses and graphing routines prefer the long format: 
+
+Table 2: The long format for data frames (3 columns, 10 rows)
+
+| Year | Var    | Value | 
+|------|--------|-------|
+| 2010 | A      | 3     | 
+| 201o | B      | 4     | 
+| 2010 | C      | 11    | 
+| 2010 | A      | 5     | 
+| 201o | B      | 6     | 
+| 2010 | C      | 12    | 
+| 2010 | A      | 7     | 
+| 201o | B      | 8     | 
+| 2010 | C      | 13    | 
+
+The long format makes it easier to generically subset the data to be used in functions. For this reason, EDAB would prefer to receive data in the long format. More specifically, we are looking for the following columns: 
+
+Table 3: Required columns for the SOE
+
+| Year | Var  | Value | EPU | Units |
+|------|------|-------|-----|-------|
+| 2010 | SST  |   21  | GOM | C     |
+
+Time: Time stamp of the variable. Typically this is the year but could be day of the week or month, etc. 
+Var: Name of variable. Use a short description such as “Piscivore Landings”. 
+Value: The numerical value for the data point. 
+Units: Units for the variable. See standardized list below. 
+EPU: Ecological production unit or shelf-wide. See standardized list below.
+
+### Standarized lists 
+
+Here is the list of standardized unit notation. Note that this list may not be comprehensive. However this should give you an idea of how to label units. If the units of your variable are not list please contact Sean Lucey for guidance. Having standard notation for units helps in labeling the y-axis. 
+
+Table 4: Examples of unit standardization
+
+| Abbrev | Units                                  | 
+|------|------------------------------------------|
+| unitless | No Units                             | 
+| anomaly  | standardized  anomaly                |  
+| degrees latitude |  position in latitude        | 
+| kmˆ2     | square kilometers degrees            | 
+| C        | temperature in Celsius               |  
+| n        | number                               | 
+| US dollars  | currency                          | 
+| n per 100m3 | number per 100 cubic meters       |  
+| kg towˆ-1 |  kilograms per tow                  | 
+
+
+Please use the abbreviations below to indicate to which ecological production unit (EPU) your indicator belongs. This will aid in separating the data between the Mid-Atlantic and New England. 
+
+Table 5: Standard notation for EPUs 
+
+| Abbrev | EPU                |
+|--------|--------------------|
+| GB     | Georges Bank       | 
+| GOM    | Gulf of Maine      | 
+| MAB    | Mid-Atlantic Bight |
+| SS     | Scotian Shelf      | 
+| All    | Shelf-wide         | 
+
+
+### Convert Wide to Long
+
+If your data is already in wide format, here is a simply function for converting your data to long. There are examples below for using `data.table` as well as a `tidyverse` solution. Run this code in R and follow the example. Note the are `R` examples. 
+
+#### tidyverse
+```{r, echo = TRUE, eval = FALSE}
+#This function requires the data.table package library(tidyverse) 
+library(tidyverse)
+wide.format <- data.frame(Year = c( 1 , 2 , 3 ),  VarA = c( 1 , 2 , 3 ), 
+                          VarB = c( 4 , 5 , 6 ), VarC = c( 7 , 8 , 9 )) 
+
+long.formart <- wide.format %>% 
+  tidyr::pivot_longer(cols = c(VarA, VarB, VarC), names_to = "Var", values_to = "Value") %>% # convert wide to long
+  dplyr::mutate(Units = c("kg tows^-1"), # add Uints
+                EPU = c("GOM")) # add epu
+```
+
+
+#### data.table
+```{r, echo = TRUE, eval = FALSE}
+#This function requires the data.table package library(data.table) 
+#Function to convert from wide to long 
+w2l <- function(x, by, by.name = Time , value.name = Value ){ 
+  x.new <- copy(x)
+  var.names <- names(x)[which(names(x) != by)] 
+  out <- c() setnames(x.new, by, by ) 
+  for(i in 1:length(var.names)){ 
+    setnames(x.new, var.names[i], V1 ) 
+    single.var <- x.new[, list(by, V1)] 
+    single.var[, Var := var.names[i]] 
+    out <- rbindlist(list(out, single.var)) 
+    setnames(x.new, V1 , var.names[i]) 
+  }
+  setnames(x.new, by , by) 
+  setnames(out, c( by , V1 ), c(by.name, value.name)) 
+  }#Simple example from above 
+
+#Wide table 
+wide.format <- data.table(Year = c( 1 , 2 , 3 ),  VarA = c( 1 , 2 , 3 ), 
+                          VarB = c( 4 , 5 , 6 ), VarC = c( 7 , 8 , 9 )) 
+print(wide.format) 
+## Year VarA VarB VarC ## 1: 1 1 4 7 ## 2: 2 2 5 8 ## 3: 3 3 6 9 
+long.format <- w2l(wide.format, by = Year ) 
+print(long.format) 
+## Time Value Var ## 1: 1 1 VarA ## 2: 2 2 VarA ## 3: 3 3 VarA ## 4: 1 4 VarB ## 5: 2 5 VarB ## 6: 3 6 VarB ## 7: 1 7 VarC ## 8: 2 8 VarC ## 9: 3 9 VarC #Notice that the w2l function named the columns to the ones noted above #but did not add units, region, or source 3 
+#Add units and region manually 
+units <- data.table(Units = c(rep( kg tows^-1 , 6), 
+                              rep( n per 100m3 , 3))) 
+region <- data.table(Region = rep( GB , 9)) 
+source <- data.table(Source = c(rep( NEFSC survey data (Survdat) , 6), 
+                                rep( NEFSC ECOMON data , 3))) 
+long.format <- cbind(long.format, units) 
+long.format <- cbind(long.format, region) 
+long.format <- cbind(long.format, source) print(long.format) 
+## Time Value Var Units Region Source ## 1: 1 1 VarA kg tows^-1 GB NEFSC survey data (Survdat) ## 2: 2 2 VarA kg tows^-1 GB NEFSC survey data (Survdat) ## 3: 3 3 VarA kg tows^-1 GB NEFSC survey data (Survdat) ## 4: 1 4 VarB kg tows^-1 GB NEFSC survey data (Survdat) ## 5: 2 5 VarB kg tows^-1 GB NEFSC survey data (Survdat) ## 6: 3 6 VarB kg tows^-1 GB NEFSC survey data (Survdat) ## 7: 1 7 VarC n per 100m3 GB NEFSC ECOMON data ## 8: 2 8 VarC n per 100m3 GB NEFSC ECOMON data ## 9: 3 9 VarC n per 100m3 GB NEFSC ECOMON data 
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
