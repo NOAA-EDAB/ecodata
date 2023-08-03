@@ -6,11 +6,14 @@ navbar:
   articles:
    text: Articles
    menu:
-   - text: ecodata_maintenance
+   - text: Ecodata maintenance
      href: articles/ecodata_maintenance.html
-   - text: landing_page
+   - text: Landing page
      href: articles/landing_page.html
-
+   - text: Data guidelines
+     href: articles/data_guidelines.html
+   - text: Using geom_gls
+     href: articles/geom_gls.html
 
 reference:
   - title: "Plotting and modeling functions"
