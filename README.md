@@ -48,8 +48,6 @@ For data used in the current developing cycle
 remotes::install_github("noaa-edab/ecodata@dev",build_vignettes=TRUE)
 ```
 
-\`\`\`
-
 ## Loading data sets
 
 1.  All derived data sets are available once the package has been loaded
