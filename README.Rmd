@@ -30,13 +30,25 @@ Management Councils (FMCs), and therefore indicator data for Scotian Shelf are i
 
 ### Please consult the [technical documentation](https://noaa-edab.github.io/tech-doc/) of SOE indicators before using data sets.
 
+## State of the Ecosystem cycle
+
+The main branch of this repository contains the data used in the most recently published [State of the Ecosystem](https://www.fisheries.noaa.gov/new-england-mid-atlantic/ecosystems/state-ecosystem-reports-northeast-us-shelf) reports (Mid Atlantic and New England reports). Data for use in the following years report can be found on the `dev` branch of the repository. Once the reports are written and the cycle ends this data will be pulled into the main branch and [released](https://github.com/NOAA-EDAB/ecodata/releases)
+
 ## Installation
+
+For the last released complete data set
 
 ```{r, eval = F}
 remotes::install_github("noaa-edab/ecodata",build_vignettes=TRUE)
+```
 
-# load/attach package
-library(ecodata)
+For data used in the current developing cycle
+
+```{r, eval = F}
+remotes::install_github("noaa-edab/ecodata@dev",build_vignettes=TRUE)
+```
+
+
 ```
 
 ## Loading data sets
