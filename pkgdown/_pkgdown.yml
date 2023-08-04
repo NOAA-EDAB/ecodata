@@ -15,6 +15,12 @@ navbar:
    - text: Using geom_gls
      href: articles/geom_gls.html
 
+# this will copy workshop folder into root of gh-pages branch
+# acts like a hidden folder in that there are no links to it from pkgdown
+#template:
+#  assets: workshop
+
+
 reference:
   - title: "Plotting and modeling functions"
     desc: "main functions for running models and plotting its output"
