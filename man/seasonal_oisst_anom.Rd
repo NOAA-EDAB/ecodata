@@ -5,14 +5,13 @@
 \alias{seasonal_oisst_anom}
 \title{Sea-surface temperature anomaly time serries}
 \format{
-480 observations in 5 columns
+492 observations in 4 columns
 
 \itemize{
 \item Value: SST anomaly in degrees C.
 \item EPU: Ecological Production Unit that data were collected from.
 \item Var: Specifies season of anomaly.
 \item Time: Year.
-\item Units: Units.
 }
 }
 \usage{

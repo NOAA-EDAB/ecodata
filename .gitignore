@@ -4,3 +4,6 @@ inst/doc
 .RData
 .Ruserdata
 .DS_Store
+
+# folders
+docs
