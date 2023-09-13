@@ -90,6 +90,16 @@ Each annual report cycle is developed with new and updated datasets. Guidelines 
 Below is a table outlining the indicators included in `ecodata` and which SOE year the indicator was included in the report(s). Further information for each indicator can be found in the [Technical Documentation: State of the Ecosystem](https://noaa-edab.github.io/tech-doc/). This holds the details on the methodologies used for all indicators included in the reports including those not included in `ecodata`.  
 
 
-*TABLE requires access to google docs*
+```{r, echo = FALSE, eval = TRUE, message=FALSE, warning=FALSE}
+table<-read.csv("indicator_table.csv")
 
+# reformat column headers
+newnames <- names(table)
+newnames <- stringr::str_replace_all(newnames,"\\."," ")
+newnames <- stringr::str_replace_all(newnames,"X","")
 
+knitr::kable(table, "html",
+             col.names = newnames)  %>%  
+  kableExtra::kable_styling(., font_size = 9) %>%
+  kableExtra::scroll_box(width = "900px")
+```
