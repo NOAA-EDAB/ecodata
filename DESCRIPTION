@@ -13,18 +13,18 @@ Date: 2018-10-24
 Suggests:
     knitr,
     rmarkdown,
-	dplyr,
-	stringr,
-	tidyr,
-	ggplot2,
-	lubridate,
-	tufte,
-	here,
-	usethis,
-	AICcmodavg,
-	mgcv,
-	zoo,
-	rlang
+    dplyr,
+    stringr,
+    tidyr,
+    ggplot2,
+    lubridate,
+    tufte,
+    here,
+    usethis,
+    AICcmodavg,
+    mgcv,
+    zoo,
+    rlang
 VignetteBuilder: knitr
 RoxygenNote: 7.2.3
 Depends: 
