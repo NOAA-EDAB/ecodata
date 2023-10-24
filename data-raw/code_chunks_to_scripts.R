@@ -6,7 +6,7 @@ rmd.list<-list("human_dimensions_MAB.Rmd", "LTL_MAB.Rmd", "macrofauna_MAB.Rmd",
 # create r scripts from rmd
 for (i in rmd.list) {
   options(knitr.duplicate.label = 'allow') #allows named chunks
-    purl <- knitr::purl(here::here("docs", i))
+    purl <- knitr::purl(here::here("workshop", i))
     knitr::read_chunk(purl)
     chunks <- knitr:::knit_code$get()
     invisible(mapply(function(chunk, name) {

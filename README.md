@@ -1,9 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ecodata <img src="https://github.com/NOAA-EDAB/ecodata/blob/master/ecodata_logo.png" align="right" width="120" />
+# ecodata <img src="man/figures/ecodata_logo.png" align="right" width="120" />
 
 <!-- badges: start -->
+
 [![gitleaks](https://github.com/NOAA-EDAB/ecodata/actions/workflows/secretScan.yml/badge.svg)](https://github.com/NOAA-EDAB/ecodata/actions/workflows/secretScan.yml)
 <!-- badges: end -->
 
@@ -22,14 +23,30 @@ Shelf are included when available, but this is not always the case.
 
 ### Please consult the [technical documentation](https://noaa-edab.github.io/tech-doc/) of SOE indicators before using data sets.
 
-## Using this package
+## State of the Ecosystem cycle
 
-1.  Use the command
-    `remotes::install_github("noaa-edab/ecodata",build_vignettes=TRUE)`
-    to install the package.
-2.  Load the package into your environment with `library(ecodata)`
-3.  Further information about the `ecodata` package can be found
-    [here](https://noaa-edab.github.io/ecodata/).
+The main branch of this repository contains the data used in the most
+recently published [State of the
+Ecosystem](https://www.fisheries.noaa.gov/new-england-mid-atlantic/ecosystems/state-ecosystem-reports-northeast-us-shelf)
+reports (Mid Atlantic and New England reports). Data for use in the
+following years report can be found on the `dev` branch of the
+repository. Once the reports are written and the cycle ends this data
+will be pulled into the main branch and
+[released](https://github.com/NOAA-EDAB/ecodata/releases)
+
+## Installation
+
+For the last released complete data set
+
+``` r
+remotes::install_github("noaa-edab/ecodata",build_vignettes=TRUE)
+```
+
+For data used in the current developing cycle
+
+``` r
+remotes::install_github("noaa-edab/ecodata@dev",build_vignettes=TRUE)
+```
 
 ## Loading data sets
 
@@ -41,38 +58,9 @@ Shelf are included when available, but this is not always the case.
 <img src="https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/ecodata1.gif">
 </p>
 
-## Using geom\_gls()
+### Legal disclaimer
 
-Also included in this package is a “geom” extension of `ggplot2` for
-assessing trends in time series. This function fits four trend models to
-each series, uses AICc to select the best model fit, and then implements
-a likelihood-ratio test to determine if a trend is present. If a
-significant trend is present (*P* &lt; 0.05), then the trend line is
-plotted with the series. By default, a purple line color is assigned to
-negative trends and orange to positive trends. More detailed information
-about this method is available
-[here](https://noaa-edab.github.io/tech-doc/trend-analysis.html).
-
-`geom_gls()` follows the same rules as other `ggplot` stats/geoms. For
-example,
-
-    m <- 0.1
-    x <- 1:30
-    y <-  m*x + rnorm(30, sd = 0.35)
-
-    data <- data.frame(x = x,
-                      y = y)
-
-    #Plot series with trend 
-    ggplot2::ggplot(data = data,aes(x = x, y = y)) +
-      geom_line() +
-      geom_gls()
-
-produces
-
-<img src="https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/geom_gls.png" width="100%" />
-
-This repository is a scientific product and is not official
+*This repository is a scientific product and is not official
 communication of the National Oceanic and Atmospheric Administration, or
 the United States Department of Commerce. All NOAA GitHub project code
 is provided on an ‘as is’ basis and the user assumes responsibility for
@@ -84,63 +72,4 @@ manufacturer, or otherwise, does not constitute or imply their
 endorsement, recommendation or favoring by the Department of Commerce.
 The Department of Commerce seal and logo, or the seal and logo of a DOC
 bureau, shall not be used in any manner to imply endorsement of any
-commercial product or activity by DOC or the United States Government.
-
-## Build documentation
-
-Organize
-[Reference](https://noaa-edab.github.io/ecodata/reference/index.html) by
-datasets and functions in `inst/_pkgdown.yml` and update using:
-
-``` r
-update_datasets_reference <- function(){
-  library(here)
-  library(dplyr)
-  library(yaml)
-
-  yml <- here("inst/_pkgdown.yml")
-
-  lst <- read_yaml(yml)
-  # listviewer::jsonedit(lst)
-  
-  # inject reference to datasets  
-  datasets <- data(package="ecodata") %>% .$results %>% .[, "Item"]
-  lst$reference <- list(
-      title = "Datasets",
-      contents = datasets)
-
-  write_yaml(lst, yml)
-}
-
-# build just Reference index
-pkgdown::build_reference_index()
-
-# build whole documentation website into docs/*
-pkgdown::build_site()
-```
-
-Note that when building, you’ll get alerted if datasets are missing or
-not included, eg:
-
-    > pkgdown::build_reference_index()
-    Writing 'reference/index.html'
-    Warning messages:
-    1: In '_pkgdown.yml', topic must be a known topic name or alias
-    x Not '`heatwave_year`' 
-    2: In '_pkgdown.yml', topic must be a known topic name or alias
-    x Not '`seasonal_sst_anom_gridded`' 
-    3: In '_pkgdown.yml', topic must be a known topic name or alias
-    x Not '`wind`' 
-    4: Topics missing from index: 
-    * ecodata
-    * seasonal_sst_anomaly_gridded
-    * soe 
-
-Aside: get all plot chunks mentioning given dataset for Uploader:
-
-``` r
-dataset <- "chl_pp"
-res <- system(glue::glue("grep ecodata::{dataset} chunk-scripts/*", intern = T))
-# todo: get just filenames
-res
-```
+commercial product or activity by DOC or the United States Government.*

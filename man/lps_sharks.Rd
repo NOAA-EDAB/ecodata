@@ -3,24 +3,26 @@
 \docType{data}
 \name{lps_sharks}
 \alias{lps_sharks}
-\title{Large Pelagics Survey -  Shark Data}
+\title{lps_sharks ???}
 \format{
-90 rows and 5 columns
+A data set containing 90 rows and 5 columns.
 
 \itemize{
-\item Time: Years.
-\item EPU: Ecological Production Unit where data originated.
-\item Var: Either \code{F.Fmsy}, representing the ratio of fishery mortality to fishery mortality
-at maximum sustainable yield (or proxy), or \code{B.Bmsy}, defined as the ratio of estimated stock biomass to
-estimated biomass at maximum sustainable yield (or proxy).
-\item Value: Value of variable \code{Var}.
-\item Units: Units of variable \code{Var}.
+\item {Time}{???}
+\item {Var}{???}
+\item {Value}{???}
+\item {EPU}{??}
+\item {Units}{???}
+
 }
 }
 \usage{
 lps_sharks
 }
 \description{
-Large Pelagics Survey (LPS) shark abundance count.
+What is it?
+}
+\details{
+More information available at \url{link to techdoc}
 }
 \keyword{datasets}
