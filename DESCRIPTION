@@ -24,7 +24,8 @@ Suggests:
     AICcmodavg,
     mgcv,
     zoo,
-    rlang
+    rlang,
+    kableExtra
 VignetteBuilder: knitr
 RoxygenNote: 7.2.3
 Depends: 
