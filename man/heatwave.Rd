@@ -5,7 +5,7 @@
 \alias{heatwave}
 \title{Marine Heatwaves}
 \format{
-423 rows and 5 columns.
+648 rows and 5 columns.
 
 \itemize{
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.
@@ -19,7 +19,8 @@
 heatwave
 }
 \description{
-Data include cumulative and maximum intensity marine heatwaves on the NES.
+Data include cumulative intensity, maximum intensity and duration of
+surface and bottom water marine heatwaves on the NES.
 }
 \details{
 More information including processing and indicator derivation steps are available at

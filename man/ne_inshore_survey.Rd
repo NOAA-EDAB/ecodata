@@ -5,7 +5,7 @@
 \alias{ne_inshore_survey}
 \title{New England inshore state survey data}
 \format{
-A data set containing 252 rows and 6 columns.
+A data set containing 264 rows and 6 columns.
 
 \itemize{
 \item Var: Includes SOE species grouping, season that survey occurred (fall or spring), and variable calculated.

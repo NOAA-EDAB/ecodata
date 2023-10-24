@@ -5,7 +5,7 @@
 \alias{ichthyo_diversity}
 \title{Ichthyoplankton diversity}
 \format{
-63 rows and 5 columns
+69 rows and 5 columns
 
 \itemize{
 \item Var: Specifies variable of interest and sampling season.

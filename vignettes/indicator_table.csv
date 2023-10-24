@@ -1,0 +1,78 @@
+Indicator,Data Name,Year added,Last Methods Update,2017,2018,2019,2020,2021,2022,2023,Link to Methods
+ABC or ACL for MA Managed Species,abc.acl,2022,2022,N,N,N,N,N,Y,,https://noaa-edab.github.io/tech-doc/mafmc-abcacl-and-catch.html#mafmc-abcacl-and-catch
+Aggregate Group Biomass,aggregate_biomass,2018,2020,N,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/aggroups.html
+Aquaculture,aquaculture,2017,2019,Y,Y,Y,N,Y,Y,,https://noaa-edab.github.io/tech-doc/aquaculture.html
+Bennet Index,bennet,2018,2018,N,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/bennet-indicator.html
+Blue Runner Presense on NES,blue_runner,2020,2020,N,N,N,Y,N,N,,https://noaa-edab.github.io/tech-doc/safmc-managed-spp.html
+Bottom heatwaves,bottom_heatwave,2023,2023,N,N,N,N,N,N,,
+Bottom Temperature,bottom_temp,2019,2019,N,N,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/bottom-temperatures.html
+Calanus Stage,calanus_stage,2020,2020,N,N,N,Y,N,N,,https://noaa-edab.github.io/tech-doc/calanus-stage.html#calanus-stage
+Chesapeake Bay Sea Surface Temperature,ches_bay_sst,2022,2022,N,N,N,N,N,Y,,https://noaa-edab.github.io/tech-doc/chesapeake-bay-seasonal-sst-anomalies.html#chesapeake-bay-seasonal-sst-anomalies
+Chesapeake Bay Temperature,ches_bey_temp,2021,2021,N,N,N,N,Y,Y,,https://noaa-edab.github.io/tech-doc/chesapeake-bay-salinity-and-temperature.html#chesapeake-bay-salinity-and-temperature
+Chesapeake Bay Water Quality,ches_bay_wq,2019,2019,N,N,Y,N,N,Y,,https://noaa-edab.github.io/tech-doc/chesapeake-bay-water-quality-standards-attainment.html
+Chlorophyll and Primary Production,chl_pp,2018,2018,N,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/chl-pp.html
+Chesapeake Bay Salinity,ch_bay_sal,2020,2020,N,N,N,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/chesapeake-bay-salinity-and-temperature.html#chesapeake-bay-salinity-and-temperature
+Cold Pool Index,cold_pool,2020,2020,N,N,N,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/cold-pool-index.html
+Commercial Fisheries,comdat,2017,2017,Y,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/comdat.html
+Commercial Fisheries Diversity,commercial_div,2018,2018,N,Y,N,N,Y,Y,,https://noaa-edab.github.io/tech-doc/catch-and-fleet-diversity.html
+Forage Fish Energy Density,energy_density,2020,2020,N,N,N,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/forage-fish-energy-density.html
+Community Engagement,engagement,2019,2020 (shift to timeseries) ,N,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/community-engagement.html
+Expected Number of Species per 1000 individuals,exp_n,2021,2021,N,N,N,N,Y,Y,,https://noaa-edab.github.io/tech-doc/expected-number-of-species.html#expected-number-of-species
+Forage Anomaly,forage_anomaly,2022,2022,N,N,N,N,N,Y,,
+Gray Seal Bycatch,grayseal,2021,2021,N,N,N,N,Y,N,,https://noaa-edab.github.io/tech-doc/harbor-porpoise-and-gray-seal-bycatch.html#harbor-porpoise-and-gray-seal-bycatch
+Gulf Stream Index,gsi,2019,2020 (shift to Perez-Hernandez and Joyce 2014 methodology),N,N,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/gulf-stream-index.html
+Habitat Vulnerability Analysis,habitat_vulnerability,2021,2021,N,N,N,N,Y,N,,https://noaa-edab.github.io/tech-doc/habitat-vulnerability.html#habitat-vulnerability
+Harbor Porpoise Abundance,harborporpoise,2018,2018,N,Y,Y,N,Y,N,,https://noaa-edab.github.io/tech-doc/harbor-porpoise-bycatch.html
+Marine Heatwave,heatwave,2020,2020,N,N,N,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/marine-heatwave.html
+Highly Migratory Species Catch per Unit Effort,hms_cpue,2022,2022,N,N,N,N,N,Y,,https://noaa-edab.github.io/tech-doc/atlantic-hms-pop-cpue.html#atlantic-hms-pop-cpue
+Highly Migratory Species Landings,hms_landings,2020,2020,N,N,N,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/highly-migratory-species-landings.html
+Highly Migratory Species Stock Status,hms_stock_status,2022,2022,N,N,N,N,N,Y,,https://noaa-edab.github.io/tech-doc/atlantic-highly-migratory-species-stock-status.html#atlantic-highly-migratory-species-stock-status
+Harbor Porpoise Density,hp_density,2018,2018,N,Y,Y,N,N,N,,https://noaa-edab.github.io/tech-doc/harbor-porpoise-bycatch.html
+Hudson River Flow,hudson_river_flow,2022,2022,N,N,N,N,N,N,,https://noaa-edab.github.io/tech-doc/hudson-river-flow.html#hudson-river-flow
+Ichthyoplankton Diversity,ichthyo_diversity,2018,2018,N,Y,Y,N,Y,N,,https://noaa-edab.github.io/tech-doc/ichthyoplankton-diversity.html
+Long Term Sea Surface Temperature,long_term_sst,2017,2017,Y,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/long-term-sea-surface-temperature.html
+Large Pelagic Survey ,lps_sharks,2021,2021,N,N,N,N,Y,Y,,https://noaa-edab.github.io/tech-doc/recreational-shark-fishing-indicators.html#recreational-shark-fishing-indicators
+Mid-Atlantic Inshore Survey,mab_inshore_survey,2019,2019,N,N,Y,Y,N,Y,,https://noaa-edab.github.io/tech-doc/inshoresurvdat.html
+Massachusettes Inshore Survey,mass_inshore_survey,2019,2019,N,N,Y,Y,N,Y,,https://noaa-edab.github.io/tech-doc/inshoresurvdat.html
+North Atlantic Right Whale,narw,2017,2020 (Includes calf birth),Y,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/right-whale-abundance.html
+NEFSC Bottom Trawl Survey,nefsc_survey,2017,2020 (map to EPU to get uncertainty),Y,Y,Y,Y,N,N,,https://noaa-edab.github.io/tech-doc/survdat.html
+NEFSC Bottom Trawl Survey dissaggregated,nefsc_survey_disaggrated,2017,2020 (map to EPU to get uncertainty),Y,Y,Y,Y,N,N,,https://noaa-edab.github.io/tech-doc/survdat.html
+New England Inshore Survey,ne_inshore_survey,2019,2019,N,N,Y,Y,N,N,,https://noaa-edab.github.io/tech-doc/inshoresurvdat.html
+New England Wind Index,ne_wind,,,N,N,Y,N,N,N,,
+Northeast Fisheries Observed Sharks,observed_sharks,2021,2021,N,N,N,N,Y,N,,https://noaa-edab.github.io/tech-doc/atlantic-hms-pop-cpue.html#atlantic-hms-pop-cpue
+Phytoplankton Size Class,phyto_size,2021,2021,N,N,N,N,Y,Y,,https://noaa-edab.github.io/tech-doc/phytoplankton-size-class.html#phytoplankton-size-class
+Primary Production Required,ppr,2020,2020,N,N,N,Y,Y,N,,https://noaa-edab.github.io/tech-doc/primary-production-required.html
+Recruitment/Productivity,productivity_anomaly,2017,2017,Y,Y,Y,Y,N,Y,,https://noaa-edab.github.io/tech-doc/fish-productivity-indicator.html
+Recreational Fisheries,recdat,2017,2017,Y,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/recreational-fishing-indicators.html
+Recreational Highly Migratory Species,rec_hms,2022,2022,N,N,N,N,N,Y,,https://noaa-edab.github.io/tech-doc/recreational-shark-fishing-indicators.html#recreational-shark-fishing-indicators
+Submerged Aquatic Vegetation,SAV,2022,2022,N,N,N,N,N,Y,,https://noaa-edab.github.io/tech-doc/submerged-aquatic-vegetation.html#submerged-aquatic-vegetation
+Mid-Atlantic Waterbirds,seabird_mab,2020,2020,N,N,N,Y,N,N,,https://noaa-edab.github.io/tech-doc/ma-waterbird-productivity.html
+New England Seabirds,seabird_ne,2019,2019,N,N,Y,Y,Y,N,,https://noaa-edab.github.io/tech-doc/ne-seabird-diet-and-productivity.html
+Gray Seal Pup Counts,seal_pups,2021,2021,N,N,N,N,Y,N,,
+Seasonal Sea Surface Temperature Anomaly,seasonal_oisst_anom,2018,2018,N,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/seasonal-sst-anomalies.html
+Seasonal Sea Surface Temperature Spatial Anomaly ,seasonal_sst_anomaly_gridded,2018,2018,N,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/seasonal-sst-anomalies.html
+Slopewater,slopewater,2019,2019,N,N,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/slopewater-proportions.html
+Species Distribution,species_dist,2017,2017,Y,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/species-distribution-indicators.html
+Species Groups,species_groupings,2018,2020 (Squid moved to piscivores),N,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/aggroups.html
+Stock Status,stock_status,2017,2017,Y,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/stockstatus.html
+Stomach Fullness,stom_fullness,2020,2020,N,N,N,N,N,N,,https://noaa-edab.github.io/tech-doc/stomach-fullness.html
+Bottom Trawl Survey Shannon Diversity,survey_shannon,2022,2022,N,N,N,N,N,Y,,https://noaa-edab.github.io/tech-doc/survdat.html#survdat
+Warm Core Rings,wcr,2020,2020,N,N,N,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/warm-core-rings.html
+Wind Lease Area Landings Revenue,wea_landings_revenue,2022,2022,N,N,N,N,N,Y,,https://noaa-edab.github.io/tech-doc/wea-fishing-port-landings.html#wea-fishing-port-landings
+Wind - Habitat Occupancy,wind_occupancy,2020,2020,N,N,N,Y,N,N,,https://noaa-edab.github.io/tech-doc/wind-lease-areas-and-habitat-occupancy-overlap.html
+Wind Lease Areea Development Speed,wind_dev_speed,2021,2021,N,N,N,N,Y,Y,,https://noaa-edab.github.io/tech-doc/wind-energy-delvelopment-timeline.html#wind-energy-delvelopment-timeline
+Wind Lease Area Port Impacts,wind_port,2022,2022,N,N,N,N,N,Y,,https://noaa-edab.github.io/tech-doc/wea-fishing-port-landings.html#wea-fishing-port-landings
+Wind Lease Areas Revenue,wind_revenue,2021,2021,N,N,N,N,N,Y,,https://noaa-edab.github.io/tech-doc/fisheries-revenue-in-wind-development-areas.html#fisheries-revenue-in-wind-development-areas
+Zooplankton Abundance,zoo_abund,2017,2017,Y,Y,Y,Y,Y,N,,https://noaa-edab.github.io/tech-doc/zooabund.html
+Zooplankton Diversity,zoo_div,2017,2017,Y,Y,Y,Y,Y,N,,https://noaa-edab.github.io/tech-doc/zooabund.html
+Zooplankton Optimal Interpolation,zoo_oi,2017,2017,Y,Y,Y,Y,Y,N,,https://noaa-edab.github.io/tech-doc/zooabund.html
+Zooplankton Small-Large Index,zoo_sli_anom,2017,2017,Y,Y,Y,Y,Y,N,,https://noaa-edab.github.io/tech-doc/zooabund.html
+Zooplankton Stratified Abundance,zoo_strat_abun,2017,2017,Y,Y,Y,Y,Y,N,,https://noaa-edab.github.io/tech-doc/zooabund.html
+Fish Condtion,NA,NA,NA,N,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/fish-condition-indicator.html
+Annual SST Cycles,NA,NA,NA,N,Y,N,N,N,N,,https://noaa-edab.github.io/tech-doc/annual-sst-cycles.html
+Mid-Atlantic Harmful Algal Bloom,NA,NA,NA,N,Y,N,N,N,N,,https://noaa-edab.github.io/tech-doc/mid-atlantic-harmful-algal-bloom-indicator.html
+New England Harmful Algal Bloom,NA,NA,NA,N,Y,N,N,N,N,,https://noaa-edab.github.io/tech-doc/new-england-harmful-algal-bloom-indicator.html
+Verified Records of Southern Kingfish,NA,NA,NA,N,Y,N,N,N,N,,https://noaa-edab.github.io/tech-doc/verified-records-of-southern-kingfish.html
+Habitat Occupancy Models,NA,NA,NA,N,Y,N,N,N,N,,https://noaa-edab.github.io/tech-doc/hab-occu.html
+Species Density ,NA,NA,NA,N,Y,Y,N,N,N,,https://noaa-edab.github.io/tech-doc/species-density-estimates.html
+Thermal Habitat projections,NA,NA,NA,N,Y,N,N,N,N,,https://noaa-edab.github.io/tech-doc/thermal-habitat-projections.html

@@ -5,7 +5,7 @@
 \alias{SAV}
 \title{Chesapeake Bay Submerged Aquatic Vegetation}
 \format{
-Data set contains 180 rows and 4 columns
+Data set contains 185 rows and 4 columns
 
 \itemize{
 \item Value: Value of variable \code{Var}.
