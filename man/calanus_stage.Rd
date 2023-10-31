@@ -5,7 +5,7 @@
 \alias{calanus_stage}
 \title{Calanus Stage}
 \format{
-A data set containing 4042 rows and 9 columns.
+A data set containing 1006 rows and 5 columns.
 
 \itemize{
 \item Year: Time
@@ -13,7 +13,6 @@ A data set containing 4042 rows and 9 columns.
 \item Value: Value of variable.
 \item Var: calanus stage
 \item Units: Number of calanus/meter cubed.
-\item season: Time of year.
 
 }
 }

@@ -5,15 +5,15 @@
 \alias{hms_stock_status}
 \title{Highly Migratory species stock status}
 \format{
-40 rows and 4 columns
+48 rows and 4 columns
 
 \itemize{
-\item stock: Stock identifier.
+\item Time: Year
 \item Var: Either \code{F.Fmsy}, representing the ratio of fishery mortality to fishery mortality
 at maximum sustainable yield (or proxy), or \code{B.Bmsy}, defined as the ratio of estimated stock biomass to
 estimated biomass at maximum sustainable yield (or proxy).
 \item Value: Value of variable \code{Var}.
-\item Year: Year.
+\item EPU: Ecological Production Unit (EPU) where sampling occurred.
 }
 }
 \usage{

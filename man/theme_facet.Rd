@@ -2,12 +2,12 @@
 % Please edit documentation in R/theme_facet.R
 \name{theme_facet}
 \alias{theme_facet}
-\title{A ggplot2 theme for facetted SOE time series figures}
+\title{A ggplot2 theme for faceted SOE time series figures}
 \usage{
 theme_facet(...)
 }
 \description{
-A ggplot2 theme for facetted SOE time series figures
+A ggplot2 theme for faceted SOE time series figures
 }
 \examples{
 library(ggplot2)
@@ -20,6 +20,6 @@ ggplot(data = data) +
   geom_line(aes(x = x, y = y)) +
   facet_wrap(Var~.)+
   theme_facet()
-  
-  
+
+
 }

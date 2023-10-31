@@ -3,9 +3,9 @@
 \docType{data}
 \name{ppr}
 \alias{ppr}
-\title{Ecosystem Overfishing Inidcators}
+\title{Ecosystem Overfishing Indicators}
 \format{
-897 rows and 5 columns.
+550 rows and 5 columns.
 
 \itemize{
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.

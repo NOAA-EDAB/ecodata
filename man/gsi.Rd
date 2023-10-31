@@ -5,9 +5,10 @@
 \alias{gsi}
 \title{Gulf Stream Index}
 \format{
+Time series with 816 rows and 4 columns
+
 \itemize{
 \item Var: Variable of interest.
-\item Units: Units of variable \code{Var}.
 \item Value: Value of variable \code{Var}.
 \item EPU: Representative Ecological Production Unit (MAB = Mid-Atlantic Bight, GB = Georges Bank,
 GOM = Gulf of Maine, SS = Scotian Shelf, or All).

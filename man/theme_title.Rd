@@ -2,12 +2,12 @@
 % Please edit documentation in R/theme_title.R
 \name{theme_title}
 \alias{theme_title}
-\title{A ggplot2 ggtitle formmatting for SOE figures}
+\title{A ggplot2 ggtitle formatting for SOE figure titles}
 \usage{
 theme_title(...)
 }
 \description{
-A ggplot2 ggtitle formmatting for SOE figures
+A ggplot2 ggtitle formatting for SOE figure titles
 }
 \examples{
 library(ggplot2)

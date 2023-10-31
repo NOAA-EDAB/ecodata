@@ -5,7 +5,7 @@
 \alias{chl_pp}
 \title{Chlorophyll \emph{a} and primary production}
 \format{
-These data contain 18900 rows and 5 columns.
+These data contain 19872 rows and 5 columns.
 
 \itemize{
 \item Var: Specifies temporal sampling resolution (\code{ANNUAL},\code{MONTHLY},\code{WEEKLY}), variable type (\code{MEDIAN},

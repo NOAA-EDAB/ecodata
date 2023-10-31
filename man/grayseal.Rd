@@ -5,15 +5,13 @@
 \alias{grayseal}
 \title{Gray Seal Bycatch}
 \format{
-24 rows and 6 columns.
+A time series with 130 rows and 4 columns.
 
 \itemize{
-\item totalest5y: Estimated bycatch with five year rolling window.
-\item totalest5yUCI: Upper confidence interval of estimated bycatch with five year rolling window.
-\item totalest5yLCI: Lower confidence interval of estimated bycatch with five year rolling window.
-\item totalest1y: Annual estimated bycatch.
-\item pbr: Possible Biological Removals.
-\item year: Time step.
+\item Time: Year
+\item Var: Bycath variable
+\item Value: Value of variable
+\item EPU: Shelfwide indicator
 }
 }
 \usage{
