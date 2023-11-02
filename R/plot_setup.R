@@ -15,6 +15,8 @@
 plot_setup <- function(shadedRegion=c(2014,2023),
                        report = report){
 
+  library(sf) # now needed in function for filter to work on sf object? https://github.com/r-spatial/sf/issues/1381
+
   plotsettings <- list()
 
     # from GIS-setup files (identical between reports)

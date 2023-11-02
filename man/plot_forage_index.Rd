@@ -4,21 +4,10 @@
 \alias{plot_forage_index}
 \title{plot forage index}
 \usage{
-plot_forage_index(
-  EPUs = "MAB",
-  shadedRegion = c(2012, 2022),
-  shade.fill = "lightgrey",
-  shade.alpha = 0.3
-)
+plot_forage_index(report = "MidAtlantic")
 }
 \arguments{
-\item{EPUs}{Character string. Which SOE report ("GB","MAB")}
-
-\item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot}
-
-\item{shade.fill}{Character string. Color of shaded region. (Default = "lightgrey)}
-
-\item{shade.alpha}{Numeric scalar. Alpha of shaded region (Default = 0.5)}
+\item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 }
 \value{
 ggplot object
