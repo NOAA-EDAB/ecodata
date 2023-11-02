@@ -2,10 +2,7 @@
 #'
 #' Description should be here. This needs to be reworked to uncouple GB and GOM
 #'
-#' @param EPUs Character string. Which SOE report ("GB","MAB")
-#' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot
-#' @param shade.fill Character string. Color of shaded region. (Default = "lightgrey)
-#' @param shade.alpha Numeric scalar. Alpha of shaded region (Default = 0.5)
+#' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #'
 #' @return ggplot object
 #'
@@ -13,53 +10,48 @@
 #' @export
 #'
 
-plot_forage_index <- function(EPUs="MAB",
-                              shadedRegion=c(2012,2022),
-                              shade.fill="lightgrey",
-                              shade.alpha=0.3) {
+plot_forage_index <- function(report="MidAtlantic") {
 
+  setup <- ecodata::plot_setup(report=report)
 
-  x.shade.min <- shadedRegion[1]
-  x.shade.max <- shadedRegion[2]
-
-  if (EPUs == "GB") {
-    filterEPUs <- c("GOM", "GB")
+  if (report == "MidAtlantic") {
+    filterEPUs <- c("MAB")
   } else {
-    filterEPUs <- EPUs
+    filterEPUs <- c("GB", "GOM")
   }
 
 
-  fix<- ecodata::forage_index %>%
+  fix<- ecodata::forage_index |>
     dplyr::filter(Var %in% c("Fall Forage Fish Biomass Estimate",
                              "Spring Forage Fish Biomass Estimate"),
-                  EPU %in% filterEPUs) %>%
-    dplyr::group_by(EPU) %>%
+                  EPU %in% filterEPUs) |>
+    dplyr::group_by(EPU) |>
     dplyr::summarise(max = max(Value))
 
-  p <- ecodata::forage_index %>%
+  p <- ecodata::forage_index |>
     dplyr::filter(Var %in% c("Fall Forage Fish Biomass Estimate",
                              "Fall Forage Fish Biomass Estimate SE",
                              "Spring Forage Fish Biomass Estimate",
                              "Spring Forage Fish Biomass Estimate SE"),
-                  EPU %in% filterEPUs) %>%
-    dplyr::group_by(EPU) %>%
-    tidyr::separate(Var, into = c("Season", "A", "B", "C", "D", "Var")) %>%
-    dplyr::mutate(Var = tidyr::replace_na(Var, "Mean")) %>% #,
-                  #max = as.numeric(Value)) %>%
-    tidyr::pivot_wider(names_from = Var, values_from = Value) %>%
-    dplyr::left_join(fix) %>%
+                  EPU %in% filterEPUs) |>
+    dplyr::group_by(EPU) |>
+    tidyr::separate(Var, into = c("Season", "A", "B", "C", "D", "Var")) |>
+    dplyr::mutate(Var = tidyr::replace_na(Var, "Mean")) |> #,
+                  #max = as.numeric(Value)) |>
+    tidyr::pivot_wider(names_from = Var, values_from = Value) |>
+    dplyr::left_join(fix) |>
     dplyr::mutate(#Value = Value/resca,
       Mean = as.numeric(Mean),
       #max = as.numeric(Value),
       Mean = Mean/max,
       SE = SE/max,
       Upper = Mean + SE,
-      Lower = Mean - SE) %>%
-    ggplot2::ggplot(aes(x = Time, y = Mean, group = Season))+
-    ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-        xmin = x.shade.min , xmax = x.shade.max,
+      Lower = Mean - SE) |>
+    ggplot2::ggplot(ggplot2::aes(x = Time, y = Mean, group = Season))+
+    ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
+        xmin = setup$x.shade.min , xmax = setup$x.shade.max,
         ymin = -Inf, ymax = Inf) +
-    ggplot2::geom_ribbon(aes(ymin = Lower, ymax = Upper, fill = Season), alpha = 0.5)+
+    ggplot2::geom_ribbon(ggplot2::aes(ymin = Lower, ymax = Upper, fill = Season), alpha = 0.5)+
     ggplot2::geom_point()+
     ggplot2::geom_line()+
     ggplot2::ggtitle("")+
@@ -71,7 +63,7 @@ plot_forage_index <- function(EPUs="MAB",
     ecodata::theme_facet()+
     ecodata::theme_title()
 
-    if (EPUs == "GB") {
+    if (report == "NewEngland") {
       p <- p +
         ggplot2::theme(legend.position = "bottom",
                        legend.title = element_blank())
@@ -80,22 +72,22 @@ plot_forage_index <- function(EPUs="MAB",
 
     return(p)
 
-  # ecodata::forage_index %>%
+  # ecodata::forage_index |>
   #   dplyr::filter(Var %in% c("Fall Forage Fish Biomass Estimate",
   #                            "Fall Forage Fish Biomass Estimate SE",
   #                            "Spring Forage Fish Biomass Estimate",
   #                            "Spring Forage Fish Biomass Estimate SE"),
-  #                 EPU == "MAB") %>%
-  #   tidyr::separate(Var, into = c("Season", "A", "B", "C", "D", "Var")) %>%
+  #                 EPU == "MAB") |>
+  #   tidyr::separate(Var, into = c("Season", "A", "B", "C", "D", "Var")) |>
   #   dplyr::mutate(Var = replace_na(Var, "Mean"),
-  #                 max = as.numeric(resca)) %>%
-  #   tidyr::pivot_wider(names_from = Var, values_from = Value) %>%
+  #                 max = as.numeric(resca)) |>
+  #   tidyr::pivot_wider(names_from = Var, values_from = Value) |>
   #   dplyr::mutate(#Value = Value/resca,
   #     Mean = as.numeric(Mean),
   #     Mean = Mean/max,
   #     SE = SE/max,
   #     Upper = Mean + SE,
-  #     Lower = Mean - SE) %>%
+  #     Lower = Mean - SE) |>
   #   ggplot2::ggplot(aes(x = Time, y = Mean, group = Season))+
   #   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
   #                     xmin = x.shade.min , xmax = x.shade.max,

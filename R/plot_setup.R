@@ -15,52 +15,50 @@
 plot_setup <- function(shadedRegion=c(2014,2023),
                        report = report){
 
-  plotsettings <- list(
+  plotsettings <- list()
 
     # from GIS-setup files (identical between reports)
     #CRS
-    crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0",
+    crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 
     #EPU shapefile
-    epu_sf <- ecodata::epu_sf %>%
-      filter(EPU %in% c("MAB","GB","GOM")),
+    epu_sf <- ecodata::epu_sf |>
+      dplyr::filter(EPU %in% c("MAB","GB","GOM"))
 
     #Map line parameters
-    map.lwd <- 0.4,
+    map.lwd <- 0.4
 
     # Set lat/lon window for maps
-    xmin = -77,
-    xmax = -65,
-    ymin = 36,
-    ymax = 45,
-    xlims <- c(xmin, xmax),
-    ylims <- c(ymin, ymax),
+    xmin = -77
+    xmax = -65
+    ymin = 36
+    ymax = 45
 
     #Time series constants
-    shade.alpha <- 0.3,
-    shade.fill <- "lightgrey",
-    lwd <- 1,
-    pcex <- 2,
-    trend.alpha <- 0.5,
-    trend.size <- 2,
-    hline.size <- 1,
-    hline.alpha <- 0.35,
-    hline.lty <- "dashed",
-    label.size <- 5,
-    hjust.label <- 1.5,
-    letter_size <- 4,
-    feeding.guilds1<- c("Piscivore","Planktivore","Benthivore","Benthos"),
-    feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos"),
-    x.shade.min <- shadedRegion[1],
-    x.shade.max <- shadedRegion[2],
+    shade.alpha <- 0.3
+    shade.fill <- "lightgrey"
+    lwd <- 1
+    pcex <- 2
+    trend.alpha <- 0.5
+    trend.size <- 2
+    hline.size <- 1
+    hline.alpha <- 0.35
+    hline.lty <- "dashed"
+    label.size <- 5
+    hjust.label <- 1.5
+    letter_size <- 4
+    feeding.guilds1<- c("Piscivore","Planktivore","Benthivore","Benthos")
+    feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
+    x.shade.min <- shadedRegion[1]
+    x.shade.max <- shadedRegion[2]
 
     #Define constants for figure plot
-    series.col <- c("indianred","black"),
+    series.col <- c("indianred","black")
 
     #Function for custom ggplot facet labels
     label <- function(variable,value){
       return(facet_names[value])
-    },
+    }
 
     # from human dimensions setup files, region specific
     # specify report as argument when calling individual plot functions
@@ -95,7 +93,42 @@ plot_setup <- function(shadedRegion=c(2014,2023),
 
     #GIS directory
     gis.dir <- here::here("data-raw","gridded")
-  )
+
+    plotsettings <- list(crs = crs,
+                         epu_sf = epu_sf,
+                         map.lwd = map.lwd,
+                         xmin = xmin,
+                         xmax = xmax,
+                         ymin = ymin,
+                         ymax = ymax,
+                         xlims = c(xmin, xmax),
+                         ylims = c(ymin, ymax),
+                         shade.alpha = shade.alpha,
+                         shade.fill =shade.fill,
+                         lwd = lwd,
+                         pcex = pcex,
+                         trend.alpha = trend.alpha,
+                         trend.size = trend.size,
+                         hline.size = hline.size,
+                         hline.alpha = hline.alpha,
+                         hline.lty = hline.lty,
+                         label.size = label.size,
+                         hjust.label = hjust.label,
+                         letter_size = letter_size,
+                         feeding.guilds1 = feeding.guilds1,
+                         feeding.guilds = feeding.guilds,
+                         x.shade.min = x.shade.min,
+                         x.shade.max = x.shade.max,
+                         series.col = series.col,
+                         label = label,
+                         council = council,
+                         council_abbr = council_abbr,
+                         epu = epu,
+                         epu_abbr = epu_abbr,
+                         region = region,
+                         region_abbr = region_abbr,
+                         gis.dir = gis.dir
+                         )
 
   return(plotsettings)
 
