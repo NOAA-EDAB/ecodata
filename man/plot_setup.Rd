@@ -7,13 +7,9 @@
 plot_setup(shadedRegion = c(2014, 2023), report = report)
 }
 \arguments{
-\item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot}
+\item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
-\item{EPUs}{Character string. Which SOE report ("GB","MAB")}
-
-\item{shade.fill}{Character string. Color of shaded region. (Default = "lightgrey)}
-
-\item{shade.alpha}{Numeric scalar. Alpha of shaded region (Default = 0.5)}
+\item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland"), passed from plot function}
 }
 \value{
 list of settings

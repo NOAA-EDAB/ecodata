@@ -2,10 +2,8 @@
 #'
 #' Single function setting up plot defaults for SOE, catalog, presentations, and other products
 #'
-#' @param EPUs Character string. Which SOE report ("GB","MAB")
-#' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot
-#' @param shade.fill Character string. Color of shaded region. (Default = "lightgrey)
-#' @param shade.alpha Numeric scalar. Alpha of shaded region (Default = 0.5)
+#' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
+#' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland"), passed from plot function
 #'
 #' @return list of settings
 #'
