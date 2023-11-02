@@ -2,7 +2,7 @@
 #'
 #' Single function setting up plot defaults for SOE, catalog, presentations, and other products
 #'
-#' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
+#' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10), passed from plot function
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland"), passed from plot function
 #'
 #' @return list of settings
@@ -10,7 +10,7 @@
 #'
 #' @export
 #'
-plot_setup <- function(shadedRegion=c(2014,2023),
+plot_setup <- function(shadedRegion=shadedRegion,
                        report = report){
 
   library(sf) # now needed in function for filter to work on sf object? https://github.com/r-spatial/sf/issues/1381

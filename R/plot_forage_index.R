@@ -2,6 +2,7 @@
 #'
 #' Description should be here. This needs to be reworked to uncouple GB and GOM
 #'
+#' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #'
 #' @return ggplot object
@@ -10,9 +11,11 @@
 #' @export
 #'
 
-plot_forage_index <- function(report="MidAtlantic") {
+plot_forage_index <- function(shadedRegion = shadedRegion,
+                              report="MidAtlantic") {
 
-  setup <- ecodata::plot_setup(report=report)
+  setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
+                               report=report)
 
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
