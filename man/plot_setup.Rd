@@ -4,10 +4,10 @@
 \alias{plot_setup}
 \title{Setup all plot defaults}
 \usage{
-plot_setup(shadedRegion = c(2014, 2023), report = report)
+plot_setup(shadedRegion = shadedRegion, report = report)
 }
 \arguments{
-\item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
+\item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10), passed from plot function}
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland"), passed from plot function}
 }

@@ -4,9 +4,11 @@
 \alias{plot_forage_index}
 \title{plot forage index}
 \usage{
-plot_forage_index(report = "MidAtlantic")
+plot_forage_index(shadedRegion = shadedRegion, report = "MidAtlantic")
 }
 \arguments{
+\item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
+
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 }
 \value{
