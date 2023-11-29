@@ -1,16 +1,16 @@
 ## Forage Index
 raw.dir<- here::here("data-raw/")
-ann<- "annualforageindex - Sarah Gaichas - NOAA Federal.rds"
+#ann<- "annualforageindex - Sarah Gaichas - NOAA Federal.rds"
 fal<- "fallforageindex - Sarah Gaichas - NOAA Federal.rds"
 spr<- "springforageindex - Sarah Gaichas - NOAA Federal.rds"
 
 get_forage_index <- function(save_clean = F){
 
-  annual<-readRDS(file.path(raw.dir, ann))
+  #annual<-readRDS(file.path(raw.dir, ann))
   fall<- readRDS(file.path(raw.dir, fal))
   spring<-readRDS(file.path(raw.dir, spr))
 
-  forage_index<- annual %>% rbind(fall, spring)
+  forage_index<- rbind(fall, spring)
 
 
   if (save_clean){
