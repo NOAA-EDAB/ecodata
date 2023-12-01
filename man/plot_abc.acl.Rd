@@ -15,5 +15,5 @@ plot_abc.acl(shadedRegion = shadedRegion, report = "MidAtlantic")
 ggplot object
 }
 \description{
-Plots realized catch versus quota by fishery
+Plots stacked bar of quotas by fishery
 }
