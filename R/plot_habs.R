@@ -1,6 +1,6 @@
 #' plot harmful algal bloom
 #'
-#' Plots alexandrium counts, PSP
+#' Plots Alexandrium counts or PSP
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
