@@ -43,6 +43,7 @@ plot_setup <- function(shadedRegion=shadedRegion,
     trend.alpha <- 0.5
     trend.size <- 2
     hline.size <- 1
+    line.size <- 2
     hline.alpha <- 0.35
     hline.lty <- "dashed"
     label.size <- 5
@@ -110,6 +111,7 @@ plot_setup <- function(shadedRegion=shadedRegion,
                          pcex = pcex,
                          trend.alpha = trend.alpha,
                          trend.size = trend.size,
+                         line.size = line.size,
                          hline.size = hline.size,
                          hline.alpha = hline.alpha,
                          hline.lty = hline.lty,
