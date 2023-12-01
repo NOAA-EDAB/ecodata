@@ -22,7 +22,8 @@ Imports:
   rpart,
   scales,
   sf,
-  stringr
+  stringr,
+  kableExtra
 Suggests:
     knitr,
     rmarkdown,
