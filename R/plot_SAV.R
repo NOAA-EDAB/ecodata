@@ -1,6 +1,6 @@
-#' plot <dataset name>
+#' plot SAV
 #'
-#' <Insert description of plot function.>
+#' Plots Mid-Atlantic Submerged Aquatic Vegetation SAV time series
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")

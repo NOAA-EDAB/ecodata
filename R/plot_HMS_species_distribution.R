@@ -1,6 +1,6 @@
-#' plot <dataset name>
+#' plot HMS species distribution
 #'
-#' <Insert description of plot function.>
+#' Plots distribution shifts for marine mammals
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
