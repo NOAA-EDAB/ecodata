@@ -58,6 +58,7 @@ plot_habs <- function(shadedRegion = shadedRegion,
      ggplot2::ylab(plotylab)+
      ggplot2::xlab(ggplot2::element_blank())+
      ggplot2::ggtitle(plotTitle)+
+     ecodata::geom_gls()+
      ecodata::theme_facet()
 
 
