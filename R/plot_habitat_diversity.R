@@ -13,7 +13,7 @@
 #'
 
 plot_habitat_diversity <- function(shadedRegion = shadedRegion,
-                              report="MidAtlantic",Var = "Diversity") {
+                              report="MidAtlantic",varName = "Diversity") {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -30,10 +30,10 @@ plot_habitat_diversity <- function(shadedRegion = shadedRegion,
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
-  if (Var == "Diversity") {
-    varName <- "Shannon"
+  if (varName == "Diversity") {
+    varNames <- "Shannon"
     fix<- ecodata::habitat_diversity |>
-      dplyr::filter(Var == varName,
+      dplyr::filter(Var == varNames,
                     EPU %in% filterEPUs) |>
       dplyr::group_by(EPU) |>
       dplyr::mutate(mean = as.numeric(Value),
@@ -46,7 +46,7 @@ plot_habitat_diversity <- function(shadedRegion = shadedRegion,
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
   #
   p <- ecodata::habitat_diversity |>
-    dplyr::filter(grepl(varName,Var)) |>
+    dplyr::filter(grepl(varNames,Var)) |>
     dplyr::group_by(EPU) |>
     dplyr::mutate(mean = as.numeric(Value),
                   Time = as.numeric(Time),
@@ -69,9 +69,9 @@ plot_habitat_diversity <- function(shadedRegion = shadedRegion,
     ecodata::theme_title()
 
   } else { # Richness
-    varName <- "Richness"
+    varNames <- "Richness"
     fix<- ecodata::habitat_diversity |>
-      dplyr::filter(grepl(varName,Var),
+      dplyr::filter(grepl(varNames,Var),
                     EPU %in% filterEPUs) |>
       tidyr::separate(Var, into = c("Var", "Richness"),sep = "-") |>
       tidyr::pivot_wider(values_from = "Value", names_from = "Var") |>
@@ -88,7 +88,7 @@ plot_habitat_diversity <- function(shadedRegion = shadedRegion,
     # xmin = setup$x.shade.min , xmax = setup$x.shade.max
     #
     p <- ecodata::habitat_diversity |>
-      dplyr::filter(grepl(varName,Var)) |>
+      dplyr::filter(grepl(varNames,Var)) |>
       tidyr::separate(Var, into = c("Var", "Richness"),sep = "-") |>
       tidyr::pivot_wider(values_from = "Value", names_from = "Var") |>
       dplyr::group_by(EPU) |>
