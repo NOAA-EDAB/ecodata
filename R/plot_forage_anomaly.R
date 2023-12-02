@@ -50,6 +50,7 @@ plot_forage_anomaly <- function(shadedRegion = shadedRegion,
     ggplot2::facet_wrap(~EPU)+
     ggplot2::xlab(ggplot2::element_blank())+
     ecodata::theme_ts()+
+    ecodata::geom_gls()+
     ecodata::theme_facet() +
     ecodata::theme_title()
 
