@@ -4,16 +4,23 @@
 \alias{plot_abc.acl}
 \title{plot abc.acl}
 \usage{
-plot_abc.acl(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_abc.acl(
+  shadedRegion = shadedRegion,
+  report = "MidAtlantic",
+  plottype = "Stacked"
+)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
+
+\item{plottype}{Character string. Which plot ("Stacked", "Catch")}
 }
 \value{
 ggplot object
 }
 \description{
-Plots stacked bar of quotas by fishery
+Plots either stacked bar of quotas/ABCs by fishery ("Stacked" plottype option)
+or point comparison of catch with quota/ABC by fishery ("Catch" plottype option)
 }
