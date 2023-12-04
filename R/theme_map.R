@@ -33,7 +33,7 @@
 #'   theme_map()
 
 theme_map <- function(...) {
-  theme(
+  ggplot2::theme(
     # axis.line = element_blank(),
     # axis.ticks = element_blank(),
     panel.grid.major = ggplot2::element_line(colour = "white"),

@@ -17,7 +17,7 @@
 #'   theme_ts()
 
 theme_ts <- function(...){
-  theme(
+  ggplot2::theme(
     panel.grid.major = ggplot2::element_blank(),
     panel.grid.minor = ggplot2::element_blank(),
     panel.background = ggplot2::element_blank(),

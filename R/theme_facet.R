@@ -16,13 +16,13 @@
 #'
 #'
 theme_facet <- function(...){
-  theme(
-    strip.background = element_blank(),
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    panel.background = element_blank(),
-    panel.border = element_rect(colour = "black", fill=NA, size=0.75),
-    legend.key = element_blank(),
-    axis.title = element_text(size = 10)
+  ggplot2::theme(
+    strip.background = ggplot2::element_blank(),
+    panel.grid.major = ggplot2::element_blank(),
+    panel.grid.minor = ggplot2::element_blank(),
+    panel.background = ggplot2::element_blank(),
+    panel.border = ggplot2::element_rect(colour = "black", fill=NA, size=0.75),
+    legend.key = ggplot2::element_blank(),
+    axis.title = ggplot2::element_text(size = 10)
   )
 }

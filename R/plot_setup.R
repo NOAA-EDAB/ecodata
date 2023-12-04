@@ -35,6 +35,11 @@ plot_setup <- function(shadedRegion=shadedRegion,
     ymin = 36
     ymax = 45
 
+    ################################################################
+    ### Different lat and lons used for bt seasonal anomalies ####
+    ### Need to think about that ##############################
+    ################################################################
+
     #Time series constants
     shade.alpha <- 0.3
     shade.fill <- "lightgrey"
