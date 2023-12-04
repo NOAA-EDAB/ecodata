@@ -4,7 +4,7 @@
 \alias{plot_bottom_temp}
 \title{plot bottom anomaly temperature time series using NEFSC survey data}
 \usage{
-plot_bottom_temp(shadedRegion = c(2012, 2022), report = "MidAtlantic")
+plot_bottom_temp(shadedRegion = shadedRegion, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
