@@ -1,6 +1,6 @@
-#' plot dataset name
+#' plot diversity of survey data
 #'
-#' Insert description of plot function.
+#' plots ecodata::survey_shannon
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
