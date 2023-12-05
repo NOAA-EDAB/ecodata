@@ -24,14 +24,11 @@ Imports:
   sf,
   stringr,
   kableExtra,
-  ggrepel
+  ggrepel,
+  plyr
 Suggests:
     knitr,
     rmarkdown,
-	dplyr,
-	stringr,
-	tidyr,
-	ggplot2,
 	lubridate,
 	tufte,
 	here,

@@ -42,7 +42,7 @@ plot_bennet <- function(shadedRegion = shadedRegion,
     dplyr::mutate(component = sum(Value)) |>
     dplyr::ungroup()
 
-  revchange <- ecodata::bennet %>%
+  revchange <- ecodata::bennet  |>
     dplyr::filter(EPU %in% filterEPUs,
                   #Var %in% c("Total Revenue Change - Bennet"),
                   !Time<1985)
