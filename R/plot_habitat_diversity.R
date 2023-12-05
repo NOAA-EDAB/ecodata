@@ -4,7 +4,7 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
-#' @param Var Character string. Which Variable to plot ("Diversity","Richness")
+#' @param varName Character string. Which Variable to plot ("Diversity","Richness")
 #'
 #' @return ggplot object
 #'

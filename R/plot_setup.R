@@ -10,7 +10,7 @@
 #'
 #' @export
 #'
-plot_setup <- function(shadedRegion=shadedRegion,
+plot_setup <- function(shadedRegion = shadedRegion,
                        report = report){
 
   #library(sf) # now needed in function for filter to work on sf object? https://github.com/r-spatial/sf/issues/1381
@@ -58,6 +58,10 @@ plot_setup <- function(shadedRegion=shadedRegion,
     feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
     x.shade.min <- shadedRegion[1]
     x.shade.max <- shadedRegion[2]
+
+    ## Additional parameters for 4 panel maps eg. plot_seasonal_sst_anomaly_gridded
+    ###################################################
+    ###################################################
 
     #Define constants for figure plot
     series.col <- c("indianred","black")
