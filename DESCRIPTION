@@ -23,7 +23,8 @@ Imports:
   scales,
   sf,
   stringr,
-  kableExtra
+  kableExtra,
+  ggrepel
 Suggests:
     knitr,
     rmarkdown,
