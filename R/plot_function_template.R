@@ -61,7 +61,7 @@ plot_function_template <- function(shadedRegion = shadedRegion,
     ggplot2::geom_line()+
     ggplot2::ggtitle("")+
     ggplot2::ylab(expression("Indicator (units)"))+
-    ggplot2::xlab(element_blank())+
+    ggplot2::xlab(ggplot2::element_blank())+
     ggplot2::facet_wrap(.~EPU)+
     ecodata::geom_gls()+
     ecodata::theme_ts()+
@@ -72,7 +72,7 @@ plot_function_template <- function(shadedRegion = shadedRegion,
     if (report == "NewEngland") {
       p <- p +
         ggplot2::theme(legend.position = "bottom",
-                       legend.title = element_blank())
+                       legend.title = ggplot2::element_blank())
 
     }
 
