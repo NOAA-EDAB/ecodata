@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_calanus_stage.R
 \name{plot_calanus_stage}
 \alias{plot_calanus_stage}
-\title{plot dataset name}
+\title{plot calanus_stage}
 \usage{
 plot_calanus_stage(shadedRegion = shadedRegion, report = "MidAtlantic")
 }
@@ -15,5 +15,5 @@ plot_calanus_stage(shadedRegion = shadedRegion, report = "MidAtlantic")
 ggplot object
 }
 \description{
-Insert description of plot function.
+Create bar plots of Calanus zooplankton stages over time
 }
