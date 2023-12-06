@@ -54,6 +54,7 @@ plot_setup <- function(shadedRegion = shadedRegion,
     label.size <- 5
     hjust.label <- 1.5
     letter_size <- 4
+    errorbar.width <- 0.25
     feeding.guilds1<- c("Piscivore","Planktivore","Benthivore","Benthos")
     feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
     x.shade.min <- shadedRegion[1]
@@ -124,6 +125,7 @@ plot_setup <- function(shadedRegion = shadedRegion,
                          hline.size = hline.size,
                          hline.alpha = hline.alpha,
                          hline.lty = hline.lty,
+                         errorbar.width = errorbar.width,
                          label.size = label.size,
                          hjust.label = hjust.label,
                          letter_size = letter_size,
