@@ -1,6 +1,6 @@
 #' plot probability of species occupancy in wind area
 #'
-#' plot wind_occupancy data. This is not region specific
+#' plot wind_occupancy data. This is not region specific?
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")

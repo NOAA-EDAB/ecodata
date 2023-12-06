@@ -15,5 +15,5 @@ plot_wind_occupancy(shadedRegion = shadedRegion, report = "MidAtlantic")
 kable object
 }
 \description{
-plot wind_occupancy data. This is not region specific
+plot wind_occupancy data. This is not region specific?
 }
