@@ -5,7 +5,7 @@
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #'
-#' @return kable object
+#' @return ggplot object
 #'
 #'
 #' @export

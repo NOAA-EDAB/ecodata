@@ -12,7 +12,7 @@ plot_wind_dev_speed(shadedRegion = shadedRegion, report = "MidAtlantic")
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 }
 \value{
-kable object
+ggplot object
 }
 \description{
 plot wind_dev_speed. This is shelf wide
