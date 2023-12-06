@@ -1,7 +1,9 @@
 ### HABs - New England
 
+raw.dir <- here::here("data-raw")
+
 habs1_csv<-
-  "Figure1_Gulf_of_Maine_Annual_Cyst_Abundance_Alexandrium_catenella - David Nelson - NOAA Federal.csv"
+  "Nelson_GOM_Alexandrium_cyst_abundance_long - David Nelson - NOAA Federal.csv"
 #psp_me_csv<- "Data_for_Figure3_PSP_BlueMussels_ME_2005-2019_cleaned - David Nelson - NOAA Federal.csv"
 psp_me_csv<- "Data_for_Figures4and5_annual_mussel_psp_samples_Maine_2005_2019 - David Nelson - NOAA Federal.csv"
 psp_nh_csv <- "Data_for_Figure7and8_Annual_Mytilis_PSP_samples_NH_2000_2019 - David Nelson - NOAA Federal.csv"
@@ -13,9 +15,9 @@ get_habs <- function(save_clean = F){
   dat <- read.csv(file.path(raw.dir,habs1_csv), header=TRUE, stringsAsFactors=FALSE)
 
   habs1 <- dat %>%
-    pivot_longer(cols= c( "West_Gulf_of_Maine","East_Gulf_of_Maine",
-                          "Bay_of_Fundy","Gulf_of_Maine_All" ),
-                 names_to = "Var", values_to = "Value") %>%
+    #pivot_longer(cols= c( "West_Gulf_of_Maine","East_Gulf_of_Maine",
+    #                      "Bay_of_Fundy","Gulf_of_Maine_All" ),
+    #             names_to = "Var", values_to = "Value") %>%
     mutate(EPU = c("GOM"),
            Source = c("Alexandrium")) %>%
     dplyr::rename(Time = Year)
@@ -70,5 +72,3 @@ get_habs <- function(save_clean = F){
   }
 }
 get_habs(save_clean = T)
-
-
