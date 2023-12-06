@@ -25,7 +25,8 @@ Imports:
   stringr,
   kableExtra,
   ggrepel,
-  plyr
+  plyr,
+  vegan
 Suggests:
     knitr,
     rmarkdown,
