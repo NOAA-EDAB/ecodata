@@ -15,7 +15,7 @@ plot_recdat(
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
-\item{varName}{Character string. Variable to plot ("landings","diversity","effort")}
+\item{varName}{Character string. Variable to plot ("landings","effortdiversity","catchdiversity","effort")}
 }
 \value{
 ggplot object
