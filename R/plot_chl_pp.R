@@ -142,7 +142,7 @@ plot_chl_pp <- function(shadedRegion = shadedRegion,
                ymin = -Inf, ymax = Inf) +
       ggplot2::geom_line() +
       ggplot2::geom_point() +
-      ggplot2::guides(color = F) +
+      ggplot2::guides(color = "none") +
       ggplot2::ylab("Anomaly ratio") +
       ggplot2::xlab(ggplot2::element_blank())+
       ggplot2::facet_wrap(EPU~.,ncol = 2)+
@@ -177,7 +177,7 @@ plot_chl_pp <- function(shadedRegion = shadedRegion,
       # ggplot2::geom_line(data = ne_pp_late,aes(x = Time, y = Value),
       #           size = 1,color = "#33a02c", linetype = "dashed") +
       ggplot2::ggtitle(paste(varabbr, titleyear)) +
-      ggplot2::guides(color = F) +
+      ggplot2::guides(color = "none") +
       ggplot2::facet_wrap(EPU~., ncol = 2)+
       ggplot2::xlab("")+
       ggplot2::ylab(varunits) +
