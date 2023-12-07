@@ -60,7 +60,7 @@ plot_zoo_regime <- function(shadedRegion = shadedRegion,
                  expression(italic("Pseudocalanus spp."))))+
     ggplot2::theme(legend.position = "bottom",
                    legend.title = ggplot2::element_blank())+
-    ecodata::geom_gls()+
+    #ecodata::geom_gls()+
     ecodata::theme_ts()+
     ecodata::theme_facet()+
     ecodata::theme_title()
