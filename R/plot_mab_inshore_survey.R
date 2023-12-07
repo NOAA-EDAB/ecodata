@@ -1,6 +1,6 @@
-#' plot massachusetts inshore data
+#' plot mid atlantic inshore survey
 #'
-#' Plots mass_inshore_survey
+#' Plot mab_inshore_survey.
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_mass_inshore_survey <- function(shadedRegion = shadedRegion,
+plot_mab_inshore_survey <- function(shadedRegion = shadedRegion,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)
@@ -21,18 +21,17 @@ plot_mass_inshore_survey <- function(shadedRegion = shadedRegion,
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
-    stop("Indicator for 'NewEngland' report only")
   } else {
+    stop("Indicator for 'MidAtlantic' report only")
     filterEPUs <- c("GB", "GOM")
   }
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
-   fix <- ecodata::mass_inshore_survey |>
+   fix <- ecodata::mab_inshore_survey |>
      dplyr::filter(EPU %in% filterEPUs,
-                   grepl("Index",Var),
-                   !grepl("Other",Var)) |>
-     tidyr::separate(Var,into = c("Var","Trash"),sep =" Biomass") |>
+                   grepl("Value",Var)) |>
+     tidyr::separate(Var,into = c("Var","Trash"),sep ="-") |>
      dplyr::select(-Trash) |>
      dplyr::mutate(Var = as.factor(Var))
    fix$Var <- factor(fix$Var,levels =  c("Piscivore Spring","Piscivore Fall",
@@ -69,7 +68,7 @@ plot_mass_inshore_survey <- function(shadedRegion = shadedRegion,
     ggplot2::geom_line()+
     ggplot2::geom_point(data = df2,ggplot2::aes(x=Time,y=max),alpha = 0)+
 
-    ggplot2::ggtitle("Massachusetts inshore BTS")+
+    ggplot2::ggtitle("NEAMAP inshore BTS")+
     ggplot2::ylab(expression("Biomass (kg row"^-1*")"))+
     ggplot2::xlab(ggplot2::element_blank())+
     ggplot2::facet_wrap(~Var,ncol=2,scales = "free_y")+
