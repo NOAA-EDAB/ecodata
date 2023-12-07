@@ -1,6 +1,6 @@
-#' plot mid atlantic inshore survey
+#' plot ME/NH inshore bottom trawl survey
 #'
-#' Plot mab_inshore_survey.
+#' Plot ne_inshore_survey.
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_mab_inshore_survey <- function(shadedRegion = shadedRegion,
+plot_ne_inshore_survey <- function(shadedRegion = shadedRegion,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)
@@ -21,22 +21,20 @@ plot_mab_inshore_survey <- function(shadedRegion = shadedRegion,
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
+    stop("Indicator for 'NewEngland' report only")
   } else {
-    stop("Indicator for 'MidAtlantic' report only")
-    filterEPUs <- c("GB", "GOM")
+    filterEPUs <- c("NE")
   }
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
-   fix <- ecodata::mab_inshore_survey |>
+   fix <- ecodata::ne_inshore_survey |>
      dplyr::filter(EPU %in% filterEPUs,
-                   grepl("Value",Var)) |>
-     tidyr::separate(Var,into = c("Var","Trash"),sep ="-") |>
-     dplyr::select(-Trash) |>
+                   !grepl("Other",Var),
+                   !grepl("Apex",Var)) |>
      dplyr::mutate(Var = as.factor(Var)) |>
      dplyr::group_by(Var) |>
      dplyr::mutate(hline = mean(Value))
-
    fix$Var <- factor(fix$Var,levels =  c("Piscivore Spring","Piscivore Fall",
                                          "Benthivore Spring","Benthivore Fall",
                                          "Planktivore Spring","Planktivore Fall",
@@ -71,11 +69,11 @@ plot_mab_inshore_survey <- function(shadedRegion = shadedRegion,
     ggplot2::geom_line()+
     ggplot2::geom_point(data = df2,ggplot2::aes(x=Time,y=max),alpha = 0)+
     ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
-                                     group = Var),
+                            group = Var),
                         linewidth = setup$hline.size,
                         alpha = setup$hline.alpha,
                         linetype = setup$hline.lty)+
-    ggplot2::ggtitle("NEAMAP inshore BTS")+
+    ggplot2::ggtitle("ME/NH inshore BTS")+
     ggplot2::ylab(expression("Biomass (kg tow"^-1*")"))+
     ggplot2::xlab(ggplot2::element_blank())+
     ggplot2::facet_wrap(~Var,ncol=2,scales = "free_y")+
