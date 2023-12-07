@@ -34,7 +34,10 @@ plot_mass_inshore_survey <- function(shadedRegion = shadedRegion,
                    !grepl("Other",Var)) |>
      tidyr::separate(Var,into = c("Var","Trash"),sep =" Biomass") |>
      dplyr::select(-Trash) |>
-     dplyr::mutate(Var = as.factor(Var))
+     dplyr::mutate(Var = as.factor(Var))  |>
+     dplyr::group_by(Var) |>
+     dplyr::mutate(hline = mean(Value))
+
    fix$Var <- factor(fix$Var,levels =  c("Piscivore Spring","Piscivore Fall",
                                          "Benthivore Spring","Benthivore Fall",
                                          "Planktivore Spring","Planktivore Fall",
@@ -68,9 +71,13 @@ plot_mass_inshore_survey <- function(shadedRegion = shadedRegion,
     ggplot2::geom_point()+
     ggplot2::geom_line()+
     ggplot2::geom_point(data = df2,ggplot2::aes(x=Time,y=max),alpha = 0)+
-
+    ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
+                                     group = Var),
+                        linewidth = setup$hline.size,
+                        alpha = setup$hline.alpha,
+                        linetype = setup$hline.lty)+
     ggplot2::ggtitle("Massachusetts inshore BTS")+
-    ggplot2::ylab(expression("Biomass (kg row"^-1*")"))+
+    ggplot2::ylab(expression("Biomass (kg tow"^-1*")"))+
     ggplot2::xlab(ggplot2::element_blank())+
     ggplot2::facet_wrap(~Var,ncol=2,scales = "free_y")+
     ecodata::geom_gls()+
