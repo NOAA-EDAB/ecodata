@@ -8,7 +8,8 @@ plot_comdat(
   shadedRegion = shadedRegion,
   report = "MidAtlantic",
   varName = "landings",
-  plottype = "total"
+  plottype = "total",
+  NAFOyear = 2019
 )
 }
 \arguments{
@@ -19,6 +20,9 @@ plot_comdat(
 \item{varName}{Character string. Which Variable to plot ("landings", "revenue")}
 
 \item{plottype}{Character string. Which plot ("total", "guild")}
+
+\item{NAFOyear}{Numeric value. Year that NAFO landings are separated.
+Defaults to 2019, as NAFO data was missing 2019-2021 in 2022.}
 }
 \value{
 ggplot object
