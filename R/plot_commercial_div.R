@@ -42,6 +42,8 @@ plot_commercial_div <- function(shadedRegion = shadedRegion,
   if(varName=="Fleet count"){
     ylim_fc <- c(min(comm_div[comm_div$Var == "Fleet count",]$Value, na.rm = TRUE) - 10,
                  max(comm_div[comm_div$Var == "Fleet count",]$Value, na.rm = TRUE) + 10 )
+  }else if(varName=="Fleet diversity in revenue"){
+    ylim_fc <- c(0, max(comm_div[comm_div$Var == "Fleet diversity in revenue",]$Value) + 3 )
   }else{
     ylim_fc <- c(NA, NA)
   }
