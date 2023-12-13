@@ -4,17 +4,23 @@
 \alias{plot_hms_landings}
 \title{plot hms_landings}
 \usage{
-plot_hms_landings(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_hms_landings(
+  shadedRegion = shadedRegion,
+  report = "MidAtlantic",
+  varName = "Landings"
+)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
-\item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland").
-HMS landings are by Mid Atlantic or New England, not EPU}
+\item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland").}
+
+\item{varName}{Character string. Which Variable to plot ("Landings", "Revenue")
+HMS landings/revenue are by Mid Atlantic or New England, not EPU}
 }
 \value{
 ggplot object
 }
 \description{
-Plot time series of Highly Migratory Species (HMS) commercial landings.
+Plot time series of Highly Migratory Species (HMS) commercial landings or revenue.
 }

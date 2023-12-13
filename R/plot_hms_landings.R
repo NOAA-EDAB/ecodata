@@ -1,10 +1,11 @@
 #' plot hms_landings
 #'
-#' Plot time series of Highly Migratory Species (HMS) commercial landings.
+#' Plot time series of Highly Migratory Species (HMS) commercial landings or revenue.
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland").
-#' HMS landings are by Mid Atlantic or New England, not EPU
+#' @param varName Character string. Which Variable to plot ("Landings", "Revenue")
+#' HMS landings/revenue are by Mid Atlantic or New England, not EPU
 #'
 #' @return ggplot object
 #'
@@ -13,7 +14,8 @@
 #'
 
 plot_hms_landings <- function(shadedRegion = shadedRegion,
-                              report="MidAtlantic") {
+                              report="MidAtlantic",
+                              varName="Landings") {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -28,12 +30,19 @@ plot_hms_landings <- function(shadedRegion = shadedRegion,
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
+
   apex<-ecodata::hms_landings |>
-    dplyr::filter(stringr::str_detect(Var, "Landings")) |>
+    dplyr::filter(stringr::str_detect(Var, varName)) |>
     tidyr::separate(Var, c("Var", "trash"), sep = "_") |>
     dplyr::filter(EPU %in% filterEPUs) |>
     dplyr::group_by(Var) |>
-    dplyr::mutate(hline = mean(Value))
+    dplyr::mutate(Value = ifelse(stringr::str_detect(Var, varName),
+                                 Value/1000000,
+                                 Value),
+                  hline = mean(Value))
+
+  ylabdat <- ifelse(varName == "Revenue", expression("Revenue (10"^6*"USD)"),
+                    expression("Landings (metric tons)"))
 
 
   # code for generating plot object p
@@ -56,9 +65,9 @@ plot_hms_landings <- function(shadedRegion = shadedRegion,
                    legend.position = "bottom",
                    legend.direction = "horizontal",
                    legend.title = ggplot2::element_blank())+
-    ggplot2::ylab(expression("Landings (metric tons)")) +
+    ggplot2::ylab(ylabdat) +
     ggplot2::xlab("Time")+
-    ggplot2::ggtitle(paste("HMS", setup$region, "Commercial Landings"))+
+    ggplot2::ggtitle(paste("HMS", setup$region, "Commercial", varName))+
     ecodata::theme_title()
 
    # # optional code for New England specific (2 panel) formatting
