@@ -9,7 +9,7 @@ library(stringr)
 library(readxl)
 
 raw.dir <- here::here("data-raw")
-narw_csv <- "NARW_N_1990-2021.csv"
+narw_csv <- "NARW_N_1990-2022.csv"
 get_narw <- function(save_clean = F){
 
   narw<- read.csv(file.path(here::here(raw.dir,narw_csv))) %>%

@@ -1,10 +1,11 @@
 library(tidyverse)
+library(readxl)
 ### File delivered almost unusable to save time edits made in excel
 ## Orginal File "2021SOE_Forage_ED_summary_Table - Mark Wuenschel - NOAA Federal.csv"
 
 
 raw.dir <- here::here("data-raw")
-energy_density_xlsx<-"2023SOE_Forage_ED_summary_Table - Mark Wuenschel - NOAA Federal.xlsx"
+energy_density_xlsx<-"2024SOE_Forage_ED_summary_Table - Mark Wuenschel - NOAA Federal.xlsx"
 get_forage_energy_density <- function(save_clean = F){
 
   energy_density <-

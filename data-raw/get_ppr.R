@@ -5,11 +5,11 @@ library(tidyr)
 library(stringr)
 
 raw.dir <- here::here("data-raw")
-ppr_rds<-"PPR_2022.rds"
+ppr_rds<-"PPR_2023 - Andrew Beet - NOAA Affiliate.rds"
 get_ppr <- function(save_clean = F){
 
   ppr<-readRDS(file.path(raw.dir, ppr_rds)) %>%
-    dplyr::rename(Time  = Year)%>%
+    #dplyr::rename(Time  = Year)%>%
     dplyr::select(Time, Var, Value, EPU, Units)
 
   # metadata ----
@@ -32,4 +32,3 @@ get_ppr <- function(save_clean = F){
   }
 }
 get_ppr(save_clean = T)
-
