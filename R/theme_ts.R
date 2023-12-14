@@ -6,10 +6,10 @@
 #' m <- 0.1
 #' x <- 1:30
 #' y <-  m*x + rnorm(30, sd = 0.35)
-#' 
+#'
 #' data <- data.frame(x = x,
 #'                   y = y)
-#' 
+#'
 #' #Plot series with trend and SOE plot theme
 #' ggplot(data = data) +
 #'   geom_line(aes(x = x, y = y)) +
@@ -17,12 +17,12 @@
 #'   theme_ts()
 
 theme_ts <- function(...){
-  theme(
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    panel.background = element_blank(),
-    panel.border = element_rect(colour = "black", fill=NA, size=0.75),
-    legend.key = element_blank(),
-    axis.title = element_text(size = 10)
+  ggplot2::theme(
+    panel.grid.major = ggplot2::element_blank(),
+    panel.grid.minor = ggplot2::element_blank(),
+    panel.background = ggplot2::element_blank(),
+    panel.border = ggplot2::element_rect(colour = "black", fill=NA, size=0.75),
+    legend.key = ggplot2::element_blank(),
+    axis.title = ggplot2::element_text(size = 10)
   )
 }
