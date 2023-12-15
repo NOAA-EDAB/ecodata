@@ -46,7 +46,7 @@ plot_hms_stock_status <- function(shadedRegion = shadedRegion,
     dplyr::group_by(spp) |>
     dplyr::filter(!species_abr == "------",
                   !species_abr == "-----") |>
-    dplyr::mutate(score = case_when(
+    dplyr::mutate(score = dplyr::case_when(
       #(B.Bmsy <0.5) ~"a",
       #(B.Bmsy == 0.5) ~"a",
       #(B.Bmsy <1) ~"a",
