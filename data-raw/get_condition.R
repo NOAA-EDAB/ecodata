@@ -6,7 +6,7 @@ library(dplyr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-condition_csv <- "RelCond2022_Year - Laurel Smith - NOAA Federal.csv"
+condition_csv <- "RelCond2023_Year - Laurel Smith - NOAA Federal.csv"
 
 get_condition <- function(save_clean = F){
   dat <- read.csv(file.path(raw.dir,condition_csv))
