@@ -6,6 +6,7 @@
 <!-- badges: start -->
 
 [![gitleaks](https://github.com/NOAA-EDAB/ecodata/actions/workflows/secretScan.yml/badge.svg)](https://github.com/NOAA-EDAB/ecodata/actions/workflows/secretScan.yml)
+[![gh-pages](https://github.com/NOAA-EDAB/ecodata/actions/workflows/pkgdown.yml/badge.svg)](https://github.com/NOAA-EDAB/ecodata/actions/workflows/pkgdown.yml)
 <!-- badges: end -->
 
 ## Overview
