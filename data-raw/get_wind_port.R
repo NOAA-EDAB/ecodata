@@ -8,7 +8,7 @@ library(readr)
 raw.dir <- here::here("data-raw")
 
 #### Angela Silva
-wind_port_xlsx<-"EJ_wind_SoE2023_01132023.xlsx"
+wind_port_xlsx<-"EJwind_public - Angela Silva - NOAA Federal.xlsx"
 
 get_wind_port <- function(save_clean = F){
   df<- data.frame(State = c(" ME", " MA", " RI", " CT", " NY", " NJ", " MD", " VA", " NC"),
@@ -16,7 +16,7 @@ get_wind_port <- function(save_clean = F){
 
   # import data
   wind_port<-readxl::read_excel(file.path(raw.dir,wind_port_xlsx)) %>%
-    tidyr::separate(VTR_PORT_ST, into = c("City", "State"), sep = ",") %>%
+    tidyr::separate(VTR_PORT, into = c("City", "State"), sep = ",") %>%
     # dplyr::rename("perc_rev_max" ="perc_MAX",
     #               "perc_rev_min" ="perc_MIN",
     #               "City" = "VTR_PORT",

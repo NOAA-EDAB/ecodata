@@ -5,7 +5,7 @@
 \alias{hms_cpue}
 \title{Highly Migratory Species Catch per Unit Effort}
 \format{
-3480 rows and 4 columns.
+3600 rows and 4 columns.
 
 \itemize{
 \item EPU: Ecological Production Unit (EPU) where sampling occurred.

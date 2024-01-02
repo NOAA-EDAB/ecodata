@@ -1,6 +1,8 @@
 ### SAV
 library(readxl)
-SAV_xlsx<- "SAV_Table_for_SOE_Report - Laurel Smith - NOAA Federal.xlsx"
+
+raw.dir <- here::here("data-raw")
+SAV_xlsx<- "Wilcox - SAV Table for SOE Report - David Wilcox.xlsx"
 get_SAV <- function(save_clean = F){
 
   # Alexandrium

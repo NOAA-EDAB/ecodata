@@ -1,7 +1,8 @@
 Package: ecodata
 Title: Documentation of Ecosystem Indicator Reporting
 Version: 0.1.0
-Authors@R: c(person("Kimberly", "Bastille", email = "kimberly.bastille@noaa.gov", role = c("cre", "aut")),
+Authors@R: c(person("Brandon", "Beltz", email = "brandon.beltz@noaa.gov", role = c("cre", "aut")),
+             person("Kimberly", "Bastille", email = "kimberly.bastille@noaa.gov", role = "aut"),
               person("Sean", "Hardison", role = "aut"))
 Description: A data package for reporting on Northeast Continental Shelf ecosystem status and trends.
 License: file LICENSE
@@ -9,21 +10,35 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 Date: 2018-10-24
-Suggests: 
-    knitr,
-    rmarkdown,
-	dplyr,
-	stringr,
-	tidyr,
-	ggplot2,
-	lubridate,
-	tufte,
-	here,
-	usethis,
+Imports:
+  dplyr,
+  magrittr,
+  ggplot2,
+  tidyr,
+  AICcmodavg,
+  cowplot,
+  grid,
+  nlme,
+  rpart,
+  scales,
+  sf,
+  stringr,
+  kableExtra,
+  ggrepel,
+  plyr,
+  lubridate,
+  vegan
+Suggests:
+  knitr,
+  rmarkdown,
+  tufte,
+  here,
+  usethis,
 	AICcmodavg,
 	mgcv,
-	zoo
+	zoo,
+	rlang
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Depends: 
     R (>= 2.10)

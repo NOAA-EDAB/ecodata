@@ -4,11 +4,11 @@ library(tidyverse)
 
 
 raw.dir <- here::here("data-raw")
-hms_landings_xlsx<-"HMS Landings Data - Jennifer Cudney - NOAA Federal.xlsx"
+hms_landings_xlsx<-"HMS Landings Data - Jennifer Cudney - NOAA Federal 2024.xlsx"
 
 get_hms_landings <- function(save_clean = F){
 
-  hms_landings<- read_excel(file.path(raw.dir, hms_landings_xlsx))
+  hms_landings<- readxl::read_excel(file.path(raw.dir, hms_landings_xlsx))
 
   hms_landings<-hms_landings %>%
     dplyr::mutate(HMS_Groups = recode(HMS_Groups, "BAYS (Bigeye, Albacore, Yellowfin, Skipjack) tunas" = "BAYS")) %>%

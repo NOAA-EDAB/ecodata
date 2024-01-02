@@ -10,7 +10,7 @@ library(dplyr)
 
 raw.dir <- here::here("data-raw")
 
-comdat_RData<-"Commercial_data_pull_23 (7).RData"
+comdat_RData<-"Commercial_data_pull_24.RData"
 
 get_comdat <- function(save_clean = F){
 
@@ -20,7 +20,8 @@ get_comdat <- function(save_clean = F){
     dplyr::rename(EPU = Region) %>%
     dplyr::select(-Source)%>%
     tibble::as_tibble() %>%
-    dplyr::select(Time, Var, Value, EPU, Units)
+    dplyr::select(Time, Var, Value, EPU, Units) %>%
+    dplyr::arrange(Var, Time)
 
   # metadata ----
   attr(comdat, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/comdat.html"

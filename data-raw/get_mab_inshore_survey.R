@@ -6,7 +6,7 @@ library(stringr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-mab_inshore_survey_csv <- "NEAMAP_SOE INDICES_2022.csv"
+mab_inshore_survey_csv <- "NEAMAP_SOE INDICES_2023.csv"
 get_mab_inshore_survey <- function(save_clean = F){
 
   mab_inshore_survey <- read.csv(file.path(raw.dir,

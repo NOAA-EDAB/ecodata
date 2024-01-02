@@ -3,9 +3,9 @@
 \docType{data}
 \name{wcr}
 \alias{wcr}
-\title{Warm core rings spun off of gulf stream}
+\title{Warm core ring births}
 \format{
-Data set contains 42 rows and 5 columns
+Data set contains 43 rows and 5 columns
 
 \itemize{
 \item Time: Year.
@@ -19,7 +19,7 @@ Data set contains 42 rows and 5 columns
 wcr
 }
 \description{
-Data include timeseires of stomach fullness index for 22 species sampled in the NEFSC fall bottom trawl survey.
+Data include timeseries of warm core ring births on the Northeast U.S. Shelf.
 }
 \details{
 More information including processing and indicator derivation steps are available at

@@ -3,24 +3,28 @@
 \docType{data}
 \name{long_line_survey}
 \alias{long_line_survey}
-\title{Long-line Survey}
+\title{longline survey}
 \format{
-Data contain 96 rows and 8 columns.
+A data set containing 96 rows and 8 columns.
+
 \itemize{
-\item CRUISE: Cruise Identifyer.
-\item STATION: Station Identifyer.
-\item YEAR: Year.
-\item SEASON: Season.
-\item COMMON NAME: Species common name.
-\item DECDEG_BEGLAT_SET: Latitudal position.
-\item DECDEG_BEGLON_SET: Longitudal position.
-\item categ: Grouping category for plotting.
+\item {Cruise}{Latitude}
+\item {Station}{Longitude}
+\item {Year}{Value}
+\item {Common_name}{??}
+\item {Deceg_beglat_set}{???}
+\item {Deceg_beglon_set}{???}
+\item {categ}{???}
+
 }
 }
 \usage{
 long_line_survey
 }
 \description{
-Gulf of Maine long line survey data
+What is it?
+}
+\details{
+More information available at \url{link to techdoc}
 }
 \keyword{datasets}

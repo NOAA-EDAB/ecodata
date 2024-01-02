@@ -5,7 +5,7 @@
 \alias{wind_revenue}
 \title{Fisheries revenue from wind lease areas}
 \format{
-Data set contains 788 rows and 4 columns
+Data set contains 1026 rows and 4 columns
 
 \itemize{
 \item Time: Year.

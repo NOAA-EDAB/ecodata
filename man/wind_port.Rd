@@ -5,7 +5,7 @@
 \alias{wind_port}
 \title{Community Port Landings and Revenue from Wind Energy Areas (WEAs)}
 \format{
-Data set contains 330 rows and 5 columns
+Data set contains 312 rows and 5 columns
 
 \itemize{
 \item City: Fishing Community.

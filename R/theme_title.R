@@ -15,7 +15,7 @@
 #'
 #'
 theme_title <- function(...){
-  theme(
-    plot.title = element_text(size = 10)
+  ggplot2::theme(
+    plot.title = ggplot2::element_text(size = 10)
   )
 }

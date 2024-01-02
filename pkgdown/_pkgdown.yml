@@ -1,0 +1,134 @@
+url: https://noaa-edab.github.io/ecodata/
+
+
+navbar:
+ components:
+  articles:
+   text: Articles
+   menu:
+   - text: Ecodata maintenance
+     href: articles/ecodata_maintenance.html
+   - text: Landing page
+     href: articles/landing_page.html
+   - text: Data guidelines
+     href: articles/data_guidelines.html
+   - text: Using geom_gls
+     href: articles/geom_gls.html
+
+# this will copy workshop folder into root of gh-pages branch
+# acts like a hidden folder in that there are no links to it from pkgdown
+template:
+  assets: workshop
+
+
+reference:
+  - title: "Plotting and modeling functions"
+    desc: "main functions for running models and plotting its output"
+    contents:
+    - ecodata
+    - coast
+    - cold_pool_sf
+    - ches_bay_sf
+    - epu_sf
+    - geom_gls
+    - geom_lm
+    - geom_regime
+    - longlinesurvey_sf
+    - starts_with("plot_")
+    - StatLM
+    - theme_facet
+    - theme_map
+    - theme_title
+    - theme_ts
+    - trans_dates
+  - title: "Synthetic Indicators"
+    desc: "Data files containing synthetic indicators used in the State of the Ecosystem Reports"
+    contents:
+    - ppr
+    - wind_occupancy
+    - wind_port
+  - title: "Human Dimension Indicators"
+    desc: "Data files containing human-related indicators used in the State of the Ecosystem Reports"
+    contents:
+    - abc.acl
+    - aquaculture
+    - bennet
+    - comdat
+    - commercial_div
+    - engagement
+    - hms_landings
+    - hms_stock_status
+    - recdat
+    - rec_hms
+    - wea_landings_rev
+    - wind_dev_speed
+    - wind_revenue
+  - title: "Megafauna Indicators"
+    desc: "Data files containing megafauna indicators used in the State of the Ecosystem Reports"
+    contents:
+    - aggregate_biomass
+    - blue_runner
+    - condition
+    - energy_density
+    - exp_n
+    - forage_index
+    - grayseal
+    - harborporpoise
+    - hms_category
+    - hms_cpue
+    - hp_density
+    - long_line_survey
+    - lps_sharks
+    - mab_inshore_survey
+    - mass_inshore_survey
+    - narw
+    - ne_inshore_survey
+    - ne_inshore_survey_species
+    - observed_sharks
+    - productivity_anomaly
+    - sandlance
+    - seabird_mab
+    - seabird_ne
+    - seal_pups
+    - species_dist
+    - species_groupings
+    - stock_status
+    - stom_fullness
+    - survey_shannon
+  - title: "LTL/Hab/Env Indicators"
+    desc: "Data files containing Low Trophic Level, Habitat and Environmental indicators used in the State of the Ecosystem Reports"
+    contents:
+    - bottom_temp
+    - bottom_temp_comp
+    - bottom_temp_seasonal_gridded
+    - bottom_temp_glorys
+    - seasonal_bt_anomaly_gridded
+    - calanus_stage
+    - ches_bay_sst
+    - ch_bay_sal
+    - ch_bay_temp
+    - ches_bay_wq
+    - chl_pp
+    - cold_pool
+    - gsi
+    - forage_anomaly
+    - habitat_diversity
+    - habitat_occupancy
+    - habitat_vulnerability
+    - habs
+    - heatwave
+    - heatwave_year
+    - hudson_river_flow
+    - ichthyo_diversity
+    - long_term_sst
+    - phyto_size
+    - SAV
+    - seasonal_oisst_anom
+    - seasonal_sst_anomaly_gridded
+    - slopewater
+    - wcr
+    - zoo_diversity
+    - zoo_abundance_anom
+    - zoo_regime
+    - zoo_strat_abun
+

@@ -5,7 +5,7 @@
 \alias{productivity_anomaly}
 \title{Small fish per large fish biomass anomaly}
 \format{
-Data frame with 2346 rows and 5 columns.
+Data frame with 8241 rows and 5 columns.
 
 \itemize{
 \item Var: Common name of surveyed species. If data reflect the aggregated shelf-wide anomaly, then \code{NE LME} is included with the species name.
@@ -20,7 +20,7 @@ productivity_anomaly
 }
 \description{
 These data represent estimates of recruitment success for species sampled
-in the NEFSC Bottom Trawl Survey.
+in the NEFSC Bottom Trawl Survey and those calculated for stock assessments.
 }
 \details{
 Detailed information regarding the derivation of this indicator are present at

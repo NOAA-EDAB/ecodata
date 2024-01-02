@@ -5,7 +5,7 @@
 \alias{aquaculture}
 \title{Oyster aquaculture}
 \format{
-A data set containing 180 rows and 4 columns.
+A data set containing 192 rows and 4 columns.
 
 \itemize{
 \item Var: Category of oyster data, production (Pieces), Shellfish lease Acres (Area), Production/Area.

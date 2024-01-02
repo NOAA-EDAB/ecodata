@@ -5,7 +5,7 @@
 \alias{wind_dev_speed}
 \title{Wind energy development speed}
 \format{
-Data set contains 58 rows and 5 columns
+Data set contains 94 rows and 5 columns
 
 \itemize{
 \item Time: Year.

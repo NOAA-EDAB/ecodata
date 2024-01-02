@@ -18,7 +18,7 @@
 hms_category
 }
 \description{
-Data include landing weight and revenue from group HMS species.
+Data include Species codes and names from HMS species groups.
 }
 \details{
 More information available at

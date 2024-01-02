@@ -5,7 +5,7 @@
 \alias{comdat}
 \title{Aggregated commercial fisheries data}
 \format{
-These data include 25394 rows and 5 columns.
+These data include 25143 rows and 5 columns.
 
 \itemize{
 \item Var: Specifies feeding guild and data type (e.g. managed or unmanaged, revenue or landings). Variables including

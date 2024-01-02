@@ -1,7 +1,5 @@
 ---
 title: "Introduction to ecodata"
-author: "NOAA-EDAB"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to ecodata}
@@ -14,65 +12,33 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(ggplot2)
 ```
 
-[`ecodata`](https://github.com/NOAA-EDAB/ecodata) is an R package developed to hold and facilitate interaction with ecosystem indicators on the Northeast Conitnental Shelf. These indicators are applied to State of the Ecosystem (SOE) reports. These yearly reports are developed by the Ecosystem Dynamics and Assessment Branch at the Northeast Fisheries Science Center for distribution to the US Fisheries Management Councils(FMCs). 
+Each data set in the `ecodata` package is documented in the [reference](https://noaa-edab.github.io/reference/) section. Many of the data sets have a similar structure. They are in long format and `ggplot2` can be used to quickly view them.
 
-Visualizations of ecosystem indicators can be found at the links below.
+For figures as seen in the SOE reports please visit the [indicator catalog](https://noaa-edab.github.io/catalog/)
 
-- [Human Dimensions](https://noaa-edab.github.io/ecodata/human_dimensions)
-- [Macrofauna](https://noaa-edab.github.io/ecodata/macrofauna)
-- [Low trophic levels/environment](https://noaa-edab.github.io/ecodata/LTL)
+## Cold pool index data
 
-### Using this package
-
-Use the command remotes::install_github("noaa-edab/ecodata",build_vignettes=TRUE) to install the package.
-
-#### load required packages
-
-```{r, eval=TRUE, echo=TRUE, message=FALSE}
-library(ecodata)
+```{r, warning = F}
+ggplot(data = ecodata::cold_pool) +
+  geom_line(aes(x=Time,y=Value,color=as.factor(EPU))) +
+  facet_wrap(vars(Var),scales = "free_y")
 ```
 
-## Loading data sets
+## Acuaculture data
 
-1.  All derived data sets are available once the package has been loaded
-    into the environment. View available data sets using the syntax
-    `ecodata::...`
+```{r, warning = F}
+ggplot(data = ecodata::aquaculture) +
+  geom_line(aes(x=Time,y=Value,color=as.factor(Region))) +
+  facet_wrap(vars(Var),scales = "free_y")
+```
 
-<p align="center" width="645">
+## Zooplankton diversity index
 
-<img src="https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/ecodata1.gif">
-
-</p>
-
-## Using geom\_gls()
-
-Also included in this package is a “geom” extension of `ggplot2` for
-assessing trends in time series. This function fits four trend models to
-each series, uses AICc to select the best model fit, and then implements
-a likelihood-ratio test to determine if a trend is present. If a
-significant trend is present (*P* \< 0.05), then the trend line is
-plotted with the series. By default, a purple line color is assigned to
-negative trends and orange to positive trends. More detailed information
-about this method is available
-[here](https://noaa-edab.github.io/tech-doc/trend-analysis.html).
-
-`geom_gls()` follows the same rules as other `ggplot` stats/geoms. For
-example,
-
-    m <- 0.1
-    x <- 1:30
-    y <-  m*x + rnorm(30, sd = 0.35)
-    
-    data <- data.frame(x = x,
-                      y = y)
-    
-    #Plot series with trend 
-    ggplot2::ggplot(data = data,aes(x = x, y = y)) +
-      geom_line() +
-      geom_gls()
-
-produces
-
-<img src="https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/geom_gls.png" width="100%" />
+```{r, warning = F}
+ggplot(data = ecodata::zoo_diversity) +
+  geom_line(aes(x=Time,y=Value,color=as.factor(EPU))) +
+  facet_wrap(vars(Var),scales = "free_y")
+```
