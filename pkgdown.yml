@@ -1,0 +1,14 @@
+pandoc: 2.19.2
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  data_guidelines: data_guidelines.html
+  ecodata: ecodata.html
+  ecodata_maintenance: ecodata_maintenance.html
+  geom_gls: geom_gls.html
+  landing_page: landing_page.html
+last_built: 2024-01-02T17:09Z
+urls:
+  reference: https://noaa-edab.github.io/ecodata/reference
+  article: https://noaa-edab.github.io/ecodata/articles
+
