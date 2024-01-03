@@ -14,6 +14,18 @@ plot_setup <- function(shadedRegion = shadedRegion,
                        report = report){
 
   #library(sf) # now needed in function for filter to work on sf object? https://github.com/r-spatial/sf/issues/1381
+  # create a 10 year window based on current month
+  if(is.null(shadedRegion)) {
+    currentMonth <- lubridate::month(Sys.Date())
+    currentYear <- lubridate::year(Sys.Date())
+    if (currentMonth > 7) {
+      endShade <- currentYear - 1
+    } else {
+      endShade <- currentYear - 2
+    }
+    shadedRegion <- c(endShade-9,endShade)
+  }
+
 
   plotsettings <- list()
 
@@ -141,7 +153,8 @@ plot_setup <- function(shadedRegion = shadedRegion,
                          epu_abbr = epu_abbr,
                          region = region,
                          region_abbr = region_abbr,
-                         gis.dir = gis.dir
+                         gis.dir = gis.dir,
+                         shadedRegion = shadedRegion
                          )
 
   return(plotsettings)
