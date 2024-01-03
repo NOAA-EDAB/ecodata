@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_survey_shannon <- function(shadedRegion = shadedRegion,
+plot_survey_shannon <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

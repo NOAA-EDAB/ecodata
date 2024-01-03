@@ -4,11 +4,7 @@
 \alias{plot_aggregate_biomass}
 \title{plot aggregate_biomass}
 \usage{
-plot_aggregate_biomass(
-  shadedRegion = shadedRegion,
-  report = "MidAtlantic",
-  EPU = "GB"
-)
+plot_aggregate_biomass(shadedRegion = NULL, report = "MidAtlantic", EPU = "GB")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

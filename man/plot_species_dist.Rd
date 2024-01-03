@@ -5,7 +5,7 @@
 \title{plot species_dist}
 \usage{
 plot_species_dist(
-  shadedRegion = shadedRegion,
+  shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "along"
 )

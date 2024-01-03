@@ -4,7 +4,7 @@
 \alias{plot_wind_occupancy}
 \title{plot probability of species occupancy in wind area}
 \usage{
-plot_wind_occupancy(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_wind_occupancy(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

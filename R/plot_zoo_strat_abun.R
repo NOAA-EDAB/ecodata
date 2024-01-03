@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_zoo_strat_abun <- function(shadedRegion = shadedRegion,
+plot_zoo_strat_abun <- function(shadedRegion = NULL,
                               report="MidAtlantic",
                               epu = "MAB") {
 

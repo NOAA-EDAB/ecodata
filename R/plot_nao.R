@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_nao <- function(shadedRegion = shadedRegion,
+plot_nao <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

@@ -8,7 +8,7 @@
 #'
 #' @export
 
-plot_seasonal_bt_anomaly_gridded <- function(shadedRegion=c(2012,2022),
+plot_seasonal_bt_anomaly_gridded <- function(shadedRegion=NULL,
                                              report = "MidAtlantic") {
 
 

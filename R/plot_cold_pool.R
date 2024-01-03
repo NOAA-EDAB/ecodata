@@ -13,7 +13,7 @@
 #' @export
 #'
 
-plot_cold_pool <- function(shadedRegion = shadedRegion,
+plot_cold_pool <- function(shadedRegion = NULL,
                            report="MidAtlantic",
                            PSYyear=max(ecodata::cold_pool$Time)-1) {
 

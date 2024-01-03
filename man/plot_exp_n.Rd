@@ -4,11 +4,7 @@
 \alias{plot_exp_n}
 \title{plot exp_n}
 \usage{
-plot_exp_n(
-  shadedRegion = shadedRegion,
-  report = "MidAtlantic",
-  varName = "fall"
-)
+plot_exp_n(shadedRegion = NULL, report = "MidAtlantic", varName = "fall")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

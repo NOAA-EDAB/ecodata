@@ -5,7 +5,7 @@
 \title{plot habitat diversity}
 \usage{
 plot_habitat_diversity(
-  shadedRegion = shadedRegion,
+  shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "Diversity"
 )

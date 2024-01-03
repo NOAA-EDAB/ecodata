@@ -12,7 +12,7 @@
 #' @export
 #'
 
-plot_habitat_diversity <- function(shadedRegion = shadedRegion,
+plot_habitat_diversity <- function(shadedRegion = NULL,
                               report="MidAtlantic",varName = "Diversity") {
 
   # generate plot setup list (same for all plot functions)

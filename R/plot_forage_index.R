@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_forage_index <- function(shadedRegion = shadedRegion,
+plot_forage_index <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,

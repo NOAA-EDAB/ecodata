@@ -4,7 +4,7 @@
 \alias{plot_forage_index}
 \title{plot forage index}
 \usage{
-plot_forage_index(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_forage_index(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

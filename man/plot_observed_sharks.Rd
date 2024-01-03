@@ -4,7 +4,7 @@
 \alias{plot_observed_sharks}
 \title{plot NE observer program shark data}
 \usage{
-plot_observed_sharks(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_observed_sharks(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

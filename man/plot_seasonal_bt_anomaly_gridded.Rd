@@ -4,10 +4,7 @@
 \alias{plot_seasonal_bt_anomaly_gridded}
 \title{plot botttom temperature anomaly}
 \usage{
-plot_seasonal_bt_anomaly_gridded(
-  shadedRegion = c(2012, 2022),
-  report = "MidAtlantic"
-)
+plot_seasonal_bt_anomaly_gridded(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10), passed from plot function}

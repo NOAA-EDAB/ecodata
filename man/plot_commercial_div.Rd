@@ -5,7 +5,7 @@
 \title{plot commercial_div}
 \usage{
 plot_commercial_div(
-  shadedRegion = shadedRegion,
+  shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "Fleet count"
 )

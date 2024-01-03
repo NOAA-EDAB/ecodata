@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_HMS_species_distribution <- function(shadedRegion = shadedRegion,
+plot_HMS_species_distribution <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

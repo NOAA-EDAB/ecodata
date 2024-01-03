@@ -15,7 +15,7 @@
 #' @export
 #'
 
-plot_heatwave_year <- function(shadedRegion = shadedRegion,
+plot_heatwave_year <- function(shadedRegion = NULL,
                               report = "MidAtlantic",
                               varName = "Surface") {
 

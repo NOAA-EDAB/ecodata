@@ -12,7 +12,7 @@
 #' @export
 #'
 
-plot_species_dist <- function(shadedRegion = shadedRegion,
+plot_species_dist <- function(shadedRegion = NULL,
                               report="MidAtlantic",
                               varName = "along") {
 

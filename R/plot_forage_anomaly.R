@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_forage_anomaly <- function(shadedRegion = shadedRegion,
+plot_forage_anomaly <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_ch_bay_sal <- function(shadedRegion = shadedRegion,
+plot_ch_bay_sal <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

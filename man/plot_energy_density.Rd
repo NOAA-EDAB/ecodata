@@ -4,7 +4,7 @@
 \alias{plot_energy_density}
 \title{plot energy_density}
 \usage{
-plot_energy_density(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_energy_density(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

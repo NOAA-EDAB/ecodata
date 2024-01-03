@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_storminess <- function(shadedRegion = shadedRegion,
+plot_storminess <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

@@ -12,7 +12,7 @@
 #' @export
 #'
 
-plot_wea_landings_rev <- function(shadedRegion = shadedRegion,
+plot_wea_landings_rev <- function(shadedRegion = NULL,
                               report="MidAtlantic",
                               n = 10) {
 

@@ -4,11 +4,7 @@
 \alias{plot_zoo_strat_abun}
 \title{plot abundance of Euphasids and Cnids}
 \usage{
-plot_zoo_strat_abun(
-  shadedRegion = shadedRegion,
-  report = "MidAtlantic",
-  epu = "MAB"
-)
+plot_zoo_strat_abun(shadedRegion = NULL, report = "MidAtlantic", epu = "MAB")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

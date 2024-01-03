@@ -5,7 +5,7 @@
 \title{plot heatwave_year}
 \usage{
 plot_heatwave_year(
-  shadedRegion = shadedRegion,
+  shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "Surface"
 )

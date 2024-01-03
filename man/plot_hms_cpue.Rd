@@ -4,11 +4,7 @@
 \alias{plot_hms_cpue}
 \title{plot hms_cpue}
 \usage{
-plot_hms_cpue(
-  shadedRegion = shadedRegion,
-  report = "MidAtlantic",
-  varName = "shark"
-)
+plot_hms_cpue(shadedRegion = NULL, report = "MidAtlantic", varName = "shark")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

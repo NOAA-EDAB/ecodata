@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_seabird_mab <- function(shadedRegion = shadedRegion,
+plot_seabird_mab <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

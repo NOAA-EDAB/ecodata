@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_gsi <- function(shadedRegion = shadedRegion,
+plot_gsi <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

@@ -13,7 +13,7 @@
 #' @export
 #'
 
-plot_seabird_ne <- function(shadedRegion = shadedRegion,
+plot_seabird_ne <- function(shadedRegion = NULL,
                               report="NewEngland",
                               varName = "diversity") {
 
