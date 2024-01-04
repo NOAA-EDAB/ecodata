@@ -33,14 +33,14 @@ library(readxl)
 library(stringr)
 
 raw.dir <- here::here("data-raw")
-ne_inshore_survey_rda <- "MENH_TrawlSurvey_SOE_Data.RData"
-ne_inshore_survey_species_xlsx <- "MENH_TrawlSpeciesinSOE_2022.xlsx"
+ne_inshore_survey_rda <- "MENH_TrawlSurvey_SOE24_Data.RData"
+ne_inshore_survey_species_xlsx <- "MENH_TrawlSpeciesinSOE_2024.xlsx"
 
 get_ne_inshore_survey <- function(save_clean = F){
 
   load(file.path(raw.dir, ne_inshore_survey_rda))
   ne_inshore_survey <- Trawl.Strat4Indices %>%
-    dplyr::rename(Var = SOE.20,
+    dplyr::rename(Var = SOE.24,
                   Value = StratMean_Weight,
                   Time = Year) %>%
     dplyr::mutate(EPU = "NE",
@@ -72,7 +72,7 @@ get_ne_inshore_survey_species <- function(save_clean = F){
   ne_inshore_survey_species <- read_excel(file.path(raw.dir, ne_inshore_survey_species_xlsx)) %>%
     dplyr::mutate(Var = "Maine and NH inshore survey species") %>%
     dplyr::rename(Species = CommonName,
-           Group = SOE.20) %>%
+           Group = SOE.24) %>%
     dplyr::select(-ITISSPP, -COMNAME, -SVSPP, -SCINAME)
 
   # metadata ----
