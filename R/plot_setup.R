@@ -18,10 +18,10 @@ plot_setup <- function(shadedRegion = shadedRegion,
   if(is.null(shadedRegion)) {
     currentMonth <- lubridate::month(Sys.Date())
     currentYear <- lubridate::year(Sys.Date())
-    if (currentMonth > 7) {
-      endShade <- currentYear - 1
+    if (currentMonth > 4) {
+      endShade <- currentYear
     } else {
-      endShade <- currentYear - 2
+      endShade <- currentYear - 1
     }
     shadedRegion <- c(endShade-9,endShade)
   }
