@@ -54,12 +54,12 @@ plot_condition <- function(shadedRegion = NULL,
                                               "Good Condition"),
                                   include.lowest = TRUE))
 
-   sortNames <- fix %>%
-     dplyr::filter(Time <= 2014) %>%
-     dplyr::group_by(Var) %>%
-     dplyr::summarize(total = sum(scaleCond)) %>%
-     dplyr::arrange(total) %>%
-     dplyr::mutate(Species = factor(Var, levels = unique(Var))) %>%
+   sortNames <- fix  |>
+     dplyr::filter(Time <= 2014) |>
+     dplyr::group_by(Var) |>
+     dplyr::summarize(total = sum(scaleCond)) |>
+     dplyr::arrange(total) |>
+     dplyr::mutate(Species = factor(Var, levels = unique(Var))) |>
      dplyr::pull(Species)
 
    fix$Var <-   factor(fix$Var, levels = sortNames)
