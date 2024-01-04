@@ -14,7 +14,7 @@ get_condition <- function(save_clean = F){
   condition <- dat %>%
     tidyr::pivot_longer(cols = c(MeanCond),
                         names_to = "Var", values_to = "Value") %>%
-    dplyr::select(YEAR, Species, Value) %>%
+    dplyr::select(YEAR, Species, EPU, Value) %>%
     dplyr::rename(Time = YEAR,
                   Var = Species) %>%
     dplyr::mutate(Units = c("MeanCond"))
