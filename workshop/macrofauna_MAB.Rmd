@@ -910,7 +910,7 @@ p
 
 ```{r mab-cf, fig.cap = "Condition factor for species sampled in MAB."}
 
-knitr::include_graphics(file.path(image.dir, "MAB_Condition_allsex_2023_viridis.jpg"))
+knitr::include_graphics(file.path(image.dir, "MAB_Condition_allsex_2024.jpg"))
 
 ```
 

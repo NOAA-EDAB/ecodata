@@ -4,7 +4,7 @@ library(dplyr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-mass_inshore_survey_rdata <- "Aggregate_Mass_Survey_biomass_23.Rdata"
+mass_inshore_survey_rdata <- "Aggregate_Mass_Survey_biomass_24.Rdata"
 get_mass_survey <- function(save_clean){
 
   load(file.path(raw.dir,mass_inshore_survey_rdata))
