@@ -6,8 +6,8 @@ library(dplyr)
 
 raw.dir <- here::here("data-raw")
 
-aggregate_biomass_RData <- "Aggregate_Survey_biomass_23.RData"
-aggregate_biomass_shelf<- "Aggregate_Survey_biomass_shelfwide_22.RData"
+aggregate_biomass_RData <- "Aggregate_Survey_biomass_24.RData"
+aggregate_biomass_shelf<- "Aggregate_Survey_biomass_shelfwide_24.RData"
 get_aggregate_biomass <- function(save_clean = F){
 
   load(file.path(raw.dir, aggregate_biomass_RData))
