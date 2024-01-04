@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Macrofauna MAB and Shelf-wide</title>
+
+<script src="libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Macrofauna MAB and Shelf-wide</h1>
+
+</div>
+
+
+<p>Trend lines are shown when slope is significantly different from 0 at
+the p &lt; 0.05 level. An orange line signifies an overall positive
+trend, and purple signifies a negative trend. To minimize bias
+introduced by small sample size, no trend is fit when N &lt; 30. Dashed
+lines represent mean values of time series unless the indicator is an
+anomaly, in which case the dashed line is equal to 0. Shaded regions
+indicate the past ten years. If there are no new data for 2018, the
+shaded region will still cover this time period.</p>
+<div id="mid-atlantic-bight" class="section level2">
+<h2>Mid-Atlantic Bight</h2>
+<div id="surveys" class="section level3 tabset tabset-fade">
+<h3 class="tabset tabset-fade">Surveys</h3>
+<div id="nefsc-bts-neamap" class="section level4">
+<h4>NEFSC BTS &amp; NEAMAP</h4>
+<div class="figure" style="text-align: center">
+<img src="macrofauna_MAB_files/figure-html/aggregate-biomass-1.png" alt="Spring (left) and fall (right) surveyed biomass in the Mid-Atlantic Bight. Data from the NEFSC Bottom Trawl Survey are shown in black, with NEAMAP shown in red. \label{nefsc-biomass}" width="672" />
+<p class="caption">
+Spring (left) and fall (right) surveyed biomass in the Mid-Atlantic
+Bight. Data from the NEFSC Bottom Trawl Survey are shown in black, with
+NEAMAP shown in red.
+</p>
+</div>
+</div>
+<div id="just-neamap" class="section level4">
+<h4>Just NEAMAP</h4>
+<p><img src="macrofauna_MAB_files/figure-html/mab-inshore-survey-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="proportion-managed-species-in-nefsc-bts"
+class="section level4">
+<h4>Proportion managed species in NEFSC BTS</h4>
+<!-- ```{r nefsc-survey-disaggregated-managed-spp-bts} -->
+<!-- prop <- ecodata::nefsc_survey_disaggregated %>%  -->
+<!--   dplyr::filter(!stringr::str_detect(`Feeding guild`, "Other|other"), -->
+<!--          !is.na(Proportion)) %>% #remove "other" -->
+<!--   tidyr::unite(.,Var,c("Feeding guild","Season"), sep = " ") %>%  -->
+<!--   dplyr::filter(!stringr::str_detect(Var,"Apex|Benthos"), -->
+<!--          !is.na(Management)) %>% #remove benthos and apex predators -->
+<!--   dplyr::group_by(EPU, Management, Var, Time) %>% -->
+<!--   dplyr::summarise(Proportion = sum(Proportion)) %>%  -->
+<!--   dplyr::mutate(Var2 = paste(Management,Var), -->
+<!--          tt = paste(Management,round(Proportion,2), Time), -->
+<!--          Proportion = ifelse(Proportion == 0, NA, Proportion)) %>% #tt = tooltip -->
+<!--   dplyr::group_by(EPU,Var2) %>%  -->
+<!--   dplyr::mutate(hline = mean(Proportion,na.rm = T)) %>%  -->
+<!--   tidyr::complete(Time = full_seq(min(.$Time):max(.$Time),1), -->
+<!--            tidyr::nesting(Management, Var))  -->
+<!-- #Change factor levels -->
+<!-- prop$Var <- factor(prop$Var,levels = c("Piscivore spring","Piscivore fall", -->
+<!--                                        "Benthivore spring","Benthivore fall",             -->
+<!--                                        "Planktivore spring", "Planktivore fall" )) -->
+<!-- mab_prop <-  -->
+<!--   prop %>%  -->
+<!--     dplyr::filter(EPU == "MAB") %>%  -->
+<!-- ggplot2::ggplot(aes(x = Time, y = Proportion, color = Management, group = Var2)) + -->
+<!--   #Highlight last ten years -->
+<!--   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--            xmin = x.shade.min , xmax = x.shade.max , -->
+<!--            ymin = -Inf, ymax = Inf) + -->
+<!--   #Add time series -->
+<!--   ggplot2::geom_line(size = 0.5) + -->
+<!--   ggiraph::geom_point_interactive(aes(tooltip = tt),size = 0.5) + -->
+<!-- #  guides(color = FALSE) + -->
+<!--   ggplot2::geom_hline(aes(yintercept = hline, -->
+<!--                  group = Var2, -->
+<!--                  color = Management), -->
+<!--              size = 0.5, -->
+<!--              alpha = hline.alpha, -->
+<!--              linetype = hline.lty)+ -->
+<!--   #Facet  -->
+<!--   ggplot2::facet_wrap(Var~., ncol = 2) + -->
+<!--   #Axis and theme -->
+<!--   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) + -->
+<!--   ggplot2::ylab(expression("Proportion of survey")) + -->
+<!--   ggplot2::ggtitle("MAB") + -->
+<!--   ecodata::theme_facet()+ -->
+<!--   ggplot2::theme(strip.text=element_text(hjust=0)) -->
+<!-- mab_prop <- ggiraph::girafe(ggobj = mab_prop) -->
+<!-- mab_prop <- ggiraph::girafe_options(mab_prop, opts_zoom(max = 5) ) -->
+<!-- mab_prop -->
+<!-- ``` -->
+</div>
+<div id="mafmc-planktivores-in-ne" class="section level4">
+<h4>MAFMC Planktivores in NE</h4>
+<!-- ```{r nefsc-survey-disaggregated-mafmc-spp-in-ne} -->
+<!-- mafmc_ne <- ecodata::nefsc_survey_disaggregated %>%  -->
+<!--   dplyr::distinct() %>%  -->
+<!--   dplyr::filter(EPU %in% c("GOM","GB"), -->
+<!--          Management == "MAFMC", -->
+<!--          !stringr::str_detect(`Feeding guild`,"Other")) %>%  -->
+<!--   dplyr::group_by(EPU, `Feeding guild`, Season, Time) %>%  -->
+<!--   dplyr::summarise(Value = sum(Proportion,na.rm = T)) %>% #IMPORTANT: Turn zeros to NA before taking mean -->
+<!--   dplyr::mutate(Value = ifelse(Value == 0, NA, Value)) %>% #Turn zeros to NA -->
+<!--   tidyr::unite(.,Var,c("Feeding guild","Season"), sep = " ") %>%  -->
+<!--   dplyr::group_by(EPU,Var) %>%  -->
+<!--   dplyr::mutate(hline = mean(Value, na.rm = T)) %>%  -->
+<!--   dplyr::filter(stringr::str_detect(Var,"Planktivore")) %>%  -->
+<!--   dplyr::ungroup() %>%  -->
+<!--   dplyr::mutate(Var = paste(stringr::str_to_title(stringr::str_extract(Var, "fall|spring")), -->
+<!--          "survey")) -->
+<!-- mafmc_ne$Var <- factor(mafmc_ne$Var,levels = c("Spring survey","Fall survey")) -->
+<!-- gom_mafmc_props <- mafmc_ne %>%  -->
+<!--   dplyr::filter(EPU == "GOM") %>%  -->
+<!--  ggplot2::ggplot(aes(x = Time, y = Value, group = Var)) + -->
+<!--   #Highlight last ten years -->
+<!--   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max , -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   #Add time series -->
+<!--   ggplot2::geom_line(size = lwd-0.5) + -->
+<!--   ggplot2::geom_point(size = pcex-0.5) + -->
+<!--   # scale_color_manual(values = series.col, aesthetics = "color")+ -->
+<!--   ggplot2::guides(color = FALSE) + -->
+<!--   ggplot2::geom_hline(aes(yintercept = hline, -->
+<!--                  group = Var), -->
+<!--              size = hline.size, -->
+<!--              alpha = hline.alpha, -->
+<!--              linetype = hline.lty)+ -->
+<!--   #Facet  -->
+<!--   ggplot2::facet_wrap(Var~.,scales = "free_y", ncol = 2) + -->
+<!--   ggplot2::ggtitle("MAFMC planktivores in Gulf of Maine")+ -->
+<!--   #Axis and theme -->
+<!--   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) + -->
+<!--   ggplot2::ylab(expression("Proportion of GOM survey")) + -->
+<!--   ecodata::theme_facet()+ -->
+<!--   ggplot2::theme(strip.text=element_text(hjust=0)) -->
+<!-- gb_mafmc_props <- mafmc_ne %>%  -->
+<!--   dplyr::filter(EPU == "GB") %>%  -->
+<!-- ggplot2::ggplot(aes(x = Time, y = Value, group = Var)) + -->
+<!--   #Highlight last ten years -->
+<!--   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max , -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   #Test for trend and add lines -->
+<!--   # geom_gls(aes(x = Time, y = Value, -->
+<!--   #              color = Var), -->
+<!--   #            alpha = trend.alpha, size = trend.size) + -->
+<!--   #Add time series -->
+<!--   ggplot2::geom_line(size = lwd-0.5) + -->
+<!--   ggplot2::geom_point(size = pcex-0.5) + -->
+<!--   # scale_color_manual(values = series.col, aesthetics = "color")+ -->
+<!--   ggplot2::guides(color = FALSE) + -->
+<!--   ggplot2::geom_hline(aes(yintercept = hline, -->
+<!--                  group = Var), -->
+<!--              size = hline.size, -->
+<!--              alpha = hline.alpha, -->
+<!--              linetype = hline.lty)+ -->
+<!--   #Facet  -->
+<!--   ggplot2::facet_wrap(Var~.,scales = "free_y", ncol = 2) + -->
+<!--   ggplot2::ggtitle("MAFMC planktivores on Georges Bank")+ -->
+<!--   #Axis and theme -->
+<!--   ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) + -->
+<!--   ggplot2::ylab("Proportion of GB survey") + -->
+<!--   ecodata::theme_facet()+ -->
+<!--   ggplot2::theme(strip.text=element_text(hjust=0)) -->
+<!-- gom_mafmc_props + gb_mafmc_props + patchwork::plot_layout(ncol = 1) -->
+<!-- ``` -->
+</div>
+</div>
+<div id="survey-shannon-diversity" class="section level3">
+<h3>Survey Shannon Diversity</h3>
+<p><img src="macrofauna_MAB_files/figure-html/survey-shannon-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="expected-number-of-species" class="section level3">
+<h3>Expected number of Species</h3>
+<p><img src="macrofauna_MAB_files/figure-html/exp-n-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="macrofauna_MAB_files/figure-html/exp-n-spring-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="productivity-anomaly" class="section level3">
+<h3>Productivity anomaly</h3>
+<div class="figure" style="text-align: center">
+<img src="macrofauna_MAB_files/figure-html/productivity-anomaly-1.png" alt="Small fish per large fish biomass anomaly in the Mid-Atlantic Bight from BTS." width="672" />
+<p class="caption">
+Small fish per large fish biomass anomaly in the Mid-Atlantic Bight from
+BTS.
+</p>
+</div>
+<div class="figure" style="text-align: center">
+<img src="macrofauna_MAB_files/figure-html/productivity-assessment-1.png" alt="Recruitment Anomaly for Mid-Atlantic Stocks from Stock Assessments." width="672" />
+<p class="caption">
+Recruitment Anomaly for Mid-Atlantic Stocks from Stock Assessments.
+</p>
+</div>
+</div>
+<div id="condition-factor" class="section level3">
+<h3>Condition factor</h3>
+<div class="figure" style="text-align: center">
+<img src="images/MAB_Condition_allsex_2023_viridis.jpg" alt="Condition factor for species sampled in MAB." width="1200" />
+<p class="caption">
+Condition factor for species sampled in MAB.
+</p>
+</div>
+</div>
+<div id="stomach-fullness" class="section level3">
+<h3>Stomach Fullness</h3>
+<div class="figure" style="text-align: center">
+<img src="macrofauna_MAB_files/figure-html/stom-fullness-1.png" alt="Stomach fullness anomaly in the Mid-Atlantic Bight." width="672" />
+<p class="caption">
+Stomach fullness anomaly in the Mid-Atlantic Bight.
+</p>
+</div>
+</div>
+<div id="larval-diversity" class="section level3">
+<h3>Larval diversity</h3>
+<p><img src="macrofauna_MAB_files/figure-html/ichthyo-diversity-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="virginia-common-tern-abundance" class="section level3">
+<h3>Virginia Common Tern Abundance</h3>
+<p><span style="color: red;">NO NEW DATA</span></p>
+<div class="figure" style="text-align: center">
+<img src="macrofauna_MAB_files/figure-html/seabird-mab-1.png" alt="Estimated number of breeding pairs in Virginia barrier island/lagoon system. " width="672" />
+<p class="caption">
+Estimated number of breeding pairs in Virginia barrier island/lagoon
+system.
+</p>
+</div>
+</div>
+<div id="forage-anomaly" class="section level3">
+<h3>Forage Anomaly</h3>
+<p><span style="color: red;">NO NEW DATA - NO SURVEY IN 2020</span></p>
+<p><a
+href="https://docs.google.com/spreadsheets/d/108snlOTy1wzMGmxbYp1qJuKgqYfYM8MD/edit#gid=966266704">Taxa
+include</a></p>
+<p><img src="macrofauna_MAB_files/figure-html/forage-anomaly-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="forage-index" class="section level3">
+<h3>Forage Index</h3>
+<p><img src="macrofauna_MAB_files/figure-html/forage-index-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="observed-shark-numbers" class="section level3">
+<h3>Observed Shark Numbers</h3>
+<p><span style="color: red;">NO NEW DATA</span>
+<img src="macrofauna_MAB_files/figure-html/observed-sharks-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="shelfwide-indicators"
+class="section level2 tabset tabset-fade">
+<h2 class="tabset tabset-fade">Shelfwide Indicators</h2>
+<div id="protected-species" class="section level3">
+<h3>Protected species</h3>
+<div class="figure" style="text-align: center">
+<img src="macrofauna_MAB_files/figure-html/harborporpoise-1.png" alt="Estimated Harbor porpoise bycatch (black) and the potential biological removal (red)." width="672" />
+<p class="caption">
+Estimated Harbor porpoise bycatch (black) and the potential biological
+removal (red).
+</p>
+</div>
+<div class="figure" style="text-align: center">
+<img src="macrofauna_MAB_files/figure-html/grayseal-1.png" alt="5 year Gray Seal bycatch estimate for NEUS Shelf (Blue) and 1 Year estimate for New England (Black) and the potential biological removal (red)." width="480" />
+<p class="caption">
+5 year Gray Seal bycatch estimate for NEUS Shelf (Blue) and 1 Year
+estimate for New England (Black) and the potential biological removal
+(red).
+</p>
+</div>
+<div class="figure" style="text-align: center">
+<img src="macrofauna_MAB_files/figure-html/narw-abundance-1.png" alt="Estimated North Atlanic right whale abundance on the Northeast Shelf." width="672" />
+<p class="caption">
+Estimated North Atlanic right whale abundance on the Northeast Shelf.
+</p>
+</div>
+<div class="figure" style="text-align: center">
+<img src="macrofauna_MAB_files/figure-html/NARW-calf-abundance-1.png" alt="Number of North Atlantic right whale calf births, 1990 - 2022." width="672" />
+<p class="caption">
+Number of North Atlantic right whale calf births, 1990 - 2022.
+</p>
+</div>
+</div>
+<div id="protected-species-hotspot-maps" class="section level3">
+<h3>Protected species hotspot maps</h3>
+<p><img src="images/SOE_2023_right_whales_hatteras_frame_v3.jpg" width="1488" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center">
+<img src="images/SOE_2023_birds_mammals_turtles_v4.png" alt="Seabirds, Turtles, Whales" width="1275" />
+<p class="caption">
+Seabirds, Turtles, Whales
+</p>
+</div>
+</div>
+<div id="aggregate-species-distribution" class="section level3">
+<h3>Aggregate species distribution</h3>
+<div class="figure" style="text-align: center">
+<img src="macrofauna_MAB_files/figure-html/species-dist-1.png" alt="Aggregate species distribution metrics for species in the Northeast Large Marine Ecosystem." width="672" />
+<p class="caption">
+Aggregate species distribution metrics for species in the Northeast
+Large Marine Ecosystem.
+</p>
+</div>
+</div>
+<div id="forage-fish-energy-content" class="section level3">
+<h3>Forage fish energy content</h3>
+<p><img src="macrofauna_MAB_files/figure-html/energy-density-1.png" width="672" style="display: block; margin: auto;" /></p>
+<!-- ### Blue Runner on NES -->
+<!-- <span style="color: red;">NO NEW DATA</span> -->
+<!-- ```{r blue-runner, fig.cap = "Blue runner presence on Northeast Shelf"} -->
+<!-- blue<-ecodata::blue_runner %>%  -->
+<!--   tidyr::separate(Var, c("Var", "Pos"), "L") %>%  -->
+<!--   tidyr::spread(., Pos, Value) %>%  -->
+<!--   dplyr::rename(Lat = at,  -->
+<!--          Lon = on) %>%  -->
+<!--   dplyr::mutate(Var = recode(Var, -->
+<!--                       "Positive Blue Runner Tows before 2001 - " = "Prior to 2000", -->
+<!--                       "Positive Blue Runner Tows 2001 - 2010 - " = "2001-2010",  -->
+<!--                       "Positive Blue Runner Tows since 2010 - " = "Since 2010")) -->
+<!-- blue$Var <- factor(blue$Var, levels = c("Prior to 2000", "2001-2010", "Since 2010")) -->
+<!-- #EPU shapefile -->
+<!-- epu_sf <- ecodata::epu_sf %>%  -->
+<!--   dplyr::filter(EPU %in% c("GOM","GB", "MAB")) -->
+<!-- #Map line parameters -->
+<!-- map.lwd <- 0.4 -->
+<!-- # Set lat/lon window for maps -->
+<!-- xmin = -77 -->
+<!-- xmax = -65 -->
+<!-- ymin = 35 -->
+<!-- ymax = 45 -->
+<!-- xlims <- c(xmin, xmax) -->
+<!-- ylims <- c(ymin, ymax) -->
+<!-- ## Map plotting blue runner -->
+<!-- blue_map <-  -->
+<!--   ggplot2::ggplot() + -->
+<!--   ggplot2::geom_sf(data = ecodata::coast, size = map.lwd) + -->
+<!--   ggplot2::geom_sf(data = epu_sf, fill = "transparent", size = map.lwd) + -->
+<!--   ggplot2::geom_point(data = blue, aes(x = Lon, y = Lat, color = Var, shape = Var))+ -->
+<!--   ggplot2::scale_shape_manual(values=c(16, 3, 17))+ -->
+<!--   ggplot2::scale_color_manual(values = c("blue", "black", "red"))+ -->
+<!--   ggplot2::coord_sf(crs = crs, xlim = xlims, ylim = ylims) + -->
+<!--   ecodata::theme_map() + -->
+<!--   ggplot2::ggtitle("Blue Runner Presence") + -->
+<!--   ggplot2::xlab("") + -->
+<!--   ggplot2::ylab("") + -->
+<!--   ggplot2::theme(panel.border = element_rect(colour = "black", fill=NA, size=0.75), -->
+<!--         legend.key = element_blank(), -->
+<!--         axis.title = element_text(size = 11), -->
+<!--         strip.background = element_blank(), -->
+<!--         strip.text=element_text(hjust=0), -->
+<!--         axis.text = element_text(size = 8),  -->
+<!--         legend.title = element_blank(),  -->
+<!--         legend.position = c(0.6, 0.15)) -->
+<!-- blue_map -->
+<!-- ``` -->
+</div>
+<div id="condition-project" class="section level3">
+<h3>Condition project</h3>
+<p><a
+href="https://docs.google.com/document/d/1uHMmMTnZG2LAmPi5SSO30k5_5NzfzdKj/edit">text
+here</a>
+<img src="images/Condition_table.png" width="394" style="display: block; margin: auto;" /></p>
+<p><img src="images/Condition_matrix.png" width="278" style="display: block; margin: auto;" /></p>
+</div>
+<div id="hms-cpue" class="section level3">
+<h3>HMS CPUE</h3>
+<!-- ```{r, hms-all-cpue} -->
+<!-- #knitr::include_graphics(file.path(image.dir, "hms-too-big.png")) -->
+<!-- ecodata::hms_cpue %>% -->
+<!--   ggplot()+ -->
+<!--  ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha, -->
+<!--       xmin = x.shade.min , xmax = x.shade.max, -->
+<!--       ymin = -Inf, ymax = Inf) + -->
+<!--   ggplot2::geom_point(aes(x=Time, y = Value))+ -->
+<!--   ggplot2::geom_line(aes(x=Time, y = Value))+ -->
+<!--   ggplot2::facet_wrap(~Var, scales = "free")+ -->
+<!--   ggplot2::ggtitle("HMS POP CPUE ALL")+ -->
+<!--   ggplot2::ylab("Number per Haul")+ -->
+<!--   ecodata::theme_ts() -->
+<!-- ``` -->
+<p><img src="macrofauna_MAB_files/figure-html/hms-tuna-cpue-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center">
+<img src="macrofauna_MAB_files/figure-html/hms-cpue-sharks-1.png" alt="Species groupings based on list from Debbie Duarte - missing Boonethead, Atlantic Angel shark, Sixgill shark, sevengill shark, nurse shark, white shark, basking shark, lemon shark." width="672" />
+<p class="caption">
+Species groupings based on list from Debbie Duarte - missing Boonethead,
+Atlantic Angel shark, Sixgill shark, sevengill shark, nurse shark, white
+shark, basking shark, lemon shark.
+</p>
+</div>
+</div>
+<div id="hms-distribution-shifts" class="section level3">
+<h3>HMS Distribution Shifts</h3>
+<div class="figure" style="text-align: center">
+<img src="macrofauna_MAB_files/figure-html/protectedspp-dist-shifts-1.png" alt="Species distribution shifts between 2010 and 2017." width="672" />
+<p class="caption">
+Species distribution shifts between 2010 and 2017.
+</p>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
