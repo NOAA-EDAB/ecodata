@@ -4,11 +4,7 @@
 \alias{plot_abc.acl}
 \title{plot abc.acl}
 \usage{
-plot_abc.acl(
-  shadedRegion = shadedRegion,
-  report = "MidAtlantic",
-  plottype = "Stacked"
-)
+plot_abc.acl(shadedRegion = NULL, report = "MidAtlantic", plottype = "Stacked")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

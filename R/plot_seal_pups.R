@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_seal_pups <- function(shadedRegion = shadedRegion,
+plot_seal_pups <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

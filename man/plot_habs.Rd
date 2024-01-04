@@ -4,11 +4,7 @@
 \alias{plot_habs}
 \title{plot harmful algal bloom}
 \usage{
-plot_habs(
-  shadedRegion = shadedRegion,
-  report = "MidAtlantic",
-  varName = "Alexandrium"
-)
+plot_habs(shadedRegion = NULL, report = "MidAtlantic", varName = "Alexandrium")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

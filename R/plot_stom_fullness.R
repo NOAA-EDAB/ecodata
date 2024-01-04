@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_stom_fullness <- function(shadedRegion = shadedRegion,
+plot_stom_fullness <- function(shadedRegion = NULL,
                               report="MidAtlantic",
                               EPU = "MAB") {
 

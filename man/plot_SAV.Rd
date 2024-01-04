@@ -4,7 +4,7 @@
 \alias{plot_SAV}
 \title{plot SAV}
 \usage{
-plot_SAV(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_SAV(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

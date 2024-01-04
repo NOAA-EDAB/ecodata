@@ -4,11 +4,7 @@
 \alias{plot_wea_landings_rev}
 \title{plot revenue from top 10 landings}
 \usage{
-plot_wea_landings_rev(
-  shadedRegion = shadedRegion,
-  report = "MidAtlantic",
-  n = 10
-)
+plot_wea_landings_rev(shadedRegion = NULL, report = "MidAtlantic", n = 10)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

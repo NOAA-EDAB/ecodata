@@ -10,7 +10,7 @@
 #'
 #' @export
 
-plot_bottom_temp <- function(shadedRegion=shadedRegion,
+plot_bottom_temp <- function(shadedRegion=NULL,
                              report = "MidAtlantic") {
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,

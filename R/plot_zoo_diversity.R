@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_zoo_diversity <- function(shadedRegion = shadedRegion,
+plot_zoo_diversity <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

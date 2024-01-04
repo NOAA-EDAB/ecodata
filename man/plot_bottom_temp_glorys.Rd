@@ -4,7 +4,7 @@
 \alias{plot_bottom_temp_glorys}
 \title{plot bottom anomaly temperature time series using GLORYS}
 \usage{
-plot_bottom_temp_glorys(shadedRegion = c(2012, 2022), report = "MidAtlantic")
+plot_bottom_temp_glorys(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

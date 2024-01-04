@@ -13,7 +13,7 @@
 #' @export
 #'
 
-plot_exp_n <- function(shadedRegion = shadedRegion,
+plot_exp_n <- function(shadedRegion = NULL,
                               report="MidAtlantic",
                        varName="fall") {
 

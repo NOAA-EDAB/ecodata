@@ -12,7 +12,7 @@
 #' @export
 #'
 
-plot_recdat <- function(shadedRegion = shadedRegion,
+plot_recdat <- function(shadedRegion = NULL,
                         report="MidAtlantic",
                         varName = "landings") {
 

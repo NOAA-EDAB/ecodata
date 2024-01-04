@@ -4,7 +4,7 @@
 \alias{plot_long_term_sst}
 \title{plot long term sea surface temperature}
 \usage{
-plot_long_term_sst(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_long_term_sst(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

@@ -4,11 +4,7 @@
 \alias{plot_heatwave}
 \title{plot heatwave}
 \usage{
-plot_heatwave(
-  shadedRegion = shadedRegion,
-  report = "MidAtlantic",
-  varName = "Surface"
-)
+plot_heatwave(shadedRegion = NULL, report = "MidAtlantic", varName = "Surface")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

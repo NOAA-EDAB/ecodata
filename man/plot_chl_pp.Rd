@@ -5,7 +5,7 @@
 \title{plot chl_pp}
 \usage{
 plot_chl_pp(
-  shadedRegion = shadedRegion,
+  shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "chl",
   plottype = "weekly",

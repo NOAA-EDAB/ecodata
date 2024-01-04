@@ -12,7 +12,7 @@
 #' @export
 #'
 
-plot_wind_revenue <- function(shadedRegion = shadedRegion,
+plot_wind_revenue <- function(shadedRegion = NULL,
                               report="MidAtlantic",
                               newVar = "landing") {
 

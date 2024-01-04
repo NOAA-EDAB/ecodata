@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_wcr <- function(shadedRegion = shadedRegion,
+plot_wcr <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

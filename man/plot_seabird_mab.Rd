@@ -4,7 +4,7 @@
 \alias{plot_seabird_mab}
 \title{plot Mid Atlantic sea bird population}
 \usage{
-plot_seabird_mab(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_seabird_mab(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

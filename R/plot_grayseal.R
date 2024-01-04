@@ -12,7 +12,7 @@
 #' @export
 #'
 
-plot_grayseal <- function(shadedRegion = shadedRegion,
+plot_grayseal <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

@@ -5,7 +5,7 @@
 \title{plot SST transition dates and timing}
 \usage{
 plot_trans_dates(
-  shadedRegion = shadedRegion,
+  shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "timing"
 )

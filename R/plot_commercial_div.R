@@ -14,7 +14,7 @@
 #' @export
 #'
 
-plot_commercial_div <- function(shadedRegion = shadedRegion,
+plot_commercial_div <- function(shadedRegion = NULL,
                               report="MidAtlantic",
                               varName="Fleet count") {
 

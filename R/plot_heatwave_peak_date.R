@@ -12,7 +12,7 @@
 #' @export
 #'
 
-plot_heatwave_peak_date <- function(shadedRegion = shadedRegion,
+plot_heatwave_peak_date <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

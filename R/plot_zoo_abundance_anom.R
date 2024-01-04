@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_zoo_abundance_anom <- function(shadedRegion = shadedRegion,
+plot_zoo_abundance_anom <- function(shadedRegion = NULL,
                               report="MidAtlantic",
                               varName = "copepod") {
 

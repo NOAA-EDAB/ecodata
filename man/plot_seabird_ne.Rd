@@ -5,7 +5,7 @@
 \title{plot New England sea bird population}
 \usage{
 plot_seabird_ne(
-  shadedRegion = shadedRegion,
+  shadedRegion = NULL,
   report = "NewEngland",
   varName = "diversity"
 )

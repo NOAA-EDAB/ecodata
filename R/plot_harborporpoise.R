@@ -12,7 +12,7 @@
 #' @export
 #'
 
-plot_harborporpoise <- function(shadedRegion = shadedRegion,
+plot_harborporpoise <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

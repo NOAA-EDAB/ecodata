@@ -13,7 +13,7 @@
 #' @export
 #'
 
-plot_hms_landings <- function(shadedRegion = shadedRegion,
+plot_hms_landings <- function(shadedRegion = NULL,
                               report="MidAtlantic",
                               varName="Landings") {
 

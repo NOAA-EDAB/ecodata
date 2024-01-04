@@ -4,11 +4,7 @@
 \alias{plot_stom_fullness}
 \title{plot stomach fullness}
 \usage{
-plot_stom_fullness(
-  shadedRegion = shadedRegion,
-  report = "MidAtlantic",
-  EPU = "MAB"
-)
+plot_stom_fullness(shadedRegion = NULL, report = "MidAtlantic", EPU = "MAB")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

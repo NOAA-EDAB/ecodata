@@ -8,7 +8,7 @@
 #'
 #' @export
 
-plot_seasonal_oisst_anom <- function(shadedRegion = shadedRegion,
+plot_seasonal_oisst_anom <- function(shadedRegion = NULL,
                                      report = "MidAtlantic") {
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,

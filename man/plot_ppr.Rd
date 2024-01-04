@@ -5,7 +5,7 @@
 \title{plot ecosystem overfishing indices}
 \usage{
 plot_ppr(
-  shadedRegion = shadedRegion,
+  shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "ryther",
   threshold = "global"

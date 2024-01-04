@@ -13,7 +13,7 @@
 #' @export
 #'
 
-plot_ppr <- function(shadedRegion = shadedRegion,
+plot_ppr <- function(shadedRegion = NULL,
                      report="MidAtlantic",
                      varName = "ryther",
                      threshold = "global") {
@@ -32,7 +32,7 @@ plot_ppr <- function(shadedRegion = shadedRegion,
   if (varName == "pp") {
     varName <-  "PP"
     scalar <- 1/1e6
-    vtitle <- "PP Reconstrcted"
+    vtitle <- "PP Reconstructed"
     vylab <- expression("mtC region"^-1*"year"^-1*"(millions)")
   } else if (varName =="fogarty") {
     varName <- "Fogarty"
