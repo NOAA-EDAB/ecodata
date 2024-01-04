@@ -4,7 +4,22 @@
     <loc>https://noaa-edab.github.io/ecodata/404.html</loc>
   </url>
   <url>
+    <loc>https://noaa-edab.github.io/ecodata/ESP_plot_mockup.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ecodata/InteractiveSOE.html</loc>
+  </url>
+  <url>
     <loc>https://noaa-edab.github.io/ecodata/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ecodata/LTL_MAB.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ecodata/LTL_NE.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ecodata/TestInteractive.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ecodata/articles/data_guidelines.html</loc>
@@ -28,7 +43,31 @@
     <loc>https://noaa-edab.github.io/ecodata/authors.html</loc>
   </url>
   <url>
+    <loc>https://noaa-edab.github.io/ecodata/dashboard.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ecodata/data_guidelines.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ecodata/human_dimensions_MAB.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ecodata/human_dimensions_NE.html</loc>
+  </url>
+  <url>
     <loc>https://noaa-edab.github.io/ecodata/index.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ecodata/indexmain.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ecodata/libs/jqueryui-1.11.4/index.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ecodata/macrofauna_MAB.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ecodata/macrofauna_NE.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ecodata/reference/SAV.html</loc>
@@ -536,5 +575,8 @@
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ecodata/reference/zoo_strat_abun.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ecodata/regime_shifts.html</loc>
   </url>
 </urlset>
