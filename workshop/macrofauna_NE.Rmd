@@ -1342,7 +1342,7 @@ p
 ```{r gom-cf, fig.cap = "Condition factor for species sampled in the Gulf of Maine.", fig.width=50}
 
 
-knitr::include_graphics(c(file.path(image.dir, "GOM_Condition_allsex_2023_viridis.jpg")))
+knitr::include_graphics(c(file.path(image.dir, "GOM_Condition_allsex_2024.jpg")))
 
 ```
 
@@ -1350,7 +1350,7 @@ knitr::include_graphics(c(file.path(image.dir, "GOM_Condition_allsex_2023_viridi
 
 
 knitr::include_graphics(c(
-                          file.path(image.dir, "GB_Condition_allsex_2023_viridis.jpg") ))
+                          file.path(image.dir, "GB_Condition_allsex_2024.jpg") ))
 
 ```
 
@@ -1559,7 +1559,7 @@ shannon <- diet_div %>%
   ggplot2::geom_line() +
   ggplot2::geom_point() +
   #ecodata::geom_lm() +
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01),limits = c(1992,2021)) +
+  #ggplot2::scale_x_continuous(expand = c(0.01, 0.01),limits = c(1992,2021)) +
   ggplot2::ggtitle("Common tern diet diversity")+
   ggplot2::ylab(expression("Shannon Diversity")) +
   ggplot2::xlab(element_blank())+
@@ -1630,7 +1630,8 @@ prey_freq3<-prey_freq1 %>%
   rbind(prey_freq2)
 colors<- c("grey", "#a6cee3", "#1f78b4", "#b2df8a", 
             "#33a02c", "#fb9a99", "#fdbf6f", 
-            "#ff7f00", "#cab2d6", "#6a3d9a")
+            "#ff7f00", "#cab2d6", "#6a3d9a",
+           "yellow")
 
 diet_freq_bar <-
   ggplot2::ggplot() +
@@ -1761,7 +1762,7 @@ aggregate_prod %>%
                     ymin = se.low,
                   ymax = se.high), 
                 width = 0.25) +
-  ggplot2::scale_x_continuous(expand = c(0.01, 0.01),limits = c(1991,2021)) +
+  #ggplot2::scale_x_continuous(expand = c(0.01, 0.01),limits = c(1991,2021)) +
   ggplot2::guides(color = FALSE) +
   ggplot2::ggtitle("Common tern productivity") +
   ggplot2::ylab(expression("Fledged chicks per nest")) +
