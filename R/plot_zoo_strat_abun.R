@@ -4,6 +4,7 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
+#' @param epu Character string. Which EPU in the report ("GB", "GOM", "MAB")
 #'
 #' @return ggplot object
 #'
