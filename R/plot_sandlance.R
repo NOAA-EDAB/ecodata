@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_sandlance <- function(shadedRegion = shadedRegion,
+plot_sandlance <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

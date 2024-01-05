@@ -12,7 +12,7 @@
 #' @export
 #'
 
-plot_narw <- function(shadedRegion = shadedRegion,
+plot_narw <- function(shadedRegion = NULL,
                       report="MidAtlantic",
                       varName = "adult") {
 

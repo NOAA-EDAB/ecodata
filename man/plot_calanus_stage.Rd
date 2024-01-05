@@ -4,7 +4,7 @@
 \alias{plot_calanus_stage}
 \title{plot calanus_stage}
 \usage{
-plot_calanus_stage(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_calanus_stage(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

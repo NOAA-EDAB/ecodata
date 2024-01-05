@@ -12,7 +12,7 @@
 #' @export
 #'
 
-plot_cold_pool_sf <- function(shadedRegion = shadedRegion,
+plot_cold_pool_sf <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

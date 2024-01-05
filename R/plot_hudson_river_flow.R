@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_hudson_river_flow <- function(shadedRegion = shadedRegion,
+plot_hudson_river_flow <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

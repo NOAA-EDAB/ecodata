@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_aquaculture <- function(shadedRegion = shadedRegion,
+plot_aquaculture <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

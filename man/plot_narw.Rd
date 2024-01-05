@@ -4,11 +4,7 @@
 \alias{plot_narw}
 \title{plot north atlantic right whale abundance}
 \usage{
-plot_narw(
-  shadedRegion = shadedRegion,
-  report = "MidAtlantic",
-  varName = "adult"
-)
+plot_narw(shadedRegion = NULL, report = "MidAtlantic", varName = "adult")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

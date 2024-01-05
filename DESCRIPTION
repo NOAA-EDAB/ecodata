@@ -27,7 +27,8 @@ Imports:
   ggrepel,
   plyr,
   lubridate,
-  vegan
+  vegan,
+  viridis
 Suggests:
   knitr,
   rmarkdown,

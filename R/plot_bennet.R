@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_bennet <- function(shadedRegion = shadedRegion,
+plot_bennet <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

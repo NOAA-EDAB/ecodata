@@ -4,7 +4,7 @@
 \alias{plot_seasonal_oisst_anom}
 \title{plot SST anomaly (OISST)}
 \usage{
-plot_seasonal_oisst_anom(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_seasonal_oisst_anom(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10), passed from plot function}

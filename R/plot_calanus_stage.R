@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_calanus_stage <- function(shadedRegion = shadedRegion,
+plot_calanus_stage <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

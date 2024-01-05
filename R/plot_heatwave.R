@@ -13,7 +13,7 @@
 #' @export
 #'
 
-plot_heatwave <- function(shadedRegion = shadedRegion,
+plot_heatwave <- function(shadedRegion = NULL,
                           report="MidAtlantic",
                           varName="Surface") {
 

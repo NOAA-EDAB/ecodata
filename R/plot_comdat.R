@@ -15,7 +15,7 @@
 #' @export
 #'
 
-plot_comdat <- function(shadedRegion = shadedRegion,
+plot_comdat <- function(shadedRegion = NULL,
                         report="MidAtlantic",
                         varName="landings",
                         plottype="total",

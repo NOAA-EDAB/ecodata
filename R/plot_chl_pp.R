@@ -16,7 +16,7 @@
 #' @export
 #'
 
-plot_chl_pp <- function(shadedRegion = shadedRegion,
+plot_chl_pp <- function(shadedRegion = NULL,
                         report="MidAtlantic",
                         varName="chl",
                         plottype="weekly",

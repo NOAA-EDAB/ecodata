@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_ne_inshore_survey <- function(shadedRegion = shadedRegion,
+plot_ne_inshore_survey <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

@@ -5,7 +5,7 @@
 \title{plot engagement}
 \usage{
 plot_engagement(
-  shadedRegion = shadedRegion,
+  shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "Commercial"
 )

@@ -12,7 +12,7 @@
 #' @export
 #'
 
-plot_phyto_size <- function(shadedRegion = shadedRegion,
+plot_phyto_size <- function(shadedRegion = NULL,
                       report="MidAtlantic",
                       epu = "MAB") {
 

@@ -10,7 +10,7 @@
 #'
 #' @export
 
-plot_bottom_temp_glorys <- function(shadedRegion=c(2012,2022),
+plot_bottom_temp_glorys <- function(shadedRegion=NULL,
                              report = "MidAtlantic") {
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,

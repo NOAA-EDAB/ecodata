@@ -4,7 +4,7 @@
 \alias{plot_cold_pool_sf}
 \title{plot cold_pool_sf}
 \usage{
-plot_cold_pool_sf(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_cold_pool_sf(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

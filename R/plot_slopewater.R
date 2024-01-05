@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_slopewater <- function(shadedRegion = shadedRegion,
+plot_slopewater <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

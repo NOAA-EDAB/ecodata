@@ -12,7 +12,7 @@
 #' @export
 #'
 
-plot_aggregate_biomass <- function(shadedRegion = shadedRegion,
+plot_aggregate_biomass <- function(shadedRegion = NULL,
                                    report="MidAtlantic",
                                    EPU="GB") {
 

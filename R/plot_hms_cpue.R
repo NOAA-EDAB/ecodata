@@ -14,7 +14,7 @@
 #' @export
 #'
 
-plot_hms_cpue <- function(shadedRegion = shadedRegion,
+plot_hms_cpue <- function(shadedRegion = NULL,
                           report="MidAtlantic",
                           varName = "shark") {
 

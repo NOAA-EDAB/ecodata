@@ -4,7 +4,7 @@
 \alias{plot_sandlance}
 \title{plot sandlance numbers}
 \usage{
-plot_sandlance(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_sandlance(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

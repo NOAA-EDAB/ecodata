@@ -4,7 +4,7 @@
 \alias{plot_hudson_river_flow}
 \title{plot flow rate of hudson river}
 \usage{
-plot_hudson_river_flow(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_hudson_river_flow(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

@@ -4,7 +4,7 @@
 \alias{plot_slopewater}
 \title{plot slopewater}
 \usage{
-plot_slopewater(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_slopewater(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

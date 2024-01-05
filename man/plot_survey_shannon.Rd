@@ -4,7 +4,7 @@
 \alias{plot_survey_shannon}
 \title{plot diversity of survey data}
 \usage{
-plot_survey_shannon(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_survey_shannon(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
