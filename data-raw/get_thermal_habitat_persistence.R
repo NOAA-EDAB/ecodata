@@ -28,7 +28,7 @@ get_thermal_habitat_persistence <- function(save_clean = F){
     return(thermal_habitat_persistence)
   }
 }
-#get_thermal_habitat_persistence(save_clean = T)
+get_thermal_habitat_persistence(save_clean = T)
 
 
 
