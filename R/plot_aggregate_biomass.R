@@ -14,7 +14,7 @@
 
 plot_aggregate_biomass <- function(shadedRegion = NULL,
                                    report="MidAtlantic",
-                                   EPU="GB") {
+                                   EPU="MAB") {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -24,6 +24,9 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
   } else {
+    if (!(EPU %in% c("GB","GOM"))) {
+      stop("For NewEngland the epu must be either 'GB' or 'GOM'")
+    }
     filterEPUs <- EPU
   }
 

@@ -7,7 +7,7 @@
 plot_wind_revenue(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  newVar = "landing"
+  varName = "landing"
 )
 }
 \arguments{

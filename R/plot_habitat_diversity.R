@@ -13,7 +13,8 @@
 #'
 
 plot_habitat_diversity <- function(shadedRegion = NULL,
-                              report="MidAtlantic",varName = "Diversity") {
+                              report="MidAtlantic",
+                              varName = "Diversity") {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,

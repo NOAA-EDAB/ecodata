@@ -4,7 +4,7 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
-#' @param epu Character string. Specify the EPU to plot within the report (Only affects NewEngland)
+#' @param EPU Character string. Specify the EPU to plot within the report (Only affects NewEngland)
 #'
 #' @return ggplot object
 #'
@@ -14,7 +14,7 @@
 
 plot_phyto_size <- function(shadedRegion = NULL,
                       report="MidAtlantic",
-                      epu = "MAB") {
+                      EPU = "MAB") {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -24,10 +24,10 @@ plot_phyto_size <- function(shadedRegion = NULL,
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
   } else {
-    if (!(epu %in% c("GB","GOM"))) {
+    if (!(EPU %in% c("GB","GOM"))) {
       stop("For NewEngland the epu must be either 'GB' or 'GOM'")
     }
-    filterEPUs <- epu
+    filterEPUs <- EPU
   }
 
   # if (varName == "size") {
