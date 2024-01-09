@@ -2,7 +2,7 @@ library(dplyr)
 library(tidyr)
 library(readxl)
 raw.dir <- here::here("data-raw")
-wind_rev_xlsx<- "SOE 2023 update_Offshore Wind Fishery Data_Christel (3).xlsx"
+wind_rev_xlsx<- "SOE 2024 update_Offshore Wind Fishery Data_Christel.xlsx"
 
 get_wind_revenue<- function(save_clean = F){
   ne_wind_revenue <- readxl::read_excel(file.path(raw.dir,wind_rev_xlsx),
