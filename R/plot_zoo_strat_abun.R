@@ -40,7 +40,7 @@ plot_zoo_strat_abun <- function(shadedRegion = NULL,
                    hline = mean(Value, na.rm = TRUE))
 
    if (nrow(fix) == 0) {
-     stop(paste0("Please check to make sure data are available for this epu (",epu,")"))
+     stop(paste0("Please check to make sure data are available for this epu (",EPU,")"))
    }
 
   # code for generating plot object p

@@ -97,7 +97,7 @@ plot_phyto_size <- function(shadedRegion = NULL,
     ggplot2::geom_line( ggplot2::aes(x = as.numeric(phyto_year_micro$wk),
                                      y = phyto_year_micro$Value), color = "#66C2A5", linewidth= 1.5)+
 
-    ggplot2::ggtitle(paste0(epu," Phytoplankton Size Class"))+
+    ggplot2::ggtitle(paste0(EPU," Phytoplankton Size Class"))+
     ggplot2::ylab("Percent")+
     ecodata::theme_facet() +
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle=45, hjust = 1),
