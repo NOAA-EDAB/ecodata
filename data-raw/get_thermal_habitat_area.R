@@ -3,9 +3,9 @@
 #library(dplyr)
 #library(usethis)
 
-get_thermal_habitat <- function(save_clean = F){
+get_thermal_habitat_area <- function(save_clean = F){
 
-  thermal_habitat<-readr::read_csv(here::here("data-raw/thermal_habitat_area_2023 - Joseph Caracappa - NOAA Federal.csv"),
+  thermal_habitat_area<-readr::read_csv(here::here("data-raw/thermal_habitat_area_2023 - Joseph Caracappa - NOAA Federal.csv"),
                        show_col_types = F) |>
     dplyr::mutate(Units = "Proportion",
                   date = lubridate::as_date(date),
@@ -18,16 +18,16 @@ get_thermal_habitat <- function(save_clean = F){
                   Source = source) |>
     dplyr::relocate(Time,EPU,Depth,Var,Value,Source)
 
-  thermal_habitat$Depth <- factor(thermal_habitat$Depth, levels = c('0-25m','25-100m','100-3000m'))
+  thermal_habitat_area$Depth <- factor(thermal_habitat_area$Depth, levels = c('0-25m','25-100m','100-3000m'))
 
 
   if (save_clean){
-    usethis::use_data(thermal_habitat, overwrite = T)
+    usethis::use_data(thermal_habitat_area, overwrite = T)
   } else {
-    return(thermal_habitat)
+    return(thermal_habitat_area)
   }
 }
-get_thermal_habitat(save_clean = T)
+get_thermal_habitat_area(save_clean = T)
 
 
 
