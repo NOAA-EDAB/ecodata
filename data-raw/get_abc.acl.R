@@ -7,7 +7,7 @@ library(readr)
 
 raw.dir <- here::here("data-raw")
 
-abc.acl_xlsx <- "ABC_ACL_catch - Brandon Muffley - NOAA Affiliate.xlsx"
+abc.acl_xlsx <- "Muffley_ABC_ACL_catch - Brandon Muffley - NOAA Affiliate.xlsx"
 NEFMC_abc_acl_xlsx <- "NEFMC_abc_acl.xlsx"
 
 get_abc.acl <- function(save_clean = F){
@@ -23,7 +23,9 @@ get_abc.acl <- function(save_clean = F){
                                  "ABC or ACL 2017", "Catch 2017",
                                  "ABC or ACL 2018",   "Catch 2018",
                                  "ABC or ACL 2019","Catch 2019",
-                                 "ABC or ACL 2020",   "Catch 2020"),
+                                 "ABC or ACL 2020","Catch 2020",
+                                 "ABC or ACL 2021","Catch 2021",
+                                 "ABC or ACL 2022","Catch 2022"),
                         names_to = "Var", values_to = "Value") %>%
     #tidyr::separate(Var, c("Var", "Time"), sep = " ") %>%
     dplyr::mutate(#Var = paste(spec,"-", Var),

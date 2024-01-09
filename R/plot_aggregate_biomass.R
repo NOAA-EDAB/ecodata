@@ -31,22 +31,22 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
   # e.g., calculate mean, max or other needed values to join below
 
   # this code from NE reports, works for Mid but includes Spring 2020
-  agg<-ecodata::aggregate_biomass %>%
-    dplyr::filter(!stringr::str_detect(Var, "Apex|inshore|offshore|managed|NEFMC|MAFMC|JOINT|NA")) %>% #remove unused datasets
-    tidyr::separate(Var, c("feeding.guild", "season", "Biomass", "Var1"), sep = " ") %>%
-    tidyr::unite("Var", feeding.guild:season, sep = " ") %>%
+  agg<-ecodata::aggregate_biomass |>
+    dplyr::filter(!stringr::str_detect(Var, "Apex|inshore|offshore|managed|NEFMC|MAFMC|JOINT|NA")) |> #remove unused datasets
+    tidyr::separate(Var, c("feeding.guild", "season", "Biomass", "Var1"), sep = " ") |>
+    tidyr::unite("Var", feeding.guild:season, sep = " ") |>
     dplyr::mutate(stat = dplyr::recode(Var1, Index = "Mean",
-                                Standard = "SD")) %>%
-    dplyr::select(-Biomass, -Var1) %>%
-    dplyr::group_by(Var, Time, EPU) %>%
-    tidyr::spread(stat, Value) %>%
+                                Standard = "SD")) |>
+    dplyr::select(-Biomass, -Var1) |>
+    dplyr::group_by(Var, Time, EPU) |>
+    tidyr::spread(stat, Value) |>
     dplyr::mutate(upper = Mean + (2*SD),
                   lower = Mean - (2*SD))
 
-  agg_bio<-agg %>% dplyr::filter(EPU == filterEPUs,
-                                 Time >= 1968) %>%
-    dplyr::group_by(Var, EPU) %>%
-    dplyr::mutate(hline = mean(Mean, na.rm = T)) %>%
+  agg_bio<-agg |> dplyr::filter(EPU == filterEPUs,
+                                 Time >= 1968) |>
+    dplyr::group_by(Var, EPU) |>
+    dplyr::mutate(hline = mean(Mean, na.rm = T)) |>
     dplyr::ungroup()
 
   agg_bio$Var <- factor(agg_bio$Var,levels = c("Piscivore Spring",
@@ -67,12 +67,12 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
 
   if(report == "MidAtlantic"){
     #Get NEAMAP
-    neamap <- ecodata::mab_inshore_survey %>%
-      tidyr::separate(Var, into = c("Var",  "Val"), sep = "-") %>%
-      tidyr::pivot_wider(names_from = Val, values_from = Value) %>%
+    neamap <- ecodata::mab_inshore_survey |>
+      tidyr::separate(Var, into = c("Var",  "Val"), sep = "-") |>
+      tidyr::pivot_wider(names_from = Val, values_from = Value) |>
       dplyr::mutate(Value = as.numeric(Value),
-                    CV = as.numeric(CV)) %>%
-      dplyr::group_by(Var) %>%
+                    CV = as.numeric(CV)) |>
+      dplyr::group_by(Var) |>
       dplyr::mutate(hline = mean(Value),
                     SD = Value * CV, #calculate SD from CV
                     upper = Value + (2*SD),
@@ -82,13 +82,13 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
                                                "Benthivore Spring", "Benthivore Fall",
                                                "Planktivore Spring", "Planktivore Fall",
                                                "Benthos Spring", "Benthos Fall"))
-    neamap.1<-neamap %>%
+    neamap.1<-neamap |>
       dplyr::filter(stringr::str_detect(Var,"Piscivore"))
-    neamap.2<-neamap %>%
+    neamap.2<-neamap |>
       dplyr::filter(stringr::str_detect(Var,"Benthivore"))
-    neamap.3<-neamap %>%
+    neamap.3<-neamap |>
       dplyr::filter(stringr::str_detect(Var,"Planktivore"))
-    neamap.4<-neamap %>%
+    neamap.4<-neamap |>
       dplyr::filter(stringr::str_detect(Var,"Benthos"))
 
   }
@@ -100,8 +100,8 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
   #
   # Build each group plot, assemble below
   ## Piscivore
-  p1<-agg_bio %>%
-    dplyr::filter(stringr::str_detect(Var,"Piscivore")) %>%
+  p1<-agg_bio |>
+    dplyr::filter(stringr::str_detect(Var,"Piscivore")) |>
     ggplot2::ggplot() +
 
     #Highlight last ten years
@@ -157,8 +157,8 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
 
 
   ## Benthivore
-  p2<-agg_bio %>%
-    dplyr::filter(stringr::str_detect(Var,"Benthivore")) %>%
+  p2<-agg_bio |>
+    dplyr::filter(stringr::str_detect(Var,"Benthivore")) |>
     ggplot2::ggplot() +
 
     #Highlight last ten years
@@ -214,8 +214,8 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
 
 
   ### Planktivore
-  p3<-agg_bio %>%
-    dplyr::filter(stringr::str_detect(Var,"Planktivore")) %>%
+  p3<-agg_bio |>
+    dplyr::filter(stringr::str_detect(Var,"Planktivore")) |>
     ggplot2::ggplot() +
 
     #Highlight last ten years
@@ -271,8 +271,8 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
 
 
   ### Benthos
-  p4<-agg_bio %>%
-    dplyr::filter(stringr::str_detect(Var,"Benthos")) %>%
+  p4<-agg_bio |>
+    dplyr::filter(stringr::str_detect(Var,"Benthos")) |>
     #ggplot(aes(x = Time, y = Mean)) +
     ggplot2::ggplot() +
     #Highlight last ten years

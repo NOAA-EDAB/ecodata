@@ -47,7 +47,7 @@ raw.dir <- here::here("data-raw")
 
 get_species_groupings <- function(save_clean = F){
 
-  load(file.path(raw.dir, "SOE_species_list.Rdata"))
+  load(file.path(raw.dir, "SOE_species_list_24.Rdata"))
   species_groupings <- species %>% tibble::as_tibble()
 
   if (save_clean){
