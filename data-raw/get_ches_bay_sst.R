@@ -6,18 +6,18 @@ library(stars)
 raw.dir <- here::here("data-raw")
 
 # Chesapeake bay sst files from Ron
- ches_1_nc <-"AVHCW_SEASON-1_ANOMALY-2022vs2009-2021_MULTISAT_SSTMASKED_CD_1KM.nc4"
- ches_2_nc <-"AVHCW_SEASON-2_ANOMALY-2022vs2009-2021_MULTISAT_SSTMASKED_CD_1KM.nc4"
- ches_3_nc <-"AVHCW_SEASON-3_ANOMALY-2022vs2009-2021_MULTISAT_SSTMASKED_CD_1KM.nc4"
- ches_4_nc <-"AVHCW_SEASON-4_ANOMALY-2022vs2009-2021_MULTISAT_SSTMASKED_CD_1KM.nc4"
+ ches_1_nc <-"Vogel_ChesBay_SST_Anomaly_2023_Winter - Ronald Vogel - NOAA Affiliate.nc4" #Winter
+ ches_2_nc <-"Vogel_ChesBay_SST_Anomaly_2023_Spring - Ronald Vogel - NOAA Affiliate.nc4" #Spring
+ ches_3_nc <-"Vogel_ChesBay_SST_Anomaly_2023_Summer - Ronald Vogel - NOAA Affiliate.nc4" #Summer
+ ches_4_nc <-"Vogel_ChesBay_SST_Anomaly_2023_Fall - Ronald Vogel - NOAA Affiliate.nc4" #Fall
 
 
 get_ches_bay_sst <- function(save_clean = F){
 
-  ches1<- raster::raster(file.path(raw.dir, ches_1_nc),varname = "sst_anomaly")
-  ches2<- raster::raster(file.path(raw.dir, ches_2_nc),varname = "sst_anomaly")
-  ches3<- raster::raster(file.path(raw.dir, ches_3_nc),varname = "sst_anomaly")
-  ches4<- raster::raster(file.path(raw.dir, ches_4_nc),varname = "sst_anomaly")
+  ches1<- raster::raster(file.path(raw.dir, ches_1_nc),varname = "sst_anomaly") #Winter
+  ches2<- raster::raster(file.path(raw.dir, ches_2_nc),varname = "sst_anomaly") #Spring
+  ches3<- raster::raster(file.path(raw.dir, ches_3_nc),varname = "sst_anomaly") #Summer
+  ches4<- raster::raster(file.path(raw.dir, ches_4_nc),varname = "sst_anomaly") #Fall
 
 
   sst_rast<- raster::stack(ches1, ches2, ches3, ches4)
@@ -28,10 +28,10 @@ get_ches_bay_sst <- function(save_clean = F){
   r <- as.data.frame(r)
 
   ches_bay_sst <- r %>%
-    dplyr::rename(Winter = "sst.anomaly.2022.minus.2009.2021.1",
-                  Spring = "sst.anomaly.2022.minus.2009.2021.2",
-                  Summer = "sst.anomaly.2022.minus.2009.2021.3",
-                  Fall = "sst.anomaly.2022.minus.2009.2021.4") %>%
+    dplyr::rename(Winter = "sea_surface_subskin_temperature.anomaly.2023.minus.2007.2022.1",
+                  Spring = "sea_surface_subskin_temperature.anomaly.2023.minus.2007.2022.2",
+                  Summer = "sea_surface_subskin_temperature.anomaly.2023.minus.2007.2022.3",
+                  Fall = "sea_surface_subskin_temperature.anomaly.2023.minus.2007.2022.4") %>%
     tidyr::pivot_longer(!c(x, y), names_to = "Season", values_to = "Value") %>%
     dplyr::rename(Longitude = "y",
                   Latitude = "x") %>%
