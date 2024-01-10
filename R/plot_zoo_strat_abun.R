@@ -4,7 +4,7 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
-#' @param epu Character string. Which EPU in the report ("GB", "GOM", "MAB")
+#' @param EPU Character string. Which EPU in the report ("GB", "GOM", "MAB")
 #'
 #' @return ggplot object
 #'
@@ -14,7 +14,7 @@
 
 plot_zoo_strat_abun <- function(shadedRegion = NULL,
                               report="MidAtlantic",
-                              epu = "MAB") {
+                              EPU = "MAB") {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -24,10 +24,10 @@ plot_zoo_strat_abun <- function(shadedRegion = NULL,
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
   } else {
-    if (!(epu %in% c("GB", "GOM"))) {
+    if (!(EPU %in% c("GB", "GOM"))) {
       stop("For NewEngland the epu must be either 'GB' or 'GOM'")
     }
-    filterEPUs <- epu
+    filterEPUs <- EPU
   }
 
   # optional code to wrangle ecodata object prior to plotting
@@ -40,7 +40,7 @@ plot_zoo_strat_abun <- function(shadedRegion = NULL,
                    hline = mean(Value, na.rm = TRUE))
 
    if (nrow(fix) == 0) {
-     stop(paste0("Please check to make sure data are available for this epu (",epu,")"))
+     stop(paste0("Please check to make sure data are available for this epu (",EPU,")"))
    }
 
   # code for generating plot object p

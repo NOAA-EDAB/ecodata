@@ -10,6 +10,8 @@ plot_stom_fullness(shadedRegion = NULL, report = "MidAtlantic", EPU = "MAB")
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
+
+\item{EPU}{Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB}
 }
 \value{
 ggplot object

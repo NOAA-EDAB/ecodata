@@ -4,7 +4,7 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
-#' @param epu Character string. Which EPU in the report ("GB", "GOM", "MAB")
+#' @param EPU Character string. Which EPU in the report ("GB", "GOM", "MAB")
 #'
 #' @return ggplot object
 #'
@@ -14,7 +14,7 @@
 
 plot_condition <- function(shadedRegion = NULL,
                            report="MidAtlantic",
-                           epu="MAB") {
+                           EPU="MAB") {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -24,10 +24,10 @@ plot_condition <- function(shadedRegion = NULL,
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
   } else {
-    if (!(epu %in% c("GB", "GOM"))) {
+    if (!(EPU %in% c("GB", "GOM"))) {
       stop("For NewEngland the epu must be either 'GB' or 'GOM'")
     }
-    filterEPUs <- epu
+    filterEPUs <- EPU
   }
 
   numberOfConditions <- 5
@@ -90,7 +90,7 @@ plot_condition <- function(shadedRegion = NULL,
                    axis.text.y = ggplot2::element_text(size = 6),
                    panel.grid.major = ggplot2::element_blank(),
                    panel.grid.minor = ggplot2::element_blank()) +
-    ggplot2::ggtitle(paste0("Condition factor for species sampled in ",epu)) +
+    ggplot2::ggtitle(paste0("Condition factor for species sampled in ",EPU)) +
     ggplot2::ylab(ggplot2::element_blank())+
     ggplot2::xlab(ggplot2::element_blank())+
     ecodata::theme_ts()+

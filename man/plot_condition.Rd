@@ -4,14 +4,14 @@
 \alias{plot_condition}
 \title{plots Fish Condition}
 \usage{
-plot_condition(shadedRegion = NULL, report = "MidAtlantic", epu = "MAB")
+plot_condition(shadedRegion = NULL, report = "MidAtlantic", EPU = "MAB")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
-\item{epu}{Character string. Which EPU in the report ("GB", "GOM", "MAB")}
+\item{EPU}{Character string. Which EPU in the report ("GB", "GOM", "MAB")}
 }
 \value{
 ggplot object
