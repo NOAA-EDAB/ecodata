@@ -14,7 +14,7 @@
 
 plot_wind_revenue <- function(shadedRegion = NULL,
                               report="MidAtlantic",
-                              newVar = "landing") {
+                              varName = "landing") {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -30,7 +30,7 @@ plot_wind_revenue <- function(shadedRegion = NULL,
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
    fix <- tidyr::separate(ecodata::wind_revenue,col=Var, into = c("Species", "Var"),sep = "-sum_") |>
-     dplyr::filter(Var == newVar) |>
+     dplyr::filter(Var == varName) |>
      dplyr::mutate(Value = Value/1000000,
                    Time = as.integer(Time)) |>
      dplyr::mutate(Species = dplyr::recode(Species,"MONK"="MONKFISH"))

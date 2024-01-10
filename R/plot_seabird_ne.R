@@ -129,14 +129,15 @@ plot_seabird_ne <- function(shadedRegion = NULL,
 
     prey_freq2<- fix |>
       dplyr::filter(Freq < 0.05) |>
-      dplyr::mutate(Diet = c("<5% Occurance"))
+      dplyr::mutate(Diet = c("<5% Occurence"))
 
     prey_freq3<-prey_freq1 |>
       rbind(prey_freq2)
 
     colors<- c("grey", "#a6cee3", "#1f78b4", "#b2df8a",
                "#33a02c", "#fb9a99", "#fdbf6f",
-               "#ff7f00", "#cab2d6", "#6a3d9a")
+               "#ff7f00", "#cab2d6", "#6a3d9a",
+               "yellow")
 
     p <- ggplot2::ggplot() +
       ggplot2::geom_bar(data = prey_freq3,
