@@ -28,8 +28,7 @@ Imports:
   plyr,
   lubridate,
   vegan,
-  viridis,
-  mapdata
+  viridis
 Suggests:
   knitr,
   rmarkdown,

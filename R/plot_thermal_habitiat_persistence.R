@@ -7,7 +7,7 @@
 #'
 #' @return ggplot object
 #'
-#'
+#' @export
 
 #'
 
@@ -27,23 +27,29 @@ plot_thermal_habitat_persistence <- function(shadedRegion = NULL,
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
-  #fix <- ecodata::thermal_habitat_persistence |>
+  fix <- ecodata::thermal_habitat_persistence |>
+    dplyr::mutate(Var = paste0(Var,"\u00B0C"))
 
-  neus_map  <-  ggplot2::map_data('worldHires',region = 'USA')
+  # neus_map  <- ggplot2::map_data('worldHires',region = 'USA')
 
 
-  p <-
+  p <- fix |>
     ggplot2::ggplot()+
-    ggplot2::geom_tile(data = d, ggplot2::aes(x=longitude,y = latitude,color = Ndays),linewidth = 2)+
-    ggplot2::facet_wrap(~temp.threshold,labeller = 'label_both')+
-    ggplot2::annotation_map(neus_map,fill = 'grey70')+
+    ggplot2::geom_tile( ggplot2::aes(x=Longitude,y = Latitude, color = Value),linewidth = setup$line.size) +
+    ggplot2::geom_sf(data=ecodata::coast, size = setup$map.lwd) +
+    ggplot2::facet_wrap(~Var )+
     ggplot2::scale_color_viridis_c()+
+    ggplot2::coord_sf(xlim = c(setup$xmin,setup$xmax), ylim = c(setup$ymin,setup$ymax)) +
+    #ggplot2::annotation_map(neus.map,fill = "grey70")+
+
     ggplot2::xlab('')+
     ggplot2::ylab('')+
-    ggplot2::theme_bw()+
-    ggplot2::theme(legend.position = 'bottom',
-          panel.grid = ggplot2::element_blank(),
-          plot.title = ggplot2::element_text(hjust = 0.5))
+    ecodata::theme_ts()+
+    ecodata::theme_facet()+
+    ecodata::theme_title() +
+    ggplot2::theme(legend.position = "bottom",
+                   legend.title = ggplot2::element_text(Units))
+
 
 
     return(p)

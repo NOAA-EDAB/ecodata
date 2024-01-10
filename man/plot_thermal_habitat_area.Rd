@@ -21,5 +21,5 @@ plot_thermal_habitat_area(
 ggplot object
 }
 \description{
-plots thermal_habitat_area dataset.
+plots thermal_habitat_area data set.
 }

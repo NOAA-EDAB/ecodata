@@ -4,10 +4,7 @@
 \alias{plot_seasonal_sst_anomaly_gridded}
 \title{plot seasonal_sst_anomaly_gridded}
 \usage{
-plot_seasonal_sst_anomaly_gridded(
-  shadedRegion = shadedRegion,
-  report = "MidAtlantic"
-)
+plot_seasonal_sst_anomaly_gridded(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{season}{Character string. Season to plot. (Default = NULL, plot all seasons)}
