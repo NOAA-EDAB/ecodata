@@ -5,7 +5,7 @@ library(tidyr)
 
 raw.dir <- here::here("data-raw")
 
-cold_pool_csv <- "cold_pool_indice_1959_2022.csv" # "Glorys12v1_ColdPool_Extents.nc" #File from Zhoumin
+cold_pool_csv <- "cold_pool_indices_1959_2023 - Joseph Caracappa - NOAA Federal.csv" # "Glorys12v1_ColdPool_Extents.nc" #File from Zhoumin
 
 
 ### Cold pool index from Hubert du Pontavice
@@ -20,8 +20,7 @@ get_cold_pool <- function(save_clean = F){
                                  "extent_index",         "se_extent_index" ),
                         names_to = "Var",values_to = "Value") %>%
     dplyr::mutate(EPU = c("MAB")) %>%
-    dplyr::rename(Time = year) %>%
-    dplyr::select(!X)
+    dplyr::rename(Time = year)
 
 
    # metadata ----
