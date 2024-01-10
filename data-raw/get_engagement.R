@@ -9,17 +9,17 @@ library(janitor)
 
 raw.dir <- here::here("data-raw")
 
-engagement_xlsx<-"EJ_in_Top_Fishing_Communities_WENG_121222 - Changhua Weng - NOAA Affiliate.xlsx"
+engagement_xlsx<-"EJ_in_Top_Fishing_Communities_WENG_120623 - Changhua Weng - NOAA Affiliate.xlsx"
 get_eng_rel <- function(save_clean = F){
 
   ## MAB
   d1 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "Mid-Atlantic_Bubble Chart")
 
   dta <- d1 %>%
-    dplyr::slice(-(16:19), -38) %>% # Removes the rows containing new and original names
+    dplyr::slice(-(17:21), -39) %>% # Removes the rows containing new and original names
     dplyr::rename("Eng" = "Commercial Engagement Index",
                   "Rel" = "Commercial Reliance Index") %>%
-    dplyr::mutate(Fishery = c(rep("Commercial",15),rep("Recreational",18)),
+    dplyr::mutate(Fishery = c(rep("Commercial",16),rep("Recreational",17)),
                   Region = c("MAB"))
 
   # d3 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "Mid-Atlantic_Radar Graph")
@@ -38,7 +38,7 @@ get_eng_rel <- function(save_clean = F){
   d2 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "New England_Bubble Chart")
 
   dta2 <- d2 %>%
-    slice( -(18:22)) %>% # Removes the rows containing new and original names
+    slice( -(18:21)) %>% # Removes the rows containing new and original names
     dplyr::rename("Eng" = "Commercial Engagement Index",
                   "Rel" = "Commercial Reliance Index")  %>%
     dplyr::mutate(Fishery = c(rep("Commercial",17),rep("Recreational",18)),
@@ -61,7 +61,7 @@ get_eng_rel <- function(save_clean = F){
   #                 "Fishery", "EJ Rating", "Region"  )
 
   engagement <- dta %>% rbind(dta2) %>%
-    dplyr::rename("Community" = "Commuity Name") %>%
+    dplyr::rename("Community" = "Community Name") %>%
     dplyr::mutate(Eng = as.numeric(Eng),
                   Rel = as.numeric(Rel),
                   `EJ Rating` = dplyr::recode(`EJ Rating`,
