@@ -31,14 +31,14 @@ plot_thermal_habitat_persistence <- function(shadedRegion = NULL,
     dplyr::mutate(Var = paste0(Var,"\u00B0C"))
 
   # neus_map  <- ggplot2::map_data('worldHires',region = 'USA')
-
+  legendTitle <- unique(fix$Units)
 
   p <- fix |>
     ggplot2::ggplot()+
     ggplot2::geom_tile( ggplot2::aes(x=Longitude,y = Latitude, color = Value),linewidth = setup$line.size) +
     ggplot2::geom_sf(data=ecodata::coast, size = setup$map.lwd) +
     ggplot2::facet_wrap(~Var )+
-    ggplot2::scale_color_viridis_c()+
+    ggplot2::scale_color_viridis_c(legendTitle)+
     ggplot2::coord_sf(xlim = c(setup$xmin,setup$xmax), ylim = c(setup$ymin,setup$ymax)) +
     #ggplot2::annotation_map(neus.map,fill = "grey70")+
 
@@ -47,8 +47,7 @@ plot_thermal_habitat_persistence <- function(shadedRegion = NULL,
     ecodata::theme_ts()+
     ecodata::theme_facet()+
     ecodata::theme_title() +
-    ggplot2::theme(legend.position = "bottom",
-                   legend.title = ggplot2::element_text(Units))
+    ggplot2::theme(legend.position = "bottom")
 
 
 
