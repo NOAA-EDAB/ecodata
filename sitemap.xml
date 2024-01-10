@@ -403,6 +403,9 @@
     <loc>https://noaa-edab.github.io/ecodata/reference/plot_ppr.html</loc>
   </url>
   <url>
+    <loc>https://noaa-edab.github.io/ecodata/reference/plot_productivity_anomaly.html</loc>
+  </url>
+  <url>
     <loc>https://noaa-edab.github.io/ecodata/reference/plot_rec_hms.html</loc>
   </url>
   <url>
@@ -449,6 +452,12 @@
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ecodata/reference/plot_survey_shannon.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ecodata/reference/plot_thermal_habitat_area.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ecodata/reference/plot_thermal_habitat_persistence.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ecodata/reference/plot_trans_dates.html</loc>
