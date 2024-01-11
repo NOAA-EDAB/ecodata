@@ -5,19 +5,19 @@ library(dplyr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-bt_csv <- "bt_temp_product_epu - Hubert duPontavice - NOAA Affiliate.csv"
-bt_seasonal_csv<- "bt_temp_times_series_anomaly_epu.csv"
+bt_csv <- "bt_temp_annual.csv"
+bt_seasonal_csv<- "bt_temp_time_series_anomaly_epu - Joseph Caracappa - NOAA Federal.csv"
 get_bottom_temp_comp <- function(save_clean = F){
 
   bottom_temp_comp<- read.csv(file.path(raw.dir,bt_csv))  %>%
-    dplyr::select(!X) %>%
+    dplyr::select(!source) %>%
     dplyr::rename("Time" = "year",
                   "EPU" = "subarea",
                   "Value" = "bt_temp") %>%
     dplyr::mutate(Var = c("Annual_Bottom Temp"),
                   Units = c("degree C"))
   bottom_temp_comp_seasonal<- read.csv(file.path(raw.dir,bt_seasonal_csv))  %>%
-    dplyr::select(!X) %>%
+    #dplyr::select(!X) %>%
     dplyr::mutate(season = recode(season, "1" = "Winter",
                                   "2" = "Spring", "3" = "Summer",
                                   "4" = "Fall")) %>%
