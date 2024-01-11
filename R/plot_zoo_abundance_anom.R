@@ -83,6 +83,7 @@ plot_zoo_abundance_anom <- function(shadedRegion = NULL,
 
     return(p)
 
-
-
 }
+
+attr(plot_zoo_abundance_anom,"varName") <- c("copepod","euphasid")
+attr(plot_zoo_abundance_anom,"report") <- c("MidAtlantic","NewEngland")

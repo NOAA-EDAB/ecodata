@@ -74,6 +74,9 @@ plot_energy_density <- function(shadedRegion = NULL,
    #  }
 
     return(p)
+}
+
+attr(plot_energy_density,"report") <- c("MidAtlantic","NewEngland")
 
   # Paste commented original plot code chunk for reference
   # d<-ecodata::energy_density %>%
@@ -110,5 +113,3 @@ plot_energy_density <- function(shadedRegion = NULL,
   #   ecodata::theme_title()
   #
   #
-
-}

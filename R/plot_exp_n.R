@@ -96,6 +96,12 @@ plot_exp_n <- function(shadedRegion = NULL,
 
     return(p)
 
+}
+
+attr(plot_exp_n,"varName") <- c("fall","spring")
+attr(plot_exp_n,"report") <- c("MidAtlantic","NewEngland")
+
+
   # Paste commented original plot code chunk for reference
   # exp<- ecodata::exp_n %>%
   #   tidyr::separate(Var, into = c("Var", "Season"), sep = "-") %>%
@@ -145,5 +151,3 @@ plot_exp_n <- function(shadedRegion = NULL,
   #   ecodata::theme_title()
   #
   #
-
-}

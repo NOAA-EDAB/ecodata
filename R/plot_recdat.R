@@ -95,3 +95,6 @@ plot_recdat <- function(shadedRegion = NULL,
 
 
 }
+
+attr(plot_recdat,"varName") <- c("landings","effortdiversity","catchdiversity","effort")
+attr(plot_recdat,"report") <- c("MidAtlantic","NewEngland")

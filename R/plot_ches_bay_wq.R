@@ -73,6 +73,10 @@ plot_ches_bay_wq <- function(shadedRegion = NULL,
 
     return(p)
 
+}
+
+attr(plot_ches_bay_wq,"report") <- c("MidAtlantic","NewEngland")
+
   # Paste commented original plot code chunk for reference
   # minlab <- seq(1987,2017,5)
   # maxlab <- seq(1989,2019,5)
@@ -102,4 +106,4 @@ plot_ches_bay_wq <- function(shadedRegion = NULL,
   #   ecodata::theme_ts()
   #
 
-}
+

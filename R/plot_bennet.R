@@ -90,6 +90,10 @@ plot_bennet <- function(shadedRegion = NULL,
     }
 
     return(p)
+}
+
+
+attr(plot_bennet,"report") <- c("MidAtlantic","NewEngland")
 
   # Paste commented original plot code chunk for reference
   # MAB version
@@ -156,4 +160,3 @@ plot_bennet <- function(shadedRegion = NULL,
   #
   #
 
-}

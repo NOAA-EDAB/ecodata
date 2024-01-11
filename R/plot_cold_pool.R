@@ -150,6 +150,9 @@ plot_cold_pool <- function(shadedRegion = NULL,
 
 
   return(p)
+}
+
+attr(plot_cold_pool,"report") <- c("MidAtlantic","NewEngland")
 
   # Paste commented original plot code chunk for reference
   # cp1<- ecodata::cold_pool %>%
@@ -261,5 +264,3 @@ plot_cold_pool <- function(shadedRegion = NULL,
   # gridExtra::grid.arrange(cpi, pi,ei, ncol=3)
   #
   #
-
-}

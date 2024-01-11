@@ -122,6 +122,10 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
 
 }
 
+attr(plot_productivity_anomaly,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_productivity_anomaly,"varName") <- c("anomaly","assessment")
+attr(plot_productivity_anomaly,"EPU") <- c("MAB","GB","GOM")
+
 
 #' anomaly stacked barchart. needs to be reworked
 #' @noRd

@@ -63,3 +63,5 @@ plot_wind_occupancy <- function(shadedRegion = NULL,
     return(tab)
 
 }
+
+attr(plot_wind_occupancy,"report") <- c("MidAtlantic","NewEngland")

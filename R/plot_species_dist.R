@@ -87,5 +87,7 @@ plot_species_dist <- function(shadedRegion = NULL,
 
     return(p)
 
-
 }
+
+attr(plot_species_dist,"varName") <- c("along","depth")
+attr(plot_species_dist,"report") <- c("MidAtlantic","NewEngland")

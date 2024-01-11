@@ -317,6 +317,12 @@ plot_comdat <- function(shadedRegion = NULL,
   # }
 
   return(p)
+}
+
+attr(plot_chl_pp,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_chl_pp,"varName") <- c("langings","revenue")
+attr(plot_chl_pp,"plottype") <- c("total","guild")
+attr(plot_chl_pp,"NAFOyear") <- 2019
 
   # Paste commented original plot code chunk for reference
   # Sorry can't fit them all here, 6 different code chunks
@@ -340,4 +346,3 @@ plot_comdat <- function(shadedRegion = NULL,
   #
   #
 
-}

@@ -84,6 +84,11 @@ plot_heatwave_year <- function(shadedRegion = NULL,
     }
 
     return(p)
+}
+
+attr(plot_heatwave_year,"varName") <- c("Surface","Bottom")
+attr(plot_heatwave_year,"report") <- c("MidAtlantic","NewEngland")
+
 
   # Paste commented original plot code chunk for reference
     # ecodata::heatwave_year %>%
@@ -107,4 +112,3 @@ plot_heatwave_year <- function(shadedRegion = NULL,
     #   ecodata::theme_title()
     #
 
-}

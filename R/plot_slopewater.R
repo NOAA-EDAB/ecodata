@@ -69,6 +69,9 @@ plot_slopewater <- function(shadedRegion = NULL,
     # }
 
     return(p)
+}
+
+attr(plot_slopewater,"report") <- c("MidAtlantic","NewEngland")
 
   # Paste commented original plot code chunk for reference
   # ecodata::dataset |>
@@ -90,5 +93,3 @@ plot_slopewater <- function(shadedRegion = NULL,
   #   ecodata::theme_title()
   #
   #
-
-}

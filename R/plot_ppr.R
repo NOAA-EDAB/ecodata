@@ -22,6 +22,11 @@ plot_ppr <- function(shadedRegion = NULL,
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
                                report=report)
 
+  if (threshold == "regional"){
+    # not yet available
+    return(p = NULL)
+  }
+
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
@@ -121,6 +126,13 @@ plot_ppr <- function(shadedRegion = NULL,
 
     return(p)
 
+}
+
+attr(plot_ppr,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_ppr,"varName") <- c("anomaly","assessment")
+attr(plot_ppr,"threshold") <- c("global","regional")
+
+
   # Paste commented original plot code chunk for reference
   # ecodata::dataset |>
   #   dplyr::filter(Var %in% c("..."),
@@ -142,4 +154,3 @@ plot_ppr <- function(shadedRegion = NULL,
   #
   #
 
-}

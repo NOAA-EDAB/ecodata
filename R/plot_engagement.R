@@ -118,3 +118,6 @@ plot_engagement <- function(shadedRegion = NULL,
   #
 
 }
+
+attr(plot_engagement,"varName") <- c("Commercial","Recreational")
+attr(plot_commercial_div,"report") <- c("MidAtlantic","NewEngland")

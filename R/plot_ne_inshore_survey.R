@@ -94,3 +94,5 @@ plot_ne_inshore_survey <- function(shadedRegion = NULL,
 
 
 }
+
+attr(plot_ne_inshore_survey,"report") <- c("MidAtlantic","NewEngland")
