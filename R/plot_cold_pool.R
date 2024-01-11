@@ -4,8 +4,6 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic" only, default)
-#' @param PSYyear Numeric value. Year that indicator switches to PSY data source.
-#' Defaults to max year - 1 so last 2 years of data are PSY source, as was true in 2022.
 #'
 #' @return ggplot object
 #'
@@ -14,8 +12,7 @@
 #'
 
 plot_cold_pool <- function(shadedRegion = NULL,
-                           report="MidAtlantic",
-                           PSYyear=max(ecodata::cold_pool$Time)-1) {
+                           report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -33,13 +30,19 @@ plot_cold_pool <- function(shadedRegion = NULL,
   # if no PSYyear given by user, default to the last 2 years in dataset
   #PSYyear <- ifelse(is.null(PSYyear), max(ecodata::cold_pool$Time)-1, PSYyear)
 
-  cp1<- ecodata::cold_pool |>
-    dplyr::filter(Time >= PSYyear) |>
-    dplyr::mutate(Source = c("PSY"))
-  cpts<- ecodata::cold_pool |>
-    dplyr::filter(Time <= PSYyear-1) |>
-    dplyr::mutate(Source = c("Glorys")) |>
-    rbind(cp1)
+  # new dataset has both GLORYS and PSY for comparison
+  # preferentially use GLORYS where duplicates exist
+
+  cpdup <- ecodata::cold_pool |>
+    dplyr::group_by(Time, Var, EPU) |>
+    dplyr::mutate(duplicated = dplyr::n()>1) |>
+    dplyr::ungroup()
+
+  cpts <- cpdup |>
+    dplyr::filter(!duplicated) |>
+    dplyr::bind_rows(cpdup |>
+                       dplyr::filter(duplicated & source=="GLORYS")) |>
+    dplyr::select(-duplicated)
 
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
@@ -61,7 +64,7 @@ plot_cold_pool <- function(shadedRegion = NULL,
                       xmin = setup$x.shade.min , xmax = setup$x.shade.max,
                       ymin = -Inf, ymax = Inf)+
     ggplot2::geom_line(ggplot2::aes(x = Time, y = Value), size = setup$lwd) +
-    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, shape = Source), size = setup$pcex) +
+    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, shape = source), size = setup$pcex) +
     ggplot2::scale_shape_manual(values = c(16, 1))+
     ggplot2::theme(legend.position = "none")+
     # ggplot2::geom_ribbon(aes(x = Time, ymin = Lower, ymax = Upper), fill = "gray")+
@@ -92,7 +95,7 @@ plot_cold_pool <- function(shadedRegion = NULL,
                       xmin = setup$x.shade.min , xmax = setup$x.shade.max,
                       ymin = -Inf, ymax = Inf)+
     ggplot2::geom_line(ggplot2::aes(x = Time, y = Value), size = setup$lwd) +
-    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, shape = Source), size = setup$pcex) +
+    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, shape = source), size = setup$pcex) +
     ggplot2::scale_shape_manual(values = c(16, 1))+
     ggplot2::theme(legend.position = "none")+
     ggplot2::geom_hline(ggplot2::aes(yintercept = 0))+
@@ -107,7 +110,7 @@ plot_cold_pool <- function(shadedRegion = NULL,
     # ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -250,
     #          colour = "red", size = 0.70, arrow = arrow())+
     ggplot2::annotate("text", x = 1990, y = 125, label = "Larger",size = 4, colour = "blue")+
-    ggplot2::annotate("text", x = 1990, y = -400, label = "Smaller",size = 4, colour = "red")
+    ggplot2::annotate("text", x = 1990, y = -350, label = "Smaller",size = 4, colour = "red")
 
 
   pi<- cpts |>
@@ -123,7 +126,7 @@ plot_cold_pool <- function(shadedRegion = NULL,
                       xmin = setup$x.shade.min , xmax = setup$x.shade.max,
                       ymin = -Inf, ymax = Inf)+
     ggplot2::geom_line(ggplot2::aes(x = Time, y = Value), size = setup$lwd) +
-    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, shape = Source), size = setup$pcex) +
+    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, shape = source), size = setup$pcex) +
     ggplot2::scale_shape_manual(values = c(16, 1))+
     ggplot2::theme(legend.position = "none")+
     ggplot2::geom_hline(ggplot2::aes(yintercept = 0))+
@@ -137,8 +140,8 @@ plot_cold_pool <- function(shadedRegion = NULL,
     #          colour = "blue", size = 0.70, arrow = arrow())+
     # ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -1.6,
     #          colour = "red", size = 0.70, arrow = arrow())+
-    ggplot2::annotate("text", x = 1990, y = 0.8, label = "Longer", size = 4,colour = "blue")+
-    ggplot2::annotate("text", x = 1990, y = -1.8, label = "Shorter", size = 4, colour = "red")
+    ggplot2::annotate("text", x = 1990, y = 1.5, label = "Longer", size = 4,colour = "blue")+
+    ggplot2::annotate("text", x = 1990, y = -1.5, label = "Shorter", size = 4, colour = "red")
 
   #cowplot::plot_grid(cpi, pi, ei, labels = c('a', 'b', 'c'), align = "h")
 
