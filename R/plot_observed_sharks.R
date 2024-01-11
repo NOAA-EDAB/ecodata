@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_observed_sharks <- function(shadedRegion = shadedRegion,
+plot_observed_sharks <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

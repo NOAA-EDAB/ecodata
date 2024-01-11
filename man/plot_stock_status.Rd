@@ -4,7 +4,7 @@
 \alias{plot_stock_status}
 \title{plot stock_Status}
 \usage{
-plot_stock_status(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_stock_status(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

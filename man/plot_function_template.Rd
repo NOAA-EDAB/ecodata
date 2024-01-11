@@ -4,7 +4,7 @@
 \alias{plot_function_template}
 \title{plot dataset name}
 \usage{
-plot_function_template(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_function_template(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

@@ -12,7 +12,7 @@
 #' @export
 #'
 
-plot_engagement <- function(shadedRegion = shadedRegion,
+plot_engagement <- function(shadedRegion = NULL,
                               report="MidAtlantic",
                             varName="Commercial") {
 

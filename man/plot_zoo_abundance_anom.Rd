@@ -5,7 +5,7 @@
 \title{plot zooplankton abundance anomaly}
 \usage{
 plot_zoo_abundance_anom(
-  shadedRegion = shadedRegion,
+  shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "copepod"
 )

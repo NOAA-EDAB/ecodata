@@ -4,6 +4,7 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
+#' @param EPU Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB
 #'
 #' @return ggplot object
 #'
@@ -11,7 +12,7 @@
 #' @export
 #'
 
-plot_stom_fullness <- function(shadedRegion = shadedRegion,
+plot_stom_fullness <- function(shadedRegion = NULL,
                               report="MidAtlantic",
                               EPU = "MAB") {
 
@@ -23,6 +24,9 @@ plot_stom_fullness <- function(shadedRegion = shadedRegion,
   if (report == "MidAtlantic") {
     filterEPUs <- "MAB"
   } else {
+    if (!(EPU %in% c("GB","GOM"))) {
+      stop("For NewEngland the epu must be either 'GB' or 'GOM'")
+    }
     filterEPUs <- EPU
   }
 

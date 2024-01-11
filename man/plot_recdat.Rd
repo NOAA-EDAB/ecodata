@@ -4,11 +4,7 @@
 \alias{plot_recdat}
 \title{plot recreational data}
 \usage{
-plot_recdat(
-  shadedRegion = shadedRegion,
-  report = "MidAtlantic",
-  varName = "landings"
-)
+plot_recdat(shadedRegion = NULL, report = "MidAtlantic", varName = "landings")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

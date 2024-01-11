@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_long_term_sst <- function(shadedRegion = shadedRegion,
+plot_long_term_sst <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

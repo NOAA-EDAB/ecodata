@@ -12,7 +12,7 @@
 #' @export
 #'
 
-plot_habs <- function(shadedRegion = shadedRegion,
+plot_habs <- function(shadedRegion = NULL,
                               report="MidAtlantic",
                               varName = "Alexandrium") {
 

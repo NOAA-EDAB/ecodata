@@ -4,7 +4,7 @@
 \alias{plot_grayseal}
 \title{plot grayseal}
 \usage{
-plot_grayseal(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_grayseal(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

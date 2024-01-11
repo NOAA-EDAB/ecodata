@@ -5,7 +5,7 @@
 \title{plot cold_pool}
 \usage{
 plot_cold_pool(
-  shadedRegion = shadedRegion,
+  shadedRegion = NULL,
   report = "MidAtlantic",
   PSYyear = max(ecodata::cold_pool$Time) - 1
 )

@@ -4,7 +4,7 @@
 \alias{plot_harborporpoise}
 \title{plot harborporpoise}
 \usage{
-plot_harborporpoise(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_harborporpoise(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

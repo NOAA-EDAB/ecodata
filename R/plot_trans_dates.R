@@ -10,7 +10,7 @@
 #'
 #' @export
 
-plot_trans_dates <- function(shadedRegion = shadedRegion,
+plot_trans_dates <- function(shadedRegion = NULL,
                                       report="MidAtlantic",
                                       varName = "timing") {
 

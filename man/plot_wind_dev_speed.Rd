@@ -4,7 +4,7 @@
 \alias{plot_wind_dev_speed}
 \title{plot wind lease cumulative areas}
 \usage{
-plot_wind_dev_speed(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_wind_dev_speed(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

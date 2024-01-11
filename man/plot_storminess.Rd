@@ -4,7 +4,7 @@
 \alias{plot_storminess}
 \title{plot storminess data}
 \usage{
-plot_storminess(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_storminess(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

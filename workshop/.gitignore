@@ -1,8 +1,8 @@
-*.html
+#*.html
 
 # folders
-/*
-!.gitignore
-!*.Rmd
-!*.rmd
-!images/
+#/*
+#!.gitignore
+#!*.Rmd
+#!*.rmd
+#!images/

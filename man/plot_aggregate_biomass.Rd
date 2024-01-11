@@ -5,9 +5,9 @@
 \title{plot aggregate_biomass}
 \usage{
 plot_aggregate_biomass(
-  shadedRegion = shadedRegion,
+  shadedRegion = NULL,
   report = "MidAtlantic",
-  EPU = "GB"
+  EPU = "MAB"
 )
 }
 \arguments{

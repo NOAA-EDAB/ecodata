@@ -13,7 +13,7 @@
 #' @export
 #'
 
-plot_abc.acl <- function(shadedRegion = shadedRegion,
+plot_abc.acl <- function(shadedRegion = NULL,
                          report="MidAtlantic",
                          plottype = "Stacked") {
 

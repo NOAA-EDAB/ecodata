@@ -4,7 +4,7 @@
 \alias{plot_nao}
 \title{plot Northern Oscillation Index}
 \usage{
-plot_nao(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_nao(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

@@ -14,7 +14,7 @@
 #' @export
 #'
 
-plot_stock_status <- function(shadedRegion = shadedRegion,
+plot_stock_status <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

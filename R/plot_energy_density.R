@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_energy_density <- function(shadedRegion = shadedRegion,
+plot_energy_density <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

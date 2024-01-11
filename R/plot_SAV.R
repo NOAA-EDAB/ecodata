@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_SAV <- function(shadedRegion = shadedRegion,
+plot_SAV <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)

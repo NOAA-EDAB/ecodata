@@ -4,18 +4,14 @@
 \alias{plot_phyto_size}
 \title{plot phytoplankton by size class}
 \usage{
-plot_phyto_size(
-  shadedRegion = shadedRegion,
-  report = "MidAtlantic",
-  epu = "MAB"
-)
+plot_phyto_size(shadedRegion = NULL, report = "MidAtlantic", EPU = "MAB")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
-\item{epu}{Character string. Specify the EPU to plot within the report (Only affects NewEngland)}
+\item{EPU}{Character string. Specify the EPU to plot within the report (Only affects NewEngland)}
 }
 \value{
 ggplot object

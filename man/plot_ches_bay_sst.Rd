@@ -4,7 +4,7 @@
 \alias{plot_ches_bay_sst}
 \title{plot ches_bay_sst}
 \usage{
-plot_ches_bay_sst(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_ches_bay_sst(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

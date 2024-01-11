@@ -4,7 +4,7 @@
 \alias{plot_wind_port}
 \title{plot revenue by port from wind energy}
 \usage{
-plot_wind_port(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_wind_port(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

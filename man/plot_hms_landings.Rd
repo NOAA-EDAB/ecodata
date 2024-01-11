@@ -5,7 +5,7 @@
 \title{plot hms_landings}
 \usage{
 plot_hms_landings(
-  shadedRegion = shadedRegion,
+  shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "Landings"
 )

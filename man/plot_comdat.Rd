@@ -5,7 +5,7 @@
 \title{plot comdat}
 \usage{
 plot_comdat(
-  shadedRegion = shadedRegion,
+  shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "landings",
   plottype = "total",

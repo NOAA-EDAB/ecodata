@@ -8,7 +8,7 @@
 #'
 #' @export
 
-plot_seasonal_sst_anomaly_gridded <- function(shadedRegion = shadedRegion,
+plot_seasonal_sst_anomaly_gridded <- function(shadedRegion = NULL,
                                               report = "MidAtlantic") {
 
 

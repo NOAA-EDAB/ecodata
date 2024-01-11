@@ -4,7 +4,7 @@
 \alias{plot_bennet}
 \title{plot Bennet indicator}
 \usage{
-plot_bennet(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_bennet(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_wind_port <- function(shadedRegion = shadedRegion,
+plot_wind_port <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)
