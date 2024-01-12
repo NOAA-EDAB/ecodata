@@ -1,5 +1,7 @@
 #' plot bottom anomaly temperature time series
 #'
+#' plots bottom_temp_comp data set. Use GLORYS and PSY to supplement
+#'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #'
@@ -21,8 +23,7 @@ plot_bottom_temp_comp <- function(shadedRegion=NULL,
 
 
   fix <- ecodata::bottom_temp_comp |>
-    dplyr::mutate(Source = dplyr::case_when(Time <= 2020 ~ "GLORYS",
-                                            TRUE ~ "PSY")) |>
+    dplyr::filter(Source == "GLORYS") |>
     dplyr::filter(EPU %in% filterEPUs) |>
     dplyr::mutate(Time = as.numeric(Time),
                   Var = stringr::str_to_title(stringr::str_extract(Var,"Winter|Spring|Summer|Fall"))) |>
@@ -30,7 +31,29 @@ plot_bottom_temp_comp <- function(shadedRegion=NULL,
 
   fix$Var <- factor(fix$Var, levels= c("Winter","Spring","Summer","Fall"))
 
-  # ne_anom <- ne_anom |>
+  psy <- ecodata::bottom_temp_comp |>
+    dplyr::filter(Source == "PSY") |>
+    dplyr::filter(EPU %in% filterEPUs) |>
+    dplyr::mutate(Time = as.numeric(Time),
+                  Var = stringr::str_to_title(stringr::str_extract(Var,"Winter|Spring|Summer|Fall"))) |>
+    dplyr::filter(!Var == "NA")
+
+  psy$Var <- factor(psy$Var, levels= c("Winter","Spring","Summer","Fall"))
+
+  #find last year of GLORYS then add PSY if needed
+  for (avar in unique(psy$Var)) {
+    maxYearGlorys <- fix |>
+      dplyr::filter(Var == avar) |>
+      dplyr::pull(Time) |>
+      max()
+    addpsy <- psy |>
+      dplyr::filter(Var == avar,Time>maxYearGlorys)
+
+    fix <- rbind(fix,addpsy)
+  }
+
+
+    # ne_anom <- ne_anom |>
   #   dplyr::filter(Var %in% season)
 
   p <- ggplot2::ggplot(data = fix,
