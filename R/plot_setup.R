@@ -116,7 +116,7 @@ plot_setup <- function(shadedRegion = shadedRegion,
     }
 
     #GIS directory
-    gis.dir <- here::here("data-raw","gridded")
+    #gis.dir <- here::here("data-raw","gridded")
 
     plotsettings <- list(crs = crs,
                          epu_sf = epu_sf,
@@ -153,7 +153,7 @@ plot_setup <- function(shadedRegion = shadedRegion,
                          epu_abbr = epu_abbr,
                          region = region,
                          region_abbr = region_abbr,
-                         gis.dir = gis.dir,
+                        # gis.dir = gis.dir,
                          shadedRegion = shadedRegion
                          )
 
