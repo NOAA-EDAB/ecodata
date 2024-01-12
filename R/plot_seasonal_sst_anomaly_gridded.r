@@ -16,8 +16,16 @@ plot_seasonal_sst_anomaly_gridded <- function(shadedRegion = NULL,
                                report=report)
 
   if (report == "MidAtlantic") {
-    stop(" This data set is for New England only")
     filterEPUs <- c("MAB")
+
+    xmin = -77
+    xmax = -66
+    ymin = 35.5
+    ymax = 43
+    xlims <- c(xmin, xmax)
+    ylims <- c(ymin, ymax)
+
+
   } else {
     filterEPUs <- c("GB", "GOM")
     # Set lat/lon window for maps
@@ -61,7 +69,7 @@ plot_seasonal_sst_anomaly_gridded <- function(shadedRegion = NULL,
     ggplot2::coord_sf(xlim = xlims, ylim = ylims) +
     ggplot2::facet_wrap(Season~.) +
     ecodata::theme_map() +
-    ggplot2::ggtitle("SST anomaly (2022)") +
+    ggplot2::ggtitle("SST anomaly") +
     ggplot2::xlab("Longitude") +
     ggplot2::ylab("Latitude") +
     ggplot2::theme(panel.border = ggplot2::element_rect(colour = "black", fill=NA, size=0.75),
