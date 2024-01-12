@@ -10,7 +10,6 @@ bt_seasonal_csv<- "bt_temp_time_series_anomaly_epu - Joseph Caracappa - NOAA Fed
 get_bottom_temp_comp <- function(save_clean = F){
 
   bottom_temp_comp<- read.csv(file.path(raw.dir,bt_csv))  %>%
-    dplyr::select(!source) %>%
     dplyr::rename("Time" = "year",
                   "EPU" = "subarea",
                   "Value" = "bt_temp") %>%
@@ -26,7 +25,7 @@ get_bottom_temp_comp <- function(save_clean = F){
                   "Value" = "anomaly") %>%
     dplyr::mutate(Var = paste0(season,"_Bottom Temp Anomaly"),
                   Units = c("degree C")) %>%
-    dplyr::select(Time, Value, Var, EPU, Units)
+    dplyr::select(Time, Value, Var, EPU, Units, source)
 
   bottom_temp_comp<- rbind(bottom_temp_comp, bottom_temp_comp_seasonal) %>%
     tibble::as_tibble()
