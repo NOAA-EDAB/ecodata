@@ -16,8 +16,16 @@ plot_seasonal_sst_anomaly_gridded <- function(shadedRegion = NULL,
                                report=report)
 
   if (report == "MidAtlantic") {
-    stop(" This data set is for New England only")
     filterEPUs <- c("MAB")
+
+    xmin = -77
+    xmax = -66
+    ymin = 35.5
+    ymax = 43
+    xlims <- c(xmin, xmax)
+    ylims <- c(ymin, ymax)
+
+
   } else {
     filterEPUs <- c("GB", "GOM")
     # Set lat/lon window for maps
