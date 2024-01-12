@@ -12,7 +12,7 @@
 #'
 
 plot_SAV <- function(shadedRegion = NULL,
-                              report="MidAtlantic") {
+                     report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -74,6 +74,11 @@ plot_SAV <- function(shadedRegion = NULL,
     # }
 
     return(p)
+}
+
+
+attr(plot_SAV,"report") <- c("MidAtlantic","NewEngland")
+
 
   # Paste commented original plot code chunk for reference
   # ecodata::SAV %>%
@@ -108,5 +113,3 @@ plot_SAV <- function(shadedRegion = NULL,
   #   ecodata::theme_facet()
   #
   #
-
-}

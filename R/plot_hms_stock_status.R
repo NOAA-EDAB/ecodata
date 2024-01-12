@@ -95,6 +95,9 @@ plot_hms_stock_status <- function(shadedRegion = NULL,
 
 
   return(list(p=p,unknown=unknown))
+}
+
+attr(plot_hms_stock_status,"report") <- c("MidAtlantic","NewEngland")
 
   # Paste commented original plot code chunk for reference
   # y.max <- 5
@@ -149,4 +152,3 @@ plot_hms_stock_status <- function(shadedRegion = NULL,
   #   ecodata::theme_ts()
   #
 
-}

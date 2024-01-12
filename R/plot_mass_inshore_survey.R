@@ -94,6 +94,6 @@ plot_mass_inshore_survey <- function(shadedRegion = NULL,
     # }
 
     return(p)
-
-
 }
+
+attr(plot_mass_inshore_survey,"report") <- c("MidAtlantic","NewEngland")

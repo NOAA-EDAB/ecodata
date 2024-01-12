@@ -63,6 +63,9 @@ plot_rec_hms <- function(shadedRegion = shadedRegion,
     }
 
     return(p)
+}
+
+attr(plot_rec_hms,"report") <- c("MidAtlantic","NewEngland")
 
   # Paste commented original plot code chunk for reference
   # ecodata::dataset |>
@@ -84,5 +87,3 @@ plot_rec_hms <- function(shadedRegion = shadedRegion,
   #   ecodata::theme_title()
   #
   #
-
-}

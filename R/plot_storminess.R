@@ -69,8 +69,6 @@ plot_storminess <- function(shadedRegion = NULL,
 
     return(p)
 
-
-  #
-  #
-
 }
+
+attr(plot_storminess,"report") <- c("MidAtlantic","NewEngland")

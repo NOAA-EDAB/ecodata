@@ -55,3 +55,6 @@ plot_bottom_temp <- function(shadedRegion=NULL,
 
   return(p)
 }
+
+
+attr(plot_bottom_temp,"report") <- c("MidAtlantic","NewEngland")

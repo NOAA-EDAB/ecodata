@@ -88,3 +88,6 @@ plot_trans_dates <- function(shadedRegion = NULL,
 
   return(p)
 }
+
+attr(plot_trans_dates,"varName") <- c("timing","length")
+attr(plot_trans_dates,"report") <- c("MidAtlantic","NewEngland")

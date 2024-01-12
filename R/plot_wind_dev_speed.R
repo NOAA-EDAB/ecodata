@@ -52,3 +52,6 @@ plot_wind_dev_speed <- function(shadedRegion = NULL,
 
   return(p)
 }
+
+
+attr(plot_wind_dev_speed,"report") <- c("MidAtlantic","NewEngland")

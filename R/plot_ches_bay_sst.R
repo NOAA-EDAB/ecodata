@@ -88,6 +88,10 @@ plot_ches_bay_sst <- function(shadedRegion = NULL,
 
     return(p)
 
+}
+
+attr(plot_ches_bay_sst,"report") <- c("MidAtlantic","NewEngland")
+
   # Paste commented original plot code chunk for reference
   # ecodata::dataset |>
   #   dplyr::filter(Var %in% c("..."),
@@ -108,5 +112,3 @@ plot_ches_bay_sst <- function(shadedRegion = NULL,
   #   ecodata::theme_title()
   #
   #
-
-}

@@ -56,3 +56,5 @@ plot_seasonal_oisst_anom <- function(shadedRegion = NULL,
 
   return(p)
 }
+
+attr(plot_seasonal_oisst_anom,"report") <- c("MidAtlantic","NewEngland")

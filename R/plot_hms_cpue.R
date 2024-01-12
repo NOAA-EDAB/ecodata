@@ -79,6 +79,11 @@ plot_hms_cpue <- function(shadedRegion = NULL,
 
     return(p)
 
+}
+
+attr(plot_hms_cpue,"varName") <- c("shark","tuna")
+attr(plot_hms_cpue,"report") <- c("MidAtlantic","NewEngland")
+
   # Paste commented original plot code chunk for reference
   # one code chunk: macrofauna_MAB.Rmd-hms-cpue-sharks.R
   # sp_cat<- ecodata::hms_category
@@ -105,4 +110,3 @@ plot_hms_cpue <- function(shadedRegion = NULL,
   #
   #
 
-}

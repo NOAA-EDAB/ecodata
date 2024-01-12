@@ -12,7 +12,7 @@
 #'
 
 plot_HMS_species_distribution <- function(shadedRegion = NULL,
-                              report="MidAtlantic") {
+                                          report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -90,6 +90,11 @@ plot_HMS_species_distribution <- function(shadedRegion = NULL,
    #  }
 
     return(p)
+}
+
+
+attr(plot_HMS_species_distribution,"report") <- c("MidAtlantic","NewEngland")
+
 
   # Paste commented original plot code chunk for reference
   # hms10<- ecodata::HMS_species_distribution |>
@@ -149,5 +154,3 @@ plot_HMS_species_distribution <- function(shadedRegion = NULL,
   #   ggplot2::facet_wrap(~season)
   # hms_map
 
-
-}

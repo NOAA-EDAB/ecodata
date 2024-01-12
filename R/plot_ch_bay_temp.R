@@ -61,6 +61,10 @@ plot_ch_bay_temp <- function(shadedRegion = NULL,
    #  }
 
     return(p)
+}
+
+
+attr(plot_ch_bay_temp,"report") <- c("MidAtlantic","NewEngland")
 
   # Paste commented original plot code chunk for reference
   # MAB only
@@ -83,4 +87,3 @@ plot_ch_bay_temp <- function(shadedRegion = NULL,
   #   ecodata::theme_title()  #
   #
 
-}

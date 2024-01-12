@@ -75,3 +75,5 @@ plot_wind_port <- function(shadedRegion = NULL,
     return(p)
 
 }
+
+attr(plot_wind_port,"report") <- c("MidAtlantic","NewEngland")

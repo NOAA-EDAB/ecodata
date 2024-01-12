@@ -66,3 +66,6 @@ plot_habs <- function(shadedRegion = NULL,
 
 
 }
+attr(plot_habs,"varName") <- c("Alexandrium","PSP")
+attr(plot_habs,"report") <- c("MidAtlantic","NewEngland")
+

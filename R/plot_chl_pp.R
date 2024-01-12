@@ -201,6 +201,13 @@ plot_chl_pp <- function(shadedRegion = NULL,
 
   return(p)
 
+}
+
+attr(plot_chl_pp,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_chl_pp,"varName") <- c("chl","pp")
+attr(plot_chl_pp,"plottype") <- c("weekly","monthly","anomaly")
+attr(plot_chl_pp,"year") <- NULL
+
   # Paste commented original plot code chunk for reference
   # NE monthly example
   # out_pp <- ecodata::chl_pp %>%
@@ -262,5 +269,3 @@ plot_chl_pp <- function(shadedRegion = NULL,
   #
   # pp_cci_gb + pp_cci_gom + patchwork::plot_layout(ncol = 1)  #
   #
-
-}

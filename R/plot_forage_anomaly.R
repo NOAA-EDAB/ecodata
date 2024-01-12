@@ -63,7 +63,6 @@ plot_forage_anomaly <- function(shadedRegion = NULL,
     }
 
     return(p)
-
-
-
 }
+
+attr(plot_forage_anomaly,"report") <- c("MidAtlantic","NewEngland")

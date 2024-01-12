@@ -75,6 +75,10 @@ plot_forage_index <- function(shadedRegion = NULL,
 
     return(p)
 
+}
+
+attr(plot_forage_index,"report") <- c("MidAtlantic","NewEngland")
+
   # ecodata::forage_index |>
   #   dplyr::filter(Var %in% c("Fall Forage Fish Biomass Estimate",
   #                            "Fall Forage Fish Biomass Estimate SE",
@@ -106,5 +110,3 @@ plot_forage_index <- function(shadedRegion = NULL,
   #   ecodata::theme_title()
   #
   #
-
-}
