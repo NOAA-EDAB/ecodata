@@ -15,5 +15,5 @@ plot_bottom_temp_comp(shadedRegion = NULL, report = "MidAtlantic")
 ggplot object
 }
 \description{
-plot bottom anomaly temperature time series
+plots bottom_temp_comp data set. Use GLORYS and PSY to supplement
 }
