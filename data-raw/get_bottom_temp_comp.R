@@ -40,27 +40,19 @@ get_bottom_temp_comp <- function(save_clean = F){
 get_bottom_temp_comp(save_clean = T)
 
 
-bt_nc <- "bt_temp_anomaly_season_2022_soe.nc"
+btsg_csv <- "bt_seasonal_gridded.csv"
 
 get_bottom_temp_seasonal_gridded <- function(save_clean = F){
 
-  b1<- raster::stack(file.path(raw.dir,bt_nc))
-  seasonal_bt_anomaly_gridded<- as.data.frame(b1) %>%
-    cbind(coordinates(b1)) %>%
-    dplyr::rename("Winter" = X1,
-                  "Spring" = X2,
-                  "Summer" = X3,
-                  "Fall" = X4,
-                  "Latitude" = y,
-                  "Longitude" = x) %>%
-    tidyr::pivot_longer(cols = c(Winter,Spring,
-                                 Summer, Fall),
-                        names_to = "Season", values_to = "Value")
+  bottom_temp_seasonal_gridded<- read.csv(file.path(raw.dir,btsg_csv)) %>%
+    dplyr::rename("Latitude" = "Lat",
+                  "Longitude" = "Lon",
+                  "Season" = "Variable")
 
   if (save_clean){
-    usethis::use_data(seasonal_bt_anomaly_gridded, overwrite = T)
+    usethis::use_data(bottom_temp_seasonal_gridded, overwrite = T)
   } else {
-    return(seasonal_bt_anomaly_gridded)
+    return(bottom_temp_seasonal_gridded)
   }
 }
 get_bottom_temp_seasonal_gridded(save_clean = T)
