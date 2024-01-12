@@ -54,3 +54,5 @@ plot_long_term_sst <- function(shadedRegion = NULL,
     return(p)
 
 }
+
+attr(plot_long_term_sst,"report") <- c("MidAtlantic","NewEngland")

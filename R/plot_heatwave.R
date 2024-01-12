@@ -94,6 +94,12 @@ plot_heatwave <- function(shadedRegion = NULL,
 
   return(p)
 
+}
+attr(plot_heatwave,"varName") <- c("Surface","Bottom")
+attr(plot_heatwave,"report") <- c("MidAtlantic","NewEngland")
+
+
+
   # Paste commented original plot code chunk for reference
   # durd <- ecodata::heatwave %>%
   #   dplyr::filter(Var == "duration-SurfaceDetrended") %>%
@@ -140,5 +146,3 @@ plot_heatwave <- function(shadedRegion = NULL,
   #   ecodata::theme_title()
   #
   #
-
-}

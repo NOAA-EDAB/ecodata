@@ -63,7 +63,7 @@ plot_seal_pups <- function(shadedRegion = NULL,
    #  }
 
     return(p)
-
-
-
 }
+
+
+attr(plot_seal_pups,"report") <- c("MidAtlantic","NewEngland")

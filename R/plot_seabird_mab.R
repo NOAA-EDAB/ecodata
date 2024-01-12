@@ -63,6 +63,6 @@ plot_seabird_mab <- function(shadedRegion = NULL,
     # }
 
     return(p)
-
-
 }
+
+attr(plot_seabird_mab,"report") <- c("MidAtlantic","NewEngland")

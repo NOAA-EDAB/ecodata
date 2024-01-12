@@ -80,6 +80,11 @@ plot_wind_revenue <- function(shadedRegion = NULL,
     # }
 
     return(p)
+}
+
+attr(plot_wind_revenue,"varName") <- c("landing","value")
+attr(plot_wind_revenue,"report") <- c("MidAtlantic","NewEngland")
+
 
   # Paste commented original plot code chunk for reference
   # ecodata::dataset |>
@@ -102,4 +107,3 @@ plot_wind_revenue <- function(shadedRegion = NULL,
   #
   #
 
-}

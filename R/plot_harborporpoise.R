@@ -59,6 +59,9 @@ plot_harborporpoise <- function(shadedRegion = NULL,
     ecodata::theme_title()
 
     return(p)
+}
+
+attr(plot_harborporpoise,"report") <- c("MidAtlantic","NewEngland")
 
   # Paste commented original plot code chunk for reference
   # ribbon<- ecodata::harborporpoise %>%
@@ -86,4 +89,3 @@ plot_harborporpoise <- function(shadedRegion = NULL,
   #
   #
 
-}

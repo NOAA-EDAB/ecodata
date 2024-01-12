@@ -54,3 +54,4 @@ plot_thermal_habitat_persistence <- function(shadedRegion = NULL,
     return(p)
 
 }
+attr(plot_thermal_habitat_persistence,"report") <- c("MidAtlantic","NewEngland")

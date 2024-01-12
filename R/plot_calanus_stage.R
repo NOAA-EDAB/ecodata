@@ -70,6 +70,11 @@ plot_calanus_stage <- function(shadedRegion = NULL,
 
     return(p)
 
+}
+
+
+attr(plot_calanus_stage,"report") <- c("MidAtlantic","NewEngland")
+
   # Paste commented original plot code chunk for reference
   # MAB
   # cal <- ecodata::calanus_stage %>%
@@ -99,4 +104,3 @@ plot_calanus_stage <- function(shadedRegion = NULL,
   #
   #
 
-}

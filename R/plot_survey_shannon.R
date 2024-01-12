@@ -69,3 +69,5 @@ plot_survey_shannon <- function(shadedRegion = NULL,
 
 
 }
+
+attr(plot_survey_shannon,"report") <- c("MidAtlantic","NewEngland")

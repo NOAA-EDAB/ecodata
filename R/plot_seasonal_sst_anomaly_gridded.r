@@ -77,3 +77,5 @@ plot_seasonal_sst_anomaly_gridded <- function(shadedRegion = NULL,
 
   return(p)
 }
+
+attr(plot_seasonal_sst_anomaly_gridded,"report") <- c("MidAtlantic","NewEngland")

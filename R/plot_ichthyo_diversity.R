@@ -68,6 +68,6 @@ plot_ichthyo_diversity <- function(shadedRegion = NULL,
     }
 
     return(p)
-
-
 }
+
+attr(plot_ichthyo_diversity,"report") <- c("MidAtlantic","NewEngland")

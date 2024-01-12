@@ -86,6 +86,11 @@ plot_aquaculture <- function(shadedRegion = NULL,
 
 
     return(p)
+}
+
+
+attr(plot_aquaculture,"report") <- c("MidAtlantic","NewEngland")
+
 
   # Paste commented original plot code chunk for reference
   # MAB
@@ -146,5 +151,3 @@ plot_aquaculture <- function(shadedRegion = NULL,
   #   ecodata::theme_ts()+
   #   ecodata::theme_title()
 
-
-}

@@ -58,6 +58,9 @@ plot_hudson_river_flow <- function(shadedRegion = NULL,
     }
 
     return(p)
+}
+
+attr(plot_hudson_river_flow,"report") <- c("MidAtlantic","NewEngland")
 
   # Paste commented original plot code chunk for reference
   # ecodata::dataset |>
@@ -80,4 +83,3 @@ plot_hudson_river_flow <- function(shadedRegion = NULL,
   #
   #
 
-}

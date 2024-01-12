@@ -93,7 +93,7 @@ plot_stock_status <- function(shadedRegion = NULL,
    #  }
 
     return(list(p=p,unknown=unknown))
-
-
-
 }
+
+
+attr(plot_stock_status,"report") <- c("MidAtlantic","NewEngland")

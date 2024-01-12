@@ -62,3 +62,5 @@ plot_observed_sharks <- function(shadedRegion = NULL,
     return(p)
 
 }
+
+attr(plot_observed_sharks,"report") <- c("MidAtlantic","NewEngland")

@@ -75,6 +75,6 @@ plot_zoo_diversity <- function(shadedRegion = NULL,
    #  }
 
     return(p)
-
-
 }
+
+attr(plot_zoo_diversity,"report") <- c("MidAtlantic","NewEngland")

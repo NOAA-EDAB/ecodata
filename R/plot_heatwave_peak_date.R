@@ -95,6 +95,10 @@ plot_heatwave_peak_date <- function(shadedRegion = NULL,
 
     return(p)
 
+}
+
+attr(plot_heatwave_peak_date,"report") <- c("MidAtlantic","NewEngland")
+
   # Paste commented original plot code chunk for reference
   # LTL_MAB.Rmd-heatwave-anom-grid
   # #EPU shapefile
@@ -152,4 +156,4 @@ plot_heatwave_peak_date <- function(shadedRegion = NULL,
   #
   #
 
-}
+

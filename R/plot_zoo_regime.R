@@ -74,7 +74,9 @@ plot_zoo_regime <- function(shadedRegion = NULL,
     # }
 
     return(p)
+}
 
+attr(plot_zoo_regime,"report") <- c("MidAtlantic","NewEngland")
   # Paste commented original plot code chunk for reference
   # ecodata::dataset |>
   #   dplyr::filter(Var %in% c("..."),
@@ -96,4 +98,3 @@ plot_zoo_regime <- function(shadedRegion = NULL,
   #
   #
 
-}

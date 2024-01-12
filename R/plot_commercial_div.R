@@ -18,6 +18,9 @@ plot_commercial_div <- function(shadedRegion = NULL,
                               report="MidAtlantic",
                               varName="Fleet count") {
 
+
+
+
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
                                report=report)
@@ -115,3 +118,7 @@ plot_commercial_div <- function(shadedRegion = NULL,
   #
 
 }
+
+
+attr(plot_commercial_div,"varName") <- c("Fleet count","Fleet diversity in revenue", "Permit revenue species diversity")
+attr(plot_commercial_div,"report") <- c("MidAtlantic","NewEngland")

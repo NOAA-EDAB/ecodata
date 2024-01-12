@@ -83,3 +83,6 @@ plot_narw <- function(shadedRegion = NULL,
     return(p)
 
 }
+
+attr(plot_narw,"varName") <- c("adult","calf")
+attr(plot_narw,"report") <- c("MidAtlantic","NewEngland")

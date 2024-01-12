@@ -72,3 +72,6 @@ plot_gsi <- function(shadedRegion = NULL,
     return(p)
 
 }
+
+
+attr(plot_gsi,"report") <- c("MidAtlantic","NewEngland")

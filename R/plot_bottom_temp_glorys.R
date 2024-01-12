@@ -11,7 +11,7 @@
 #' @export
 
 plot_bottom_temp_glorys <- function(shadedRegion=NULL,
-                             report = "MidAtlantic") {
+                                    report = "MidAtlantic") {
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
                                report=report)
@@ -50,3 +50,6 @@ plot_bottom_temp_glorys <- function(shadedRegion=NULL,
 
   return(p)
 }
+
+
+attr(plot_bottom_temp_glorys,"report") <- c("MidAtlantic","NewEngland")

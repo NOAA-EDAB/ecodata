@@ -4,19 +4,12 @@
 \alias{plot_cold_pool}
 \title{plot cold_pool}
 \usage{
-plot_cold_pool(
-  shadedRegion = NULL,
-  report = "MidAtlantic",
-  PSYyear = max(ecodata::cold_pool$Time) - 1
-)
+plot_cold_pool(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
 \item{report}{Character string. Which SOE report ("MidAtlantic" only, default)}
-
-\item{PSYyear}{Numeric value. Year that indicator switches to PSY data source.
-Defaults to max year - 1 so last 2 years of data are PSY source, as was true in 2022.}
 }
 \value{
 ggplot object

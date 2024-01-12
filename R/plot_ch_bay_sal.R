@@ -57,6 +57,9 @@ plot_ch_bay_sal <- function(shadedRegion = NULL,
    #  }
 
     return(p)
+}
+
+attr(plot_ch_bay_sal,"report") <- c("MidAtlantic","NewEngland")
 
   # Paste commented original plot code chunk for reference
   # MAB only
@@ -76,4 +79,3 @@ plot_ch_bay_sal <- function(shadedRegion = NULL,
   #
   #
 
-}

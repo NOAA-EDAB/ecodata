@@ -57,3 +57,5 @@ plot_nao <- function(shadedRegion = NULL,
     return(p)
 
 }
+
+attr(plot_nao,"report") <- c("MidAtlantic","NewEngland")

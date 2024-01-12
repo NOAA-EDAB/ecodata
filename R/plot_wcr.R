@@ -77,3 +77,5 @@ plot_wcr <- function(shadedRegion = NULL,
     return(p)
 
 }
+
+attr(plot_wcr,"report") <- c("MidAtlantic","NewEngland")

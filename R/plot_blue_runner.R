@@ -78,7 +78,10 @@ plot_blue_runner <- function(shadedRegion = NULL,
     # }
 
     return(p)
+}
 
+
+attr(plot_blue_runner,"report") <- c("MidAtlantic","NewEngland")
   # Paste commented original plot code chunk for reference
   # Mid Atlantic only
   # blue<-ecodata::blue_runner %>%
@@ -131,5 +134,3 @@ plot_blue_runner <- function(shadedRegion = NULL,
   #
   # blue_map
   #
-
-}

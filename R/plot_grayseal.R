@@ -60,7 +60,9 @@ plot_grayseal <- function(shadedRegion = NULL,
 
 
     return(p)
+}
 
+attr(plot_grayseal,"report") <- c("MidAtlantic","NewEngland")
   # Paste commented original plot code chunk for reference
   # ribbon<- ecodata::grayseal %>%
   #   tidyr::pivot_wider(names_from = Var, values_from = Value)
@@ -87,4 +89,3 @@ plot_grayseal <- function(shadedRegion = NULL,
   #
   #
 
-}
