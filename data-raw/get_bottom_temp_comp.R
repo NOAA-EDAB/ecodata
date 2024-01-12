@@ -12,7 +12,8 @@ get_bottom_temp_comp <- function(save_clean = F){
   bottom_temp_comp<- read.csv(file.path(raw.dir,bt_csv))  %>%
     dplyr::rename("Time" = "year",
                   "EPU" = "subarea",
-                  "Value" = "bt_temp") %>%
+                  "Value" = "bt_temp",
+                  "Source" = "source") %>%
     dplyr::mutate(Var = c("Annual_Bottom Temp"),
                   Units = c("degree C"))
   bottom_temp_comp_seasonal<- read.csv(file.path(raw.dir,bt_seasonal_csv))  %>%
@@ -22,10 +23,11 @@ get_bottom_temp_comp <- function(save_clean = F){
                                   "4" = "Fall")) %>%
     dplyr::rename("Time" = "year",
                   "EPU" = "subarea",
-                  "Value" = "anomaly") %>%
+                  "Value" = "anomaly",
+                  "Source" = "source") %>%
     dplyr::mutate(Var = paste0(season,"_Bottom Temp Anomaly"),
                   Units = c("degree C")) %>%
-    dplyr::select(Time, Value, Var, EPU, Units, source)
+    dplyr::select(Time, Value, Var, EPU, Units, Source)
 
   bottom_temp_comp<- rbind(bottom_temp_comp, bottom_temp_comp_seasonal) %>%
     tibble::as_tibble()
