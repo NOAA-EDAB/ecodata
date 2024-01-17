@@ -80,6 +80,12 @@ plot_hms_landings <- function(shadedRegion = NULL,
 
     return(p)
 
+
+}
+
+attr(plot_hms_landings,"varName") <- c("Landings","Revenue")
+attr(plot_hms_landings,"report") <- c("MidAtlantic","NewEngland")
+
   # Paste commented original plot code chunk for reference
   #Get data for plotting
   # ## Apex pred
@@ -120,4 +126,3 @@ plot_hms_landings <- function(shadedRegion = NULL,
   # p1
   #
 
-}
