@@ -1,6 +1,6 @@
 #' plot thermal habitat persistence
 #'
-#' plots thermal_habitat_persistence data set.
+#' plots thermal_habitat_persistence data set. Current SOE Year only
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
@@ -12,7 +12,8 @@
 #'
 
 plot_thermal_habitat_persistence <- function(shadedRegion = NULL,
-                                      report="MidAtlantic") {
+                                             report="MidAtlantic",
+                                             year = NULL) {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -25,10 +26,15 @@ plot_thermal_habitat_persistence <- function(shadedRegion = NULL,
     filterEPUs <- c("GB","GOM")
   }
 
+  if (is.null(year)) {
+    # current SOE report year
+    Yr <- setup$shadedRegion[2]
+  }
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
   fix <- ecodata::thermal_habitat_persistence |>
-    dplyr::mutate(Var = paste0(Var,"\u00B0C"))
+    dplyr::mutate(Var = paste0(Var,"\u00B0C")) |>
+    dplyr::filter(Time == Yr)
 
   # neus_map  <- ggplot2::map_data('worldHires',region = 'USA')
   legendTitle <- unique(fix$Units)
