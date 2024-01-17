@@ -24,8 +24,8 @@ get_slopewater <- function(save_clean = F){
     as.data.frame() %>% tibble::as_tibble() %>%
     dplyr::select(Time, Var, Value, EPU, Units)
 
-  dat.fill<- expand.grid(Time = c(1978, 1988, 1989,
-                                  1990, 2020),
+  dat.fill<- expand.grid(Time = c(1967,1971,1972,1978,1988,1989,
+                                  1990,2020),
                          Var = unique(slopewater$Var),
                          EPU = unique(slopewater$EPU),
                          Value = NA,
