@@ -7,7 +7,8 @@
 plot_wind_revenue(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  varName = "landing"
+  varName = "landing",
+  plottype = "facets"
 )
 }
 \arguments{
@@ -16,6 +17,8 @@ plot_wind_revenue(
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
 \item{varName}{Character string. Which Variable to plot ("landing","value")}
+
+\item{plottype}{Character string. Which plot ("facets", "nofacets")}
 }
 \value{
 ggplot object
