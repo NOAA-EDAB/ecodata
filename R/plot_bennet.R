@@ -1,9 +1,10 @@
-#' plot Bennet indicator
+#' plot Bennett indicator
 #'
 #' Stacked bar charts of price and volume components of revenue by feeding guild.
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
+#' @param plottype Character string. Which plot ("revenue", "??","???)
 #'
 #' @return ggplot object
 #'
@@ -12,7 +13,8 @@
 #'
 
 plot_bennet <- function(shadedRegion = NULL,
-                              report="MidAtlantic") {
+                        report="MidAtlantic",
+                        plottype="revenue") {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
