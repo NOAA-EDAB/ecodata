@@ -13,7 +13,7 @@ library(tidyr)
 library(stringr)
 
 raw.dir <- here::here("data-raw")
-commercial_div_csv <- "Commercial_Diversity_2023.csv"
+commercial_div_csv <- "Commercial_Diversity_2024.csv"
 
 get_commercial_div <- function(save_clean = F){
   commercial_div <- read.csv(file.path(raw.dir, commercial_div_csv)) %>%
