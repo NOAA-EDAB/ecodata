@@ -4,12 +4,14 @@
 \alias{plot_gsi}
 \title{plot gulf stream index}
 \usage{
-plot_gsi(shadedRegion = NULL, report = "MidAtlantic")
+plot_gsi(shadedRegion = NULL, report = "MidAtlantic", varName = "gsi")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
+
+\item{varName}{Character string. Which variable to plot ("gsi","westgsi")}
 }
 \value{
 ggplot object
