@@ -854,8 +854,8 @@ ecodata::plot_chl_pp(c(2014,2023), report = "NewEngland", varName = "pp")
 
 ```{r weekly-phyto-size, eval = T}
 
-ecodata::plot_phyto_size(c(2014,2023), report = "NewEngland", epu = "GB")
-ecodata::plot_phyto_size(c(2014,2023), report = "NewEngland", epu = "GOM")
+ecodata::plot_phyto_size(c(2014,2023), report = "NewEngland", EPU = "GB")
+ecodata::plot_phyto_size(c(2014,2023), report = "NewEngland", EPU = "GOM")
 
 # month <- seq(as.Date("2022-01-01"), 
 #              as.Date("2022-12-31"), 

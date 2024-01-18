@@ -2,14 +2,16 @@
 % Please edit documentation in R/plot_bennet.R
 \name{plot_bennet}
 \alias{plot_bennet}
-\title{plot Bennet indicator}
+\title{plot Bennett indicator}
 \usage{
-plot_bennet(shadedRegion = NULL, report = "MidAtlantic")
+plot_bennet(shadedRegion = NULL, report = "MidAtlantic", plottype = "revenue")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
+
+\item{plottype}{Character string. Which plot ("revenue", "??","???)}
 }
 \value{
 ggplot object
