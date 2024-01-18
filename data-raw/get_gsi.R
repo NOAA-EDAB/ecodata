@@ -9,15 +9,13 @@ library(lubridate)
 library(readxl)
 
 raw.dir <- here::here("data-raw")
-gsi_xlsx<-"Chen_EN4_T200_GSI_1954_2022_monthly - Zhuomin Chen.xlsx"
+gsi_xlsx<-"Chen_EN4_T200_GSI_1954_2023_monthly.xlsx"
 get_gsi <- function(save_clean = F){
 
-  gsi <- read_excel(file.path(raw.dir, gsi_xlsx)) %>%
-    dplyr::rename(Time = Month, Value = GSI) %>%
-    dplyr::mutate(Var = "gulf stream index",
-           Units = "latitude anomaly",
-           EPU = "All")%>%
-    dplyr::select(Time, Var, Value, EPU)
+  gsi <- read_excel(file.path(raw.dir, gsi_xlsx), col_names = T) %>%
+    dplyr::rename(Time = Month, "gulf stream index" = GSI, "western gulf stream index" = WGSI) %>%
+    tidyr::pivot_longer(c("gulf stream index", "western gulf stream index"), names_to = "Var", values_to = "Value") %>%
+    dplyr::mutate(EPU = c("All"))
 
   # metadata ----
   attr(gsi, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/gulf-stream-index.html"
