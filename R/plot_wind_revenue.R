@@ -5,6 +5,7 @@
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which Variable to plot ("landing","value")
+#' @param plottype Character string. Which plot ("facets", "nofacets")
 #'
 #' @return ggplot object
 #'
@@ -14,7 +15,8 @@
 
 plot_wind_revenue <- function(shadedRegion = NULL,
                               report="MidAtlantic",
-                              varName = "landing") {
+                              varName = "landing",
+                              plottype = "facets") {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -55,21 +57,41 @@ plot_wind_revenue <- function(shadedRegion = NULL,
   # e.g. fill = setup$shade.fill, alpha = setup$shade.alpha,
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
   #
-  p <- fix |>
-    ggplot2::ggplot(ggplot2::aes(x = Time, y = Value))+
-    ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
-        xmin = setup$x.shade.min , xmax = setup$x.shade.max,
-        ymin = -Inf, ymax = Inf) +
-    ggplot2::geom_point()+
-    ggplot2::geom_line()+
-    ggplot2::ggtitle(paste0(report,": Fishery Revenue in Wind Lease Areas"))+
-    ggplot2::ylab(expression("Dollars (millions)"))+
-    ggplot2::xlab(ggplot2::element_blank())+
-    ggplot2::facet_wrap(.~Species,scales = "free_y")+
-    #ecodata::geom_gls()+
-    ecodata::theme_ts()+
-    ecodata::theme_facet()+
-    ecodata::theme_title()
+
+   if (plottype == "facets") {
+      p <- fix |>
+        ggplot2::ggplot(ggplot2::aes(x = Time, y = Value))+
+        ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
+            xmin = setup$x.shade.min , xmax = setup$x.shade.max,
+            ymin = -Inf, ymax = Inf) +
+        ggplot2::geom_point()+
+        ggplot2::geom_line()+
+        ggplot2::ggtitle(paste0(report,": Fishery Revenue in Wind Lease Areas"))+
+        ggplot2::ylab(expression("Dollars (millions)"))+
+        ggplot2::xlab(ggplot2::element_blank())+
+        ggplot2::facet_wrap(.~Species,scales = "free_y") +
+        #ecodata::geom_gls()+
+        ecodata::theme_ts()+
+        ecodata::theme_facet()+
+        ecodata::theme_title()
+   } else {
+     p <- fix |>
+       ggplot2::ggplot(ggplot2::aes(x = Time, y = Value,color = Species))+
+       ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
+                         xmin = setup$x.shade.min , xmax = setup$x.shade.max,
+                         ymin = -Inf, ymax = Inf) +
+       ggplot2::geom_point()+
+       ggplot2::geom_line()+
+       ggplot2::ggtitle(paste0(report,": Fishery Revenue in Wind Lease Areas"))+
+       ggplot2::ylab(expression("Dollars (millions)"))+
+       ggplot2::xlab(ggplot2::element_blank())+
+
+       #ecodata::geom_gls()+
+       ecodata::theme_ts()+
+       ecodata::theme_facet()+
+       ecodata::theme_title()
+   }
+
 
    # optional code for New England specific (2 panel) formatting
     # if (report == "NewEngland") {
@@ -84,26 +106,4 @@ plot_wind_revenue <- function(shadedRegion = NULL,
 
 attr(plot_wind_revenue,"varName") <- c("landing","value")
 attr(plot_wind_revenue,"report") <- c("MidAtlantic","NewEngland")
-
-
-  # Paste commented original plot code chunk for reference
-  # ecodata::dataset |>
-  #   dplyr::filter(Var %in% c("..."),
-  #                 EPU == "...") |>
-  #   ... more dataset wrangling as necessary |>
-  #   ggplot2::ggplot(aes(x = Time, y = Mean, group = Season))+
-  #   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-  #                     xmin = x.shade.min , xmax = x.shade.max,
-  #                     ymin = -Inf, ymax = Inf) +
-  #   ggplot2::geom_ribbon(aes(ymin = Lower, ymax = Upper, fill = Season), alpha = 0.5)+
-  #   ggplot2::geom_point()+
-  #   ggplot2::geom_line()+
-  #   ggplot2::ggtitle("Title")+
-  #   ggplot2::ylab(expression("Y label"))+
-  #   ggplot2::xlab(element_blank())+
-  #   ecodata::geom_gls()+
-  #   ecodata::theme_ts()+
-  #   ecodata::theme_title()
-  #
-  #
-
+attr(plot_wind_revenue,"plottype") <- c("facets","nofacets")

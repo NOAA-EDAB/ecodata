@@ -4,7 +4,7 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
-#'
+#' @param varName Character string. Which variable to plot ("gsi","westgsi")
 #' @return ggplot object
 #'
 #'
@@ -12,7 +12,8 @@
 #'
 
 plot_gsi <- function(shadedRegion = NULL,
-                              report="MidAtlantic") {
+                     report="MidAtlantic",
+                     varName = "gsi") {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -26,12 +27,18 @@ plot_gsi <- function(shadedRegion = NULL,
     filterEPUs <- c("GB", "GOM")
   }
 
+  if (varName == "gsi") {
+    var <- "gulf stream index"
+  } else {
+    var <- "western gulf stream index"
+  }
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
 
 
 
   fix <- ecodata::gsi  |>
+    dplyr::filter(Var == var) |>
     dplyr::mutate(Year = floor(Time)) |>
     dplyr::group_by(Year) |>
     dplyr::summarise(Value = mean(Value)) |>
@@ -50,7 +57,7 @@ plot_gsi <- function(shadedRegion = NULL,
         ymin = -Inf, ymax = Inf) +
     ggplot2::geom_point()+
     ggplot2::geom_line()+
-    ggplot2::ggtitle("Gulf Stream Index")+
+    ggplot2::ggtitle(stringr::str_to_title(var))+
     ggplot2::ylab("Anomaly")+
     ggplot2::xlab(ggplot2::element_blank())+
     ecodata::geom_gls()+
@@ -75,3 +82,4 @@ plot_gsi <- function(shadedRegion = NULL,
 
 
 attr(plot_gsi,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_gsi,"varName") <- c("gsi","westgsi")

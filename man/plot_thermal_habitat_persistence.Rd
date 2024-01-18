@@ -4,7 +4,11 @@
 \alias{plot_thermal_habitat_persistence}
 \title{plot thermal habitat persistence}
 \usage{
-plot_thermal_habitat_persistence(shadedRegion = NULL, report = "MidAtlantic")
+plot_thermal_habitat_persistence(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  year = NULL
+)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
@@ -15,5 +19,5 @@ plot_thermal_habitat_persistence(shadedRegion = NULL, report = "MidAtlantic")
 ggplot object
 }
 \description{
-plots thermal_habitat_persistence data set.
+plots thermal_habitat_persistence data set. Current SOE Year only
 }
