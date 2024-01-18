@@ -293,37 +293,34 @@ get_heatwave(save_clean = T)
 get_heatwave_year <- function(save_clean = F){
   # import data
   # SURFACE
-  # gom<-read.csv(file.path(raw.dir,heatwave_gom), header = FALSE) %>%
-  #   dplyr::rename(V1, "t" ="V1",
-  #                 V2, "temp" ="V2") %>%
-  #   dplyr::filter(!temp == "temp") %>%
-  #   dplyr::mutate(temp = as.numeric(temp),
-  #                 t = as.Date(t, "%m/%d/%y")) %>%
-  #   tidyr::drop_na()
-  gb<-read.csv(file.path(raw.dir,heatwave_gb), header = FALSE) %>%
-    dplyr::rename(V1, "t" ="V1",
-                  V2, "temp" ="V2") %>%
+  gom<-read.csv(file.path(raw.dir,heatwave_gomd), header = TRUE) %>%
     dplyr::filter(!temp == "temp") %>%
+    dplyr::select(t, temp) %>%
+    tidyr::drop_na() %>%
     dplyr::mutate(temp = as.numeric(temp),
-                  t = as.Date(t, "%m/%d/%y")) %>%
-    tidyr::drop_na()
-  # mab<-read.csv(file.path(raw.dir,heatwave_mab), header = FALSE) %>%
-  #   dplyr::rename(V1, "t" ="V1",
-  #                 V2, "temp" ="V2") %>%
-  #   dplyr::filter(!temp == "temp") %>%
-  #   dplyr::mutate(temp = as.numeric(temp),
-  #                 t = as.Date(t, "%m/%d/%y")) %>%
-  #   tidyr::drop_na()
+                  t = as.Date(t))
+  gb<-read.csv(file.path(raw.dir,heatwave_gbd), header = TRUE) %>%
+    dplyr::filter(!temp == "temp") %>%
+    dplyr::select(t, temp) %>%
+    tidyr::drop_na() %>%
+    dplyr::mutate(temp = as.numeric(temp),
+                  t = as.Date(t, "%m/%d/%y"))
+  mab<-read.csv(file.path(raw.dir,heatwave_mabd), header = TRUE) %>%
+    dplyr::filter(!temp == "temp") %>%
+    dplyr::select(t, temp) %>%
+    tidyr::drop_na() %>%
+    dplyr::mutate(temp = as.numeric(temp),
+                  t = as.Date(t))
   #GB
-  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2022-12-05"))
+  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2023-12-05"))
   #ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   gb.mhw <- heatwaveR::detect_event(ts)
   #GOM
-  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2022-12-05"))
+  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2023-12-04"))
   #ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   gom.mhw <- heatwaveR::detect_event(ts)
   #MAB
-  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2022-12-05"))
+  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2023-12-05"))
   #ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   mab.mhw <- heatwaveR::detect_event(ts)
 
@@ -331,56 +328,52 @@ get_heatwave_year <- function(save_clean = F){
   #GB
   mhw<- gb.mhw$clim %>%
     mutate(EPU = c("GB"),
-           Year = c("2022"))# add EPU column
-  mhw.gb.year <- mhw[14611:14949,]## days in 2020 data set only went to dec 9, 2020
+           Year = c("2023"))# add EPU column
+  mhw.gb.year <- mhw[14976:15314,]## days in 2020 data set only went to dec 9, 2020
   #GOM
   mhw<- gom.mhw$clim %>%
     mutate(EPU = c("GOM"),
-           Year = c("2022"))# add EPU column
-  mhw.gom.year <- mhw[14611:14949,]## days in 2020 data set only went to dec 9, 2020
+           Year = c("2023"))# add EPU column
+  mhw.gom.year <- mhw[14976:15313,]## days in 2020 data set only went to dec 9, 2020
   #MAB
   mhw<- mab.mhw$clim %>%
     mutate(EPU = c("MAB"),
-           Year = c("2022"))# add EPU column
-  mhw.mab.year <- mhw[14611:14949,]## days in 2020 data set only went to dec 9, 2020
+           Year = c("2023"))# add EPU column
+  mhw.mab.year <- mhw[14976:15314,]## days in 2020 data set only went to dec 9, 2020
 
 
   heatwave_year<- rbind(mhw.gb.year, mhw.gom.year, mhw.mab.year) %>%
     dplyr::mutate(Var = "Surface")
 
   # SURFACE DETRENDED
-  gom<-read.csv(file.path(raw.dir,heatwave_gomd), header = FALSE) %>%
-    dplyr::rename(V1, "t" ="V1",
-                  V2, "temp" ="V2") %>%
+  gom<-read.csv(file.path(raw.dir,heatwave_gomd), header = TRUE) %>%
     dplyr::filter(!temp == "temp") %>%
+    dplyr::select(t, temp) %>%
+    tidyr::drop_na() %>%
     dplyr::mutate(temp = as.numeric(temp),
-                  t = as.Date(t, "%m/%d/%y")) %>%
-    tidyr::drop_na()
-  gb<-read.csv(file.path(raw.dir,heatwave_gbd), header = FALSE) %>%
-    dplyr::rename(V1, "t" ="V1",
-                  V2, "temp" ="V2") %>%
+                  t = as.Date(t))
+  gb<-read.csv(file.path(raw.dir,heatwave_gbd), header = TRUE) %>%
     dplyr::filter(!temp == "temp") %>%
+    dplyr::select(t, temp) %>%
+    tidyr::drop_na() %>%
     dplyr::mutate(temp = as.numeric(temp),
-                  t = as.Date(t, "%m/%d/%y")) %>%
-    tidyr::drop_na()
-  mab<-read.csv(file.path(raw.dir,heatwave_mabd), header = FALSE) %>%
-    dplyr::rename(V1, "t" ="V1",
-                  V2, "temp" ="V2") %>%
+                  t = as.Date(t, "%m/%d/%y"))
+  mab<-read.csv(file.path(raw.dir,heatwave_mabd), header = TRUE) %>%
     dplyr::filter(!temp == "temp") %>%
+    dplyr::select(t, temp) %>%
+    tidyr::drop_na() %>%
     dplyr::mutate(temp = as.numeric(temp),
-                  t = as.Date(t, "%m/%d/%y")) %>%
-    tidyr::drop_na()
-
+                  t = as.Date(t))
   #GB
-  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2022-12-05"))
+  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2023-12-05"))
   #ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   gb.mhw <- heatwaveR::detect_event(ts)
   #GOM
-  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2022-12-05"))
+  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2023-12-04"))
   #ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   gom.mhw <- heatwaveR::detect_event(ts)
   #MAB
-  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2022-12-05"))
+  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2023-12-05"))
   #ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   mab.mhw <- heatwaveR::detect_event(ts)
 
@@ -388,24 +381,24 @@ get_heatwave_year <- function(save_clean = F){
   #GB
   mhw<- gb.mhw$clim %>%
     mutate(EPU = c("GB"),
-           Year = c("2022"))# add EPU column
-  mhw.gb.year <- mhw[14611:14949,]## days in 2020 data set only went to dec 9, 2020
+           Year = c("2023"))# add EPU column
+  mhw.gb.year <- mhw[14976:15314,]## days in 2020 data set only went to dec 9, 2020
   #GOM
   mhw<- gom.mhw$clim %>%
     mutate(EPU = c("GOM"),
-           Year = c("2022"))# add EPU column
-  mhw.gom.year <- mhw[14611:14949,]## days in 2020 data set only went to dec 9, 2020
+           Year = c("2023"))# add EPU column
+  mhw.gom.year <- mhw[14976:15313,]## days in 2020 data set only went to dec 9, 2020
   #MAB
   mhw<- mab.mhw$clim %>%
     mutate(EPU = c("MAB"),
-           Year = c("2022"))# add EPU column
-  mhw.mab.year <- mhw[14611:14949,]## days in 2020 data set only went to dec 9, 2020
+           Year = c("2023"))# add EPU column
+  mhw.mab.year <- mhw[14976:15314,]## days in 2020 data set only went to dec 9, 2020
 
 
   heatwave_year_detrended<- rbind(mhw.gb.year, mhw.gom.year, mhw.mab.year) %>%
     dplyr::mutate(Var = "SurfaceDetrended")
 
-
+  #Bottom heatwave
   gom<-read.csv(file.path(raw.dir,bheatwave_gomd), header = FALSE) %>%
     dplyr::rename(V1, "t" ="V1",
                   V2, "temp" ="V2") %>%
@@ -433,7 +426,7 @@ get_heatwave_year <- function(save_clean = F){
   #ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   gb.mhw <- heatwaveR::detect_event(ts, minDuration = 30)
   #GOM
-  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2022-12-31"))
+  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2023-12-31"))
   #ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1991-01-01", "2020-12-31"))
   gom.mhw <- heatwaveR::detect_event(ts, minDuration = 30)
   #MAB
@@ -450,8 +443,8 @@ get_heatwave_year <- function(save_clean = F){
   #GOM
   mhw<- gom.mhw$clim %>%
     mutate(EPU = c("GOM"),
-           Year = c("2022"))# add EPU column
-  mhw.gom.year <- mhw[14611:14975,]## days in 2020 data set only went to dec 9, 2020
+           Year = c("2023"))# add EPU column
+  mhw.gom.year <- mhw[14976:15314,]## days in 2020 data set only went to dec 9, 2020
   #MAB
   mhw<- mab.mhw$clim %>%
     mutate(EPU = c("MAB"),
