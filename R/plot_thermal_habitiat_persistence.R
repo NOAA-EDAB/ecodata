@@ -29,6 +29,8 @@ plot_thermal_habitat_persistence <- function(shadedRegion = NULL,
   if (is.null(year)) {
     # current SOE report year
     Yr <- setup$shadedRegion[2]
+  } else {
+    Yr <- year
   }
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
