@@ -8,7 +8,7 @@ library(readxl)
 raw.dir <- here::here("data-raw")
 wind_dev_speed_xlsx_2021<- "Tables_Cumulative Totals by Construction Year_01_20_21.xlsx"
 wind_dev_speed_xlsx_2022<- "Wind Cumulative Data_SoE2021_2022 differences_12121.xlsx"
-wind_dev_speed_xlsx_2023<- "wind_footprint_2023 - Angela Silva - NOAA Affiliate.xlsx"
+wind_dev_speed_xlsx_2023<- "wind_footprint_2024 - Angela Silva - NOAA Affiliate.xlsx"
 
 get_wind_dev_speed <- function(save_clean = F){
   wind_dev_speed_2021 <- read_excel(file.path(raw.dir,wind_dev_speed_xlsx_2021), sheet = 3) %>%
@@ -46,7 +46,7 @@ get_wind_dev_speed <- function(save_clean = F){
     dplyr::filter(!Const_Yr == "Beyond 2030 (Planning Areas)") %>%
     dplyr::mutate(Time = as.numeric(Const_Yr),
                   EPU = c("All"),
-                  Report_year = c("year2023")) %>%
+                  Report_year = c("year2024")) %>%
     dplyr::select(!Const_Yr)
 
 
