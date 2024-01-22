@@ -4,14 +4,21 @@
 \alias{plot_bennet}
 \title{plot Bennett indicator}
 \usage{
-plot_bennet(shadedRegion = NULL, report = "MidAtlantic", plottype = "revenue")
+plot_bennet(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  varName = "guild",
+  EPU = "MAB"
+)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
-\item{plottype}{Character string. Which plot ("revenue", "??","???)}
+\item{varName}{Character string. Which plot ("revenue", "total",""total_guild")}
+
+\item{EPU}{Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB}
 }
 \value{
 ggplot object
