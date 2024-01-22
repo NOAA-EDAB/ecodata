@@ -9,6 +9,7 @@ raw.dir <- here::here("data-raw")
 wind_dev_speed_xlsx_2021<- "Tables_Cumulative Totals by Construction Year_01_20_21.xlsx"
 wind_dev_speed_xlsx_2022<- "Wind Cumulative Data_SoE2021_2022 differences_12121.xlsx"
 wind_dev_speed_xlsx_2023<- "wind_footprint_2023 - Angela Silva - NOAA Affiliate.xlsx"
+wind_dev_speed_xlsx_2024<- "wind_footprint_2024 - Angela Silva - NOAA Affiliate.xlsx"
 
 get_wind_dev_speed <- function(save_clean = F){
   wind_dev_speed_2021 <- read_excel(file.path(raw.dir,wind_dev_speed_xlsx_2021), sheet = 3) %>%
@@ -40,8 +41,9 @@ get_wind_dev_speed <- function(save_clean = F){
     dplyr::mutate(Report_year = c("year2022"))
 
   wind_dev_speed_2023 <- read_excel(file.path(raw.dir,wind_dev_speed_xlsx_2023)) %>%
-    tidyr::pivot_longer(cols = c("Acres", "Gen_Cap", "Fndns", "Exp_Cab",
-                                 "Inter_Cab", "Cab_Total"),
+    dplyr::rename(Tot_Area_Acres = Acres, Num_Foundations = Fndns, Cable_Miles = Cab_Total) %>%
+    tidyr::pivot_longer(cols = c("Tot_Area_Acres", "Gen_Cap", "Num_Foundations", "Exp_Cab",
+                                 "Inter_Cab", "Cable_Miles"),
                         names_to = "Var", values_to = "Value") %>%
     dplyr::filter(!Const_Yr == "Beyond 2030 (Planning Areas)") %>%
     dplyr::mutate(Time = as.numeric(Const_Yr),
@@ -49,9 +51,20 @@ get_wind_dev_speed <- function(save_clean = F){
                   Report_year = c("year2023")) %>%
     dplyr::select(!Const_Yr)
 
+  wind_dev_speed_2024 <- read_excel(file.path(raw.dir,wind_dev_speed_xlsx_2024)) %>%
+    dplyr::rename(Tot_Area_Acres = Acres, Num_Foundations = Fndns, Cable_Miles = Cab_Total) %>%
+    tidyr::pivot_longer(cols = c("Tot_Area_Acres", "Gen_Cap", "Num_Foundations", "Exp_Cab",
+                                 "Inter_Cab", "Cable_Miles"),
+                            names_to = "Var", values_to = "Value") %>%
+    dplyr::filter(!Const_Yr == "Beyond 2030 (Planning Areas)") %>%
+    dplyr::mutate(Time = as.numeric(Const_Yr),
+                  EPU = c("All"),
+                  Report_year = c("year2024")) %>%
+    dplyr::select(!Const_Yr)
+
 
     wind_dev_speed<- rbind(wind_dev_speed_2021, wind_dev_speed_2022,
-                           wind_dev_speed_2023)
+                           wind_dev_speed_2023, wind_dev_speed_2024)
 
   if (save_clean){
     usethis::use_data(wind_dev_speed, overwrite = T)
