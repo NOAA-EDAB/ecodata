@@ -22,7 +22,7 @@ plot_wcr <- function(shadedRegion = NULL,
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
   } else {
-    stop("This indicator is only present in the `MidAtlantic` report")
+    message("This indicator is only present in the `MidAtlantic` report")
     filterEPUs <- c("GB", "GOM")
   }
 
@@ -73,6 +73,10 @@ plot_wcr <- function(shadedRegion = NULL,
     #                    legend.title = ggplot2::element_blank())
     #
     # }
+
+    if (report == "NewEngland"){
+      p <- NULL
+    }
 
     return(p)
 
