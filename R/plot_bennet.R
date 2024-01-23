@@ -84,7 +84,7 @@ plot_bennet <- function(shadedRegion = NULL,
       ecodata::theme_facet()
 
 
-  } else if (varName == "revenue") {
+  } else if (varName == "total") {
 
     indicators <- indicators |>
       dplyr::filter(stringr::str_detect(Var, pattern="Total"),
