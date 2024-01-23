@@ -45,6 +45,21 @@ plot_wind_port <- function(shadedRegion = NULL,
                                                 "WEA Revenue Range",
                                                 "WEA Revenue")))
 
+   # add EJ port symbols
+   df.symbol <- ecodata::wind_port |>
+     dplyr::filter(EPU %in% filterEPUs,
+                   !Var %in% c("WEA_MAX", "TOT_MAX",
+                               "perc_MIN", "perc_MAX")) |>
+     tidyr::pivot_wider( names_from = Var, values_from = Value) |>
+     dplyr::mutate(City = paste0(City,State)) |>
+     dplyr::select(City, EJ, Gent) |>
+     tidyr::pivot_longer(cols = c(EJ, Gent), names_to = "Variable") |>
+     dplyr::filter(!value == "NA") |>
+     dplyr::mutate(symbol = dplyr::recode(Variable, EJ = -7, Gent = -3),
+                   Variable = dplyr::recode(Variable,"EJ"= "Mid-High to High EJ Concerns" ,
+                                     "Gent" ="Mid-High to High Gentrificaiton Concerns"))
+
+
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
   # e.g. fill = setup$shade.fill, alpha = setup$shade.alpha,
@@ -57,7 +72,7 @@ plot_wind_port <- function(shadedRegion = NULL,
     ggplot2::theme(legend.position = "bottom",
                    legend.title = ggplot2::element_blank(),
                    legend.box="vertical", legend.margin=ggplot2::margin())+
-    #ggplot2::geom_point(data = df.symbol, ggplot2::aes(x = symbol,y = City, shape = Variable)) +
+    ggplot2::geom_point(data = df.symbol, ggplot2::aes(x = symbol,y = City, shape = Variable)) +
     ggplot2::scale_shape_manual(values = c(17, 16)) +
     ggplot2::ggtitle(paste0(report,": Port Revenue from Wind Energy Area"))+
     ggplot2::xlab(expression("Port Revenue (%)"))+
