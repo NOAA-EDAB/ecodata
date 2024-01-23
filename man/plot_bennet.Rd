@@ -16,7 +16,7 @@ plot_bennet(
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
-\item{varName}{Character string. Which plot ("revenue", "total",""total_guild")}
+\item{varName}{Character string. Which plot ("guild", "total",""total_guild")}
 
 \item{EPU}{Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB}
 }
