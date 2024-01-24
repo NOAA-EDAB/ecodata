@@ -6,7 +6,7 @@ library(tidyr)
 
 raw.dir <- here::here("data-raw")
 bt_csv <- "bt_temp_annual.csv"
-bt_seasonal_csv<- "bt_temp_time_series_anomaly_epu - Joseph Caracappa - NOAA Federal.csv"
+bt_seasonal_csv<- "bt_temp_time_series_anomaly_epu.csv"
 get_bottom_temp_comp <- function(save_clean = F){
 
   bottom_temp_comp<- read.csv(file.path(raw.dir,bt_csv))  %>%
