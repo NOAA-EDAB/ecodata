@@ -23,7 +23,7 @@ plot_seabird_ne <- function(shadedRegion = NULL,
 
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
-    stop("For Mid Atlantic seabirds see `plot_seabird_mab`")
+    message("For Mid Atlantic seabirds see `plot_seabird_mab`")
   } else {
     filterEPUs <- c("GB", "GOM")
   }
@@ -169,6 +169,11 @@ plot_seabird_ne <- function(shadedRegion = NULL,
     #                    legend.title = ggplot2::element_blank())
     #
     # }
+
+
+  if(report == "MidAtlantic"){
+    p <- NULL
+  }
 
     return(p)
 

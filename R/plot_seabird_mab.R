@@ -22,6 +22,7 @@ plot_seabird_mab <- function(shadedRegion = NULL,
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
   } else {
+    stop("For New England seabirds see `plot_seabird_ne`")
     filterEPUs <- c("GB", "GOM")
   }
 
@@ -62,7 +63,11 @@ plot_seabird_mab <- function(shadedRegion = NULL,
     #
     # }
 
-    return(p)
+  if(report == "NewEngland"){
+    p <- NULL
+  }
+
+  return(p)
 }
 
 attr(plot_seabird_mab,"report") <- c("MidAtlantic","NewEngland")
