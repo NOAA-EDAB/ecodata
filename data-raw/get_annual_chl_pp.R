@@ -5,7 +5,7 @@ library(stringr)
 raw.dir <- here::here("data-raw")
 
 # input files ----
-chl_ppd_ann_csv <- "MERGED_ANNUAL_SUM-NES_EPU_NOESTUARIES-PPD-VGPM2_STATS-V2024-SOE_FORMAT.csv"
+chl_ppd_ann_csv <- "MERGED_ANNUAL_SUM-NES_EPU_NOESTUARIES-PPD-VGPM2_CHLOR_A-CCI-STATS-V2024-SOE_FORMAT.csv"
 
 # transformation ----
 annual_chl_pp <- read.csv(file.path(raw.dir, chl_ppd_ann_csv)) %>%
