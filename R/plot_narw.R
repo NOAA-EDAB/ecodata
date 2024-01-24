@@ -78,6 +78,9 @@ plot_narw <- function(shadedRegion = NULL,
     p <- p + ggplot2::geom_ribbon(ggplot2::aes(ymin = Lower95, ymax = Upper95, x = Time), alpha = setup$shade.alpha)
   }
 
+    if (report == "NewEngland") {
+      p <- NULL
+    }
 
 
     return(p)
