@@ -48,17 +48,14 @@ plot_bottom_temp_seasonal_gridded <- function(shadedRegion = NULL,
   fix <- ecodata::bottom_temp_seasonal_gridded |>
     dplyr::filter(Time == max(Time)) |>
     dplyr::select(-Time) |>
-    dplyr::as_tibble() |>
-    dplyr::rename(Var = Season) |>
     dplyr::mutate(Var = factor(Var, levels = c("winter","spring","summer","fall")))
 
 
   p <- ggplot2::ggplot(data = fix)+
     ggplot2::geom_tile(ggplot2::aes(x = Longitude, y = Latitude, fill = Value)) +
-    #ggplot2::coord_sf(xlim = xlims, ylim = ylims) +
-
-    #ggplot2::geom_sf(data = ecodata::coast, size = setup$map.lwd) +
-    #ggplot2::geom_sf(data = ne_epu_sf, fill = "transparent", size = setup$map.lwd) +
+    ggplot2::geom_sf(data = ecodata::coast, size = setup$map.lwd) +
+    ggplot2::geom_sf(data = ne_epu_sf, fill = "transparent", size = setup$map.lwd) +
+    ggplot2::coord_sf(xlim = xlims, ylim = ylims) +
     ggplot2::facet_wrap(Var~.)+
     ecodata::theme_map() +
     #ggplot2::scale_fill_viridis_c(option = 'A',name = 'Bottom \n Temp')+
