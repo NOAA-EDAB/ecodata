@@ -95,9 +95,9 @@ plot_forage_index <- function(shadedRegion = NULL,
                     Upper = Mean + SE,
                     Lower = Mean - SE) |>
       ggplot2::ggplot(ggplot2::aes(x = Time, y = Mean, group = Season))+
-      #ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
-      #                  xmin = setup$x.shade.min , xmax = setup$x.shade.max,
-      #                  ymin = -Inf, ymax = Inf) +
+      ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
+                        xmin = setup$x.shade.min , xmax = setup$x.shade.max,
+                        ymin = -Inf, ymax = Inf) +
       ggplot2::geom_ribbon(ggplot2::aes(ymin = Lower, ymax = Upper, fill = Season), alpha = 0.3)+ #
       ggplot2::geom_point()+
       ggplot2::geom_line()+
