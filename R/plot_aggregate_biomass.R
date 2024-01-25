@@ -130,14 +130,14 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
     ggplot2::guides(color = FALSE) +
     ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
                                      group = Var),
-                        size = setup$hline.size,
+                        linewidth = setup$hline.size,
                         alpha = setup$hline.alpha,
                         linetype = setup$hline.lty)+
     ggplot2::facet_wrap(Var~.,ncol = 2) +
     #Axis and theme
     ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
     #ylim(0, 1200)+
-    ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+    ggplot2::ylab(ggplot2::element_blank()) +
     ecodata::theme_facet()+
     ggplot2::theme(strip.text=ggplot2::element_text(hjust=0),
                    axis.title.x=ggplot2::element_blank())
@@ -187,14 +187,14 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
     ggplot2::guides(color = FALSE) +
     ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
                                      group = Var),
-                        size = setup$hline.size,
+                        linewidth = setup$hline.size,
                         alpha = setup$hline.alpha,
                         linetype = setup$hline.lty)+
     ggplot2::facet_wrap(Var~.,ncol = 2) +
     #Axis and theme
     ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
     #ylim(0, 1200)+
-    ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+    ggplot2::ylab(ggplot2::element_blank()) +
     ecodata::theme_facet()+
     ggplot2::theme(strip.text=ggplot2::element_text(hjust=0),
                    axis.title.x=ggplot2::element_blank())
@@ -244,14 +244,14 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
     ggplot2::guides(color = FALSE) +
     ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
                                      group = Var),
-                        size = setup$hline.size,
+                        linewidth = setup$hline.size,
                         alpha = setup$hline.alpha,
                         linetype = setup$hline.lty)+
     ggplot2::facet_wrap(Var~.,ncol = 2) +
     #Axis and theme
     ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
     #ylim(0, 1200)+
-    ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+    ggplot2::ylab(ggplot2::element_blank()) +
     ecodata::theme_facet()+
     ggplot2::theme(strip.text=ggplot2::element_text(hjust=0),
                    axis.title.x=ggplot2::element_blank())
@@ -301,14 +301,14 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
     ggplot2::guides(color = FALSE) +
     ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
                                      group = Var),
-                        size = setup$hline.size,
+                        linewidth = setup$hline.size,
                         alpha = setup$hline.alpha,
                         linetype = setup$hline.lty)+
     ggplot2::facet_wrap(Var~.,ncol = 2) +
     #Axis and theme
     ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
     #ylim(0, 1200)+
-    ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+    ggplot2::ylab(ggplot2::element_blank()) +
     ecodata::theme_facet()+
     ggplot2::theme(strip.text=ggplot2::element_text(hjust=0),
                    axis.title.x=ggplot2::element_blank())
@@ -332,6 +332,13 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
 
   p <- cowplot::plot_grid(p1, p2, p3, p4, nrow=4)
 
+
+  y.grob <- grid::textGrob(expression("Biomass (kg tow"^-1*")"),
+                     gp=grid::gpar( col="black", fontsize=15), rot=90)
+
+  p <- gridExtra::grid.arrange(gridExtra::arrangeGrob(p, left = y.grob))
+
+    #ggplot2::ylab(expression("Biomass (kg tow"^-1*")"))
   return(p)
 
 
