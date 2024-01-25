@@ -48,7 +48,7 @@ get_bottom_temp_seasonal_gridded <- function(save_clean = F){
   bottom_temp_seasonal_gridded<- read.csv(file.path(raw.dir,btsg_csv)) %>%
     dplyr::rename("Latitude" = "Lat",
                   "Longitude" = "Lon",
-                  "Season" = "Variable")
+                  "Var" = "Variable")
 
   if (save_clean){
     usethis::use_data(bottom_temp_seasonal_gridded, overwrite = T)
