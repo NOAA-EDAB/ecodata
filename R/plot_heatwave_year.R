@@ -57,32 +57,38 @@ plot_heatwave_year <- function(shadedRegion = NULL,
   # e.g. fill = setup$shade.fill, alpha = setup$shade.alpha,
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
   #
-  p <- hwyr |>
-    ggplot2::ggplot( ggplot2::aes(x = t, y = temp))+
-    heatwaveR::geom_flame(ggplot2::aes(y2 = thresh))+
-    ggplot2::geom_line(ggplot2::aes(x = t, y = seas, color = "a"), size = 1)+
-    ggplot2::geom_line(ggplot2::aes(x = t, y = thresh, color = "c"), size = 1)+
-    ggplot2::geom_line(ggplot2::aes(x = t, y = temp, color = "b"))+
-    ggplot2::scale_colour_manual(values = c("turquoise4", "sienna3", "black"),
-                        labels = c(legendlab,"Temperature", "Threshold"))+
-    ggplot2::ylab(ylabs)+
-    ggplot2::xlab(ggplot2::element_blank())+
-    ggplot2::scale_x_date(date_labels = "%b", breaks = "1 month")+
-    ggplot2::facet_wrap(~EPU, scales = "free_y") +
-    ecodata::theme_facet() +
-    ggplot2::ggtitle(paste(setup$region, plotvartitle, year))+
-    ggplot2::theme(legend.title = ggplot2::element_blank(),
-          legend.position=c(0.2, 0.8))+
-    ecodata::theme_title()
 
-   # optional code for New England specific (2 panel) formatting
-    if (report == "NewEngland") {
-      p <- p +
-        ggplot2::theme(legend.position = "bottom",
-                       legend.title = ggplot2::element_blank())
+  if(nrow(hwyr) > 0) {
 
-    }
+    p <- hwyr |>
+      ggplot2::ggplot( ggplot2::aes(x = t, y = temp))+
+      heatwaveR::geom_flame(ggplot2::aes(y2 = thresh))+
+      ggplot2::geom_line(ggplot2::aes(x = t, y = seas, color = "a"), linewidth = 1)+
+      ggplot2::geom_line(ggplot2::aes(x = t, y = thresh, color = "c"), linewidth = 1)+
+      ggplot2::geom_line(ggplot2::aes(x = t, y = temp, color = "b"))+
+      ggplot2::scale_colour_manual(values = c("turquoise4", "sienna3", "black"),
+                          labels = c(legendlab,"Temperature", "Threshold"))+
+      ggplot2::ylab(ylabs)+
+      ggplot2::xlab(ggplot2::element_blank())+
+      ggplot2::scale_x_date(date_labels = "%b", breaks = "1 month")+
+      ggplot2::facet_wrap(~EPU, scales = "free_y") +
+      ecodata::theme_facet() +
+      ggplot2::ggtitle(paste(setup$region, plotvartitle, year))+
+      ggplot2::theme(legend.title = ggplot2::element_blank(),
+            legend.position=c(0.2, 0.8))+
+      ecodata::theme_title()
 
+     # optional code for New England specific (2 panel) formatting
+      if (report == "NewEngland") {
+        p <- p +
+          ggplot2::theme(legend.position = "bottom",
+                         legend.title = ggplot2::element_blank())
+
+      }
+  } else {
+    #no data
+    p <- "No data available"
+  }
     return(p)
 }
 
