@@ -180,5 +180,6 @@ plot_seabird_ne <- function(shadedRegion = NULL,
 
 }
 
-attr(plot_seabird_ne,"varName") <- c("diversity","productivity","prey")
 attr(plot_seabird_ne,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_seabird_ne,"varName") <- c("diversity","productivity","prey")
+
