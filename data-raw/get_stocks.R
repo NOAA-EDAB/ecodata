@@ -31,6 +31,16 @@ get_stocks <- function(save_clean = F){
     dplyr::mutate(Units = "unitless") %>%
     dplyr::mutate(Value = replace(Value, which(Code == "N Windowpane" & Var == "F.Fmsy"), NA))
 
+  #Duplicate 'Council' to a column called EPU
+  stock_status_epu<-tibble(stock_status$Council) %>%
+    dplyr::rename(EPU = "stock_status$Council") %>%
+    dplyr::mutate(EPU = recode(EPU, "MAFMC" = "MAB",
+                               "NEFMC" = "NE"))
+  stock_status<-cbind(stock_status, stock_status_epu)
+
+
+
+
   if (save_clean){
     usethis::use_data(stock_status, overwrite = T)
   } else {
