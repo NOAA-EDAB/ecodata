@@ -7,7 +7,7 @@
 plot_species_groupings(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  varName = "SOE.24"
+  varName = "2024"
 )
 }
 \arguments{
@@ -15,7 +15,7 @@ plot_species_groupings(
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
-\item{varName}{Character string. Which year of SOE report ("SOE.24", "SOE.20","SOE.18","SOE.17")}
+\item{varName}{Character string. Which year of SOE report ("2024", "2020","2018","2017")}
 }
 \value{
 flextable object
