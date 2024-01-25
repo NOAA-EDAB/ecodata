@@ -4,7 +4,7 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
-#' @param varName Character string. Which year of SOE report ("SOE.24", "SOE.20","SOE.18","SOE.17")
+#' @param varName Character string. Which year of SOE report ("2024", "2020","2018","2017")
 #'
 #' @return flextable object
 #'
@@ -14,7 +14,7 @@
 
 plot_species_groupings <- function(shadedRegion = NULL,
                               report="MidAtlantic",
-                              varName = "SOE.24") {
+                              varName = "2024") {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -24,12 +24,13 @@ plot_species_groupings <- function(shadedRegion = NULL,
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
   } else {
+    message("Same figure for both reports ")
     filterEPUs <- c("GB", "GOM")
   }
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
-  varName <- toupper(varName)
+  varName <- paste0("SOE.",substr(varName,3,4))
 
   # new table with all species listed by management entity
   fix <- ecodata::species_groupings |>
@@ -59,11 +60,16 @@ plot_species_groupings <- function(shadedRegion = NULL,
                                  "<NA>" = "State or Other") |>
     flextable::width(width = c(1,1,1,1,3))
 
-    return(p)
+
+  if(report == "NewEngland") {
+    p <- "Same figure for both regions"
+  }
+
+  return(p)
 
 
 }
 
 
 attr(plot_species_groupings,"report") <- c("MidAtlantic","NewEngland")
-attr(plot_species_groupings,"varName") <- c("SOE.24")
+attr(plot_species_groupings,"varName") <- c("2024")

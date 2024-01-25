@@ -86,8 +86,9 @@ plot_heatwave_year <- function(shadedRegion = NULL,
     return(p)
 }
 
-attr(plot_heatwave_year,"varName") <- c("Surface","Bottom")
 attr(plot_heatwave_year,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_heatwave_year,"varName") <- c("Surface","Bottom")
+
 
 
   # Paste commented original plot code chunk for reference
