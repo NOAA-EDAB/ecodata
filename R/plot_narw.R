@@ -67,7 +67,7 @@ plot_narw <- function(shadedRegion = NULL,
     ggplot2::ggtitle(vtitle)+
     ggplot2::ylab(vylab)+
     ggplot2::geom_hline(ggplot2::aes(yintercept = hline),
-                        size = setup$hline.size,
+                        linewidth = setup$hline.size,
                         alpha = setup$hline.alpha,
                         linetype = setup$hline.lty) +
     ggplot2::xlab(ggplot2::element_blank())+
