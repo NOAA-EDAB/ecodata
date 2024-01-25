@@ -27,17 +27,18 @@ plot_ches_bay_sst <- function(shadedRegion = NULL,
   setup$ylims <- c(setup$ymin, setup$ymax)
 
 
-  # # which report? this may be bypassed for some figures
-  # if (report == "MidAtlantic") {
-  #   filterEPUs <- c("MAB")
-  # } else {
-  #   filterEPUs <- c("GB", "GOM")
-  # }
+  # which report? this may be bypassed for some figures
+  if (report == "MidAtlantic") {
+    filterEPUs <- c("MAB")
+  } else {
+    message("Not part of New England report")
+    filterEPUs <- c("GB", "GOM")
+  }
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
   sst<- ecodata::ches_bay_sst
-  sst$Season <- factor(sst$Season, levels = c("Winter",
+  sst$Var <- factor(sst$Var, levels = c("Winter",
                                               "Spring",
                                               "Summer",
                                               "Fall"))
@@ -62,14 +63,14 @@ plot_ches_bay_sst <- function(shadedRegion = NULL,
     ggplot2::coord_sf(crs = setup$crs, xlim = setup$xlims, ylim = setup$ylims) +
 
     ggplot2::geom_tile(data = sst, ggplot2::aes(x = Latitude, y = Longitude,fill = Value)) +
-    ggplot2::facet_wrap(Season~.) +
+    ggplot2::facet_wrap(Var~.) +
     ecodata::theme_map() +
     ggplot2::ggtitle("Chesapeake Bay SST anomaly") +
     ggplot2::xlab(ggplot2::element_blank()) +
     ggplot2::ylab(ggplot2::element_blank()) +
     ggplot2::scale_y_continuous(breaks = seq(37, 40, by = 1))+
     ggplot2::scale_x_continuous(breaks = seq(-77, -75, by = 1))+
-    ggplot2::theme(panel.border = ggplot2::element_rect(colour = "black", fill=NA, size=0.75),
+    ggplot2::theme(panel.border = ggplot2::element_rect(colour = "black", fill=NA, linewidth=0.75),
                    legend.key = ggplot2::element_blank(),
                    axis.title = ggplot2::element_text(size = 6),
                    strip.background = ggplot2::element_blank(),
@@ -85,6 +86,10 @@ plot_ches_bay_sst <- function(shadedRegion = NULL,
    #                     legend.title = ggplot2::element_blank())
    #
    #  }
+
+  if(report == "NewEngland") {
+    p <- "Not part of New England report"
+  }
 
     return(p)
 

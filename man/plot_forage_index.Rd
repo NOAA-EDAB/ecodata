@@ -4,12 +4,18 @@
 \alias{plot_forage_index}
 \title{plot forage index}
 \usage{
-plot_forage_index(shadedRegion = NULL, report = "MidAtlantic")
+plot_forage_index(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  varName = "index"
+)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
+
+\item{varName}{Character string. Forage biomass index by region, or coastwide center of gravity ("index", "cog")}
 }
 \value{
 ggplot object

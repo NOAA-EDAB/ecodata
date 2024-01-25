@@ -23,7 +23,7 @@ plot_bottom_temp_comp <- function(shadedRegion=NULL,
 
 
   fix <- ecodata::bottom_temp_comp |>
-    dplyr::filter(Source == "GLORYS") |>
+    dplyr::filter((Source == "GLORYS" & Time >= 1993) | (Source == "ROMS") ) |>
     dplyr::filter(EPU %in% filterEPUs) |>
     dplyr::mutate(Time = as.numeric(Time),
                   Var = stringr::str_to_title(stringr::str_extract(Var,"Winter|Spring|Summer|Fall"))) |>
@@ -63,12 +63,12 @@ plot_bottom_temp_comp <- function(shadedRegion=NULL,
                       ymin = -Inf, ymax = Inf) +
     ggplot2::geom_line()+
     ggplot2::geom_point(ggplot2::aes(shape = Source))+
-    ggplot2::scale_shape_manual(values = c(16, 1)) +
+    ggplot2::scale_shape_manual(values = c(16,1,15)) +
     ggplot2::ylim(-2,3)+
     ggplot2::ylab(expression("BT Anomaly (C)")) +
     ggplot2::xlab(ggplot2::element_blank())+
     ggplot2::geom_hline(yintercept=0,linetype=setup$hline.lty)+
-    ggplot2::ggtitle(paste0(report,": GLORYS/PSY bottom temperature Anomaly")) +
+    ggplot2::ggtitle(paste0(report,": ROMS/GLORYS/PSY bottom temperature Anomaly")) +
     ggplot2::scale_color_manual(values = c("black","indianred"))+
   #  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
     # ggplot2::geom_hline(aes(yintercept = hline),

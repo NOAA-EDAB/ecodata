@@ -2,7 +2,6 @@
 % Please edit documentation in R/ecodata.R
 \docType{package}
 \name{ecodata}
-\alias{ecodata-package}
 \alias{ecodata}
 \title{ecodata: indicator data for reporting ecosystem health}
 \description{
@@ -16,14 +15,4 @@ The main goals are:
 }
 
 To learn more about using \code{ecodata}, start with the vignette: \code{browseVignettes(package="ecodata")} or click the index link below
-}
-\author{
-\strong{Maintainer}: Brandon Beltz \email{brandon.beltz@noaa.gov}
-
-Authors:
-\itemize{
-  \item Kimberly Bastille \email{kimberly.bastille@noaa.gov}
-  \item Sean Hardison
-}
-
 }

@@ -192,6 +192,7 @@ plot_bennet <- function(shadedRegion = NULL,
 
 attr(plot_bennet,"report") <- c("MidAtlantic","NewEngland")
 attr(plot_bennet,"varName") <- c("guild","total","total_guild")
+attr(plot_bennet,"EPU") <- c("MAB","GB","GOM")
 
   # Paste commented original plot code chunk for reference
   # MAB version
