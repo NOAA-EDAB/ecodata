@@ -61,7 +61,8 @@ get_eng_rel <- function(save_clean = F){
   #                 "Fishery", "EJ Rating", "Region"  )
 
   engagement <- dta %>% rbind(dta2) %>%
-    dplyr::rename("Community" = "Community Name") %>%
+    dplyr::rename("Community" = "Community Name",
+                  "EPU" = "Region") %>%
     dplyr::mutate(Eng = as.numeric(Eng),
                   Rel = as.numeric(Rel),
                   `EJ Rating` = dplyr::recode(`EJ Rating`,

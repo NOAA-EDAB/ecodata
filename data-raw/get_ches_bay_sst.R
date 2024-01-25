@@ -34,7 +34,8 @@ get_ches_bay_sst <- function(save_clean = F){
                   Fall = "sea_surface_subskin_temperature.anomaly.2023.minus.2007.2022.4") %>%
     tidyr::pivot_longer(!c(x, y), names_to = "Season", values_to = "Value") %>%
     dplyr::rename(Longitude = "y",
-                  Latitude = "x") %>%
+                  Latitude = "x",
+                  Var = "Season") %>%
     filter(!Value == "NaN")
 
   # metadata ----
