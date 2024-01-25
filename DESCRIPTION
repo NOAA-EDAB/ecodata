@@ -28,7 +28,10 @@ Imports:
   plyr,
   lubridate,
   vegan,
-  viridis
+  viridis,
+  grid,
+  gridExtra,
+  flextable
 Suggests:
   knitr,
   rmarkdown,
