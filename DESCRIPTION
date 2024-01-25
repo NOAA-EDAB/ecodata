@@ -31,7 +31,8 @@ Imports:
   viridis,
   grid,
   gridExtra,
-  flextable
+  flextable,
+  heatwaveR
 Suggests:
   knitr,
   rmarkdown,
