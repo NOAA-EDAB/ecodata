@@ -46,7 +46,8 @@ plot_abc_acl <- function(shadedRegion = NULL,
       dplyr::mutate(Fishery = gsub("Commercial", "C", Fishery),
                     Fishery = gsub("Recreational", "R", Fishery)) |>
       dplyr::group_by(Fishery, Time) |>
-      dplyr::summarise(Value = sum(Value))
+      dplyr::summarise(Value = sum(Value),
+                       .groups="drop")
 
     CatchABC <- ecodata::abc_acl |>
       unique()|>
@@ -63,7 +64,8 @@ plot_abc_acl <- function(shadedRegion = NULL,
 
     meanCatchABC <- CatchABC |>
       dplyr::group_by(Time) |>
-      dplyr::summarise(val = mean(Value)) |>
+      dplyr::summarise(val = mean(Value),
+                       .groups="drop") |>
       dplyr::ungroup() |>
       dplyr::mutate(Time = as.numeric(Time))
 
@@ -76,7 +78,8 @@ plot_abc_acl <- function(shadedRegion = NULL,
       tidyr::separate(col = Var, into = c("FMP", "Fishery", "Var"), sep = "_") |>
       dplyr::filter(Var == "ABC") |>
       dplyr::group_by(Fishery, Time) |>
-      dplyr::summarise(Value = sum(Value))
+      dplyr::summarise(Value = sum(Value),
+                       .groups="drop")
 
     CatchABC <- ecodata::abc_acl |>
       unique()|>
@@ -93,7 +96,8 @@ plot_abc_acl <- function(shadedRegion = NULL,
 
     meanCatchABC <- CatchABC |>
       dplyr::group_by(Time) |>
-      dplyr::summarise(val = mean(Value)) |>
+      dplyr::summarise(val = mean(Value),
+                       .groups="drop") |>
       dplyr::ungroup() |>
       dplyr::mutate(Time = as.numeric(Time))
 
@@ -109,6 +113,7 @@ plot_abc_acl <- function(shadedRegion = NULL,
     p <-  ABCs |>
       ggplot2::ggplot()+
       ggplot2::geom_bar(ggplot2::aes( y = Value, x = Time, fill = Fishery), stat="identity", position = "stack" )+
+      ggplot2::scale_x_continuous(breaks= scales::pretty_breaks()) +
       ggplot2::ggtitle("ABC or ACL for Managed Species")+
       ggplot2::theme(legend.text = ggplot2::element_text(size = 8),
                      legend.key.height = ggplot2::unit(2, "mm"))+
@@ -131,6 +136,7 @@ plot_abc_acl <- function(shadedRegion = NULL,
       ggplot2::geom_point(data = meanCatchABC, ggplot2::aes(x = Time, y = val), color = "red")+
       ggplot2::geom_line(data = meanCatchABC, ggplot2::aes(x = Time, y = val), color = "red")+
       ggplot2::geom_hline(yintercept = 1, linetype='dashed', col = 'gray')+
+      ggplot2::scale_x_continuous(breaks= scales::pretty_breaks()) +
       ggplot2::ggtitle("Catch per ABC or ACL")+
       ggplot2::ylab(expression("Catch / ABC or ACL"))+
       ggplot2::theme(legend.title = ggplot2::element_blank())+
