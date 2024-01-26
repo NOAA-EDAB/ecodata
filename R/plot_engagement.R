@@ -34,17 +34,11 @@ plot_engagement <- function(shadedRegion = NULL,
                   Fishery == varName) |>
     dplyr::rename("EJRating" = "EJ Rating") |>
     dplyr::mutate(EJRating = as.factor(EJRating))
+  eng$EJRating <- factor(eng$EJRating, c("MedHigh to High","Medium","All Other Communities"))
 
-  ## assign colors to EJRating Column
-  df <- data.frame(EJRating = as.factor(c("MedHigh to High","Medium","All Other Communities")),
-                   color = c("#F8766D","#00BA38","#619CFF"))
-  eng <- eng |>
-    dplyr::left_join(df, by="EJRating")
-  # select pairs in datadet
-  palette <- eng |>
-    dplyr::distinct(EJRating,color)
+  # select 3 colors from palette
+  #colorpalette <- RColorBrewer::brewer.pal(4, "Dark2")[1:3]
 
-#return(palette)
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
   # e.g. fill = setup$shade.fill, alpha = setup$shade.alpha,
@@ -62,10 +56,12 @@ plot_engagement <- function(shadedRegion = NULL,
                                  label = Community,
                                  color = EJRating),
                              show.legend = FALSE, direction = "both", box.padding = 0.2, size = 3)+
+    ggplot2::scale_color_manual(values = c("MedHigh to High"="#D95F02",
+                                           "Medium"="#7570B3",
+                                           "All Other Communities" = "#1B9E77")) +
     # ggplot2::scale_color_brewer(palette = c("#F8766D","#00BA38","#619CFF"),#"Dark2", #Change legend labels for clarity
     #                             breaks = eng$EJRating) +
-    ggplot2::scale_color_manual(values = palette$color,#"Dark2", #Change legend labels for clarity
-                                labels = palette$EJRating) +
+
     #ggplot2::xlim(-2,12.7)+
     #ggplot2::ylim(-1,3.0)+
     ggplot2::theme(legend.position="top",
