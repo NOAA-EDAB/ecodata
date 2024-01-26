@@ -32,25 +32,40 @@ plot_engagement <- function(shadedRegion = NULL,
   eng<-ecodata::engagement |>
     dplyr::filter(EPU == filterEPUs,
                   Fishery == varName) |>
-    dplyr::rename("EJRating" = "EJ Rating")
+    dplyr::rename("EJRating" = "EJ Rating") |>
+    dplyr::mutate(EJRating = as.factor(EJRating))
 
+  ## assign colors to EJRating Column
+  df <- data.frame(EJRating = as.factor(c("MedHigh to High","Medium","All Other Communities")),
+                   color = c("#F8766D","#00BA38","#619CFF"))
+  eng <- eng |>
+    dplyr::left_join(df, by="EJRating")
+  # select pairs in datadet
+  palette <- eng |>
+    dplyr::distinct(EJRating,color)
 
+#return(palette)
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
   # e.g. fill = setup$shade.fill, alpha = setup$shade.alpha,
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
   #
+
   eng2<-eng |>
     ggplot2::ggplot()+
     ggplot2::geom_point(ggplot2::aes(x = Eng, y = Rel, color = EJRating), size = 2)+
+    #ggplot2::scale_color_manual(values = c("MedHigh to High"="red","Medium"="black","All Other Communities"="pink"))+
     ggplot2::geom_vline(xintercept = 1, linetype = "dashed",color = "black", linewidth = 0.5)+
     ggplot2::geom_hline(yintercept = 1, linetype = "dashed", color = "black", linewidth = 0.5) +
     ggrepel::geom_text_repel(ggplot2::aes(x = Eng, #geom_text_repel auto-jitters text around points
                                  y = Rel,
                                  label = Community,
-                                 color = EJRating), show.legend = FALSE, direction = "both", box.padding = 0.2, size = 3)+
-    ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
-                                breaks = eng$EJRating) +
+                                 color = EJRating),
+                             show.legend = FALSE, direction = "both", box.padding = 0.2, size = 3)+
+    # ggplot2::scale_color_brewer(palette = c("#F8766D","#00BA38","#619CFF"),#"Dark2", #Change legend labels for clarity
+    #                             breaks = eng$EJRating) +
+    ggplot2::scale_color_manual(values = palette$color,#"Dark2", #Change legend labels for clarity
+                                labels = palette$EJRating) +
     #ggplot2::xlim(-2,12.7)+
     #ggplot2::ylim(-1,3.0)+
     ggplot2::theme(legend.position="top",
