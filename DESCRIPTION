@@ -32,7 +32,9 @@ Imports:
   grid,
   gridExtra,
   flextable,
-  heatwaveR
+  heatwaveR,
+  forcats,
+  patchwork
 Suggests:
   knitr,
   rmarkdown,
