@@ -21,6 +21,7 @@ plot_zoo_diversity <- function(shadedRegion = NULL,
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
+    to_string <- ggplot2::as_labeller("MAB Zooplankton Diversity")
   } else {
     filterEPUs <- c("GB", "GOM")
     to_string <- ggplot2::as_labeller(c("GB" = "GB Zooplankton Diversity","GOM"="GOM Zooplankton Diversity"))
@@ -33,6 +34,13 @@ plot_zoo_diversity <- function(shadedRegion = NULL,
      dplyr::filter(EPU %in% filterEPUs,
                    Time > 1991)
 
+   mn <- fix |>
+     dplyr::group_by(EPU,Var) |>
+     dplyr::summarise(mn = mean(Value,na.rm = T),
+                      .groups="drop")
+
+   fix <- fix |>
+     dplyr::left_join(mn,by=c("Var","EPU"))
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
   # e.g. fill = setup$shade.fill, alpha = setup$shade.alpha,
@@ -47,17 +55,17 @@ plot_zoo_diversity <- function(shadedRegion = NULL,
     ggplot2::geom_point()+
     ggplot2::geom_line()+
 
-    ggplot2::ylab("Shannon Diversity")+
+    ggplot2::ylab("Zooplankton Diversity (Shannon)")+
     ggplot2::xlab(ggplot2::element_blank())
 
-  if(report == "MidAtlantic"){
-    p <-  p + ggplot2::ggtitle("MAB  Zooplankton Diversity")
-  } else {
-    p <- p + ggplot2::facet_wrap(~EPU,scales = "free_y",labeller = to_string)
-  }
+  #if(report == "MidAtlantic"){
+   # p <-  p + ggplot2::ggtitle("MAB  Zooplankton Diversity")
+  #} else {
+    p <- p + ggplot2::facet_wrap(~EPU,scales = "free_y")#,labeller = to_string)
+  #}
 
 
-    p <- p + ggplot2::geom_hline(ggplot2::aes(yintercept = mean(Value, na.rm = TRUE)),
+    p <- p + ggplot2::geom_hline(ggplot2::aes(yintercept = mn),
                         linewidth = setup$hline.size,
                         alpha = setup$hline.alpha,
                         linetype = setup$hline.lty)+

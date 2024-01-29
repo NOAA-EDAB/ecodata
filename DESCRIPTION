@@ -28,7 +28,13 @@ Imports:
   plyr,
   lubridate,
   vegan,
-  viridis
+  viridis,
+  grid,
+  gridExtra,
+  flextable,
+  heatwaveR,
+  forcats,
+  patchwork
 Suggests:
   knitr,
   rmarkdown,

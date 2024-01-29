@@ -20,7 +20,7 @@ plot_slopewater <- function(shadedRegion = NULL,
 
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
-    stop("This indicator is only present in the `NewEngland` report")
+    message("This indicator is only present in the `NewEngland` report")
     filterEPUs <- c("MAB")
   } else {
     filterEPUs <- c("GB", "GOM")
@@ -67,6 +67,10 @@ plot_slopewater <- function(shadedRegion = NULL,
     #                    legend.title = ggplot2::element_blank())
     #
     # }
+
+    if(report == "MidAtlantic"){
+      p <- NULL
+    }
 
     return(p)
 }
