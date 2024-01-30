@@ -1,6 +1,6 @@
 ## Spawn timing
 raw.dir<- here::here("data-raw/")
-sptime <- readRDS(file.path(raw.dir, fal))
+sptime <- "spawn_timing.rds"
 
 get_spawn_timing <- function(save_clean = F){
 
