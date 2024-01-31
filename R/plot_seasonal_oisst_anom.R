@@ -3,13 +3,15 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10), passed from plot function
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland"), passed from plot function
+#' @param EPU Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB
 #'
 #' @return ggplot object
 #'
 #' @export
 
 plot_seasonal_oisst_anom <- function(shadedRegion = NULL,
-                                     report = "MidAtlantic") {
+                                     report = "MidAtlantic",
+                                     EPU="MAB") {
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
                                report=report)
@@ -17,7 +19,10 @@ plot_seasonal_oisst_anom <- function(shadedRegion = NULL,
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
   } else {
-    filterEPUs <- c("GB", "GOM")
+    if (!(EPU %in% c("GB","GOM"))) {
+      stop("For NewEngland the epu must be either 'GB' or 'GOM'")
+    }
+    filterEPUs <- EPU
   }
 
   ne_anom <- ecodata::seasonal_oisst_anom |>
@@ -57,4 +62,5 @@ plot_seasonal_oisst_anom <- function(shadedRegion = NULL,
   return(p)
 }
 
+attr(plot_seasonal_oisst_anom,"EPU") <- c("MAB","GB","GOM")
 attr(plot_seasonal_oisst_anom,"report") <- c("MidAtlantic","NewEngland")
