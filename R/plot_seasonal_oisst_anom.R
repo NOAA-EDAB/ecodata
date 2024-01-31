@@ -34,7 +34,7 @@ plot_seasonal_oisst_anom <- function(shadedRegion = NULL,
   #   dplyr::filter(Var %in% season)
   #
   p <- ggplot2::ggplot(data = ne_anom,
-                                 ggplot2::aes(x = Time, y = Value, color = EPU, group = EPU)) +
+                                 ggplot2::aes(x = Time, y = Value,  group = EPU)) + #color = EPU,
     ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
                       xmin = setup$x.shade.min , xmax = setup$x.shade.max,
                       ymin = -Inf, ymax = Inf) +
@@ -43,7 +43,7 @@ plot_seasonal_oisst_anom <- function(shadedRegion = NULL,
     ggplot2::ylim(-2,3)+
     ggplot2::ylab(expression("SST Anomaly (C)")) +
     ggplot2::xlab(ggplot2::element_blank())+
-    ggplot2::ggtitle(paste0(report,": SST Anomaly (OISST)")) +
+    ggplot2::ggtitle(paste0(EPU,": SST Anomaly (OISST)")) +
     ggplot2::scale_color_manual(values = c("black","indianred"))+
     ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
     ggplot2::geom_hline(yintercept = 0,
