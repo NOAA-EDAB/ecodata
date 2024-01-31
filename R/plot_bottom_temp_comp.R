@@ -5,6 +5,7 @@
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which variable ("seasonal", "annual")
+#' @param EPU Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB
 #'
 #' @return ggplot object
 #'
@@ -12,7 +13,8 @@
 
 plot_bottom_temp_comp <- function(shadedRegion=NULL,
                                   report="MidAtlantic",
-                                  varName="seasonal") {
+                                  varName="seasonal",
+                                  EPU="MAB") {
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
                                report=report)
@@ -20,7 +22,10 @@ plot_bottom_temp_comp <- function(shadedRegion=NULL,
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
   } else {
-    filterEPUs <- c("GB", "GOM")
+    if (!(EPU %in% c("GB","GOM"))) {
+      stop("For NewEngland the epu must be either 'GB' or 'GOM'")
+    }
+    filterEPUs <- EPU
   }
 
 
@@ -62,18 +67,18 @@ plot_bottom_temp_comp <- function(shadedRegion=NULL,
     fix <- fix |>
       dplyr::filter(!Var == "Annual")
 
-    ylabvar <-expression("BT Anomaly (C)")
+    ylabvar <-expression("Bottom Temperature Anomaly (C)")
   }
 
   if(varName == "annual"){
     fix <- fix |>
       dplyr::filter(Var == "Annual")
 
-    ylabvar <-expression("Bottom temperature (C)")
+    ylabvar <-expression("Bottom Temperature (C)")
   }
 
   p <- ggplot2::ggplot(data = fix,
-                       ggplot2::aes(x = Time, y = Value, color = EPU, group = EPU)) +
+                       ggplot2::aes(x = Time, y = Value,  group = EPU)) + #color = EPU,
     ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
                       xmin = setup$x.shade.min , xmax = setup$x.shade.max,
                       ymin = -Inf, ymax = Inf) +
@@ -84,7 +89,7 @@ plot_bottom_temp_comp <- function(shadedRegion=NULL,
     ggplot2::ylab(ylabvar) +
     ggplot2::xlab(ggplot2::element_blank())+
     {if(varName == "seasonal")ggplot2::geom_hline(yintercept=0,linetype=setup$hline.lty)}+
-    ggplot2::ggtitle(paste0(report,": ROMS/GLORYS/PSY bottom temperature Anomaly")) +
+    ggplot2::ggtitle(paste0(EPU,": Bottom Temperature")) +
     ggplot2::scale_color_manual(values = c("black","indianred"))+
   #  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
     # ggplot2::geom_hline(aes(yintercept = hline),
@@ -106,5 +111,6 @@ plot_bottom_temp_comp <- function(shadedRegion=NULL,
 }
 
 
+attr(plot_bottom_temp_comp,"EPU") <- c("MAB","GB","GOM")
 attr(plot_bottom_temp_comp,"report") <- c("MidAtlantic","NewEngland")
 attr(plot_bottom_temp_comp, "varName") <- c("seasonal", "annual")
