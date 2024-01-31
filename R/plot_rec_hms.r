@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_rec_hms <- function(shadedRegion = shadedRegion,
+plot_rec_hms <- function(shadedRegion = NULL,
                               report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)
