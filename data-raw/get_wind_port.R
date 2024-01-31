@@ -33,8 +33,8 @@ get_wind_port <- function(save_clean = F){
     dplyr::mutate(perc_MAX = perc_MAX*100,
            perc_MIN = perc_MIN*100,
            total_rev = 100 - perc_MIN - perc_MAX) %>%
-    dplyr::select(State, City, perc_MIN, perc_MAX, EJ, Gentrification, "MAX_$val") %>%
-    tidyr::pivot_longer(cols = c(perc_MIN, perc_MAX, EJ, Gentrification, "MAX_$val"),
+    dplyr::select(State, City, perc_MIN, perc_MAX, EJ, Gentrification, MaxVal) %>%
+    tidyr::pivot_longer(cols = c(perc_MIN, perc_MAX, EJ, Gentrification, MaxVal),
                         names_to = "Var", values_to = "Value") %>%
     #tidyr::separate(City, into = c("City", "State"), sep = ",") %>%
     left_join(df, by = "State")
