@@ -59,6 +59,9 @@ plot_bennet <- function(shadedRegion = NULL,
     indicators$Guild<-factor(indicators$Guild, levels = c("Apex", "Piscivore", "Planktivore",
                                                         "Benthivore", "Benthos", "Other"))
 
+    # Define dataset max year for use in unit label
+    bennet_year<-max(ecodata::bennet$Time)
+
     p <- ggplot2::ggplot()+
       #Highlight last ten years
       ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
@@ -71,7 +74,7 @@ plot_bennet <- function(shadedRegion = NULL,
       ggplot2::facet_grid(EPU~Var, scales = "free")+
       ggplot2::scale_colour_grey(name ="Component") +
       ggplot2::ggtitle("Bennet Indicator")+
-      ggplot2::labs(y="Value $1,000,000 ($ADD BASE YEAR)") +
+      ggplot2::labs(y=paste0("Value $1,000,000 ($", bennet_year, ")")) +
 
       ggplot2::xlab(ggplot2::element_blank())+
       #ggplot2::scale_x_continuous(breaks = seq(1965, 2020, by = 10), expand = c(0.01, 0.01)) +
@@ -112,7 +115,7 @@ plot_bennet <- function(shadedRegion = NULL,
       ggplot2::geom_line(data = revchange, ggplot2::aes(x = Time, y = Value, color = "$"))+
       ggplot2::scale_colour_grey(name ="Revenue Change") +
       ggplot2::ggtitle("Bennet Indicator")+
-      ggplot2::labs(y="Value $1,000,000  ($ADD BASE YEAR)") +
+      ggplot2::labs(y=paste0("Value $1,000,000 ($", bennet_year, ")")) +
       ggplot2::scale_x_continuous(breaks = seq(1980, 2020, by = 5), expand = c(0.01, 0.01)) +
       #::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100),
       #                            limits = y.lim, expand = c(0.01, 0.01)) +
@@ -155,7 +158,7 @@ plot_bennet <- function(shadedRegion = NULL,
       ggplot2::geom_line(data = revchange, ggplot2::aes(x = Time, y = Value, color = "$"))+
       ggplot2::scale_colour_grey(name ="Revenue Change") +
       ggplot2::ggtitle("Bennet Indicator")+
-      ggplot2::labs(y="Value $1,000,000 ($ADD BASE YEAR)") +
+      ggplot2::labs(y=paste0("Value $1,000,000 ($", bennet_year, ")")) +
       ggplot2::scale_x_continuous(breaks = seq(1980, 2015, by = 10), expand = c(0.01, 0.01)) +
       #ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100),
       #                            limits = y.lim, expand = c(0.01, 0.01)) +
