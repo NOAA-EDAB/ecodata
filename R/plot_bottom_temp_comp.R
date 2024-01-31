@@ -4,13 +4,15 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
+#' @param EPU Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB
 #'
 #' @return ggplot object
 #'
 #' @export
 
 plot_bottom_temp_comp <- function(shadedRegion=NULL,
-                                  report="MidAtlantic") {
+                                  report="MidAtlantic",
+                                  EPU="MAB") {
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
                                report=report)
@@ -18,7 +20,10 @@ plot_bottom_temp_comp <- function(shadedRegion=NULL,
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
   } else {
-    filterEPUs <- c("GB", "GOM")
+    if (!(EPU %in% c("GB","GOM"))) {
+      stop("For NewEngland the epu must be either 'GB' or 'GOM'")
+    }
+    filterEPUs <- EPU
   }
 
 
@@ -90,4 +95,5 @@ plot_bottom_temp_comp <- function(shadedRegion=NULL,
 }
 
 
+attr(plot_bottom_temp_comp,"EPU") <- c("MAB","GB","GOM")
 attr(plot_bottom_temp_comp,"report") <- c("MidAtlantic","NewEngland")
