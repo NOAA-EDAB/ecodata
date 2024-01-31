@@ -4,13 +4,15 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
+#' @param varName Character string. Which variable ("seasonal", "annual")
 #'
 #' @return ggplot object
 #'
 #' @export
 
 plot_bottom_temp_comp <- function(shadedRegion=NULL,
-                                  report="MidAtlantic") {
+                                  report="MidAtlantic",
+                                  varName="seasonal") {
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
                                report=report)
@@ -26,19 +28,19 @@ plot_bottom_temp_comp <- function(shadedRegion=NULL,
     dplyr::filter((Source == "GLORYS" & Time >= 1993) | (Source == "ROMS") ) |>
     dplyr::filter(EPU %in% filterEPUs) |>
     dplyr::mutate(Time = as.numeric(Time),
-                  Var = stringr::str_to_title(stringr::str_extract(Var,"Winter|Spring|Summer|Fall"))) |>
+                  Var = stringr::str_to_title(stringr::str_extract(Var,"Winter|Spring|Summer|Fall|Annual"))) |>
     dplyr::filter(!Var == "NA")
 
-  fix$Var <- factor(fix$Var, levels= c("Winter","Spring","Summer","Fall"))
+  fix$Var <- factor(fix$Var, levels= c("Winter","Spring","Summer","Fall", "Annual"))
 
   psy <- ecodata::bottom_temp_comp |>
     dplyr::filter(Source == "PSY") |>
     dplyr::filter(EPU %in% filterEPUs) |>
     dplyr::mutate(Time = as.numeric(Time),
-                  Var = stringr::str_to_title(stringr::str_extract(Var,"Winter|Spring|Summer|Fall"))) |>
+                  Var = stringr::str_to_title(stringr::str_extract(Var,"Winter|Spring|Summer|Fall|Annual"))) |>
     dplyr::filter(!Var == "NA")
 
-  psy$Var <- factor(psy$Var, levels= c("Winter","Spring","Summer","Fall"))
+  psy$Var <- factor(psy$Var, levels= c("Winter","Spring","Summer","Fall", "Annual"))
 
   #find last year of GLORYS then add PSY if needed
   for (avar in unique(psy$Var)) {
@@ -56,6 +58,20 @@ plot_bottom_temp_comp <- function(shadedRegion=NULL,
     # ne_anom <- ne_anom |>
   #   dplyr::filter(Var %in% season)
 
+  if(varName == "seasonal"){
+    fix <- fix |>
+      dplyr::filter(!Var == "Annual")
+
+    ylabvar <-expression("BT Anomaly (C)")
+  }
+
+  if(varName == "annual"){
+    fix <- fix |>
+      dplyr::filter(Var == "Annual")
+
+    ylabvar <-expression("Bottom temperature (C)")
+  }
+
   p <- ggplot2::ggplot(data = fix,
                        ggplot2::aes(x = Time, y = Value, color = EPU, group = EPU)) +
     ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
@@ -64,10 +80,10 @@ plot_bottom_temp_comp <- function(shadedRegion=NULL,
     ggplot2::geom_line()+
     ggplot2::geom_point(ggplot2::aes(shape = Source))+
     ggplot2::scale_shape_manual(values = c(16,1,15)) +
-    ggplot2::ylim(-2,3)+
-    ggplot2::ylab(expression("BT Anomaly (C)")) +
+    #ggplot2::ylim(-2,3)+
+    ggplot2::ylab(ylabvar) +
     ggplot2::xlab(ggplot2::element_blank())+
-    ggplot2::geom_hline(yintercept=0,linetype=setup$hline.lty)+
+    {if(varName == "seasonal")ggplot2::geom_hline(yintercept=0,linetype=setup$hline.lty)}+
     ggplot2::ggtitle(paste0(report,": ROMS/GLORYS/PSY bottom temperature Anomaly")) +
     ggplot2::scale_color_manual(values = c("black","indianred"))+
   #  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
@@ -91,3 +107,4 @@ plot_bottom_temp_comp <- function(shadedRegion=NULL,
 
 
 attr(plot_bottom_temp_comp,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_bottom_temp_comp, "varName") <- c("seasonal", "annual")
