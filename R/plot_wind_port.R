@@ -30,14 +30,14 @@ plot_wind_port <- function(shadedRegion = NULL,
    fix <- ecodata::wind_port |>
      dplyr::filter(EPU %in% filterEPUs)
    fix <- tidyr::pivot_wider(fix,names_from = Var, values_from = Value) |>
-     dplyr::mutate(ordering = "MAX_$val",
+     dplyr::mutate(ordering = MaxVal,
                    City = paste0(City, State),
                    perc_dif =  c(perc_MAX - perc_MIN),
                    TOT_MAX = c(100 - perc_dif - perc_MIN))
    fix <- tidyr::pivot_longer(fix,cols = c(perc_MIN,  perc_dif, TOT_MAX), names_to="Var", values_to = "Value") |>
      dplyr::arrange(ordering) |>
      dplyr::mutate(City = factor(City, levels = unique(City))) |>
-     dplyr::filter(!Var %in% c("EJ","Gentrification","MAX_$val")) |>
+     dplyr::filter(!Var %in% c("EJ","Gentrification","MaxVal")) |>
      dplyr::mutate(Var = dplyr::recode(Var,"perc_MIN"= "WEA Revenue" ,
                                 "perc_dif" ="WEA Revenue Range",
                                 "TOT_MAX" = "Non-WEA Revenue"),
@@ -48,7 +48,7 @@ plot_wind_port <- function(shadedRegion = NULL,
    # add EJ port symbols
    df.symbol <- ecodata::wind_port |>
      dplyr::filter(EPU %in% filterEPUs,
-                   !Var %in% c("MAX_$val", "TOT_MAX",
+                   !Var %in% c("MaxVal", "TOT_MAX",
                                "perc_MIN", "perc_MAX")) |>
      tidyr::pivot_wider( names_from = Var, values_from = Value) |>
      dplyr::mutate(City = paste0(City,State)) |>
