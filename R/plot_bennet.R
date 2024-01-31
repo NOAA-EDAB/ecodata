@@ -39,6 +39,10 @@ plot_bennet <- function(shadedRegion = NULL,
   indicators <- ecodata::bennet |>
     dplyr::filter(EPU %in% filterEPUs)
 
+  # Define dataset max year for use in unit label
+  bennet_year<-max(ecodata::bennet$Time)
+
+
   if (varName == "guild") {
     indicators$Var<- gsub( "Predator", "", indicators$Var)
     indicators$Var<- gsub( "Value", "Volume", indicators$Var)
@@ -59,8 +63,6 @@ plot_bennet <- function(shadedRegion = NULL,
     indicators$Guild<-factor(indicators$Guild, levels = c("Apex", "Piscivore", "Planktivore",
                                                         "Benthivore", "Benthos", "Other"))
 
-    # Define dataset max year for use in unit label
-    bennet_year<-max(ecodata::bennet$Time)
 
     p <- ggplot2::ggplot()+
       #Highlight last ten years
