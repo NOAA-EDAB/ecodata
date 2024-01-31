@@ -85,5 +85,6 @@ plot_spawn_timing <- function(shadedRegion = NULL,
   return(p)
 
 }
-#attr(plot_forage_index,"report") <- c("MidAtlantic","NewEngland")
-#attr(plot_forage_index, "varName") <- c("Resting", "Ripe", "Spent", "Developing", "MF", "meanTEMP", "meanJDAY")
+
+attr(plot_spawn_timing,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_spawn_timing, "varName") <- c("Resting", "Ripe", "Spent", "Developing", "MF", "meanTEMP", "meanJDAY")
