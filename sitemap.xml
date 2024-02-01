@@ -76,7 +76,7 @@
     <loc>https://noaa-edab.github.io/ecodata/reference/StatLM.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/abc.acl.html</loc>
+    <loc>https://noaa-edab.github.io/ecodata/reference/abc_acl.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ecodata/reference/aggregate_biomass.html</loc>
@@ -164,6 +164,9 @@
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ecodata/reference/geom_gls.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ecodata/reference/geom_gls_gauss.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ecodata/reference/geom_lm.html</loc>
@@ -262,10 +265,13 @@
     <loc>https://noaa-edab.github.io/ecodata/reference/plot_SAV.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_abc.acl.html</loc>
+    <loc>https://noaa-edab.github.io/ecodata/reference/plot_abc_acl.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ecodata/reference/plot_aggregate_biomass.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ecodata/reference/plot_annual_chl_pp.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ecodata/reference/plot_aquaculture.html</loc>
@@ -445,7 +451,13 @@
     <loc>https://noaa-edab.github.io/ecodata/reference/plot_slopewater.html</loc>
   </url>
   <url>
+    <loc>https://noaa-edab.github.io/ecodata/reference/plot_spawn_timing.html</loc>
+  </url>
+  <url>
     <loc>https://noaa-edab.github.io/ecodata/reference/plot_species_dist.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ecodata/reference/plot_species_groupings.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ecodata/reference/plot_stock_status.html</loc>
