@@ -4,12 +4,18 @@
 \alias{plot_seasonal_oisst_anom}
 \title{plot SST anomaly (OISST)}
 \usage{
-plot_seasonal_oisst_anom(shadedRegion = NULL, report = "MidAtlantic")
+plot_seasonal_oisst_anom(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  EPU = "MAB"
+)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10), passed from plot function}
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland"), passed from plot function}
+
+\item{EPU}{Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB}
 }
 \value{
 ggplot object
