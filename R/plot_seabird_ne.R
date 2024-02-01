@@ -23,7 +23,7 @@ plot_seabird_ne <- function(shadedRegion = NULL,
 
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
-    stop("For Mid Atlantic seabirds see `plot_seabird_mab`")
+    message("For Mid Atlantic seabirds see `plot_seabird_mab`")
   } else {
     filterEPUs <- c("GB", "GOM")
   }
@@ -170,10 +170,16 @@ plot_seabird_ne <- function(shadedRegion = NULL,
     #
     # }
 
+
+  if(report == "MidAtlantic"){
+    p <- NULL
+  }
+
     return(p)
 
 
 }
 
-attr(plot_seabird_ne,"varName") <- c("diversity","productivity","prey")
 attr(plot_seabird_ne,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_seabird_ne,"varName") <- c("diversity","productivity","prey")
+

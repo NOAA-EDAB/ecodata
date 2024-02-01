@@ -29,6 +29,8 @@ plot_thermal_habitat_persistence <- function(shadedRegion = NULL,
   if (is.null(year)) {
     # current SOE report year
     Yr <- setup$shadedRegion[2]
+  } else {
+    Yr <- year
   }
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
@@ -41,7 +43,8 @@ plot_thermal_habitat_persistence <- function(shadedRegion = NULL,
 
   p <- fix |>
     ggplot2::ggplot()+
-    ggplot2::geom_tile( ggplot2::aes(x=Longitude,y = Latitude, color = Value),linewidth = setup$line.size) +
+    ggplot2::geom_tile(ggplot2::aes(x=Longitude,y = Latitude, color = Value, width = 1/12, height = 1/12),
+                       linewidth = setup$line.size) +
     ggplot2::geom_sf(data=ecodata::coast, size = setup$map.lwd) +
     ggplot2::facet_wrap(~Var )+
     ggplot2::scale_color_viridis_c(legendTitle)+

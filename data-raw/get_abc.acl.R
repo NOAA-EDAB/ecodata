@@ -7,12 +7,12 @@ library(readr)
 
 raw.dir <- here::here("data-raw")
 
-abc.acl_xlsx <- "Muffley_ABC_ACL_catch - Brandon Muffley - NOAA Affiliate.xlsx"
+abc_acl_xlsx <- "Muffley_ABC_ACL_catch - Brandon Muffley - NOAA Affiliate.xlsx"
 NEFMC_abc_acl_xlsx <- "NEFMC_abc_acl.xlsx"
 
-get_abc.acl <- function(save_clean = F){
+get_abc_acl <- function(save_clean = F){
   # import data
-  ma<-readxl::read_excel(file.path(raw.dir,abc.acl_xlsx)) %>%
+  ma<-readxl::read_excel(file.path(raw.dir,abc_acl_xlsx)) %>%
     janitor::row_to_names(.,1) %>%
     dplyr::rename("spec" = "Species/Sector") %>%
     tidyr::pivot_longer(cols = c("ABC or ACL 2012", "Catch 2012",
@@ -60,28 +60,28 @@ get_abc.acl <- function(save_clean = F){
     dplyr::select(Time, Var, Value, EPU, Units)
 
 
-  abc.acl <- ma %>% rbind(ma, ne) %>%
+  abc_acl <- ma %>% rbind(ma, ne) %>%
     tibble::as_tibble()
 
 
   # metadata ----
-  attr(abc.acl, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/mafmc-abcacl-and-catch.html"
-  attr(abc.acl, "data_files")   <- list(
-    abc.acl_xlsx = abc.acl_xlsx)
-  attr(abc.acl, "data_steward") <- c(
+  attr(abc_acl, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/mafmc-abcacl-and-catch.html"
+  attr(abc_acl, "data_files")   <- list(
+    abc_acl_xlsx = abc_acl_xlsx)
+  attr(abc_acl, "data_steward") <- c(
     "Brandon Muffley <bmuffley@mafmc.org>")
-  attr(abc.acl, "plot_script") <- list(
+  attr(abc_acl, "plot_script") <- list(
     `mf_MAB` = "human_dimensions_MAB.Rmd-abc-acl.R")
 
   if (save_clean){
-    usethis::use_data(abc.acl, overwrite = T)
+    usethis::use_data(abc_acl, overwrite = T)
   } else {
-    return(abc.acl)
+    return(abc_acl)
   }
 }
-get_abc.acl(save_clean = T)
+get_abc_acl(save_clean = T)
 
-# groundfish<- abc.acl %>% filter(EPU == "NE") %>%
+# groundfish<- abc_acl %>% filter(EPU == "NE") %>%
 #   tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>%
 #   tidyr::pivot_wider(names_from = "Var", values_from = "Value") %>%
 #   filter(stringr::str_detect(Fishery, "Groundfish")) %>%
@@ -91,7 +91,7 @@ get_abc.acl(save_clean = T)
 #                 EPU = "NE",
 #                 Units = "mt")
 #
-# sm_mesh<- abc.acl %>% filter(EPU == "NE") %>%
+# sm_mesh<- abc_acl %>% filter(EPU == "NE") %>%
 #   tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>%
 #   tidyr::pivot_wider(names_from = "Var", values_from = "Value") %>%
 #   filter(stringr::str_detect(Fishery, "Small Mesh")) %>%
@@ -101,7 +101,7 @@ get_abc.acl(save_clean = T)
 #                 EPU = "NE",
 #                 Units = "mt")
 #
-# abc.acl %>% filter(EPU == "NE") %>%
+# abc_acl %>% filter(EPU == "NE") %>%
 #   tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "-") %>%
 #   tidyr::pivot_wider(names_from = "Var", values_from = "Value") %>%
 #   dplyr::filter(!stringr::str_detect(Fishery, "Groundfish"),

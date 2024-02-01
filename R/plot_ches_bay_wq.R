@@ -19,11 +19,12 @@ plot_ches_bay_wq <- function(shadedRegion = NULL,
                                report=report)
 
   # which report? this may be bypassed for some figures
-  # if (report == "MidAtlantic") {
-  #   filterEPUs <- c("MAB")
-  # } else {
-  #   filterEPUs <- c("GB", "GOM")
-  # }
+  if (report == "MidAtlantic") {
+    filterEPUs <- c("MAB")
+  } else {
+    message("This indicator is only present in the `MidAtlantic` report")
+    filterEPUs <- c("GB", "GOM")
+  }
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
@@ -70,6 +71,10 @@ plot_ches_bay_wq <- function(shadedRegion = NULL,
    #                     legend.title = ggplot2::element_blank())
    #
    #  }
+
+    if (report == "NewEngland"){
+      p <- NULL
+    }
 
     return(p)
 

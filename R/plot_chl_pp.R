@@ -65,8 +65,9 @@ plot_chl_pp <- function(shadedRegion = NULL,
     pp_anom <- ecodata::chl_pp |>
       dplyr::filter(stringr::str_detect(Var, "ANNUAL_PPD_RATIO_ANOMALY"),
              EPU %in% filterEPUs) |>
+      tidyr::separate(Time, into = c("Cat", "Time"), sep = "_") |>
       dplyr::mutate(hline = 1,
-             Time = as.numeric(as.character(Time)),
+             Time = as.numeric(Time),
              Var = "ANNUAL_PPD_RATIO_ANOMALY")
     pp_anom$EPU <- factor(pp_anom$EPU, levels = filterEPUs)
   }

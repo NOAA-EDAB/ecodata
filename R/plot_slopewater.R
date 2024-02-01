@@ -20,7 +20,7 @@ plot_slopewater <- function(shadedRegion = NULL,
 
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
-    stop("This indicator is only present in the `NewEngland` report")
+    message("This indicator is only present in the `NewEngland` report")
     filterEPUs <- c("MAB")
   } else {
     filterEPUs <- c("GB", "GOM")
@@ -29,6 +29,7 @@ plot_slopewater <- function(shadedRegion = NULL,
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
    fix<- ecodata::slopewater |>
+     dplyr::filter(Time >= 1977) |>
      dplyr::mutate(Var, Var = plyr::mapvalues(Var, from = c("WSW proportion ne channel",
                                                             "LSLW proportion ne channel"),
                                               to = c("WSW","LSW")))  |>
@@ -36,6 +37,8 @@ plot_slopewater <- function(shadedRegion = NULL,
      dplyr::mutate(Origin = as.factor(Origin)) |>
      dplyr::group_by(Origin) |>
      dplyr::mutate(hline = mean(Value, na.rm = TRUE))
+
+   fix$Origin <- factor(fix$Origin,levels = c("WSW","LSW"))
 
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
@@ -67,6 +70,10 @@ plot_slopewater <- function(shadedRegion = NULL,
     #                    legend.title = ggplot2::element_blank())
     #
     # }
+
+    if(report == "MidAtlantic"){
+      p <- NULL
+    }
 
     return(p)
 }

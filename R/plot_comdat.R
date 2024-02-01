@@ -55,13 +55,13 @@ plot_comdat <- function(shadedRegion = NULL,
                                "Benthivore JOINT managed species - Seafood Landings",
                                "Apex Predator JOINT managed species - Seafood Landings",
                                "Benthos JOINT managed species - Seafood Landings"),
-                    Time >= 1986) |>
+                    Time >= 1982) |>
       dplyr::filter(stringr::str_detect(Var, paste0("JOINT|", setup$council_abbr)))
 
 
     US_landings <- ecodata::comdat  |>
       dplyr::filter(Var == "Seafood Landings", # There may be US landings that aren't seafood
-                    Time >= 1986)
+                    Time >= 1982)
 
     # Dec 2023:
     # Total is not total for 2019 on due to missing NAFO data
@@ -76,7 +76,7 @@ plot_comdat <- function(shadedRegion = NULL,
                                "Apex Predator Landings",
                                "Benthos Landings",
                                "Other Landings"),
-                    Time >= 1986) |>
+                    Time >= 1982) |>
       dplyr::mutate(grouping = c("Total")) |>
       tidyr::separate(Var, into = c("feeding.guild"), sep = " ") #|>
       #dplyr::bind_rows(NAFO_landings) |>
@@ -201,13 +201,13 @@ plot_comdat <- function(shadedRegion = NULL,
       dplyr::mutate(feeding.guild = factor(feeding.guild, levels = setup$feeding.guilds)) |>
       dplyr::group_by(Var, EPU) |>
       dplyr::mutate(hline = mean(Value)) |>
-      dplyr::filter(Time >1986) |>
+      dplyr::filter(Time >1982) |>
       dplyr::filter(EPU %in% filterEPUs)
 
     totdat <- rbind(rev_agg, rev_total) |>
       dplyr::mutate(Value = Total,
                     Var = Status) |>
-      dplyr::filter(Time >1986) |>
+      dplyr::filter(Time >1982) |>
       dplyr::filter(EPU %in% filterEPUs)
 
     ylabdat <- expression("Revenue (10"^6*"USD)")
@@ -232,9 +232,9 @@ plot_comdat <- function(shadedRegion = NULL,
                                      group = Var),
                         alpha = setup$trend.alpha, size = setup$trend.size) +
       #ecodata::geom_lm(aes(x = Time, y = Value))+
-      ggplot2::geom_line(ggplot2::aes(x = Time, y = Value, color = Var), size = setup$lwd) +
+      ggplot2::geom_line(ggplot2::aes(x = Time, y = Value, color = Var), linewidth = setup$lwd) +
       ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, color = Var), size = setup$pcex) +
-      ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
+      ggplot2::scale_x_continuous(breaks = seq(1980, 2020, by = 5), expand = c(0.01, 0.01)) +
       ggplot2::scale_color_manual(values = series.col2, aesthetics = "color")+
       ggplot2::facet_wrap(~EPU, scales = "free")+
       #ggplot2::guides(color = "none") +
@@ -244,7 +244,7 @@ plot_comdat <- function(shadedRegion = NULL,
                      legend.title = ggplot2::element_blank())+
       ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
                                        color = Var),
-                          size = setup$hline.size,
+                          linewidth = setup$hline.size,
                           alpha = setup$hline.alpha,
                           linetype = setup$hline.lty) +
       ecodata::theme_ts() +
@@ -275,13 +275,13 @@ plot_comdat <- function(shadedRegion = NULL,
       #              group = Var))+
 
       #Add time series
-      ggplot2::geom_line(size = setup$lwd) +
+      ggplot2::geom_line(linewidth = setup$lwd) +
       ggplot2::geom_point(size = setup$pcex) +
       ggplot2::scale_color_manual(values = setup$series.col, aesthetics = "color")+
       ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
                               color = grouping,
                               size = grouping),
-                          size = setup$hline.size,
+                          linewidth = setup$hline.size,
                           alpha = setup$hline.alpha,
                           linetype = setup$hline.lty)+
 
@@ -295,7 +295,7 @@ plot_comdat <- function(shadedRegion = NULL,
       #Axis and theme
       #ggplot2::ylim(0, 200)+
       ggplot2::scale_y_continuous(labels = function(l){trans = l / 1000})+
-      ggplot2::scale_x_continuous(breaks = seq(1985, 2020, by = 5), expand = c(0.01, 0.01)) +
+      ggplot2::scale_x_continuous(breaks = seq(1980, 2020, by = 5), expand = c(0.01, 0.01)) +
       ggplot2::ylab(ylabdat) +
       ggplot2::xlab(ggplot2::element_blank())+
       ecodata::theme_facet() +

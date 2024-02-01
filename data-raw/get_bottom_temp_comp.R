@@ -6,7 +6,7 @@ library(tidyr)
 
 raw.dir <- here::here("data-raw")
 bt_csv <- "bt_temp_annual.csv"
-bt_seasonal_csv<- "bt_temp_time_series_anomaly_epu - Joseph Caracappa - NOAA Federal.csv"
+bt_seasonal_csv<- "bt_temp_time_series_anomaly_epu.csv"
 get_bottom_temp_comp <- function(save_clean = F){
 
   bottom_temp_comp<- read.csv(file.path(raw.dir,bt_csv))  %>%
@@ -48,7 +48,7 @@ get_bottom_temp_seasonal_gridded <- function(save_clean = F){
   bottom_temp_seasonal_gridded<- read.csv(file.path(raw.dir,btsg_csv)) %>%
     dplyr::rename("Latitude" = "Lat",
                   "Longitude" = "Lon",
-                  "Season" = "Variable")
+                  "Var" = "Variable")
 
   if (save_clean){
     usethis::use_data(bottom_temp_seasonal_gridded, overwrite = T)

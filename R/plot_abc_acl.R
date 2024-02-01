@@ -1,4 +1,4 @@
-#' plot abc.acl
+#' plot abc_acl
 #'
 #' Plots either stacked bar of quotas/ABCs by fishery ("Stacked" plottype option)
 #' or point comparison of catch with quota/ABC by fishery ("Catch" plottype option)
@@ -13,7 +13,7 @@
 #' @export
 #'
 
-plot_abc.acl <- function(shadedRegion = NULL,
+plot_abc_acl <- function(shadedRegion = NULL,
                          report="MidAtlantic",
                          plottype = "Stacked") {
 
@@ -25,7 +25,7 @@ plot_abc.acl <- function(shadedRegion = NULL,
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
   } else {
-    filterEPUs <- c("NE") #unique to abc.acl dataset
+    filterEPUs <- c("NE") #unique to abc_acl dataset
   }
 
   # optional code to wrangle ecodata object prior to plotting
@@ -39,16 +39,17 @@ plot_abc.acl <- function(shadedRegion = NULL,
 
   if (report == "MidAtlantic") {
 
-    ABCs <- ecodata::abc.acl |>
+    ABCs <- ecodata::abc_acl |>
       dplyr::filter(EPU == filterEPUs) |>
       tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "_") |>
       dplyr::filter(Var == "Quota") |>
       dplyr::mutate(Fishery = gsub("Commercial", "C", Fishery),
                     Fishery = gsub("Recreational", "R", Fishery)) |>
       dplyr::group_by(Fishery, Time) |>
-      dplyr::summarise(Value = sum(Value))
+      dplyr::summarise(Value = sum(Value),
+                       .groups="drop")
 
-    CatchABC <- ecodata::abc.acl |>
+    CatchABC <- ecodata::abc_acl |>
       unique()|>
       dplyr::filter(EPU == filterEPUs) |>
       tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "_") |>
@@ -63,7 +64,8 @@ plot_abc.acl <- function(shadedRegion = NULL,
 
     meanCatchABC <- CatchABC |>
       dplyr::group_by(Time) |>
-      dplyr::summarise(val = mean(Value)) |>
+      dplyr::summarise(val = mean(Value),
+                       .groups="drop") |>
       dplyr::ungroup() |>
       dplyr::mutate(Time = as.numeric(Time))
 
@@ -71,14 +73,15 @@ plot_abc.acl <- function(shadedRegion = NULL,
 
   if (report == "NewEngland") {
 
-    ABCs <- ecodata::abc.acl |>
+    ABCs <- ecodata::abc_acl |>
       dplyr::filter(EPU == filterEPUs) |>
       tidyr::separate(col = Var, into = c("FMP", "Fishery", "Var"), sep = "_") |>
       dplyr::filter(Var == "ABC") |>
       dplyr::group_by(Fishery, Time) |>
-      dplyr::summarise(Value = sum(Value))
+      dplyr::summarise(Value = sum(Value),
+                       .groups="drop")
 
-    CatchABC <- ecodata::abc.acl |>
+    CatchABC <- ecodata::abc_acl |>
       unique()|>
       dplyr::filter(EPU == filterEPUs) |>
       tidyr::separate(col = Var, into = c("FMP", "Fishery", "Var"), sep = "_") |>
@@ -93,7 +96,8 @@ plot_abc.acl <- function(shadedRegion = NULL,
 
     meanCatchABC <- CatchABC |>
       dplyr::group_by(Time) |>
-      dplyr::summarise(val = mean(Value)) |>
+      dplyr::summarise(val = mean(Value),
+                       .groups="drop") |>
       dplyr::ungroup() |>
       dplyr::mutate(Time = as.numeric(Time))
 
@@ -109,6 +113,7 @@ plot_abc.acl <- function(shadedRegion = NULL,
     p <-  ABCs |>
       ggplot2::ggplot()+
       ggplot2::geom_bar(ggplot2::aes( y = Value, x = Time, fill = Fishery), stat="identity", position = "stack" )+
+      ggplot2::scale_x_continuous(breaks= scales::pretty_breaks()) +
       ggplot2::ggtitle("ABC or ACL for Managed Species")+
       ggplot2::theme(legend.text = ggplot2::element_text(size = 8),
                      legend.key.height = ggplot2::unit(2, "mm"))+
@@ -131,6 +136,7 @@ plot_abc.acl <- function(shadedRegion = NULL,
       ggplot2::geom_point(data = meanCatchABC, ggplot2::aes(x = Time, y = val), color = "red")+
       ggplot2::geom_line(data = meanCatchABC, ggplot2::aes(x = Time, y = val), color = "red")+
       ggplot2::geom_hline(yintercept = 1, linetype='dashed', col = 'gray')+
+      ggplot2::scale_x_continuous(breaks= scales::pretty_breaks()) +
       ggplot2::ggtitle("Catch per ABC or ACL")+
       ggplot2::ylab(expression("Catch / ABC or ACL"))+
       ggplot2::theme(legend.title = ggplot2::element_blank())+
@@ -143,15 +149,15 @@ plot_abc.acl <- function(shadedRegion = NULL,
 
 }
 
-attr(plot_abc.acl,"report") <- c("MidAtlantic","NewEngland")
-attr(plot_abc.acl,"plottype") <- c("Stacked","Catch")
+attr(plot_abc_acl,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_abc_acl,"plottype") <- c("Stacked","Catch")
 
 
 # Paste commented original plot code chunk for reference
 #
 # Stacked
-# mean<- ecodata::abc.acl %>%
-# ecodata::abc.acl |>
+# mean<- ecodata::abc_acl %>%
+# ecodata::abc_acl |>
 #   dplyr::filter(EPU == "MAB") |>
 #   tidyr::separate(col = Var, into = c("Fishery", "Var"), sep = "_") |>
 #   dplyr::filter(Var == "Quota") |>
@@ -171,7 +177,7 @@ attr(plot_abc.acl,"plottype") <- c("Stacked","Catch")
 #   ecodata::theme_title()
 #
 # Catch
-# mean<- ecodata::abc.acl %>%
+# mean<- ecodata::abc_acl %>%
 #   dplyr::filter(EPU == "MAB") %>%
 #   tidyr::separate(col = Var, into = c("FMP", "Var"), sep = "_") %>%
 #   tidyr::pivot_wider(names_from = Var, values_from = Value)  %>%
@@ -186,7 +192,7 @@ attr(plot_abc.acl,"plottype") <- c("Stacked","Catch")
 #   dplyr::ungroup() %>%
 #   dplyr::mutate(Time = as.numeric(Time))
 #
-# ecodata::abc.acl %>%
+# ecodata::abc_acl %>%
 #   dplyr::filter(EPU == "MAB") %>%
 #   tidyr::separate(col = Var, into = c("FMP", "Var"), sep = "_") %>%
 #   tidyr::pivot_wider(names_from = Var, values_from = Value)  %>%

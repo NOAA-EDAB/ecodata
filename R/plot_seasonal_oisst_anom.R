@@ -3,13 +3,15 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10), passed from plot function
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland"), passed from plot function
+#' @param EPU Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB
 #'
 #' @return ggplot object
 #'
 #' @export
 
 plot_seasonal_oisst_anom <- function(shadedRegion = NULL,
-                                     report = "MidAtlantic") {
+                                     report = "MidAtlantic",
+                                     EPU="MAB") {
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
                                report=report)
@@ -17,7 +19,10 @@ plot_seasonal_oisst_anom <- function(shadedRegion = NULL,
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
   } else {
-    filterEPUs <- c("GB", "GOM")
+    if (!(EPU %in% c("GB","GOM"))) {
+      stop("For NewEngland the epu must be either 'GB' or 'GOM'")
+    }
+    filterEPUs <- EPU
   }
 
   ne_anom <- ecodata::seasonal_oisst_anom |>
@@ -29,7 +34,7 @@ plot_seasonal_oisst_anom <- function(shadedRegion = NULL,
   #   dplyr::filter(Var %in% season)
   #
   p <- ggplot2::ggplot(data = ne_anom,
-                                 ggplot2::aes(x = Time, y = Value, color = EPU, group = EPU)) +
+                                 ggplot2::aes(x = Time, y = Value,  group = EPU)) + #color = EPU,
     ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
                       xmin = setup$x.shade.min , xmax = setup$x.shade.max,
                       ymin = -Inf, ymax = Inf) +
@@ -38,7 +43,7 @@ plot_seasonal_oisst_anom <- function(shadedRegion = NULL,
     ggplot2::ylim(-2,3)+
     ggplot2::ylab(expression("SST Anomaly (C)")) +
     ggplot2::xlab(ggplot2::element_blank())+
-    ggplot2::ggtitle(paste0(report,": SST Anomaly (OISST)")) +
+    ggplot2::ggtitle(paste0(EPU,": SST Anomaly (OISST)")) +
     ggplot2::scale_color_manual(values = c("black","indianred"))+
     ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
     ggplot2::geom_hline(yintercept = 0,
@@ -57,4 +62,5 @@ plot_seasonal_oisst_anom <- function(shadedRegion = NULL,
   return(p)
 }
 
+attr(plot_seasonal_oisst_anom,"EPU") <- c("MAB","GB","GOM")
 attr(plot_seasonal_oisst_anom,"report") <- c("MidAtlantic","NewEngland")

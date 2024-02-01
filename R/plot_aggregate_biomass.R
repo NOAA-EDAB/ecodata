@@ -35,6 +35,7 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
 
   # this code from NE reports, works for Mid but includes Spring 2020
   agg<-ecodata::aggregate_biomass |>
+    dplyr::mutate(EPU = factor(EPU)) |>
     dplyr::filter(!stringr::str_detect(Var, "Apex|inshore|offshore|managed|NEFMC|MAFMC|JOINT|NA")) |> #remove unused datasets
     tidyr::separate(Var, c("feeding.guild", "season", "Biomass", "Var1"), sep = " ") |>
     tidyr::unite("Var", feeding.guild:season, sep = " ") |>
@@ -124,20 +125,20 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
     ggplot2::geom_ribbon(ggplot2::aes(x = Time, ymin = pmax(lower,0), ymax = upper),
                          alpha = 0.5,
                          fill = "grey") +
-    ggplot2::geom_line(ggplot2::aes(x = Time, y = Mean),size = setup$lwd-0.5) +
+    ggplot2::geom_line(ggplot2::aes(x = Time, y = Mean),linewidth = setup$lwd-0.5) +
     ggplot2::geom_point(ggplot2::aes(x = Time, y = Mean),size = setup$pcex-0.5) +
     ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
-    ggplot2::guides(color = FALSE) +
+    ggplot2::guides(color = "none") +
     ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
                                      group = Var),
-                        size = setup$hline.size,
+                        linewidth = setup$hline.size,
                         alpha = setup$hline.alpha,
                         linetype = setup$hline.lty)+
     ggplot2::facet_wrap(Var~.,ncol = 2) +
     #Axis and theme
     ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
     #ylim(0, 1200)+
-    ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+    ggplot2::ylab(ggplot2::element_blank()) +
     ecodata::theme_facet()+
     ggplot2::theme(strip.text=ggplot2::element_text(hjust=0),
                    axis.title.x=ggplot2::element_blank())
@@ -157,7 +158,6 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
                           size = setup$pcex-0.5,
                           color = "#ca0020")
   }
-
 
   ## Benthivore
   p2<-agg_bio |>
@@ -181,20 +181,20 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
     ggplot2::geom_ribbon(ggplot2::aes(x = Time, ymin = pmax(lower,0), ymax = upper),
                          alpha = 0.5,
                          fill = "grey") +
-    ggplot2::geom_line(ggplot2::aes(x = Time, y = Mean),size = setup$lwd-0.5) +
+    ggplot2::geom_line(ggplot2::aes(x = Time, y = Mean),linewidth = setup$lwd-0.5) +
     ggplot2::geom_point(ggplot2::aes(x = Time, y = Mean),size = setup$pcex-0.5) +
     ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
-    ggplot2::guides(color = FALSE) +
+    ggplot2::guides(color = "none") +
     ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
                                      group = Var),
-                        size = setup$hline.size,
+                        linewidth = setup$hline.size,
                         alpha = setup$hline.alpha,
                         linetype = setup$hline.lty)+
     ggplot2::facet_wrap(Var~.,ncol = 2) +
     #Axis and theme
     ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
     #ylim(0, 1200)+
-    ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+    ggplot2::ylab(ggplot2::element_blank()) +
     ecodata::theme_facet()+
     ggplot2::theme(strip.text=ggplot2::element_text(hjust=0),
                    axis.title.x=ggplot2::element_blank())
@@ -215,10 +215,14 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
                           color = "#ca0020")
   }
 
-
   ### Planktivore
   p3<-agg_bio |>
-    dplyr::filter(stringr::str_detect(Var,"Planktivore")) |>
+    dplyr::filter(stringr::str_detect(Var,"Planktivore"),
+                  Time <= 2023) |>
+    dplyr::mutate(Mean = dplyr::case_when(Mean >80 ~ 90,
+                                           TRUE ~ Mean)) |>
+
+
     ggplot2::ggplot() +
 
     #Highlight last ten years
@@ -226,7 +230,9 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
                       xmin = setup$x.shade.min , xmax = setup$x.shade.max ,
                       ymin = -Inf, ymax = Inf) +
     #Test for trend and add lines
-    ecodata::geom_gls(ggplot2::aes(x = Time, y = Mean,
+    # bespoke geom just for planktivores since nmle package could not fit
+    # models with ar1 errors
+    ecodata::geom_gls_gauss(ggplot2::aes(x = Time, y = Mean,
                                    color = Var),
                       alpha = setup$trend.alpha, size = setup$trend.size) +
     # ecodata::geom_lm(aes(x = Time, y = Mean,
@@ -238,20 +244,20 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
     ggplot2::geom_ribbon(ggplot2::aes(x = Time, ymin = pmax(lower,0), ymax = upper),
                          alpha = 0.5,
                          fill = "grey") +
-    ggplot2::geom_line(ggplot2::aes(x = Time, y = Mean),size = setup$lwd-0.5) +
+    ggplot2::geom_line(ggplot2::aes(x = Time, y = Mean),linewidth = setup$lwd-0.5) +
     ggplot2::geom_point(ggplot2::aes(x = Time, y = Mean),size = setup$pcex-0.5) +
     ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
-    ggplot2::guides(color = FALSE) +
+    ggplot2::guides(color = "none") +
     ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
                                      group = Var),
-                        size = setup$hline.size,
+                        linewidth = setup$hline.size,
                         alpha = setup$hline.alpha,
                         linetype = setup$hline.lty)+
     ggplot2::facet_wrap(Var~.,ncol = 2) +
     #Axis and theme
     ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
     #ylim(0, 1200)+
-    ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+    ggplot2::ylab(ggplot2::element_blank()) +
     ecodata::theme_facet()+
     ggplot2::theme(strip.text=ggplot2::element_text(hjust=0),
                    axis.title.x=ggplot2::element_blank())
@@ -271,7 +277,6 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
                           size = setup$pcex-0.5,
                           color = "#ca0020")
   }
-
 
   ### Benthos
   p4<-agg_bio |>
@@ -295,20 +300,20 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
     ggplot2::geom_ribbon(ggplot2::aes(x = Time, ymin = pmax(lower,0), ymax = upper),
                          alpha = 0.5,
                          fill = "grey") +
-    ggplot2::geom_line(ggplot2::aes(x = Time, y = Mean),size = setup$lwd-0.5) +
+    ggplot2::geom_line(ggplot2::aes(x = Time, y = Mean),linewidth = setup$lwd-0.5) +
     ggplot2::geom_point(ggplot2::aes(x = Time, y = Mean),size = setup$pcex-0.5) +
     ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
-    ggplot2::guides(color = FALSE) +
+    ggplot2::guides(color = "none") +
     ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
                                      group = Var),
-                        size = setup$hline.size,
+                        linewidth = setup$hline.size,
                         alpha = setup$hline.alpha,
                         linetype = setup$hline.lty)+
     ggplot2::facet_wrap(Var~.,ncol = 2) +
     #Axis and theme
     ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
     #ylim(0, 1200)+
-    ggplot2::ylab(expression("Biomass (kg tow"^-1*")")) +
+    ggplot2::ylab(ggplot2::element_blank()) +
     ecodata::theme_facet()+
     ggplot2::theme(strip.text=ggplot2::element_text(hjust=0),
                    axis.title.x=ggplot2::element_blank())
@@ -332,6 +337,13 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
 
   p <- cowplot::plot_grid(p1, p2, p3, p4, nrow=4)
 
+
+  y.grob <- grid::textGrob(expression("Biomass (kg tow"^-1*")"),
+                     gp=grid::gpar( col="black", fontsize=15), rot=90)
+
+  p <- gridExtra::grid.arrange(gridExtra::arrangeGrob(p, left = y.grob))
+
+    #ggplot2::ylab(expression("Biomass (kg tow"^-1*")"))
   return(p)
 
 

@@ -22,7 +22,7 @@ plot_wcr <- function(shadedRegion = NULL,
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
   } else {
-    stop("This indicator is only present in the `MidAtlantic` report")
+    message("This indicator is only present in the `MidAtlantic` report")
     filterEPUs <- c("GB", "GOM")
   }
 
@@ -30,16 +30,19 @@ plot_wcr <- function(shadedRegion = NULL,
   # e.g., calculate mean, max or other needed values to join below
 
   # upper and lower are used to define the two regimes?
-  # where year 2000 come from?
-  upper.line<-ecodata::wcr |>
-    dplyr::filter(Time>2000)  |>
-    dplyr::mutate(hline = c(mean(Value)))
+  # where year 2000 come from? Estimated change point from publication?
+
+  fix <- ecodata::wcr
+
+  upper.line <- fix |>
+    dplyr::filter(Time>2000 & Time <=2017)  |>
+    dplyr::mutate(hline = c(mean(Value))) |>
+    dplyr::select(Time,hline)
+
   lower.line<-ecodata::wcr |>
     dplyr::filter(Time<2000)  |>
-    dplyr::mutate(hline = c(mean(Value)))
-
-  fix<- upper.line  |>
-    rbind(lower.line)
+    dplyr::mutate(hline = c(mean(Value))) |>
+    dplyr::select(Time,hline)
 
 
   # code for generating plot object p
@@ -73,6 +76,10 @@ plot_wcr <- function(shadedRegion = NULL,
     #                    legend.title = ggplot2::element_blank())
     #
     # }
+
+    if (report == "NewEngland"){
+      p <- NULL
+    }
 
     return(p)
 

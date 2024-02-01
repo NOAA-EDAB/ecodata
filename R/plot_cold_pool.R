@@ -4,6 +4,7 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic" only, default)
+#' @param varName Character string. Which plot (NULL, "cold_pool", "persistence","extent")
 #'
 #' @return ggplot object
 #'
@@ -12,7 +13,8 @@
 #'
 
 plot_cold_pool <- function(shadedRegion = NULL,
-                           report="MidAtlantic") {
+                           report="MidAtlantic",
+                           varName = NULL) {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -145,14 +147,25 @@ plot_cold_pool <- function(shadedRegion = NULL,
 
   #cowplot::plot_grid(cpi, pi, ei, labels = c('a', 'b', 'c'), align = "h")
 
-  p <- gridExtra::grid.arrange(cpi, pi,ei, ncol=3)
-
-
+  if (!is.null(varName)) {
+    if (varName == "cold_pool") {
+      p <- cpi
+    } else if (varName == "persistence") {
+      p <- pi
+    } else if (varName == "extent") {
+      p <- ei
+    }
+  } else {
+    p <- gridExtra::grid.arrange(cpi, pi,ei, ncol=3)
+  }
 
   return(p)
 }
 
 attr(plot_cold_pool,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_cold_pool,"varName") <- c("cold_pool", "persistence","extent")
+
+
 
   # Paste commented original plot code chunk for reference
   # cp1<- ecodata::cold_pool %>%

@@ -23,7 +23,7 @@ plot_gsi <- function(shadedRegion = NULL,
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
   } else {
-    stop("This indicator is only present in the `MidAtlantic` report")
+    message("This indicator is only present in the `MidAtlantic` report")
     filterEPUs <- c("GB", "GOM")
   }
 
@@ -76,7 +76,11 @@ plot_gsi <- function(shadedRegion = NULL,
     #
     # }
 
-    return(p)
+  if (report == "NewEngland") {
+    p <- NULL
+  }
+
+  return(p)
 
 }
 

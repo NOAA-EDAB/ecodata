@@ -10,11 +10,11 @@ library(dplyr)
 
 raw.dir <- here::here("data-raw")
 
-comdat_RData<-"Commercial_data_pull_24.RData"
+comdat_RData<-"Commercial_data_pull_comdat_2024.rds"
 
 get_comdat <- function(save_clean = F){
 
-  load(file.path(raw.dir, comdat_RData))
+  commercial<- readRDS(file.path(raw.dir, comdat_RData))
 
   comdat <- commercial %>%
     dplyr::rename(EPU = Region) %>%

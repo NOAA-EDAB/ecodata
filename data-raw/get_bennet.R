@@ -5,7 +5,7 @@ library(tidyr)
 library(magrittr)
 
 raw.dir <- here::here('data-raw')
-bennet_Rdata<- "Walden_Bennet_Index_23 - John Walden - NOAA Federal.Rdata"
+bennet_Rdata<- "Bennet_Index_23.Rdata"
 get_bennet <- function(save_clean = F){
 
   load(file.path(raw.dir, bennet_Rdata))

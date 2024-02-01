@@ -23,6 +23,7 @@ plot_habs <- function(shadedRegion = NULL,
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
+    message("This indicator is only present in the `NewEngland` report")
   } else {
     filterEPUs <- c("GB", "GOM","NE")
   }
@@ -58,11 +59,14 @@ plot_habs <- function(shadedRegion = NULL,
      ggplot2::ylab(plotylab)+
      ggplot2::xlab(ggplot2::element_blank())+
      ggplot2::ggtitle(plotTitle)+
-     ecodata::geom_gls()+
+     #ecodata::geom_gls()+
      ecodata::theme_facet()
 
+  if(report == "MidAtlantic") {
+    p <- NULL
+  }
 
-    return(p)
+  return(p)
 
 
 }

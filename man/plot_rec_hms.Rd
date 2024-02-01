@@ -4,7 +4,7 @@
 \alias{plot_rec_hms}
 \title{plot recreational shark fishing landings}
 \usage{
-plot_rec_hms(shadedRegion = shadedRegion, report = "MidAtlantic")
+plot_rec_hms(shadedRegion = NULL, report = "MidAtlantic")
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

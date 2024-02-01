@@ -4,12 +4,14 @@
 \alias{plot_cold_pool}
 \title{plot cold_pool}
 \usage{
-plot_cold_pool(shadedRegion = NULL, report = "MidAtlantic")
+plot_cold_pool(shadedRegion = NULL, report = "MidAtlantic", varName = NULL)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
 \item{report}{Character string. Which SOE report ("MidAtlantic" only, default)}
+
+\item{varName}{Character string. Which plot (NULL, "cold_pool", "persistence","extent")}
 }
 \value{
 ggplot object
