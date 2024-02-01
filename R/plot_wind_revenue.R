@@ -37,6 +37,13 @@ plot_wind_revenue <- function(shadedRegion = NULL,
                    Time = as.integer(Time)) |>
      dplyr::mutate(Species = dplyr::recode(Species,"MONK"="MONKFISH"))
 
+   # Code to determine units displayed on y axis
+   if (varName == "landing") {
+     wind_label <- "Landings (lb)"
+   } else {
+     wind_label <- "Dollars (millions)"
+   }
+
    if (report == "MidAtlantic") {
      fix <- fix |>
        dplyr::filter(EPU %in% filterEPUs,
@@ -67,7 +74,7 @@ plot_wind_revenue <- function(shadedRegion = NULL,
         ggplot2::geom_point()+
         ggplot2::geom_line()+
         ggplot2::ggtitle(paste0(report,": Fishery Revenue in Wind Lease Areas"))+
-        ggplot2::ylab(expression("Dollars (millions)"))+
+        ggplot2::ylab(wind_label)+
         ggplot2::xlab(ggplot2::element_blank())+
         ggplot2::facet_wrap(.~Species,scales = "free_y") +
         #ecodata::geom_gls()+
@@ -83,7 +90,7 @@ plot_wind_revenue <- function(shadedRegion = NULL,
        ggplot2::geom_point()+
        ggplot2::geom_line()+
        ggplot2::ggtitle(paste0(report,": Fishery Revenue in Wind Lease Areas"))+
-       ggplot2::ylab(expression("Dollars (millions)"))+
+       ggplot2::ylab(wind_label)+
        ggplot2::xlab(ggplot2::element_blank())+
 
        #ecodata::geom_gls()+
