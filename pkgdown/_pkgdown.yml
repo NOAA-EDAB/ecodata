@@ -30,9 +30,7 @@ reference:
     - cold_pool_sf
     - ches_bay_sf
     - epu_sf
-    - geom_gls
-    - geom_lm
-    - geom_regime
+    - starts_with("geom")
     - longlinesurvey_sf
     - starts_with("plot_")
     - StatLM
@@ -50,7 +48,7 @@ reference:
   - title: "Human Dimension Indicators"
     desc: "Data files containing human-related indicators used in the State of the Ecosystem Reports"
     contents:
-    - abc.acl
+    - abc_acl
     - aquaculture
     - bennet
     - comdat
