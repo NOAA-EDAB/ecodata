@@ -4,12 +4,21 @@
 \alias{plot_bottom_temp_comp}
 \title{plot bottom anomaly temperature time series}
 \usage{
-plot_bottom_temp_comp(shadedRegion = NULL, report = "MidAtlantic")
+plot_bottom_temp_comp(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  varName = "seasonal",
+  EPU = "MAB"
+)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
+
+\item{varName}{Character string. Which variable ("seasonal", "annual")}
+
+\item{EPU}{Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB}
 }
 \value{
 ggplot object
