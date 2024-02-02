@@ -4,7 +4,7 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
-#' @param varName Character string. Which variable to plot ("copepod","euphasid")
+#' @param varName Character string. Which variable to plot ("copepod","euphausid")
 #' @return ggplot object
 #'
 #'
@@ -29,12 +29,12 @@ plot_zoo_abundance_anom <- function(shadedRegion = NULL,
   if (varName == "copepod") {
     varName <-  "large-bodied|small-bodied"
     vtitle <- "Small and large-bodied copepod abundance anomaly"
-  } else if (varName == "euphasid") {
+  } else if (varName == "euphausid") {
     varName <-  "Euphausiacea|Cnidaria"
     vtitle <- "Zooplankton abundance anomaly"
 
   } else {
-    stop("Please select either 'copepod' or 'euphasid'")
+    stop("Please select either 'copepod' or 'euphausid'")
   }
 
   # optional code to wrangle ecodata object prior to plotting
@@ -67,10 +67,12 @@ plot_zoo_abundance_anom <- function(shadedRegion = NULL,
                linewidth = setup$hline.size,
                alpha = setup$hline.alpha,
                linetype = setup$hline.lty)+
-    ggplot2::facet_wrap(~EPU,ncol = 1)+
+    ggplot2::facet_wrap(~EPU~Var)+
+    ecodata::geom_gls() +
     ecodata::theme_ts()+
     ecodata::theme_facet()+
-    ggplot2::theme(legend.title = ggplot2::element_blank()) +
+    ggplot2::theme(legend.title = ggplot2::element_blank(),
+                   legend.position = "none") +
     ecodata::theme_title()
 
    # optional code for New England specific (2 panel) formatting
@@ -85,5 +87,5 @@ plot_zoo_abundance_anom <- function(shadedRegion = NULL,
 
 }
 
-attr(plot_zoo_abundance_anom,"varName") <- c("copepod","euphasid")
+attr(plot_zoo_abundance_anom,"varName") <- c("copepod","euphausid")
 attr(plot_zoo_abundance_anom,"report") <- c("MidAtlantic","NewEngland")
