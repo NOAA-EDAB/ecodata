@@ -41,7 +41,7 @@ plot_wind_revenue <- function(shadedRegion = NULL,
    if (varName == "landing") {
      wind_label <- "Landings (lb)"
    } else {
-     wind_label <- "Dollars (millions)"
+     wind_label <- "Revenue ($2022)"
    }
 
    if (report == "MidAtlantic") {
