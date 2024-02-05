@@ -48,12 +48,12 @@ plot_wind_revenue <- function(shadedRegion = NULL,
      fix <- fix |>
        dplyr::filter(EPU %in% filterEPUs,
                      Species %in% c("LONGFIN SQUID","MONKFISH","SUMMER FLOUNDER",
-                                    "OCEAN QUAHOG",  "SURF CLAM" )) |>
+                                    "OCEAN QUAHOG",  "SURFCLAM" )) |>
        dplyr::mutate(Species = stringr::str_to_sentence(Species))
      } else if (report == "NewEngland") {
        fix <- fix |>
          dplyr::filter(EPU %in% filterEPUs,
-                       Species %in% c("ATLANTIC HERRING","MONKFISH","SEA SCALLOP",
+                       Species %in% c("ATLANTIC HERRING","MONKFISH","ATLANTIC SEA SCALLOP",
                                       "SILVER HAKE",  "SKATES" )) |>
          dplyr::mutate(Species = stringr::str_to_sentence(Species))
      }
