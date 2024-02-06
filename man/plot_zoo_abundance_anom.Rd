@@ -15,7 +15,7 @@ plot_zoo_abundance_anom(
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
-\item{varName}{Character string. Which variable to plot ("copepod","euphasid")}
+\item{varName}{Character string. Which variable to plot ("copepod","euphausid")}
 }
 \value{
 ggplot object
