@@ -59,8 +59,8 @@ plot_habitat_diversity <- function(shadedRegion = NULL,
     #ggplot2::geom_ribbon(ggplot2::aes(ymin = Lower, ymax = Upper), alpha = 0.5)+
     ggplot2::geom_point()+
     ggplot2::geom_line()+
-    ggplot2::geom_point(data = fix, aes(x = Time, y = mean), size = setup$line.size)+
-    ggplot2::geom_line(data = fix, aes(x = Time, y = mean), linewidth = setup$line.size)+
+    ggplot2::geom_point(data = fix, ggplot2::aes(x = Time, y = mean), size = setup$line.size)+
+    ggplot2::geom_line(data = fix, ggplot2::aes(x = Time, y = mean), linewidth = setup$line.size)+
     ggplot2::ggtitle(paste(report,"Species Shannon Diversity from Habitat Assessment"))+
     ggplot2::ylab("Shannon Diversity")+
     ggplot2::xlab(ggplot2::element_blank())+
