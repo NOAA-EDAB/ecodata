@@ -20,6 +20,20 @@ get_wind_revenue<- function(save_clean = F){
     #              "Sum of Nominal Value ($)",
     #              "Sum of Landings (pounds*)")
 
+    for (i in 2013:2016){
+      mab_wind_revenue <- mab_wind_revenue %>%
+      rbind(c("OCEAN QUAHOG", i, NA, NA, NA, NA, NA, NA, NA, NA, "MAB"))
+    }
+
+    for (i in 2018:2022){
+      mab_wind_revenue <- mab_wind_revenue %>%
+      rbind(c("OCEAN QUAHOG", i, NA, NA, NA, NA, NA, NA, NA, NA, "MAB"))
+    }
+
+  mab_wind_revenue <- mab_wind_revenue %>%
+    dplyr::group_by(Species) %>%
+    dplyr::arrange(Year, .by_group = T)
+
   wind_revenue <- ne_wind_revenue %>%
     rbind(mab_wind_revenue) %>%
     dplyr::rename(Time = Year,
@@ -31,6 +45,7 @@ get_wind_revenue<- function(save_clean = F){
     dplyr::select(!Species) %>%
     tibble::as_tibble() %>%
     dplyr::select(Time, Var, Value, EPU)
+
   # metadata ----
   attr(wind_revenue, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc.html"
   attr(wind_revenue, "data_files")   <- list(
