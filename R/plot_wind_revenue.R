@@ -33,8 +33,7 @@ plot_wind_revenue <- function(shadedRegion = NULL,
   # e.g., calculate mean, max or other needed values to join below
    fix <- tidyr::separate(ecodata::wind_revenue,col=Var, into = c("Species", "Var"),sep = "-sum_") |>
      dplyr::filter(Var == varName) |>
-     dplyr::mutate(Value = Value/1000000,
-                   Time = as.integer(Time)) |>
+     dplyr::mutate(Value = Value/1000000) |>
      dplyr::mutate(Species = dplyr::recode(Species,"MONK"="MONKFISH"))
 
    # Code to determine units displayed on y axis

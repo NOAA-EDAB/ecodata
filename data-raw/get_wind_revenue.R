@@ -44,7 +44,9 @@ get_wind_revenue<- function(save_clean = F){
     dplyr::mutate(Var = paste0(Species, "-", Var)) %>%
     dplyr::select(!Species) %>%
     tibble::as_tibble() %>%
-    dplyr::select(Time, Var, Value, EPU)
+    dplyr::select(Time, Var, Value, EPU) %>%
+    dplyr::mutate(Value = as.double(Value),
+                  Time = as.integer(Time))
 
   # metadata ----
   attr(wind_revenue, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc.html"
