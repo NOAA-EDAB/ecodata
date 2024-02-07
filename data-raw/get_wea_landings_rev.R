@@ -26,7 +26,23 @@ get_wea_landings_rev <- function(save_clean = F){
     tidyr::drop_na() %>%
     dplyr::mutate(perc_landings_max = as.numeric(perc_landings_max)*100,
                   perc_revenue_max = as.numeric(perc_revenue_max)*100,
-                  Units = c("Percent"))
+                  Units = c("Percent")) %>%
+    dplyr::mutate(across(where(is.numeric), ~round(., 0))) %>%
+    dplyr::mutate(Council = "NEFSC")
+
+   # Add council data to dataset
+    mafmc <- list("Atlantic mackerel", "Black sea bass", "Bluefish", "Blueline tilefish", "Butterfish",
+                  "Atlantic chub mackerel", "Golden tilefish", "Illex squid", "Longfin squid",
+                  "Ocean quahog", "Scup", "Summer flounder", "Atlantic surfclam")
+
+    for (i in 1:length(mafmc)){
+      wea_landings_rev <- wea_landings_rev %>%
+        dplyr::mutate(Council = replace(Council, wea_landings_rev$`NEFMC, MAFMC, and ASMFC Managed Species` == mafmc[i], "MAFMC"))
+    }
+
+    wea_landings_rev <- wea_landings_rev %>%
+      dplyr::mutate(Council = replace(Council, wea_landings_rev$`NEFMC, MAFMC, and ASMFC Managed Species` == "Monkfish", "MAFMC/NEFMC")) %>%
+      dplyr::mutate(Council = replace(Council, wea_landings_rev$`NEFMC, MAFMC, and ASMFC Managed Species` == "Spiny dogfish", "MAFMC/NEFMC"))
 
   # metadata ----
   attr(wea_landings_rev, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/fisheries-revenue-in-wind-development-areas.html"
@@ -46,8 +62,3 @@ get_wea_landings_rev <- function(save_clean = F){
   }
 }
 get_wea_landings_rev(save_clean = T)
-
-
-
-
-
