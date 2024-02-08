@@ -48,13 +48,13 @@ plot_ches_bay_sst <- function(shadedRegion = NULL,
   if (scale == "fahrenheit") {
     # convert celsius to fahrenheit
     sst <- sst |>
-      dplyr::mutate(Value = (9/5)*Value + 32)
+      dplyr::mutate(Value = (9/5)*Value)
     label <- "Temp.\nAnomaly (\u00B0F)"
-    breaks <- c(23,27.5,32,36.5,41)
-    labelLegend <- c("<23", "27.5", "32", "36.5", ">41")
-    limits <- c(23,41)
-    maxVal <- 41
-    midpoint <- 32
+    breaks <- c(-9.0, -4.5,  0.0,  4.5,  9.0)
+    labelLegend <- c("<-9", "-4.5", "0", "4.5", ">9")
+    limits <- c(-9,9)
+    maxVal <- 9
+    midpoint <- 0
   } else {
     label <- "Temp.\nAnomaly (\u00B0C)"
     breaks <- c(-5,-2.5,0,2.5,5)
