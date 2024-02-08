@@ -66,7 +66,11 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_bottom_temp_seasonal_gridded</span><span class="op">(</span>shadedRegion <span class="op">=</span> <span class="cn">NULL</span>, report <span class="op">=</span> <span class="st">"MidAtlantic"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_bottom_temp_seasonal_gridded</span><span class="op">(</span></span>
+<span>  shadedRegion <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  report <span class="op">=</span> <span class="st">"MidAtlantic"</span>,</span>
+<span>  scale <span class="op">=</span> <span class="st">"celsius"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -77,6 +81,10 @@
 
 <dt>report</dt>
 <dd><p>Character string. Which SOE report ("MidAtlantic", "NewEngland"), passed from plot function</p></dd>
+
+
+<dt>scale</dt>
+<dd><p>character string. celsius or fahrenheit. Default = "celsius"</p></dd>
 
 </dl></div>
     <div id="value">
