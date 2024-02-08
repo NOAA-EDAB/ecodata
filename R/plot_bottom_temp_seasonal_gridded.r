@@ -75,7 +75,9 @@ plot_bottom_temp_seasonal_gridded <- function(shadedRegion = NULL,
                    strip.text=ggplot2::element_text(hjust=0),
                    axis.text = ggplot2::element_text(size = 8),
                    axis.title.y = ggplot2::element_text(angle = 90))+
+    ggplot2::guides(fill = ggplot2::guide_legend(title="LEFT", title.position = "left")) +
     ecodata::theme_title() +
+
     ecodata::theme_ts()
 
 
