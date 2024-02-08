@@ -51,11 +51,11 @@ plot_hms_stock_status <- function(shadedRegion = NULL,
       #(B.Bmsy == 0.5) ~"a",
       #(B.Bmsy <1) ~"a",
       #(B.Bmsy == 1) ~"a",
-      (F.Fmsy == 1) ~ "a",
-      (F.Fmsy >1) ~ "a",
+      #(F.Fmsy == 1) ~ "a",
+      #(F.Fmsy >1) ~ "a",
       #(F.Fmsy < 1 & B.Bmsy > 0.5 & B.Bmsy < 1) ~ "b",
-      (F.Fmsy < 1 & B.Bmsy < 1) ~ "b",
-      (F.Fmsy < 1 & B.Bmsy > 1) ~ "c"))
+      (F.Fmsy > 1 | B.Bmsy < 1) ~ "b",
+      (F.Fmsy < 1 & B.Bmsy > 1) ~ "a"))
 
   unknown <- stock_status |>
     dplyr::filter(is.na(F.Fmsy) | is.na(B.Bmsy)) |>
