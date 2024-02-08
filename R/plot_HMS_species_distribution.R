@@ -64,7 +64,7 @@ plot_HMS_species_distribution <- function(shadedRegion = NULL,
 
       #ggplot2::scale_shape_manual(values=c(16, 3, 17))+
       #ggplot2::scale_color_manual(values = c("blue", "black", "red"))+
-      ggplot2::coord_sf(crs = setup$crs, xlim = setup$xlims, ylim = setup$ylims) +
+      ggplot2::coord_sf(xlim = setup$xlims, ylim = setup$ylims) +
       ecodata::theme_map() +
       ggplot2::ggtitle("HMS Species Distribution") +
     ggplot2::xlab("") +
