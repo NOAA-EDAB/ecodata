@@ -51,11 +51,11 @@ plot_hms_stock_status <- function(shadedRegion = NULL,
       #(B.Bmsy == 0.5) ~"a",
       #(B.Bmsy <1) ~"a",
       #(B.Bmsy == 1) ~"a",
-      (F.Fmsy == 1) ~ "a",
-      (F.Fmsy >1) ~ "a",
+      #(F.Fmsy == 1) ~ "a",
+      #(F.Fmsy >1) ~ "a",
       #(F.Fmsy < 1 & B.Bmsy > 0.5 & B.Bmsy < 1) ~ "b",
-      (F.Fmsy < 1 & B.Bmsy < 1) ~ "b",
-      (F.Fmsy < 1 & B.Bmsy > 1) ~ "c"))
+      (F.Fmsy > 1 | B.Bmsy < 1) ~ "b",
+      (F.Fmsy < 1 & B.Bmsy > 1) ~ "a"))
 
   unknown <- stock_status |>
     dplyr::filter(is.na(F.Fmsy) | is.na(B.Bmsy)) |>
@@ -85,7 +85,7 @@ plot_hms_stock_status <- function(shadedRegion = NULL,
     ggplot2::geom_text(data = unknownp, ggplot2::aes(x = x, y = y, label = text), #Custom legend for unknown stock status
                        size = c(4.75,rep(4,3))) +
     ggplot2::annotate(geom="text", x=0.43, y=5, label="ATL SBN (F/Fmsy = 22.5)",
-                      color="#1B9E77")+
+                      color="#D95F02")+
     ggplot2::scale_color_brewer(palette = "Dark2", #Change legend labels for clarity
                                 breaks = stock_status$score) +
     ggplot2::xlab(expression(~B/B[msy])) +

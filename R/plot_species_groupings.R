@@ -39,10 +39,16 @@ plot_species_groupings <- function(shadedRegion = NULL,
     dplyr::distinct() |>
     dplyr::group_by(dplyr::across(varName), Fed.Managed) |>
     dplyr::summarize_all(dplyr::funs(paste(na.omit(.), collapse = ", "))) |>
+    dplyr::ungroup() |>
     tidyr::spread(Fed.Managed, COMNAME) |>
-    dplyr::arrange(factor(get(varName), levels = c("Apex Predator", "Piscivore", "Planktivore", "Benthivore", "Benthos")))
-  fix<-fix[c(1,3,2,4,5)] |>
-    dplyr::mutate_all(tolower)
+    dplyr::arrange(factor(get(varName), levels = c("Apex Predator", "Piscivore", "Planktivore", "Benthivore", "Benthos"))) |>
+    dplyr::mutate(dplyr::across(dplyr::everything(), tolower)) |>
+    dplyr::rename(Guild = !!varName,
+                  Joint = JOINT) |>
+    dplyr::relocate(Guild,MAFMC,Joint)
+
+  # fix<-fix[c(1,3,2,4,5)] |>
+  #   dplyr::mutate_all(tolower)
 
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
@@ -50,10 +56,11 @@ plot_species_groupings <- function(shadedRegion = NULL,
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
   #
 
+
   p <- flextable::flextable(fix) |>
     flextable::set_caption('Feeding guilds and management bodies.') |>
     flextable::fontsize(size=8, part = "all") |>
-    flextable::set_header_labels(SOE.20 = "Guild",
+    flextable::set_header_labels(SOE.24 = "Guild",
                                  MAFMC = "MAFMC",
                                  JOINT = "Joint",
                                  NEFMC = "NEFMC",

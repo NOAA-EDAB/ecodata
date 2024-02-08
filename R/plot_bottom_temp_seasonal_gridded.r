@@ -23,7 +23,7 @@ plot_bottom_temp_seasonal_gridded <- function(shadedRegion = NULL,
     xmin = -77
     xmax = -66
     ymin = 35.5
-    ymax = 43
+    ymax = 45
     xlims <- c(xmin, xmax)
     ylims <- c(ymin, ymax)
 
@@ -58,7 +58,13 @@ plot_bottom_temp_seasonal_gridded <- function(shadedRegion = NULL,
     ggplot2::coord_sf(xlim = xlims, ylim = ylims) +
     ggplot2::facet_wrap(Var~.)+
     ecodata::theme_map() +
-    #ggplot2::scale_fill_viridis_c(option = 'A',name = 'Bottom \n Temp')+
+    #ggplot2::scale_fill_gradient2(name = 'Bottom \n Temp',
+                                  #low = scales::muted("blue"),
+                                  #mid = "white",
+                                  #high = scales::muted("red"),
+                                  #limits = c(5,25),
+                                  #labels = c("5", "10", "15", "20", "25")) +
+    ggplot2::scale_fill_viridis_c(option = 'B',name = 'Bottom \n Temp')+
     ggplot2::ggtitle('Seasonal Mean Bottom Temperature')+
     ggplot2::xlab("Longitude") +
     ggplot2::ylab("Latitude") +

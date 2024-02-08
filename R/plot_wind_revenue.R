@@ -33,20 +33,26 @@ plot_wind_revenue <- function(shadedRegion = NULL,
   # e.g., calculate mean, max or other needed values to join below
    fix <- tidyr::separate(ecodata::wind_revenue,col=Var, into = c("Species", "Var"),sep = "-sum_") |>
      dplyr::filter(Var == varName) |>
-     dplyr::mutate(Value = Value/1000000,
-                   Time = as.integer(Time)) |>
+     dplyr::mutate(Value = Value/1000000) |>
      dplyr::mutate(Species = dplyr::recode(Species,"MONK"="MONKFISH"))
+
+   # Code to determine units displayed on y axis
+   if (varName == "landing") {
+     wind_label <- "Landings (million lbs)"
+   } else {
+     wind_label <- "Revenue (millions $2022)"
+   }
 
    if (report == "MidAtlantic") {
      fix <- fix |>
        dplyr::filter(EPU %in% filterEPUs,
                      Species %in% c("LONGFIN SQUID","MONKFISH","SUMMER FLOUNDER",
-                                    "OCEAN QUAHOG",  "SURF CLAM" )) |>
+                                    "OCEAN QUAHOG",  "SURFCLAM" )) |>
        dplyr::mutate(Species = stringr::str_to_sentence(Species))
      } else if (report == "NewEngland") {
        fix <- fix |>
          dplyr::filter(EPU %in% filterEPUs,
-                       Species %in% c("ATLANTIC HERRING","MONKFISH","SEA SCALLOP",
+                       Species %in% c("ATLANTIC HERRING","MONKFISH","ATLANTIC SEA SCALLOP",
                                       "SILVER HAKE",  "SKATES" )) |>
          dplyr::mutate(Species = stringr::str_to_sentence(Species))
      }
@@ -67,7 +73,7 @@ plot_wind_revenue <- function(shadedRegion = NULL,
         ggplot2::geom_point()+
         ggplot2::geom_line()+
         ggplot2::ggtitle(paste0(report,": Fishery Revenue in Wind Lease Areas"))+
-        ggplot2::ylab(expression("Dollars (millions)"))+
+        ggplot2::ylab(wind_label)+
         ggplot2::xlab(ggplot2::element_blank())+
         ggplot2::facet_wrap(.~Species,scales = "free_y") +
         #ecodata::geom_gls()+
@@ -83,7 +89,7 @@ plot_wind_revenue <- function(shadedRegion = NULL,
        ggplot2::geom_point()+
        ggplot2::geom_line()+
        ggplot2::ggtitle(paste0(report,": Fishery Revenue in Wind Lease Areas"))+
-       ggplot2::ylab(expression("Dollars (millions)"))+
+       ggplot2::ylab(wind_label)+
        ggplot2::xlab(ggplot2::element_blank())+
 
        #ecodata::geom_gls()+

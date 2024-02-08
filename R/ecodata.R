@@ -11,6 +11,5 @@
 #'To learn more about using \code{ecodata}, start with the vignette: \code{browseVignettes(package="ecodata")} or click the index link below
 #'
 #'
-#' @docType package
-#' @name ecodata
-NULL
+"_PACKAGE"
+

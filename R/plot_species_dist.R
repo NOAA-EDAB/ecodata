@@ -24,7 +24,7 @@ plot_species_dist <- function(shadedRegion = NULL,
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
   } else {
-    stop("This is a shelfwide indicator only used in the MidAtlantic report")
+    returnMessage <- "This is a shelfwide indicator only used in the MidAtlantic report"
     filterEPUs <- c("GB", "GOM")
   }
 
@@ -85,6 +85,9 @@ plot_species_dist <- function(shadedRegion = NULL,
     #
     # }
 
+    if (report == "NewEngland"){
+      p <- returnMessage
+    }
     return(p)
 
 }
