@@ -57,13 +57,13 @@ plot_bottom_temp_seasonal_gridded <- function(shadedRegion = NULL,
     # convert celsius to fahrenheit
     fix <- fix |>
       dplyr::mutate(Value = (9/5)*Value + 32)
-    label <- "Temp.\nAnomaly (\u00B0F)"
+    label <- "Temp. (\u00B0F)"
     breaks <- c(41, 50, 59, 68, 77)
     labelLegend <- c("41", "50", "59", "68", "77")
     limits <- c(39,80)
     midpoint <- 59
   } else {
-    label <- "Temp.\nAnomaly (\u00B0C)"
+    label <- "Temp. (\u00B0C)"
     breaks <- c(5,10,15,20,25)
     labelLegend <- c("5", "10", "15", "20", "25")
     limits <- c(5,25)
