@@ -2,6 +2,7 @@
 #'
 #' @param season Character string. Season to plot. (Default = NULL, plot all seasons)
 #' @param region Character vector. Regional EPUs ("GB","MAB") to overly on figure. (Default = NULL, use all)
+#' @param scale character string. celsius or fahrenheit. Default = "celsius"
 #'
 #'
 #' @return ggplot object
@@ -9,7 +10,8 @@
 #' @export
 
 plot_seasonal_sst_anomaly_gridded <- function(shadedRegion = NULL,
-                                              report = "MidAtlantic") {
+                                              report = "MidAtlantic",
+                                              scale = "celsius") {
 
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -47,8 +49,29 @@ plot_seasonal_sst_anomaly_gridded <- function(shadedRegion = NULL,
     dplyr::mutate(Season = factor(Season, levels = c("Winter",
                                                      "Spring",
                                                      "Summer",
-                                                     "Fall"))) |>
-    dplyr::mutate(Value = replace(Value, Value > 5, 5))
+                                                     "Fall")))
+
+
+  if (scale == "fahrenheit") {
+    # convert celsius anomaly to fahrenheit anomaly
+    sst <- sst |>
+      dplyr::mutate(Value = (9/5)*Value )
+    label <- "Temp.\nAnomaly (\u00B0F)"
+    breaks <- c(-9.0, -4.5,  0.0,  4.5,  9.0)
+    labelLegend <- c("<-9", "-4.5", "0", "4.5", ">9")
+    limits <- c(-9,9)
+    maxVal <- 9
+    midpoint <- 0
+  } else {
+    label <- "Temp.\nAnomaly (\u00B0C)"
+    breaks <- c(-5,-2.5,0,2.5,5)
+    labelLegend <- c("<-5", "-2.5", "0", "2.5", ">5")
+    limits <- c(-5,5)
+    maxVal <- 5
+    midpoint <- 0
+  }
+
+  sst <- sst |> dplyr::mutate(Value = replace(Value, Value > maxVal, maxVal))
 
 
   # filter by season
@@ -60,19 +83,21 @@ plot_seasonal_sst_anomaly_gridded <- function(shadedRegion = NULL,
     ggplot2::geom_tile(data = sst, ggplot2::aes(x = Longitude, y = Latitude,fill = Value)) +
     ggplot2::geom_sf(data = ecodata::coast, size = setup$map.lwd) +
     ggplot2::geom_sf(data = ne_epu_sf, fill = "transparent", size = setup$map.lwd) +
-    ggplot2::scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
+    ggplot2::scale_fill_gradient2(name = label,
                                   low = scales::muted("blue"),
                                   mid = "white",
                                   high = scales::muted("red"),
-                                  limits = c(-5,5),
-                                  labels = c("<-5", "-2", "0", "2", ">5")) +
+                                  limits = limits,
+                                  labels = labelLegend,
+                                  breaks = breaks,
+                                  midpoint = midpoint) +
     ggplot2::coord_sf(xlim = xlims, ylim = ylims) +
     ggplot2::facet_wrap(Season~.) +
     ecodata::theme_map() +
     ggplot2::ggtitle("SST anomaly") +
     ggplot2::xlab("Longitude") +
     ggplot2::ylab("Latitude") +
-    ggplot2::theme(panel.border = ggplot2::element_rect(colour = "black", fill=NA, size=0.75),
+    ggplot2::theme(panel.border = ggplot2::element_rect(colour = "black", fill=NA, linewidth=0.75),
                    legend.key = ggplot2::element_blank(),
                    axis.title = ggplot2::element_text(size = 11),
                    strip.background = ggplot2::element_blank(),
