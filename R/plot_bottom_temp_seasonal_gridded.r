@@ -4,14 +4,15 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10), passed from plot function
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland"), passed from plot function
-#'
+#' @param scale character string. celsius or fahrenheit. Default = "celsius"
 #'
 #' @return ggplot object
 #'
 #' @export
 
 plot_bottom_temp_seasonal_gridded <- function(shadedRegion = NULL,
-                                              report = "MidAtlantic") {
+                                              report = "MidAtlantic",
+                                              scale = "celsius") {
 
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -51,6 +52,29 @@ plot_bottom_temp_seasonal_gridded <- function(shadedRegion = NULL,
     dplyr::mutate(Var = factor(Var, levels = c("winter","spring","summer","fall")))
 
 
+
+  if (scale == "fahrenheit") {
+    # convert celsius to fahrenheit
+    fix <- fix |>
+      dplyr::mutate(Value = (9/5)*Value + 32)
+    label <- "Temp. (\u00B0F)"
+    breaks <- c(41, 50, 59, 68, 77)
+    labelLegend <- c("41", "50", "59", "68", "77")
+    limits <- c(39,80)
+    midpoint <- 59
+  } else {
+    label <- "Temp. (\u00B0C)"
+    breaks <- c(5,10,15,20,25)
+    labelLegend <- c("5", "10", "15", "20", "25")
+    limits <- c(5,25)
+    midpoint <- 15
+  }
+
+ # fix <- fix |> dplyr::mutate(Value = replace(Value, Value > maxVal, maxVal))
+
+
+
+
   p <- ggplot2::ggplot(data = fix)+
     ggplot2::geom_tile(ggplot2::aes(x = Longitude, y = Latitude, fill = Value)) +
     ggplot2::geom_sf(data = ecodata::coast, size = setup$map.lwd) +
@@ -58,13 +82,15 @@ plot_bottom_temp_seasonal_gridded <- function(shadedRegion = NULL,
     ggplot2::coord_sf(xlim = xlims, ylim = ylims) +
     ggplot2::facet_wrap(Var~.)+
     ecodata::theme_map() +
-    #ggplot2::scale_fill_gradient2(name = 'Bottom \n Temp',
-                                  #low = scales::muted("blue"),
-                                  #mid = "white",
-                                  #high = scales::muted("red"),
-                                  #limits = c(5,25),
-                                  #labels = c("5", "10", "15", "20", "25")) +
-    ggplot2::scale_fill_viridis_c(option = 'B',name = 'Bottom \n Temp')+
+    #scales::show_col(viridis::inferno(n=3)) Find the colors
+    ggplot2::scale_fill_gradient2(name = label,
+                                  low = "#000004FF",
+                                  mid = "#BB3754FF",
+                                  high = "#FCFFA4FF",
+                                  limits = limits,
+                                  labels = labelLegend,
+                                  midpoint = midpoint) +
+    #ggplot2::scale_color_viridis_c(option = 'B',name = 'Bottom \n Temp')+
     ggplot2::ggtitle('Seasonal Mean Bottom Temperature')+
     ggplot2::xlab("Longitude") +
     ggplot2::ylab("Latitude") +
@@ -76,6 +102,7 @@ plot_bottom_temp_seasonal_gridded <- function(shadedRegion = NULL,
                    axis.text = ggplot2::element_text(size = 8),
                    axis.title.y = ggplot2::element_text(angle = 90))+
     ecodata::theme_title() +
+
     ecodata::theme_ts()
 
 
