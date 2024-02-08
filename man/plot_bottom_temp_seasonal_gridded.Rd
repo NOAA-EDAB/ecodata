@@ -4,12 +4,18 @@
 \alias{plot_bottom_temp_seasonal_gridded}
 \title{plot bottom temperature seasonal gridded data}
 \usage{
-plot_bottom_temp_seasonal_gridded(shadedRegion = NULL, report = "MidAtlantic")
+plot_bottom_temp_seasonal_gridded(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  scale = "celsius"
+)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10), passed from plot function}
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland"), passed from plot function}
+
+\item{scale}{character string. celsius or fahrenheit. Default = "celsius"}
 }
 \value{
 ggplot object

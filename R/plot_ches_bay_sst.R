@@ -4,6 +4,7 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic" only, default)
+#' @param scale character string. celsius or fahrenheit. Default = "celsius"
 #'
 #' @return ggplot object
 #'
@@ -12,7 +13,8 @@
 #'
 
 plot_ches_bay_sst <- function(shadedRegion = NULL,
-                              report="MidAtlantic") {
+                              report="MidAtlantic",
+                              scale = "celsius") {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -43,8 +45,26 @@ plot_ches_bay_sst <- function(shadedRegion = NULL,
                                               "Summer",
                                               "Fall"))
 
-  sst <- sst |> dplyr::mutate(Value = replace(Value, Value > 5, 5))
+  if (scale == "fahrenheit") {
+    # convert celsius to fahrenheit
+    sst <- sst |>
+      dplyr::mutate(Value = (9/5)*Value)
+    label <- "Temp.\nAnomaly (\u00B0F)"
+    breaks <- c(-9.0, -4.5,  0.0,  4.5,  9.0)
+    labelLegend <- c("<-9", "-4.5", "0", "4.5", ">9")
+    limits <- c(-9,9)
+    maxVal <- 9
+    midpoint <- 0
+  } else {
+    label <- "Temp.\nAnomaly (\u00B0C)"
+    breaks <- c(-5,-2.5,0,2.5,5)
+    labelLegend <- c("<-5", "-2.5", "0", "2.5", ">5")
+    limits <- c(-5,5)
+    maxVal <- 5
+    midpoint <- 0
+  }
 
+  sst <- sst |> dplyr::mutate(Value = replace(Value, Value > maxVal, maxVal))
 
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
@@ -54,15 +74,17 @@ plot_ches_bay_sst <- function(shadedRegion = NULL,
   p <- sst |>
     ggplot2::ggplot() +
     ggplot2::geom_sf(data = ecodata::coast, size = setup$map.lwd) +
-    ggplot2::scale_fill_gradient2(name = "Temp.\nAnomaly (C)",
-                                  low = scales::muted("blue"),
-                                  mid = "white",
-                                  high = scales::muted("red"),
-                                  limits = c(-4,4),
-                                  labels = c("<-5", "-2.5", "0", "2.5", ">5")) +
     ggplot2::coord_sf(crs = setup$crs, xlim = setup$xlims, ylim = setup$ylims) +
 
     ggplot2::geom_tile(data = sst, ggplot2::aes(x = Latitude, y = Longitude,fill = Value)) +
+    ggplot2::scale_fill_gradient2(name = label,
+                                  low = scales::muted("blue"),
+                                  mid = "white",
+                                  high = scales::muted("red"),
+                                  limits = limits,
+                                  labels = labelLegend,
+                                  breaks = breaks,
+                                  midpoint = midpoint) +
     ggplot2::facet_wrap(Var~.) +
     ecodata::theme_map() +
     ggplot2::ggtitle("Chesapeake Bay SST anomaly") +

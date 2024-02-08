@@ -4,9 +4,15 @@
 \alias{plot_seasonal_sst_anomaly_gridded}
 \title{plot seasonal_sst_anomaly_gridded}
 \usage{
-plot_seasonal_sst_anomaly_gridded(shadedRegion = NULL, report = "MidAtlantic")
+plot_seasonal_sst_anomaly_gridded(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  scale = "celsius"
+)
 }
 \arguments{
+\item{scale}{character string. celsius or fahrenheit. Default = "celsius"}
+
 \item{season}{Character string. Season to plot. (Default = NULL, plot all seasons)}
 
 \item{region}{Character vector. Regional EPUs ("GB","MAB") to overly on figure. (Default = NULL, use all)}
