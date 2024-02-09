@@ -9,11 +9,12 @@ library(janitor)
 
 raw.dir <- here::here("data-raw")
 
-engagement_xlsx<-"EJ_in_Top_Fishing_Communities_WENG_120623 - Changhua Weng - NOAA Affiliate.xlsx"
+engagement_xlsx<-"EJ_in_Top_Fishing_Communities_WENG_020824.xlsx"
 get_eng_rel <- function(save_clean = F){
 
   ## MAB
   d1 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "Mid-Atlantic_Bubble Chart")
+  d1 <- d1[,1:4]
 
   dta <- d1 %>%
     dplyr::slice(-(17:21), -39) %>% # Removes the rows containing new and original names
@@ -21,6 +22,7 @@ get_eng_rel <- function(save_clean = F){
                   "Rel" = "Commercial Reliance Index") %>%
     dplyr::mutate(Fishery = c(rep("Commercial",16),rep("Recreational",17)),
                   Region = c("MAB"))
+
 
   # d3 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "Mid-Atlantic_Radar Graph")
   #
