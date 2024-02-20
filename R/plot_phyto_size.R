@@ -58,7 +58,7 @@ plot_phyto_size <- function(shadedRegion = NULL,
                   wk = stringr::str_sub(WEEK, 5,6)) |>
     tidyr::pivot_longer(cols = c("nano"),
                         names_to = "Var", values_to = "Value") |>
-    dplyr::filter(year == 2022,
+    dplyr::filter((year == max(year)),
                   !Value == "NA") |>
     dplyr::mutate(Value = Value*100)
 
@@ -70,7 +70,7 @@ plot_phyto_size <- function(shadedRegion = NULL,
     tidyr::separate(Time, into = c("Cat", "WEEK"), sep = "_") |>
     dplyr::mutate(year = stringr::str_sub(WEEK, 1,4),
                   wk = stringr::str_sub(WEEK, 5,6)) |>
-    dplyr::filter(year == 2022,
+    dplyr::filter((year == max(year)),
                   !Value == "NA") |>
     dplyr::mutate(Value = Value*100)
 
