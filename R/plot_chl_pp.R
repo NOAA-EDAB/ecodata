@@ -157,6 +157,9 @@ plot_chl_pp <- function(shadedRegion = NULL,
                  linetype = setup$hline.lty)+
       ecodata::theme_facet() +
       ggplot2::theme(strip.text=ggplot2::element_text(hjust=0))
+
+    p <- "This data set is currently under review"
+
   }
 
   if(plottype == "weekly") {
@@ -193,12 +196,12 @@ plot_chl_pp <- function(shadedRegion = NULL,
   }
 
   # optional code for New England specific (2 panel) formatting
-  if (report == "NewEngland") {
-    p <- p +
-      ggplot2::theme(legend.position = "bottom",
-                     legend.title = ggplot2::element_blank())
-
-  }
+  # if (report == "NewEngland") {
+  #   p <- p +
+  #     ggplot2::theme(legend.position = "bottom",
+  #                    legend.title = ggplot2::element_blank())
+  #
+  # }
 
   return(p)
 
