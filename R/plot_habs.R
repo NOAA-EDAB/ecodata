@@ -63,7 +63,7 @@ plot_habs <- function(shadedRegion = NULL,
      ecodata::theme_facet()
 
   if(report == "MidAtlantic") {
-    p <- NULL
+    p <- "This indicator is only present in the 'NewEngland' report"
   }
 
   return(p)
