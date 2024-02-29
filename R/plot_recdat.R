@@ -30,7 +30,7 @@ plot_recdat <- function(shadedRegion = NULL,
   if (varName =="landings") {
     varName <- "Recreational Seafood"
     vtitle <- "Recreational seafood harvest"
-    vylab <- expression("Landings (10"^6*"lbs)")
+    vylab <- expression("Landings (10"^6*" lbs)")
     scalar <- 1e6
   } else if (varName == "effort") {
     varName <- "Recreational Effort"
