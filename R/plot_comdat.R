@@ -124,7 +124,7 @@ plot_comdat <- function(shadedRegion = NULL,
     totdat<- landings_agg |>
       dplyr::filter(EPU %in% filterEPUs)
 
-    ylabdat <- expression("Landings (10"^3*"metric tons)")
+    ylabdat <- expression("Landings (10"^3*" metric tons)")
   }
 
   if(varName == "revenue") {
@@ -210,7 +210,7 @@ plot_comdat <- function(shadedRegion = NULL,
       dplyr::filter(Time >1982) |>
       dplyr::filter(EPU %in% filterEPUs)
 
-    ylabdat <- expression("Revenue (10"^6*"USD)")
+    ylabdat <- expression("Revenue (10"^6*" USD)")
   }
 
   # code for generating plot object p
