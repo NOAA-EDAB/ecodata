@@ -154,7 +154,8 @@ plot_comdat <- function(shadedRegion = NULL,
                                "Piscivore JOINT managed species - Revenue",
                                "Planktivore JOINT managed species - Revenue",
                                "Benthivore JOINT managed species - Revenue",
-                               "Benthos JOINT managed species - Revenue")) |>
+                               "Benthos JOINT managed species - Revenue"),
+                    Time >= 1982) |>
       #rbind(apex) |>
       dplyr::filter(stringr::str_detect(Var, paste0("JOINT|", setup$council_abbr))) |>
       dplyr::mutate(Status = c("Council Managed"))  #Create groups for
@@ -179,13 +180,15 @@ plot_comdat <- function(shadedRegion = NULL,
                                "Benthivore Revenue",
                                "Apex Predator Revenue",
                                "Benthos Revenue",
-                               "Other Revenue")) |>
+                               "Other Revenue"),
+                    Time >= 1982) |>
       dplyr::mutate(grouping = c("Total")) |>
       tidyr::separate(Var, into = c("feeding.guild"), sep = " ") |>
       dplyr::mutate(Value = Value/1000)
 
     rev_total<- ecodata::comdat |>
-      dplyr::filter(Var == "Revenue") |>
+      dplyr::filter(Var == "Revenue",
+                    Time >= 1982) |>
       dplyr::mutate(Status = c("Total")) |>
       dplyr::group_by(Status, Time, EPU) |>
       dplyr::summarise(Total = sum(Value)/1000000) |>
