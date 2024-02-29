@@ -117,7 +117,7 @@ plot_abc_acl <- function(shadedRegion = NULL,
       ggplot2::ggtitle("ABC or ACL for Managed Species")+
       ggplot2::theme(legend.text = ggplot2::element_text(size = 8),
                      legend.key.height = ggplot2::unit(2, "mm"))+
-      ggplot2::ylab("ABC or ACL")+
+      ggplot2::ylab("ABC or ACL, metric tons")+
       ggplot2::xlab(ggplot2::element_blank())+
       ecodata::theme_ts()+
       ggplot2::guides(fill=ggplot2::guide_legend(ncol=1))+
