@@ -117,7 +117,7 @@ plot_bennet <- function(shadedRegion = NULL,
       ggplot2::geom_line(data = revchange, ggplot2::aes(x = Time, y = Value, color = "$"))+
       ggplot2::scale_colour_grey(name ="Revenue Change") +
       ggplot2::ggtitle("Bennet Indicator")+
-      ggplot2::labs(y=paste0("Value $1,000,000 ($", bennet_year, ")")) +
+      ggplot2::labs(y=paste0("Million USD (", bennet_year, ")")) +
       ggplot2::scale_x_continuous(breaks = seq(1980, 2020, by = 5), expand = c(0.01, 0.01)) +
       #::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100),
       #                            limits = y.lim, expand = c(0.01, 0.01)) +
@@ -160,7 +160,7 @@ plot_bennet <- function(shadedRegion = NULL,
       ggplot2::geom_line(data = revchange, ggplot2::aes(x = Time, y = Value, color = "$"))+
       ggplot2::scale_colour_grey(name ="Revenue Change") +
       ggplot2::ggtitle("Bennet Indicator")+
-      ggplot2::labs(y=paste0("Value $1,000,000 ($", bennet_year, ")")) +
+      ggplot2::labs(y=paste0("Million USD (", bennet_year, ")")) +
       ggplot2::scale_x_continuous(breaks = seq(1980, 2015, by = 10), expand = c(0.01, 0.01)) +
       #ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100),
       #                            limits = y.lim, expand = c(0.01, 0.01)) +
