@@ -39,6 +39,10 @@ plot_grayseal <- function(shadedRegion = NULL,
   p <- ecodata::grayseal |>
     dplyr::filter(Var %in% c("pbr", "totalest5y", "totalest1y")) |>
     ggplot2::ggplot()+
+    #Highlight last ten years
+    ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
+                      xmin = setup$x.shade.min , xmax = setup$x.shade.max,
+                      ymin = -Inf, ymax = Inf) +
     ggplot2::geom_line(ggplot2::aes(x = Time, y = Value, linetype = Var, color = Var))+
     ggplot2::geom_ribbon(data = ribbon, ggplot2::aes(ymin = total5yLCI, ymax =total5yUCI, x = Time), fill = "blue", alpha = 0.2)+
     ggplot2::ggtitle("Gray Seal Bycatch")+

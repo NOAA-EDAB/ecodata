@@ -58,7 +58,7 @@ plot_phyto_size <- function(shadedRegion = NULL,
                   wk = stringr::str_sub(WEEK, 5,6)) |>
     tidyr::pivot_longer(cols = c("nano"),
                         names_to = "Var", values_to = "Value") |>
-    dplyr::filter(year == 2022,
+    dplyr::filter((year == max(year)),
                   !Value == "NA") |>
     dplyr::mutate(Value = Value*100)
 
@@ -70,7 +70,7 @@ plot_phyto_size <- function(shadedRegion = NULL,
     tidyr::separate(Time, into = c("Cat", "WEEK"), sep = "_") |>
     dplyr::mutate(year = stringr::str_sub(WEEK, 1,4),
                   wk = stringr::str_sub(WEEK, 5,6)) |>
-    dplyr::filter(year == 2022,
+    dplyr::filter((year == max(year)),
                   !Value == "NA") |>
     dplyr::mutate(Value = Value*100)
 
@@ -110,6 +110,7 @@ plot_phyto_size <- function(shadedRegion = NULL,
     #scale_y_continuous( name = "Phytoplankton Size Fraction", sec.axis = sec_axis(~.*2, name="Chlorophyll a (mg m^-3)"))+
     ggplot2::scale_x_continuous(breaks = month_numeric,
                                 labels = month_label)+
+    ggplot2::xlab(ggplot2::element_blank()) +
     ecodata::theme_title()
 
   # if(varName == "adult"){

@@ -77,7 +77,7 @@ plot_gsi <- function(shadedRegion = NULL,
     # }
 
   if (report == "NewEngland") {
-    p <- NULL
+    p <- "This indicator is only present in the `MidAtlantic` report"
   }
 
   return(p)
