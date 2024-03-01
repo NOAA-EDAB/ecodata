@@ -39,6 +39,10 @@ plot_harborporpoise <- function(shadedRegion = NULL,
   p <- ecodata::harborporpoise |>
     dplyr::filter(Var %in% c("pbr", "totalest5y", "totalest1y")) |>
     ggplot2::ggplot()+
+    #Highlight last ten years
+    ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
+                      xmin = setup$x.shade.min , xmax = setup$x.shade.max,
+                      ymin = -Inf, ymax = Inf) +
     ggplot2::geom_line(ggplot2::aes(x = Time, y = Value, linetype = Var, color = Var))+
     ggplot2::geom_ribbon(data = ribbon, ggplot2::aes(ymin = total5yLCI, ymax =total5yUCI, x = Time), fill = "blue", alpha = 0.2)+
     ggplot2::ggtitle("Harbor Porpoise Bycatch")+
@@ -50,7 +54,7 @@ plot_harborporpoise <- function(shadedRegion = NULL,
                                 labels = c("PBR", "Annual Estimates", "5yr rolling mean and CI"))+
     ggplot2::theme(#legend.position = "none",
       legend.title = ggplot2::element_blank(),
-      legend.position = c(0.75, 0.8),
+      legend.position = c(0.5, 0.8),
       legend.text = ggplot2::element_text(size = 8),
       legend.background = ggplot2::element_rect(
         colour = "transparent", fill = "transparent"))+
