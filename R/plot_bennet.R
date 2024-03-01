@@ -76,7 +76,7 @@ plot_bennet <- function(shadedRegion = NULL,
       ggplot2::facet_grid(EPU~Var, scales = "free")+
       ggplot2::scale_colour_grey(name ="Component") +
       ggplot2::ggtitle("Bennet Indicator")+
-      ggplot2::labs(y=paste0("Value $1,000,000 ($", bennet_year, ")")) +
+      ggplot2::labs(y=paste0("Million USD (", bennet_year, ")")) +
 
       ggplot2::xlab(ggplot2::element_blank())+
       #ggplot2::scale_x_continuous(breaks = seq(1965, 2020, by = 10), expand = c(0.01, 0.01)) +
