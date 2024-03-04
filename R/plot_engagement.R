@@ -59,7 +59,7 @@ plot_engagement <- function(shadedRegion = NULL,
     ggplot2::scale_color_manual(values = c("MedHigh to High"="#D95F02",
                                            "Medium"="#7570B3",
                                            "All Other Communities" = "#1B9E77"),
-                                labels = c('Medium-High to High','Medium','All Other Communities')) +
+                                labels = c('MedHigh to High' = 'Medium-High to High','Medium' = 'Medium','All Other Communities'='All Other Communities')) +
     # ggplot2::scale_color_brewer(palette = c("#F8766D","#00BA38","#619CFF"),#"Dark2", #Change legend labels for clarity
     #                             breaks = eng$EJRating) +
 
