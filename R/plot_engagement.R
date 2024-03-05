@@ -80,10 +80,15 @@ plot_engagement <- function(shadedRegion = NULL,
   #ecodata::theme_facet()
 
 
-  p <- gridExtra::grid.arrange(eng2, bottom = grid::textGrob("Low <---------------------------------------------------------------------------------------------------------------------------> High",
-                                                  x = 0.5, y = 1, gp = grid::gpar(fontsize = 7)),
-                          left = grid::textGrob("Low <--------------------------------------------------------------------------------------> High", rot = 90,
-                                          x = 1, y = 0.5, gp = grid::gpar(fontsize = 7)))
+  #p <- gridExtra::grid.arrange(eng2, bottom = grid::textGrob("Low <---------------------------------------------------------------------------------------------------------------------------> High",
+  #                                                x = 0.5, y = 1, gp = grid::gpar(fontsize = 7)),
+  #                        left = grid::textGrob("Low <--------------------------------------------------------------------------------------> High", rot = 90,
+  #                                        x = 1, y = 0.5, gp = grid::gpar(fontsize = 7)))
+
+  p <- cowplot::plot_grid(eng2, nrow=1,scale = 0.9) +
+    cowplot::draw_label(expression("Low <------------------------------------------------------------------------------------------------------> High"), x=  0.02, y=0.5, vjust= 1.5, angle=90, size = 10) +
+    cowplot::draw_label(expression("Low <---------------------------------------------------------------------------------------------------------------------------> High"), x=  0.5, y=0.05, vjust= 1.5, angle=0, size = 10)
+
 
     return(p)
 
