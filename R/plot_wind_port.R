@@ -31,7 +31,7 @@ plot_wind_port <- function(shadedRegion = NULL,
      dplyr::filter(EPU %in% filterEPUs)
    fix <- tidyr::pivot_wider(fix,names_from = Var, values_from = Value) |>
      dplyr::mutate(ordering = MaxVal,
-                   City = paste0(City, State),
+                   City = paste0(City, ",", State),
                    perc_dif =  c(perc_MAX - perc_MIN),
                    TOT_MAX = c(100 - perc_dif - perc_MIN))
    fix <- tidyr::pivot_longer(fix,cols = c(perc_MIN,  perc_dif, TOT_MAX), names_to="Var", values_to = "Value") |>
@@ -51,7 +51,7 @@ plot_wind_port <- function(shadedRegion = NULL,
                    !Var %in% c("MaxVal", "TOT_MAX",
                                "perc_MIN", "perc_MAX")) |>
      tidyr::pivot_wider( names_from = Var, values_from = Value) |>
-     dplyr::mutate(City = paste0(City,State)) |>
+     dplyr::mutate(City = paste0(City,",",State)) |>
      dplyr::select(City, EJ, Gentrification) |>
      tidyr::pivot_longer(cols = c(EJ, Gentrification), names_to = "Variable") |>
      dplyr::filter(!value == "NA") |>
