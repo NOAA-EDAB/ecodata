@@ -29,7 +29,7 @@ plot_rec_hms <- function(shadedRegion = NULL,
   # e.g., calculate mean, max or other needed values to join below
    fix <- ecodata::rec_hms |>
      dplyr::filter(EPU %in% filterEPUs) |>
-     tidyr::separate(col = Var,into = c("Var","Trash"),sep="-") |>
+     tidyr::separate(col = Var,into = c("Group","Trash"),sep="-") |>
      dplyr::mutate(Value = Value/1000)
 
 
@@ -39,7 +39,7 @@ plot_rec_hms <- function(shadedRegion = NULL,
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
   #
   p <- fix |>
-    ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color = Var))+
+    ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color = Group))+
     ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
         xmin = setup$x.shade.min , xmax = setup$x.shade.max,
         ymin = -Inf, ymax = Inf) +
@@ -47,7 +47,7 @@ plot_rec_hms <- function(shadedRegion = NULL,
     ggplot2::geom_line()+
     ggplot2::ggtitle("Recreational Shark Landings")+
     ggplot2::ylab(expression("Number of Fish (1000s)"))+
-    ggplot2::xlab(ggplot2::element_blank())+
+    ggplot2::xlab(ggplot2::element_blank()) +
 
 #    ecodata::geom_gls()+
     ecodata::theme_ts()+

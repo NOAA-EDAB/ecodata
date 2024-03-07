@@ -58,7 +58,8 @@ plot_engagement <- function(shadedRegion = NULL,
                              show.legend = FALSE, direction = "both", box.padding = 0.2, size = 3)+
     ggplot2::scale_color_manual(values = c("MedHigh to High"="#D95F02",
                                            "Medium"="#7570B3",
-                                           "All Other Communities" = "#1B9E77")) +
+                                           "All Other Communities" = "#1B9E77"),
+                                labels = c('MedHigh to High' = 'Medium-High to High','Medium' = 'Medium','All Other Communities'='All Other Communities')) +
     # ggplot2::scale_color_brewer(palette = c("#F8766D","#00BA38","#619CFF"),#"Dark2", #Change legend labels for clarity
     #                             breaks = eng$EJRating) +
 
@@ -79,10 +80,15 @@ plot_engagement <- function(shadedRegion = NULL,
   #ecodata::theme_facet()
 
 
-  p <- gridExtra::grid.arrange(eng2, bottom = grid::textGrob("Low <---------------------------------------------------------------------------------------------------------------------------> High",
-                                                  x = 0.5, y = 1, gp = grid::gpar(fontsize = 7)),
-                          left = grid::textGrob("Low <--------------------------------------------------------------------------------------> High", rot = 90,
-                                          x = 1, y = 0.5, gp = grid::gpar(fontsize = 7)))
+  #p <- gridExtra::grid.arrange(eng2, bottom = grid::textGrob("Low <---------------------------------------------------------------------------------------------------------------------------> High",
+  #                                                x = 0.5, y = 1, gp = grid::gpar(fontsize = 7)),
+  #                        left = grid::textGrob("Low <--------------------------------------------------------------------------------------> High", rot = 90,
+  #                                        x = 1, y = 0.5, gp = grid::gpar(fontsize = 7)))
+
+  p <- cowplot::plot_grid(eng2, nrow=1,scale = 0.9) +
+    cowplot::draw_label(expression("Low <------------------------------------------------------------------------------------------------------> High"), x=  0.02, y=0.5, vjust= 1.5, angle=90, size = 10) +
+    cowplot::draw_label(expression("Low <---------------------------------------------------------------------------------------------------------------------------> High"), x=  0.5, y=0.05, vjust= 1.5, angle=0, size = 10)
+
 
     return(p)
 
