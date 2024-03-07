@@ -130,5 +130,5 @@ plot_habitat_diversity <- function(shadedRegion = NULL,
 
 }
 
-attr(plot_habitat_diversity,"varName") <- c("Diversity","Richness")
+attr(plot_habitat_diversity,"varName") <- c("Richness") #removed "Diversity", argument for varName per Laurel's request
 attr(plot_habitat_diversity,"report") <- c("MidAtlantic","NewEngland")
