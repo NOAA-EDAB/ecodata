@@ -82,6 +82,79 @@ plot_phyto_size <- function(shadedRegion = NULL,
                   !Var == "CLIMATOLOGICAL_WEEK_CHLOR_A_MEDIAN")  |>
     dplyr::mutate(Value = Value*100)
 
+  # Normalize size class data so it adds to 1
+
+  # Climatology median data from Kim does not add up to 1 do to variability in Kim's methods
+  # We have decided to normalize these data such that they sum to 1 but remain in the same
+  # relative proportions to one another. All data are normalized below to maintain consistent
+  # scale across variables. ecodata will be left exactly as sent in by Kim
+
+  # Normalize climatology medians
+  climatology_norm<-out_phyto |>
+    dplyr::group_by(Var) |>
+    tidyr::pivot_wider(names_from = Var,
+                       values_from = Value) |>
+    dplyr::mutate(Total = CLIMATOLOGICAL_WEEK_PSC_FPICO_MEDIAN +
+                          CLIMATOLOGICAL_WEEK_PSC_FNANO_MEDIAN +
+                          CLIMATOLOGICAL_WEEK_PSC_FMICRO_MEDIAN) |>
+    dplyr::mutate(CLIMATOLOGICAL_WEEK_PSC_FPICO_MEDIAN = CLIMATOLOGICAL_WEEK_PSC_FPICO_MEDIAN/Total * 100) |>
+    dplyr::mutate(CLIMATOLOGICAL_WEEK_PSC_FNANO_MEDIAN = CLIMATOLOGICAL_WEEK_PSC_FNANO_MEDIAN/Total * 100) |>
+    dplyr::mutate(CLIMATOLOGICAL_WEEK_PSC_FMICRO_MEDIAN = CLIMATOLOGICAL_WEEK_PSC_FMICRO_MEDIAN/Total * 100) |>
+    dplyr::mutate(Total = CLIMATOLOGICAL_WEEK_PSC_FPICO_MEDIAN +
+                    CLIMATOLOGICAL_WEEK_PSC_FNANO_MEDIAN +
+                    CLIMATOLOGICAL_WEEK_PSC_FMICRO_MEDIAN) |>
+    dplyr::select(!Total) |>
+    tidyr::pivot_longer(cols = c("CLIMATOLOGICAL_WEEK_PSC_FPICO_MEDIAN",
+                                 "CLIMATOLOGICAL_WEEK_PSC_FNANO_MEDIAN",
+                                 "CLIMATOLOGICAL_WEEK_PSC_FMICRO_MEDIAN"),
+                        names_to = "Var",
+                        values_to = "Value") |>
+    dplyr::arrange(Var, by_group = T)
+
+  # Reassign processed data to 'out_phyto' for combatibility with code below
+  out_phyto<-climatology_norm
+
+  # Normalize current year phytoplankton size classes
+  fpico<-ecodata::phyto_size |>
+    dplyr::filter(EPU %in% filterEPUs,
+                  Var == c("WEEKLY_PSC_FPICO_MEDIAN")) |>
+    dplyr::mutate(Value = as.numeric(Value)) |>
+    tidyr::separate(Time, into = c("Cat", "WEEK"), sep = "_") |>
+    dplyr::mutate(year = stringr::str_sub(WEEK, 1,4),
+                  wk = stringr::str_sub(WEEK, 5,6)) |>
+    dplyr::filter((year == max(year)),
+                  !Value == "NA") |>
+    tidyr::pivot_wider(names_from = Var,
+                       values_from = Value) |>
+    dplyr::select(WEEK, WEEKLY_PSC_FPICO_MEDIAN)
+
+  phyto_norm<-phyto_year_nano |>
+    dplyr::left_join(fpico, by = "WEEK") |>
+    dplyr::mutate(Total = WEEKLY_PSC_FNANO_MEDIAN +
+                          WEEKLY_PSC_FMICRO_MEDIAN +
+                          WEEKLY_PSC_FPICO_MEDIAN) |>
+    dplyr::mutate(WEEKLY_PSC_FNANO_MEDIAN = WEEKLY_PSC_FNANO_MEDIAN/Total) |>
+    dplyr::mutate(WEEKLY_PSC_FMICRO_MEDIAN = WEEKLY_PSC_FMICRO_MEDIAN/Total) |>
+    dplyr::mutate(WEEKLY_PSC_FPICO_MEDIAN = WEEKLY_PSC_FPICO_MEDIAN/Total) |>
+    dplyr::mutate(Total = WEEKLY_PSC_FNANO_MEDIAN +
+                    WEEKLY_PSC_FMICRO_MEDIAN +
+                    WEEKLY_PSC_FPICO_MEDIAN) |>
+    dplyr::select(!WEEKLY_PSC_FPICO_MEDIAN) |>
+    dplyr::select(!Total) |>
+    dplyr::mutate(Value = (as.numeric(WEEKLY_PSC_FNANO_MEDIAN) +
+                    as.numeric(WEEKLY_PSC_FMICRO_MEDIAN)) * 100)
+
+  fmicro<-phyto_norm |>
+    dplyr::select(Cat, WEEK, WEEKLY_PSC_FMICRO_MEDIAN, EPU, Units, year, wk) |>
+    tidyr::pivot_longer(cols = "WEEKLY_PSC_FMICRO_MEDIAN",
+                        names_to = "Var",
+                        values_to = "Value") |>
+    dplyr::mutate(Value = Value*100)
+
+  # Reassign processed data to 'phyto_year_nano' and "phyto_year_micro' for compatibility with code below
+  phyto_year_micro<-fmicro
+  phyto_year_nano<-phyto_norm
+
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
   # e.g. fill = setup$shade.fill, alpha = setup$shade.alpha,
