@@ -39,13 +39,13 @@ plot_mab_inshore_survey <- function(shadedRegion = NULL,
                   upper = Value + (2*SD),
                   lower = Value - (2*SD))
 
-  fix$Var <- factor(neamap$Var,levels = c("Piscivore Spring","Piscivore Fall",
-                                             "Benthivore Spring", "Benthivore Fall",
-                                             "Planktivore Spring", "Planktivore Fall",
-                                             "Benthos Spring", "Benthos Fall"))
+  fix$Var <- factor(fix$Var,levels = c("Piscivore Spring","Piscivore Fall",
+                                       "Benthivore Spring", "Benthivore Fall",
+                                       "Planktivore Spring", "Planktivore Fall",
+                                       "Benthos Spring", "Benthos Fall"))
 
 
-
+    # code before adding standard deviation calculation
    #fix <- ecodata::mab_inshore_survey |>
     # dplyr::filter(EPU %in% filterEPUs,
      #              grepl("Value",Var)) |>
