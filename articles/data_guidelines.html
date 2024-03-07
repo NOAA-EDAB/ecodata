@@ -332,41 +332,41 @@ examples.</p>
 <div class="section level4">
 <h4 id="data-table">data.table<a class="anchor" aria-label="anchor" href="#data-table"></a>
 </h4>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#This function requires the data.table package library(data.table) </span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Function to convert from wide to long </span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>w2l <span class="ot">&lt;-</span> <span class="cf">function</span>(x, by, <span class="at">by.name =</span> Time , <span class="at">value.name =</span> Value ){ </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  x.new <span class="ot">&lt;-</span> <span class="fu">copy</span>(x)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  var.names <span class="ot">&lt;-</span> <span class="fu">names</span>(x)[<span class="fu">which</span>(<span class="fu">names</span>(x) <span class="sc">!=</span> by)] </span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  out <span class="ot">&lt;-</span> <span class="fu">c</span>() <span class="fu">setnames</span>(x.new, by, by ) </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(var.names)){ </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setnames</span>(x.new, var.names[i], V1 ) </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    single.var <span class="ot">&lt;-</span> x.new[, <span class="fu">list</span>(by, V1)] </span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    single.var[, Var <span class="sc">:</span><span class="er">=</span> var.names[i]] </span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    out <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(<span class="fu">list</span>(out, single.var)) </span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setnames</span>(x.new, V1 , var.names[i]) </span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setnames</span>(x.new, by , by) </span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setnames</span>(out, <span class="fu">c</span>( by , V1 ), <span class="fu">c</span>(by.name, value.name)) </span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  }<span class="co">#Simple example from above </span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Wide table </span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>wide.format <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">Year =</span> <span class="fu">c</span>( <span class="dv">1</span> , <span class="dv">2</span> , <span class="dv">3</span> ),  <span class="at">VarA =</span> <span class="fu">c</span>( <span class="dv">1</span> , <span class="dv">2</span> , <span class="dv">3</span> ), </span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                          <span class="at">VarB =</span> <span class="fu">c</span>( <span class="dv">4</span> , <span class="dv">5</span> , <span class="dv">6</span> ), <span class="at">VarC =</span> <span class="fu">c</span>( <span class="dv">7</span> , <span class="dv">8</span> , <span class="dv">9</span> )) </span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(wide.format) </span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Year VarA VarB VarC ## 1: 1 1 4 7 ## 2: 2 2 5 8 ## 3: 3 3 6 9 </span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>long.format <span class="ot">&lt;-</span> <span class="fu">w2l</span>(wide.format, <span class="at">by =</span> Year ) </span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(long.format) </span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="do">## Time Value Var ## 1: 1 1 VarA ## 2: 2 2 VarA ## 3: 3 3 VarA ## 4: 1 4 VarB ## 5: 2 5 VarB ## 6: 3 6 VarB ## 7: 1 7 VarC ## 8: 2 8 VarC ## 9: 3 9 VarC #Notice that the w2l function named the columns to the ones noted above #but did not add units, region, or source 3 </span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co">#Add units and region manually </span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>units <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">Units =</span> <span class="fu">c</span>(<span class="fu">rep</span>( kg tows<span class="sc">^-</span><span class="dv">1</span> , <span class="dv">6</span>), </span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">rep</span>( n per 100m3 , <span class="dv">3</span>))) </span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>region <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">Region =</span> <span class="fu">rep</span>( GB , <span class="dv">9</span>)) </span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>source <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">Source =</span> <span class="fu">c</span>(<span class="fu">rep</span>( NEFSC survey <span class="fu">data</span> (Survdat) , <span class="dv">6</span>), </span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">rep</span>( NEFSC ECOMON data , <span class="dv">3</span>))) </span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>long.format <span class="ot">&lt;-</span> <span class="fu">cbind</span>(long.format, units) </span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>long.format <span class="ot">&lt;-</span> <span class="fu">cbind</span>(long.format, region) </span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>long.format <span class="ot">&lt;-</span> <span class="fu">cbind</span>(long.format, source) <span class="fu">print</span>(long.format) </span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="do">## Time Value Var Units Region Source ## 1: 1 1 VarA kg tows^-1 GB NEFSC survey data (Survdat) ## 2: 2 2 VarA kg tows^-1 GB NEFSC survey data (Survdat) ## 3: 3 3 VarA kg tows^-1 GB NEFSC survey data (Survdat) ## 4: 1 4 VarB kg tows^-1 GB NEFSC survey data (Survdat) ## 5: 2 5 VarB kg tows^-1 GB NEFSC survey data (Survdat) ## 6: 3 6 VarB kg tows^-1 GB NEFSC survey data (Survdat) ## 7: 1 7 VarC n per 100m3 GB NEFSC ECOMON data ## 8: 2 8 VarC n per 100m3 GB NEFSC ECOMON data ## 9: 3 9 VarC n per 100m3 GB NEFSC ECOMON data </span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co">#This function requires the data.table package library(data.table) </span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#Function to convert from wide to long </span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>w2l <span class="ot">&lt;-</span> <span class="cf">function</span>(x, by, <span class="at">by.name =</span> Time , <span class="at">value.name =</span> Value ){ </span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  x.new <span class="ot">&lt;-</span> <span class="fu">copy</span>(x)</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  var.names <span class="ot">&lt;-</span> <span class="fu">names</span>(x)[<span class="fu">which</span>(<span class="fu">names</span>(x) <span class="sc">!=</span> by)] </span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  out <span class="ot">&lt;-</span> <span class="fu">c</span>() <span class="fu">setnames</span>(x.new, by, by ) </span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(var.names)){ </span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>    <span class="fu">setnames</span>(x.new, var.names[i], V1 ) </span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>    single.var <span class="ot">&lt;-</span> x.new[, <span class="fu">list</span>(by, V1)] </span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>    single.var[, Var <span class="sc">:=</span> var.names[i]] </span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>    out <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(<span class="fu">list</span>(out, single.var)) </span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>    <span class="fu">setnames</span>(x.new, V1 , var.names[i]) </span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>  }</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>  <span class="fu">setnames</span>(x.new, by , by) </span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>  <span class="fu">setnames</span>(out, <span class="fu">c</span>( by , V1 ), <span class="fu">c</span>(by.name, value.name)) </span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>  }<span class="co">#Simple example from above </span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#Wide table </span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>wide.format <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">Year =</span> <span class="fu">c</span>( <span class="dv">1</span> , <span class="dv">2</span> , <span class="dv">3</span> ),  <span class="at">VarA =</span> <span class="fu">c</span>( <span class="dv">1</span> , <span class="dv">2</span> , <span class="dv">3</span> ), </span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>                          <span class="at">VarB =</span> <span class="fu">c</span>( <span class="dv">4</span> , <span class="dv">5</span> , <span class="dv">6</span> ), <span class="at">VarC =</span> <span class="fu">c</span>( <span class="dv">7</span> , <span class="dv">8</span> , <span class="dv">9</span> )) </span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="fu">print</span>(wide.format) </span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="do">## Year VarA VarB VarC ## 1: 1 1 4 7 ## 2: 2 2 5 8 ## 3: 3 3 6 9 </span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>long.format <span class="ot">&lt;-</span> <span class="fu">w2l</span>(wide.format, <span class="at">by =</span> Year ) </span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="fu">print</span>(long.format) </span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="do">## Time Value Var ## 1: 1 1 VarA ## 2: 2 2 VarA ## 3: 3 3 VarA ## 4: 1 4 VarB ## 5: 2 5 VarB ## 6: 3 6 VarB ## 7: 1 7 VarC ## 8: 2 8 VarC ## 9: 3 9 VarC #Notice that the w2l function named the columns to the ones noted above #but did not add units, region, or source 3 </span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="co">#Add units and region manually </span></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a>units <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">Units =</span> <span class="fu">c</span>(<span class="fu">rep</span>( kg tows<span class="sc">^-</span><span class="dv">1</span> , <span class="dv">6</span>), </span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a>                              <span class="fu">rep</span>( n per <span class="dv">100</span>m3 , <span class="dv">3</span>))) </span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a>region <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">Region =</span> <span class="fu">rep</span>( GB , <span class="dv">9</span>)) </span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a>source <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">Source =</span> <span class="fu">c</span>(<span class="fu">rep</span>( NEFSC survey <span class="fu">data</span> (Survdat) , <span class="dv">6</span>), </span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a>                                <span class="fu">rep</span>( NEFSC ECOMON data , <span class="dv">3</span>))) </span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a>long.format <span class="ot">&lt;-</span> <span class="fu">cbind</span>(long.format, units) </span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a>long.format <span class="ot">&lt;-</span> <span class="fu">cbind</span>(long.format, region) </span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a>long.format <span class="ot">&lt;-</span> <span class="fu">cbind</span>(long.format, source) <span class="fu">print</span>(long.format) </span>
+<span id="cb2-35"><a href="#cb2-35" tabindex="-1"></a><span class="do">## Time Value Var Units Region Source ## 1: 1 1 VarA kg tows^-1 GB NEFSC survey data (Survdat) ## 2: 2 2 VarA kg tows^-1 GB NEFSC survey data (Survdat) ## 3: 3 3 VarA kg tows^-1 GB NEFSC survey data (Survdat) ## 4: 1 4 VarB kg tows^-1 GB NEFSC survey data (Survdat) ## 5: 2 5 VarB kg tows^-1 GB NEFSC survey data (Survdat) ## 6: 3 6 VarB kg tows^-1 GB NEFSC survey data (Survdat) ## 7: 1 7 VarC n per 100m3 GB NEFSC ECOMON data ## 8: 2 8 VarC n per 100m3 GB NEFSC ECOMON data ## 9: 3 9 VarC n per 100m3 GB NEFSC ECOMON data </span></span></code></pre></div>
 </div>
 </div>
   </div>
