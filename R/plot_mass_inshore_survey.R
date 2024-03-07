@@ -28,26 +28,30 @@ plot_mass_inshore_survey <- function(shadedRegion = NULL,
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
-   fix <- ecodata::mass_inshore_survey |>
-     dplyr::filter(EPU %in% filterEPUs,
-                   grepl("Index",Var),
-                   !grepl("Other",Var)) |>
-     tidyr::separate(Var,into = c("Var","Trash"),sep =" Biomass") |>
-     dplyr::select(-Trash) |>
-     dplyr::mutate(Var = as.factor(Var))  |>
-     dplyr::group_by(Var) |>
-     dplyr::mutate(hline = mean(Value))
+  fix <- ecodata::mass_inshore_survey |>
+    dplyr::filter(EPU %in% filterEPUs,
+                  !grepl("Other",Var)) |>
+    tidyr::separate(Var, into = c("Var",  "Trash"), sep = " - ") |>
+    dplyr::select(!Trash) |>
+    tidyr::separate(Var, into = c("Var", "Val"), sep = " Biomass ") |>
+    tidyr::pivot_wider(names_from = Val, values_from = Value) |>
+    dplyr::mutate(Index = as.numeric(Index),
+                  SE = as.numeric(SE)) |>
+    dplyr::group_by(Var) |>
+    dplyr::mutate(hline = mean(Index),
+                  upper = Index + (2*SE),
+                  lower = Index - (2*SE))
 
-   fix$Var <- factor(fix$Var,levels =  c("Piscivore Spring","Piscivore Fall",
-                                         "Benthivore Spring","Benthivore Fall",
-                                         "Planktivore Spring","Planktivore Fall",
-                                         "Benthos Spring","Benthos Fall"))
+  fix$Var <- factor(fix$Var,levels = c("Piscivore Spring","Piscivore Fall",
+                                       "Benthivore Spring", "Benthivore Fall",
+                                       "Planktivore Spring", "Planktivore Fall",
+                                       "Benthos Spring", "Benthos Fall"))
 
 
-   ymax <- fix |>
-     tidyr::separate(Var, into = c("vars","Trash"),sep=" ") |>
-     dplyr::group_by(vars) |>
-     dplyr::summarise(max = max(Value,na.rm=T))
+  ymax <- fix |>
+    tidyr::separate(Var, into = c("vars","Trash"),sep=" ") |>
+    dplyr::group_by(vars) |>
+    dplyr::summarise(max = max(Index,na.rm=T))
 
   usevars <- fix |>
     dplyr::distinct(Var) |>
@@ -58,13 +62,44 @@ plot_mass_inshore_survey <- function(shadedRegion = NULL,
     dplyr::left_join(ymax,by="vars") |>
     dplyr::select(-vars)
 
+  # Old code
+  #fix <- ecodata::mass_inshore_survey |>
+  #   dplyr::filter(EPU %in% filterEPUs,
+  #                 grepl("Index",Var),
+  #                 !grepl("Other",Var)) |>
+  #   tidyr::separate(Var,into = c("Var","Trash"),sep =" Biomass") |>
+  #   dplyr::select(-Trash) |>
+  #   dplyr::mutate(Var = as.factor(Var))  |>
+  #   dplyr::group_by(Var) |>
+  #   dplyr::mutate(hline = mean(Value))
+
+  #fix$Var <- factor(fix$Var,levels =  c("Piscivore Spring","Piscivore Fall",
+  #                                       "Benthivore Spring","Benthivore Fall",
+  #                                       "Planktivore Spring","Planktivore Fall",
+  #                                       "Benthos Spring","Benthos Fall"))
+
+
+  # ymax <- fix |>
+  #   tidyr::separate(Var, into = c("vars","Trash"),sep=" ") |>
+  #   dplyr::group_by(vars) |>
+  #   dplyr::summarise(max = max(Value,na.rm=T))
+
+  #usevars <- fix |>
+  #  dplyr::distinct(Var) |>
+  #  dplyr::pull()
+
+  #df2 <- data.frame(Time = 2015,Var = usevars) |>
+  #  dplyr::mutate(vars = stringr::word(Var)) |>
+  #  dplyr::left_join(ymax,by="vars") |>
+  #  dplyr::select(-vars)
+
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
   # e.g. fill = setup$shade.fill, alpha = setup$shade.alpha,
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
   #
   p <- fix |>
-    ggplot2::ggplot(ggplot2::aes(x = Time, y = Value))+
+    ggplot2::ggplot(ggplot2::aes(x = Time, y = Index))+
     ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
         xmin = setup$x.shade.min , xmax = setup$x.shade.max,
         ymin = -Inf, ymax = Inf) +
@@ -76,6 +111,10 @@ plot_mass_inshore_survey <- function(shadedRegion = NULL,
                         linewidth = setup$hline.size,
                         alpha = setup$hline.alpha,
                         linetype = setup$hline.lty)+
+    ggplot2::geom_ribbon(data = fix,
+                         ggplot2::aes(x = Time, ymin = pmax(lower,0), ymax = upper),
+                         alpha = 0.5,
+                         fill = "gray")+
     ggplot2::ggtitle("Massachusetts inshore BTS")+
     ggplot2::ylab(expression("Biomass (kg tow"^-1*")"))+
     ggplot2::xlab(ggplot2::element_blank())+
