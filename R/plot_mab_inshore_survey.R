@@ -28,19 +28,37 @@ plot_mab_inshore_survey <- function(shadedRegion = NULL,
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
-   fix <- ecodata::mab_inshore_survey |>
-     dplyr::filter(EPU %in% filterEPUs,
-                   grepl("Value",Var)) |>
-     tidyr::separate(Var,into = c("Var","Trash"),sep ="-") |>
-     dplyr::select(-Trash) |>
-     dplyr::mutate(Var = as.factor(Var)) |>
-     dplyr::group_by(Var) |>
-     dplyr::mutate(hline = mean(Value))
+  fix <- ecodata::mab_inshore_survey |>
+    tidyr::separate(Var, into = c("Var",  "Val"), sep = "-") |>
+    tidyr::pivot_wider(names_from = Val, values_from = Value) |>
+    dplyr::mutate(Value = as.numeric(Value),
+                  CV = as.numeric(CV)) |>
+    dplyr::group_by(Var) |>
+    dplyr::mutate(hline = mean(Value),
+                  SD = Value * CV, #calculate SD from CV
+                  upper = Value + (2*SD),
+                  lower = Value - (2*SD))
 
-   fix$Var <- factor(fix$Var,levels =  c("Piscivore Spring","Piscivore Fall",
-                                         "Benthivore Spring","Benthivore Fall",
-                                         "Planktivore Spring","Planktivore Fall",
-                                         "Benthos Spring","Benthos Fall"))
+  fix$Var <- factor(neamap$Var,levels = c("Piscivore Spring","Piscivore Fall",
+                                             "Benthivore Spring", "Benthivore Fall",
+                                             "Planktivore Spring", "Planktivore Fall",
+                                             "Benthos Spring", "Benthos Fall"))
+
+
+
+   #fix <- ecodata::mab_inshore_survey |>
+    # dplyr::filter(EPU %in% filterEPUs,
+     #              grepl("Value",Var)) |>
+     #tidyr::separate(Var,into = c("Var","Trash"),sep ="-") |>
+     #dplyr::select(-Trash) |>
+     #dplyr::mutate(Var = as.factor(Var)) |>
+     #dplyr::group_by(Var) |>
+     #dplyr::mutate(hline = mean(Value))
+
+   #fix$Var <- factor(fix$Var,levels =  c("Piscivore Spring","Piscivore Fall",
+                                        #"Benthivore Spring","Benthivore Fall",
+                                         #"Planktivore Spring","Planktivore Fall",
+                                         #"Benthos Spring","Benthos Fall"))
 
 
    ymax <- fix |>
@@ -75,6 +93,10 @@ plot_mab_inshore_survey <- function(shadedRegion = NULL,
                         linewidth = setup$hline.size,
                         alpha = setup$hline.alpha,
                         linetype = setup$hline.lty)+
+    ggplot2::geom_ribbon(data = fix,
+                         ggplot2::aes(x = Time, ymin = pmax(lower,0), ymax = upper),
+                         alpha = 0.5,
+                         fill = "gray")+
     ggplot2::ggtitle("NEAMAP inshore BTS")+
     ggplot2::ylab(expression("Biomass (kg tow"^-1*")"))+
     ggplot2::xlab(ggplot2::element_blank())+
