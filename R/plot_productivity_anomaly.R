@@ -22,6 +22,9 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
                                report=report)
 
+  # this should be added to plot_setip
+  leg_font_size <- 6
+
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
     if (varName == "anomaly") {
@@ -59,7 +62,8 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
     prod<- ecodata::productivity_anomaly |>
       tidyr::separate(Var, into = c("Stock", "Var"), sep = "-")  |>
       dplyr::filter(EPU == filterEPUs,
-                    Var == "rs_anom")
+                    Var == "rs_anom") |>
+      dplyr::mutate(Stock = toupper(Stock))
 
     # code for generating plot object p
     # ensure that setup list objects are called as setup$...
@@ -86,7 +90,8 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
                      axis.text    = ggplot2::element_text(size = 10),
                      plot.title   = ggplot2::element_text(size = 12),
                      #legend.text  = element_text(size = leg_font_size),
-                     legend.title = ggplot2::element_blank())
+                     legend.title = ggplot2::element_blank(),
+                     legend.text=ggplot2::element_text(size=6))
 
   }
 
@@ -109,6 +114,7 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
                                     height = 5.5,
                                     width = 9,
                                     filt = FALSE,
+                                    leg_font_size = leg_font_size,
                                     label = "",
                                     y.text = 10,
                                     aggregate = TRUE)
@@ -133,7 +139,7 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
                                      x, xlab, ylab,
                                      titl,
                                      file_suffix,
-                                     leg_font_size = 6,
+                                     leg_font_size = leg_font_size,
                                      remove_leg = FALSE,
                                      leg_ncol = 1,
                                      wcpts = TRUE,

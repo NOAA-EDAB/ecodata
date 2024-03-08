@@ -1,6 +1,6 @@
 #' plot habitat diversity
 #'
-#' Plots ecodata::habitat_diversity (Shanon index)
+#' Plots ecodata::habitat_diversity (Shannon index and species richness)
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
@@ -129,6 +129,7 @@ plot_habitat_diversity <- function(shadedRegion = NULL,
 
 
 }
+
 
 attr(plot_habitat_diversity,"varName") <- c("Richness") #removed "Diversity", argument for varName per Laurel's request
 attr(plot_habitat_diversity,"report") <- c("MidAtlantic","NewEngland")
