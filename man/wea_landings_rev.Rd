@@ -5,13 +5,14 @@
 \alias{wea_landings_rev}
 \title{Fisheries maximum and minimum landings and revenue from wind energy areas (WEAs).}
 \format{
-Data set contains 46 rows and 4 columns
+Data set contains 32 rows and 5 columns
 
 \itemize{
 \item NEFMC, MAFMC, and ASMFC Managed Species: Managed Fishery.
 \item perc_landings_max: Max Landings Percent from WEA.
 \item perc_revenue_max: Max Revenue Percent from WEA.
 \item Units: Units for landings or revenue.
+\item Council: New England (NEFMC) or Mid Atlantic (MAFMC)
 }
 }
 \usage{

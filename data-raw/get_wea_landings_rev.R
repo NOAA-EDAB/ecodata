@@ -28,7 +28,7 @@ get_wea_landings_rev <- function(save_clean = F){
                   perc_revenue_max = as.numeric(perc_revenue_max)*100,
                   Units = c("Percent")) %>%
     dplyr::mutate(across(where(is.numeric), ~round(., 0))) %>%
-    dplyr::mutate(Council = "NEFSC")
+    dplyr::mutate(Council = "NEFMC")
 
    # Add council data to dataset
     mafmc <- list("Atlantic mackerel", "Black sea bass", "Bluefish", "Blueline tilefish", "Butterfish",

@@ -57,7 +57,7 @@ plot_wind_port <- function(shadedRegion = NULL,
      dplyr::filter(!value == "NA") |>
      dplyr::mutate(symbol = dplyr::recode(Variable, EJ = -7, Gentrification = -3),
                    Variable = dplyr::recode(Variable,"EJ"= "Mid-High to High EJ Concerns" ,
-                                     "Gentrification" ="Mid-High to High Gentrificaiton Concerns"))
+                                     "Gentrification" ="Mid-High to High Gentrification Concerns"))
 
 
   # code for generating plot object p
