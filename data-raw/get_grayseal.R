@@ -28,6 +28,6 @@ get_grayseal<- function(save_clean = F){
   attr(grayseal, "data_files")   <- list(
     grayseal_csv = grayseal_csv)
   attr(grayseal, "data_steward") <- c(
-    "Chris Orphanides <chris.orphanides@noaa.gov>")
+    "Debra Palka <debra.palka@noaa.gov>")
 }
 get_grayseal(save_clean = T)
