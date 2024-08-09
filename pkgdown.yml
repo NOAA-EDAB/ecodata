@@ -1,5 +1,5 @@
 pandoc: 3.1.11
-pkgdown: 2.0.9
+pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   data_guidelines: data_guidelines.html
@@ -7,8 +7,7 @@ articles:
   ecodata: ecodata.html
   geom_gls: geom_gls.html
   landing_page: landing_page.html
-last_built: 2024-04-23T13:25Z
+last_built: 2024-08-09T13:36Z
 urls:
   reference: https://noaa-edab.github.io/ecodata/reference
   article: https://noaa-edab.github.io/ecodata/articles
-

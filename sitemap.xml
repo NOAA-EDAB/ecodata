@@ -1,612 +1,192 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/404.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/ESP_plot_mockup.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/InteractiveSOE.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/LTL_MAB.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/LTL_NE.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/TestInteractive.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/articles/data_guidelines.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/articles/ecodata.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/articles/ecodata_maintenance.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/articles/geom_gls.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/articles/landing_page.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/dashboard.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/data_guidelines.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/human_dimensions_MAB.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/human_dimensions_NE.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/index.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/indexmain.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/libs/jqueryui-1.11.4/index.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/macrofauna_MAB.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/macrofauna_NE.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/SAV.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/StatLM.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/abc_acl.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/aggregate_biomass.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/aquaculture.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/bennet.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/blue_runner.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/bottom_temp.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/bottom_temp_comp.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/bottom_temp_glorys.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/bottom_temp_seasonal_gridded.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/calanus_stage.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/ch_bay_sal.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/ch_bay_temp.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/ches_bay_sf.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/ches_bay_sst.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/ches_bay_wq.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/chl_pp.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/coast.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/cold_pool.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/cold_pool_sf.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/comdat.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/commercial_div.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/condition.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/ecodata-package.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/energy_density.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/engagement.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/epu_sf.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/exp_n.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/forage_anomaly.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/forage_index.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/geom_gls.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/geom_gls_gauss.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/geom_lm.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/geom_regime.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/grayseal.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/gsi.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/habitat_diversity.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/habitat_occupancy.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/habitat_vulnerability.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/habs.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/harborporpoise.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/heatwave.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/heatwave_year.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/hms_category.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/hms_cpue.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/hms_landings.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/hms_stock_status.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/hp_density.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/hudson_river_flow.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/ichthyo_diversity.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/long_line_survey.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/long_term_sst.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/longlinesurvey_sf.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/lps_sharks.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/mab_inshore_survey.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/mass_inshore_survey.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/narw.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/ne_inshore_survey.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/ne_inshore_survey_species.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/observed_sharks.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/phyto_size.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_HMS_species_distribution.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_SAV.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_abc_acl.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_aggregate_biomass.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_annual_chl_pp.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_aquaculture.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_bennet.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_blue_runner.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_bottom_temp.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_bottom_temp_comp.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_bottom_temp_glorys.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_bottom_temp_seasonal_gridded.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_calanus_stage.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_ch_bay_sal.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_ch_bay_temp.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_ches_bay_sst.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_ches_bay_wq.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_chl_pp.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_cold_pool.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_cold_pool_sf.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_comdat.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_commercial_div.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_condition.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_energy_density.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_engagement.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_exp_n.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_forage_anomaly.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_forage_index.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_function_template.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_gom_salmon.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_grayseal.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_gsi.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_habitat_diversity.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_habs.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_harborporpoise.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_heatwave.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_heatwave_peak_date.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_heatwave_year.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_hms_cpue.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_hms_landings.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_hms_stock_status.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_hudson_river_flow.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_ichthyo_diversity.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_long_term_sst.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_mab_inshore_survey.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_mass_inshore_survey.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_nao.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_narw.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_ne_inshore_survey.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_observed_sharks.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_phyto_size.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_ppr.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_productivity_anomaly.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_rec_hms.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_recdat.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_sandlance.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_seabird_mab.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_seabird_ne.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_seal_pups.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_seasonal_bt_anomaly_gridded.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_seasonal_oisst_anom.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_seasonal_sst_anomaly_gridded.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_setup.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_slopewater.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_spawn_timing.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_species_dist.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_species_groupings.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_stock_status.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_stom_fullness.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_storminess.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_survey_shannon.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_thermal_habitat_area.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_thermal_habitat_persistence.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_trans_dates.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_wcr.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_wea_landings_rev.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_wind_dev_speed.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_wind_occupancy.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_wind_port.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_wind_revenue.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_zoo_abundance_anom.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_zoo_diversity.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_zoo_regime.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/plot_zoo_strat_abun.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/ppr.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/productivity_anomaly.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/rec_hms.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/recdat.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/sandlance.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/seabird_mab.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/seabird_ne.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/seal_pups.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/seasonal_bt_anomaly_gridded.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/seasonal_oisst_anom.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/seasonal_sst_anomaly_gridded.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/slopewater.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/species_dist.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/species_groupings.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/stock_status.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/stom_fullness.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/survey_shannon.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/theme_facet.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/theme_map.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/theme_title.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/theme_ts.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/trans_dates.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/wcr.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/wea_landings_rev.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/wind_dev_speed.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/wind_occupancy.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/wind_port.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/wind_revenue.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/zoo_abundance_anom.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/zoo_diversity.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/zoo_regime.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/reference/zoo_strat_abun.html</loc>
-  </url>
-  <url>
-    <loc>https://noaa-edab.github.io/ecodata/regime_shifts.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://noaa-edab.github.io/ecodata/404.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/LICENSE-text.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/articles/data_guidelines.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/articles/ecodata.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/articles/ecodata_maintenance.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/articles/geom_gls.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/articles/index.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/articles/landing_page.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/authors.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/index.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/SAV.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/StatLM.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/abc_acl.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/aggregate_biomass.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/aquaculture.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/bennet.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/blue_runner.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/bottom_temp.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/bottom_temp_comp.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/bottom_temp_glorys.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/bottom_temp_seasonal_gridded.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/calanus_stage.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/ch_bay_sal.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/ch_bay_temp.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/ches_bay_sf.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/ches_bay_sst.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/ches_bay_wq.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/chl_pp.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/coast.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/cold_pool.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/cold_pool_sf.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/comdat.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/commercial_div.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/condition.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/ecodata-package.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/energy_density.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/engagement.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/epu_sf.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/exp_n.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/forage_anomaly.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/forage_index.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/geom_gls.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/geom_gls_gauss.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/geom_lm.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/geom_regime.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/grayseal.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/gsi.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/habitat_diversity.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/habitat_occupancy.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/habitat_vulnerability.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/habs.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/harborporpoise.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/heatwave.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/heatwave_year.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/hms_category.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/hms_cpue.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/hms_landings.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/hms_stock_status.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/hp_density.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/hudson_river_flow.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/ichthyo_diversity.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/index.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/long_line_survey.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/long_term_sst.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/longlinesurvey_sf.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/lps_sharks.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/mab_inshore_survey.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/mass_inshore_survey.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/narw.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/ne_inshore_survey.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/ne_inshore_survey_species.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/observed_sharks.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/phyto_size.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_HMS_species_distribution.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_SAV.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_abc_acl.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_aggregate_biomass.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_annual_chl_pp.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_aquaculture.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_bennet.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_blue_runner.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_bottom_temp.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_bottom_temp_comp.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_bottom_temp_glorys.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_bottom_temp_seasonal_gridded.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_calanus_stage.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_ch_bay_sal.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_ch_bay_temp.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_ches_bay_sst.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_ches_bay_wq.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_chl_pp.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_cold_pool.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_cold_pool_sf.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_comdat.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_commercial_div.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_condition.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_energy_density.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_engagement.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_exp_n.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_forage_anomaly.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_forage_index.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_function_template.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_gom_salmon.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_grayseal.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_gsi.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_habitat_diversity.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_habs.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_harborporpoise.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_heatwave.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_heatwave_peak_date.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_heatwave_year.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_hms_cpue.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_hms_landings.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_hms_stock_status.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_hudson_river_flow.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_ichthyo_diversity.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_long_term_sst.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_mab_inshore_survey.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_mass_inshore_survey.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_nao.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_narw.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_ne_inshore_survey.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_observed_sharks.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_phyto_size.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_ppr.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_productivity_anomaly.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_rec_hms.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_recdat.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_sandlance.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_seabird_mab.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_seabird_ne.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_seal_pups.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_seasonal_bt_anomaly_gridded.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_seasonal_oisst_anom.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_seasonal_sst_anomaly_gridded.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_setup.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_slopewater.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_spawn_timing.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_species_dist.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_species_groupings.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_stock_status.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_stom_fullness.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_storminess.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_survey_shannon.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_thermal_habitat_area.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_thermal_habitat_persistence.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_trans_dates.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_wcr.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_wea_landings_rev.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_wind_dev_speed.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_wind_occupancy.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_wind_port.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_wind_revenue.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_zoo_abundance_anom.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_zoo_diversity.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_zoo_regime.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_zoo_strat_abun.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/ppr.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/productivity_anomaly.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/rec_hms.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/recdat.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/sandlance.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/seabird_mab.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/seabird_ne.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/seal_pups.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/seasonal_bt_anomaly_gridded.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/seasonal_oisst_anom.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/seasonal_sst_anomaly_gridded.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/slopewater.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/species_dist.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/species_groupings.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/stock_status.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/stom_fullness.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/survey_shannon.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/theme_facet.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/theme_map.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/theme_title.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/theme_ts.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/trans_dates.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/wcr.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/wea_landings_rev.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/wind_dev_speed.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/wind_occupancy.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/wind_port.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/wind_revenue.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/zoo_abundance_anom.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/zoo_diversity.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/zoo_regime.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/zoo_strat_abun.html</loc></url>
 </urlset>
+
