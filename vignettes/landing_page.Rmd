@@ -90,6 +90,9 @@ Each annual report cycle is developed with new and updated datasets. Guidelines 
 |2023 | MAFMC | [2023](https://github.com/NOAA-EDAB/SOE-MAFMC/releases/tag/2023) | [2022.1](https://github.com/NOAA-EDAB/memos/releases/tag/2022.1) | [4.0](https://github.com/NOAA-EDAB/ecodata/releases/tag/4.0) | [4.0](https://github.com/NOAA-EDAB/tech-doc/tree/4.0) |
 |2023 | NEFMC | [2023](https://github.com/NOAA-EDAB/SOE-NEFMC/releases/tag/2023) | [2022.1](https://github.com/NOAA-EDAB/memos/releases/tag/2022.1) | [4.0](https://github.com/NOAA-EDAB/ecodata/releases/tag/4.0) | [4.0](https://github.com/NOAA-EDAB/tech-doc/tree/4.0) |
 
+|2024 | MAFMC | [2024](https://github.com/NOAA-EDAB/SOE-MAFMC/releases/tag/2024) | [2024](https://github.com/NOAA-EDAB/memos/releases/tag/2024) | [5.0.1](https://github.com/NOAA-EDAB/ecodata/releases/tag/5.0.1) | [5.0](https://github.com/NOAA-EDAB/tech-doc/releases/tag/5.0) |
+|2024 | NEFMC | [2024](https://github.com/NOAA-EDAB/SOE-NEFMC/releases/tag/2024) | [2024](https://github.com/NOAA-EDAB/memos/releases/tag/2024) | [5.0.1](https://github.com/NOAA-EDAB/ecodata/releases/tag/5.0.1) | [5.0](https://github.com/NOAA-EDAB/tech-doc/releases/5.0) |
+
 Below is a table outlining the indicators included in `ecodata` and which SOE year the indicator was included in the report(s). Further information for each indicator can be found in the [Technical Documentation: State of the Ecosystem](https://noaa-edab.github.io/tech-doc/). This holds the details on the methodologies used for all indicators included in the reports including those not included in `ecodata`.  
 
 
