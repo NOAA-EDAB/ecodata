@@ -1,0 +1,31 @@
+name: Ecodata - Bug Report
+description: Use this issue template to report bugs found in ecodata.
+title: "[Bug Report]: "
+labels: ["bug"]
+assignees: "BBeltz1"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please use the fields below to identify the bug and provide related information we can use to troubleshoot. Thanks.
+  - type: textarea
+    id: bugdesc
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: bugdisc
+    attributes:
+      label: Describe the situation
+      description: How did you discover this bug? What were you trying to accomplish?
+    validations:
+      required: true
+  - type: textarea
+    id: addinfo
+    attributes:
+      label: Additional information
+      description: Add any other information about the problem here.
+    validations:
+      required: false
