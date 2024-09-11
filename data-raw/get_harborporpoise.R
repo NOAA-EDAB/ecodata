@@ -28,7 +28,7 @@ get_harborporpoise<- function(save_clean = F){
    attr(harborporpoise, "data_files")   <- list(
     harborporpoise_csv = harborporpoise_csv)
    attr(harborporpoise, "data_steward") <- c(
-    "Chris Orphanides <chris.orphanides@noaa.gov>")
+    "Debra Palka <debra.palka@noaa.gov>")
 }
 get_harborporpoise(save_clean = T)
 

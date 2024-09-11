@@ -28,7 +28,7 @@ plot_thermal_habitat_persistence <- function(shadedRegion = NULL,
 
   if (is.null(year)) {
     # current SOE report year
-    Yr <- setup$shadedRegion[2]
+    Yr <- max(ecodata::thermal_habitat_persistence$Time)
   } else {
     Yr <- year
   }
@@ -46,7 +46,7 @@ plot_thermal_habitat_persistence <- function(shadedRegion = NULL,
     ggplot2::geom_tile(ggplot2::aes(x=Longitude,y = Latitude, color = Value, width = 1/12, height = 1/12),
                        linewidth = setup$line.size) +
     ggplot2::geom_sf(data=ecodata::coast, size = setup$map.lwd) +
-    ggplot2::facet_wrap(~Var )+
+    ggplot2::facet_wrap(~Var)+
     ggplot2::scale_color_viridis_c(legendTitle)+
     ggplot2::coord_sf(xlim = c(setup$xmin,setup$xmax), ylim = c(setup$ymin,setup$ymax)) +
     #ggplot2::annotation_map(neus.map,fill = "grey70")+
@@ -64,3 +64,4 @@ plot_thermal_habitat_persistence <- function(shadedRegion = NULL,
 
 }
 attr(plot_thermal_habitat_persistence,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_thermal_habitat_persistence,"year") <- NULL
