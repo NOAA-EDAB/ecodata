@@ -89,7 +89,6 @@ Each annual report cycle is developed with new and updated datasets. Guidelines 
 |2022 | NEFMC | [2022.2](https://github.com/NOAA-EDAB/SOE-NEFMC/releases/tag/2022.2) | [2022.1](https://github.com/NOAA-EDAB/memos/releases/tag/2022.1) | [3.0](https://github.com/NOAA-EDAB/ecodata/releases/tag/3.0) | [3.0](https://github.com/NOAA-EDAB/tech-doc/tree/3.0) | 
 |2023 | MAFMC | [2023](https://github.com/NOAA-EDAB/SOE-MAFMC/releases/tag/2023) | [2022.1](https://github.com/NOAA-EDAB/memos/releases/tag/2022.1) | [4.0](https://github.com/NOAA-EDAB/ecodata/releases/tag/4.0) | [4.0](https://github.com/NOAA-EDAB/tech-doc/tree/4.0) |
 |2023 | NEFMC | [2023](https://github.com/NOAA-EDAB/SOE-NEFMC/releases/tag/2023) | [2022.1](https://github.com/NOAA-EDAB/memos/releases/tag/2022.1) | [4.0](https://github.com/NOAA-EDAB/ecodata/releases/tag/4.0) | [4.0](https://github.com/NOAA-EDAB/tech-doc/tree/4.0) |
-
 |2024 | MAFMC | [2024](https://github.com/NOAA-EDAB/SOE-MAFMC/releases/tag/2024) | [2024](https://github.com/NOAA-EDAB/memos/releases/tag/2024) | [5.0.1](https://github.com/NOAA-EDAB/ecodata/releases/tag/5.0.1) | [5.0](https://github.com/NOAA-EDAB/tech-doc/releases/tag/5.0) |
 |2024 | NEFMC | [2024](https://github.com/NOAA-EDAB/SOE-NEFMC/releases/tag/2024) | [2024](https://github.com/NOAA-EDAB/memos/releases/tag/2024) | [5.0.1](https://github.com/NOAA-EDAB/ecodata/releases/tag/5.0.1) | [5.0](https://github.com/NOAA-EDAB/tech-doc/releases/5.0) |
 
