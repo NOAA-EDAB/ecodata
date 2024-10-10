@@ -6,7 +6,7 @@ GeomLM <- ggplot2::ggproto("GeomLM",
 
 
                             default_aes = ggplot2::aes(size = 2, color = NA,fill = NA,
-                                                       linetype = 2, alpha = 0.7),
+                                                       linetype = 1, alpha = 0.7),
 
                             draw_key = ggplot2::draw_key_path,
 
@@ -17,9 +17,9 @@ GeomLM <- ggplot2::ggproto("GeomLM",
 
                               #Select default color based on positive/negative trend
                               if (coords$y[1] < coords$y[which.max(coords$x)]){
-                                first_row$color <- "orange"
+                                first_row$color <- "orange4"
                               } else {
-                                first_row$color <- "purple"
+                                first_row$color <- "purple4"
                               }
 
                               grid::linesGrob(

@@ -19,14 +19,12 @@ StatLM <- ggplot2::ggproto("StatLM",
                               `%>%` <- magrittr::`%>%`
                               dataUse <- data %>%
                                 dplyr::arrange(x) %>%
-                                #Fill in time steps if there are missing values
-                                #tidyr::complete(x = tidyr::full_seq(min(data$x):max(data$x),1)) %>%
-                                # Select last 11 years
+                                # Select last n years
                                 dplyr::filter(x %in% (max(x)-(n-1)):max(x)) %>%
                                 dplyr::mutate(x = x-min(x)+1)
 
                               # print("########RAW##########")
-                              # print(data)
+                               #print(data)
                               # print((max(data$x)-(n-1)))
                               # print(max(data$x))
                               # print(data$x-min(data$x)+1)
@@ -41,7 +39,7 @@ StatLM <- ggplot2::ggproto("StatLM",
                               # Linear model with AR1 error
                               linear_ar1 <-
                                 try(arfit::fit_real_data(dataUse,nBootSims=nBootSamples))
-                              ##print(linear_ar1)
+                              #print(linear_ar1$pValue)
                               if (is.na(linear_ar1$pValue)){
                                 return(best_lm <- data.frame(model = NA,
                                                              coefs..Intercept = NA,
