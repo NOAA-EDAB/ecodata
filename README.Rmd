@@ -55,9 +55,7 @@ remotes::install_github("noaa-edab/ecodata@dev",build_vignettes=TRUE)
 
 1.  All derived data sets are available once the package has been loaded into the environment. View available data sets using the syntax `ecodata::...`
 
-<p align="center" width="645"> 
-<img src="https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/ecodata1.gif">
-</p>
+![](man/figures/ecodata1.gif)
 
 
 ### Legal disclaimer
