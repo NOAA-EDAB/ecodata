@@ -3,7 +3,7 @@
 #' @export
 #'
 #' @examples
-#'
+#'\dontrun{
 #' library(rnaturalearth); library(ggplot2)
 #' library(dplyr); library(sf)
 #'
@@ -31,6 +31,7 @@
 #'   geom_sf(data = coast) +
 #'   coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
 #'   theme_map()
+#'  }
 
 theme_map <- function(...) {
   ggplot2::theme(
