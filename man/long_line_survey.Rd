@@ -7,7 +7,7 @@
 \format{
 A data set containing 96 rows and 8 columns.
 
-\itemize
+\itemize{
 \item Cruise: Latitude
 \item Station: Longitude
 \item Year: Value
@@ -15,6 +15,7 @@ A data set containing 96 rows and 8 columns.
 \item Deceg_beglat_set: ???
 \item Deceg_beglon_set: ???
 \item categ: ???
+}
 }
 \usage{
 long_line_survey

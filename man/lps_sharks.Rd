@@ -7,12 +7,13 @@
 \format{
 A data set containing 90 rows and 5 columns.
 
-\itemize
+\itemize{
 \item Time: ???
 \item Var: ???
 \item Value: ???
 \item EPU: ??
 \item Units: ???
+}
 }
 \usage{
 lps_sharks

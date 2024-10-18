@@ -4,7 +4,7 @@
 #'
 #' @format A data set containing 96 rows and 8 columns.
 #'
-#' \itemize
+#' \itemize{
 #'     \item Cruise: Latitude
 #'     \item Station: Longitude
 #'     \item Year: Value
@@ -12,7 +12,7 @@
 #'     \item Deceg_beglat_set: ???
 #'     \item Deceg_beglon_set: ???
 #'     \item categ: ???
-#'
+#'}
 #'
 #'
 #' @details More information available at (link to techdoc)
