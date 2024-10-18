@@ -292,7 +292,6 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
     ecodata::geom_gls(ggplot2::aes(x = Time, y = Mean,
                                    color = Var),
                       alpha = setup$trend.alpha, size = setup$trend.size) +
-    ecodata::geom_lm(ggplot2::aes(x = Time, y = Mean))+
 
     # ecodata::geom_lm(aes(x = Time, y = Mean,
     #              color = Var),
