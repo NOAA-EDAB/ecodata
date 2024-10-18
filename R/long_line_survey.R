@@ -15,5 +15,5 @@
 #'
 #'
 #'
-#' @details More information available at \url link to techdoc
+#' @details More information available at (link to techdoc)
 "long_line_survey"
