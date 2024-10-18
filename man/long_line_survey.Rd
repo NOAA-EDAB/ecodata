@@ -8,14 +8,13 @@
 A data set containing 96 rows and 8 columns.
 
 \itemize{
-\item {Cruise}{Latitude}
-\item {Station}{Longitude}
-\item {Year}{Value}
-\item {Common_name}{??}
-\item {Deceg_beglat_set}{???}
-\item {Deceg_beglon_set}{???}
-\item {categ}{???}
-
+\item Cruise: Latitude
+\item Station: Longitude
+\item Year: Value
+\item Common_name: ??
+\item Deceg_beglat_set: ???
+\item Deceg_beglon_set: ???
+\item categ: ???
 }
 }
 \usage{
@@ -25,6 +24,6 @@ long_line_survey
 What is it?
 }
 \details{
-More information available at \url{link to techdoc}
+More information available at (link to techdoc)
 }
 \keyword{datasets}

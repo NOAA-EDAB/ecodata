@@ -2,11 +2,13 @@
 #'
 #'@param mapping Set of aesthetic mappings created by \code{aes()}. By default \code{inherit.aes = TRUE}, which
 #'assigns the top-level plotting \code{aes()} to the GLS geom.
-#'
 #'@param data Input series to be analyzed. If NULL, data is inherited from previous layer or \code{ggplot} call.
-#'
+#'@param stat stat
+#'@param position position
+#'@param na.rm remove NAs
+#'@param show.legend show legend
+#'@param inherit.aes inherit aesthetics
 #'@param warn Conditional. If \code{TRUE}, a warning message will be returned when N < 30.
-#'
 #'@param ... Other arguments may be passed to the stat, including fixed aesthetics.
 #'
 #'
@@ -37,7 +39,7 @@ geom_gls_gauss <- function(mapping = NULL, data = NULL, stat = "GLSgauss",
                      position = "identity", na.rm = FALSE, show.legend = NA,
                      inherit.aes = TRUE, warn = TRUE, ...) {
   ggplot2::layer(
-    geom = ecodata:::GeomGLS, mapping = mapping, data = data, stat = stat,
+    geom = GeomGLS, mapping = mapping, data = data, stat = stat,
     position = position, show.legend = show.legend, inherit.aes = inherit.aes,
     params = list(na.rm = na.rm, warn = warn, ...)
   )

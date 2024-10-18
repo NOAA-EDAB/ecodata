@@ -1,7 +1,15 @@
 #'A geom to fit a regime shifts to a time series
 #'
-#'@param data Input series to be analyzed. If NULL,
-#'data is inherited from previous layer or \code{ggplot} call.
+#'@param mapping Set of aesthetic mappings created by \code{aes()}. By default \code{inherit.aes = TRUE}, which
+#'assigns the top-level plotting \code{aes()} to the GLS geom.
+#'@param data Input series to be analyzed. If NULL, data is inherited from previous layer or \code{ggplot} call.
+#'@param stat stat
+#'@param position position
+#'@param geom geom
+#'@param na.rm remove NAs
+#'@param show.legend show legend
+#'@param inherit.aes inherit aesthetics
+#'@param color color
 #'
 #'@param ... Other arguments may be passed to the stat, including fixed aesthetics.
 #'
@@ -11,6 +19,7 @@
 #'
 #'
 #'@examples
+#'\dontrun{
 #'library(ggplot2)
 #'
 #'#Generate series
@@ -26,6 +35,7 @@
 #'ggplot(data = data) +
 #'   geom_line(aes(x = x, y = y)) +
 #'   geom_regime()
+#'}
 
 geom_regime <- function(data = NULL, mapping = NULL,
                        stat = "REGIME",

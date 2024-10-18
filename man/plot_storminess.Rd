@@ -15,5 +15,5 @@ plot_storminess(shadedRegion = NULL, report = "MidAtlantic")
 ggplot object
 }
 \description{
-plots \link{storminess}
+plots storminess
 }

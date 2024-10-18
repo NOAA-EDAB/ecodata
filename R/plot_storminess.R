@@ -1,6 +1,6 @@
 #' plot storminess data
 #'
-#' plots [storminess]
+#' plots storminess
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")

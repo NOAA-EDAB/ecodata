@@ -17,8 +17,9 @@ navbar:
 
 # this will copy workshop folder into root of gh-pages branch
 # acts like a hidden folder in that there are no links to it from pkgdown
-template:
-  assets: workshop
+# Dont remove this. Nice hack to be aware of in future
+#template:
+#  assets: workshop
 
 
 reference:

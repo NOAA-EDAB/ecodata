@@ -17,8 +17,24 @@ geom_regime(
 )
 }
 \arguments{
-\item{data}{Input series to be analyzed. If NULL,
-data is inherited from previous layer or \code{ggplot} call.}
+\item{data}{Input series to be analyzed. If NULL, data is inherited from previous layer or \code{ggplot} call.}
+
+\item{mapping}{Set of aesthetic mappings created by \code{aes()}. By default \code{inherit.aes = TRUE}, which
+assigns the top-level plotting \code{aes()} to the GLS geom.}
+
+\item{stat}{stat}
+
+\item{geom}{geom}
+
+\item{position}{position}
+
+\item{inherit.aes}{inherit aesthetics}
+
+\item{na.rm}{remove NAs}
+
+\item{color}{color}
+
+\item{show.legend}{show legend}
 
 \item{...}{Other arguments may be passed to the stat, including fixed aesthetics.}
 }
@@ -29,6 +45,7 @@ If regime shifts exists, then xintercept line(s) is returned. Otherwise output i
 A geom to fit a regime shifts to a time series
 }
 \examples{
+\dontrun{
 library(ggplot2)
 
 #Generate series
@@ -44,4 +61,5 @@ data <- data.frame(x = x,
 ggplot(data = data) +
   geom_line(aes(x = x, y = y)) +
   geom_regime()
+}
 }
