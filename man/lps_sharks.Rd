@@ -22,6 +22,6 @@ lps_sharks
 What is it?
 }
 \details{
-More information available at \url link to techdoc
+More information available at (link to techdoc)
 }
 \keyword{datasets}
