@@ -19,6 +19,7 @@
 #'
 #'
 #'@examples
+#'\dontrun{
 #'library(ggplot2)
 #'
 #'#Generate series
@@ -34,6 +35,7 @@
 #'ggplot(data = data) +
 #'   geom_line(aes(x = x, y = y)) +
 #'   geom_regime()
+#'}
 
 geom_regime <- function(data = NULL, mapping = NULL,
                        stat = "REGIME",

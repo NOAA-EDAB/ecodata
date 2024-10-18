@@ -45,6 +45,7 @@ If regime shifts exists, then xintercept line(s) is returned. Otherwise output i
 A geom to fit a regime shifts to a time series
 }
 \examples{
+\dontrun{
 library(ggplot2)
 
 #Generate series
@@ -60,4 +61,5 @@ data <- data.frame(x = x,
 ggplot(data = data) +
   geom_line(aes(x = x, y = y)) +
   geom_regime()
+}
 }
