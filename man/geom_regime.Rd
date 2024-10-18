@@ -17,8 +17,24 @@ geom_regime(
 )
 }
 \arguments{
-\item{data}{Input series to be analyzed. If NULL,
-data is inherited from previous layer or \code{ggplot} call.}
+\item{data}{Input series to be analyzed. If NULL, data is inherited from previous layer or \code{ggplot} call.}
+
+\item{mapping}{Set of aesthetic mappings created by \code{aes()}. By default \code{inherit.aes = TRUE}, which
+assigns the top-level plotting \code{aes()} to the GLS geom.}
+
+\item{stat}{stat}
+
+\item{geom}{geom}
+
+\item{position}{position}
+
+\item{inherit.aes}{inherit aesthetics}
+
+\item{na.rm}{remove NAs}
+
+\item{color}{color}
+
+\item{show.legend}{show legend}
 
 \item{...}{Other arguments may be passed to the stat, including fixed aesthetics.}
 }

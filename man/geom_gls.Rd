@@ -22,6 +22,16 @@ assigns the top-level plotting \code{aes()} to the GLS geom.}
 
 \item{data}{Input series to be analyzed. If NULL, data is inherited from previous layer or \code{ggplot} call.}
 
+\item{stat}{stat}
+
+\item{position}{position}
+
+\item{na.rm}{remove NAs}
+
+\item{show.legend}{show legend}
+
+\item{inherit.aes}{inherit aesthetics}
+
 \item{warn}{Conditional. If \code{TRUE}, a warning message will be returned when N < 30.}
 
 \item{...}{Other arguments may be passed to the stat, including fixed aesthetics.}

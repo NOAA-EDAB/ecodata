@@ -283,14 +283,17 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
     dplyr::filter(stringr::str_detect(Var,"Benthos")) |>
     #ggplot(aes(x = Time, y = Mean)) +
     ggplot2::ggplot() +
-    #Highlight last ten years
     ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
                       xmin = setup$x.shade.min , xmax = setup$x.shade.max ,
                       ymin = -Inf, ymax = Inf) +
+
+    #Highlight last ten years
     #Test for trend and add lines
     ecodata::geom_gls(ggplot2::aes(x = Time, y = Mean,
                                    color = Var),
                       alpha = setup$trend.alpha, size = setup$trend.size) +
+    ecodata::geom_lm(ggplot2::aes(x = Time, y = Mean))+
+
     # ecodata::geom_lm(aes(x = Time, y = Mean,
     #              color = Var),
     #            alpha = trend.alpha, size = trend.size) +

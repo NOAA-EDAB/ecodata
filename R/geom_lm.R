@@ -3,11 +3,11 @@
 #'@param mapping Set of aesthetic mappings created by \code{aes()}. By default \code{inherit.aes = TRUE}, which
 #'assigns the top-level plotting \code{aes()} to the GLS geom.
 #'@param data Input series to be analyzed. If NULL, data is inherited from previous layer or \code{ggplot} call.
-#'@param stat
-#'@param position
-#'@param na.rm
-#'@param show.legend
-#'@param inherit.aes
+#'@param stat stat
+#'@param position position
+#'@param na.rm remove NAs
+#'@param show.legend show legend
+#'@param inherit.aes inherit aesthetics
 #'@param warn Conditional. If \code{TRUE}, a warning message will be returned when N < 30.
 #'@param n Numeric. Number of points to use for trend. Default = 10.
 #'@param nBootSamples Numeric. Number of bootstrap samples used to test Null hypothesis. Default = 499
