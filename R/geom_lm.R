@@ -2,9 +2,16 @@
 #'
 #'@param mapping Set of aesthetic mappings created by \code{aes()}. By default \code{inherit.aes = TRUE}, which
 #'assigns the top-level plotting \code{aes()} to the GLS geom.
-#'
 #'@param data Input series to be analyzed. If NULL, data is inherited from previous layer or \code{ggplot} call.
-#'
+#'@param stat
+#'@param position
+#'@param na.rm
+#'@param show.legend
+#'@param inherit.aes
+#'@param warn Conditional. If \code{TRUE}, a warning message will be returned when N < 30.
+#'@param n Numeric. Number of points to use for trend. Default = 10.
+#'@param nBootSamples Numeric. Number of bootstrap samples used to test Null hypothesis. Default = 499
+#'@param pValThreshold Numeric. Significance level of the test. Default = 0.05
 #'@param ... Other arguments may be passed to the stat, including fixed aesthetics.
 #'
 #'
@@ -36,7 +43,7 @@ geom_lm <- function(mapping = NULL, data = NULL, stat = "LM",
                      inherit.aes = TRUE, warn = TRUE, n= 10, nBootSamples = 499,
                      pValThreshold = 0.05, ...) {
   ggplot2::layer(
-    geom = ecodata:::GeomLM, mapping = mapping, data = data, stat = stat,
+    geom = GeomLM, mapping = mapping, data = data, stat = stat,
     position = position, show.legend = show.legend, inherit.aes = inherit.aes,
     params = list(n = n, na.rm = FALSE,nBootSamples = nBootSamples,
                   pValThreshold = pValThreshold, ...)
