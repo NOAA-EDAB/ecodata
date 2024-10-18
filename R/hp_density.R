@@ -5,11 +5,11 @@
 #' @format A data set containing 6244 rows and 5 columns.
 #'
 #' \itemize{
-#'     \item{Latitude}{Latitude}
-#'     \item{Longitude}{Longitude}
-#'     \item{Value}{Value}
-#'     \item{Bin}{??}
-#'     \item{Season}{???}
+#'  \item Latitude: Latitude
+#'  \item Longitude: Longitude
+#'  \item Value: Value
+#'  \item Bin: ??
+#'  \item Season: ???
 #'
 #' }
 #'
