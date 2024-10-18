@@ -10,6 +10,7 @@ theme_ts(...)
 A ggplot2 theme for SOE time series figures
 }
 \examples{
+library(ggplot2)
 m <- 0.1
 x <- 1:30
 y <-  m*x + rnorm(30, sd = 0.35)
