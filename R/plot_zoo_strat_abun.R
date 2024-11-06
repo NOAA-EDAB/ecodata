@@ -5,6 +5,7 @@
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param EPU Character string. Which EPU in the report ("GB", "GOM", "MAB")
+#' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
 #'
@@ -14,7 +15,8 @@
 
 plot_zoo_strat_abun <- function(shadedRegion = NULL,
                               report="MidAtlantic",
-                              EPU = "MAB") {
+                              EPU = "MAB",
+                              n = 0) {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -60,6 +62,7 @@ plot_zoo_strat_abun <- function(shadedRegion = NULL,
     ggplot2::xlab(ggplot2::element_blank())+
     ggplot2::facet_wrap(~Var)+
     ecodata::geom_gls()+
+    ecodata::geom_lm(n=n)+
     ecodata::theme_ts()+
     ecodata::theme_facet()+
     ecodata::theme_title()

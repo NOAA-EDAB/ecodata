@@ -5,6 +5,7 @@
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param EPU Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB
+#' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
 #'
@@ -14,7 +15,8 @@
 
 plot_aggregate_biomass <- function(shadedRegion = NULL,
                                    report="MidAtlantic",
-                                   EPU="MAB") {
+                                   EPU="MAB",
+                                   n = 0) {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -116,6 +118,9 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
     ecodata::geom_gls(ggplot2::aes(x = Time, y = Mean,
                                    color = Var),
                       alpha = setup$trend.alpha, size = setup$trend.size) +
+    ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Mean,
+                                       color = Var),
+                     alpha = setup$trend.alpha, size = setup$trend.size) +
     # ecodata::geom_lm(aes(x = Time, y = Mean,
     #              color = Var),
     #            alpha = trend.alpha, size = trend.size) +
@@ -172,6 +177,9 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
     ecodata::geom_gls(ggplot2::aes(x = Time, y = Mean,
                                    color = Var),
                       alpha = setup$trend.alpha, size = setup$trend.size) +
+    ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Mean,
+                                       color = Var),
+                     alpha = setup$trend.alpha, size = setup$trend.size) +
     # ecodata::geom_lm(aes(x = Time, y = Mean,
     #              color = Var),
     #            alpha = trend.alpha, size = trend.size) +
@@ -235,6 +243,9 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
     ecodata::geom_gls_gauss(ggplot2::aes(x = Time, y = Mean,
                                    color = Var),
                       alpha = setup$trend.alpha, size = setup$trend.size) +
+    ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Mean,
+                                       color = Var),
+                     alpha = setup$trend.alpha, size = setup$trend.size) +
     # ecodata::geom_lm(aes(x = Time, y = Mean,
     #              color = Var),
     #            alpha = trend.alpha, size = trend.size) +
@@ -292,6 +303,9 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
     ecodata::geom_gls(ggplot2::aes(x = Time, y = Mean,
                                    color = Var),
                       alpha = setup$trend.alpha, size = setup$trend.size) +
+    ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Mean,
+                                       color = Var),
+                     alpha = setup$trend.alpha, size = setup$trend.size) +
 
     # ecodata::geom_lm(aes(x = Time, y = Mean,
     #              color = Var),

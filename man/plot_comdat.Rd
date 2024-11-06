@@ -9,7 +9,8 @@ plot_comdat(
   report = "MidAtlantic",
   varName = "landings",
   plottype = "total",
-  NAFOyear = 2019
+  NAFOyear = 2019,
+  n = 0
 )
 }
 \arguments{
@@ -23,6 +24,8 @@ plot_comdat(
 
 \item{NAFOyear}{Numeric value. Year that NAFO landings are separated.
 Defaults to 2019, as NAFO data was missing 2019-2021 in 2022.}
+
+\item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
 \value{
 ggplot object

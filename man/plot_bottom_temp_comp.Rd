@@ -8,7 +8,8 @@ plot_bottom_temp_comp(
   shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "seasonal",
-  EPU = "MAB"
+  EPU = "MAB",
+  n = 0
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ plot_bottom_temp_comp(
 \item{varName}{Character string. Which variable ("seasonal", "annual")}
 
 \item{EPU}{Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB}
+
+\item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
 \value{
 ggplot object

@@ -7,7 +7,8 @@
 plot_zoo_abundance_anom(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  varName = "copepod"
+  varName = "copepod",
+  n = 0
 )
 }
 \arguments{
@@ -16,6 +17,8 @@ plot_zoo_abundance_anom(
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
 \item{varName}{Character string. Which variable to plot ("copepod","euphausid")}
+
+\item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
 \value{
 ggplot object

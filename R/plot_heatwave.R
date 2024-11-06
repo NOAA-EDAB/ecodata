@@ -6,6 +6,7 @@
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which Variable to plot ("Surface", "Bottom")
+#' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
 #'
@@ -15,7 +16,8 @@
 
 plot_heatwave <- function(shadedRegion = NULL,
                           report="MidAtlantic",
-                          varName="Surface") {
+                          varName="Surface",
+                          n = 0) {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -64,6 +66,7 @@ plot_heatwave <- function(shadedRegion = NULL,
     ggplot2::geom_line(ggplot2::aes(x = Time, y = Value)) +
     ggplot2::geom_point(ggplot2::aes(x = Time, y = Value)) +
     ecodata::geom_gls(ggplot2::aes(x = Time, y = Value, group = Var)) +
+    ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Value, group = Var)) +
     #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
     ggplot2::ylab("") +
     ggplot2::xlab(ggplot2::element_blank())+

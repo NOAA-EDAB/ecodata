@@ -7,7 +7,8 @@
 plot_seabird_ne(
   shadedRegion = NULL,
   report = "NewEngland",
-  varName = "diversity"
+  varName = "diversity",
+  n = 0
 )
 }
 \arguments{
@@ -16,6 +17,8 @@ plot_seabird_ne(
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
 \item{varName}{Character string. Variable to plot ("diversity","productivity","prey")}
+
+\item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
 \value{
 ggplot object

@@ -7,7 +7,8 @@
 plot_spawn_timing(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  varName = "Resting"
+  varName = "Resting",
+  n = 0
 )
 }
 \arguments{
@@ -20,6 +21,8 @@ maturity stage ("Resting", "Ripe", "Spent", "Developing"),
 number of mature females ("MF"),
 mean sampled bottom temperature ("meanTEMP"),
 or mean sampled day of year ("meanJDAY")}
+
+\item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
 \value{
 ggplot object
