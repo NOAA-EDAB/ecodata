@@ -6,6 +6,7 @@
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which variable ("seasonal", "annual")
 #' @param EPU Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB
+#' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
 #'
@@ -14,7 +15,8 @@
 plot_bottom_temp_comp <- function(shadedRegion=NULL,
                                   report="MidAtlantic",
                                   varName="seasonal",
-                                  EPU="MAB") {
+                                  EPU="MAB",
+                                  n = 0) {
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
                                report=report)
@@ -101,6 +103,7 @@ plot_bottom_temp_comp <- function(shadedRegion=NULL,
     ecodata::theme_ts() +
     ecodata::theme_facet() +
     ecodata::geom_gls() +
+    ecodata::geom_lm(n=n)+
     #ecodata::geom_lm(aes(x = Time, y = Value))+
     # ggplot2::theme(strip.text=ggplot2::element_text(hjust=0),
     #                plot.title = ggplot2::element_text(size = 12))+

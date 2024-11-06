@@ -8,6 +8,7 @@
 #' @param plottype Character string. Which plot ("total", "guild")
 #' @param NAFOyear Numeric value. Year that NAFO landings are separated.
 #' Defaults to 2019, as NAFO data was missing 2019-2021 in 2022.
+#' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
 #'
@@ -19,7 +20,8 @@ plot_comdat <- function(shadedRegion = NULL,
                         report="MidAtlantic",
                         varName="landings",
                         plottype="total",
-                        NAFOyear=2019) {
+                        NAFOyear=2019,
+                        n = 0) {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -234,6 +236,9 @@ plot_comdat <- function(shadedRegion = NULL,
       ecodata::geom_gls(ggplot2::aes(x = Time, y = Value,
                                      group = Var),
                         alpha = setup$trend.alpha, size = setup$trend.size) +
+      ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Value,
+                                        group = Var),
+                       alpha = setup$trend.alpha, size = setup$trend.size) +
       #ecodata::geom_lm(aes(x = Time, y = Value))+
       ggplot2::geom_line(ggplot2::aes(x = Time, y = Value, color = Var), linewidth = setup$lwd) +
       ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, color = Var), size = setup$pcex) +
@@ -274,6 +279,9 @@ plot_comdat <- function(shadedRegion = NULL,
       #Test for trend and add lines
       ecodata::geom_gls(ggplot2::aes(x = Time, y = Value,
                             group = Var)) +
+      ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Value,
+                                         group = Var),
+                       alpha = setup$trend.alpha, size = setup$trend.size) +
       # ecodata::geom_lm(aes(x = Time, y = Value,
       #              group = Var))+
 

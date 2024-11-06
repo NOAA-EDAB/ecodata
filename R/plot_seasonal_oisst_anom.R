@@ -4,6 +4,7 @@
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10), passed from plot function
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland"), passed from plot function
 #' @param EPU Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB
+#' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
 #'
@@ -11,7 +12,8 @@
 
 plot_seasonal_oisst_anom <- function(shadedRegion = NULL,
                                      report = "MidAtlantic",
-                                     EPU="MAB") {
+                                     EPU="MAB",
+                                     n = 0) {
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
                                report=report)
@@ -53,6 +55,7 @@ plot_seasonal_oisst_anom <- function(shadedRegion = NULL,
     ggplot2::facet_wrap(~Var, scales = "free_y")+
     ecodata::theme_facet() +
     ecodata::geom_gls() +
+    ecodata::geom_lm(n=n)+
     #ecodata::geom_lm(aes(x = Time, y = Value))+
     ggplot2::theme(strip.text=ggplot2::element_text(hjust=0),
                    plot.title = ggplot2::element_text(size = 12))+

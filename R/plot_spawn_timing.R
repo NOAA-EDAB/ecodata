@@ -9,6 +9,7 @@
 #' number of mature females ("MF"),
 #' mean sampled bottom temperature ("meanTEMP"),
 #' or mean sampled day of year ("meanJDAY")
+#' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
 #'
@@ -18,7 +19,8 @@
 
 plot_spawn_timing <- function(shadedRegion = NULL,
                               report="MidAtlantic",
-                              varName = "Resting") {
+                              varName = "Resting",
+                              n = 0) {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -62,6 +64,7 @@ plot_spawn_timing <- function(shadedRegion = NULL,
     ggplot2::geom_point() +
     ggplot2::geom_line() +
     ecodata::geom_gls() +
+    ecodata::geom_lm(n=n)+
     #ggplot2::geom_bar(stat="identity", position="fill") +
     #ggplot2::scale_fill_manual(values = mat.col) +
     ggplot2::ylab(filt$Units) +
