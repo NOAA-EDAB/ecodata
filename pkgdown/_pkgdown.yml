@@ -97,9 +97,9 @@ reference:
   - title: "LTL/Hab/Env Indicators"
     desc: "Data files containing Low Trophic Level, Habitat and Environmental indicators used in the State of the Ecosystem Reports"
     contents:
-    - bottom_temp
+    - bottom_temp_insitu
     - bottom_temp_model_anom
-    - bottom_temp_seasonal_gridded
+    - bottom_temp_model_gridded
     - bottom_temp_glorys
     - seasonal_bt_anomaly_gridded
     - calanus_stage

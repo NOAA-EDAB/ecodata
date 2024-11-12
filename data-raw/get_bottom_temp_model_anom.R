@@ -43,18 +43,18 @@ get_bottom_temp_model_anom(save_clean = T)
 
 btsg_csv <- "bt_seasonal_gridded.csv"
 
-get_bottom_temp_seasonal_gridded <- function(save_clean = F){
+get_bottom_temp_model_gridded <- function(save_clean = F){
 
-  bottom_temp_seasonal_gridded<- read.csv(file.path(raw.dir,btsg_csv)) %>%
+  bottom_temp_model_gridded<- read.csv(file.path(raw.dir,btsg_csv)) %>%
     dplyr::rename("Latitude" = "Lat",
                   "Longitude" = "Lon",
                   "Var" = "Variable")
 
   if (save_clean){
-    usethis::use_data(bottom_temp_seasonal_gridded, overwrite = T)
+    usethis::use_data(bottom_temp_model_gridded, overwrite = T)
   } else {
-    return(bottom_temp_seasonal_gridded)
+    return(bottom_temp_model_gridded)
   }
 }
-get_bottom_temp_seasonal_gridded(save_clean = T)
+get_bottom_temp_model_gridded(save_clean = T)
 
