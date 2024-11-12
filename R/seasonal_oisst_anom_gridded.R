@@ -26,4 +26,4 @@
 #'
 #' @source Source data for this indicator are available at
 #' \url{https://www.esrl.noaa.gov/psd/data/gridded/data.noaa.oisst.v2.highres.html}
-"seasonal_sst_anomaly_gridded"
+"seasonal_oisst_anom_gridded"

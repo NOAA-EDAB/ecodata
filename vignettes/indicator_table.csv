@@ -50,7 +50,7 @@ Mid-Atlantic Waterbirds,seabird_mab,2020,2020,N,N,N,Y,N,N,,https://noaa-edab.git
 New England Seabirds,seabird_ne,2019,2019,N,N,Y,Y,Y,N,,https://noaa-edab.github.io/tech-doc/ne-seabird-diet-and-productivity.html
 Gray Seal Pup Counts,seal_pups,2021,2021,N,N,N,N,Y,N,,
 Seasonal Sea Surface Temperature Anomaly,seasonal_oisst_anom,2018,2018,N,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/seasonal-sst-anomalies.html
-Seasonal Sea Surface Temperature Spatial Anomaly ,seasonal_sst_anomaly_gridded,2018,2018,N,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/seasonal-sst-anomalies.html
+Seasonal Sea Surface Temperature Spatial Anomaly ,seasonal_oisst_anom_gridded,2018,2018,N,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/seasonal-sst-anomalies.html
 Slopewater,slopewater,2019,2019,N,N,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/slopewater-proportions.html
 Species Distribution,species_dist,2017,2017,Y,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/species-distribution-indicators.html
 Species Groups,species_groupings,2018,2020 (Squid moved to piscivores),N,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/aggroups.html

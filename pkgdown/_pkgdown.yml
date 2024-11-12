@@ -123,7 +123,7 @@ reference:
     - phyto_size
     - SAV
     - seasonal_oisst_anom
-    - seasonal_sst_anomaly_gridded
+    - seasonal_oisst_anom_gridded
     - slopewater
     - wcr
     - zoo_diversity

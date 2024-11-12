@@ -1,4 +1,4 @@
-#' plot seasonal_sst_anomaly_gridded
+#' plot seasonal_oisst_anom_gridded
 #'
 #' @param season Character string. Season to plot. (Default = NULL, plot all seasons)
 #' @param region Character vector. Regional EPUs ("GB","MAB") to overly on figure. (Default = NULL, use all)
@@ -9,7 +9,7 @@
 #'
 #' @export
 
-plot_seasonal_sst_anomaly_gridded <- function(shadedRegion = NULL,
+plot_seasonal_oisst_anom_gridded <- function(shadedRegion = NULL,
                                               report = "MidAtlantic",
                                               scale = "celsius") {
 
@@ -45,7 +45,7 @@ plot_seasonal_sst_anomaly_gridded <- function(shadedRegion = NULL,
     sf::st_as_sf() |>
     dplyr::filter(EPU %in% filterEPUs)
 
-  sst <- ecodata::seasonal_sst_anomaly_gridded |>
+  sst <- ecodata::seasonal_oisst_anom_gridded |>
     dplyr::mutate(Season = factor(Season, levels = c("Winter",
                                                      "Spring",
                                                      "Summer",
@@ -111,4 +111,4 @@ plot_seasonal_sst_anomaly_gridded <- function(shadedRegion = NULL,
   return(p)
 }
 
-attr(plot_seasonal_sst_anomaly_gridded,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_seasonal_oisst_anom_gridded,"report") <- c("MidAtlantic","NewEngland")
