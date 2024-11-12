@@ -64,10 +64,10 @@ bt_map <- function(season){
         axis.title.y = element_text(angle = 90))+
   ecodata::theme_title()
 }
-bt1<- ecodata::bottom_temp_comp %>%
+bt1<- ecodata::bottom_temp_model_anom %>%
   dplyr::filter(Time >= 2021) %>% 
   dplyr::mutate(Source = c("PSY"))
-bt_ts<- ecodata::bottom_temp_comp %>% 
+bt_ts<- ecodata::bottom_temp_model_anom %>% 
   dplyr::filter(Time <= 2020) %>% 
   dplyr::mutate(Source = c("Glorys")) %>% 
   rbind(bt1) 

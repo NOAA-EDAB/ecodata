@@ -1,6 +1,6 @@
 #' plot bottom anomaly temperature time series
 #'
-#' plots bottom_temp_comp data set. Use GLORYS and PSY to supplement
+#' plots bottom_temp_model_anom data set. Use GLORYS and PSY to supplement
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
@@ -12,7 +12,7 @@
 #'
 #' @export
 
-plot_bottom_temp_comp <- function(shadedRegion=NULL,
+plot_bottom_temp_model_anom <- function(shadedRegion=NULL,
                                   report="MidAtlantic",
                                   varName="seasonal",
                                   EPU="MAB",
@@ -31,7 +31,7 @@ plot_bottom_temp_comp <- function(shadedRegion=NULL,
   }
 
 
-  fix <- ecodata::bottom_temp_comp |>
+  fix <- ecodata::bottom_temp_model_anom |>
     dplyr::filter((Source == "GLORYS" & Time >= 1993) | (Source == "ROMS") ) |>
     dplyr::filter(EPU %in% filterEPUs) |>
     dplyr::mutate(Time = as.numeric(Time),
@@ -40,7 +40,7 @@ plot_bottom_temp_comp <- function(shadedRegion=NULL,
 
   fix$Var <- factor(fix$Var, levels= c("Winter","Spring","Summer","Fall", "Annual"))
 
-  psy <- ecodata::bottom_temp_comp |>
+  psy <- ecodata::bottom_temp_model_anom |>
     dplyr::filter(Source == "PSY") |>
     dplyr::filter(EPU %in% filterEPUs) |>
     dplyr::mutate(Time = as.numeric(Time),
@@ -114,6 +114,6 @@ plot_bottom_temp_comp <- function(shadedRegion=NULL,
 }
 
 
-attr(plot_bottom_temp_comp,"EPU") <- c("MAB","GB","GOM")
-attr(plot_bottom_temp_comp,"report") <- c("MidAtlantic","NewEngland")
-attr(plot_bottom_temp_comp, "varName") <- c("seasonal", "annual")
+attr(plot_bottom_temp_model_anom,"EPU") <- c("MAB","GB","GOM")
+attr(plot_bottom_temp_model_anom,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_bottom_temp_model_anom, "varName") <- c("seasonal", "annual")

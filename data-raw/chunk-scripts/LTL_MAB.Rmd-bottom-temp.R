@@ -1,5 +1,5 @@
 
-ecodata::bottom_temp_comp %>% 
+ecodata::bottom_temp_model_anom %>% 
   dplyr::filter(EPU == epu_abbr) %>% 
   dplyr::mutate(anom = Value - mean(Value)) %>% 
   ggplot2::ggplot() +

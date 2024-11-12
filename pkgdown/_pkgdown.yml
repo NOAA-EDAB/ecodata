@@ -98,7 +98,7 @@ reference:
     desc: "Data files containing Low Trophic Level, Habitat and Environmental indicators used in the State of the Ecosystem Reports"
     contents:
     - bottom_temp
-    - bottom_temp_comp
+    - bottom_temp_model_anom
     - bottom_temp_seasonal_gridded
     - bottom_temp_glorys
     - seasonal_bt_anomaly_gridded
