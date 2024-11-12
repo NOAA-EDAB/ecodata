@@ -1,6 +1,6 @@
 #' plot bottom anomaly temperature time series using NEFSC survey data
 #'
-#' ecodata::bottom_temp
+#' ecodata::bottom_temp_insitu
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
@@ -11,7 +11,7 @@
 #'
 #' @export
 
-plot_bottom_temp <- function(shadedRegion=NULL,
+plot_bottom_temp_insitu <- function(shadedRegion=NULL,
                              report = "MidAtlantic",
                              n = 0) {
 
@@ -23,9 +23,9 @@ plot_bottom_temp <- function(shadedRegion=NULL,
     filterEPUs <- c("GB", "GOM")
   }
 
-  fix <- ecodata::bottom_temp |>
+  fix <- ecodata::bottom_temp_insitu |>
     dplyr::filter(EPU %in% filterEPUs) |>
-    tidyr::complete(Time = tidyr::full_seq(min(ecodata::bottom_temp$Time):max(ecodata::bottom_temp$Time),1),
+    tidyr::complete(Time = tidyr::full_seq(min(ecodata::bottom_temp_insitu$Time):max(ecodata::bottom_temp_insitu$Time),1),
                     tidyr::nesting(Var)) |>
     dplyr::mutate(hline = 0) |>
     dplyr::filter(Var == "bottom temp anomaly in situ",
@@ -60,4 +60,4 @@ plot_bottom_temp <- function(shadedRegion=NULL,
 }
 
 
-attr(plot_bottom_temp,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_bottom_temp_insitu,"report") <- c("MidAtlantic","NewEngland")

@@ -26,9 +26,9 @@
 #   ecodata::theme_ts()
 
 
-temp_anom <- ecodata::bottom_temp %>% 
+temp_anom <- ecodata::bottom_temp_insitu %>% 
   dplyr::filter(EPU %in% c("GB")) %>% 
-  tidyr::complete(Time = tidyr::full_seq(min(bottom_temp$Time):max(bottom_temp$Time),1),
+  tidyr::complete(Time = tidyr::full_seq(min(bottom_temp_insitu$Time):max(bottom_temp_insitu$Time),1),
            tidyr::nesting(Var)) %>% 
   dplyr::mutate(hline = 0)%>%
  dplyr::filter(Var == "bottom temp anomaly in situ")
@@ -63,9 +63,9 @@ ggplot2::ggplot() +
   ecodata::theme_title()
 
 
-temp_anom <- ecodata::bottom_temp %>% 
+temp_anom <- ecodata::bottom_temp_insitu %>% 
   dplyr::filter(EPU %in% c("GOM")) %>% 
-  tidyr::complete(Time = tidyr::full_seq(min(bottom_temp$Time):max(bottom_temp$Time),1),
+  tidyr::complete(Time = tidyr::full_seq(min(bottom_temp_insitu$Time):max(bottom_temp_insitu$Time),1),
            tidyr::nesting(Var)) %>% 
   dplyr::mutate(hline = 0)%>%
  dplyr::filter(Var == "bottom temp anomaly in situ")

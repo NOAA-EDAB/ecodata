@@ -2,7 +2,7 @@
 gl_bt<- ecodata::bottom_temp_glorys%>% 
   dplyr::filter(EPU == "GOM")
 
-bt<- ecodata::bottom_temp %>%
+bt<- ecodata::bottom_temp_insitu %>%
   dplyr::filter(EPU == "GOM",
          Var == "bottom temp anomaly in situ") %>%
   dplyr::mutate(hline = 0) 
@@ -34,7 +34,7 @@ gom_bottomtemp<- ggplot2::ggplot()+ #plot
 gb_gl_bt<- ecodata::bottom_temp_glorys%>% 
   dplyr::filter(EPU == "GB")
 
-gb_bt<- ecodata::bottom_temp %>%
+gb_bt<- ecodata::bottom_temp_insitu %>%
   dplyr::filter(EPU == "GB",
          Var == "bottom temp anomaly in situ") %>%
   dplyr::mutate(hline = 0) 

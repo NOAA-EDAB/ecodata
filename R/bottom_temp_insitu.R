@@ -16,4 +16,4 @@
 #'
 #' @details Links to source data, further data definitions, and extended methodology are available at
 #' \url{https://noaa-edab.github.io/tech-doc/bottom-temperatures.html}
-"bottom_temp"
+"bottom_temp_insitu"

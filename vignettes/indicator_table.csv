@@ -5,7 +5,7 @@ Aquaculture,aquaculture,2017,2019,Y,Y,Y,N,Y,Y,,https://noaa-edab.github.io/tech-
 Bennet Index,bennet,2018,2018,N,Y,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/bennet-indicator.html
 Blue Runner Presense on NES,blue_runner,2020,2020,N,N,N,Y,N,N,,https://noaa-edab.github.io/tech-doc/safmc-managed-spp.html
 Bottom heatwaves,bottom_heatwave,2023,2023,N,N,N,N,N,N,,
-Bottom Temperature,bottom_temp,2019,2019,N,N,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/bottom-temperatures.html
+Bottom Temperature,bottom_temp_insitu,2019,2019,N,N,Y,Y,Y,Y,,https://noaa-edab.github.io/tech-doc/bottom-temperatures.html
 Calanus Stage,calanus_stage,2020,2020,N,N,N,Y,N,N,,https://noaa-edab.github.io/tech-doc/calanus-stage.html#calanus-stage
 Chesapeake Bay Sea Surface Temperature,ches_bay_sst,2022,2022,N,N,N,N,N,Y,,https://noaa-edab.github.io/tech-doc/chesapeake-bay-seasonal-sst-anomalies.html#chesapeake-bay-seasonal-sst-anomalies
 Chesapeake Bay Temperature,ches_bey_temp,2021,2021,N,N,N,N,Y,Y,,https://noaa-edab.github.io/tech-doc/chesapeake-bay-salinity-and-temperature.html#chesapeake-bay-salinity-and-temperature
