@@ -1,6 +1,6 @@
 #' plot thermal habitat persistence
 #'
-#' plots thermal_habitat_persistence data set. Current SOE Year only
+#' plots thermal_habitat_gridded data set. Current SOE Year only
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
@@ -11,7 +11,7 @@
 
 #'
 
-plot_thermal_habitat_persistence <- function(shadedRegion = NULL,
+plot_thermal_habitat_gridded <- function(shadedRegion = NULL,
                                              report="MidAtlantic",
                                              year = NULL) {
 
@@ -28,13 +28,13 @@ plot_thermal_habitat_persistence <- function(shadedRegion = NULL,
 
   if (is.null(year)) {
     # current SOE report year
-    Yr <- max(ecodata::thermal_habitat_persistence$Time)
+    Yr <- max(ecodata::thermal_habitat_gridded$Time)
   } else {
     Yr <- year
   }
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
-  fix <- ecodata::thermal_habitat_persistence |>
+  fix <- ecodata::thermal_habitat_gridded |>
     dplyr::mutate(Var = paste0(Var,"\u00B0C")) |>
     dplyr::filter(Time == Yr)
 
@@ -63,5 +63,5 @@ plot_thermal_habitat_persistence <- function(shadedRegion = NULL,
     return(p)
 
 }
-attr(plot_thermal_habitat_persistence,"report") <- c("MidAtlantic","NewEngland")
-attr(plot_thermal_habitat_persistence,"year") <- NULL
+attr(plot_thermal_habitat_gridded,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_thermal_habitat_gridded,"year") <- NULL
