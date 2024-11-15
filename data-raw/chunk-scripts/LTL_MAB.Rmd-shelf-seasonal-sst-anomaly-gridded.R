@@ -6,7 +6,7 @@ ymin = 36
 ymax = 45
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
-sst <- ecodata::seasonal_sst_anomaly_gridded 
+sst <- ecodata::seasonal_oisst_anom_gridded 
 
 sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Spring",

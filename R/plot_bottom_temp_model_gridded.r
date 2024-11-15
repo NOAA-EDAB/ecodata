@@ -1,6 +1,6 @@
 #' plot bottom temperature seasonal gridded data
 #'
-#' plots bottom_temp_seasonal_gridded data set
+#' plots bottom_temp_model_gridded data set
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10), passed from plot function
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland"), passed from plot function
@@ -10,7 +10,7 @@
 #'
 #' @export
 
-plot_bottom_temp_seasonal_gridded <- function(shadedRegion = NULL,
+plot_bottom_temp_model_gridded <- function(shadedRegion = NULL,
                                               report = "MidAtlantic",
                                               scale = "celsius") {
 
@@ -46,7 +46,7 @@ plot_bottom_temp_seasonal_gridded <- function(shadedRegion = NULL,
     dplyr::filter(EPU %in% filterEPUs)
 
 
-  fix <- ecodata::bottom_temp_seasonal_gridded |>
+  fix <- ecodata::bottom_temp_model_gridded |>
     dplyr::filter(Time == max(Time)) |>
     dplyr::select(-Time) |>
     dplyr::mutate(Var = factor(Var, levels = c("winter","spring","summer","fall")))
@@ -109,7 +109,7 @@ plot_bottom_temp_seasonal_gridded <- function(shadedRegion = NULL,
   return(p)
 }
 
-attr(plot_bottom_temp_seasonal_gridded,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_bottom_temp_model_gridded,"report") <- c("MidAtlantic","NewEngland")
 
 
 

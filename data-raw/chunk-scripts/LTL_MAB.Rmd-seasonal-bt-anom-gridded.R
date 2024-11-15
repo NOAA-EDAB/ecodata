@@ -23,7 +23,7 @@ ymin = 36.5
 ymax = 43
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
-sst <- ecodata::seasonal_sst_anomaly_gridded 
+sst <- ecodata::seasonal_oisst_anom_gridded 
 bt<- ecodata::seasonal_bt_anomaly_gridded
 
 bt$Season <- factor(bt$Season, levels = c("Winter",
@@ -64,10 +64,10 @@ bt_map <- function(season){
         axis.title.y = element_text(angle = 90))+
   ecodata::theme_title()
 }
-bt1<- ecodata::bottom_temp_comp %>%
+bt1<- ecodata::bottom_temp_model_anom %>%
   dplyr::filter(Time >= 2021) %>% 
   dplyr::mutate(Source = c("PSY"))
-bt_ts<- ecodata::bottom_temp_comp %>% 
+bt_ts<- ecodata::bottom_temp_model_anom %>% 
   dplyr::filter(Time <= 2020) %>% 
   dplyr::mutate(Source = c("Glorys")) %>% 
   rbind(bt1) 

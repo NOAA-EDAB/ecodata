@@ -1,5 +1,5 @@
 
-hms10<- ecodata::HMS_species_distribution %>%
+hms10<- ecodata::cetacean_dist %>%
   tidyr::separate(Var, into = c("Var", "species", "season"), sep = "_") %>% 
   tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
   dplyr::filter(Time == 2010) %>% 
@@ -7,7 +7,7 @@ hms10<- ecodata::HMS_species_distribution %>%
                 "y_start" = wlat) %>% 
   dplyr::select(!Time)
 
-hms<-ecodata::HMS_species_distribution %>%
+hms<-ecodata::cetacean_dist %>%
   tidyr::separate(Var, into = c("Var", "species", "season"), sep = "_") %>% 
   tidyr::pivot_wider(names_from = Var, values_from = Value) %>% 
   dplyr::filter(Time == 2017) %>% 

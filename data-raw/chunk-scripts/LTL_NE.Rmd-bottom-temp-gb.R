@@ -2,7 +2,7 @@
 gl_bt<- ecodata::bottom_temp_glorys%>% 
   dplyr::filter(EPU == "GB")
 
-bt<- ecodata::bottom_temp %>%
+bt<- ecodata::bottom_temp_insitu %>%
   dplyr::filter(EPU == "GB",
          Var == "bottom temp anomaly in situ") %>%
   dplyr::mutate(hline = 0) 

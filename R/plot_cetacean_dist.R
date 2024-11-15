@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_HMS_species_distribution <- function(shadedRegion = NULL,
+plot_cetacean_dist <- function(shadedRegion = NULL,
                                           report="MidAtlantic") {
 
   # generate plot setup list (same for all plot functions)
@@ -27,7 +27,7 @@ plot_HMS_species_distribution <- function(shadedRegion = NULL,
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
-  hms10<- ecodata::HMS_species_distribution |>
+  hms10<- ecodata::cetacean_dist |>
     tidyr::separate(Var, into = c("Var", "species", "season"), sep = "_") |>
     tidyr::pivot_wider(names_from = Var, values_from = Value) |>
     dplyr::filter(Time == 2010) |>
@@ -35,7 +35,7 @@ plot_HMS_species_distribution <- function(shadedRegion = NULL,
                   "y_start" = wlat) |>
     dplyr::select(!Time)
 
-  hms<-ecodata::HMS_species_distribution |>
+  hms<-ecodata::cetacean_dist |>
     tidyr::separate(Var, into = c("Var", "species", "season"), sep = "_") |>
     tidyr::pivot_wider(names_from = Var, values_from = Value) |>
     dplyr::filter(Time == 2017) |>
@@ -66,7 +66,7 @@ plot_HMS_species_distribution <- function(shadedRegion = NULL,
       #ggplot2::scale_color_manual(values = c("blue", "black", "red"))+
       ggplot2::coord_sf(xlim = setup$xlims, ylim = setup$ylims) +
       ecodata::theme_map() +
-      ggplot2::ggtitle("HMS Species Distribution") +
+      ggplot2::ggtitle("Cetacean Species Distribution") +
     ggplot2::xlab("") +
     ggplot2::ylab("") +
     ggplot2::scale_x_continuous(breaks=c(-76,-72, -68) )+
@@ -93,11 +93,11 @@ plot_HMS_species_distribution <- function(shadedRegion = NULL,
 }
 
 
-attr(plot_HMS_species_distribution,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_cetacean_dist,"report") <- c("MidAtlantic","NewEngland")
 
 
   # Paste commented original plot code chunk for reference
-  # hms10<- ecodata::HMS_species_distribution |>
+  # hms10<- ecodata::cetacean_dist |>
   #   tidyr::separate(Var, into = c("Var", "species", "season"), sep = "_") |>
   #   tidyr::pivot_wider(names_from = Var, values_from = Value) |>
   #   dplyr::filter(Time == 2010) |>
@@ -105,7 +105,7 @@ attr(plot_HMS_species_distribution,"report") <- c("MidAtlantic","NewEngland")
   #                 "y_start" = wlat) |>
   #   dplyr::select(!Time)
   #
-  # hms<-ecodata::HMS_species_distribution |>
+  # hms<-ecodata::cetacean_dist |>
   #   tidyr::separate(Var, into = c("Var", "species", "season"), sep = "_") |>
   #   tidyr::pivot_wider(names_from = Var, values_from = Value) |>
   #   dplyr::filter(Time == 2017) |>

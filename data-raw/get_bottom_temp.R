@@ -19,14 +19,14 @@ bottom_temp_GB_csv<-"bot_temp_GB.csv"
 bottom_temp_MAB_csv<-"bot_temp_MAB.csv"
 bottom_temp_SS_csv<-"bot_temp_SS.csv"
 
-get_bottom_temp <- function(save_clean = F){
+get_bottom_temp_insitu <- function(save_clean = F){
 
   ss <- read.csv(file.path(raw.dir,bottom_temp_SS_csv)) %>% mutate(EPU = "SS")
   gom <- read.csv(file.path(raw.dir,bottom_temp_GOM_csv)) %>% mutate(EPU = "GOM")
   gb <- read.csv(file.path(raw.dir,bottom_temp_GB_csv)) %>% mutate(EPU = "GB")
   mab <- read.csv(file.path(raw.dir,bottom_temp_MAB_csv)) %>% mutate(EPU = "MAB")
 
-  bottom_temp <- rbind(ss, gom, gb, mab) %>% #bind all
+  bottom_temp_insitu <- rbind(ss, gom, gb, mab) %>% #bind all
     dplyr::mutate(Units = "degreesC", Time = as.Date(format(lubridate::date_decimal(Time), "%Y-%b-%d"), "%Y-%b-%d"),
            Var, Var = plyr::mapvalues(Var, from = c("Tsfc_anom",#Rename variables
                                                     "Tsfc_ref",
@@ -43,27 +43,27 @@ get_bottom_temp <- function(save_clean = F){
     dplyr::select(Time, Var, Value, EPU, Units)
 
   # metadata ----
-  attr(bottom_temp, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/bottom-temperatures.html"
-  attr(bottom_temp, "data_files")   <- list(
+  attr(bottom_temp_insitu, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/bottom-temperatures.html"
+  attr(bottom_temp_insitu, "data_files")   <- list(
     bottom_temp_SS_csv = bottom_temp_SS_csv,
     bottom_temp_GB_csv = bottom_temp_GB_csv,
     bottom_temp_GOM_csv = bottom_temp_GOM_csv,
     bottom_temp_MAB_csv = bottom_temp_MAB_csv)
-  attr(bottom_temp, "data_steward") <- c(
+  attr(bottom_temp_insitu, "data_steward") <- c(
     "Paula Fratantoni <paula.fratantoni@noaa.gov>")
-  attr(bottom_temp, "plot_script") <- list(
+  attr(bottom_temp_insitu, "plot_script") <- list(
     `ltl_MAB` = "LTL_MAB.Rmd-bottom-temp.R",
     `ltl_NE` = "LTL_NE.Rmd-bottom-temp.R",
     `ltl_NE_gb` = "LTL_NE.Rmd-bottom-temp-gb.R",
     `ltl_NE_gom` = "LTL_NE.Rmd-bottom-temp-gom.R")
 
   if (save_clean){
-    usethis::use_data(bottom_temp, overwrite = T)
+    usethis::use_data(bottom_temp_insitu, overwrite = T)
   } else {
-    return(bottom_temp)
+    return(bottom_temp_insitu)
   }
 }
-get_bottom_temp(save_clean = T)
+get_bottom_temp_insitu(save_clean = T)
 
 
 

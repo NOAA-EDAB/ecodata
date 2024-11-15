@@ -1,5 +1,5 @@
 
-bt<- ecodata::bottom_temp_comp %>%
+bt<- ecodata::bottom_temp_model_anom %>%
   dplyr::filter(EPU == "GOM") %>%
   dplyr::mutate(anom = Value - mean(Value), 
                 hline = 0) %>% 
@@ -25,7 +25,7 @@ bt<- ecodata::bottom_temp_comp %>%
   ecodata::theme_title()
 
 
-gb_bt<- ecodata::bottom_temp_comp %>%
+gb_bt<- ecodata::bottom_temp_model_anom %>%
   dplyr::filter(EPU == "GB") %>% 
   dplyr::mutate(anom = Value - mean(Value), 
                 hline = 0) %>% 

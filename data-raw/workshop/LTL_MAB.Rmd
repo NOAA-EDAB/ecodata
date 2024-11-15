@@ -127,7 +127,7 @@ ymin = 35.5
 ymax = 43
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
-sst <- ecodata::seasonal_sst_anomaly_gridded 
+sst <- ecodata::seasonal_oisst_anom_gridded 
 
 sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Spring",
@@ -318,7 +318,7 @@ ymin = 36.5
 ymax = 43
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
-sst <- ecodata::seasonal_sst_anomaly_gridded 
+sst <- ecodata::seasonal_oisst_anom_gridded 
 bt<- ecodata::seasonal_bt_anomaly_gridded
 
 bt$Season <- factor(bt$Season, levels = c("Winter",
@@ -359,10 +359,10 @@ bt_map <- function(season){
         axis.title.y = element_text(angle = 90))+
   ecodata::theme_title()
 }
-bt1<- ecodata::bottom_temp_comp %>%
+bt1<- ecodata::bottom_temp_model_anom %>%
   dplyr::filter(Time >= 2021) %>% 
   dplyr::mutate(Source = c("PSY"))
-bt_ts<- ecodata::bottom_temp_comp %>% 
+bt_ts<- ecodata::bottom_temp_model_anom %>% 
   dplyr::filter(Time <= 2020) %>% 
   dplyr::mutate(Source = c("Glorys")) %>% 
   rbind(bt1) 
@@ -441,10 +441,10 @@ ggpubr::ggarrange(winter, spring, summer, fall,
 ```
 
 ```{r bottom-temp-hi-res-ts, fig.cap=""}
-bt1<- ecodata::bottom_temp_comp %>%
+bt1<- ecodata::bottom_temp_model_anom %>%
   dplyr::filter(Time >= 2021) %>% 
   dplyr::mutate(Source = c("PSY"))
-bt_ts<- ecodata::bottom_temp_comp %>% 
+bt_ts<- ecodata::bottom_temp_model_anom %>% 
   dplyr::filter(Time <= 2020) %>% 
   dplyr::mutate(Source = c("Glorys")) %>% 
   rbind(bt1) %>% 
@@ -479,9 +479,9 @@ bt_ts %>%  dplyr::filter(EPU == "MAB",
 ```
 
 ```{r bottom-temp-insituglorys, fig.width = 6, fig.asp = .55, fig.cap="Annual bottom temperature in the Mid-Atlantic Bight. (black = Paula's, red = GLORYS)"}
-temp_anom <- ecodata::bottom_temp %>% 
+temp_anom <- ecodata::bottom_temp_insitu %>% 
   dplyr::filter(EPU == epu_abbr) %>% 
-  tidyr::complete(Time = tidyr::full_seq(min(bottom_temp$Time):max(bottom_temp$Time),1),
+  tidyr::complete(Time = tidyr::full_seq(min(bottom_temp_insitu$Time):max(bottom_temp_insitu$Time),1),
            tidyr::nesting(Var)) %>% 
   dplyr::mutate(hline = 0)%>%
  dplyr::filter(Var == "bottom temp anomaly in situ")
@@ -882,7 +882,7 @@ ymin = 37
 ymax = 40
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
-#sst <- ecodata::seasonal_sst_anomaly_gridded
+#sst <- ecodata::seasonal_oisst_anom_gridded
 crs<- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Spring",
@@ -1847,7 +1847,7 @@ ymin = 36
 ymax = 45
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
-sst <- ecodata::seasonal_sst_anomaly_gridded 
+sst <- ecodata::seasonal_oisst_anom_gridded 
 
 sst$Season <- factor(sst$Season, levels = c("Winter",
                                             "Spring",
