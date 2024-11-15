@@ -66,7 +66,7 @@ plot_cetacean_dist <- function(shadedRegion = NULL,
       #ggplot2::scale_color_manual(values = c("blue", "black", "red"))+
       ggplot2::coord_sf(xlim = setup$xlims, ylim = setup$ylims) +
       ecodata::theme_map() +
-      ggplot2::ggtitle("HMS Species Distribution") +
+      ggplot2::ggtitle("Cetacean Species Distribution") +
     ggplot2::xlab("") +
     ggplot2::ylab("") +
     ggplot2::scale_x_continuous(breaks=c(-76,-72, -68) )+
