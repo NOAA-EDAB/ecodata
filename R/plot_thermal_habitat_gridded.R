@@ -56,6 +56,7 @@ plot_thermal_habitat_gridded <- function(shadedRegion = NULL,
     ecodata::theme_ts()+
     ecodata::theme_facet()+
     ecodata::theme_title() +
+    ggplot2::ggtitle(paste(Yr)) +
     ggplot2::theme(legend.position = "bottom")
 
 
