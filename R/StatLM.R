@@ -11,12 +11,12 @@ StatLM <- ggplot2::ggproto("StatLM",
                             extra_params = c("n", "pValThreshold", "nBootSamples", "na.rm"),
                             compute_group = function(data, scales, warn, n, pValThreshold,  nBootSamples) {
 
-######################### THESE NEED TO BE PARAMETERS #####################
-                              #n <- 10
-                              #pValThreshold <- 0.05
-                              #nBootSamples <- 499
-###########################################################################
                               `%>%` <- magrittr::`%>%`
+
+                              ## Geom removes NAs from data. arfit needs full timeseries with NAs
+                              # arfit pads the time series and returns this padded data set.
+                              # the returned data set is used in plotting the fitted model
+
 
                               if(n>4) {
                                 dataUse <- data %>%
@@ -26,7 +26,7 @@ StatLM <- ggplot2::ggproto("StatLM",
                                   dplyr::mutate(x = x-min(x)+1)
 
                                 # print("########RAW##########")
-                                 #print(data)
+                                # print(data)
                                 # print((max(data$x)-(n-1)))
                                 # print(max(data$x))
                                 # print(data$x-min(data$x)+1)
@@ -53,8 +53,9 @@ StatLM <- ggplot2::ggproto("StatLM",
 
                                 # pick out model. Either null (no trend) or alternative (trend)
                                 if (linear_ar1$pValue <= pValThreshold) { # Trend detected
+                                  dataNAs <- linear_ar1$data # arfit package returns data after padding for NAs
                                   coefs <- linear_ar1$alt$betaEst
-                                  xMat <- as.matrix(cbind(rep(1,n),dataUse$x)) # design matrix
+                                  xMat <- as.matrix(cbind(rep(1,n),dataNAs$x)) # design matrix
 
                                 # } else { # no trend
                                 #   coefs <- linear_ar1$null$betaEst
