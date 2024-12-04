@@ -5,18 +5,18 @@ library(stringr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-exp_n_rdata <- "Expected_number_of_species_24.RData"
+exp_n_rdata <- "Expected_number_of_species_25.RData"
 get_exp_n <- function(save_clean = F){
 
   load(file.path(raw.dir, exp_n_rdata))
 
 
 
-  exp_n2<-ESn.epu %>% filter(str_detect(Var,  'Species - Bigelow|Species - Albatross')) %>%
+  exp_n2<-exp_n %>% filter(str_detect(Var,  'Species - Bigelow|Species - Albatross')) %>%
     tidyr::separate(Var, c("Season", "EPU", "trash1","trash2", "trash3", "trash4", "Var")) %>%
     dplyr::select(-trash1, -trash2, -trash3, -trash4)
 
-  exp_n<-ESn.epu %>% filter(str_detect(Var,  'Standard Deviation')) %>%
+  exp_n<-exp_n %>% filter(str_detect(Var,  'Standard Deviation')) %>%
     tidyr::separate(Var, c("Season", "EPU", "trash1", "trash2", "trash3","trash4",
                            "trash5", "trash6","Var")) %>%
     dplyr::mutate(Var=recode(Var,
