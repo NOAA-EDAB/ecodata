@@ -28,32 +28,8 @@ get_exp_n <- function(save_clean = F){
     dplyr::mutate(Var = paste0(Var, "-", Season)) %>%
     dplyr::select(Time, Var, Value, EPU, Units)
 
-  fill<- data.frame(Time = c(2020,2020,2020,2020,2020,2020,2020,
-                             2020,2020,2020,2020,2020,2020,2020,
-                             2020,2020,2020,2020,2020,2020,2020),
-                    Var = c("AlbatrossSD-FALL","AlbatrossSD-SPRING",
-                            "BigelowSD-FALL", "BigelowSD-SPRING",
-                            "Albatross-FALL","Albatross-SPRING",
-                            "Bigelow-FALL",
-                            "AlbatrossSD-FALL","AlbatrossSD-SPRING",
-                            "BigelowSD-FALL", "BigelowSD-SPRING",
-                            "Albatross-FALL","Albatross-SPRING",
-                            "Bigelow-FALL",
-                            "AlbatrossSD-FALL","AlbatrossSD-SPRING",
-                            "BigelowSD-FALL", "BigelowSD-SPRING",
-                            "Albatross-FALL","Albatross-SPRING",
-                            "Bigelow-FALL"),
-                    Value = c(NA,NA,NA,NA,NA,NA,NA,
-                              NA,NA,NA,NA,NA,NA,NA,
-                              NA,NA,NA,NA,NA,NA,NA),
-                    EPU = c("MAB", "MAB","MAB","MAB","MAB","MAB","MAB",
-                            "GOM","GOM","GOM","GOM","GOM","GOM","GOM",
-                            "GB","GB","GB","GB","GB","GB","GB"),
-                    Units = c(NA,NA,NA,NA,NA,NA,NA,
-                              NA,NA,NA,NA,NA,NA,NA,
-                              NA,NA,NA,NA,NA,NA,NA))
+  exp_n<- exp_n
 
-  exp_n<- exp_n %>% rbind(fill)
   # metadata ----
   attr(exp_n, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/expected-number-of-species.html"
   attr(exp_n, "data_files")   <- list(
