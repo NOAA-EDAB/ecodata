@@ -4,12 +4,12 @@ library(dplyr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-mass_inshore_survey_rdata <- "Aggregate_Mass_Survey_biomass_24.Rdata"
+mass_inshore_survey_rdata <- "Aggregate_Mass_Survey_biomass_25.Rdata"
 get_mass_survey <- function(save_clean){
 
   load(file.path(raw.dir,mass_inshore_survey_rdata))
 
-  mass_inshore_survey <- mass.survey %>%
+  mass_inshore_survey <- mass_inshore_survey %>%
     dplyr::mutate(EPU = c("GB")) %>%
     tibble::as_tibble()%>%
     dplyr::select(Time, Var, Value, EPU, Units)
