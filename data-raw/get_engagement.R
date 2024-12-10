@@ -9,18 +9,18 @@ library(janitor)
 
 raw.dir <- here::here("data-raw")
 
-engagement_xlsx<-"EJ_in_Top_Fishing_Communities_WENG_020824.xlsx"
+engagement_xlsx<-"EJ_in_Top_Fishing_Communities_final.xlsx"
 get_eng_rel <- function(save_clean = F){
 
   ## MAB
-  d1 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "Mid-Atlantic_Bubble Chart")
-  d1 <- d1[,1:4]
+  d1 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "Mid-Atlantic_Radar Graph")
+  d1 <- d1[,1:3]
 
   dta <- d1 %>%
-    dplyr::slice(-(17:21), -39) %>% # Removes the rows containing new and original names
+    dplyr::slice(-(15:28), -46) %>% # Removes the rows containing new and original names
     dplyr::rename("Eng" = "Commercial Engagement Index",
                   "Rel" = "Commercial Reliance Index") %>%
-    dplyr::mutate(Fishery = c(rep("Commercial",16),rep("Recreational",17)),
+    dplyr::mutate(Fishery = c(rep("Commercial",14),rep("Recreational",17)),
                   Region = c("MAB"))
 
 
@@ -37,13 +37,14 @@ get_eng_rel <- function(save_clean = F){
 
 
   ## NE
-  d2 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "New England_Bubble Chart")
+  d2 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "New England_Radar Graph")
+  d2 <- d2[,1:3]
 
   dta2 <- d2 %>%
-    slice( -(18:21)) %>% # Removes the rows containing new and original names
+    slice( -(18:29), -49) %>% # Removes the rows containing new and original names
     dplyr::rename("Eng" = "Commercial Engagement Index",
                   "Rel" = "Commercial Reliance Index")  %>%
-    dplyr::mutate(Fishery = c(rep("Commercial",17),rep("Recreational",18)),
+    dplyr::mutate(Fishery = c(rep("Commercial",17),rep("Recreational",19)),
                   Region = c("NE"))
 
   ### NE EJ
@@ -66,9 +67,9 @@ get_eng_rel <- function(save_clean = F){
     dplyr::rename("Community" = "Community Name",
                   "EPU" = "Region") %>%
     dplyr::mutate(Eng = as.numeric(Eng),
-                  Rel = as.numeric(Rel),
-                  `EJ Rating` = dplyr::recode(`EJ Rating`,
-                                              "All Others Communities" = "All Other Communities"))
+                  Rel = as.numeric(Rel))#,
+                  #`EJ Rating` = dplyr::recode(`EJ Rating`,
+                  #                            "All Others Communities" = "All Other Communities"))
 
 
 
@@ -79,6 +80,3 @@ get_eng_rel <- function(save_clean = F){
   }
 }
 get_eng_rel(save_clean = T)
-
-
-

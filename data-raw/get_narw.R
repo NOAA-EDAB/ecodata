@@ -9,11 +9,20 @@ library(stringr)
 library(readxl)
 
 raw.dir <- here::here("data-raw")
-narw_csv <- "NARW_N_1990-2022.csv"
+narw_csv <- "Linden_NARW_abundance_2024-10-09 - Daniel Linden - NOAA Federal.csv"
+calves_csv <- "Linden_NARW_Calves_1990-present - Daniel Linden - NOAA Federal.csv"
+
 get_narw <- function(save_clean = F){
+
+  calves <- read.csv(file.path(here::here(raw.dir,calves_csv))) %>%
+    dplyr::rename(Time = Year) %>%
+    dplyr::rename(Calves = Tot.Calves) %>%
+    tidyr::pivot_longer(-Time, names_to = "Var", values_to = "Value") %>%
+    dplyr::mutate(Units =  "n", EPU = "All")
 
   narw<- read.csv(file.path(here::here(raw.dir,narw_csv))) %>%
     dplyr::rename(Time = Year) %>%
+    dplyr::select(!"X") %>%
     tidyr::pivot_longer(-Time, names_to = "Var", values_to = "Value") %>%
     dplyr::mutate(Units =  "n",
            EPU = "All") %>%
@@ -21,6 +30,10 @@ get_narw <- function(save_clean = F){
     dplyr::mutate(Value == as.numeric(Value),
                   Time == as.numeric(Time))%>%
     dplyr::select(Time, Var, Value, EPU, Units)
+
+  narw <- rbind(narw, calves) %>%
+    dplyr::arrange(Var) %>%
+    dplyr::arrange(Time)
 
   # metadata ----
   attr(narw, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/right-whale-abundance.html"

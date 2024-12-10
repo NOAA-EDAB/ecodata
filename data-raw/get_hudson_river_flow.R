@@ -7,20 +7,20 @@ library(readr)
 
 raw.dir <- here::here("data-raw")
 
-hrf_csv<-"Gruenburg_RiverFlow2021 - Laura Gruenburg.csv"
+hrf_csv<-"RiverFlow_OCT_23_2024 - Ian Maywar.csv"
 
 get_hudson_river_flow <- function(save_clean = F){
 
   dat <- read.csv(file.path(raw.dir,hrf_csv), header=TRUE, stringsAsFactors=FALSE)
 
   hudson_river_flow <- dat %>%
-    dplyr::select(!X) %>%
+    dplyr::select(-X, -Loc, -N) %>%
     dplyr::mutate(EPU = c("MAB"),
-                  Var = c("flowrate")) %>%
-    dplyr::rename(Time = year,
-                  Value = flowrate)%>%
-    tibble::as_tibble() %>%
-    dplyr::select(Time, Var, Value, EPU)
+                  Units = c("cubic feet per second")) %>%
+    dplyr::rename(Time = Year,
+                  Value = Val,
+                  Var = Variable)%>%
+    tibble::as_tibble()
 
   # metadata ----
   attr(hudson_river_flow, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc.html"

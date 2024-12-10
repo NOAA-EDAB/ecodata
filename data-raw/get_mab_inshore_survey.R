@@ -6,11 +6,10 @@ library(stringr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-mab_inshore_survey_csv <- "NEAMAP_SOE_INDICES_2023_revised.csv"
+mab_inshore_survey_csv <- "NEAMAP_SOE_INDICES_2024.xlsx"
 get_mab_inshore_survey <- function(save_clean = F){
 
-  mab_inshore_survey <- read.csv(file.path(raw.dir,
-                                             mab_inshore_survey_csv)) %>%
+  mab_inshore_survey <- readxl::read_excel(file.path(raw.dir, mab_inshore_survey_csv)) %>%
     tidyr::unite(Var, "Category","Season", sep = " ") %>%
     dplyr::rename(Time = Year,
                   Value = Index) %>%

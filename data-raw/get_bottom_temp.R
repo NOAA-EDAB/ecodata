@@ -14,10 +14,10 @@ library(readr)
 #Get raw
 raw.dir <- here::here("data-raw") #input raw
 
-bottom_temp_GOM_csv<-"bot_temp_GOM.csv"
-bottom_temp_GB_csv<-"bot_temp_GB.csv"
-bottom_temp_MAB_csv<-"bot_temp_MAB.csv"
-bottom_temp_SS_csv<-"bot_temp_SS.csv"
+bottom_temp_GOM_csv<-"fratantoni_bot_temp_GOM - Paula Fratantoni - NOAA Federal.csv"
+bottom_temp_GB_csv<-"fratantoni_bot_temp_GB - Paula Fratantoni - NOAA Federal.csv"
+bottom_temp_MAB_csv<-"fratantoni_bot_temp_MAB - Paula Fratantoni - NOAA Federal.csv"
+bottom_temp_SS_csv<-"fratantoni_bot_temp_SS - Paula Fratantoni - NOAA Federal.csv"
 
 get_bottom_temp_insitu <- function(save_clean = F){
 

@@ -5,7 +5,7 @@ library(readr)
 
 raw.dir <- here::here("data-raw")
 
-gom_salmon_csv<-"Palka_Gulf of Maine Atlantic Salmon  - Debra Palka - NOAA Federal.xlsx"
+gom_salmon_csv<-"Gulf of Maine Atlantic Salmon 2024 Update01NOV2024  - John Kocik - NOAA Federal.xlsx"
 get_gom_salmon <- function(save_clean = F){
 
   gom_salmon<-read_excel(file.path(raw.dir,gom_salmon_csv), col_names = TRUE) %>%
@@ -16,9 +16,10 @@ get_gom_salmon <- function(save_clean = F){
     dplyr::mutate(Units = c("number of salmon"),
                   Value = as.numeric(Value))  %>%
     dplyr::arrange(Var) %>%
-    dplyr::mutate(Units = c(rep("percent return rate",51),rep("number of salmon",51))) %>%
+    dplyr::mutate(Units = c(rep("percent return rate",54),rep("number of salmon",54))) %>%
     dplyr::arrange(Year) %>%
-    dplyr::rename(Time = Year)
+    dplyr::rename(Time = Year) %>%
+    dplyr::select(!"Figure ##. Return Rate proportions and abundance of Atlantic salmon.")
 
   # metadata ---- ### OLD METADATA FROM CH_BAY_SAL... NEEDS REPLACING
   #attr(ch_bay_sal, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chesapeake-bay-salinity-and-temperature.html"

@@ -12,7 +12,7 @@ library(tidyr)
 
 #Get raw
 raw.dir <- here::here("data-raw") #input raw
-slopewater_csv <- "slopewater_proportions.csv"
+slopewater_csv <- "fratantoni_slopewater_proportions - Paula Fratantoni - NOAA Federal.csv"
 get_slopewater <- function(save_clean = F){
 
   d <- read.csv(file.path(raw.dir,slopewater_csv))

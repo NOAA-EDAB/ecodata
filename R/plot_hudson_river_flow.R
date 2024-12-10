@@ -29,7 +29,8 @@ plot_hudson_river_flow <- function(shadedRegion = NULL,
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
-   fix<- ecodata::hudson_river_flow
+   fix<- ecodata::hudson_river_flow |>
+     dplyr::filter(Var == "Hudson_meanflow")
 
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
@@ -44,7 +45,7 @@ plot_hudson_river_flow <- function(shadedRegion = NULL,
     ggplot2::geom_point()+
     ggplot2::geom_line()+
     ggplot2::ggtitle("Hudson River flow")+
-    ggplot2::ylab(expression("mean flowrate (m"^3*" s"^-1*")"))+
+    ggplot2::ylab(expression("mean flowrate (ft"^3*" s"^-1*")"))+
     ggplot2::xlab(ggplot2::element_blank())+
     ecodata::geom_gls()+
     ecodata::geom_lm(n=n)+

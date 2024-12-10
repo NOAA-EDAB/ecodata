@@ -1,6 +1,6 @@
 ## Spawn timing
 raw.dir<- here::here("data-raw/")
-sptime <- "spawn_timing.rds"
+sptime <- "spawn_timing - Sarah Gaichas - NOAA Federal.rds"
 
 get_spawn_timing <- function(save_clean = F){
 

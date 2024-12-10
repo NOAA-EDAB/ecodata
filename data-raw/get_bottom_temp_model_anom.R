@@ -5,32 +5,10 @@ library(dplyr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-bt_csv <- "bt_temp_annual.csv"
-bt_seasonal_csv<- "bt_temp_time_series_anomaly_epu.csv"
+bt_csv <- "bottom_temp_anomaly_2025 - Joseph Caracappa - NOAA Federal.csv"
 get_bottom_temp_model_anom <- function(save_clean = F){
 
-  bottom_temp_model_anom<- read.csv(file.path(raw.dir,bt_csv))  %>%
-    dplyr::rename("Time" = "year",
-                  "EPU" = "subarea",
-                  "Value" = "bt_temp",
-                  "Source" = "source") %>%
-    dplyr::mutate(Var = c("Annual_Bottom Temp"),
-                  Units = c("degree C"))
-  bottom_temp_model_anom_seasonal<- read.csv(file.path(raw.dir,bt_seasonal_csv))  %>%
-    #dplyr::select(!X) %>%
-    dplyr::mutate(season = recode(season, "1" = "Winter",
-                                  "2" = "Spring", "3" = "Summer",
-                                  "4" = "Fall")) %>%
-    dplyr::rename("Time" = "year",
-                  "EPU" = "subarea",
-                  "Value" = "anomaly",
-                  "Source" = "source") %>%
-    dplyr::mutate(Var = paste0(season,"_Bottom Temp Anomaly"),
-                  Units = c("degree C")) %>%
-    dplyr::select(Time, Value, Var, EPU, Units, Source)
-
-  bottom_temp_model_anom<- rbind(bottom_temp_model_anom, bottom_temp_model_anom_seasonal) %>%
-    tibble::as_tibble()
+  bottom_temp_model_anom<- read.csv(file.path(raw.dir,bt_csv))
 
   if (save_clean){
     usethis::use_data(bottom_temp_model_anom, overwrite = T)
@@ -41,14 +19,11 @@ get_bottom_temp_model_anom <- function(save_clean = F){
 get_bottom_temp_model_anom(save_clean = T)
 
 
-btsg_csv <- "bt_seasonal_gridded.csv"
+btsg_csv <- "bottom_temp_seasonal_gridded_2025 - Joseph Caracappa - NOAA Federal.csv"
 
 get_bottom_temp_model_gridded <- function(save_clean = F){
 
-  bottom_temp_model_gridded<- read.csv(file.path(raw.dir,btsg_csv)) %>%
-    dplyr::rename("Latitude" = "Lat",
-                  "Longitude" = "Lon",
-                  "Var" = "Variable")
+  bottom_temp_model_gridded<- read.csv(file.path(raw.dir,btsg_csv))
 
   if (save_clean){
     usethis::use_data(bottom_temp_model_gridded, overwrite = T)
@@ -57,4 +32,3 @@ get_bottom_temp_model_gridded <- function(save_clean = F){
   }
 }
 get_bottom_temp_model_gridded(save_clean = T)
-

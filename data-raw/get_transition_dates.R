@@ -2,17 +2,15 @@ library(dplyr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-transdates_csv <- "EPU_transition_dates.csv"
+transdates_csv <- "trans_dates.csv"
 
 get_transition_dates <- function(save_clean = F){
 
   trans_dates<- read.csv(file.path(raw.dir,transdates_csv)) %>%
-    tidyr::pivot_longer( cols = c("sprtrans","falltrans","sprtrans10",
-                                 "falltrans10","sprtrans20" ,"falltrans20",
-                                 "sprtrans30","falltrans30", "maxday",
-                                 "sumlen","sumlen10", "sumlen20", "sumlen30"),
+    tidyr::pivot_longer( cols = c("sprtrans","falltrans","sumlen"),
                         names_to = "Var", values_to = "Value") %>%
     dplyr::filter(!EPU == "NA") %>%
+    dplyr::rename(Time = Year) %>%
     dplyr::select(Time, Value, Var, EPU) %>%
     dplyr::mutate(Time = as.numeric(Time),
                   Value = as.numeric(Value)) %>%
