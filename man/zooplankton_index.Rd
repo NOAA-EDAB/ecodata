@@ -3,9 +3,9 @@
 \docType{data}
 \name{zooplankton_index}
 \alias{zooplankton_index}
-\title{Forage Index}
+\title{Zooplankton Index}
 \format{
-888 rows and 5 columns.
+n rows and 5 columns.
 
 \itemize{
 \item Value: Value of variable \code{Var}.
@@ -19,7 +19,7 @@
 zooplankton_index
 }
 \description{
-Data include Calanus finmarchicus biomass index from predator diet data from NEFSC bottom trawl survey.
+Data include Zooplankton (Calanus finmarchicus, Eupausiids, Smallcopesoe, Lgcopeall, Zoopvol, Smallcopeall) biomass index from predator diet data from NEFSC bottom trawl survey.
 }
 \details{
 Methods used to calculate data are available at \url{https://noaa-edab.github.io/tech-doc/zooplankton_index.html}.

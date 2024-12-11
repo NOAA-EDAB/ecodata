@@ -1,9 +1,9 @@
-#' Forage Index
+#' Zooplankton Index
 #'
-#' Data include Calanus finmarchicus biomass index from predator diet data from NEFSC bottom trawl survey.
+#' Data include Zooplankton (Calanus finmarchicus, Eupausiids, Smallcopesoe, Lgcopeall, Zoopvol, Smallcopeall) biomass index from predator diet data from NEFSC bottom trawl survey.
 #'
 #'
-#' @format 888 rows and 5 columns.
+#' @format n rows and 5 columns.
 #'
 #' \itemize{
 #'     \item Value: Value of variable \code{Var}.

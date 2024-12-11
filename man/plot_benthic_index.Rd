@@ -7,7 +7,8 @@
 plot_benthic_index(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  varName = "index",
+  varName = "Macrobenthos",
+  plottype = "index",
   n = 0
 )
 }
@@ -16,7 +17,9 @@ plot_benthic_index(
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
-\item{varName}{Character string. Benthic biomass index by region, or coastwide center of gravity ("index", "cog")}
+\item{varName}{Character string. Benthic group name ("Macrobenthos", "Megabenthos")}
+
+\item{plottype}{Character string. Benthic biomass index by region, or coastwide center of gravity ("index", "cog")}
 
 \item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }

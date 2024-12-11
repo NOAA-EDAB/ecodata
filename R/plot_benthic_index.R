@@ -4,7 +4,8 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
-#' @param varName Character string. Benthic biomass index by region, or coastwide center of gravity ("index", "cog")
+#' @param varName Character string. Benthic group name ("Macrobenthos", "Megabenthos")
+#' @param plottype Character string. Benthic biomass index by region, or coastwide center of gravity ("index", "cog")
 #' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
@@ -15,13 +16,21 @@
 
 plot_benthic_index <- function(shadedRegion = NULL,
                               report="MidAtlantic",
-                              varName = "index",
+                              varName = "Macrobenthos",
+                              plottype = "index",
                               n = 0) {
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
                                report=report)
 
-  if (varName == "index") {
+  # convert to leading capital
+  varName <- stringr::str_to_sentence(varName)
+  if (!(varName %in% c("Megabenthos","Macrobenthos"))){
+    stop("varName should be either Megabenthos or Macrobenthos")
+  }
+
+
+  if (plottype == "index") {
 
     if (report == "MidAtlantic") {
       filterEPUs <- c("MAB")
@@ -30,17 +39,17 @@ plot_benthic_index <- function(shadedRegion = NULL,
     }
 
     fix<- ecodata::benthic_index |>
-      dplyr::filter(Var %in% c("Fall Megabenthos Biomass Index Estimate",
-                               "Spring Megabenthos Biomass Index Estimate"),
+      dplyr::filter(Var %in% c(paste("Fall",varName,"Biomass Index Estimate"),
+                               paste("Spring",varName,"Megabenthos Biomass Index Estimate")),
                     EPU %in% filterEPUs) |>
       dplyr::group_by(EPU) |>
       dplyr::summarise(max = max(Value))
 
     p <- ecodata::benthic_index |>
-      dplyr::filter(Var %in% c("Fall Megabenthos Biomass Index Estimate",
-                               "Fall Megabenthos Biomass Index Estimate SE",
-                               "Spring Megabenthos Biomass Index Estimate",
-                               "Spring Megabenthos Biomass Index Estimate SE"),
+      dplyr::filter(Var %in% c(paste("Fall",varName,"Biomass Index Estimate"),
+                               paste("Fall",varName,"Biomass Index Estimate SE"),
+                               paste("Spring",varName,"Biomass Index Estimate"),
+                               paste("Spring",varName,"Biomass Index Estimate SE")),
                     EPU %in% filterEPUs) |>
       dplyr::group_by(EPU) |>
       tidyr::separate(Var, into = c("Season", "A", "B", "C", "D", "Var")) |>
@@ -63,7 +72,7 @@ plot_benthic_index <- function(shadedRegion = NULL,
       ggplot2::geom_point()+
       ggplot2::geom_line()+
       ggplot2::ggtitle("")+
-      ggplot2::ylab(expression("Relative benthic biomass"))+
+      ggplot2::ylab(paste("Relative",varName,"Biomass"))+
       ggplot2::xlab(ggplot2::element_blank())+
       ggplot2::facet_wrap(.~EPU)+
       ecodata::geom_gls()+
@@ -80,17 +89,17 @@ plot_benthic_index <- function(shadedRegion = NULL,
     }
   }
 
-  if (varName == "cog"){
+  if (plottype == "cog"){
 
     p <- ecodata::benthic_index |>
-      dplyr::filter(Var %in% c("Fall Megabenthos Eastward Center of Gravity",
-                               "Fall Megabenthos Eastward Center of Gravity SE",
-                               "Fall Megabenthos Northward Center of Gravity",
-                               "Fall Megabenthos Northward Center of Gravity SE",
-                               "Spring Megabenthos Eastward Center of Gravity",
-                               "Spring Megabenthos Eastward Center of Gravity SE",
-                               "Spring Megabenthos Northward Center of Gravity",
-                               "Spring Megabenthos Northward Center of Gravity SE")) |>
+      dplyr::filter(Var %in% c(paste("Fall",varName,"Eastward Center of Gravity"),
+                               paste("Fall",varName,"Eastward Center of Gravity SE"),
+                               paste("Fall",varName,"Northward Center of Gravity"),
+                               paste("Fall",varName,"Northward Center of Gravity SE"),
+                               paste("Spring",varName,"Eastward Center of Gravity"),
+                               paste("Spring",varName,"Eastward Center of Gravity SE"),
+                               paste("Spring",varName,"Northward Center of Gravity"),
+                               paste("Spring",varName,"Northward Center of Gravity SE"))) |>
       tidyr::separate(Var, into = c("Season", "A", "Direction", "B", "C", "D", "Var")) |>
       dplyr::mutate(Var = tidyr::replace_na(Var, "Mean")) |>
       tidyr::pivot_wider(names_from = Var, values_from = Value) |>
@@ -105,7 +114,7 @@ plot_benthic_index <- function(shadedRegion = NULL,
       ggplot2::geom_point()+
       ggplot2::geom_line()+
       ggplot2::ggtitle("")+
-      ggplot2::ylab(expression("Benthic Center of Gravity, km"))+
+      ggplot2::ylab(paste(varName," Center of Gravity, km"))+
       ggplot2::xlab(ggplot2::element_blank())+
       ggplot2::facet_wrap(~Direction, scales = "free_y")+ #Season
       ecodata::geom_gls()+
@@ -121,4 +130,5 @@ plot_benthic_index <- function(shadedRegion = NULL,
 }
 
 attr(plot_benthic_index,"report") <- c("MidAtlantic","NewEngland")
-attr(plot_benthic_index, "varName") <- c("index", "cog")
+attr(plot_benthic_index, "varName") <- c("Microbenthos", "Macrobenthos")
+attr(plot_benthic_index, "plottype") <- c("index", "cog")

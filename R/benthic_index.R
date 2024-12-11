@@ -1,6 +1,6 @@
 #' Benthic Index
 #'
-#' Data include Megabenthos biomass index from predator diet data from NEFSC bottom trawl survey.
+#' Data include Megabenthos and Macrobenthos biomass and center of gravity indices from predator diet data from NEFSC bottom trawl survey.
 #'
 #'
 #' @format n rows and 5 columns.

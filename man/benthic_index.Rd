@@ -19,7 +19,7 @@ n rows and 5 columns.
 benthic_index
 }
 \description{
-Data include Megabenthos biomass index from predator diet data from NEFSC bottom trawl survey.
+Data include Megabenthos and Macrobenthos biomass and center of gravity indices from predator diet data from NEFSC bottom trawl survey.
 }
 \details{
 Methods used to calculate data are available at \url{https://noaa-edab.github.io/tech-doc/benthic_index.html}.
