@@ -99,6 +99,7 @@ StatGLS <- ggplot2::ggproto("StatGLS",
                                                           update(linear_ar1, method = "ML"))$`p-value`[2]))
 
                               best_lm <- df_aicc %>%
+                                dplyr::filter(grepl("linear",model)) %>% #Select only linear models (removal of poly fit)
                                 dplyr::filter(aicc == min(aicc)) #Select model with lowest AICc
 
                               if (best_lm$model == "poly_norm") {
