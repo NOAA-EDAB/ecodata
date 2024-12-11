@@ -41,6 +41,7 @@ get_thermal_habitat_gridded <- function(threshold, year, depth.bins, save_clean 
 
     #Convert to raster object
     comb.data = terra::rast(data.file.name)
+    # print(mean(values(comb.data),na.rm=T))
 
     #Loop through EPU x depth bins
     for(j in 1:nrow(epu.depth.combs)){
@@ -50,9 +51,11 @@ get_thermal_habitat_gridded <- function(threshold, year, depth.bins, save_clean 
       depth.range = terra::clamp(depth.mask,lower = epu.depth.combs$depth.min[j], upper = epu.depth.combs$depth.max[j], values = F)
       depth.epu.rast = terra::crop(terra::mask(depth.range,this.epu),this.epu)
 
+      data.depth.epu = terra::mask(terra::crop(comb.data,depth.epu.rast),depth.epu.rast)
+
       # convert to dataframe
-      output.ls[[df.ind]] = as.data.frame(depth.epu.rast,xy =T) %>%
-        dplyr::rename(Value = 'GLORYS_depth_NEUS',
+      output.ls[[df.ind]] = as.data.frame(data.depth.epu,xy =T) %>%
+        dplyr::rename(Value = dplyr::starts_with('nday_'),
                       Longitude = 'x',
                       Latitude = 'y')%>%
         dplyr::mutate(Time = yt.combs$year[i],
@@ -72,6 +75,9 @@ get_thermal_habitat_gridded <- function(threshold, year, depth.bins, save_clean 
   }
 
   thermal_habitat_gridded = dplyr::bind_rows(output.ls)
+  # thermal_habitat_gridded %>%
+  #   group_by(EPU, Depth, Var)%>%
+  #   summarise(Value = mean(Value))
 
   if (save_clean){
     usethis::use_data(thermal_habitat_gridded, overwrite = T)
