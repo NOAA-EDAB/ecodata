@@ -1,0 +1,44 @@
+---
+title: "Submerged Aquatic Vegetation"
+author: "Brandon Beltz"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ecodata)
+library(ecodata24)
+library(dplyr)
+library(knitr)
+
+# Replace 'SAV' with intended dataset
+dataset<-ecodata::SAV
+dataset24<-ecodata24::SAV
+
+# Define dataset-specific arguments for plot functions
+report<-list("MidAtlantic","NewEngland")
+#variable<-list()
+#plottype<-list("Stacked", "Catch")
+#epu<-list()
+```
+
+# Dataset Metrics {.tabset}
+```{r echo=FALSE, include=TRUE}
+datastats<-data.frame(Metric=c("First Year","Final Year","Series Length","Minimum Value","Maximum Value","Mean Value","Median Value","# NAs"),
+                      Last_Year=c(min(dataset24$Time),max(dataset24$Time),max(dataset24$Time)-min(dataset24$Time),min(dataset24$Value, na.rm = T),max(dataset24$Value, na.rm = T),mean(dataset24$Value, na.rm = T),median(dataset24$Value, na.rm = T),sum(is.na(dataset24$Value))),
+                      Current_Year=c(min(dataset$Time),max(dataset$Time),max(dataset$Time)-min(dataset$Time),min(dataset$Value, na.rm = T),max(dataset$Value, na.rm = T),mean(dataset$Value, na.rm = T),median(dataset$Value, na.rm = T),sum(is.na(dataset24$Value))))
+datastats$Difference<-datastats$Current_Year-datastats$Last_Year
+
+kable(datastats, digits = 2)
+```
+
+## `r paste(report[1])`
+```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
+ecodata::plot_SAV(report = report[1], n = 10) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+
+ecodata24::plot_SAV(report = report[1]) + 
+  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+```
