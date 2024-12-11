@@ -31,6 +31,12 @@ sprzoopvol <- "springzoopvolindex - Sarah Gaichas - NOAA Federal.rds"
 falzoopvolcog <- "fallzoopvolcog - Sarah Gaichas - NOAA Federal.rds"
 sprzoopvolcog <- "springzoopvolcog - Sarah Gaichas - NOAA Federal.rds"
 
+# Define file paths for small copepods index and center of gravity
+falsmallcopeALL <- "fallsmallcopeALLindex - Sarah Gaichas - NOAA Federal.rds"
+sprsmallcopeALL <- "springsmallcopeALLindex - Sarah Gaichas - NOAA Federal.rds"
+falsmallcopecogALL <- "fallsmallcopeALLcog - Sarah Gaichas - NOAA Federal.rds"
+sprsmallcopecogALL <- "springsmallcopeALLcog - Sarah Gaichas - NOAA Federal.rds"
+
 get_zooplankton_index <- function(save_clean = F){
 
   # Load input files for Calanus finmarchicus index and center of gravity
@@ -45,29 +51,37 @@ get_zooplankton_index <- function(save_clean = F){
   falleuphcog <- readRDS(file.path(raw.dir, faleuphcog))
   springeuphcog <- readRDS(file.path(raw.dir, spreuphcog))
 
-  # Load input files for Calanus finmarchicus index and center of gravity
+  # Load input files for small copepods index and center of gravity
   fallsmallcope <- readRDS(file.path(raw.dir, falsmallcope))
   springsmallcope <- readRDS(file.path(raw.dir, sprsmallcope))
   fallsmallcopecog <- readRDS(file.path(raw.dir, falsmallcopecog))
   springsmallcopecog <- readRDS(file.path(raw.dir, sprsmallcopecog))
 
-  # Load input files for Calanus finmarchicus index and center of gravity
+  # Load input files for large copepods index and center of gravity
   falllgcope <- readRDS(file.path(raw.dir, fallgcope))
   springlgcope <- readRDS(file.path(raw.dir, sprlgcope))
   falllgcopecog <- readRDS(file.path(raw.dir, fallgcopecog))
   springlgcopecog <- readRDS(file.path(raw.dir, sprlgcopecog))
 
-  # Load input files for Calanus finmarchicus index and center of gravity
+  # Load input files for zooplankton volume index and center of gravity
   fallzoopvol <- readRDS(file.path(raw.dir, falzoopvol))
   springzoopvol <- readRDS(file.path(raw.dir, sprzoopvol))
   fallzoopvolcog <- readRDS(file.path(raw.dir, falzoopvolcog))
   springzoopvolcog <- readRDS(file.path(raw.dir, sprzoopvolcog))
 
+  # Load input files for small copepods index and center of gravity
+  fallsmallcopeALL <- readRDS(file.path(raw.dir, falsmallcopeALL))
+  springsmallcopeALL <- readRDS(file.path(raw.dir, sprsmallcopeALL))
+  fallsmallcopeALLcog <- readRDS(file.path(raw.dir, falsmallcopecogALL))
+  springsmallcopeALLcog <- readRDS(file.path(raw.dir, sprsmallcopecogALL))
+
   zooplankton_index<- rbind(fallcalfin, springcalfin, fallcalfincog, springcalfincog,
                             falleuph, springeuph, falleuphcog, springeuphcog, fallsmallcope,
                             springsmallcope, fallsmallcopecog, springsmallcopecog, falllgcope,
                             springlgcope, falllgcopecog, springlgcopecog, fallzoopvol,
-                            springzoopvol, fallzoopvolcog, springzoopvolcog)
+                            springzoopvol, fallzoopvolcog, springzoopvolcog, fallsmallcopeALL,
+                            springsmallcopeALL, fallsmallcopeALLcog, springsmallcopeALLcog) |>
+    tibble::as_tibble()
 
   if (save_clean){
     usethis::use_data(zooplankton_index, overwrite = T)
