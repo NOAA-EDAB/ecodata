@@ -5,7 +5,7 @@ library(stringr)
 raw.dir <- here::here("data-raw")
 
 # input files ----
-chl_pp_csv <- "MERGED_ANNUAL_SUM-NES_EPU_NOESTUARIES-PPD-VGPM2_CHLOR_A-CCI-STATS-V2025-SOE_FORMAT.csv"
+chl_pp_csv <- "19980101_20241231-OCCCI_GLOBCOLOUR-CHLOR_A_PPD_PSC_FMICRO_PSC_FNANO_PSC_FPICO_PSC_MICRO_PSC_NANO_PSC_PICO-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_PHYTOPLANKTON-SOE_FORMAT.csv"
 
 # transformation ----
 chl_pp <- read.csv(file.path(raw.dir, chl_pp_csv)) %>%
@@ -20,9 +20,11 @@ chl_pp <- read.csv(file.path(raw.dir, chl_pp_csv)) %>%
   #                                        ifelse(stringr::str_detect(FILENAME, "1997_2017"),
   #                                               paste(VARIABLE, "1997_2017"),
   #                                               VARIABLE))))) %>%
-  dplyr::select(PERIOD, UNITS, VARIABLE, VALUE, SUBAREA) %>%
+  dplyr::select(PERIOD, VARIABLE, VALUE, SUBAREA, UNITS) %>%
   dplyr::rename(Time = PERIOD, Units = UNITS, Var = VARIABLE,
                 EPU = SUBAREA, Value = VALUE)
+
+chl_pp <- as_tibble(chl_pp)
 
 # metadata ----
 attr(chl_pp, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chl-pp.html"
