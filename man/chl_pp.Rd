@@ -3,7 +3,7 @@
 \docType{data}
 \name{chl_pp}
 \alias{chl_pp}
-\title{Chlorophyll \emph{a} and primary production}
+\title{Chlorophyll \emph{a} and primary production and phytoplankton size class}
 \format{
 These data contain 19872 rows and 5 columns.
 
@@ -27,7 +27,7 @@ phytoplankton size class. Data from multiple sensors (OC-CCI, SeaWiFS, MODIS-Aqu
 \url{https://noaa-edab.github.io/tech-doc/chl-pp.html}) are presented.
 }
 \details{
-Methods used to calculate median and anomaly data are available at \url{https://noaa-edab.github.io/tech-doc/chl-pp.html}. Methods
+Methods used to calculate median and anomaly data are available at \url{https://noaa-edab.github.io/tech-doc/chl_pp.html}. Methods
 used to find phytoplankton size-class information are forthcoming.
 }
 \keyword{datasets}
