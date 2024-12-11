@@ -7,7 +7,7 @@ transdates_csv <- "trans_dates.csv"
 get_transition_dates <- function(save_clean = F){
 
   trans_dates<- read.csv(file.path(raw.dir,transdates_csv)) %>%
-    tidyr::pivot_longer( cols = c("sprtrans","falltrans","sumlen"),
+    tidyr::pivot_longer( cols = c("sprtrans","falltrans","sumlen","maxday"),
                         names_to = "Var", values_to = "Value") %>%
     dplyr::filter(!EPU == "NA") %>%
     dplyr::rename(Time = Year) %>%
