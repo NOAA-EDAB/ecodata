@@ -209,8 +209,12 @@ plot_chl_pp <- function(shadedRegion = NULL,
   } else {
     # plot phyto_size
     # which report? this may be bypassed for some figures
-    p <- plot_phyto_size(report = report,
-                    EPU = EPU)
+    if(plottype == "weekly") {
+      p <- plot_phyto_size(report = report,
+                           EPU = EPU)
+    } else {
+      p <- ""
+    }
   }
   return(p)
 
