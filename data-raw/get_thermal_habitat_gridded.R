@@ -85,10 +85,10 @@ get_thermal_habitat_gridded <- function(threshold, year, depth.bins, save_clean 
     return(thermal_habitat_gridded)
   }
 }
-get_thermal_habitat_gridded(threshold = c(15,18.5,24),
+a <- get_thermal_habitat_gridded(threshold = c(15,18.5,24),
                             year = 2023,
                             depth.bins = c(0,25,100,3000),
-                            save_clean = T)
+                            save_clean = F)
 
 
 
