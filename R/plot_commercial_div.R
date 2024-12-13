@@ -62,18 +62,19 @@ plot_commercial_div <- function(shadedRegion = NULL,
   #
   p <- comm_div |>
     dplyr::filter(Var == varName) |>
-    ggplot2::ggplot() +
+    ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color = Var)) +
+    # ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Value, group = Var),
+    #                  alpha = setup$trend.alpha, size = setup$trend.size)+
+    # geom_gls(aes(x = Time, y = Value,
+    #              group = Var),
+    #            alpha = trend.alpha, size = trend.size) +
+    ggplot2::geom_line(linewidth = setup$lwd) +
+    ggplot2::geom_point(size = setup$pcex) +
+    ecodata::geom_lm(n=n) +
     #Highlight last ten years
     ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
                       xmin = setup$x.shade.min , xmax = setup$x.shade.max,
                       ymin = -Inf, ymax = Inf) +
-    ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Value, group = Var),
-                     alpha = setup$trend.alpha, size = setup$trend.size)+
-    # geom_gls(aes(x = Time, y = Value,
-    #              group = Var),
-    #            alpha = trend.alpha, size = trend.size) +
-    ggplot2::geom_line(ggplot2::aes(x = Time, y = Value, color = Var), size = setup$lwd) +
-    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, color = Var), size = setup$pcex) +
     # ecodata::geom_lm(aes(x = Time, y = Value,
     #              group = Var))+
     ggplot2::ylim(ylim_fc) +
