@@ -225,8 +225,7 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
 
   ### Planktivore
   p3<-agg_bio |>
-    dplyr::filter(stringr::str_detect(Var,"Planktivore"),
-                  Time <= 2023) |>
+    dplyr::filter(stringr::str_detect(Var,"Planktivore")) |>
     dplyr::mutate(Mean = dplyr::case_when(Mean >80 ~ 90,
                                            TRUE ~ Mean)) |>
 
