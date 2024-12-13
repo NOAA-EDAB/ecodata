@@ -1,4 +1,4 @@
-## Benthic Index
+## Benthos Index
 raw.dir <- here::here("data-raw/")
 
 # Define file paths for megabenthos index and center of gravity
@@ -13,7 +13,7 @@ sprmacro <- "springmacrobenthosindex - Sarah Gaichas - NOAA Federal.rds"
 falmacrocog <- "fallmacrobenthoscog - Sarah Gaichas - NOAA Federal.rds"
 sprmacrocog <- "springmacrobenthoscog - Sarah Gaichas - NOAA Federal.rds"
 
-get_benthic_index <- function(save_clean = F){
+get_benthos_index <- function(save_clean = F){
 
   # Load input files for megabenthos index and center of gravity
   fallmega <- readRDS(file.path(raw.dir, falmega))
@@ -27,16 +27,16 @@ get_benthic_index <- function(save_clean = F){
   fallmacrocog <- readRDS(file.path(raw.dir, falmacrocog))
   springmacrocog <- readRDS(file.path(raw.dir, sprmacrocog))
 
-  benthic_index<- rbind(fallmega, springmega, fallmegacog, springmegacog, fallmacro, springmacro, fallmacrocog, springmacrocog)
+  benthos_index<- rbind(fallmega, springmega, fallmegacog, springmegacog, fallmacro, springmacro, fallmacrocog, springmacrocog)
 
 
   if (save_clean){
-    usethis::use_data(benthic_index, overwrite = T)
+    usethis::use_data(benthos_index, overwrite = T)
   } else {
-    return(benthic_index)
+    return(benthos_index)
   }
 }
-get_benthic_index(save_clean = T)
+get_benthos_index(save_clean = T)
 
 
 
