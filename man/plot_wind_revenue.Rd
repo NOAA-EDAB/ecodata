@@ -8,7 +8,8 @@ plot_wind_revenue(
   shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "landing",
-  plottype = "facets"
+  plottype = "facets",
+  n = 0
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ plot_wind_revenue(
 \item{varName}{Character string. Which Variable to plot ("landing","value")}
 
 \item{plottype}{Character string. Which plot ("facets", "nofacets")}
+
+\item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
 \value{
 ggplot object

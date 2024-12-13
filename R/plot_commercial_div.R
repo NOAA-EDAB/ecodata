@@ -7,6 +7,7 @@
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which Variable to plot ("Fleet count",
 #' "Fleet diversity in revenue", "Permit revenue species diversity")
+#' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
 #'
@@ -16,7 +17,8 @@
 
 plot_commercial_div <- function(shadedRegion = NULL,
                               report="MidAtlantic",
-                              varName="Fleet count") {
+                              varName="Fleet count",
+                              n = 0) {
 
 
 
@@ -60,16 +62,19 @@ plot_commercial_div <- function(shadedRegion = NULL,
   #
   p <- comm_div |>
     dplyr::filter(Var == varName) |>
-    ggplot2::ggplot() +
+    ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color = Var)) +
+    # ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Value, group = Var),
+    #                  alpha = setup$trend.alpha, size = setup$trend.size)+
+    # geom_gls(aes(x = Time, y = Value,
+    #              group = Var),
+    #            alpha = trend.alpha, size = trend.size) +
+    ggplot2::geom_line(linewidth = setup$lwd) +
+    ggplot2::geom_point(size = setup$pcex) +
+    ecodata::geom_lm(n=n) +
     #Highlight last ten years
     ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
                       xmin = setup$x.shade.min , xmax = setup$x.shade.max,
                       ymin = -Inf, ymax = Inf) +
-    # geom_gls(aes(x = Time, y = Value,
-    #              group = Var),
-    #            alpha = trend.alpha, size = trend.size) +
-    ggplot2::geom_line(ggplot2::aes(x = Time, y = Value, color = Var), size = setup$lwd) +
-    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, color = Var), size = setup$pcex) +
     # ecodata::geom_lm(aes(x = Time, y = Value,
     #              group = Var))+
     ggplot2::ylim(ylim_fc) +

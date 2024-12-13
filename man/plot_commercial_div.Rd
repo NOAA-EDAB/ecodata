@@ -7,7 +7,8 @@
 plot_commercial_div(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  varName = "Fleet count"
+  varName = "Fleet count",
+  n = 0
 )
 }
 \arguments{
@@ -17,6 +18,8 @@ plot_commercial_div(
 
 \item{varName}{Character string. Which Variable to plot ("Fleet count",
 "Fleet diversity in revenue", "Permit revenue species diversity")}
+
+\item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
 \value{
 ggplot object

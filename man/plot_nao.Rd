@@ -4,12 +4,14 @@
 \alias{plot_nao}
 \title{plot Northern Oscillation Index}
 \usage{
-plot_nao(shadedRegion = NULL, report = "MidAtlantic")
+plot_nao(shadedRegion = NULL, report = "MidAtlantic", n = 0)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
+
+\item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
 \value{
 ggplot object

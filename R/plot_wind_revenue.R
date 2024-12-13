@@ -6,6 +6,7 @@
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which Variable to plot ("landing","value")
 #' @param plottype Character string. Which plot ("facets", "nofacets")
+#' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
 #'
@@ -16,7 +17,8 @@
 plot_wind_revenue <- function(shadedRegion = NULL,
                               report="MidAtlantic",
                               varName = "landing",
-                              plottype = "facets") {
+                              plottype = "facets",
+                              n=0) {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -76,6 +78,7 @@ plot_wind_revenue <- function(shadedRegion = NULL,
         ggplot2::ylab(wind_label)+
         ggplot2::xlab(ggplot2::element_blank())+
         ggplot2::facet_wrap(.~Species,scales = "free_y") +
+        ecodata::geom_lm(n=n)+
         #ecodata::geom_gls()+
         ecodata::theme_ts()+
         ecodata::theme_facet()+
@@ -91,6 +94,7 @@ plot_wind_revenue <- function(shadedRegion = NULL,
        ggplot2::ggtitle(paste0(report,": Fishery Revenue in Wind Lease Areas"))+
        ggplot2::ylab(wind_label)+
        ggplot2::xlab(ggplot2::element_blank())+
+       ecodata::geom_lm(n=n)+
 
        #ecodata::geom_gls()+
        ecodata::theme_ts()+
