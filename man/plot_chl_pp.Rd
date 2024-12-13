@@ -9,8 +9,7 @@ plot_chl_pp(
   report = "MidAtlantic",
   varName = "chl",
   plottype = "weekly",
-  year = NULL,
-  EPU = "MAB"
+  year = NULL
 )
 }
 \arguments{
@@ -18,7 +17,7 @@ plot_chl_pp(
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
-\item{varName}{Character string. Which Variable to plot ("chl","pp","size")}
+\item{varName}{Character string. Which Variable to plot ("chl","pp")}
 
 \item{plottype}{Character string. Which plot ("weekly", "monthly", "anomaly")
 Weekly and monthly plots are for both variables, annual anomaly plot for PP only.}
