@@ -1,4 +1,4 @@
-#' Benthic Index
+#' Benthos Index
 #'
 #' Data include Megabenthos and Macrobenthos biomass and center of gravity indices from predator diet data from NEFSC bottom trawl survey.
 #'
@@ -13,5 +13,5 @@
 #'     \item Units: grams per stomach.
 #' }
 #'
-#' @details Methods used to calculate data are available at \url{https://noaa-edab.github.io/tech-doc/benthic_index.html}.
-"benthic_index"
+#' @details Methods used to calculate data are available at \url{https://noaa-edab.github.io/tech-doc/benthos_index.html}.
+"benthos_index"
