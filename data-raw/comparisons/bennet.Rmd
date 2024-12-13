@@ -1,5 +1,5 @@
 ---
-title: "Commercial Catch and Fleet Diversity"
+title: "Bennet"
 author: "Brandon Beltz"
 date: "`r Sys.Date()`"
 output:
@@ -13,15 +13,15 @@ library(ecodata24)
 library(dplyr)
 library(knitr)
 
-# Replace 'commercial_div' with intended dataset
-dataset<-ecodata::commercial_div
-dataset24<-ecodata24::commercial_div
+# Replace 'bennet' with intended dataset
+dataset<-ecodata::bennet
+dataset24<-ecodata24::bennet
 
 # Define dataset-specific arguments for plot functions
 report<-list("MidAtlantic","NewEngland")
-variable<-list("Fleet count", "Fleet diversity in revenue", "Permit revenue species diversity")
+variable<-list("guild", "total","total_guild")
 #plottype<-list("Stacked", "Catch")
-#epu<-list()
+epu<-list("GB","GOM")
 ```
 
 # Dataset Metrics {.tabset}
@@ -34,56 +34,83 @@ datastats$Difference<-datastats$Current_Year-datastats$Last_Year
 kable(datastats, digits = 2)
 ```
 
-## `r paste(report[1], variable[1])`
+## `r paste(report[1],variable[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_commercial_div(report = report[1], n=10, varName = variable[1]) + 
+ecodata::plot_bennet(report = report[1],varName = variable[1]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_commercial_div(report = report[1], varName = variable[1]) + 
+ecodata24::plot_bennet(report = report[1],varName = variable[1]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
-## `r paste(report[2], variable[1])`
+## `r paste(report[2],variable[1],EPU = epu[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_commercial_div(report = report[2], n=10, varName = variable[1]) + 
+ecodata::plot_bennet(report = report[2],varName = variable[1],EPU = epu[1]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_commercial_div(report = report[2], varName = variable[1]) + 
+ecodata24::plot_bennet(report = report[2],varName = variable[1],EPU = epu[1]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
-## `r paste(report[1], variable[2])`
+## `r paste(report[2],variable[1],EPU = epu[2])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_commercial_div(report = report[1], n=10, varName = variable[2]) + 
+ecodata::plot_bennet(report = report[2],varName = variable[1],EPU = epu[2]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_commercial_div(report = report[1], varName = variable[2]) + 
+ecodata24::plot_bennet(report = report[2],varName = variable[1],EPU = epu[2]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
-## `r paste(report[2], variable[2])`
+## `r paste(report[1],variable[2])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_commercial_div(report = report[2], n=10, varName = variable[2]) + 
+ecodata::plot_bennet(report = report[1],varName = variable[2]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_commercial_div(report = report[2], varName = variable[2]) + 
+ecodata24::plot_bennet(report = report[1],varName = variable[2]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
-## `r paste(report[1], variable[3])`
+## `r paste(report[2],variable[2],EPU = epu[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_commercial_div(report = report[1], n=10, varName = variable[3]) + 
+ecodata::plot_bennet(report = report[2],varName = variable[2],EPU = epu[1]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_commercial_div(report = report[1], varName = variable[3]) + 
+ecodata24::plot_bennet(report = report[2],varName = variable[2],EPU = epu[1]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
-## `r paste(report[2], variable[3])`
+## `r paste(report[2],variable[2],EPU = epu[2])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_commercial_div(report = report[2], n=10, varName = variable[3]) + 
+ecodata::plot_bennet(report = report[2],varName = variable[2],EPU = epu[2]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_commercial_div(report = report[2], varName = variable[3]) + 
+ecodata24::plot_bennet(report = report[2],varName = variable[2],EPU = epu[2]) + 
+  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+```
+
+## `r paste(report[1],variable[3])`
+```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
+ecodata::plot_bennet(report = report[1],varName = variable[3]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+
+ecodata24::plot_bennet(report = report[1],varName = variable[3]) + 
+  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+```
+
+## `r paste(report[2],variable[3],EPU = epu[1])`
+```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
+ecodata::plot_bennet(report = report[2],varName = variable[3],EPU = epu[1]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+
+ecodata24::plot_bennet(report = report[2],varName = variable[3],EPU = epu[1]) + 
+  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+```
+
+## `r paste(report[2],variable[3],EPU = epu[2])`
+```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
+ecodata::plot_bennet(report = report[2],varName = variable[3],EPU = epu[2]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+
+ecodata24::plot_bennet(report = report[2],varName = variable[3],EPU = epu[2]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```

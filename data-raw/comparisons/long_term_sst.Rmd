@@ -1,5 +1,5 @@
 ---
-title: "Slopewater"
+title: "Long Term SST (ERSST)"
 author: "Brandon Beltz"
 date: "`r Sys.Date()`"
 output:
@@ -13,13 +13,13 @@ library(ecodata24)
 library(dplyr)
 library(knitr)
 
-# Replace 'slopewater' with intended dataset
-dataset<-ecodata::slopewater
-dataset24<-ecodata24::slopewater
+# Replace 'long_term_sst' with intended dataset
+dataset<-ecodata::long_term_sst
+dataset24<-ecodata24::long_term_sst
 
 # Define dataset-specific arguments for plot functions
-report<-list("NewEngland")
-#plottype<-list()
+report<-list("MidAtlantic","NewEngland")
+#variable<-list()
 #plottype<-list("Stacked", "Catch")
 #epu<-list()
 ```
@@ -34,11 +34,11 @@ datastats$Difference<-datastats$Current_Year-datastats$Last_Year
 kable(datastats, digits = 2)
 ```
 
-## `r report[1]`
+## `r paste(report[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_slopewater(report = report[1],n=10) + 
+ecodata::plot_long_term_sst(report = report[1], n = 10) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_slopewater(report = report[1]) + 
+ecodata24::plot_long_term_sst(report = report[1]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```

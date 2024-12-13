@@ -1,5 +1,5 @@
 ---
-title: "Commercial Catch and Fleet Diversity"
+title: "Comdat"
 author: "Brandon Beltz"
 date: "`r Sys.Date()`"
 output:
@@ -13,14 +13,14 @@ library(ecodata24)
 library(dplyr)
 library(knitr)
 
-# Replace 'commercial_div' with intended dataset
-dataset<-ecodata::commercial_div
-dataset24<-ecodata24::commercial_div
+# Replace 'comdat' with intended dataset
+dataset<-ecodata::comdat
+dataset24<-ecodata24::comdat
 
 # Define dataset-specific arguments for plot functions
 report<-list("MidAtlantic","NewEngland")
-variable<-list("Fleet count", "Fleet diversity in revenue", "Permit revenue species diversity")
-#plottype<-list("Stacked", "Catch")
+variable<-list("landings","revenue")
+plottype<-list("total","guild")
 #epu<-list()
 ```
 
@@ -31,59 +31,77 @@ datastats<-data.frame(Metric=c("First Year","Final Year","Series Length","Minimu
                       Current_Year=c(min(dataset$Time),max(dataset$Time),max(dataset$Time)-min(dataset$Time),min(dataset$Value, na.rm = T),max(dataset$Value, na.rm = T),mean(dataset$Value, na.rm = T),median(dataset$Value, na.rm = T),sum(is.na(dataset24$Value))))
 datastats$Difference<-datastats$Current_Year-datastats$Last_Year
 
-kable(datastats, digits = 2)
+kable(datastats, digits = 0)
 ```
 
-## `r paste(report[1], variable[1])`
+## `r paste(report[1],variable[1],plottype[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_commercial_div(report = report[1], n=10, varName = variable[1]) + 
+ecodata::plot_comdat(report = report[1], n = 10, varName = variable[1], plottype = plottype[1]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_commercial_div(report = report[1], varName = variable[1]) + 
+ecodata24::plot_comdat(report = report[1], varName = variable[1], plottype = plottype[1]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
-## `r paste(report[2], variable[1])`
+## `r paste(report[2],variable[1],plottype[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_commercial_div(report = report[2], n=10, varName = variable[1]) + 
+ecodata::plot_comdat(report = report[2], n = 10, varName = variable[1], plottype = plottype[1]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_commercial_div(report = report[2], varName = variable[1]) + 
+ecodata24::plot_comdat(report = report[2], varName = variable[1], plottype = plottype[1]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
-## `r paste(report[1], variable[2])`
+## `r paste(report[1],variable[1],plottype[2])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_commercial_div(report = report[1], n=10, varName = variable[2]) + 
+ecodata::plot_comdat(report = report[1], n = 10, varName = variable[1], plottype = plottype[2]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_commercial_div(report = report[1], varName = variable[2]) + 
+ecodata24::plot_comdat(report = report[1], varName = variable[1], plottype = plottype[2]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
-## `r paste(report[2], variable[2])`
+## `r paste(report[2],variable[1],plottype[2])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_commercial_div(report = report[2], n=10, varName = variable[2]) + 
+ecodata::plot_comdat(report = report[2], n = 10, varName = variable[1], plottype = plottype[2]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_commercial_div(report = report[2], varName = variable[2]) + 
+ecodata24::plot_comdat(report = report[2], varName = variable[1], plottype = plottype[2]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
-## `r paste(report[1], variable[3])`
+## `r paste(report[1],variable[2],plottype[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_commercial_div(report = report[1], n=10, varName = variable[3]) + 
+ecodata::plot_comdat(report = report[1], n = 10, varName = variable[2], plottype = plottype[1]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_commercial_div(report = report[1], varName = variable[3]) + 
+ecodata24::plot_comdat(report = report[1], varName = variable[2], plottype = plottype[1]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
-## `r paste(report[2], variable[3])`
+## `r paste(report[2],variable[2],plottype[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_commercial_div(report = report[2], n=10, varName = variable[3]) + 
+ecodata::plot_comdat(report = report[2], n = 10, varName = variable[2], plottype = plottype[1]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_commercial_div(report = report[2], varName = variable[3]) + 
+ecodata24::plot_comdat(report = report[2], varName = variable[2], plottype = plottype[1]) + 
+  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+```
+
+## `r paste(report[1],variable[2],plottype[2])`
+```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
+ecodata::plot_comdat(report = report[1], n = 10, varName = variable[2], plottype = plottype[2]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+
+ecodata24::plot_comdat(report = report[1], varName = variable[2], plottype = plottype[2]) + 
+  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+```
+
+## `r paste(report[2],variable[2],plottype[2])`
+```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
+ecodata::plot_comdat(report = report[2], n = 10, varName = variable[2], plottype = plottype[2]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+
+ecodata24::plot_comdat(report = report[2], varName = variable[2], plottype = plottype[2]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```

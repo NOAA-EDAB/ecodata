@@ -1,0 +1,243 @@
+---
+title: "MOM6 Bottom Temperature"
+author: "Brandon Beltz"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ecodata)
+library(ecodata24)
+library(dplyr)
+library(knitr)
+library(ggplot2)
+```
+
+# MOM6 Bottom {.tabset}
+
+## MAB Annual BT 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+fix <- ecodata::bottom_temp_mom6 |>
+  dplyr::filter(grepl("Annual",Var)) |>
+  dplyr::filter(EPU == "MAB")
+
+p <- fix |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color=Source)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::ylab("Temperature (C)")
+
+p
+```
+
+## GB Annual BT 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+fix <- ecodata::bottom_temp_mom6 |>
+  dplyr::filter(grepl("Annual",Var)) |>
+  dplyr::filter(EPU == "GB")
+
+p <- fix |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color=Source)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::ylab("Temperature (C)")
+
+p
+```
+
+## GOM Annual BT 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+fix <- ecodata::bottom_temp_mom6 |>
+  dplyr::filter(grepl("Annual",Var)) |>
+  dplyr::filter(EPU == "GOM")
+
+p <- fix |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color=Source)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::ylab("Temperature (C)")
+
+p
+```
+
+## MAB Winter BT Anom
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+fix <- ecodata::bottom_temp_mom6 |>
+  dplyr::filter(grepl("Winter",Var)) |>
+  dplyr::filter(EPU == "MAB")
+
+p <- fix |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color=Source)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::ylab("Temperature (C)")
+
+p
+```
+
+## GB Winter BT Anom 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+fix <- ecodata::bottom_temp_mom6 |>
+  dplyr::filter(grepl("Winter",Var)) |>
+  dplyr::filter(EPU == "GB")
+
+p <- fix |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color=Source)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::ylab("Temperature (C)")
+
+p
+```
+
+## GOM Winter BT Anom 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+fix <- ecodata::bottom_temp_mom6 |>
+  dplyr::filter(grepl("Winter",Var)) |>
+  dplyr::filter(EPU == "GOM")
+
+p <- fix |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color=Source)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::ylab("Temperature (C)")
+
+p
+```
+
+## MAB Spring BT Anom
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+fix <- ecodata::bottom_temp_mom6 |>
+  dplyr::filter(grepl("Spring",Var)) |>
+  dplyr::filter(EPU == "MAB")
+
+p <- fix |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color=Source)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::ylab("Temperature (C)")
+
+p
+```
+
+## GB Spring BT Anom 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+fix <- ecodata::bottom_temp_mom6 |>
+  dplyr::filter(grepl("Spring",Var)) |>
+  dplyr::filter(EPU == "GB")
+
+p <- fix |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color=Source)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::ylab("Temperature (C)")
+
+p
+```
+
+## GOM Spring BT Anom 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+fix <- ecodata::bottom_temp_mom6 |>
+  dplyr::filter(grepl("Spring",Var)) |>
+  dplyr::filter(EPU == "GOM")
+
+p <- fix |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color=Source)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::ylab("Temperature (C)")
+
+p
+```
+
+## MAB Summer BT Anom
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+fix <- ecodata::bottom_temp_mom6 |>
+  dplyr::filter(grepl("Summer",Var)) |>
+  dplyr::filter(EPU == "MAB")
+
+p <- fix |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color=Source)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::ylab("Temperature (C)")
+
+p
+```
+
+## GB Summer BT Anom 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+fix <- ecodata::bottom_temp_mom6 |>
+  dplyr::filter(grepl("Summer",Var)) |>
+  dplyr::filter(EPU == "GB")
+
+p <- fix |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color=Source)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::ylab("Temperature (C)")
+
+p
+```
+
+## GOM Summer BT Anom 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+fix <- ecodata::bottom_temp_mom6 |>
+  dplyr::filter(grepl("Summer",Var)) |>
+  dplyr::filter(EPU == "GOM")
+
+p <- fix |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color=Source)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::ylab("Temperature (C)")
+
+p
+```
+
+## MAB Fall BT Anom
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+fix <- ecodata::bottom_temp_mom6 |>
+  dplyr::filter(grepl("Fall",Var)) |>
+  dplyr::filter(EPU == "MAB")
+
+p <- fix |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color=Source)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::ylab("Temperature (C)")
+
+p
+```
+
+## GB Fall BT Anom 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+fix <- ecodata::bottom_temp_mom6 |>
+  dplyr::filter(grepl("Fall",Var)) |>
+  dplyr::filter(EPU == "GB")
+
+p <- fix |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color=Source)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::ylab("Temperature (C)")
+
+p
+```
+
+## GOM Fall BT Anom 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+fix <- ecodata::bottom_temp_mom6 |>
+  dplyr::filter(grepl("Fall",Var)) |>
+  dplyr::filter(EPU == "GOM")
+
+p <- fix |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color=Source)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::ylab("Temperature (C)")
+
+p
+```
