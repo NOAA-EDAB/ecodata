@@ -22,6 +22,6 @@ forage_index
 Data include forage fish biomass index from predator diet data from NEFSC bottom trawl survey.
 }
 \details{
-Methods used to calculate data are available at \url{https://noaa-edab.github.io/tech-doc/forage-fish-biomass-indices.html}.
+Methods used to calculate data are available at \url{https://noaa-edab.github.io/tech-doc/forage_index.html}.
 }
 \keyword{datasets}

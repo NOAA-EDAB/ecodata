@@ -13,5 +13,5 @@
 #'     \item Units: grams per stomach.
 #' }
 #'
-#' @details Methods used to calculate data are available at \url{https://noaa-edab.github.io/tech-doc/forage-fish-biomass-indices.html}.
+#' @details Methods used to calculate data are available at \url{https://noaa-edab.github.io/tech-doc/forage_index.html}.
 "forage_index"

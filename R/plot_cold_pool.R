@@ -76,7 +76,7 @@ plot_cold_pool <- function(shadedRegion = NULL,
     ecodata::geom_gls(ggplot2::aes(x = Time, y = Value))+
     ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Value))+
     #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
-    ggplot2::ylab("Cold Pool Index (x(-1))") +
+    ggplot2::ylab(bquote("Cold Pool Index, " ~ (x^{-1}))) +
     #ggplot2::scale_y_reverse()+
     ggplot2::xlab("")+
     ecodata::theme_ts()+
