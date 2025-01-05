@@ -21,7 +21,8 @@ get_commercial_div <- function(save_clean = F){
     dplyr::rename(EPU = Region) %>%
     as.data.frame()%>%
     tibble::as_tibble() %>%
-    dplyr::select(Time, Var, Value, EPU, Units)
+    dplyr::select(Time, Var, Value, EPU, Units) %>%
+    dplyr::filter(Time >2002)
 
   commercial_div$Var <- stringr::str_replace(commercial_div$Var, "diveristy", "diversity")
 
