@@ -5,7 +5,7 @@ library(dplyr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-bt_csv <- "bottom_temp_anomaly_2025 - Joseph Caracappa - NOAA Federal.csv"
+bt_csv <- "bottom_temp_anomaly_2025_V2.csv"
 get_bottom_temp_model_anom <- function(save_clean = F){
 
   bottom_temp_model_anom<- read.csv(file.path(raw.dir,bt_csv))
