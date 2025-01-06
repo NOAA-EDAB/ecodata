@@ -46,11 +46,16 @@ plot_thermal_habitat_area_annual <- function(shadedRegion = NULL,
   fix <- fix |>
     dplyr::left_join(limits,by=c("Var","Time"))
 
+  fix.this.year = fix |>
+    dplyr::filter(Time == max(Time)) |>
+    dplyr::mutate(ReportYear = max(Time))
+
   p <- ggplot2::ggplot()+
     # ggplot2::geom_line(data=fix, ggplot2::aes(x = temp.threshold, ymin = areaMinProportion, ymax = areaMaxProportion))+
-    ggplot2::geom_line(data=fix,ggplot2::aes(x = temp.threshold, y= Value,group = Time,color = Time),alpha = 0.7,size =1)+
+    ggplot2::geom_line(data=fix,ggplot2::aes(x = temp.threshold, y= Value,group = Time,color = Time),alpha = 0.7,size =1.2)+
     ggplot2::scale_color_gradient(name = "Year",low = 'grey70',high ='blue2')+
-    ggplot2::geom_line(data=dplyr::filter(fix,Time == max(Time)),ggplot2::aes(x = temp.threshold, y= Value),color = 'black',alpha = 0.7,size =2)+
+    ggplot2::geom_line(data=dplyr::filter(fix.this.year,Time == max(Time)),ggplot2::aes(x = temp.threshold, y = Value, linetype = as.factor(ReportYear)), color = 'black',alpha = 0.7,size =2)+
+    ggplot2::scale_linetype_manual(name = 'Report Year',values = 1)+
     ggplot2::theme_bw()+
     ggplot2::xlab('Temperature Threshold (\u00B0C)')+
     ggplot2::ylab('Proportion of EPU Area above threshold') +
