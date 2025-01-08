@@ -16,6 +16,8 @@ plot_thermal_habitat_area(
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
 \item{EPU}{Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB}
+
+\item{plottype}{character string. Which type of plots should be made. "daily" for daily area proportions or "annual"}
 }
 \value{
 ggplot object
