@@ -9,7 +9,7 @@ get_thermal_habitat_area <- function(save_clean = F){
                        show_col_types = F) |>
     dplyr::relocate(Time,EPU,Depth,Var,Value,Source)
 
-  thermal_habitat_area$Depth <- factor(thermal_habitat_area$Depth, levels = c('0-25m','25-100m','100-3000m','AllDepths'))
+  thermal_habitat_area$Depth <- factor(thermal_habitat_area$Depth, levels = c('0-25m','25-100m','100-300m','AllDepths'))
 
 
   if (save_clean){
