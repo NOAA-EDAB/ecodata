@@ -8,17 +8,15 @@ library(readr)
 raw.dir <- here::here("data-raw")
 
 #### Angela Silva
-wind_port_xlsx<-"SoE_EJ_2024_Final.xlsx"
+wind_port_csv<-"wind_ej_output_2024-11-13.csv"
 
 get_wind_port <- function(save_clean = F){
   df<- data.frame(State = c(" ME", " MA", " RI", " CT", " NY", " NJ", " MD", " VA", " NC"),
                   EPU = c("NE", "NE", "NE", "NE","MAB","MAB","MAB","MAB","MAB"))
 
   # import data
-  wind_port<-readxl::read_excel(file.path(raw.dir,wind_port_xlsx)) %>%
-    tidyr::separate(Port_State, into = c("City", "State"), sep = ",") %>%
-    dplyr::rename("perc_MAX" ="MAX_%val",
-                  "perc_MIN" ="MIN_%val") %>%
+  wind_port<-read.csv(file.path(raw.dir, wind_port_csv)) %>%
+    tidyr::separate(PORT_STATE, into = c("City", "State"), sep = ",") %>%
     dplyr::mutate(City = dplyr::recode(City,"DAVISVILLE" = "NORTH KINGSTOWN"),
            City = dplyr::recode(City,"HAMPTON BAY" ="HAMPTON BAY/SHINNECOCK"),
            City = dplyr::recode(City,"SHINNECOCK" = "HAMPTON BAY/SHINNECOCK"),
@@ -26,24 +24,22 @@ get_wind_port <- function(save_clean = F){
            City = dplyr::recode(City,"LONG BEACH" = "BARNEGAT LIGHT"),
            City = dplyr::recode(City,"MENEMSHA" = "CHILMARK"),
            City = dplyr::recode(City,"BASS RIVER/YARMOUTH" = "BASS RIVER")) %>%
-    dplyr::group_by(City) %>%
-    #dplyr::mutate( WEA_MAX = sum(WEA_MAX)) %>%
-    dplyr::slice(1) %>%
-    dplyr::ungroup() %>%
     dplyr::mutate(perc_MAX = perc_MAX*100,
            perc_MIN = perc_MIN*100,
            total_rev = 100 - perc_MIN - perc_MAX) %>%
+    dplyr::rename(Gentrification = Gent, MaxVal = WEA_MAX) %>%
     dplyr::select(State, City, perc_MIN, perc_MAX, EJ, Gentrification, MaxVal) %>%
     tidyr::pivot_longer(cols = c(perc_MIN, perc_MAX, EJ, Gentrification, MaxVal),
                         names_to = "Var", values_to = "Value") %>%
     #tidyr::separate(City, into = c("City", "State"), sep = ",") %>%
-    left_join(df, by = "State")
+    left_join(df, by = "State") %>%
+    dplyr::arrange(State)
 
 
   # metadata ----
   attr(wind_port, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/wea-fishing-port-landings.html"
   attr(wind_port, "data_files")   <- list(
-    wind_port_xlsx = wind_port_xlsx)
+    wind_port_csv = wind_port_csv)
   attr(wind_port, "data_steward") <- c(
     "Angela Silva <angela.silva@noaa.gov>")
   attr(wind_port, "plot_script") <- list(
