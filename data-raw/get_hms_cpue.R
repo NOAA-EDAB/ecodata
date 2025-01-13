@@ -7,21 +7,21 @@ library(readxl)
 
 raw.dir <- here::here("data-raw")
 #HMS_SPUE_xlsx <- "HMS POP CPUE_Cudney - Jennifer Cudney - NOAA Federal.xlsx"
-HMS_SPUE_csv <- "2024 Atlantic HMS POP CPUE Data - Jennifer Cudney - NOAA Federal.csv"
+HMS_SPUE_csv <- "HMS POP CPUE Data 2024 - Jennifer Cudney - NOAA Federal.xlsx"
 HMS_sp_csv <- "HMS_species_pdf.csv"
 
 get_hms_cpue <- function(save_clean = F){
   code_csv<- read.csv(file.path(raw.dir,HMS_sp_csv))
-  hms_cpue <- read.csv(file.path(raw.dir,HMS_SPUE_csv)) %>%
-    dplyr::select(-X) %>%
-    dplyr::rename(Code = Animal_Code,
-                  Value = Count) %>%
+  hms_cpue <- readxl::read_excel(file.path(file.path(raw.dir,HMS_SPUE_csv))) %>%
+    dplyr::select(-c("HAUL_NUM", "NUM_PER_HAUL")) %>%
+    dplyr::rename(Code = ANIMAL_CODE,
+                  Value = COUNT) %>%
     dplyr::mutate(Units =  "n",
                   EPU = "All") %>%
     left_join(code_csv) %>%
     dplyr::filter(!Common == "NA") %>%
     dplyr::rename(Var = Common,
-                  Time = Year) %>%
+                  Time = YEAR) %>%
     tibble::as_tibble() %>%
     dplyr::select(Time, Var, Value, EPU)
 
