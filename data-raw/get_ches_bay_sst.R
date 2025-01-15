@@ -6,10 +6,10 @@ library(stars)
 raw.dir <- here::here("data-raw")
 
 # Chesapeake bay sst files from Ron
- ches_1_nc <-"Vogel_ChesBay_SST_Anomaly_2023_Winter - Ronald Vogel - NOAA Affiliate.nc4" #Winter
- ches_2_nc <-"Vogel_ChesBay_SST_Anomaly_2023_Spring - Ronald Vogel - NOAA Affiliate.nc4" #Spring
+ ches_1_nc <-"Vogel_ChesBay_SST_Anomaly_2024_Winter - Ronald Vogel - NOAA Affiliate.nc4" #Winter
+ ches_2_nc <-"Vogel_ChesBay_SST_Anomaly_2024_Spring - Ronald Vogel - NOAA Affiliate.nc4" #Spring
  ches_3_nc <-"Vogel_ChesBay_SST_Anomaly_2023_Summer - Ronald Vogel - NOAA Affiliate.nc4" #Summer
- ches_4_nc <-"Vogel_ChesBay_SST_Anomaly_2023_Fall - Ronald Vogel - NOAA Affiliate.nc4" #Fall
+ ches_4_nc <-"Vogel_ChesBay_SST_Anomaly_2024_Fall - Ronald Vogel - NOAA Affiliate.nc4" #Fall
 
 
 get_ches_bay_sst <- function(save_clean = F){
@@ -28,10 +28,10 @@ get_ches_bay_sst <- function(save_clean = F){
   r <- as.data.frame(r)
 
   ches_bay_sst <- r %>%
-    dplyr::rename(Winter = "sea_surface_subskin_temperature.anomaly.2023.minus.2007.2022.1",
-                  Spring = "sea_surface_subskin_temperature.anomaly.2023.minus.2007.2022.2",
-                  Summer = "sea_surface_subskin_temperature.anomaly.2023.minus.2007.2022.3",
-                  Fall = "sea_surface_subskin_temperature.anomaly.2023.minus.2007.2022.4") %>%
+    dplyr::rename(Winter = "sea_surface_subskin_temperature.anomaly.2024.minus.2007.2023.1",
+                  Spring = "sea_surface_subskin_temperature.anomaly.2024.minus.2007.2023.2",
+                  Summer = "sea_surface_subskin_temperature.anomaly.2023.minus.2007.2022",
+                  Fall = "sea_surface_subskin_temperature.anomaly.2024.minus.2007.2023.3") %>%
     tidyr::pivot_longer(!c(x, y), names_to = "Season", values_to = "Value") %>%
     dplyr::rename(Longitude = "y",
                   Latitude = "x",
