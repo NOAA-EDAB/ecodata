@@ -45,7 +45,7 @@ Suggests:
 	zoo,
 	rlang
 Remotes:
-  andybeet/arfit
+  NOAA-EDAB/arfit
 VignetteBuilder: knitr
 RoxygenNote: 7.3.1
 Depends: 
