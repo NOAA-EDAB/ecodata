@@ -45,7 +45,7 @@ plot_cold_pool <- function(shadedRegion = NULL,
   cpts <- cpdup |>
     dplyr::filter(!duplicated) |>
     dplyr::bind_rows(cpdup |>
-                       dplyr::filter(duplicated & source=="GLORYS")) |>
+                       dplyr::filter(duplicated & Source=="GLORYS")) |>
     dplyr::select(-duplicated)
 
   # code for generating plot object p
@@ -68,7 +68,7 @@ plot_cold_pool <- function(shadedRegion = NULL,
                       xmin = setup$x.shade.min , xmax = setup$x.shade.max,
                       ymin = -Inf, ymax = Inf)+
     ggplot2::geom_line(ggplot2::aes(x = Time, y = Value), size = setup$lwd) +
-    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, shape = source), size = setup$pcex) +
+    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, shape = Source), size = setup$pcex) +
     ggplot2::scale_shape_manual(values = c(16, 1))+
     ggplot2::theme(legend.position = "none")+
     # ggplot2::geom_ribbon(aes(x = Time, ymin = Lower, ymax = Upper), fill = "gray")+
@@ -100,7 +100,7 @@ plot_cold_pool <- function(shadedRegion = NULL,
                       xmin = setup$x.shade.min , xmax = setup$x.shade.max,
                       ymin = -Inf, ymax = Inf)+
     ggplot2::geom_line(ggplot2::aes(x = Time, y = Value), size = setup$lwd) +
-    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, shape = source), size = setup$pcex) +
+    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, shape = Source), size = setup$pcex) +
     ggplot2::scale_shape_manual(values = c(16, 1))+
     ggplot2::theme(legend.position = "none")+
     ggplot2::geom_hline(ggplot2::aes(yintercept = 0))+
@@ -132,7 +132,7 @@ plot_cold_pool <- function(shadedRegion = NULL,
                       xmin = setup$x.shade.min , xmax = setup$x.shade.max,
                       ymin = -Inf, ymax = Inf)+
     ggplot2::geom_line(ggplot2::aes(x = Time, y = Value), size = setup$lwd) +
-    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, shape = source), size = setup$pcex) +
+    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, shape = Source), size = setup$pcex) +
     ggplot2::scale_shape_manual(values = c(16, 1))+
     ggplot2::theme(legend.position = "none")+
     ggplot2::geom_hline(ggplot2::aes(yintercept = 0))+

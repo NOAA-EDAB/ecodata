@@ -35,27 +35,26 @@ plot_wind_revenue <- function(shadedRegion = NULL,
   # e.g., calculate mean, max or other needed values to join below
    fix <- tidyr::separate(ecodata::wind_revenue,col=Var, into = c("Species", "Var"),sep = "-sum_") |>
      dplyr::filter(Var == varName) |>
-     dplyr::mutate(Value = Value/1000000) |>
-     dplyr::mutate(Species = dplyr::recode(Species,"MONK"="MONKFISH"))
+     dplyr::mutate(Value = Value/1000000)
 
    # Code to determine units displayed on y axis
    if (varName == "landing") {
      wind_label <- "Landings (million lbs)"
    } else {
-     wind_label <- "Revenue (millions $2022)"
+     wind_label <- "Revenue (millions $2023)"
    }
 
    if (report == "MidAtlantic") {
      fix <- fix |>
        dplyr::filter(EPU %in% filterEPUs,
-                     Species %in% c("LONGFIN SQUID","MONKFISH","SUMMER FLOUNDER",
-                                    "OCEAN QUAHOG",  "SURFCLAM" )) |>
+                     Species %in% c("Longfin Squid","Monkfish","Summer Flounder",
+                                    "Ocean Quahog",  "Surfclam" )) |>
        dplyr::mutate(Species = stringr::str_to_sentence(Species))
      } else if (report == "NewEngland") {
        fix <- fix |>
          dplyr::filter(EPU %in% filterEPUs,
-                       Species %in% c("ATLANTIC HERRING","MONKFISH","ATLANTIC SEA SCALLOP",
-                                      "SILVER HAKE",  "SKATES" )) |>
+                       Species %in% c("Atlantic herring","Monkfish","Atlantic Sea Scallop",
+                                      "Silver Hake",  "Skates" )) |>
          dplyr::mutate(Species = stringr::str_to_sentence(Species))
      }
 

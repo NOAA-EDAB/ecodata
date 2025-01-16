@@ -5,15 +5,15 @@ library(readr)
 
 raw.dir <- here::here("data-raw")
 
-ch_bay_temp_csv<-"GR_WaterTemp.csv"
+ch_bay_temp_csv<-"GR_Sea_Water_Temp_Data - Charles Pellerin - NOAA Affiliate.csv"
 get_ch_bay_temp <- function(save_clean = F){
 
   ch_bay_temp<-read_csv(file.path(raw.dir,ch_bay_temp_csv), col_names = FALSE) %>%
     janitor::row_to_names(1) %>%
-    dplyr::rename("Year" = "2023 Daily Avg",
-                  "YearLTA" = "2010-2022 Avg",
-                  "minLTA" = "2010-2022 Min",
-                  "maxLTA" = "2010-2022 Max") %>%
+    dplyr::rename("Year" = "2024  Daily",
+                  "YearLTA" = "2010-2024 avg",
+                  "minLTA" = "2010-2024 min",
+                  "maxLTA" = "2010-2024 max") %>%
     tidyr::pivot_longer(c("Year", "YearLTA", "minLTA", "maxLTA"), names_to = "Var", values_to = "Value") %>%
     dplyr::mutate(Units = c("C"),
                   Value = as.numeric(Value))  %>%

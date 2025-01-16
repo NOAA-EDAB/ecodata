@@ -4,7 +4,7 @@ library(tidyverse)
 
 
 raw.dir <- here::here("data-raw")
-hms_landings_xlsx<-"HMS Landings Data_Corrected.xlsx"
+hms_landings_xlsx<-"HMS Landings Data_20242025_Final - Jennifer Cudney - NOAA Federal.xlsx"
 
 get_hms_landings <- function(save_clean = F){
 
@@ -12,8 +12,9 @@ get_hms_landings <- function(save_clean = F){
 
   hms_landings<-hms_landings %>%
     dplyr::mutate(HMS_Groups = recode(HMS_Groups, "BAYS (Bigeye, Albacore, Yellowfin, Skipjack) tunas" = "BAYS")) %>%
-    tidyr::unite(Var, HMS_Groups, Var, sep = "_")%>%
-    dplyr::rename(Time = YEAR) %>%
+    tidyr::unite(Var, HMS_Groups, VAR_wt, sep = "_") %>%
+    dplyr::mutate(EPUs = dplyr::recode(EPUs, "New England" = "NE", "Mid-Atlantic Bight" = "MAB")) %>%
+    dplyr::rename(Time = YEAR, Value = Total, EPU = EPUs, Units = Units_WT) %>%
     dplyr::mutate(Value = as.numeric(Value)) %>%
     dplyr::select(Time, Var, Value, EPU)
 

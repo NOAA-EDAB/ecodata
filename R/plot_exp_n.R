@@ -32,6 +32,12 @@ plot_exp_n <- function(shadedRegion = NULL,
 
   season <- stringr::str_to_upper(varName)
 
+  if (season == "fall"){
+    start_year = 1965
+  } else {
+    start_year = 1968
+  }
+
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
   exp<- ecodata::exp_n |>
@@ -81,7 +87,7 @@ plot_exp_n <- function(shadedRegion = NULL,
     ecodata::geom_gls() +
     ecodata::geom_lm(n=n) +
     #Axis and theme
-    ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+    ggplot2::scale_x_continuous(breaks = seq(start_year, 2015, by = 10), expand = c(0.01, 0.01)) +
     ggplot2::ylab("n species per 1000 ind") +
     ggplot2::xlab(ggplot2::element_blank())+
     ecodata::theme_facet()+
