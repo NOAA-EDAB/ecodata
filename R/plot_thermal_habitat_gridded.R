@@ -4,8 +4,8 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
-#' @param thresholds numeric vector for the temperature tresholds (0.5 degree increments from 0.5 to 30)
-#' @param depths Chatercter string. Which depth bands do you want to plot ('0-25m','25-100m','100-300m','AllDepths')
+#' @param thresholds numeric vector for the temperature thresholds (0.5 degree increments from 0.5 to 30)
+#' @param depths Character string. Which depth bands do you want to plot ('0-25m','25-100m','100-300m','AllDepths')
 #'
 #' @return ggplot object
 #'
