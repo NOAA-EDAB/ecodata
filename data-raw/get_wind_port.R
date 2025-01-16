@@ -22,7 +22,6 @@ get_wind_port <- function(save_clean = F){
            City = dplyr::recode(City,"SHINNECOCK" = "HAMPTON BAY/SHINNECOCK"),
            City = dplyr::recode(City,"BARNEGAT" = "BARNEGAT LIGHT" ),
            City = dplyr::recode(City,"LONG BEACH" = "BARNEGAT LIGHT"),
-           City = dplyr::recode(City,"MENEMSHA" = "CHILMARK"),
            City = dplyr::recode(City,"BASS RIVER/YARMOUTH" = "BASS RIVER")) %>%
     dplyr::mutate(perc_MAX = perc_MAX*100,
            perc_MIN = perc_MIN*100,
