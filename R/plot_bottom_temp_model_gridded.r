@@ -47,8 +47,7 @@ plot_bottom_temp_model_gridded <- function(shadedRegion = NULL,
 
 
   fix <- ecodata::bottom_temp_model_gridded |>
-    # dplyr::filter(Time == max(Time)) |>
-    dplyr::filter(Time == 2023) |>
+    dplyr::filter(Time == max(Time)) |>
     dplyr::select(-Time) |>
     dplyr::mutate(Var = factor(Var, levels = c("winter","spring","summer","fall")))
 
