@@ -5,7 +5,6 @@
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param EPU Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB
-#' @param plottype character string. Which type of plots should be made. "daily" for daily area proportions or "annual"
 #'
 #' @return ggplot object
 #'
