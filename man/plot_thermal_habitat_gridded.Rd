@@ -17,9 +17,9 @@ plot_thermal_habitat_gridded(
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
-\item{thresholds}{numeric vector for the temperature tresholds (0.5 degree increments from 0.5 to 30)}
+\item{thresholds}{numeric vector for the temperature thresholds (0.5 degree increments from 0.5 to 30)}
 
-\item{depths}{Chatercter string. Which depth bands do you want to plot ('0-25m','25-100m','100-300m','AllDepths')}
+\item{depths}{Character string. Which depth bands do you want to plot ('0-25m','25-100m','100-300m','AllDepths')}
 }
 \value{
 ggplot object
