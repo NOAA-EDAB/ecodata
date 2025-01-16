@@ -7,7 +7,9 @@
 plot_thermal_habitat_gridded(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  year = NULL
+  year = NULL,
+  thresholds = c(15, 24),
+  depths = "AllDepths"
 )
 }
 \arguments{
