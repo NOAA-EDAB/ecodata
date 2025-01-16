@@ -36,7 +36,8 @@ plot_bottom_temp_model_anom <- function(shadedRegion=NULL,
     dplyr::filter(EPU %in% filterEPUs) |>
     dplyr::mutate(Time = as.numeric(Time),
                   Var = stringr::str_to_title(stringr::str_extract(Var,"Winter|Spring|Summer|Fall|Annual"))) |>
-    dplyr::filter(!Var == "NA")
+    dplyr::filter(!Var == "NA") |>
+    dplyr::mutate(Source = as.factor(Source))
 
   fix$Var <- factor(fix$Var, levels= c("Winter","Spring","Summer","Fall", "Annual"))
 
@@ -78,7 +79,7 @@ plot_bottom_temp_model_anom <- function(shadedRegion=NULL,
   }
 
   p <- ggplot2::ggplot(data = fix,
-                       ggplot2::aes(x = Time, y = Value,  group = Source, color = Source)) + #color = EPU,
+                       ggplot2::aes(x = Time, y = Value,   color = Source, group = Source)) + #color = EPU,
     ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
                       xmin = setup$x.shade.min , xmax = setup$x.shade.max,
                       ymin = -Inf, ymax = Inf) +
@@ -97,7 +98,7 @@ plot_bottom_temp_model_anom <- function(shadedRegion=NULL,
     #                     alpha = hline.alpha,
     #                     linetype = hline.lty) +
     #ggplot2::facet_wrap(Var ~., ncol = 2, scales = "free_y")+
-    ggplot2::facet_wrap(~Var, scales="free_y") +
+    ggplot2::facet_wrap(Var~., scales="free_y") +
     ecodata::theme_ts() +
     ecodata::theme_facet() +
     ecodata::geom_gls() +
