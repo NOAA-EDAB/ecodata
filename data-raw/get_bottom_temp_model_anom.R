@@ -15,7 +15,7 @@ get_bottom_temp_model_anom <- function(save_clean = F){
   bottom_temp_mom6 <- read.csv(file.path(raw.dir, bottom_temp_mom6_csv)) |>
     dplyr::select(Time, Var, Value, Units, EPU, Source)
 
-  #bottom_temp_model_anom <- rbind(bottom_temp_model_anom, bottom_temp_mom6)
+  bottom_temp_model_anom <- rbind(bottom_temp_model_anom, bottom_temp_mom6)
 
   if (save_clean){
     usethis::use_data(bottom_temp_model_anom, overwrite = T)
