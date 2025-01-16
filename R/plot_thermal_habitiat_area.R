@@ -33,43 +33,35 @@ plot_thermal_habitat_area <- function(shadedRegion = NULL,
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
 
-
   fix <- ecodata::thermal_habitat_area |>
-    dplyr::filter(EPU == filterEPUs) |>
-    tidyr::pivot_wider(names_from = Source,values_from = Value) |>
-    dplyr::mutate(presentBoth = !is.na(GLORYS+PSY),
-                  PSYMask = dplyr::case_when(presentBoth == F ~ 1,
-                                             TRUE ~ NA_real_),
-                  PSY = PSY * PSYMask)  |>
-    tidyr::pivot_longer(c(GLORYS,PSY),names_to = "Source",values_to = "Value") |>
-    dplyr::select(-PSYMask,-presentBoth) |>
-    dplyr::filter(!is.na(Value)) |>
-    dplyr::mutate(Time = lubridate::yday(Time))
-
+      dplyr::filter(EPU == filterEPUs)
 
   limits <- fix |>
-    dplyr::group_by(Depth,Var,Time) |>
-    dplyr::summarise(areaMinProportion = min(Value),
-                     areaMaxProportion = max(Value),
-                     .groups = "drop")
+      dplyr::group_by(Var,Time) |>
+      dplyr::summarise(areaMinProportion = min(Value),
+                       areaMaxProportion = max(Value),
+                       .groups = "drop")
 
   fix <- fix |>
-    dplyr::left_join(limits,by=c("Depth","Var","Time")) |>
-    dplyr::filter(year == max(year))
+    dplyr::left_join(limits,by=c("Var","Time"))
 
+  fix.this.year = fix |>
+    dplyr::filter(Time == max(Time)) |>
+    dplyr::mutate(ReportYear = max(Time))
 
-  p <- fix |>
-    ggplot2::ggplot()+
-    ggplot2::geom_ribbon(data=fix, ggplot2::aes(x = Time, ymin = areaMinProportion, ymax = areaMaxProportion),fill = 'grey50')+
-    ggplot2::geom_line(data=fix,ggplot2::aes(x = Time, y= Value),color = 'black',alpha = 0.7,size =1)+
-    ggplot2::facet_grid(Var~Depth)+
+  p <- ggplot2::ggplot()+
+    # ggplot2::geom_line(data=fix, ggplot2::aes(x = temp.threshold, ymin = areaMinProportion, ymax = areaMaxProportion))+
+    ggplot2::geom_line(data=fix,ggplot2::aes(x = temp.threshold, y= Value,group = Time,color = Time),alpha = 0.7,linewidth =1.2)+
+    ggplot2::scale_color_gradient(name = "Year",low = 'grey70',high ='blue2')+
+    ggplot2::geom_line(data=dplyr::filter(fix.this.year,Time == max(Time)),ggplot2::aes(x = temp.threshold, y = Value, linetype = as.factor(ReportYear)), color = 'black',alpha = 0.7,linewidth =2)+
+    ggplot2::scale_linetype_manual(name = 'Report Year',values = 1)+
+    ggplot2::facet_wrap(~Depth)+
     ggplot2::theme_bw()+
-    ggplot2::xlab('Calendar Day')+
+    ggplot2::xlab('Temperature Threshold (\u00B0C)')+
     ggplot2::ylab('Proportion of EPU Area above threshold') +
     ggplot2::ggtitle(filterEPUs)+
     ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
 
-
-    return(p)
+  return(p)
 
 }
