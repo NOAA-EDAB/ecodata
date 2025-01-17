@@ -9,6 +9,7 @@
 #' @param plottype Character string. Which plot ("weekly", "monthly", "anomaly")
 #' Weekly and monthly plots are for both variables, annual anomaly plot for PP only.
 #' @param year Numeric value. Optional. Year for weekly plot, defaults to max year in data.
+#' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
 #'
@@ -20,7 +21,8 @@ plot_chl_pp <- function(shadedRegion = NULL,
                         report="MidAtlantic",
                         varName="chl",
                         plottype="weekly",
-                        year=NULL) {
+                        year=NULL,
+                        n= 0) {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -131,10 +133,11 @@ plot_chl_pp <- function(shadedRegion = NULL,
   #
   if(plottype == "monthly") {
     p <- out |>
-      ggplot2::ggplot() +
+      ggplot2::ggplot(ggplot2::aes(x = Year, y = Value, group = Month)) +
       #ecodata::geom_lm(aes(x = Year, y = Value, group = Month))+
-      ggplot2::geom_point(ggplot2::aes(x = Year, y = Value, group = Month)) +
-      ggplot2::geom_line(ggplot2::aes(x = Year, y = Value, group = Month)) +
+      ggplot2::geom_point() +
+      ggplot2::geom_line() +
+      ecodata::geom_lm(n=n) +
       ggplot2::scale_x_discrete(name = "", breaks = seq(min(out$Year),max(out$Year),10)) +
       ggplot2::facet_wrap(EPU~Month~., ncol = 12) +
       ggplot2::ggtitle(paste0("Monthly median ",varabbr)) +
