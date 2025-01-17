@@ -1,3 +1,87 @@
+#'A geom to fit a GLS model to a time series
+#'
+#'@param mapping Set of aesthetic mappings created by \code{aes()}. By default \code{inherit.aes = TRUE}, which
+#'assigns the top-level plotting \code{aes()} to the GLS geom.
+#'@param data Input series to be analyzed. If NULL, data is inherited from previous layer or \code{ggplot} call.
+#'@param stat stat
+#'@param position position
+#'@param na.rm remove NAs
+#'@param show.legend show legend
+#'@param inherit.aes inherit aesthetics
+#'@param warn Conditional. If \code{TRUE}, a warning message will be returned when N < 30.
+#'
+#'@param ... Other arguments may be passed to the stat, including fixed aesthetics.
+#'
+#'
+#'@export
+#'
+#'@return If slope is significantly different from 0 (p < 0.05), then a line of best fit is returned. Otherwise output
+#'is \code{NULL}.
+#'
+#'
+#'@examples
+#'library(ggplot2)
+#'
+#'#Generate series
+#'
+#'m <- 0.1
+#'x <- 1:30
+#'y <-  m*x + rnorm(30, sd = 0.35)
+#'
+#'data <- data.frame(x = x,
+#'                   y = y)
+#'
+#'#Plot series with trend
+#'ggplot(data = data) +
+#'   geom_line(aes(x = x, y = y)) +
+#'   geom_gls(aes(x = x, y = y))
+
+geom_gls <- function(mapping = NULL, data = NULL, stat = "GLS",
+                     position = "identity", na.rm = FALSE, show.legend = NA,
+                     inherit.aes = TRUE, warn = TRUE, ...) {
+  ggplot2::layer(
+    geom = GeomGLS, mapping = mapping, data = data, stat = stat,
+    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+    params = list(na.rm = na.rm, warn = warn, ...)
+  )
+}
+
+
+# defines line appearance
+GeomGLS <- ggplot2::ggproto("GeomGLS",
+                            ggplot2::Geom,
+                            required_aes = c("x", "y"),
+
+                            default_aes = ggplot2::aes(size = 2, color = NA,fill = NA,
+                                                       linetype = 1, alpha = 0.5),
+
+                            draw_key = ggplot2::draw_key_path,
+
+                            draw_group = function(data, panel_params, coord) {
+
+                              coords <- coord$transform(data, panel_params)
+                              first_row <- coords[1, , drop = FALSE]
+
+                              #Select default color based on positive/negative trend
+                              if (coords$y[1] < coords$y[which.max(coords$x)]){
+                                first_row$color <- "orange"
+                              } else {
+                                first_row$color <- "purple"
+                              }
+
+                              grid::linesGrob(
+                                coords$x, coords$y,
+                                gp = grid::gpar(
+                                  col = first_row$color,
+                                  alpha = first_row$alpha,
+                                  lwd = first_row$size * ggplot2::.pt,
+                                  lty = first_row$linetype
+                                )
+                              )
+                            }
+)
+
+# where all the computation takes place
 StatGLS <- ggplot2::ggproto("StatGLS",
                             ggplot2::Stat,
                             required_aes = c("x", "y"),
