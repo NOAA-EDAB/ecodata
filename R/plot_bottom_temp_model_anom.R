@@ -32,34 +32,36 @@ plot_bottom_temp_model_anom <- function(shadedRegion=NULL,
 
 
   fix <- ecodata::bottom_temp_model_anom |>
-    dplyr::filter((Source == "GLORYS" & Time >= 1993) | (Source == "ROMS") ) |>
+    dplyr::filter((Source == "GLORYS" & Time >= 1993) | (Source == "ROMS") | (Source == 'MOM6') ) |>
     dplyr::filter(EPU %in% filterEPUs) |>
     dplyr::mutate(Time = as.numeric(Time),
                   Var = stringr::str_to_title(stringr::str_extract(Var,"Winter|Spring|Summer|Fall|Annual"))) |>
-    dplyr::filter(!Var == "NA")
+    dplyr::filter(!Var == "NA") |>
+    dplyr::mutate(Source = as.factor(Source))%>%
+    dplyr::arrange(Source,Time,EPU,Var)
 
   fix$Var <- factor(fix$Var, levels= c("Winter","Spring","Summer","Fall", "Annual"))
 
-  psy <- ecodata::bottom_temp_model_anom |>
-    dplyr::filter(Source == "PSY") |>
-    dplyr::filter(EPU %in% filterEPUs) |>
-    dplyr::mutate(Time = as.numeric(Time),
-                  Var = stringr::str_to_title(stringr::str_extract(Var,"Winter|Spring|Summer|Fall|Annual"))) |>
-    dplyr::filter(!Var == "NA")
-
-  psy$Var <- factor(psy$Var, levels= c("Winter","Spring","Summer","Fall", "Annual"))
-
-  #find last year of GLORYS then add PSY if needed
-  for (avar in unique(psy$Var)) {
-    maxYearGlorys <- fix |>
-      dplyr::filter(Var == avar) |>
-      dplyr::pull(Time) |>
-      max()
-    addpsy <- psy |>
-      dplyr::filter(Var == avar,Time>maxYearGlorys)
-
-    fix <- rbind(fix,addpsy)
-  }
+  # psy <- ecodata::bottom_temp_model_anom |>
+  #   dplyr::filter(Source == "PSY") |>
+  #   dplyr::filter(EPU %in% filterEPUs) |>
+  #   dplyr::mutate(Time = as.numeric(Time),
+  #                 Var = stringr::str_to_title(stringr::str_extract(Var,"Winter|Spring|Summer|Fall|Annual"))) |>
+  #   dplyr::filter(!Var == "NA")
+  #
+  # psy$Var <- factor(psy$Var, levels= c("Winter","Spring","Summer","Fall", "Annual"))
+  #
+  # #find last year of GLORYS then add PSY if needed
+  # for (avar in unique(psy$Var)) {
+  #   maxYearGlorys <- fix |>
+  #     dplyr::filter(Var == avar) |>
+  #     dplyr::pull(Time) |>
+  #     max()
+  #   addpsy <- psy |>
+  #     dplyr::filter(Var == avar,Time>maxYearGlorys)
+  #
+  #   fix <- rbind(fix,addpsy)
+  # }
 
 
     # ne_anom <- ne_anom |>
@@ -67,44 +69,34 @@ plot_bottom_temp_model_anom <- function(shadedRegion=NULL,
 
   if(varName == "seasonal"){
     fix <- fix |>
-      dplyr::filter(!Var == "Annual")
+      dplyr::filter(Var != "Annual")
 
     ylabvar <-expression("Bottom Temperature Anomaly (C)")
-  }
-
-  if(varName == "annual"){
+  } else if(varName == "annual"){
     fix <- fix |>
       dplyr::filter(Var == "Annual")
 
     ylabvar <-expression("Bottom Temperature (C)")
   }
 
-  p <- ggplot2::ggplot(data = fix,
-                       ggplot2::aes(x = Time, y = Value,  group = EPU)) + #color = EPU,
+  p <-  fix |>
+    ggplot2::ggplot(ggplot2::aes(x = Time, y = Value,   color = Source)) + #color = EPU,
     ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
                       xmin = setup$x.shade.min , xmax = setup$x.shade.max,
                       ymin = -Inf, ymax = Inf) +
     ggplot2::geom_line()+
-    ggplot2::geom_point(ggplot2::aes(shape = Source))+
-    ggplot2::scale_shape_manual(values = c(16,1,15)) +
-    #ggplot2::ylim(-2,3)+
+    ggplot2::geom_point()+
     ggplot2::ylab(ylabvar) +
     ggplot2::xlab(ggplot2::element_blank())+
     {if(varName == "seasonal")ggplot2::geom_hline(yintercept=0,linetype=setup$hline.lty)}+
     ggplot2::ggtitle(paste0(EPU,": Bottom Temperature")) +
-    ggplot2::scale_color_manual(values = c("black","indianred"))+
-  #  ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
-    # ggplot2::geom_hline(aes(yintercept = hline),
-    #                     size = hline.size,
-    #                     alpha = hline.alpha,
-    #                     linetype = hline.lty) +
-    #ggplot2::facet_wrap(Var ~., ncol = 2, scales = "free_y")+
-    ggplot2::facet_wrap(~Var, scales="free_y") +
+    ggplot2::scale_color_manual(values = c("black","indianred",'steelblue4'))+
+    ggplot2::facet_wrap(Var~., scales="free_y") +
     ecodata::theme_ts() +
     ecodata::theme_facet() +
-    ecodata::geom_gls() +
-    ecodata::geom_lm(n=n)+
-    #ecodata::geom_lm(aes(x = Time, y = Value))+
+    ecodata::geom_gls(inherit.aes =T) +
+    # ecodata::geom_lm(n=10)+
+    # ecodata::geom_lm(ggplot2::aes(x = Time, y = Value))+
     # ggplot2::theme(strip.text=ggplot2::element_text(hjust=0),
     #                plot.title = ggplot2::element_text(size = 12))+
     ecodata::theme_title()
