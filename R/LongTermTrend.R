@@ -174,13 +174,13 @@ StatGLS <- ggplot2::ggproto("StatGLS",
                                            # Calculate overall signifiance (need to use
                                            # ML not REML for this)
                                            pval = c(anova(update(constant_norm, method = "ML"),
-                                                          update(poly_norm, method = "ML"))$`p-value`[2],
-                                                    anova(update(constant_ar1, method = "ML"),
-                                                          update(poly_ar1, method = "ML"))$`p-value`[2],
-                                                    anova(update(constant_norm, method = "ML"),
-                                                          update(linear_norm, method = "ML"))$`p-value`[2],
-                                                    anova(update(constant_ar1, method = "ML"),
-                                                          update(linear_ar1, method = "ML"))$`p-value`[2]))
+                                                         update(poly_norm, method = "ML"))$`p-value`[2],
+                                                   anova(update(constant_ar1, method = "ML"),
+                                                         update(poly_ar1, method = "ML"))$`p-value`[2],
+                                                   anova(update(constant_norm, method = "ML"),
+                                                         update(linear_norm, method = "ML"))$`p-value`[2],
+                                                   anova(update(constant_ar1, method = "ML"),
+                                                         update(linear_ar1, method = "ML"))$`p-value`[2]))
 
                               best_lm <- df_aicc %>%
                                 dplyr::filter(grepl("linear",model)) %>% #Select only linear models (removal of poly fit)
