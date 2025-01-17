@@ -10,10 +10,12 @@ bottom_temp_mom6_csv <- "BT_m6_gl_2024_soe.csv - Laura Gruenburg - NOAA Federal.
 
 get_bottom_temp_model_anom <- function(save_clean = F){
 
-  bottom_temp_model_anom <- read.csv(file.path(raw.dir,bt_csv))
+  bottom_temp_model_anom <- read.csv(file.path(raw.dir,bt_csv))%>%
+    dplyr::arrange(Source,Time,EPU,Var)
 
   bottom_temp_mom6 <- read.csv(file.path(raw.dir, bottom_temp_mom6_csv)) |>
-    dplyr::select(Time, Var, Value, Units, EPU, Source)
+    dplyr::select(Time, Var, Value, Units, EPU, Source) |>
+    dplyr::filter(Source == 'MOM6')
 
   bottom_temp_model_anom <- rbind(bottom_temp_model_anom, bottom_temp_mom6)
 
