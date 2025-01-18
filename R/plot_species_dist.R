@@ -50,8 +50,7 @@ plot_species_dist <- function(shadedRegion = NULL,
     dplyr::group_by(Var) |>
     dplyr::mutate(hline = mean(Value)) |>
     dplyr::ungroup() |>
-    dplyr::filter(Var == varName,
-                  !Time == 2020)
+    dplyr::filter(Var == varName)
 
 
 
@@ -65,7 +64,7 @@ plot_species_dist <- function(shadedRegion = NULL,
     ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
         xmin = setup$x.shade.min , xmax = setup$x.shade.max,
         ymin = -Inf, ymax = Inf) +
-    ggplot2::geom_point()+
+    ggplot2::geom_point(na.rm=T)+
     ggplot2::geom_line()+
     ggplot2::scale_y_continuous(trans = yaxis)+
     ggplot2::ggtitle(stringr::str_to_sentence(varName))+
@@ -74,9 +73,10 @@ plot_species_dist <- function(shadedRegion = NULL,
     ggplot2::geom_hline(ggplot2::aes(yintercept = hline),
                         linewidth = setup$hline.size,
                         alpha = setup$hline.alpha,
-                        linetype = setup$hline.lty) +
-    ecodata::geom_gls() +
-    ecodata::geom_lm(n=n)+
+                        linetype = setup$hline.lty,
+                        na.rm=T) +
+    ecodata::geom_gls(na.rm=T) +
+    ecodata::geom_lm(n=n,na.rm=T)+
     ecodata::theme_ts()+
     ecodata::theme_title()
 
