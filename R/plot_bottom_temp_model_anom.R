@@ -37,7 +37,7 @@ plot_bottom_temp_model_anom <- function(shadedRegion=NULL,
     dplyr::mutate(Time = as.numeric(Time),
                   Var = stringr::str_to_title(stringr::str_extract(Var,"Winter|Spring|Summer|Fall|Annual"))) |>
     dplyr::filter(!Var == "NA") |>
-    dplyr::mutate(Source = as.factor(Source))%>%
+    dplyr::mutate(Source = as.factor(Source)) |>
     dplyr::arrange(Source,Time,EPU,Var)
 
   fix$Var <- factor(fix$Var, levels= c("Winter","Spring","Summer","Fall", "Annual"))
