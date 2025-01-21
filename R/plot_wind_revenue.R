@@ -40,8 +40,10 @@ plot_wind_revenue <- function(shadedRegion = NULL,
    # Code to determine units displayed on y axis
    if (varName == "landing") {
      wind_label <- "Landings (million lbs)"
+     wind_title <- "Fishery Landings in Wind Lease Areas"
    } else {
      wind_label <- "Revenue (millions $2023)"
+     wind_title <- "Fishery Revenue in Wind Lease Areas"
    }
 
    if (report == "MidAtlantic") {
@@ -73,7 +75,7 @@ plot_wind_revenue <- function(shadedRegion = NULL,
             ymin = -Inf, ymax = Inf) +
         ggplot2::geom_point()+
         ggplot2::geom_line()+
-        ggplot2::ggtitle(paste0(report,": Fishery Revenue in Wind Lease Areas"))+
+        ggplot2::ggtitle(paste0(report,": ",wind_title))+
         ggplot2::ylab(wind_label)+
         ggplot2::xlab(ggplot2::element_blank())+
         ggplot2::facet_wrap(.~Species,scales = "free_y") +
@@ -90,7 +92,7 @@ plot_wind_revenue <- function(shadedRegion = NULL,
                          ymin = -Inf, ymax = Inf) +
        ggplot2::geom_point()+
        ggplot2::geom_line()+
-       ggplot2::ggtitle(paste0(report,": Fishery Revenue in Wind Lease Areas"))+
+       ggplot2::ggtitle(paste0(report,": ",wind_title))+
        ggplot2::ylab(wind_label)+
        ggplot2::xlab(ggplot2::element_blank())+
        ecodata::geom_lm(n=n)+
