@@ -107,7 +107,16 @@ StatLM <- ggplot2::ggproto("StatLM",
                              # arfit pads the time series and returns this padded data set.
                              # the returned data set is used in plotting the fitted model
 
-                             if(n>4) {
+                             if(n>7) {
+
+                               # find dimensions of the data and adjust n accordingly.
+                               # Otherwise if n > nrow(data) fitted values get overwritten
+
+                               if (n> nrow(data)){
+                                 n <- nrow(data)
+                               }
+
+
                                dataUse <- data |>
                                  dplyr::arrange(x) |>
                                  # Select last n years
@@ -160,7 +169,7 @@ StatLM <- ggplot2::ggproto("StatLM",
                                                           y = predy,
                                                           pval = linear_ar1$pValue)
 
-                                 print(fittedData)
+                                 #print(fittedData)
 
                                  return(fittedData)
                                }
