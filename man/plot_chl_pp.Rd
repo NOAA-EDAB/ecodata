@@ -10,7 +10,8 @@ plot_chl_pp(
   varName = "chl",
   plottype = "weekly",
   year = NULL,
-  EPU = "MAB"
+  EPU = "MAB",
+  n = 0
 )
 }
 \arguments{
@@ -24,6 +25,8 @@ plot_chl_pp(
 Weekly and monthly plots are for both variables, annual anomaly plot for PP only.}
 
 \item{year}{Numeric value. Optional. Year for weekly plot, defaults to max year in data.}
+
+\item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
 \value{
 ggplot object
