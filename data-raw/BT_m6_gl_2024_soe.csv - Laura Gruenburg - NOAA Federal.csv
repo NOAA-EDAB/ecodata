@@ -1,0 +1,916 @@
+,Time,Value,EPU,Source,Var,Units
+0,1993,-1.1400771141052246,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+1,1994,-0.47298336029052734,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+2,1995,0.8907442092895508,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+3,1996,-1.299203872680664,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+4,1997,0.9755382537841797,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+5,1998,-0.6639213562011719,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+6,1999,0.7122011184692383,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+7,2000,-0.21161174774169922,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+8,2001,-0.20600605010986328,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+9,2002,1.397324562072754,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+10,2003,-0.9302330017089844,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+11,2004,-1.3040142059326172,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+12,2005,-0.6127414703369141,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+13,2006,1.1002798080444336,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+14,2007,0.6864175796508789,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+15,2008,0.8016843795776367,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+16,2009,-0.8764934539794922,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+17,2010,-1.4085745811462402,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+18,2011,-1.2237334251403809,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+19,2012,2.2087888717651367,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+20,2013,0.06760501861572266,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+21,2014,-0.2970132827758789,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+22,2015,-1.0155754089355469,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+23,2016,1.2976818084716797,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+24,2017,0.7596044540405273,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+25,2018,-0.3338003158569336,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+26,2019,1.070683479309082,MAB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+27,1993,-1.1646690368652344,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+28,1994,-0.27287960052490234,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+29,1995,1.1343002319335938,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+30,1996,-0.2658414840698242,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+31,1997,0.2960243225097656,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+32,1998,-0.6722002029418945,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+33,1999,-0.18021678924560547,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+34,2000,0.5853786468505859,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+35,2001,-0.0695352554321289,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+36,2002,1.8531808853149414,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+37,2003,-0.09365463256835938,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+38,2004,-1.3900079727172852,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+39,2005,-0.7546415328979492,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+40,2006,0.35624122619628906,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+41,2007,-0.8807868957519531,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+42,2008,0.4236316680908203,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+43,2009,-0.44570255279541016,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+44,2010,-1.3175106048583984,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+45,2011,-0.6414518356323242,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+46,2012,1.9303064346313477,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+47,2013,-0.29255104064941406,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+48,2014,-0.4442119598388672,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+49,2015,-0.9278135299682617,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+50,2016,0.8799114227294922,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+51,2017,0.5272483825683594,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+52,2018,0.5671634674072266,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+53,2019,1.5616397857666016,MAB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+54,1993,-0.9602651596069336,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+55,1994,-0.19244098663330078,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+56,1995,1.908228874206543,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+57,1996,0.06622886657714844,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+58,1997,0.1933155059814453,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+59,1998,-0.5734968185424805,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+60,1999,0.17060184478759766,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+61,2000,0.6001482009887695,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+62,2001,-0.10658550262451172,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+63,2002,1.5545835494995117,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+64,2003,-0.47243690490722656,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+65,2004,-1.2913885116577148,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+66,2005,-1.0950727462768555,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+67,2006,0.48951244354248047,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+68,2007,-0.6397314071655273,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+69,2008,0.3495035171508789,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+70,2009,-0.28383731842041016,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+71,2010,-0.8206577301025391,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+72,2011,-0.3743619918823242,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+73,2012,0.9943132400512695,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+74,2013,-0.30791664123535156,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+75,2014,0.1562051773071289,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+76,2015,0.12421894073486328,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+77,2016,0.9659509658813477,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+78,2017,0.506922721862793,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+79,2018,0.6395320892333984,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+80,2019,1.0503225326538086,MAB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+81,1993,-0.5452308654785156,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+82,1994,-0.24975204467773438,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+83,1995,0.2047443389892578,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+84,1996,-0.05224609375,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+85,1997,-1.3838977813720703,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+86,1998,-0.2582683563232422,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+87,1999,-0.1845254898071289,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+88,2000,-0.2283935546875,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+89,2001,0.5155820846557617,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+90,2002,0.07526016235351562,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+91,2003,-0.6773319244384766,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+92,2004,-0.4114952087402344,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+93,2005,-0.10403251647949219,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+94,2006,0.4582357406616211,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+95,2007,-0.38172245025634766,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+96,2008,-0.11882209777832031,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+97,2009,-0.28322601318359375,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+98,2010,-0.9900360107421875,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+99,2011,-0.1296062469482422,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+100,2012,-0.038765907287597656,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+101,2013,-0.2634286880493164,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+102,2014,0.18178558349609375,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+103,2015,1.6935949325561523,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+104,2016,0.8522205352783203,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+105,2017,0.7378530502319336,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+106,2018,0.2636604309082031,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+107,2019,1.007272720336914,MAB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+108,1993,-0.7638211250305176,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+109,1994,-0.49822521209716797,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+110,1995,0.5625624656677246,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+111,1996,0.21399497985839844,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+112,1997,0.10970640182495117,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+113,1998,0.10877704620361328,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+114,1999,0.39234256744384766,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+115,2000,-0.08507204055786133,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+116,2001,-0.11587715148925781,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+117,2002,0.6277055740356445,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+118,2003,-0.7347555160522461,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+119,2004,-1.4802250862121582,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+120,2005,-0.33300018310546875,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+121,2006,0.45639753341674805,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+122,2007,0.2611427307128906,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+123,2008,0.10290336608886719,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+124,2009,-0.7381329536437988,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+125,2010,-0.36163330078125,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+126,2011,-0.46251869201660156,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+127,2012,1.3159871101379395,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+128,2013,0.39673328399658203,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+129,2014,-3.8623809814453125e-05,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+130,2015,-0.1591634750366211,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+131,2016,0.988865852355957,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+132,2017,0.5812187194824219,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+133,2018,0.43059349060058594,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+134,2019,0.051911354064941406,GB,MOM6,Winter_Bottom Temp Anomaly,degrees C
+135,1993,-0.5361909866333008,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+136,1994,-0.06153106689453125,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+137,1995,0.03606224060058594,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+138,1996,0.027021408081054688,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+139,1997,-0.48643064498901367,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+140,1998,0.06568336486816406,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+141,1999,0.2150249481201172,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+142,2000,0.7819118499755859,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+143,2001,0.09364128112792969,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+144,2002,0.5126094818115234,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+145,2003,-0.5462031364440918,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+146,2004,-0.9673547744750977,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+147,2005,-0.5156641006469727,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+148,2006,0.4063854217529297,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+149,2007,-0.2663240432739258,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+150,2008,-0.02889728546142578,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+151,2009,-0.521550178527832,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+152,2010,0.4227638244628906,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+153,2011,-0.17003440856933594,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+154,2012,1.1070308685302734,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+155,2013,0.46417903900146484,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+156,2014,0.4886932373046875,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+157,2015,-0.04971504211425781,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+158,2016,0.6821413040161133,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+159,2017,0.7813434600830078,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+160,2018,0.7530899047851562,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+161,2019,0.36864376068115234,GB,MOM6,Spring_Bottom Temp Anomaly,degrees C
+162,1993,-0.1862506866455078,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+163,1994,0.17755413055419922,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+164,1995,0.6829376220703125,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+165,1996,0.5669422149658203,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+166,1997,-0.5360622406005859,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+167,1998,0.07062053680419922,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+168,1999,0.24207210540771484,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+169,2000,0.7328453063964844,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+170,2001,0.37799072265625,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+171,2002,0.6316051483154297,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+172,2003,-0.64666748046875,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+173,2004,-1.384537696838379,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+174,2005,-0.0648050308227539,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+175,2006,0.544677734375,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+176,2007,-0.21169281005859375,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+177,2008,-0.03938770294189453,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+178,2009,-0.5880279541015625,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+179,2010,0.340240478515625,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+180,2011,-0.019697189331054688,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+181,2012,0.7459774017333984,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+182,2013,0.3585386276245117,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+183,2014,0.7324857711791992,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+184,2015,0.5435552597045898,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+185,2016,0.8319816589355469,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+186,2017,0.8343563079833984,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+187,2018,0.9193639755249023,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+188,2019,0.6470623016357422,GB,MOM6,Summer_Bottom Temp Anomaly,degrees C
+189,1993,-0.43584251403808594,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+190,1994,0.0819711685180664,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+191,1995,0.6544885635375977,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+192,1996,-0.15929508209228516,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+193,1997,-1.159834861755371,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+194,1998,-0.21662330627441406,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+195,1999,-0.44533348083496094,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+196,2000,-0.38394737243652344,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+197,2001,0.13814830780029297,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+198,2002,0.5337734222412109,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+199,2003,-0.9966497421264648,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+200,2004,-0.6665773391723633,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+201,2005,0.5976810455322266,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+202,2006,0.6781644821166992,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+203,2007,-0.23915576934814453,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+204,2008,-0.7047185897827148,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+205,2009,-0.044470787048339844,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+206,2010,-0.3026247024536133,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+207,2011,0.28133106231689453,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+208,2012,0.8743686676025391,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+209,2013,-0.011000633239746094,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+210,2014,0.4382495880126953,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+211,2015,0.7502775192260742,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+212,2016,0.900782585144043,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+213,2017,1.055821418762207,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+214,2018,0.32807064056396484,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+215,2019,0.7130002975463867,GB,MOM6,Fall_Bottom Temp Anomaly,degrees C
+216,1993,-0.5858659744262695,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+217,1994,0.5649890899658203,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+218,1995,1.0775089263916016,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+219,1996,0.44347667694091797,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+220,1997,1.6328020095825195,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+221,1998,0.6650333404541016,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+222,1999,0.3931760787963867,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+223,2000,-0.10616779327392578,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+224,2001,-0.03538990020751953,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+225,2002,0.3086557388305664,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+226,2003,-0.9854140281677246,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+227,2004,-1.7965192794799805,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+228,2005,-1.0443291664123535,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+229,2006,0.5345239639282227,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+230,2007,0.061785221099853516,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+231,2008,-0.4323859214782715,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+232,2009,-0.6437268257141113,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+233,2010,-0.18669557571411133,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+234,2011,0.7149581909179688,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+235,2012,0.9390687942504883,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+236,2013,0.46759653091430664,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+237,2014,-0.25107908248901367,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+238,2015,-0.6124701499938965,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+239,2016,0.16598224639892578,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+240,2017,0.4412369728088379,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+241,2018,-0.18557119369506836,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+242,2019,0.10193920135498047,GOM,MOM6,Winter_Bottom Temp Anomaly,degrees C
+243,1993,0.03501558303833008,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+244,1994,0.817997932434082,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+245,1995,1.494992733001709,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+246,1996,0.5631246566772461,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+247,1997,1.2836852073669434,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+248,1998,1.412381649017334,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+249,1999,-0.08698654174804688,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+250,2000,0.1587834358215332,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+251,2001,-0.2969169616699219,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+252,2002,0.5779023170471191,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+253,2003,-1.352017879486084,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+254,2004,-1.9603171348571777,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+255,2005,-0.2705245018005371,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+256,2006,0.29853153228759766,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+257,2007,-0.6104059219360352,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+258,2008,-0.45251989364624023,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+259,2009,-0.9227638244628906,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+260,2010,0.4880971908569336,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+261,2011,1.1065187454223633,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+262,2012,1.097111701965332,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+263,2013,0.20252609252929688,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+264,2014,-0.5098342895507812,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+265,2015,-1.1220636367797852,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+266,2016,0.8099756240844727,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+267,2017,-0.2471022605895996,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+268,2018,-0.15450572967529297,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+269,2019,0.2823610305786133,GOM,MOM6,Spring_Bottom Temp Anomaly,degrees C
+270,1993,0.13121986389160156,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+271,1994,0.7333731651306152,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+272,1995,1.3617596626281738,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+273,1996,0.6978764533996582,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+274,1997,0.8138775825500488,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+275,1998,1.0860695838928223,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+276,1999,-0.1917581558227539,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+277,2000,0.21843528747558594,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+278,2001,-0.2735304832458496,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+279,2002,0.543982982635498,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+280,2003,-1.167959213256836,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+281,2004,-1.964139461517334,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+282,2005,-0.009915351867675781,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+283,2006,0.42772674560546875,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+284,2007,-0.5183839797973633,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+285,2008,-0.5513067245483398,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+286,2009,-0.7663488388061523,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+287,2010,0.5005936622619629,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+288,2011,0.7514948844909668,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+289,2012,0.7206053733825684,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+290,2013,0.43156862258911133,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+291,2014,-0.152801513671875,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+292,2015,-0.8536791801452637,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+293,2016,0.5941977500915527,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+294,2017,-0.19692039489746094,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+295,2018,0.1348729133605957,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+296,2019,0.2681446075439453,GOM,MOM6,Summer_Bottom Temp Anomaly,degrees C
+297,1993,0.1074838638305664,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+298,1994,0.7077465057373047,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+299,1995,1.2065181732177734,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+300,1996,0.9248790740966797,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+301,1997,0.5550289154052734,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+302,1998,0.6494598388671875,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+303,1999,-0.3387126922607422,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+304,2000,0.32741260528564453,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+305,2001,-0.2453479766845703,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+306,2002,0.4522237777709961,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+307,2003,-1.0206661224365234,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+308,2004,-1.7119903564453125,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+309,2005,0.008133888244628906,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+310,2006,0.48679637908935547,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+311,2007,-0.49161720275878906,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+312,2008,-0.691277027130127,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+313,2009,-0.6356396675109863,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+314,2010,0.49289608001708984,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+315,2011,0.4185056686401367,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+316,2012,0.4633007049560547,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+317,2013,0.40967464447021484,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+318,2014,0.16505050659179688,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+319,2015,-0.6163315773010254,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+320,2016,0.538548469543457,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+321,2017,-0.09883403778076172,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+322,2018,0.21127986907958984,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+323,2019,0.2309732437133789,GOM,MOM6,Fall_Bottom Temp Anomaly,degrees C
+324,1993,10.074950218200684,MAB,MOM6,Annual_Bottom Temp,degrees C
+325,1994,10.73049545288086,MAB,MOM6,Annual_Bottom Temp,degrees C
+326,1995,12.062012672424316,MAB,MOM6,Annual_Bottom Temp,degrees C
+327,1996,10.639744758605957,MAB,MOM6,Annual_Bottom Temp,degrees C
+328,1997,11.047755241394043,MAB,MOM6,Annual_Bottom Temp,degrees C
+329,1998,10.4855375289917,MAB,MOM6,Annual_Bottom Temp,degrees C
+330,1999,11.157024383544922,MAB,MOM6,Annual_Bottom Temp,degrees C
+331,2000,11.21389102935791,MAB,MOM6,Annual_Bottom Temp,degrees C
+332,2001,11.060873985290527,MAB,MOM6,Annual_Bottom Temp,degrees C
+333,2002,12.24759578704834,MAB,MOM6,Annual_Bottom Temp,degrees C
+334,2003,10.484095573425293,MAB,MOM6,Annual_Bottom Temp,degrees C
+335,2004,9.928282737731934,MAB,MOM6,Annual_Bottom Temp,degrees C
+336,2005,10.385889053344727,MAB,MOM6,Annual_Bottom Temp,degrees C
+337,2006,11.62857723236084,MAB,MOM6,Annual_Bottom Temp,degrees C
+338,2007,10.723553657531738,MAB,MOM6,Annual_Bottom Temp,degrees C
+339,2008,11.391509056091309,MAB,MOM6,Annual_Bottom Temp,degrees C
+340,2009,10.555194854736328,MAB,MOM6,Annual_Bottom Temp,degrees C
+341,2010,9.893315315246582,MAB,MOM6,Annual_Bottom Temp,degrees C
+342,2011,10.435221672058105,MAB,MOM6,Annual_Bottom Temp,degrees C
+343,2012,12.301170349121094,MAB,MOM6,Annual_Bottom Temp,degrees C
+344,2013,10.828437805175781,MAB,MOM6,Annual_Bottom Temp,degrees C
+345,2014,10.926700592041016,MAB,MOM6,Annual_Bottom Temp,degrees C
+346,2015,10.996115684509277,MAB,MOM6,Annual_Bottom Temp,degrees C
+347,2016,12.026451110839844,MAB,MOM6,Annual_Bottom Temp,degrees C
+348,2017,11.660416603088379,MAB,MOM6,Annual_Bottom Temp,degrees C
+349,2018,11.311649322509766,MAB,MOM6,Annual_Bottom Temp,degrees C
+350,2019,12.199989318847656,MAB,MOM6,Annual_Bottom Temp,degrees C
+351,1993,9.346823692321777,GB,MOM6,Annual_Bottom Temp,degrees C
+352,1994,9.752291679382324,GB,MOM6,Annual_Bottom Temp,degrees C
+353,1995,10.311363220214844,GB,MOM6,Annual_Bottom Temp,degrees C
+354,1996,9.989516258239746,GB,MOM6,Annual_Bottom Temp,degrees C
+355,1997,9.309195518493652,GB,MOM6,Annual_Bottom Temp,degrees C
+356,1998,9.834465026855469,GB,MOM6,Annual_Bottom Temp,degrees C
+357,1999,9.928377151489258,GB,MOM6,Annual_Bottom Temp,degrees C
+358,2000,10.088786125183105,GB,MOM6,Annual_Bottom Temp,degrees C
+359,2001,9.950826644897461,GB,MOM6,Annual_Bottom Temp,degrees C
+360,2002,10.40377426147461,GB,MOM6,Annual_Bottom Temp,degrees C
+361,2003,9.096282005310059,GB,MOM6,Annual_Bottom Temp,degrees C
+362,2004,8.702677726745605,GB,MOM6,Annual_Bottom Temp,degrees C
+363,2005,9.748403549194336,GB,MOM6,Annual_Bottom Temp,degrees C
+364,2006,10.34875774383545,GB,MOM6,Annual_Bottom Temp,degrees C
+365,2007,9.71334457397461,GB,MOM6,Annual_Bottom Temp,degrees C
+366,2008,9.659825325012207,GB,MOM6,Annual_Bottom Temp,degrees C
+367,2009,9.354304313659668,GB,MOM6,Annual_Bottom Temp,degrees C
+368,2010,9.852038383483887,GB,MOM6,Annual_Bottom Temp,degrees C
+369,2011,9.734620094299316,GB,MOM6,Annual_Bottom Temp,degrees C
+370,2012,10.8381929397583,GB,MOM6,Annual_Bottom Temp,degrees C
+371,2013,10.129463195800781,GB,MOM6,Annual_Bottom Temp,degrees C
+372,2014,10.24219799041748,GB,MOM6,Annual_Bottom Temp,degrees C
+373,2015,10.098589897155762,GB,MOM6,Annual_Bottom Temp,degrees C
+374,2016,10.67829418182373,GB,MOM6,Annual_Bottom Temp,degrees C
+375,2017,10.640536308288574,GB,MOM6,Annual_Bottom Temp,degrees C
+376,2018,10.43513011932373,GB,MOM6,Annual_Bottom Temp,degrees C
+377,2019,10.272504806518555,GB,MOM6,Annual_Bottom Temp,degrees C
+378,1993,7.464849948883057,GOM,MOM6,Annual_Bottom Temp,degrees C
+379,1994,8.24891185760498,GOM,MOM6,Annual_Bottom Temp,degrees C
+380,1995,8.828081130981445,GOM,MOM6,Annual_Bottom Temp,degrees C
+381,1996,8.200224876403809,GOM,MOM6,Annual_Bottom Temp,degrees C
+382,1997,8.614234924316406,GOM,MOM6,Annual_Bottom Temp,degrees C
+383,1998,8.496122360229492,GOM,MOM6,Annual_Bottom Temp,degrees C
+384,1999,7.486815929412842,GOM,MOM6,Annual_Bottom Temp,degrees C
+385,2000,7.692502498626709,GOM,MOM6,Annual_Bottom Temp,degrees C
+386,2001,7.330089569091797,GOM,MOM6,Annual_Bottom Temp,degrees C
+387,2002,8.013577461242676,GOM,MOM6,Annual_Bottom Temp,degrees C
+388,2003,6.41137170791626,GOM,MOM6,Annual_Bottom Temp,degrees C
+389,2004,5.68464469909668,GOM,MOM6,Annual_Bottom Temp,degrees C
+390,2005,7.2137274742126465,GOM,MOM6,Annual_Bottom Temp,degrees C
+391,2006,7.979781627655029,GOM,MOM6,Annual_Bottom Temp,degrees C
+392,2007,7.153230667114258,GOM,MOM6,Annual_Bottom Temp,degrees C
+393,2008,7.011013507843018,GOM,MOM6,Annual_Bottom Temp,degrees C
+394,2009,6.800766468048096,GOM,MOM6,Annual_Bottom Temp,degrees C
+395,2010,7.8666090965271,GOM,MOM6,Annual_Bottom Temp,degrees C
+396,2011,8.290756225585938,GOM,MOM6,Annual_Bottom Temp,degrees C
+397,2012,8.347907066345215,GOM,MOM6,Annual_Bottom Temp,degrees C
+398,2013,7.9207282066345215,GOM,MOM6,Annual_Bottom Temp,degrees C
+399,2014,7.355720043182373,GOM,MOM6,Annual_Bottom Temp,degrees C
+400,2015,6.741750717163086,GOM,MOM6,Annual_Bottom Temp,degrees C
+401,2016,8.070061683654785,GOM,MOM6,Annual_Bottom Temp,degrees C
+402,2017,7.517481327056885,GOM,MOM6,Annual_Bottom Temp,degrees C
+403,2018,7.544404983520508,GOM,MOM6,Annual_Bottom Temp,degrees C
+404,2019,7.763740539550781,GOM,MOM6,Annual_Bottom Temp,degrees C
+405,1993,8.59863524986463,GB,GLORYS,Annual_Bottom Temp,degree C
+406,1994,9.30358268856045,GB,GLORYS,Annual_Bottom Temp,degree C
+407,1995,9.37201531197051,GB,GLORYS,Annual_Bottom Temp,degree C
+408,1996,7.9724595450536,GB,GLORYS,Annual_Bottom Temp,degree C
+409,1997,8.89915452587415,GB,GLORYS,Annual_Bottom Temp,degree C
+410,1998,8.35402025764731,GB,GLORYS,Annual_Bottom Temp,degree C
+411,1999,9.93324129873268,GB,GLORYS,Annual_Bottom Temp,degree C
+412,2000,9.45754486878169,GB,GLORYS,Annual_Bottom Temp,degree C
+413,2001,9.30174383926135,GB,GLORYS,Annual_Bottom Temp,degree C
+414,2002,9.71427682996728,GB,GLORYS,Annual_Bottom Temp,degree C
+415,2003,8.51227952897838,GB,GLORYS,Annual_Bottom Temp,degree C
+416,2004,7.739521664955,GB,GLORYS,Annual_Bottom Temp,degree C
+417,2005,8.24821019631806,GB,GLORYS,Annual_Bottom Temp,degree C
+418,2006,9.1997191419746,GB,GLORYS,Annual_Bottom Temp,degree C
+419,2007,8.31210572248051,GB,GLORYS,Annual_Bottom Temp,degree C
+420,2008,8.75665784071022,GB,GLORYS,Annual_Bottom Temp,degree C
+421,2009,9.33656377847399,GB,GLORYS,Annual_Bottom Temp,degree C
+422,2010,9.7969342702746,GB,GLORYS,Annual_Bottom Temp,degree C
+423,2011,9.29052403998686,GB,GLORYS,Annual_Bottom Temp,degree C
+424,2012,10.8158832309589,GB,GLORYS,Annual_Bottom Temp,degree C
+425,2013,10.121226951597,GB,GLORYS,Annual_Bottom Temp,degree C
+426,2014,10.130579287309,GB,GLORYS,Annual_Bottom Temp,degree C
+427,2015,10.3030289566835,GB,GLORYS,Annual_Bottom Temp,degree C
+428,2016,10.6303987538214,GB,GLORYS,Annual_Bottom Temp,degree C
+429,2017,10.067201099327,GB,GLORYS,Annual_Bottom Temp,degree C
+430,2018,9.66420637279606,GB,GLORYS,Annual_Bottom Temp,degree C
+431,2019,9.10207527293064,GB,GLORYS,Annual_Bottom Temp,degree C
+432,2020,9.90392867033342,GB,GLORYS,Annual_Bottom Temp,degree C
+433,2021,10.7442706819267,GB,GLORYS,Annual_Bottom Temp,degree C
+434,2022,10.6132618921314,GB,GLORYS,Annual_Bottom Temp,degree C
+435,2023,8.79586341000513,GB,GLORYS,Annual_Bottom Temp,degree C
+436,1993,6.27682710618816,GOM,GLORYS,Annual_Bottom Temp,degree C
+437,1994,7.26221360179632,GOM,GLORYS,Annual_Bottom Temp,degree C
+438,1995,7.24488464154123,GOM,GLORYS,Annual_Bottom Temp,degree C
+439,1996,7.22900183976688,GOM,GLORYS,Annual_Bottom Temp,degree C
+440,1997,7.11732023307735,GOM,GLORYS,Annual_Bottom Temp,degree C
+441,1998,6.53407878889903,GOM,GLORYS,Annual_Bottom Temp,degree C
+442,1999,6.78095007517303,GOM,GLORYS,Annual_Bottom Temp,degree C
+443,2000,7.26042491076791,GOM,GLORYS,Annual_Bottom Temp,degree C
+444,2001,6.83996077395776,GOM,GLORYS,Annual_Bottom Temp,degree C
+445,2002,7.36932749433573,GOM,GLORYS,Annual_Bottom Temp,degree C
+446,2003,6.34934120117727,GOM,GLORYS,Annual_Bottom Temp,degree C
+447,2004,5.80301268812425,GOM,GLORYS,Annual_Bottom Temp,degree C
+448,2005,6.13757812177239,GOM,GLORYS,Annual_Bottom Temp,degree C
+449,2006,7.28069975440235,GOM,GLORYS,Annual_Bottom Temp,degree C
+450,2007,6.60393226572291,GOM,GLORYS,Annual_Bottom Temp,degree C
+451,2008,6.43964911921409,GOM,GLORYS,Annual_Bottom Temp,degree C
+452,2009,6.47654397461661,GOM,GLORYS,Annual_Bottom Temp,degree C
+453,2010,7.47808633358835,GOM,GLORYS,Annual_Bottom Temp,degree C
+454,2011,7.89052116620329,GOM,GLORYS,Annual_Bottom Temp,degree C
+455,2012,8.26053756719057,GOM,GLORYS,Annual_Bottom Temp,degree C
+456,2013,8.08134205077427,GOM,GLORYS,Annual_Bottom Temp,degree C
+457,2014,7.56521539871655,GOM,GLORYS,Annual_Bottom Temp,degree C
+458,2015,7.7143328188976,GOM,GLORYS,Annual_Bottom Temp,degree C
+459,2016,8.33432925364227,GOM,GLORYS,Annual_Bottom Temp,degree C
+460,2017,7.92135795377584,GOM,GLORYS,Annual_Bottom Temp,degree C
+461,2018,8.06219153486358,GOM,GLORYS,Annual_Bottom Temp,degree C
+462,2019,8.14493482763184,GOM,GLORYS,Annual_Bottom Temp,degree C
+463,2020,8.89959085960459,GOM,GLORYS,Annual_Bottom Temp,degree C
+464,2021,9.28388063738452,GOM,GLORYS,Annual_Bottom Temp,degree C
+465,2022,8.73317057490079,GOM,GLORYS,Annual_Bottom Temp,degree C
+466,2023,9.06281697178389,GOM,GLORYS,Annual_Bottom Temp,degree C
+467,1993,9.74644599105476,MAB,GLORYS,Annual_Bottom Temp,degree C
+468,1994,10.4140899754859,MAB,GLORYS,Annual_Bottom Temp,degree C
+469,1995,11.1670953958333,MAB,GLORYS,Annual_Bottom Temp,degree C
+470,1996,9.11455640160177,MAB,GLORYS,Annual_Bottom Temp,degree C
+471,1997,10.7564683968472,MAB,GLORYS,Annual_Bottom Temp,degree C
+472,1998,9.96288547164582,MAB,GLORYS,Annual_Bottom Temp,degree C
+473,1999,11.7867307510735,MAB,GLORYS,Annual_Bottom Temp,degree C
+474,2000,11.0994406357297,MAB,GLORYS,Annual_Bottom Temp,degree C
+475,2001,10.8417853635952,MAB,GLORYS,Annual_Bottom Temp,degree C
+476,2002,11.8553028712677,MAB,GLORYS,Annual_Bottom Temp,degree C
+477,2003,9.87343143499399,MAB,GLORYS,Annual_Bottom Temp,degree C
+478,2004,9.15629029290501,MAB,GLORYS,Annual_Bottom Temp,degree C
+479,2005,9.87356294586584,MAB,GLORYS,Annual_Bottom Temp,degree C
+480,2006,11.6030176197761,MAB,GLORYS,Annual_Bottom Temp,degree C
+481,2007,10.183411999485,MAB,GLORYS,Annual_Bottom Temp,degree C
+482,2008,11.0856336294499,MAB,GLORYS,Annual_Bottom Temp,degree C
+483,2009,11.1447039765655,MAB,GLORYS,Annual_Bottom Temp,degree C
+484,2010,10.2789940717717,MAB,GLORYS,Annual_Bottom Temp,degree C
+485,2011,10.9872719621392,MAB,GLORYS,Annual_Bottom Temp,degree C
+486,2012,12.55659988903,MAB,GLORYS,Annual_Bottom Temp,degree C
+487,2013,11.4373207819572,MAB,GLORYS,Annual_Bottom Temp,degree C
+488,2014,11.7142951627705,MAB,GLORYS,Annual_Bottom Temp,degree C
+489,2015,12.1505656906997,MAB,GLORYS,Annual_Bottom Temp,degree C
+490,2016,12.172679203405,MAB,GLORYS,Annual_Bottom Temp,degree C
+491,2017,11.280809082955,MAB,GLORYS,Annual_Bottom Temp,degree C
+492,2018,10.5768020648968,MAB,GLORYS,Annual_Bottom Temp,degree C
+493,2019,11.4061310304957,MAB,GLORYS,Annual_Bottom Temp,degree C
+494,2020,11.8849236838752,MAB,GLORYS,Annual_Bottom Temp,degree C
+495,2021,12.0940213853053,MAB,GLORYS,Annual_Bottom Temp,degree C
+496,2022,12.2098167666073,MAB,GLORYS,Annual_Bottom Temp,degree C
+497,2023,10.6764142517801,MAB,GLORYS,Annual_Bottom Temp,degree C
+498,2021,10.1951077537165,GB,PSY,Annual_Bottom Temp,degree C
+499,2022,10.1552419232793,GB,PSY,Annual_Bottom Temp,degree C
+500,2023,9.17384487574997,GB,PSY,Annual_Bottom Temp,degree C
+501,2021,8.86805190484818,GOM,PSY,Annual_Bottom Temp,degree C
+502,2022,8.10597827570309,GOM,PSY,Annual_Bottom Temp,degree C
+503,2023,8.19959781499365,GOM,PSY,Annual_Bottom Temp,degree C
+504,2021,12.2072360733764,MAB,PSY,Annual_Bottom Temp,degree C
+505,2022,12.0768009311035,MAB,PSY,Annual_Bottom Temp,degree C
+506,2023,11.6788920614064,MAB,PSY,Annual_Bottom Temp,degree C
+507,1993,-0.186538845,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+508,1993,-0.745028306,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+509,1993,-0.751763829,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+510,1993,-1.121415711,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+511,1993,-0.644957293,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+512,1993,-1.196136707,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+513,1993,-1.158245716,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+514,1993,-0.782634348,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+515,1993,-1.073990894,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+516,1993,-1.34182571,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+517,1993,-0.966704051,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+518,1993,-1.474322818,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+519,1994,-0.124312616,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+520,1994,0.112015143,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+521,1994,0.820238868,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+522,1994,-0.806055596,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+523,1994,0.381305099,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+524,1994,0.004540951,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+525,1994,0.065981524,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+526,1994,-0.293383744,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+527,1994,-0.032116469,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+528,1994,-0.48104829,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+529,1994,-0.508911489,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+530,1994,-1.170491725,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+531,1995,-0.028698028,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+532,1995,-0.009367096,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+533,1995,0.326324435,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+534,1995,-0.011755931,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+535,1995,-0.120181737,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+536,1995,0.045458198,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+537,1995,-0.007133676,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+538,1995,0.166707892,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+539,1995,0.110387274,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+540,1995,-0.078686653,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+541,1995,0.709259761,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+542,1995,0.062031758,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+543,1996,-2.001550931,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+544,1996,-0.707568996,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+545,1996,-1.542241911,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+546,1996,-1.019937148,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+547,1996,-0.139171228,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+548,1996,0.188852481,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+549,1996,0.073442755,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+550,1996,-0.100088889,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+551,1996,-2.121829274,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+552,1996,-1.525417839,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+553,1996,-1.692733433,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+554,1996,-1.999653145,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+555,1997,-0.894071663,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+556,1997,-0.349483782,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+557,1997,0.289862681,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+558,1997,-0.656556982,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+559,1997,-0.296296792,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+560,1997,-0.00996589,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+561,1997,-0.055079312,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+562,1997,-0.06039025,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+563,1997,-0.946623169,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+564,1997,0.365482875,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+565,1997,-0.241412324,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+566,1997,0.023582503,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+567,1998,-1.469982788,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+568,1998,-0.509674488,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+569,1998,-0.914848818,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+570,1998,-0.87838081,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+571,1998,-1.206339448,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+572,1998,-0.354886397,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+573,1998,-0.818999255,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+574,1998,-0.377304851,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+575,1998,-1.395183743,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+576,1998,-0.859025517,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+577,1998,-1.006218412,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+578,1998,-0.714169314,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+579,1999,0.94071029,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+580,1999,0.292019957,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+581,1999,1.228854117,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+582,1999,0.069696387,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+583,1999,0.064745871,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+584,1999,-0.567680752,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+585,1999,-0.302857555,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+586,1999,-0.95992345,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+587,1999,1.019949482,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+588,1999,0.399230225,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+589,1999,1.551700229,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+590,1999,0.338713188,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+591,2000,-0.84074248,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+592,2000,0.85363527,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+593,2000,0.357658453,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+594,2000,0.277242789,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+595,2000,-0.176745882,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+596,2000,0.157308313,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+597,2000,0.034641816,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+598,2000,0.130083906,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+599,2000,-0.892536208,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+600,2000,1.016259152,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+601,2000,0.10290656,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+602,2000,0.34433642,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+603,2001,0.331220498,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+604,2001,-0.058517683,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+605,2001,0.030743892,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+606,2001,-0.28572752,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+607,2001,-0.627430165,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+608,2001,-0.273705878,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+609,2001,-0.50170645,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+610,2001,-0.125426378,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+611,2001,0.807445977,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+612,2001,-0.607529706,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+613,2001,0.249897503,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+614,2001,-0.918802914,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+615,2002,0.096292047,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+616,2002,0.655419321,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+617,2002,0.587272789,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+618,2002,0.311732253,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+619,2002,0.216824203,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+620,2002,0.264809254,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+621,2002,0.277970692,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+622,2002,-0.175877392,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+623,2002,0.106663423,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+624,2002,1.432644928,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+625,2002,0.593151849,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+626,2002,1.450243381,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+627,2003,-0.691557195,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+628,2003,-0.75274543,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+629,2003,-0.674820053,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+630,2003,-1.043001334,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+631,2003,-0.979034359,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+632,2003,-0.989030403,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+633,2003,-1.036398795,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+634,2003,-0.490893121,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+635,2003,-0.66888823,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+636,2003,-1.293442617,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+637,2003,-1.083427906,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+638,2003,-1.30474868,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+639,2004,-1.615897603,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+640,2004,-1.351816696,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+641,2004,-1.658105159,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+642,2004,-1.587709877,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+643,2004,-1.561151877,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+644,2004,-1.51261194,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+645,2004,-1.592328347,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+646,2004,-1.025432223,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+647,2004,-0.909104578,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+648,2004,-1.97701274,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+649,2004,-2.59137681,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+650,2004,-1.717896379,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+651,2005,-0.695284994,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+652,2005,-1.116489278,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+653,2005,-1.109252139,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+654,2005,-1.28561414,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+655,2005,-0.712893129,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+656,2005,-1.117975326,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+657,2005,-0.78870575,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+658,2005,-1.724061484,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+659,2005,-0.556362917,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+660,2005,-1.448940793,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+661,2005,-0.811432501,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+662,2005,-1.531858786,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+663,2006,-0.159095181,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+664,2006,-0.180116653,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+665,2006,0.063134539,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+666,2006,-0.112152266,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+667,2006,0.161048882,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+668,2006,0.09119506,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+669,2006,0.191554438,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+670,2006,-0.21041471,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+671,2006,0.377647013,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+672,2006,0.778434973,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+673,2006,0.902412825,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+674,2006,0.528198412,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+675,2007,-1.800719991,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+676,2007,-1.007806524,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+677,2007,-1.081152243,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+678,2007,-0.061553018,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+679,2007,-1.146321945,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+680,2007,-0.5544654,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+681,2007,-0.869131911,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+682,2007,0.095117993,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+683,2007,-1.428721041,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+684,2007,-1.062877833,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+685,2007,-1.157947746,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+686,2007,0.547206531,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+687,2008,-0.55912511,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+688,2008,-0.548787334,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+689,2008,-0.525998679,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+690,2008,-0.502595751,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+691,2008,-1.064581988,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+692,2008,-0.552736373,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+693,2008,-0.716100702,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+694,2008,-0.800624562,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+695,2008,-0.287979736,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+696,2008,0.679872741,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+697,2008,-0.007661574,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+698,2008,0.168668456,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+699,2009,1.060737132,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+700,2009,-0.385908821,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+701,2009,0.068650617,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+702,2009,-0.605643127,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+703,2009,-0.510392797,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+704,2009,-0.510515588,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+705,2009,-1.022641433,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+706,2009,-0.938373381,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+707,2009,0.647498209,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+708,2009,0.159982531,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+709,2009,-0.060365982,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+710,2009,-0.015510673,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+711,2010,-0.01782691,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+712,2010,0.851833386,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+713,2010,0.620375457,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+714,2010,0.530876513,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+715,2010,0.276561667,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+716,2010,0.369878448,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+717,2010,0.780776349,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+718,2010,-0.409894593,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+719,2010,-0.705908205,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+720,2010,-0.485555122,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+721,2010,-0.457814218,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+722,2010,-1.104872354,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+723,2011,0.551447657,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+724,2011,0.055771492,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+725,2011,-0.606903057,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+726,2011,-0.022110739,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+727,2011,0.519831911,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+728,2011,0.917197954,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+729,2011,0.646448012,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+730,2011,0.588922439,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+731,2011,0.607874324,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+732,2011,0.189672184,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+733,2011,0.488915098,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+734,2011,-1.158254271,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+735,2012,1.624251306,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+736,2012,1.784476295,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+737,2012,1.422210488,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+738,2012,1.260062976,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+739,2012,0.960633438,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+740,2012,1.226099713,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+741,2012,1.077601461,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+742,2012,0.888387435,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+743,2012,0.036965154,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+744,2012,2.613561975,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+745,2012,1.659742192,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+746,2012,2.100108042,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+747,2013,0.808502874,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+748,2013,0.896955451,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+749,2013,0.785683917,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+750,2013,0.78130222,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+751,2013,1.491651068,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+752,2013,0.273678831,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+753,2013,0.928044377,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+754,2013,0.728419631,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+755,2013,0.475659548,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+756,2013,0.560584401,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+757,2013,0.722963381,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+758,2013,0.152395724,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+759,2014,1.752503387,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+760,2014,0.327120413,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+761,2014,1.351142215,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+762,2014,-0.110222617,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+763,2014,0.550626422,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+764,2014,0.131025998,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+765,2014,-0.035877259,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+766,2014,0.728179198,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+767,2014,1.207452108,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+768,2014,-0.02585756,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+769,2014,1.895570323,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+770,2014,-0.08801122,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+771,2015,1.850659449,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+772,2015,0.386480132,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+773,2015,0.813248673,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+774,2015,0.957341481,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+775,2015,0.334320664,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+776,2015,0.315983215,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+777,2015,0.604653053,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+778,2015,0.707691164,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+779,2015,2.062712246,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+780,2015,0.738415866,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+781,2015,2.08408434,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+782,2015,-0.126814618,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+783,2016,1.654254546,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+784,2016,1.392217558,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+785,2016,1.117095918,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+786,2016,1.163831101,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+787,2016,1.402173808,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+788,2016,1.159436222,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+789,2016,1.372613604,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+790,2016,0.512426361,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+791,2016,0.705737549,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+792,2016,1.150593155,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+793,2016,1.660472697,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+794,2016,1.335038862,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+795,2017,1.348344525,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+796,2017,-0.049088848,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+797,2017,0.87707124,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+798,2017,0.884600448,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+799,2017,0.874535298,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+800,2017,0.342171331,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+801,2017,0.760556494,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+802,2017,0.814041199,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+803,2017,1.115876036,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+804,2017,-0.21615519,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+805,2017,-0.118737272,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+806,2017,0.495543567,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+807,2018,0.284329412,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+808,2018,0.534062219,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+809,2018,0.230509898,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+810,2018,0.402673708,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+811,2018,0.602918866,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+812,2018,0.943301224,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+813,2018,0.678600831,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+814,2018,1.13130341,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+815,2018,-0.17116268,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+816,2018,-0.802810772,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+817,2018,-0.138688603,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+818,2018,-0.429456839,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+819,2019,0.381224167,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+820,2019,-0.330166066,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+821,2019,-0.596952101,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+822,2019,-0.243333812,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+823,2019,1.400785957,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+824,2019,0.758145795,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+825,2019,1.11956949,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+826,2019,0.402811356,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+827,2019,1.51631188,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+828,2019,-0.290368381,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+829,2019,0.978604953,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+830,2019,-0.439878341,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+831,2020,1.03209908,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+832,2020,0.250979999,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+833,2020,0.538463519,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+834,2020,0.636518372,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+835,2020,3.397021541,GB,PSY,Winter_Bottom Temp Anomaly,degree C
+836,2020,1.335997518,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+837,2020,1.932544407,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+838,2020,1.862216927,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+839,2020,1.57586584,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+840,2020,1.529102249,GOM,PSY,Winter_Bottom Temp Anomaly,degree C
+841,2020,0.431626146,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+842,2020,1.049785345,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+843,2020,1.193512722,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+844,2020,1.064339067,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+845,2020,3.239010238,MAB,PSY,Winter_Bottom Temp Anomaly,degree C
+846,2021,1.442774923,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+847,2021,0.398286021,GB,PSY,Fall_Bottom Temp Anomaly,degree C
+848,2021,1.672406374,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+849,2021,1.585465228,GB,PSY,Spring_Bottom Temp Anomaly,degree C
+850,2021,1.055495038,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+851,2021,0.220739002,GB,PSY,Summer_Bottom Temp Anomaly,degree C
+852,2021,1.617047548,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+853,2021,1.408499238,GB,PSY,Winter_Bottom Temp Anomaly,degree C
+854,2021,1.416806085,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+855,2021,1.470267332,GOM,PSY,Fall_Bottom Temp Anomaly,degree C
+856,2021,2.99652344,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+857,2021,2.133306013,GOM,PSY,Spring_Bottom Temp Anomaly,degree C
+858,2021,1.918713177,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+859,2021,1.766253815,GOM,PSY,Summer_Bottom Temp Anomaly,degree C
+860,2021,1.92050058,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+861,2021,1.214498503,GOM,PSY,Winter_Bottom Temp Anomaly,degree C
+862,2021,1.066860042,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+863,2021,1.275404679,MAB,PSY,Fall_Bottom Temp Anomaly,degree C
+864,2021,1.855779015,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+865,2021,2.05384964,MAB,PSY,Spring_Bottom Temp Anomaly,degree C
+866,2021,0.642209053,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+867,2021,0.753975556,MAB,PSY,Summer_Bottom Temp Anomaly,degree C
+868,2021,0.983213241,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+869,2021,0.913557667,MAB,PSY,Winter_Bottom Temp Anomaly,degree C
+870,2022,1.17157231,GB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+871,2022,0.208930796,GB,PSY,Fall_Bottom Temp Anomaly,degree C
+872,2022,1.824514597,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+873,2022,1.743341534,GB,PSY,Spring_Bottom Temp Anomaly,degree C
+874,2022,0.528969447,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+875,2022,-0.099308519,GB,PSY,Summer_Bottom Temp Anomaly,degree C
+876,2022,1.732248217,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+877,2022,1.579404412,GB,PSY,Winter_Bottom Temp Anomaly,degree C
+878,2022,1.155993163,GOM,GLORYS,Fall_Bottom Temp Anomaly,degree C
+879,2022,0.913416653,GOM,PSY,Fall_Bottom Temp Anomaly,degree C
+880,2022,1.722387151,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+881,2022,1.11719943,GOM,PSY,Spring_Bottom Temp Anomaly,degree C
+882,2022,1.519747666,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+883,2022,0.46824518,GOM,PSY,Summer_Bottom Temp Anomaly,degree C
+884,2022,1.642335758,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+885,2022,1.030792209,GOM,PSY,Winter_Bottom Temp Anomaly,degree C
+886,2022,0.72232316,MAB,GLORYS,Fall_Bottom Temp Anomaly,degree C
+887,2022,0.748659931,MAB,PSY,Fall_Bottom Temp Anomaly,degree C
+888,2022,1.834551689,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+889,2022,1.812655295,MAB,PSY,Spring_Bottom Temp Anomaly,degree C
+890,2022,0.96716672,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+891,2022,0.96160519,MAB,PSY,Summer_Bottom Temp Anomaly,degree C
+892,2022,1.486415511,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+893,2022,0.949033373,MAB,PSY,Winter_Bottom Temp Anomaly,degree C
+894,2023,-1.874905487,GB,PSY,Fall_Bottom Temp Anomaly,degree C
+895,2023,0.757103231,GB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+896,2023,0.987996753,GB,PSY,Spring_Bottom Temp Anomaly,degree C
+897,2023,-0.734265882,GB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+898,2023,-1.285376059,GB,PSY,Summer_Bottom Temp Anomaly,degree C
+899,2023,1.42090128,GB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+900,2023,1.707998568,GB,PSY,Winter_Bottom Temp Anomaly,degree C
+901,2023,0.40948841,GOM,PSY,Fall_Bottom Temp Anomaly,degree C
+902,2023,2.64290299,GOM,GLORYS,Spring_Bottom Temp Anomaly,degree C
+903,2023,1.433152009,GOM,PSY,Spring_Bottom Temp Anomaly,degree C
+904,2023,2.075587773,GOM,GLORYS,Summer_Bottom Temp Anomaly,degree C
+905,2023,1.122349059,GOM,PSY,Summer_Bottom Temp Anomaly,degree C
+906,2023,1.582167349,GOM,GLORYS,Winter_Bottom Temp Anomaly,degree C
+907,2023,0.938307173,GOM,PSY,Winter_Bottom Temp Anomaly,degree C
+908,2023,-0.327402224,MAB,PSY,Fall_Bottom Temp Anomaly,degree C
+909,2023,1.026896809,MAB,GLORYS,Spring_Bottom Temp Anomaly,degree C
+910,2023,1.055858392,MAB,PSY,Spring_Bottom Temp Anomaly,degree C
+911,2023,-0.200852123,MAB,GLORYS,Summer_Bottom Temp Anomaly,degree C
+912,2023,0.766353005,MAB,PSY,Summer_Bottom Temp Anomaly,degree C
+913,2023,1.589623991,MAB,GLORYS,Winter_Bottom Temp Anomaly,degree C
+914,2023,1.389656837,MAB,PSY,Winter_Bottom Temp Anomaly,degree C

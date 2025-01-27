@@ -5,15 +5,14 @@ library(tidyr)
 
 raw.dir <- here::here("data-raw")
 ####
-zoo_cal_rdata <- "RM_20210205_CalanusStage.Rda"
+zoo_cal_rdata <- "20241223_CalanusStageAnom - Ryan Morse - NOAA Affiliate.RData"
 get_calanus_stage <- function(save_clean = F){
 
   load(file.path(raw.dir, zoo_cal_rdata))
 
-  calanus_stage<- CalanusStage2 %>%
+  calanus_stage<- CalanusStage %>%
     dplyr::rename(EPU = epu,
-                  Time = Year) %>%
-    dplyr::mutate(Var = paste0(Var, "-", season)) %>%
+                  Time = YEAR) %>%
     dplyr::select(Time, Var, Value, EPU, Units)
 
   # metadata ----

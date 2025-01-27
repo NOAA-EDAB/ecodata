@@ -9,33 +9,29 @@ get_wind_revenue<- function(save_clean = F){
                                         sheet = "NEFMC Land-Revenue Figures") %>%
     janitor::row_to_names(.,1) %>%
     dplyr::slice(-1) %>%
-    #dplyr::select("Species","Year",
-    #              "Sum of Nominal Value ($)",
-    #              "Sum of Landings (pounds*)") %>%
     dplyr::mutate(EPU = "NE")
 
-  ne_wind_revenue <- ne_wind_revenue[-c(406:423),]
+  ne_wind_revenue <- ne_wind_revenue[-c(294:407),] %>%
+    dplyr::mutate(Species = dplyr::recode(Species, "All Managed Skates" = "Skates"))
 
   mab_wind_revenue <- readxl::read_excel(file.path(raw.dir,wind_rev_xlsx),
                                          sheet = "MAFMC Land-Revenue Figures") %>%
     janitor::row_to_names(.,1) %>%
     dplyr::slice(-1) %>%
-    dplyr::mutate(EPU = "MAB") #%>%
-    #dplyr::select("Species","Year", "EPU",
-    #              "Sum of Nominal Value ($)",
-    #              "Sum of Landings (pounds*)")
+    dplyr::mutate(EPU = "MAB")
 
-  mab_wind_revenue <- mab_wind_revenue[-113,]
+  mab_wind_revenue <- mab_wind_revenue[-241,] %>%
+    dplyr::mutate(Species = dplyr::recode(Species, "SCUP" = "Scup"))
 
-    for (i in 2013:2016){
-      mab_wind_revenue <- mab_wind_revenue %>%
-      rbind(c("Ocean Quahog", i, NA, NA, NA, NA, NA, NA, NA, NA, "MAB"))
-    }
+    #for (i in 2012:2016){
+    #  mab_wind_revenue <- mab_wind_revenue %>%
+    #  rbind(c("Ocean Quahog", i, NA, NA, NA, NA, NA, NA, NA, NA, "MAB"))
+    #}
 
-    for (i in 2018:2022){
-      mab_wind_revenue <- mab_wind_revenue %>%
-      rbind(c("Ocean Quahog", i, NA, NA, NA, NA, NA, NA, NA, NA, "MAB"))
-    }
+    #for (i in 2018:2022){
+    #  mab_wind_revenue <- mab_wind_revenue %>%
+    #  rbind(c("Ocean Quahog", i, NA, NA, NA, NA, NA, NA, NA, NA, "MAB"))
+    #}
 
   mab_wind_revenue <- mab_wind_revenue %>%
     dplyr::group_by(Species) %>%
@@ -43,7 +39,7 @@ get_wind_revenue<- function(save_clean = F){
 
   wind_revenue <- ne_wind_revenue %>%
     rbind(mab_wind_revenue) %>%
-    dplyr::rename(Time = Year,
+       dplyr::rename(Time = Year,
                  sum_value = "Revenue",
                  sum_landing = "Landings") %>%
     tidyr::pivot_longer(cols = c(sum_landing, sum_value),
@@ -53,7 +49,8 @@ get_wind_revenue<- function(save_clean = F){
     tibble::as_tibble() %>%
     dplyr::select(Time, Var, Value, EPU) %>%
     dplyr::mutate(Value = as.double(Value),
-                  Time = as.integer(Time))
+                  Time = as.integer(Time)) %>%
+    dplyr::mutate(Value = dplyr::na_if(Value, 0))
 
   # metadata ----
   attr(wind_revenue, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc.html"

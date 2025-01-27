@@ -2,8 +2,7 @@
 
 raw.dir <- here::here("data-raw")
 
-habs1_csv<-
-  "Nelson_GOM_Alexandrium_cyst_abundance_long - David Nelson - NOAA Federal.csv"
+habs1_csv<-"Nelson_GoM_Annual_Cyst_Abundance_Alexandrium_catenella_v2024 - David Nelson - NOAA Federal.xlsx"
 #psp_me_csv<- "Data_for_Figure3_PSP_BlueMussels_ME_2005-2019_cleaned - David Nelson - NOAA Federal.csv"
 psp_me_csv<- "Data_for_Figures4and5_annual_mussel_psp_samples_Maine_2005_2019 - David Nelson - NOAA Federal.csv"
 psp_nh_csv <- "Data_for_Figure7and8_Annual_Mytilis_PSP_samples_NH_2000_2019 - David Nelson - NOAA Federal.csv"
@@ -12,12 +11,12 @@ psp_ma_csv <- "Data_for_Figure10and11_Annual_Mytilis_Samples_MA_1972-2019_Mabrou
 get_habs <- function(save_clean = F){
 
   # Alexandrium
-  dat <- read.csv(file.path(raw.dir,habs1_csv), header=TRUE, stringsAsFactors=FALSE)
+  dat <- readxl::read_excel(file.path(raw.dir, habs1_csv))
 
   habs1 <- dat %>%
-    #pivot_longer(cols= c( "West_Gulf_of_Maine","East_Gulf_of_Maine",
-    #                      "Bay_of_Fundy","Gulf_of_Maine_All" ),
-    #             names_to = "Var", values_to = "Value") %>%
+    pivot_longer(cols= c( "West_Gulf_of_Maine","East_Gulf_of_Maine",
+                          "Bay_of_Fundy","Gulf_of_Maine_All" ),
+                 names_to = "Var", values_to = "Value") %>%
     mutate(EPU = c("GOM"),
            Source = c("Alexandrium")) %>%
     dplyr::rename(Time = Year)

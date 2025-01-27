@@ -33,7 +33,7 @@ library(readxl)
 library(stringr)
 
 raw.dir <- here::here("data-raw")
-ne_inshore_survey_rda <- "MENH_TrawlSurvey_SOE24_Data.RData"
+ne_inshore_survey_rda <- "MENH_TrawlSurvey_SOE25_Data.RData"
 ne_inshore_survey_species_xlsx <- "MENH_TrawlSpeciesinSOE_2024.xlsx"
 
 get_ne_inshore_survey <- function(save_clean = F){

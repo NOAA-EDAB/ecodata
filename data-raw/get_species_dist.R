@@ -18,6 +18,14 @@ get_species_dist <- function(save_clean = F){
                                      "degreesN",ifelse(stringr::str_detect(Var,"Longitude"),
                                                       "degreesW",ifelse(stringr::str_detect(Var, "depth"),
                                                                         "m",NA)))))
+
+  # Fill in missing data with NAs
+  expanded <- expand.grid(Time = min(species_dist$Time):max(species_dist$Time),
+                          Var = unique(species_dist$Var))
+
+  species_dist <- right_join(species_dist, expanded) %>%
+    dplyr::arrange(Time)
+
   # metadata ----
   attr(species_dist, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/species-distribution-indicators.html"
   attr(species_dist, "data_files")   <- list(

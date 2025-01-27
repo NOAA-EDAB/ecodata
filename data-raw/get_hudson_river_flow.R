@@ -16,10 +16,11 @@ get_hudson_river_flow <- function(save_clean = F){
   hudson_river_flow <- dat %>%
     dplyr::select(-X, -Loc, -N) %>%
     dplyr::mutate(EPU = c("MAB"),
-                  Units = c("cubic feet per second")) %>%
+                  Units = c("cubic meters per second")) %>%
     dplyr::rename(Time = Year,
                   Value = Val,
                   Var = Variable)%>%
+    dplyr::mutate(Value = Value*0.0283168)%>%
     tibble::as_tibble()
 
   # metadata ----

@@ -45,7 +45,7 @@ plot_hudson_river_flow <- function(shadedRegion = NULL,
     ggplot2::geom_point()+
     ggplot2::geom_line()+
     ggplot2::ggtitle("Hudson River flow")+
-    ggplot2::ylab(expression("mean flowrate (ft"^3*" s"^-1*")"))+
+    ggplot2::ylab(expression("mean flowrate (m"^3*" s"^-1*")"))+
     ggplot2::xlab(ggplot2::element_blank())+
     ecodata::geom_gls()+
     ecodata::geom_lm(n=n)+

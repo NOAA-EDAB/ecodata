@@ -58,16 +58,16 @@ plot_bottom_temp_model_gridded <- function(shadedRegion = NULL,
     fix <- fix |>
       dplyr::mutate(Value = (9/5)*Value + 32)
     label <- "Temp. (\u00B0F)"
-    breaks <- c(41, 50, 59, 68, 77)
-    labelLegend <- c("41", "50", "59", "68", "77")
-    limits <- c(39,80)
-    midpoint <- 59
+    breaks <- c(32,41, 50, 59, 68, 77)
+    labelLegend <- c("32","41", "50", "59", "68", "77")
+    limits <- c(31.6,84.2)
+    midpoint <- 50
   } else {
     label <- "Temp. (\u00B0C)"
-    breaks <- c(5,10,15,20,25)
-    labelLegend <- c("5", "10", "15", "20", "25")
-    limits <- c(5,25)
-    midpoint <- 15
+    breaks <- c(0,5,10,15,20,25)
+    labelLegend <- c("0","5", "10", "15", "20", "25")
+    limits <- c(-0.2,29)
+    midpoint <-10
   }
 
  # fix <- fix |> dplyr::mutate(Value = replace(Value, Value > maxVal, maxVal))
@@ -76,7 +76,7 @@ plot_bottom_temp_model_gridded <- function(shadedRegion = NULL,
 
 
   p <- ggplot2::ggplot(data = fix)+
-    ggplot2::geom_tile(ggplot2::aes(x = Longitude, y = Latitude, fill = Value)) +
+    ggplot2::geom_tile(ggplot2::aes(x = Longitude, y = Latitude, fill = sqrt(Value+1))) +
     ggplot2::geom_sf(data = ecodata::coast, size = setup$map.lwd) +
     ggplot2::geom_sf(data = ne_epu_sf, fill = "transparent", size = setup$map.lwd) +
     ggplot2::coord_sf(xlim = xlims, ylim = ylims) +
@@ -87,9 +87,10 @@ plot_bottom_temp_model_gridded <- function(shadedRegion = NULL,
                                   low = "#000004FF",
                                   mid = "#BB3754FF",
                                   high = "#FCFFA4FF",
-                                  limits = limits,
+                                  breaks = sqrt(breaks+1),
+                                  limits = sqrt(limits+1),
                                   labels = labelLegend,
-                                  midpoint = midpoint) +
+                                  midpoint = sqrt(midpoint+1)) +
     #ggplot2::scale_color_viridis_c(option = 'B',name = 'Bottom \n Temp')+
     ggplot2::ggtitle('Seasonal Mean Bottom Temperature')+
     ggplot2::xlab("Longitude") +
