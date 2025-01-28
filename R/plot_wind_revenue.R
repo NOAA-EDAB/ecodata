@@ -73,7 +73,7 @@ plot_wind_revenue <- function(shadedRegion = NULL,
             ymin = -Inf, ymax = Inf) +
         ggplot2::geom_point()+
         ggplot2::geom_line()+
-        ggplot2::ggtitle(paste0(report,": Fishery Revenue in Wind Lease Areas"))+
+        ggplot2::ggtitle(paste0(report,": Fishery Revenue in Leased Areas"))+
         ggplot2::ylab(wind_label)+
         ggplot2::xlab(ggplot2::element_blank())+
         ggplot2::facet_wrap(.~Species,scales = "free_y") +
@@ -90,7 +90,7 @@ plot_wind_revenue <- function(shadedRegion = NULL,
                          ymin = -Inf, ymax = Inf) +
        ggplot2::geom_point()+
        ggplot2::geom_line()+
-       ggplot2::ggtitle(paste0(report,": Fishery Revenue in Wind Lease Areas"))+
+       ggplot2::ggtitle(paste0(report,": Fishery Revenue in Leased Areas"))+
        ggplot2::ylab(wind_label)+
        ggplot2::xlab(ggplot2::element_blank())+
        ecodata::geom_lm(n=n)+
