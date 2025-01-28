@@ -31,9 +31,9 @@ get_wea_landings_rev <- function(save_clean = F){
     dplyr::mutate(Council = "NEFMC")
 
    # Add council data to dataset
-    mafmc <- list("Atlantic mackerel", "Black sea bass", "Bluefish", "Blueline tilefish", "Butterfish",
-                  "Atlantic chub mackerel", "Golden tilefish", "Illex squid", "Longfin squid",
-                  "Ocean quahog", "Scup", "Summer flounder", "Atlantic surfclam")
+    mafmc <- list("Atlantic Mackerel", "Black Sea Bass", "Bluefish*", "Blueline Tilefish*", "Butterfish",
+                  "Chub Mackerel", "Golden Tilefish", "Illex Squid", "Longfin Squid",
+                  "Ocean Quahog", "Scup", "Summer Flounder", "Atlantic Surfclam")
 
     for (i in 1:length(mafmc)){
       wea_landings_rev <- wea_landings_rev %>%
@@ -42,7 +42,7 @@ get_wea_landings_rev <- function(save_clean = F){
 
     wea_landings_rev <- wea_landings_rev %>%
       dplyr::mutate(Council = replace(Council, wea_landings_rev$`NEFMC, MAFMC, and ASMFC Managed Species` == "Monkfish", "MAFMC/NEFMC")) %>%
-      dplyr::mutate(Council = replace(Council, wea_landings_rev$`NEFMC, MAFMC, and ASMFC Managed Species` == "Spiny dogfish", "MAFMC/NEFMC"))
+      dplyr::mutate(Council = replace(Council, wea_landings_rev$`NEFMC, MAFMC, and ASMFC Managed Species` == "Spiny Dogfish", "MAFMC/NEFMC"))
 
   # metadata ----
   attr(wea_landings_rev, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/fisheries-revenue-in-wind-development-areas.html"
