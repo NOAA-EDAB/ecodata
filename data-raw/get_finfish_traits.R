@@ -11,12 +11,18 @@ finfish_traits_csv <- "cwmtraits_forSOE - Bart DiFiore.csv"
 
 get_finfish_traits <- function(save_clean = F){
 
+  finfish_units<-data.frame("Var" = c("trophic_level","offspring_size","age_maturity","length_maturity",
+                                      "fecundity","l_inf","k","max_obs_length","PC1","PC2","PC3"),
+                            "Units" = c("unitless","mm","years","cm","number of offspring per mature female",
+                                        "cm","1/years","cm","unitless","unitless","unitless"))
+
   finfish_traits <- read.csv(file.path(raw.dir, finfish_traits_csv)) |>
     tidyr::pivot_longer(cols = -c(region, est_year, season), names_to = "Var", values_to = "Value") |>
+    dplyr::left_join(finfish_units) |>
     dplyr::mutate(Var = paste0(season, "-", Var)) |>
     dplyr::rename("Time" = "est_year",
                   "EPU" = "region") |>
-    dplyr::select(Time, Var, Value, EPU)
+    dplyr::select(Time, Var, Value, EPU, Units)
 
 
   if (save_clean){
