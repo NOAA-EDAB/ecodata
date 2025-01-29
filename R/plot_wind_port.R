@@ -74,7 +74,7 @@ plot_wind_port <- function(shadedRegion = NULL,
                    legend.box="vertical", legend.margin=ggplot2::margin())+
     ggplot2::geom_point(data = df.symbol, ggplot2::aes(x = symbol,y = City, shape = Variable)) +
     ggplot2::scale_shape_manual(values = c(17, 16)) +
-    ggplot2::ggtitle(paste0(report,": Port Revenue from Wind Energy Area"))+
+    ggplot2::ggtitle(paste0(report,": Port Revenue from Leased Areas"))+
     ggplot2::xlab(expression("Port Revenue (%)"))+
     ggplot2::ylab(ggplot2::element_blank())+
     ecodata::theme_ts()

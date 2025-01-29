@@ -39,7 +39,7 @@ plot_wea_landings_rev <- function(shadedRegion = NULL,
     dplyr::rename("Maximum Percent Total Annual Regional Species Landings"="perc_landings_max",
                   "Maximum Percent Total Annual Regional Species Revenue"="perc_revenue_max")
 
-  t <- kableExtra::kable(fix, caption = "Top ten species Landings and Revenue from Wind Energy Areas." ) |>
+  t <- kableExtra::kable(fix, caption = "Top ten species Landings and Revenue from Leased Areas." ) |>
     kableExtra::kable_classic(full_width = F, html_font = "Cambria")
 
 

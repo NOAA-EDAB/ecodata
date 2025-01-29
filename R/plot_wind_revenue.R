@@ -40,10 +40,10 @@ plot_wind_revenue <- function(shadedRegion = NULL,
    # Code to determine units displayed on y axis
    if (varName == "landing") {
      wind_label <- "Landings (million lbs)"
-     wind_title <- "Fishery Landings in Wind Lease Areas"
+     wind_title <- "Fishery Landings in Lease Areas"
    } else {
      wind_label <- "Revenue (millions $2023)"
-     wind_title <- "Fishery Revenue in Wind Lease Areas"
+     wind_title <- "Fishery Revenue in Lease Areas"
    }
 
    if (report == "MidAtlantic") {
