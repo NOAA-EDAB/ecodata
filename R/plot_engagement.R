@@ -110,7 +110,7 @@ plot_engagement <- function(shadedRegion = NULL,
     ggplot2::scale_color_manual(values = c("gray","skyblue","slateblue3","navy"),
                                 labels = c("low", "med", "med high", "high")) + #1,2,3,4 low-->high
     ggplot2::theme_bw()+
-    ggplot2::ylim(-5,20)+
+    #ggplot2::ylim(-5,20)+
     ggplot2::theme(text = ggplot2::element_text(size=10),
                    plot.title = ggplot2::element_text(size=9, vjust=-7.5, hjust=0.01),
                    panel.grid.major = ggplot2::element_blank(), 
@@ -156,5 +156,6 @@ plot_engagement <- function(shadedRegion = NULL,
 
 attr(plot_engagement,"report") <- c("MidAtlantic","NewEngland")
 attr(plot_engagement,"varName") <- c("Commercial","Recreational")
-attr(plot_engagement,"plottype") <- c("EJ", "Economic", "Gentrification")
+attr(plot_engagement,"plottype") <- c("EJ","Economic","Gentrification")
+
 
