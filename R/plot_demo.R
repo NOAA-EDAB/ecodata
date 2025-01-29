@@ -90,11 +90,15 @@ plot_demo <- function(shadedRegion = NULL,
     ggplot2::labs(tag = "b")
 
   # combine figures
-  p <-  patchwork::plot_layout(psample + epumap,
-                           ncol = 2,
-                           nrow = 1,
-                           widths=c(.75,1),heights = c(.4,1))
+  # p <-  patchwork::plot_layout(psample + epumap,
+  #                          ncol = 2,
+  #                          nrow = 1,
+  #                          widths=c(.75,1),heights = c(.4,1))
 
+  p <- ggpubr::ggarrange(psample,
+                         epumap,
+                         nrow = 1,
+                         ncol = 2)
 
   return(p)
 

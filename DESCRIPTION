@@ -34,6 +34,7 @@ Imports:
   heatwaveR,
   forcats,
   patchwork,
+  ggpubr,
   arfit
 Suggests:
   knitr,
