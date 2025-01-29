@@ -22,21 +22,21 @@ get_engagement <- function(save_clean = F){
   dat$GEO_NAME <- replace(dat$GEO_NAME,
                           dat$GEO_NAME=="Port Clyde-Tenants Harbor/Saint George/Spruce Head, ME",
                           "Port Clyde-Tenants Harbor, ME")
-  
-  
+
+
   dat$GEO_NAME <- replace(dat$GEO_NAME,
                           dat$GEO_NAME=="Sandwich/East Sandwich/Forestdale, MA",
                           "Sandwich, MA")
-  
-  
+
+
   dat$GEO_NAME <- replace(dat$GEO_NAME,
                           dat$GEO_NAME=="Reedville/District 5 (Northumberland County), VA",
                           "Reedville, VA")
-  
+
   # If we want a long dataset, these need to be numbers to have them with the Eng and Rel values
   # Otherwise we need a wide dataset
   dat<- dat |>
-    dplyr::mutate(across(ComEng_ct:urban_sprawl_index_rank, ~ 
+    dplyr::mutate(across(ComEng_ct:urban_sprawl_index_rank, ~
                            as.numeric(case_when(
                              . == "low" ~ "1",
                              . == "med" ~ "2",
@@ -44,7 +44,7 @@ get_engagement <- function(save_clean = F){
                              . == "high" ~ "4",
                              TRUE ~ NA_character_
                            ))))
-  
+
 
 
   engagement <- dat |>
@@ -52,8 +52,7 @@ get_engagement <- function(save_clean = F){
     #dplyr::filter(REGION == "Northeast") |>
     # Deselect unnecessary columns
     dplyr::mutate(EPU = case_when(Council == "New England" ~ "NE",
-                                  Council == "Mid-Atlantic" ~ "MAB"),
-                  Units = NA_character_) |>
+                                  Council == "Mid-Atlantic" ~ "MAB")) |>
     dplyr::select(!c("Council", "MAPNAME", "geography", "REGION", "STATEABBR")) |>
     # can't do this and keep correct data attributes (numeric and factor)
     tidyr::pivot_longer(cols = c("TOTPOP",
@@ -82,9 +81,11 @@ get_engagement <- function(save_clean = F){
                                  "retiree_migration_rank",
                                  "urban_sprawl_index_rank"),
                           names_to = "Var", values_to = "Value") |>
+    dplyr::mutate(Units = case_when(Var == "TOTPOP" ~ "number of individuals",
+                                    Var != "TOTPOP" ~ "unitless")) |>
     tidyr::unite("Var", c(GEO_NAME,Var), sep = "-") |>
     dplyr::rename("Time" = "year") |>
-    dplyr::select(Time, Var, Value, EPU, Units)  
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   if (save_clean){
     usethis::use_data(engagement, overwrite = T)
