@@ -173,7 +173,7 @@ plot_cold_pool <- function(shadedRegion = NULL,
 
 attr(plot_cold_pool,"report") <- c("MidAtlantic","NewEngland")
 attr(plot_cold_pool,"varName") <- c("cold_pool", "persistence","extent")
-
+attr(plot_cold_pool, "source") <- c("GLORYS", "MOM6")
 
 
   # Paste commented original plot code chunk for reference

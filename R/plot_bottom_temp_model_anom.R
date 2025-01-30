@@ -111,3 +111,4 @@ plot_bottom_temp_model_anom <- function(shadedRegion=NULL,
 attr(plot_bottom_temp_model_anom,"EPU") <- c("MAB","GB","GOM")
 attr(plot_bottom_temp_model_anom,"report") <- c("MidAtlantic","NewEngland")
 attr(plot_bottom_temp_model_anom, "varName") <- c("seasonal", "annual")
+attr(plot_bottom_temp_model_anom, "source") <- c("GLORYS", "MOM6")
