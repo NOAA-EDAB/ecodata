@@ -71,11 +71,11 @@ plot_bennet <- function(shadedRegion = NULL,
                         ymin = -Inf, ymax = Inf)+
       ggplot2::geom_bar(data = indicators, ggplot2::aes(x = Time, y = Value, fill = Guild), stat="identity")+
       #ggplot2::scale_fill_manual(name = "Indicators", values = Guild) +
-      ggplot2::geom_line(data = indicators, ggplot2::aes(x = Time, y = component, color = "$"))+
+      ggplot2::geom_line(data = indicators, ggplot2::aes(x = Time, y = component, color = "$"), linewidth = 0.7)+
       ggplot2::scale_x_continuous(breaks = seq(1980, 2020, by = 5), expand = c(0.01, 0.01)) +
       ggplot2::facet_grid(EPU~Var, scales = "free")+
       ggplot2::scale_colour_grey(name ="Component") +
-      ggplot2::ggtitle("Bennet Indicator")+
+      ggplot2::ggtitle(paste0("Bennet Indicator \n",EPU))+
       ggplot2::labs(y=paste0("Million USD (", bennet_year, ")")) +
 
       ggplot2::xlab(ggplot2::element_blank())+
@@ -114,9 +114,9 @@ plot_bennet <- function(shadedRegion = NULL,
                         ymin = -Inf, ymax = Inf)+
       ggplot2::geom_bar(data = indicators, ggplot2::aes(x = Time, y = Value, fill = Var), stat="identity")+
       ggplot2::scale_fill_manual(name = "Indicators", values = ind_fill) +
-      ggplot2::geom_line(data = revchange, ggplot2::aes(x = Time, y = Value, color = "$"))+
+      ggplot2::geom_line(data = revchange, ggplot2::aes(x = Time, y = Value, color = "$"), linewidth = 0.7)+
       ggplot2::scale_colour_grey(name ="Revenue Change") +
-      ggplot2::ggtitle("Bennet Indicator")+
+      ggplot2::ggtitle(paste0("Bennet Indicator \n",EPU))+
       ggplot2::labs(y=paste0("Million USD (", bennet_year, ")")) +
       ggplot2::scale_x_continuous(breaks = seq(1980, 2020, by = 5), expand = c(0.01, 0.01)) +
       #::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100),
@@ -157,9 +157,9 @@ plot_bennet <- function(shadedRegion = NULL,
                         ymin = -Inf, ymax = Inf)+
       ggplot2::geom_bar(data = indicators, ggplot2::aes(x = Time, y = Value, fill = Var), stat="identity")+
       ggplot2::scale_fill_manual(name = "Indicators", values = ind_fill) +
-      ggplot2::geom_line(data = revchange, ggplot2::aes(x = Time, y = Value, color = "$"))+
+      ggplot2::geom_line(data = revchange, ggplot2::aes(x = Time, y = Value, color = "$"), linewidth = 0.7)+
       ggplot2::scale_colour_grey(name ="Revenue Change") +
-      ggplot2::ggtitle("Bennet Indicator")+
+      ggplot2::ggtitle(paste0("Bennet Indicator \n",EPU))+
       ggplot2::labs(y=paste0("Million USD (", bennet_year, ")")) +
       ggplot2::scale_x_continuous(breaks = seq(1980, 2015, by = 10), expand = c(0.01, 0.01)) +
       #ggplot2::scale_y_continuous(breaks = seq(y.lim[1], y.lim[2], by = 100),
