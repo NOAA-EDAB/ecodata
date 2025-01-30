@@ -38,7 +38,7 @@ plot_engagement <- function(shadedRegion = NULL,
   # filter to fishery type for main plot
   if (varName == "Commercial"){
     eng<-ecodata::engagement |>
-      dplyr::distinct(Time, Var,  EPU, Units, .keep_all = T) |> #hack, remove later
+      #dplyr::distinct(Time, Var,  EPU, Units, .keep_all = T) |> #hack, remove later
       tidyr::separate(Var, into = c("Town", "StateVar"), sep = ",") |> #using two steps because some towns have - in the name
       tidyr::separate(StateVar, into = c("State", "Var"), sep = "-") |> # which also seps the variable
       tidyr::unite("Town", c(Town, State), sep = ",") |>
@@ -51,7 +51,7 @@ plot_engagement <- function(shadedRegion = NULL,
   
   if(varName == "Recreational"){
     eng<-ecodata::engagement |>
-      dplyr::distinct(Time, Var,  EPU, Units, .keep_all = T) |> #hack, remove later
+      #dplyr::distinct(Time, Var,  EPU, Units, .keep_all = T) |> #hack, remove later
       tidyr::separate(Var, into = c("Town", "StateVar"), sep = ",") |>
       tidyr::separate(StateVar, into = c("State", "Var"), sep = "-") |>
       tidyr::unite("Town", c(Town, State), sep = ",") |>
