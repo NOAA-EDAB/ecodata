@@ -82,6 +82,10 @@ get_zooplankton_index <- function(save_clean = F){
                             springzoopvol, fallzoopvolcog, springzoopvolcog, fallsmallcopeALL,
                             springsmallcopeALL, fallsmallcopeALLcog, springsmallcopeALLcog) |>
     tibble::as_tibble()
+  
+  # Index should have NA for missing surveys in Fall 2020,  not 0
+  zooplankton_index$Value[zooplankton_index$Time==2020 & zooplankton_index$Value==0] <- NA
+  
 
   if (save_clean){
     usethis::use_data(zooplankton_index, overwrite = T)
