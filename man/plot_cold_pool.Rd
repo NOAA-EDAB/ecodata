@@ -8,6 +8,7 @@ plot_cold_pool(
   shadedRegion = NULL,
   report = "MidAtlantic",
   varName = NULL,
+  source = "GLORYS",
   n = 0
 )
 }
@@ -17,6 +18,8 @@ plot_cold_pool(
 \item{report}{Character string. Which SOE report ("MidAtlantic" only, default)}
 
 \item{varName}{Character string. Which plot (NULL, "cold_pool", "persistence","extent")}
+
+\item{source}{character vector. Which source data should be plotted (e.g. 'GLORYS','MOM6')}
 
 \item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }

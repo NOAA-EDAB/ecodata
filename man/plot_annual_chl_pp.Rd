@@ -9,7 +9,8 @@ plot_annual_chl_pp(
   report = "MidAtlantic",
   varName = "chl",
   plottype = "mean",
-  EPU = "MAB"
+  EPU = "MAB",
+  n = 0
 )
 }
 \arguments{
@@ -20,6 +21,8 @@ plot_annual_chl_pp(
 \item{varName}{Character string. Which Variable to plot ("chl","pp")}
 
 \item{plottype}{Character string. Which plot ("mean","total")}
+
+\item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
 \value{
 ggplot object
