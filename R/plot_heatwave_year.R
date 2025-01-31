@@ -45,7 +45,7 @@ plot_heatwave_year <- function(shadedRegion = NULL,
 
   ylabs <- "Temperature - Climate Trend (C)"
 
-  plotvartitle <- paste(varName,"Detrended"))
+  plotvartitle <- paste(varName,"Detrended")
 
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
