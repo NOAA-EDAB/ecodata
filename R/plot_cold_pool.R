@@ -4,20 +4,24 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic" only, default)
-#' @param varName Character string. Which plot (NULL, "cold_pool", "persistence","extent")
+#' @param varName Character string. Which variable to plot (NULL, "cold_pool", "persistence","extent"). NULL plots all three.
 #' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
-#' @param source character vector. Which source data should be plotted (e.g. 'GLORYS','MOM6')
 #'
 #' @return ggplot object
 #'
 #'
 #' @export
 #'
+#'
+
+# removed temporarily from params documentation, add back later:
+# @param source character vector. Which source data should be plotted (e.g. 'GLORYS','MOM6')
+
 
 plot_cold_pool <- function(shadedRegion = NULL,
                            report="MidAtlantic",
                            varName = NULL,
-                           source = 'GLORYS',
+                           #source = 'GLORYS',
                            n = 0) {
 
   # generate plot setup list (same for all plot functions)
@@ -41,7 +45,7 @@ plot_cold_pool <- function(shadedRegion = NULL,
 
   cpdup <- ecodata::cold_pool |>
     dplyr::group_by(Time, Var, EPU) |>
-    dplyr::filter(Source %in% source) |>
+    #dplyr::filter(Source %in% source) |>
     dplyr::mutate(duplicated = dplyr::n()>1) |>
     dplyr::ungroup()
 
@@ -70,8 +74,8 @@ plot_cold_pool <- function(shadedRegion = NULL,
     ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
                       xmin = setup$x.shade.min , xmax = setup$x.shade.max,
                       ymin = -Inf, ymax = Inf)+
-    ggplot2::geom_line(ggplot2::aes(x = Time, y = Value, color = Source), size = setup$lwd) +
-    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, color = Source), size = setup$pcex) +
+    ggplot2::geom_line(ggplot2::aes(x = Time, y = Value), size = setup$lwd) + #, color = Source
+    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, shape = Source), size = setup$pcex) + #color = Source
     ggplot2::scale_shape_manual(values = c(16, 1))+
     ggplot2::theme(legend.position = "none")+
     # ggplot2::geom_ribbon(aes(x = Time, ymin = Lower, ymax = Upper), fill = "gray")+
@@ -103,13 +107,13 @@ plot_cold_pool <- function(shadedRegion = NULL,
     ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
                       xmin = setup$x.shade.min , xmax = setup$x.shade.max,
                       ymin = -Inf, ymax = Inf)+
-    ggplot2::geom_line(ggplot2::aes(x = Time, y = Value*85.5, color = Source), size = setup$lwd) +
-    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value*85.5, color = Source), size = setup$pcex) +
+    ggplot2::geom_line(ggplot2::aes(x = Time, y = Value*85.5), size = setup$lwd) + #, color = Source
+    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value*85.5, shape = Source), size = setup$pcex) + #color = Source
     ggplot2::scale_shape_manual(values = c(16, 1))+
     ggplot2::theme(legend.position = "none")+
     ggplot2::geom_hline(ggplot2::aes(yintercept = 0))+
-    ecodata::geom_gls(ggplot2::aes(x = Time, y = Value))+
-    ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Value))+
+    ecodata::geom_gls(ggplot2::aes(x = Time, y = Value*85.5))+
+    ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Value*85.5))+
     #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
     ggplot2::ylab(bquote("Spatial Extent Index, " ~ (km^{2}))) +
     ggplot2::xlab("")+
@@ -135,8 +139,8 @@ plot_cold_pool <- function(shadedRegion = NULL,
     ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
                       xmin = setup$x.shade.min , xmax = setup$x.shade.max,
                       ymin = -Inf, ymax = Inf)+
-    ggplot2::geom_line(ggplot2::aes(x = Time, y = Value, color = Source), size = setup$lwd) +
-    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, color = Source), size = setup$pcex) +
+    ggplot2::geom_line(ggplot2::aes(x = Time, y = Value), size = setup$lwd) + #, color = Source
+    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, shape = Source), size = setup$pcex) + #color = Source
     ggplot2::scale_shape_manual(values = c(16, 1))+
     ggplot2::theme(legend.position = "none")+
     ggplot2::geom_hline(ggplot2::aes(yintercept = 0))+
@@ -173,7 +177,7 @@ plot_cold_pool <- function(shadedRegion = NULL,
 
 attr(plot_cold_pool,"report") <- c("MidAtlantic","NewEngland")
 attr(plot_cold_pool,"varName") <- c("cold_pool", "persistence","extent")
-attr(plot_cold_pool, "source") <- c("GLORYS", "MOM6")
+#attr(plot_cold_pool, "source") <- c("GLORYS", "MOM6")
 
 
   # Paste commented original plot code chunk for reference
