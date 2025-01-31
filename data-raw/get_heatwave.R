@@ -141,21 +141,21 @@ get_heatwave <- function(save_clean = F){
     tidyr::drop_na()
 
   # GB - define climatology, detect events
-  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2024-09-10"))
+  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2024-11-26"))
   gb.mhw <- heatwaveR::detect_event(ts, minDuration = 30)
   gb.hw<- gb.mhw$event %>%
     dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative)%>%
     dplyr::mutate(EPU = "GB")
 
   # GOM - define climatology, detect events
-  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2024-09-10"))
+  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2024-11-26"))
   gom.mhw <- heatwaveR::detect_event(ts, minDuration = 30)
   gom.hw<- gom.mhw$event %>%
     dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative) %>%
     dplyr::mutate(EPU = "GOM")
 
   # MAB - define climatology, detect events
-  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2024-09-10"))
+  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2024-11-26"))
   mab.mhw <- heatwaveR::detect_event(ts, minDuration = 30)
   mab.hw<- mab.mhw$event %>%
     dplyr::select(event_no, duration, date_start, date_peak, intensity_max, intensity_cumulative) %>%
@@ -233,67 +233,6 @@ get_heatwave(save_clean = T)
 #### get_heatwave_year get single year of heatwave
 get_heatwave_year <- function(save_clean = F){
   # import data
-  # SURFACE
-  gom<-read.csv(file.path(raw.dir,heatwave_gomd), header = FALSE) %>%
-    janitor::row_to_names(1) %>%
-    dplyr::select(t, detrended) %>%
-    dplyr::rename(temp = detrended) %>%
-    dplyr::filter(!temp == "temp") %>%
-    dplyr::mutate(temp = as.numeric(temp),
-                  t = as.Date(t, format = "%m/%d/%Y")) %>%
-    tidyr::drop_na()
-
-  gb<-read.csv(file.path(raw.dir,heatwave_gbd), header = FALSE) %>%
-    janitor::row_to_names(1) %>%
-    dplyr::select(t, detrended) %>%
-    dplyr::rename(temp = detrended) %>%
-    dplyr::filter(!temp == "temp") %>%
-    dplyr::mutate(temp = as.numeric(temp),
-                  t = as.Date(t, format = "%m/%d/%Y")) %>%
-    tidyr::drop_na()
-
-  mab<-read.csv(file.path(raw.dir,heatwave_mabd), header = FALSE) %>%
-    janitor::row_to_names(1) %>%
-    dplyr::select(t, detrended) %>%
-    dplyr::rename(temp = detrended) %>%
-    dplyr::filter(!temp == "temp") %>%
-    dplyr::mutate(temp = as.numeric(temp),
-                  t = as.Date(t, format = "%m/%d/%Y")) %>%
-    tidyr::drop_na()
-  #GB
-  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2024-12-31"))
-  gb.mhw <- heatwaveR::detect_event(ts)
-
-  #GOM
-  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2024-12-31"))
-  gom.mhw <- heatwaveR::detect_event(ts)
-
-  #MAB
-  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2024-12-31"))
-  mab.mhw <- heatwaveR::detect_event(ts)
-
-  ### Take just clim
-  #GB
-  mhw<- gb.mhw$clim %>%
-    mutate(EPU = c("GB"),
-           Year = c("2024"))# add EPU column
-  mhw.gb.year <- mhw[15341:15706,]## days in 2024 data set
-
-  #GOM
-  mhw<- gom.mhw$clim %>%
-    mutate(EPU = c("GOM"),
-           Year = c("2024"))# add EPU column
-  mhw.gom.year <- mhw[15341:15706,]## days in 2024 data set
-
-  #MAB
-  mhw<- mab.mhw$clim %>%
-    mutate(EPU = c("MAB"),
-           Year = c("2024"))# add EPU column
-  mhw.mab.year <- mhw[15341:15706,]## days in 2024 data set
-
-  heatwave_year<- rbind(mhw.gb.year, mhw.gom.year, mhw.mab.year) %>%
-    dplyr::mutate(Var = "Surface")
-
   # SURFACE DETRENDED
   gom<-read.csv(file.path(raw.dir,heatwave_gomd), header = FALSE) %>%
     janitor::row_to_names(1) %>%
@@ -357,7 +296,7 @@ get_heatwave_year <- function(save_clean = F){
   heatwave_year_detrended<- rbind(mhw.gb.year, mhw.gom.year, mhw.mab.year) %>%
     dplyr::mutate(Var = "SurfaceDetrended")
 
-  #Bottom heatwave
+  #Bottom heatwave detrended
   gom<-read.csv(file.path(raw.dir,bheatwave_gomd), header = FALSE) %>%
     janitor::row_to_names(1) %>%
     dplyr::select(date, Detrended) %>%
@@ -386,15 +325,15 @@ get_heatwave_year <- function(save_clean = F){
     tidyr::drop_na()
 
   #GB
-  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2024-09-10"))
+  ts <- heatwaveR::ts2clm(gb, climatologyPeriod = c("1982-01-01", "2024-11-26"))
   gb.mhw <- heatwaveR::detect_event(ts, minDuration = 30)
 
   #GOM
-  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2024-09-10"))
+  ts <- heatwaveR::ts2clm(gom, climatologyPeriod = c("1982-01-01", "2024-11-26"))
   gom.mhw <- heatwaveR::detect_event(ts, minDuration = 30)
 
   #MAB
-  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2024-09-10"))
+  ts <- heatwaveR::ts2clm(mab, climatologyPeriod = c("1982-01-01", "2024-11-26"))
   mab.mhw <- heatwaveR::detect_event(ts, minDuration = 30)
 
   ### Take just clim
@@ -402,25 +341,25 @@ get_heatwave_year <- function(save_clean = F){
   mhw<- gb.mhw$clim %>%
     mutate(EPU = c("GB"),
            Year = c("2024"))# add EPU column
-  mhw.gb.year <- mhw[15341:15594,]## days in 2024 data set only went to Sep 10, 2024
+  mhw.gb.year <- mhw[15341:15671,]## days in 2024 data set only went to Sep 10, 2024
 
   #GOM
   mhw<- gom.mhw$clim %>%
     mutate(EPU = c("GOM"),
            Year = c("2024"))# add EPU column
-  mhw.gom.year <- mhw[15341:15594,]## days in 2024 data set only went to Sep 10, 2024
+  mhw.gom.year <- mhw[15341:15671,]## days in 2024 data set only went to Sep 10, 2024
 
   #MAB
   mhw<- mab.mhw$clim %>%
     mutate(EPU = c("MAB"),
            Year = c("2024"))# add EPU column
-  mhw.mab.year <- mhw[15341:15594,]## days in 2024 data set only went to Sep 10, 2024
+  mhw.mab.year <- mhw[15341:15671,]## days in 2024 data set only went to Sep 10, 2024
 
 
   bheatwave_year_detrended<- rbind(mhw.gb.year, mhw.gom.year, mhw.mab.year) %>%
     dplyr::mutate(Var = "BottomDetrended")
 
-  heatwave_year <- rbind(heatwave_year, heatwave_year_detrended,
+  heatwave_year <- rbind(heatwave_year_detrended,
                          bheatwave_year_detrended)
 
 if (save_clean){

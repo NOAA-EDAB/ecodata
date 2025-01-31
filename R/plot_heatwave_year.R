@@ -5,9 +5,8 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
-#' @param varName Character string. Which Variable to plot ("Surface", "Bottom", "withtrend")
-#' default variables Surface and Bottom are detrended; option to print surface including
-#' climate change signal is "withtrend"
+#' @param varName Character string. Which Variable to plot ("Surface", "Bottom")
+#' default variables Surface and Bottom are detrended
 #'
 #' @return ggplot object
 #'
@@ -33,7 +32,7 @@ plot_heatwave_year <- function(shadedRegion = NULL,
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
 
-  plotvar = ifelse(varName == "withtrend", "Surface", paste0(varName,"Detrended"))
+  plotvar = paste0(varName,"Detrended")
 
   year <- max(ecodata::heatwave_year$Year, na.rm = TRUE)
 
@@ -42,15 +41,11 @@ plot_heatwave_year <- function(shadedRegion = NULL,
                   Year == year,
                   Var == plotvar)
 
-  legendlab <- ifelse(varName == "withtrend", "Climatology",
-                     "Shifted Climatology")
+  legendlab <- "Shifted Climatology"
 
-  ylabs <- ifelse(varName == "withtrend",
-                  c("Temperature (C)"),
-                  c("Temperature - Climate Trend (C)"))
+  ylabs <- "Temperature - Climate Trend (C)"
 
-  plotvartitle <- ifelse(varName == "withtrend", "Surface (not detrended)",
-                           paste(varName,"Detrended"))
+  plotvartitle <- paste(varName,"Detrended")
 
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
