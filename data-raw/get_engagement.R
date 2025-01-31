@@ -1,77 +1,91 @@
-# Commercial and recreational engagement and reliance
+#### Get Community Social Vulnerability Indicators (CSVI)
 
-#More information about these data are available at https://noaa-edab.github.io/tech-doc/fishery-reliance-and-social-vulnerability.html
+library(dplyr)
+library(tidyr)
 
-library(tidyverse)
-library(readxl)
-library(janitor)
-
-
+# Set directory
 raw.dir <- here::here("data-raw")
 
-engagement_xlsx<-"EJ_in_Top_Fishing_Communities_final.xlsx"
-get_eng_rel <- function(save_clean = F){
+# Define input files
+comm_social_vuln_csv <- "fishdata_2022_CSVI_1-23-2025.csv"
 
-  ## MAB
-  d1 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "Mid-Atlantic_Radar Graph")
-  d1 <- d1[,1:3]
+get_engagement <- function(save_clean = F){
+  # Create data frame to define State-EPU
+  EPUlook <- data.frame(State = c("ME", "MA", "RI", "CT", "DE", "NH", "NY", "NJ", "MD", "VA", "NC", "PA"),
+                  EPU = c("NE", "NE", "NE", "NE", "MAB", "NE","MAB","MAB","MAB","MAB","MAB","MAB"))
 
-  dta <- d1 %>%
-    dplyr::slice(-(15:28), -46) %>% # Removes the rows containing new and original names
-    dplyr::rename("Eng" = "Commercial Engagement Index",
-                  "Rel" = "Commercial Reliance Index") %>%
-    dplyr::mutate(Fishery = c(rep("Commercial",14),rep("Recreational",17)),
-                  Region = c("MAB"))
+  # this reads numbers in as numbers
+  dat <- readr::read_csv(file.path(raw.dir,comm_social_vuln_csv))
 
-
-  # d3 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "Mid-Atlantic_Radar Graph")
-  #
-  # dta3 <- d3 %>%
-  #   dplyr::slice(-(16:19)) %>% # Removes the rows containing new and original names
-  #   dplyr::rename("Eng" = "Commercial Engagement Index",
-  #                 "Rel" = "Commercial Reliance Index") %>%
-  #   dplyr::mutate(Fishery = c(rep("Commercial",14),rep("Recreational",16)),
-  #                 Region = c("MAB"))%>%
-  #   left_join(dta)
+  # These are Bobby's data edits
+  #rename top communities
+  dat$GEO_NAME <- replace(dat$GEO_NAME,
+                          dat$GEO_NAME=="Port Clyde-Tenants Harbor/Saint George/Spruce Head, ME",
+                          "Port Clyde-Tenants Harbor, ME")
 
 
-
-  ## NE
-  d2 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "New England_Radar Graph")
-  d2 <- d2[,1:3]
-
-  dta2 <- d2 %>%
-    slice( -(18:29), -49) %>% # Removes the rows containing new and original names
-    dplyr::rename("Eng" = "Commercial Engagement Index",
-                  "Rel" = "Commercial Reliance Index")  %>%
-    dplyr::mutate(Fishery = c(rep("Commercial",17),rep("Recreational",19)),
-                  Region = c("NE"))
-
-  ### NE EJ
-  # d4 <-read_excel(file.path(raw.dir, engagement_xlsx), sheet =  "New England_Radar Graph")
-  #
-  # dta4 <- d4 %>%
-  #   dplyr::slice(-(18:22)) %>% # Removes the rows containing new and original names
-  #   dplyr::rename("Eng" = "Commercial Engagement Index",
-  #                 "Rel" = "Commercial Reliance Index") %>%
-  #   dplyr::mutate(Fishery = c(rep("Commercial",17),rep("Recreational",16)),
-  #                 Region = c("NE")) %>%
-  #   left_join(dta2) %>%
-  #   dplyr::select("Commuity Name","Eng","Rel",
-  #                 "Personal Disruption Index",
-  #                 "Population Composition Index",
-  #                 "Poverty Index" ,"1 std","0.5 std",
-  #                 "Fishery", "EJ Rating", "Region"  )
-
-  engagement <- dta %>% rbind(dta2) %>%
-    dplyr::rename("Community" = "Community Name",
-                  "EPU" = "Region") %>%
-    dplyr::mutate(Eng = as.numeric(Eng),
-                  Rel = as.numeric(Rel))#,
-                  #`EJ Rating` = dplyr::recode(`EJ Rating`,
-                  #                            "All Others Communities" = "All Other Communities"))
+  dat$GEO_NAME <- replace(dat$GEO_NAME,
+                          dat$GEO_NAME=="Sandwich/East Sandwich/Forestdale, MA",
+                          "Sandwich, MA")
 
 
+  dat$GEO_NAME <- replace(dat$GEO_NAME,
+                          dat$GEO_NAME=="Reedville/District 5 (Northumberland County), VA",
+                          "Reedville, VA")
+
+  # If we want a long dataset, these need to be numbers to have them with the Eng and Rel values
+  # Otherwise we need a wide dataset
+  dat<- dat |>
+    dplyr::mutate(across(ComEng_ct:urban_sprawl_index_rank, ~
+                           as.numeric(case_when(
+                             . == "low" ~ "1",
+                             . == "med" ~ "2",
+                             . == "med high" ~ "3",
+                             . == "high" ~ "4",
+                             TRUE ~ NA_character_
+                           ))))
+
+
+
+  engagement <- dat |>
+    # Filter only Northeast region
+    #dplyr::filter(REGION == "Northeast") |>
+    # Deselect unnecessary columns
+    dplyr::mutate(EPU = case_when(Council == "New England" ~ "NE",
+                                  Council == "Mid-Atlantic" ~ "MAB")) |>
+    dplyr::select(!c("Council", "MAPNAME", "geography", "REGION", "STATEABBR")) |>
+    # can't do this and keep correct data attributes (numeric and factor)
+    tidyr::pivot_longer(cols = c("TOTPOP",
+                                 "personal_disruption",
+                                 "pop_composition",
+                                 "poverty",
+                                 "labor_force_str",
+                                 "housing_characteristics",
+                                 "housing_disrupt",
+                                 "retiree_migration",
+                                 "urban_sprawl_index",
+                                 "ComEng",
+                                 "ComRel",
+                                 "RecEng",
+                                 "RecRel",
+                                 "RecEng_ct",
+                                 "RecRel_ct",
+                                 "ComEng_ct",
+                                 "ComRel_ct",
+                                 "personal_disruption_rank",
+                                 "pop_composition_rank",
+                                 "poverty_rank",
+                                 "labor_force_str_rank",
+                                 "housing_characteristics_rank",
+                                 "housing_disrupt_rank",
+                                 "retiree_migration_rank",
+                                 "urban_sprawl_index_rank"),
+                          names_to = "Var", values_to = "Value") |>
+    dplyr::mutate(Units = case_when(Var == "TOTPOP" ~ "number of individuals",
+                                    Var != "TOTPOP" ~ "unitless")) |>
+    tidyr::unite("Var", c(GEO_NAME,Var), sep = "-") |>
+    dplyr::rename("Time" = "year") |>
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   if (save_clean){
     usethis::use_data(engagement, overwrite = T)
@@ -79,4 +93,4 @@ get_eng_rel <- function(save_clean = F){
     return(engagement)
   }
 }
-get_eng_rel(save_clean = T)
+get_engagement(save_clean = T)
