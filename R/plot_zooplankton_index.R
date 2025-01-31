@@ -42,7 +42,7 @@ plot_zooplankton_index <- function(shadedRegion = NULL,
                                paste("Spring",varName,"Abundance Index Estimate")),
                     EPU %in% filterEPUs) |>
       dplyr::group_by(EPU) |>
-      dplyr::summarise(max = max(Value))
+      dplyr::summarise(max = max(Value, na.rm = T))
 
     p <- ecodata::zooplankton_index |>
       dplyr::filter(Var %in% c(paste("Fall",varName,"Abundance Index Estimate"),
