@@ -117,10 +117,10 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
     #Test for trend and add lines
     ecodata::geom_gls(ggplot2::aes(x = Time, y = Mean,
                                    color = Var),
-                      alpha = setup$trend.alpha, size = setup$trend.size) +
+                      alpha = setup$trend.alpha, size = setup$trend.size,na.rm = T) +
     ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Mean,
                                        color = Var),
-                     alpha = setup$trend.alpha, size = setup$trend.size) +
+                     alpha = setup$trend.alpha, size = setup$trend.size,na.rm = T) +
     # ecodata::geom_lm(aes(x = Time, y = Mean,
     #              color = Var),
     #            alpha = trend.alpha, size = trend.size) +
@@ -131,7 +131,7 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
                          alpha = 0.5,
                          fill = "grey") +
     ggplot2::geom_line(ggplot2::aes(x = Time, y = Mean),linewidth = setup$lwd-0.5) +
-    ggplot2::geom_point(ggplot2::aes(x = Time, y = Mean),size = setup$pcex-0.5) +
+    ggplot2::geom_point(ggplot2::aes(x = Time, y = Mean),size = setup$pcex-0.5,na.rm = T) +
     ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
     ggplot2::guides(color = "none") +
     ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
@@ -159,7 +159,7 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
                          ggplot2::aes(x = Time, y = Value),
                          color = "#ca0020")+
       ggplot2::geom_point(data = neamap.1,
-                          ggplot2::aes(x = Time, y = Value),
+                          ggplot2::aes(x = Time, y = Value),na.rm = T,
                           size = setup$pcex-0.5,
                           color = "#ca0020")
   }
@@ -176,10 +176,10 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
     #Test for trend and add lines
     ecodata::geom_gls(ggplot2::aes(x = Time, y = Mean,
                                    color = Var),
-                      alpha = setup$trend.alpha, size = setup$trend.size) +
+                      alpha = setup$trend.alpha, size = setup$trend.size,na.rm = T) +
     ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Mean,
                                        color = Var),
-                     alpha = setup$trend.alpha, size = setup$trend.size) +
+                     alpha = setup$trend.alpha, size = setup$trend.size,na.rm = T) +
     # ecodata::geom_lm(aes(x = Time, y = Mean,
     #              color = Var),
     #            alpha = trend.alpha, size = trend.size) +
@@ -190,7 +190,7 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
                          alpha = 0.5,
                          fill = "grey") +
     ggplot2::geom_line(ggplot2::aes(x = Time, y = Mean),linewidth = setup$lwd-0.5) +
-    ggplot2::geom_point(ggplot2::aes(x = Time, y = Mean),size = setup$pcex-0.5) +
+    ggplot2::geom_point(ggplot2::aes(x = Time, y = Mean),size = setup$pcex-0.5,na.rm = T) +
     ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
     ggplot2::guides(color = "none") +
     ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
@@ -220,7 +220,7 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
       ggplot2::geom_point(data = neamap.2,
                           ggplot2::aes(x = Time, y = Value),
                           size = setup$pcex-0.5,
-                          color = "#ca0020")
+                          color = "#ca0020",na.rm = T)
   }
 
   ### Planktivore
@@ -239,12 +239,12 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
     #Test for trend and add lines
     # bespoke geom just for planktivores since nmle package could not fit
     # models with ar1 errors
-    ecodata::geom_gls_gauss(ggplot2::aes(x = Time, y = Mean,
+    ecodata::geom_gls(ggplot2::aes(x = Time, y = Mean,
                                    color = Var),
-                      alpha = setup$trend.alpha, size = setup$trend.size) +
+                      alpha = setup$trend.alpha, size = setup$trend.size,na.rm = T) +
     ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Mean,
                                        color = Var),
-                     alpha = setup$trend.alpha, size = setup$trend.size) +
+                     alpha = setup$trend.alpha, size = setup$trend.size,na.rm = T) +
     # ecodata::geom_lm(aes(x = Time, y = Mean,
     #              color = Var),
     #            alpha = trend.alpha, size = trend.size) +
@@ -255,7 +255,7 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
                          alpha = 0.5,
                          fill = "grey") +
     ggplot2::geom_line(ggplot2::aes(x = Time, y = Mean),linewidth = setup$lwd-0.5) +
-    ggplot2::geom_point(ggplot2::aes(x = Time, y = Mean),size = setup$pcex-0.5) +
+    ggplot2::geom_point(ggplot2::aes(x = Time, y = Mean),size = setup$pcex-0.5,na.rm = T) +
     ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
     ggplot2::guides(color = "none") +
     ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
@@ -285,7 +285,7 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
       ggplot2::geom_point(data = neamap.3,
                           ggplot2::aes(x = Time, y = Value),
                           size = setup$pcex-0.5,
-                          color = "#ca0020")
+                          color = "#ca0020",na.rm = T)
   }
 
   ### Benthos
@@ -301,10 +301,10 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
     #Test for trend and add lines
     ecodata::geom_gls(ggplot2::aes(x = Time, y = Mean,
                                    color = Var),
-                      alpha = setup$trend.alpha, size = setup$trend.size) +
+                      alpha = setup$trend.alpha, size = setup$trend.size,na.rm = T) +
     ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Mean,
                                        color = Var),
-                     alpha = setup$trend.alpha, size = setup$trend.size) +
+                     alpha = setup$trend.alpha, size = setup$trend.size,na.rm = T) +
 
     # ecodata::geom_lm(aes(x = Time, y = Mean,
     #              color = Var),
@@ -316,7 +316,7 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
                          alpha = 0.5,
                          fill = "grey") +
     ggplot2::geom_line(ggplot2::aes(x = Time, y = Mean),linewidth = setup$lwd-0.5) +
-    ggplot2::geom_point(ggplot2::aes(x = Time, y = Mean),size = setup$pcex-0.5) +
+    ggplot2::geom_point(ggplot2::aes(x = Time, y = Mean),size = setup$pcex-0.5,na.rm = T) +
     ggplot2::scale_color_manual(values = series.col, aesthetics = "color")+
     ggplot2::guides(color = "none") +
     ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
@@ -346,7 +346,7 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
       ggplot2::geom_point(data = neamap.4,
                           ggplot2::aes(x = Time, y = Value),
                           size = setup$pcex-0.5,
-                          color = "#ca0020")
+                          color = "#ca0020",na.rm = T)
   }
 
 
