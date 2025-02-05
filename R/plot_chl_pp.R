@@ -225,6 +225,6 @@ plot_chl_pp <- function(shadedRegion = NULL,
 
 attr(plot_chl_pp,"report") <- c("MidAtlantic","NewEngland")
 attr(plot_chl_pp,"varName") <- c("chl","pp","size")
-attr(plot_chl_pp,"plottype") <- c("weekly","monthly","anomaly")
+attr(plot_chl_pp,"plottype") <- c("weekly","monthly")
 attr(plot_chl_pp,"year") <- NULL
 attr(plot_chl_pp,"EPU") <- c("MAB","GB","GOM")
