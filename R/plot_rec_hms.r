@@ -4,6 +4,7 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
+#' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
 #'
@@ -12,7 +13,8 @@
 #'
 
 plot_rec_hms <- function(shadedRegion = NULL,
-                              report="MidAtlantic") {
+                              report="MidAtlantic",
+                         n=0) {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -32,6 +34,9 @@ plot_rec_hms <- function(shadedRegion = NULL,
      tidyr::separate(col = Var,into = c("Group","Trash"),sep="-") |>
      dplyr::mutate(Value = Value/1000)
 
+   ltm <- fix |>
+     dplyr::summarise(hline = mean(Value, na.rm = T))
+
 
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
@@ -45,7 +50,8 @@ plot_rec_hms <- function(shadedRegion = NULL,
         ymin = -Inf, ymax = Inf) +
     ggplot2::geom_point()+
     ggplot2::geom_line()+
-    ggplot2::ggtitle("Recreational Shark Landings")+
+    ecodata::geom_lm(n = n) +
+    ggplot2::ggtitle(paste(report,"Recreational Shark Landings"))+
     ggplot2::ylab(expression("Number of Fish (1000s)"))+
     ggplot2::xlab(ggplot2::element_blank()) +
 
@@ -55,12 +61,12 @@ plot_rec_hms <- function(shadedRegion = NULL,
     ecodata::theme_title()
 
    # optional code for New England specific (2 panel) formatting
-    if (report == "NewEngland") {
-      p <- p +
-        ggplot2::theme(legend.position = "bottom",
-                       legend.title = ggplot2::element_blank())
-
-    }
+    # if (report == "NewEngland") {
+    #   p <- p +
+    #     ggplot2::theme(legend.position = "bottom",
+    #                    legend.title = ggplot2::element_blank())
+    #
+    # }
 
     return(p)
 }

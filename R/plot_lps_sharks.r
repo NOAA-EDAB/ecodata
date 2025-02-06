@@ -4,6 +4,10 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
+#' @param varName Character string. Which variable to plot ("Total", "Blue_Shark", "Common_Thresher", "Shortfin_Mako")
+#' Default plot is Total pelagic sharks.
+#'
+#' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
 #'
@@ -12,7 +16,9 @@
 #'
 
 plot_lps_sharks <- function(shadedRegion = NULL,
-                            report="MidAtlantic") {
+                            report="MidAtlantic",
+                            varName = "Total",
+                            n=0) {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -28,8 +34,12 @@ plot_lps_sharks <- function(shadedRegion = NULL,
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
    fix <- ecodata::lps_sharks |>
-     dplyr::filter(EPU %in% filterEPUs) |>
+     dplyr::filter(EPU %in% filterEPUs,
+                   Var %in% varName) |>
      dplyr::mutate(Value = Value/1000)
+
+   ltm <- fix |>
+     dplyr::summarise(hline = mean(Value, na.rm = T))
 
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
@@ -37,15 +47,20 @@ plot_lps_sharks <- function(shadedRegion = NULL,
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
   #
   p <- fix |>
-    ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color = Var))+
+    ggplot2::ggplot(ggplot2::aes(x = Time, y = Value))+
     ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
         xmin = setup$x.shade.min , xmax = setup$x.shade.max,
         ymin = -Inf, ymax = Inf) +
     ggplot2::geom_point()+
     ggplot2::geom_line()+
-    ggplot2::ggtitle("Recreational Shark Landings")+
+    ecodata::geom_lm(n = n) +
+    ggplot2::ggtitle(paste(report, "Recreational Pelagic Shark Landings"))+
     ggplot2::ylab(expression("Number of Fish (1000s)"))+
     ggplot2::xlab(ggplot2::element_blank()) +
+    ggplot2::geom_hline(ggplot2::aes(yintercept = ltm$hline),
+                        linewidth = setup$hline.size,
+                        alpha = setup$hline.alpha,
+                        linetype = setup$hline.lty)+
 
 #    ecodata::geom_gls()+
     ecodata::theme_ts()+
@@ -53,17 +68,19 @@ plot_lps_sharks <- function(shadedRegion = NULL,
     ecodata::theme_title()
 
    # optional code for New England specific (2 panel) formatting
-    if (report == "NewEngland") {
-      p <- p +
-        ggplot2::theme(legend.position = "bottom",
-                       legend.title = ggplot2::element_blank())
-
-    }
+    # if (report == "NewEngland") {
+    #   p <- p +
+    #     ggplot2::theme(legend.position = "bottom",
+    #                    legend.title = ggplot2::element_blank())
+    #
+    # }
 
     return(p)
 }
 
 attr(plot_lps_sharks,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_lps_sharks,"varName") <- c("Total", "Blue_Shark", "Common_Thresher", "Shortfin_Mako")
+
 
   # Paste commented original plot code chunk for reference
   # ecodata::dataset |>
