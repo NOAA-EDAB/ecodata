@@ -21,8 +21,8 @@ plot_chl_pp(
 
 \item{varName}{Character string. Which Variable to plot ("chl","pp","size")}
 
-\item{plottype}{Character string. Which plot ("weekly", "monthly", "anomaly")
-Weekly and monthly plots are for both variables, annual anomaly plot for PP only.}
+\item{plottype}{Character string. Which plot ("weekly", "monthly")
+Weekly and monthly plots are for both variables.}
 
 \item{year}{Numeric value. Optional. Year for weekly plot, defaults to max year in data.}
 

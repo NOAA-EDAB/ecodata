@@ -6,8 +6,8 @@
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which Variable to plot ("chl","pp","size")
-#' @param plottype Character string. Which plot ("weekly", "monthly", "anomaly")
-#' Weekly and monthly plots are for both variables, annual anomaly plot for PP only.
+#' @param plottype Character string. Which plot ("weekly", "monthly")
+#' Weekly and monthly plots are for both variables.
 #' @param year Numeric value. Optional. Year for weekly plot, defaults to max year in data.
 #' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
