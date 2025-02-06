@@ -48,7 +48,8 @@ get_rec_hms <- function(save_clean = F){
                                          `4` = "New England",
                                          `5` = "Mid-Atlantic")) %>%
     dplyr::mutate(Var = paste0(Var, "-", EPU)) %>%
-    dplyr::select(Time, Var, Value, EPU)
+    dplyr::select(Time, Var, Value, EPU) |>
+    dplyr::filter(!stringr::str_detect(Var, "Pelagic")) # Remove pelagics from this dataset per HMS request (MRIP should not be used for pelagics)
 
   # metadata ----
   attr(rec_hms, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/recreational-shark-fishing-indicators.html"
