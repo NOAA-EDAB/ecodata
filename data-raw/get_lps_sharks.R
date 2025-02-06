@@ -20,7 +20,7 @@ get_lps_sharks <- function(save_clean = F){
     dplyr::mutate(Units = "N of Fish",
                   EPU = "MAB") |>
     dplyr::rename("Total" = "Grand Total",
-                  "Year" = "Row Labels",
+                  "Time" = "Row Labels",
                   "Blue_Shark" = "BLUE SHARK",
                   "Common_Thresher" = "COMMON THRESHER",
                   "Shortfin_Mako" = "SHORTFIN MAKO") |>
@@ -29,14 +29,14 @@ get_lps_sharks <- function(save_clean = F){
                                  "Shortfin_Mako",
                                  "Total"),
                         names_to = "Var", values_to = "Value") |>
-    dplyr::select(Year, Var, Value, EPU, Units)
+    dplyr::select(Time, Var, Value, EPU, Units)
 
   # NE
   lps_sharks_ne <- lps_sharks[26:48,] |>
     dplyr::mutate(Units = "N of Fish",
                   EPU = "NE") |>
     dplyr::rename("Total" = "Grand Total",
-                  "Year" = "Row Labels",
+                  "Time" = "Row Labels",
                   "Blue_Shark" = "BLUE SHARK",
                   "Common_Thresher" = "COMMON THRESHER",
                   "Shortfin_Mako" = "SHORTFIN MAKO") |>
@@ -45,9 +45,11 @@ get_lps_sharks <- function(save_clean = F){
                                  "Shortfin_Mako",
                                  "Total"),
                         names_to = "Var", values_to = "Value") |>
-    dplyr::select(Year, Var, Value, EPU, Units)
+    dplyr::select(Time, Var, Value, EPU, Units)
 
-  lps_sharks <- rbind(lps_sharks_mab, lps_sharks_ne)
+  lps_sharks <- rbind(lps_sharks_mab, lps_sharks_ne) |>
+    dplyr::mutate(Value = as.numeric(Value),
+                  Time = as.numeric(Time))
 
   # metadata ----
   attr(lps_sharks, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/recreational-shark-fishing-indicators.html"
