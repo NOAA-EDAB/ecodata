@@ -9,7 +9,7 @@ library(lubridate)
 library(readxl)
 
 raw.dir <- here::here("data-raw")
-gsi_xlsx<-"T200-based_GSI_EN4_195401-202409_monthly.csv"
+gsi_xlsx<-"T200-based_GSI_EN4_195401-202411_monthly.csv"
 get_gsi <- function(save_clean = F){
 
   gsi <- read.csv(file.path(raw.dir, gsi_xlsx)) %>%

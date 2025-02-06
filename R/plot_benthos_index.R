@@ -130,5 +130,5 @@ plot_benthos_index <- function(shadedRegion = NULL,
 }
 
 attr(plot_benthos_index,"report") <- c("MidAtlantic","NewEngland")
-attr(plot_benthos_index, "varName") <- c("Microbenthos", "Macrobenthos")
+attr(plot_benthos_index, "varName") <- c("Megabenthos", "Macrobenthos")
 attr(plot_benthos_index, "plottype") <- c("index", "cog")
