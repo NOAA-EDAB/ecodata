@@ -7,7 +7,7 @@ library(tidyr)
 raw.dir <- here::here("data-raw")
 
 # Define input files
-finfish_traits_csv <- "cwmtraits_forSOE - Bart DiFiore.csv"
+finfish_traits_csv <- "cwmtraits_forSOE.csv"
 
 get_finfish_traits <- function(save_clean = F){
 
@@ -17,10 +17,10 @@ get_finfish_traits <- function(save_clean = F){
                                         "cm","1/years","cm","unitless","unitless","unitless"))
 
   finfish_traits <- read.csv(file.path(raw.dir, finfish_traits_csv)) |>
-    tidyr::pivot_longer(cols = -c(region, est_year, season), names_to = "Var", values_to = "Value") |>
+    tidyr::pivot_longer(cols = -c(region, year, season), names_to = "Var", values_to = "Value") |>
     dplyr::left_join(finfish_units) |>
     dplyr::mutate(Var = paste0(season, "-", Var)) |>
-    dplyr::rename("Time" = "est_year",
+    dplyr::rename("Time" = "year",
                   "EPU" = "region") |>
     dplyr::select(Time, Var, Value, EPU, Units)
 

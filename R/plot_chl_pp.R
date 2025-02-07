@@ -216,7 +216,7 @@ plot_chl_pp <- function(shadedRegion = NULL,
       p <- plot_phyto_size(report = report,
                          EPU = EPU)
     } else {
-      p <- ""
+      p <- "Size plots are only available for the weekly scale."
     }
   }
   return(p)

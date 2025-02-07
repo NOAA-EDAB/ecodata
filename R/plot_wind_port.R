@@ -56,7 +56,7 @@ plot_wind_port <- function(shadedRegion = NULL,
      tidyr::pivot_longer(cols = c(EJ, Gentrification), names_to = "Variable") |>
      dplyr::filter(!value == "NA") |>
      dplyr::mutate(symbol = dplyr::recode(Variable, EJ = -7, Gentrification = -3),
-                   Variable = dplyr::recode(Variable,"EJ"= "Mid-High to High EJ Concerns" ,
+                   Variable = dplyr::recode(Variable,"EJ"= "Mid-High to High Social-demographics Concerns" ,
                                      "Gentrification" ="Mid-High to High Gentrification Concerns"))
 
 
