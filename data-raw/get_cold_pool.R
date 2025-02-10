@@ -24,7 +24,7 @@ get_cold_pool <- function(save_clean = F){
                                  "extent_index",         "se_extent_index" ),
                         names_to = "Var",values_to = "Value") %>%
     dplyr::mutate(EPU = c("MAB")) %>%
-    dplyr::rename(Time = year, Source = source)
+    dplyr::rename(Time = year)
 
     cold_pool <- rbind(cold_pool, cold_pool_mom6)
 
