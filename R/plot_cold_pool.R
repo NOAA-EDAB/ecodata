@@ -52,7 +52,7 @@ plot_cold_pool <- function(shadedRegion = NULL,
   cpts <- cpdup |>
     dplyr::filter(!duplicated) |>
     dplyr::bind_rows(cpdup |>
-                       dplyr::filter(duplicated & Source=="GLORYS")) |>
+                       dplyr::filter(duplicated & Source %in% c("GLORYS","ROMS"))) |>
     dplyr::select(-duplicated)
 
   # code for generating plot object p
