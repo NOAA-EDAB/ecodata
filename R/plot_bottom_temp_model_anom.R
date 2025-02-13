@@ -7,7 +7,7 @@
 #' @param varName Character string. Which variable ("seasonal", "annual")
 #' @param EPU Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB
 #' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
-#' @param source character vector. Which source data should be plotted (e.g. 'GLORYS','MOM6')
+#' @param plottype character vector. Which source data should be plotted (e.g. 'GLORYS','MOM6')
 #'
 #' @return ggplot object
 #'
@@ -17,7 +17,7 @@ plot_bottom_temp_model_anom <- function(shadedRegion=NULL,
                                   report="MidAtlantic",
                                   varName="seasonal",
                                   EPU="MAB",
-                                  source = 'GLORYS',
+                                  plottype = 'GLORYS',
                                   n = 0) {
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -34,7 +34,7 @@ plot_bottom_temp_model_anom <- function(shadedRegion=NULL,
 
 
   fix <- ecodata::bottom_temp_model_anom |>
-    dplyr::filter(Source %in% source) |>
+    dplyr::filter(Source %in% plottype) |>
     dplyr::filter(EPU %in% filterEPUs) |>
     dplyr::mutate(Time = as.numeric(Time),
                   Var = stringr::str_to_title(stringr::str_extract(Var,"Winter|Spring|Summer|Fall|Annual"))) |>
@@ -111,4 +111,4 @@ plot_bottom_temp_model_anom <- function(shadedRegion=NULL,
 attr(plot_bottom_temp_model_anom,"EPU") <- c("MAB","GB","GOM")
 attr(plot_bottom_temp_model_anom,"report") <- c("MidAtlantic","NewEngland")
 attr(plot_bottom_temp_model_anom, "varName") <- c("seasonal", "annual")
-attr(plot_bottom_temp_model_anom, "source") <- c("GLORYS", "MOM6")
+attr(plot_bottom_temp_model_anom, "plottype") <- c("GLORYS", "MOM6")

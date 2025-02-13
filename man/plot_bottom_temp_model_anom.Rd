@@ -9,7 +9,7 @@ plot_bottom_temp_model_anom(
   report = "MidAtlantic",
   varName = "seasonal",
   EPU = "MAB",
-  source = "GLORYS",
+  plottype = "GLORYS",
   n = 0
 )
 }
@@ -22,7 +22,7 @@ plot_bottom_temp_model_anom(
 
 \item{EPU}{Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB}
 
-\item{source}{character vector. Which source data should be plotted (e.g. 'GLORYS','MOM6')}
+\item{plottype}{character vector. Which source data should be plotted (e.g. 'GLORYS','MOM6')}
 
 \item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
