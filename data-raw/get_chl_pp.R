@@ -5,8 +5,7 @@ library(stringr)
 raw.dir <- here::here("data-raw")
 
 # input files ----
-chl_pp_csv <- "19980101_20241231-OCCCI_GLOBCOLOUR-CHLOR_A_PPD_PSC_FMICRO_PSC_FNANO_PSC_FPICO_PSC_MICRO_PSC_NANO_PSC_PICO-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_PHYTOPLANKTON-SOE_FORMAT.csv"
-
+chl_pp_csv <- "19980101_20241231-OCCCI-CHLOR_A_PPD_PSC_FMICRO_PSC_FNANO_PSC_FPICO_PSC_MICRO_PSC_NANO_PSC_PICO-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_PHYTOPLANKTON-SOE_FORMAT.csv"
 # transformation ----
 chl_pp <- read.csv(file.path(raw.dir, chl_pp_csv)) %>%
   #dplyr::mutate(ALGORITHM = word(stringr::str_replace(ALGORITHM, "_", " "))) %>%
