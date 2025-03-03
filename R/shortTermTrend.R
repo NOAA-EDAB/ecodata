@@ -106,13 +106,14 @@ StatLM <- ggplot2::ggproto("StatLM",
                              ## Geom removes NAs from data. arfit needs full timeseries with NAs
                              # arfit pads the time series and returns this padded data set.
                              # the returned data set is used in plotting the fitted model
-
-                             if(n>7) {
+                             nlimit <- 7
+                             if(n>nlimit) {
 
                                # find dimensions of the data and adjust n accordingly.
                                # Otherwise if n > nrow(data) fitted values get overwritten
 
-                               if (n> nrow(data)){
+                               if (n > nrow(data)){
+                                 # Allows user to overshoot n and fit will be to whole time series
                                  n <- nrow(data)
                                }
 
@@ -133,20 +134,29 @@ StatLM <- ggplot2::ggproto("StatLM",
                                # print(dataUse)
                                # print("#######################")
 
-                               xmax <- max(data$x)
-                               xmin <- xmax-n +1
+                               if (nrow(data) < nlimit) {
+                                 # too many NAs then exit
+                                 linear_ar1 <- data.frame(x = NA,
+                                                          y = NA,
+                                                          pValue = 1)
 
-                               # Linear model with AR1 error
-                               linear_ar1 <-
-                                 try(arfit::fit_real_data(dataUse,nBootSims=nBootSamples))
-                               #print(linear_ar1$pValue)
-                               if (is.na(linear_ar1$pValue)){
-                                 return(best_lm <- data.frame(model = NA,
-                                                              coefs..Intercept = NA,
-                                                              coefs.time = NA,
-                                                              coefs.time2 = NA,
-                                                              pval = NA))
+                               } else {
 
+                                 xmax <- max(data$x)
+                                 xmin <- xmax-n +1
+
+                                 # Linear model with AR1 error
+                                 linear_ar1 <-
+                                   try(arfit::fit_real_data(dataUse,nBootSims=nBootSamples))
+                                 #print(linear_ar1$pValue)
+                                 if (is.na(linear_ar1$pValue)){
+                                   return(best_lm <- data.frame(model = NA,
+                                                                coefs.Intercept = NA,
+                                                                coefs.time = NA,
+                                                                coefs.time2 = NA,
+                                                                pval = NA))
+
+                                 }
                                }
 
                                # pick out model. Either null (no trend) or alternative (trend)
