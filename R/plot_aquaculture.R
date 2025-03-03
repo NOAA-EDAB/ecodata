@@ -75,7 +75,7 @@ plot_aquaculture <- function(shadedRegion = NULL,
                                                     size = setup$lwd)} +
     #ggplot2::facet_wrap(~Region, nrow = 3)+
     ggplot2::ggtitle(paste0("Oyster Production in ", setup$region))+
-    {if(report == "MidAtlantic") ggplot2::ylab(expression("Oysters production"))} +
+    {if(report == "MidAtlantic") ggplot2::ylab(expression("Oyster production"))} +
     {if(report == "NewEngland")ggplot2::ylab(expression("Production/Acre"))} +
     ggplot2::xlab("")+
     ggplot2::theme(legend.position="bottom",
