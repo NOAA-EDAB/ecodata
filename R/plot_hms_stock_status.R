@@ -93,8 +93,11 @@ plot_hms_stock_status <- function(shadedRegion = NULL,
     ggplot2::guides(color = FALSE) +
     ecodata::theme_ts()
 
+  # Temporarily block plots as HMS reviews indicator
+  p <- "This indicator is under review."
+  return(p)
 
-  return(list(p=p,unknown=unknown))
+  #return(list(p=p,unknown=unknown))
 }
 
 attr(plot_hms_stock_status,"report") <- c("MidAtlantic","NewEngland")

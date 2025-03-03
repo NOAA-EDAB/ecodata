@@ -123,6 +123,9 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
 
   }
 
+  if (varName == "assessment" & EPU == "GOM") {
+    p <- "Assessment variable includes GB and GOM. See plot for EPU = GB."
+  }
 
   return(p)
 

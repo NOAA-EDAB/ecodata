@@ -83,7 +83,7 @@ plot_narw <- function(shadedRegion = NULL,
   }
 
     if (report == "NewEngland") {
-      p <- NULL
+      p <- "This is a shelfwide indicator. Please use report = 'MidAtlantic' to view."
     }
 
 
