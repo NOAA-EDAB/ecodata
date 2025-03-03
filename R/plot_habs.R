@@ -34,7 +34,7 @@ plot_habs <- function(shadedRegion = NULL,
     plotLegend <- "State"
   } else if(varName == "Alexandrium") {
     plotTitle <- "Gulf of Maine Alexandrium Cyst Abundance"
-    plotylab <- expression("Cyst Abundance (10"^6*"Cells)")
+    plotylab <- expression("Cyst Abundance (10"^16*"Cells)")
     plotLegend <- "Region"
 
   }
