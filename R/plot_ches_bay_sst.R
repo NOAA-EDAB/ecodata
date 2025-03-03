@@ -64,7 +64,8 @@ plot_ches_bay_sst <- function(shadedRegion = NULL,
     midpoint <- 0
   }
 
-  sst <- sst |> dplyr::mutate(Value = replace(Value, Value > maxVal, maxVal))
+  sst <- sst |> dplyr::mutate(Value = replace(Value, Value > maxVal, maxVal)) |>
+    dplyr::filter(Var != "Summer")
 
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
