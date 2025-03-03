@@ -81,6 +81,10 @@ plot_seabird_ne <- function(shadedRegion = NULL,
       dplyr::filter(!stringr::str_detect(Var, "Productivity"),
                     !stringr::str_detect(Var, "Sum"))
     fix <- tidyr::separate(fix, Var,c("Island", "Spp"), sep = " COTE ") |>
+      dplyr::mutate(Island = plyr::mapvalues(Island, from = c("EER","JI","MR","OGI","PINWR","SINWR","STI"),
+                                             to = c("Eastern Egg Rock", "Jenny Island", "Matinicus Rock",
+                                                    "Outer Green Island", "Pond Island", "Seal Island",
+                                                    "Stratton Island"))) |>
       dplyr::group_by(Island, Time) |>
       dplyr::summarise(shannon = vegan::diversity(Value),
                        simpson = vegan::diversity(Value, index = "simpson"),
@@ -175,7 +179,7 @@ plot_seabird_ne <- function(shadedRegion = NULL,
 
 
   if(report == "MidAtlantic"){
-    p <- NULL
+    p <- "This indicator is for New England only."
   }
 
     return(p)
