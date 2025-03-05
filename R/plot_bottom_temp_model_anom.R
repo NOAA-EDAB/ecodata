@@ -34,13 +34,19 @@ plot_bottom_temp_model_anom <- function(shadedRegion=NULL,
 
 
   fix <- ecodata::bottom_temp_model_anom |>
-    dplyr::filter(Source %in% plottype) |>
     dplyr::filter(EPU %in% filterEPUs) |>
     dplyr::mutate(Time = as.numeric(Time),
                   Var = stringr::str_to_title(stringr::str_extract(Var,"Winter|Spring|Summer|Fall|Annual"))) |>
     dplyr::filter(!Var == "NA") |>
     dplyr::mutate(Source = as.factor(Source)) |>
     dplyr::arrange(Source,Time,EPU,Var)
+
+  # Add statement to properly assign source (GLORYS+PSY or MOM6)
+  if (plottype == "MOM6") {
+    fix <- dplyr::filter(fix, Source == "MOM6")
+  } else {
+    fix <- dplyr::filter(fix, (Source == "GLORYS" & Time >= 1993) | (Source == "ROMS") | (Source != "MOM6"))
+  }
 
   fix$Var <- factor(fix$Var, levels= c("Winter","Spring","Summer","Fall", "Annual"))
 
