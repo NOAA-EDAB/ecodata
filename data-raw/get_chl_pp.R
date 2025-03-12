@@ -23,7 +23,8 @@ chl_pp <- read.csv(file.path(raw.dir, chl_pp_csv)) %>%
   dplyr::rename(Time = PERIOD, Units = UNITS, Var = VARIABLE,
                 EPU = SUBAREA, Value = VALUE) %>%
   dplyr::mutate(Value = as.numeric(Value)) %>%
-  dplyr::filter(Var != "ANNUAL_PPD_RATIO_ANOMALY")
+  dplyr::filter(Var != "ANNUAL_PPD_RATIO_ANOMALY") %>%
+  dplyr::distinct()
 
 chl_pp <- as_tibble(chl_pp)
 
