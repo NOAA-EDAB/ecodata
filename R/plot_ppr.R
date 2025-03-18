@@ -130,7 +130,7 @@ plot_ppr <- function(shadedRegion = NULL,
 
 attr(plot_ppr,"report") <- c("MidAtlantic","NewEngland")
 attr(plot_ppr,"varName") <- c("pp","fogarty","ryther")
-attr(plot_ppr,"threshold") <- c("regional")
+attr(plot_ppr,"threshold") <- c("global")
 
 
   # Paste commented original plot code chunk for reference
