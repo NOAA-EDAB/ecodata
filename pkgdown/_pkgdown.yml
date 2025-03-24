@@ -60,6 +60,7 @@ reference:
     - bennet
     - comdat
     - commercial_div
+    - community_climate_vulnerability
     - engagement
     - hms_landings
     - hms_stock_status
@@ -72,6 +73,7 @@ reference:
     desc: "Data files containing megafauna indicators used in the State of the Ecosystem Reports"
     contents:
     - aggregate_biomass
+    - benthos_index
     - blue_runner
     - condition
     - energy_density
@@ -100,6 +102,7 @@ reference:
     - stock_status
     - stom_fullness
     - survey_shannon
+    - zooplankton_index
   - title: "LTL/Hab/Env Indicators"
     desc: "Data files containing Low Trophic Level, Habitat and Environmental indicators used in the State of the Ecosystem Reports"
     contents:
