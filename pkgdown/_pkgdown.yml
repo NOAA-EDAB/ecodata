@@ -126,7 +126,6 @@ reference:
     - hudson_river_flow
     - ichthyo_diversity
     - long_term_sst
-    - phyto_size
     - SAV
     - seasonal_oisst_anom
     - seasonal_oisst_anom_gridded
