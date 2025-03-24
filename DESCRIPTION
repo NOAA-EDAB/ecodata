@@ -45,6 +45,7 @@ Suggests:
 	mgcv,
 	zoo,
 	rlang
+URL: https://noaa-edab.github.io/ecodata/,https://github.com/NOAA-EDAB/ecodata
 Remotes:
   NOAA-EDAB/arfit
 VignetteBuilder: knitr

@@ -8,6 +8,7 @@
 #'
 #' @return ggplot object
 #'
+#' @noRd
 
 plot_phyto_size <- function(shadedRegion = NULL,
                       report="MidAtlantic",

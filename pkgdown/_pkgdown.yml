@@ -1,5 +1,11 @@
 url: https://noaa-edab.github.io/ecodata/
 
+template:
+ bootstrap: 5
+
+#needed for package to be linked by other locally installed packages
+deploy:
+  install_metadata: true
 
 navbar:
  components:
