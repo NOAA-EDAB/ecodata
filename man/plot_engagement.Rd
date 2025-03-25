@@ -8,7 +8,7 @@ plot_engagement(
   shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "Commercial",
-  plottype = "EJ"
+  plottype = "plot"
 )
 }
 \arguments{
@@ -18,7 +18,7 @@ plot_engagement(
 
 \item{varName}{Character string. Which Fishery to plot ("Commercial","Recreational")}
 
-\item{plottype}{Character string. Which Social indicator group to tabulate ("EJ", "Economic", "Gentrification")}
+\item{plottype}{Character string. Which Social indicator group to tabulate ("plot","Social", "Economic", "Gentrification")}
 }
 \value{
 list of 2 items
