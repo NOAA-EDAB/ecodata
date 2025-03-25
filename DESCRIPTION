@@ -2,8 +2,9 @@ Package: ecodata
 Title: Documentation of Ecosystem Indicator Reporting
 Version: 5.0.2
 Authors@R: c(person("Brandon", "Beltz", email = "brandon.beltz@noaa.gov", role = c("cre", "aut")),
+             person("Andy", "Beet", email = "andrew.beet@noaa.gov", role = "aut", comment = c(ORCID = "0000-0001-8270-7090")),
              person("Kimberly", "Bastille", email = "kimberly.bastille@noaa.gov", role = "aut"),
-              person("Sean", "Hardison", role = "aut"))
+             person("Sean", "Hardison", role = "aut"))
 Description: A data package for reporting on Northeast Continental Shelf ecosystem status and trends.
 License: file LICENSE
 Encoding: UTF-8
