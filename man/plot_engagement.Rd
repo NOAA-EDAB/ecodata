@@ -21,10 +21,10 @@ plot_engagement(
 \item{plottype}{Character string. Which Social indicator group to tabulate ("plot","Social", "Economic", "Gentrification")}
 }
 \value{
-list of 2 items
+one of 2 items depending on plottype argument
 
-\item{p}{ggplot object}
-\item{t}{data frame listing selected social indicators for highly engaged communities}
+\item{plottype = "plot"}{ggplot object}
+\item{plottype = indicator group name}{flextable of selected social indicators for highly engaged communities}
 }
 \description{
 Plot population relative engagement vs engagement by community, recreational or commercial fishery.

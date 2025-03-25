@@ -10,10 +10,10 @@
 #' @param varName Character string. Which Fishery to plot ("Commercial","Recreational")
 #' @param plottype Character string. Which Social indicator group to tabulate ("plot","Social", "Economic", "Gentrification")
 #'
-#' @return list of 2 items
+#' @return one of 2 items depending on plottype argument
 #'
-#' \item{p}{ggplot object}
-#' \item{t}{data frame listing selected social indicators for highly engaged communities}
+#' \item{plottype = "plot"}{ggplot object}
+#' \item{plottype = indicator group name}{flextable of selected social indicators for highly engaged communities}
 #'
 #'
 #' @export
