@@ -4,7 +4,12 @@
 \alias{plot_recdat}
 \title{plot recreational data}
 \usage{
-plot_recdat(shadedRegion = NULL, report = "MidAtlantic", varName = "landings")
+plot_recdat(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  varName = "landings",
+  n = 0
+)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
@@ -12,6 +17,8 @@ plot_recdat(shadedRegion = NULL, report = "MidAtlantic", varName = "landings")
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
 \item{varName}{Character string. Variable to plot ("landings","effortdiversity","catchdiversity","effort")}
+
+\item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
 \value{
 ggplot object

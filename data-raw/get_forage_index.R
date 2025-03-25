@@ -3,8 +3,8 @@ raw.dir<- here::here("data-raw/")
 #ann<- "annualforageindex - Sarah Gaichas - NOAA Federal.rds"
 fal<- "fallforageindex - Sarah Gaichas - NOAA Federal.rds"
 spr<- "springforageindex - Sarah Gaichas - NOAA Federal.rds"
-falcog <- "fallforagecog.rds"
-sprcog <- "springforagecog.rds"
+falcog <- "fallforagecog - Sarah Gaichas - NOAA Federal.rds"
+sprcog <- "springforagecog - Sarah Gaichas - NOAA Federal.rds"
 
 get_forage_index <- function(save_clean = F){
 

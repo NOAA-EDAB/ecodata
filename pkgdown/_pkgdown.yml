@@ -1,5 +1,11 @@
 url: https://noaa-edab.github.io/ecodata/
 
+template:
+ bootstrap: 5
+
+#needed for package to be linked by other locally installed packages
+deploy:
+  install_metadata: true
 
 navbar:
  components:
@@ -17,8 +23,9 @@ navbar:
 
 # this will copy workshop folder into root of gh-pages branch
 # acts like a hidden folder in that there are no links to it from pkgdown
-template:
-  assets: workshop
+# Dont remove this. Nice hack to be aware of in future
+#template:
+#  assets: workshop
 
 
 reference:
@@ -53,6 +60,7 @@ reference:
     - bennet
     - comdat
     - commercial_div
+    - community_climate_vulnerability
     - engagement
     - hms_landings
     - hms_stock_status
@@ -65,6 +73,7 @@ reference:
     desc: "Data files containing megafauna indicators used in the State of the Ecosystem Reports"
     contents:
     - aggregate_biomass
+    - benthos_index
     - blue_runner
     - condition
     - energy_density
@@ -93,12 +102,13 @@ reference:
     - stock_status
     - stom_fullness
     - survey_shannon
+    - zooplankton_index
   - title: "LTL/Hab/Env Indicators"
     desc: "Data files containing Low Trophic Level, Habitat and Environmental indicators used in the State of the Ecosystem Reports"
     contents:
-    - bottom_temp
-    - bottom_temp_comp
-    - bottom_temp_seasonal_gridded
+    - bottom_temp_insitu
+    - bottom_temp_model_anom
+    - bottom_temp_model_gridded
     - bottom_temp_glorys
     - seasonal_bt_anomaly_gridded
     - calanus_stage
@@ -119,10 +129,9 @@ reference:
     - hudson_river_flow
     - ichthyo_diversity
     - long_term_sst
-    - phyto_size
     - SAV
     - seasonal_oisst_anom
-    - seasonal_sst_anomaly_gridded
+    - seasonal_oisst_anom_gridded
     - slopewater
     - wcr
     - zoo_diversity

@@ -7,7 +7,8 @@
 plot_trans_dates(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  varName = "timing"
+  varName = "timing",
+  n = 0
 )
 }
 \arguments{
@@ -16,6 +17,8 @@ plot_trans_dates(
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
 \item{varName}{Character string. Which Variable to plot ("timing","length")}
+
+\item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
 \value{
 ggplot object

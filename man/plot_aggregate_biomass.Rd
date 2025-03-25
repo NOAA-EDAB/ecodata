@@ -7,7 +7,8 @@
 plot_aggregate_biomass(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  EPU = "MAB"
+  EPU = "MAB",
+  n = 0
 )
 }
 \arguments{
@@ -16,6 +17,8 @@ plot_aggregate_biomass(
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
 \item{EPU}{Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB}
+
+\item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
 \value{
 ggplot object

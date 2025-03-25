@@ -5,6 +5,7 @@
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which variable to plot ("adult","calf")
+#' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
 #'
@@ -14,7 +15,8 @@
 
 plot_narw <- function(shadedRegion = NULL,
                       report="MidAtlantic",
-                      varName = "adult") {
+                      varName = "adult",
+                      n = 0) {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -64,6 +66,8 @@ plot_narw <- function(shadedRegion = NULL,
         ymin = -Inf, ymax = Inf) +
     ggplot2::geom_point()+
     ggplot2::geom_line()+
+    ecodata::geom_lm(n=n) +
+    ecodata::geom_gls() +
     ggplot2::ggtitle(vtitle)+
     ggplot2::ylab(vylab)+
     ggplot2::geom_hline(ggplot2::aes(yintercept = hline),
@@ -79,7 +83,7 @@ plot_narw <- function(shadedRegion = NULL,
   }
 
     if (report == "NewEngland") {
-      p <- NULL
+      p <- "This is a shelfwide indicator. Please use report = 'MidAtlantic' to view."
     }
 
 

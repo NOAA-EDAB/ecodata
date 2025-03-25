@@ -15,9 +15,8 @@ plot_heatwave_year(
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
-\item{varName}{Character string. Which Variable to plot ("Surface", "Bottom", "withtrend")
-default variables Surface and Bottom are detrended; option to print surface including
-climate change signal is "withtrend"}
+\item{varName}{Character string. Which Variable to plot ("Surface", "Bottom")
+default variables Surface and Bottom are detrended}
 }
 \value{
 ggplot object

@@ -1,17 +1,16 @@
 #' Commercial and recreational fishery social-economic indicators
 #'
 #' Data include commercial and recreational fishery engagement and
-#' reliance rankings for coastal communities in the Northeast US.
+#' relative engagement rankings for coastal communities in the Northeast US.
 #'
-#' @format 68 rows and 6 columns.
+#' @format 50125 rows and 5 columns.
 #'
 #' \itemize{
-#'     \item Community: Fishing community.
-#'     \item Eng: Value of fishing community engagement.
-#'     \item Rel: Value of fishing community reliance.
-#'     \item EJ Rating: Category of social vulnerability.
-#'     \item Fishery: Fishery classification.
-#'     \item Region: Ecological Production Unit (EPU) where sampling occurred.
+#'     \item Time: Year.
+#'     \item Var: Community, State-fishing community indicator.
+#'     \item Value: Value of fishing community indicator.
+#'     \item EPU: Region where sampling occurred: NE New England, MAB Mid-Atlantic.
+#'     \item Units: Units of fishing community indicator.
 #' }
 #'
 #' @details

@@ -8,12 +8,11 @@
 A data set containing 90 rows and 5 columns.
 
 \itemize{
-\item {Time}{???}
-\item {Var}{???}
-\item {Value}{???}
-\item {EPU}{??}
-\item {Units}{???}
-
+\item Time: ???
+\item Var: ???
+\item Value: ???
+\item EPU: ??
+\item Units: ???
 }
 }
 \usage{
@@ -23,6 +22,6 @@ lps_sharks
 What is it?
 }
 \details{
-More information available at \url{link to techdoc}
+More information available at (link to techdoc)
 }
 \keyword{datasets}

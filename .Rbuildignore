@@ -3,3 +3,7 @@
 ^\.Rproj\.user$
 ^other$
 ^README\.Rmd$
+^\.github$
+
+# folders
+workshop

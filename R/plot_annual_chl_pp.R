@@ -7,6 +7,7 @@
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which Variable to plot ("chl","pp")
 #' @param plottype Character string. Which plot ("mean","total")
+#' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
 #'
@@ -18,7 +19,8 @@ plot_annual_chl_pp <- function(shadedRegion = NULL,
                         report="MidAtlantic",
                         varName="chl",
                         plottype="mean",
-                        EPU = "MAB") {
+                        EPU = "MAB",
+                        n = 0) {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -64,10 +66,10 @@ plot_annual_chl_pp <- function(shadedRegion = NULL,
   #
 
     p <- fix |>
-      ggplot2::ggplot() +
+      ggplot2::ggplot(ggplot2::aes(x = Time, y = Value)) +
       #ecodata::geom_lm(aes(x = Year, y = Value, group = Month))+
-      ggplot2::geom_point(ggplot2::aes(x = Time, y = Value)) +
-      ggplot2::geom_line(ggplot2::aes(x = Time, y = Value)) +
+      ggplot2::geom_point() +
+      ggplot2::geom_line() +
       ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
                         xmin = setup$x.shade.min , xmax = setup$x.shade.max ,
                         ymin = -Inf, ymax = Inf) +
@@ -77,6 +79,7 @@ plot_annual_chl_pp <- function(shadedRegion = NULL,
                           linewidth = setup$hline.size,
                           alpha = setup$hline.alpha,
                           linetype = setup$hline.lty)+
+      ecodata::geom_lm(n=n) +
       ecodata::theme_facet() +
       ecodata::theme_title()
 

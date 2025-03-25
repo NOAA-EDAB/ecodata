@@ -19,7 +19,7 @@ library(stringr)
 ### SST from ecopull
 # https://github.com/kimberly-bastille/ecopull/blob/main/data/new_sst_anomaly.rda
 raw.dir <- here::here("data-raw")
-sst_rda<- "new_sst_anomaly_2024.rda"
+sst_rda<- "new_sst_anomaly_2025.rda"
 
 get_seasonal_oisst_anom<- function(save_clean = F){
   load(file.path(raw.dir, sst_rda))

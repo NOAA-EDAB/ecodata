@@ -5,6 +5,7 @@
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which Variable to plot ("timing","length")
+#' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
 #'
@@ -12,7 +13,8 @@
 
 plot_trans_dates <- function(shadedRegion = NULL,
                                       report="MidAtlantic",
-                                      varName = "timing") {
+                                      varName = "timing",
+                             n = 0) {
 
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -45,6 +47,7 @@ plot_trans_dates <- function(shadedRegion = NULL,
       ggplot2::geom_point() +
       ggplot2::geom_line() +
       ecodata::geom_gls() +
+      ecodata::geom_lm(n=n)+
       # ggplot2::theme(strip.text=ggplot2::element_text(hjust=0),
       #                plot.title = ggplot2::element_text(size = 12)) +
       ecodata::theme_title("") +
@@ -68,6 +71,7 @@ plot_trans_dates <- function(shadedRegion = NULL,
       ggplot2::geom_point()+
       ggplot2::geom_line()+
       ecodata::geom_gls() +
+      ecodata::geom_lm(n=n)+
       # ggplot2::theme(strip.text=ggplot2::element_text(hjust=0),
       #                plot.title = ggplot2::element_text(size = 12))+
       ecodata::theme_title()+

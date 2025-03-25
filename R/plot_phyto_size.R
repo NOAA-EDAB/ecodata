@@ -8,9 +8,7 @@
 #'
 #' @return ggplot object
 #'
-#'
-#' @export
-#'
+#' @noRd
 
 plot_phyto_size <- function(shadedRegion = NULL,
                       report="MidAtlantic",
@@ -23,6 +21,9 @@ plot_phyto_size <- function(shadedRegion = NULL,
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
+    if (EPU != "MAB") {
+      stop("Are you trying to plot phytoplankton size for GB or GOM. If so change report to NewEngland")
+    }
   } else {
     if (!(EPU %in% c("GB","GOM"))) {
       stop("For NewEngland the epu must be either 'GB' or 'GOM'")
@@ -30,13 +31,6 @@ plot_phyto_size <- function(shadedRegion = NULL,
     filterEPUs <- EPU
   }
 
-  # if (varName == "size") {
-  #   vtitle <- ""
-  #   vylab <- ""
-  # } else {
-  #   vtitle <- ""
-  #   vylab <- ""
-  # }
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
@@ -46,7 +40,7 @@ plot_phyto_size <- function(shadedRegion = NULL,
   month_numeric <- lubridate::yday(month) / 365 * 52 + 1
   month_label <- lubridate::month(month, label = TRUE)
 
-  phyto_year_nano<- ecodata::phyto_size |>
+  phyto_year_nano<- ecodata::chl_pp |>
     dplyr::filter(EPU %in% filterEPUs,
                   Var %in% c("WEEKLY_PSC_FNANO_MEDIAN",
                              "WEEKLY_PSC_FMICRO_MEDIAN")) |>
@@ -63,7 +57,7 @@ plot_phyto_size <- function(shadedRegion = NULL,
     dplyr::mutate(Value = Value*100)
 
 
-  phyto_year_micro<- ecodata::phyto_size |>
+  phyto_year_micro<- ecodata::chl_pp |>
     dplyr::filter(EPU %in% filterEPUs,
                   Var == c("WEEKLY_PSC_FMICRO_MEDIAN")) |>
     dplyr::mutate(Value = as.numeric(Value)) |>
@@ -74,7 +68,7 @@ plot_phyto_size <- function(shadedRegion = NULL,
                   !Value == "NA") |>
     dplyr::mutate(Value = Value*100)
 
-  out_phyto<-  ecodata::phyto_size |>
+  out_phyto<-  ecodata::chl_pp |>
     dplyr::filter(EPU %in% filterEPUs,
                   stringr::str_detect(Var, ("CLIMATOLOGICAL_WEEK"))) |> #,
     tidyr::separate(Time, into = c("Cat", "WEEK", "Year1", "Year2"), sep = "_") |>
@@ -115,7 +109,7 @@ plot_phyto_size <- function(shadedRegion = NULL,
   out_phyto<-climatology_norm
 
   # Normalize current year phytoplankton size classes
-  fpico<-ecodata::phyto_size |>
+  fpico<-ecodata::chl_pp |>
     dplyr::filter(EPU %in% filterEPUs,
                   Var == c("WEEKLY_PSC_FPICO_MEDIAN")) |>
     dplyr::mutate(Value = as.numeric(Value)) |>

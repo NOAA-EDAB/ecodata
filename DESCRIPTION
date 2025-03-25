@@ -1,9 +1,10 @@
 Package: ecodata
 Title: Documentation of Ecosystem Indicator Reporting
-Version: 5.0.2
+Version: 6.0
 Authors@R: c(person("Brandon", "Beltz", email = "brandon.beltz@noaa.gov", role = c("cre", "aut")),
+             person("Andy", "Beet", email = "andrew.beet@noaa.gov", role = "aut", comment = c(ORCID = "0000-0001-8270-7090")),
              person("Kimberly", "Bastille", email = "kimberly.bastille@noaa.gov", role = "aut"),
-              person("Sean", "Hardison", role = "aut"))
+             person("Sean", "Hardison", role = "aut"))
 Description: A data package for reporting on Northeast Continental Shelf ecosystem status and trends.
 License: file LICENSE
 Encoding: UTF-8
@@ -33,18 +34,22 @@ Imports:
   flextable,
   heatwaveR,
   forcats,
-  patchwork
+  patchwork,
+  ggpubr,
+  arfit
 Suggests:
   knitr,
   rmarkdown,
   tufte,
   here,
   usethis,
-	AICcmodavg,
 	mgcv,
 	zoo,
 	rlang
+URL: https://noaa-edab.github.io/ecodata/,https://github.com/NOAA-EDAB/ecodata
+Remotes:
+  NOAA-EDAB/arfit
 VignetteBuilder: knitr
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5)

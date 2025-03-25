@@ -6,20 +6,20 @@ library(dplyr)
 
 raw.dir <- here::here("data-raw")
 
-aggregate_biomass_RData <- "Aggregate_Survey_biomass_24.RData"
-aggregate_biomass_shelf<- "Aggregate_Survey_biomass_shelfwide_24.RData"
+aggregate_biomass_RData <- "Aggregate_Survey_biomass_25.RData"
+aggregate_biomass_shelf<- "Aggregate_Survey_biomass_shelfwide_25.RData"
 get_aggregate_biomass <- function(save_clean = F){
 
   load(file.path(raw.dir, aggregate_biomass_RData))
 
-  aggregate_biomass <- survey.data %>%
+  aggregate_biomass <- agg_biomass %>%
     dplyr::rename(EPU = Region) %>%
     tibble::as_tibble()%>%
     dplyr::select(Time, Var, Value, EPU, Units)
 
   load(file.path(raw.dir, aggregate_biomass_shelf))
 
-  aggregate_shelf<- survey.data %>%
+  aggregate_shelf<- agg_biomass_shelf %>%
     dplyr::rename(EPU = Region) %>%
     tibble::as_tibble()%>%
     dplyr::select(Time, Var, Value, EPU, Units)
@@ -31,7 +31,7 @@ get_aggregate_biomass <- function(save_clean = F){
                          EPU = unique(ecodata::aggregate_biomass$EPU),
                          Units = NA,
                          Value = NA)
-  aggregate_biomass <- aggregate_biomass %>% rbind(agg_nas)
+
   # metadata ----
   attr(aggregate_biomass, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/aggroups.html"
   attr(aggregate_biomass, "data_files")   <- list(

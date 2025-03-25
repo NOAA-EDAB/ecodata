@@ -1,8 +1,10 @@
 ---
 title: "SOE Data Structure Guidelines"
-author: "Kimberly Bastille"
-date: "12/1/2020"
-output: html_document
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{SOE Data Structure Guidelines}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 The NEFSC State of the Ecosystem (SOE) report is a collection of indicators that track the status and trend of the Northeast US Large Marine Ecosystem. The report is broken into two separate regional reports to be delivered to the two Fishery Management Councils that the Center serves: Mid-Atlantic and New England. The SOE contains a diverse range of indicators from revenue and commercial fisheries reliance through biomass of aggregate species groups to primary production and climate drivers. 

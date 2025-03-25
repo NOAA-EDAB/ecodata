@@ -17,11 +17,19 @@ The main goals are:
 
 To learn more about using \code{ecodata}, start with the vignette: \code{browseVignettes(package="ecodata")} or click the index link below
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://noaa-edab.github.io/ecodata/,https://github.com/NOAA-EDAB/ecodata}
+}
+
+}
 \author{
 \strong{Maintainer}: Brandon Beltz \email{brandon.beltz@noaa.gov}
 
 Authors:
 \itemize{
+  \item Andy Beet \email{andrew.beet@noaa.gov} (\href{https://orcid.org/0000-0001-8270-7090}{ORCID})
   \item Kimberly Bastille \email{kimberly.bastille@noaa.gov}
   \item Sean Hardison
 }

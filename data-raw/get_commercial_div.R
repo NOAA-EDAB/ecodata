@@ -13,7 +13,7 @@ library(tidyr)
 library(stringr)
 
 raw.dir <- here::here("data-raw")
-commercial_div_csv <- "Commercial_Diversity_2024.csv"
+commercial_div_csv <- "Commercial_Diversity_2025 - Geret DePiper - NOAA Federal.csv"
 
 get_commercial_div <- function(save_clean = F){
   commercial_div <- read.csv(file.path(raw.dir, commercial_div_csv)) %>%
@@ -21,7 +21,8 @@ get_commercial_div <- function(save_clean = F){
     dplyr::rename(EPU = Region) %>%
     as.data.frame()%>%
     tibble::as_tibble() %>%
-    dplyr::select(Time, Var, Value, EPU, Units)
+    dplyr::select(Time, Var, Value, EPU, Units) %>%
+    dplyr::filter(Time >2002)
 
   commercial_div$Var <- stringr::str_replace(commercial_div$Var, "diveristy", "diversity")
 

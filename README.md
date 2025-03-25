@@ -7,6 +7,7 @@
 
 [![gitleaks](https://github.com/NOAA-EDAB/ecodata/actions/workflows/secretScan.yml/badge.svg)](https://github.com/NOAA-EDAB/ecodata/actions/workflows/secretScan.yml)
 [![gh-pages](https://github.com/NOAA-EDAB/ecodata/actions/workflows/pkgdown.yml/badge.svg)](https://github.com/NOAA-EDAB/ecodata/actions/workflows/pkgdown.yml)
+[![R-CMD-check](https://github.com/NOAA-EDAB/ecodata/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/NOAA-EDAB/ecodata/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Overview
@@ -55,9 +56,7 @@ remotes::install_github("noaa-edab/ecodata@dev",build_vignettes=TRUE)
     into the environment. View available data sets using the syntax
     `ecodata::...`
 
-<p align="center" width="645">
-<img src="https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/ecodata1.gif">
-</p>
+![](man/figures/ecodata1.gif)
 
 ### Legal disclaimer
 

@@ -5,27 +5,9 @@ library(stringr)
 raw.dir <- here::here("data-raw")
 
 # input files ----
-ppd_csv <- "19980101_20231231-OCCCI_GLOBCOLOUR-PPD-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_PHYTOPLANKTON-SOE_FORMAT.csv"
-chl_csv <- "19980101_20231231-OCCCI_GLOBCOLOUR-CHLOR_A-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_PHYTOPLANKTON-SOE_FORMAT.csv"
-
+chl_pp_csv <- "19980101_20241231-OCCCI-CHLOR_A_PPD_PSC_FMICRO_PSC_FNANO_PSC_FPICO_PSC_MICRO_PSC_NANO_PSC_PICO_PPD-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_PHYTOPLANKTON-SOE_FORMAT.csv"
 # transformation ----
-ppd <- read.csv(file.path(raw.dir, ppd_csv)) %>%
-  #dplyr::mutate(ALGORITHM = word(str_replace(ALGORITHM, "_", " "))) %>%
-  #tidyr::unite(.,VARIABLE, c("VARIABLE","SENSOR","ALGORITHM"), sep = " ") %>%
-  # dplyr::mutate(VARIABLE = ifelse(stringr::str_detect(FILENAME, "1998_2020"),
-  #                           paste(VARIABLE,"1998_20120")))
-  #                          # ifelse(stringr::str_detect(FILENAME, "1998_2020"),
-  #                          #        paste(VARIABLE, "1998_2018"),
-  #                          #        ifelse(stringr::str_detect(FILENAME, "1997_2019"),
-  #                          #               paste(VARIABLE, "1997_2019"),
-  #                          #               ifelse(stringr::str_detect(FILENAME, "1997_2018"),
-  #                          #                      paste(VARIABLE, "1997_2018"),
-  #                          #                      VARIABLE))))) %>%
-  dplyr::select(PERIOD, UNITS, VARIABLE, VALUE, SUBAREA) %>%
-  dplyr::rename(Time = PERIOD, Units = UNITS, Var = VARIABLE,
-                EPU =SUBAREA, Value = VALUE)
-
-chl <- read.csv(file.path(raw.dir, chl_csv)) %>%
+chl_pp <- read.csv(file.path(raw.dir, chl_pp_csv)) %>%
   #dplyr::mutate(ALGORITHM = word(stringr::str_replace(ALGORITHM, "_", " "))) %>%
   #tidyr::unite(.,VARIABLE, c("VARIABLE","SENSOR","ALGORITHM"), sep = " ") %>%
   # dplyr::mutate(VARIABLE = ifelse(stringr::str_detect(FILENAME, "1998_2019"),
@@ -37,23 +19,22 @@ chl <- read.csv(file.path(raw.dir, chl_csv)) %>%
   #                                        ifelse(stringr::str_detect(FILENAME, "1997_2017"),
   #                                               paste(VARIABLE, "1997_2017"),
   #                                               VARIABLE))))) %>%
-  dplyr::select(PERIOD, UNITS, VARIABLE, VALUE, SUBAREA) %>%
+  dplyr::select(PERIOD, VARIABLE, VALUE, SUBAREA, UNITS) %>%
   dplyr::rename(Time = PERIOD, Units = UNITS, Var = VARIABLE,
-                EPU = SUBAREA, Value = VALUE)
+                EPU = SUBAREA, Value = VALUE) %>%
+  dplyr::mutate(Value = as.numeric(Value)) %>%
+  dplyr::filter(Var != "ANNUAL_PPD_RATIO_ANOMALY") %>%
+  dplyr::distinct(Time, Var, EPU, .keep_all = T)
 
-chl_pp <- rbind(ppd,chl)%>%
-  tibble::as_tibble() %>%
-  dplyr::select(Time, Var, Value, EPU, Units)
+chl_pp <- as_tibble(chl_pp)
 
 # metadata ----
 attr(chl_pp, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chl-pp.html"
 attr(chl_pp, "data_files")   <- list(
-  chl_csv = chl_csv,
-  ppd_csv = ppd_csv)
+  chl_pp_csv = chl_pp_csv)
 attr(chl_pp, "data_steward") <- c(
   "Kimberly Hyde <kimberly.hyde@noaa.gov>")
 attr(chl_pp, "plot_script") <- list(
   `ltl_NE_anom` = "LTL_NE.Rmd-chl-pp-anom.R")
 
 usethis::use_data(chl_pp, overwrite = T)
-

@@ -6,6 +6,7 @@
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which Season to plot ("fall", "spring")
+#' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
 #'
@@ -15,7 +16,8 @@
 
 plot_exp_n <- function(shadedRegion = NULL,
                               report="MidAtlantic",
-                       varName="fall") {
+                       varName="fall",
+                       n = 0) {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -29,6 +31,12 @@ plot_exp_n <- function(shadedRegion = NULL,
   }
 
   season <- stringr::str_to_upper(varName)
+
+  if (season == "fall"){
+    start_year = 1965
+  } else {
+    start_year = 1968
+  }
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
@@ -77,8 +85,9 @@ plot_exp_n <- function(shadedRegion = NULL,
     ggplot2::facet_wrap(EPU~.,scales = "free_y", ncol = 2) +
     ggplot2::ggtitle(paste("Expected Number of Species -", season))+
     ecodata::geom_gls() +
+    ecodata::geom_lm(n=n) +
     #Axis and theme
-    ggplot2::scale_x_continuous(breaks = seq(1965, 2015, by = 10), expand = c(0.01, 0.01)) +
+    ggplot2::scale_x_continuous(breaks = seq(start_year, 2015, by = 10), expand = c(0.01, 0.01)) +
     ggplot2::ylab("n species per 1000 ind") +
     ggplot2::xlab(ggplot2::element_blank())+
     ecodata::theme_facet()+

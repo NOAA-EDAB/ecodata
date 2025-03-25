@@ -10,7 +10,7 @@ theme_map(...)
 A ggplot2 theme for SOE map figures
 }
 \examples{
-
+\dontrun{
 library(rnaturalearth); library(ggplot2)
 library(dplyr); library(sf)
 
@@ -38,4 +38,5 @@ ggplot()+
   geom_sf(data = coast) +
   coord_sf(crs = crs, xlim = xlims, ylim = ylims) +
   theme_map()
+ }
 }

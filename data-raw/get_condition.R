@@ -6,18 +6,15 @@ library(dplyr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-condition_csv <- "RelCond2023_Year.csv"
+condition_csv <- "RelCond2024_Year.csv"
 
 get_condition <- function(save_clean = F){
   dat <- read.csv(file.path(raw.dir,condition_csv))
 
   condition <- dat %>%
-    tidyr::pivot_longer(cols = c(MeanCond),
-                        names_to = "Var", values_to = "Value") %>%
-    dplyr::select(YEAR, Species, EPU, Value) %>%
-    dplyr::rename(Time = YEAR,
-                  Var = Species) %>%
-    dplyr::mutate(Units = c("MeanCond"))
+    dplyr::rename(Value = MeanCond) %>%
+    dplyr::mutate(Units = c("MeanCond")) %>%
+    dplyr::select(Time, Var, EPU, Value, Units)
 
   # metadata ----
   attr(condition, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/condition.html"

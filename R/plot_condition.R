@@ -90,7 +90,7 @@ plot_condition <- function(shadedRegion = NULL,
                    axis.text.y = ggplot2::element_text(size = 6),
                    panel.grid.major = ggplot2::element_blank(),
                    panel.grid.minor = ggplot2::element_blank()) +
-    ggplot2::ggtitle(paste0("Condition factor for species sampled in ",EPU)) +
+    ggplot2::ggtitle(paste0("Relative condition for species sampled in ",EPU)) +
     ggplot2::ylab(ggplot2::element_blank())+
     ggplot2::xlab(ggplot2::element_blank())+
     ecodata::theme_ts()+

@@ -6,6 +6,7 @@
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which Variable to plot ("landing","value")
 #' @param plottype Character string. Which plot ("facets", "nofacets")
+#' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
 #'
@@ -16,7 +17,8 @@
 plot_wind_revenue <- function(shadedRegion = NULL,
                               report="MidAtlantic",
                               varName = "landing",
-                              plottype = "facets") {
+                              plottype = "facets",
+                              n=0) {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -33,27 +35,28 @@ plot_wind_revenue <- function(shadedRegion = NULL,
   # e.g., calculate mean, max or other needed values to join below
    fix <- tidyr::separate(ecodata::wind_revenue,col=Var, into = c("Species", "Var"),sep = "-sum_") |>
      dplyr::filter(Var == varName) |>
-     dplyr::mutate(Value = Value/1000000) |>
-     dplyr::mutate(Species = dplyr::recode(Species,"MONK"="MONKFISH"))
+     dplyr::mutate(Value = Value/1000000)
 
    # Code to determine units displayed on y axis
    if (varName == "landing") {
      wind_label <- "Landings (million lbs)"
+     wind_title <- "Fishery Landings in Lease Areas"
    } else {
-     wind_label <- "Revenue (millions $2022)"
+     wind_label <- "Revenue (millions $2023)"
+     wind_title <- "Fishery Revenue in Lease Areas"
    }
 
    if (report == "MidAtlantic") {
      fix <- fix |>
        dplyr::filter(EPU %in% filterEPUs,
-                     Species %in% c("LONGFIN SQUID","MONKFISH","SUMMER FLOUNDER",
-                                    "OCEAN QUAHOG",  "SURFCLAM" )) |>
+                     Species %in% c("Longfin Squid","Monkfish","Summer Flounder",
+                                    "Ocean Quahog",  "Surfclam" )) |>
        dplyr::mutate(Species = stringr::str_to_sentence(Species))
      } else if (report == "NewEngland") {
        fix <- fix |>
          dplyr::filter(EPU %in% filterEPUs,
-                       Species %in% c("ATLANTIC HERRING","MONKFISH","ATLANTIC SEA SCALLOP",
-                                      "SILVER HAKE",  "SKATES" )) |>
+                       Species %in% c("Atlantic herring","Monkfish","Atlantic Sea Scallop",
+                                      "Silver Hake",  "Skates" )) |>
          dplyr::mutate(Species = stringr::str_to_sentence(Species))
      }
 
@@ -72,10 +75,11 @@ plot_wind_revenue <- function(shadedRegion = NULL,
             ymin = -Inf, ymax = Inf) +
         ggplot2::geom_point()+
         ggplot2::geom_line()+
-        ggplot2::ggtitle(paste0(report,": Fishery Revenue in Wind Lease Areas"))+
+        ggplot2::ggtitle(paste0(report,": ",wind_title))+
         ggplot2::ylab(wind_label)+
         ggplot2::xlab(ggplot2::element_blank())+
         ggplot2::facet_wrap(.~Species,scales = "free_y") +
+        ecodata::geom_lm(n=n)+
         #ecodata::geom_gls()+
         ecodata::theme_ts()+
         ecodata::theme_facet()+
@@ -88,9 +92,10 @@ plot_wind_revenue <- function(shadedRegion = NULL,
                          ymin = -Inf, ymax = Inf) +
        ggplot2::geom_point()+
        ggplot2::geom_line()+
-       ggplot2::ggtitle(paste0(report,": Fishery Revenue in Wind Lease Areas"))+
+       ggplot2::ggtitle(paste0(report,": ",wind_title))+
        ggplot2::ylab(wind_label)+
        ggplot2::xlab(ggplot2::element_blank())+
+       ecodata::geom_lm(n=n)+
 
        #ecodata::geom_gls()+
        ecodata::theme_ts()+

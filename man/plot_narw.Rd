@@ -4,7 +4,12 @@
 \alias{plot_narw}
 \title{plot north atlantic right whale abundance}
 \usage{
-plot_narw(shadedRegion = NULL, report = "MidAtlantic", varName = "adult")
+plot_narw(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  varName = "adult",
+  n = 0
+)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
@@ -12,6 +17,8 @@ plot_narw(shadedRegion = NULL, report = "MidAtlantic", varName = "adult")
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
 \item{varName}{Character string. Which variable to plot ("adult","calf")}
+
+\item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
 \value{
 ggplot object

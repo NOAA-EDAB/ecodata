@@ -4,14 +4,15 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
-#'
+#' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
 #'
 #' @export
 
 plot_bottom_temp_glorys <- function(shadedRegion=NULL,
-                                    report = "MidAtlantic") {
+                                    report = "MidAtlantic",
+                                    n = 0) {
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
                                report=report)
@@ -43,6 +44,7 @@ plot_bottom_temp_glorys <- function(shadedRegion=NULL,
     ggplot2::xlab(ggplot2::element_blank())+
     ggplot2::ggtitle(paste(report,": GLORYS bottom temperature anomaly")) +
     ecodata::geom_gls() +
+    ecodata::geom_lm(n=n)+
     ecodata::theme_ts()+
     ecodata::theme_facet()+
     ecodata::theme_title()

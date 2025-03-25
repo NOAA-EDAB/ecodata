@@ -3,6 +3,7 @@
 #' @export
 #'
 #' @examples
+#' library(ggplot2)
 #' m <- 0.1
 #' x <- 1:30
 #' y <-  m*x + rnorm(30, sd = 0.35)
@@ -13,7 +14,7 @@
 #' #Plot series with trend and SOE plot theme
 #' ggplot(data = data) +
 #'   geom_line(aes(x = x, y = y)) +
-#'   stat_gls(aes(x = x, y = y, color = stat(col)))+
+#'   geom_gls(aes(x = x, y = y))+
 #'   theme_ts()
 
 theme_ts <- function(...){

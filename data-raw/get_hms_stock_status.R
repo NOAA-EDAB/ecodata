@@ -6,7 +6,7 @@ library(tidyr)
 library(ggplot2)
 
 data.dir <- here::here('data-raw')
-hms_stock_status_xlsx <- "2023_SAFE_B_F - Jennifer Cudney - NOAA Federal.xlsx"
+hms_stock_status_xlsx <- "2024_SAFE_B_F - Jennifer Cudney - NOAA Federal.xlsx"
 
 get_hms_stockstatus <- function(save_clean = F){
   xlsx <- readxl::read_xlsx(file.path(data.dir, hms_stock_status_xlsx))

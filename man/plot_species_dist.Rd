@@ -7,7 +7,8 @@
 plot_species_dist(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  varName = "along"
+  varName = "along",
+  n = 0
 )
 }
 \arguments{
@@ -16,6 +17,8 @@ plot_species_dist(
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
 \item{varName}{Character string. Which variable to plot ("along","depth")}
+
+\item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
 \value{
 ggplot object

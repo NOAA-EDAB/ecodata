@@ -1,0 +1,120 @@
+Species,Cruise,Year,Season,N,Energy Density,StdDev of Energy Density
+Alewife,201702,2017,Spring,163,6.86,1.4
+Alewife,201704,2017,Fall,88,7.79,1.52
+Alewife,201802,2018,Spring,123,6.7,1.25
+Alewife,201804,2018,Fall,47,7.41,1.62
+Alewife,201902,2019,Spring,113,6.46,1.27
+Alewife,201904,2019,Fall,83,7.6,2.05
+Alewife,NA,2020,Fall,NA,NA,NA
+Alewife,202002,2020,Spring,35,6.37,1.48
+Alewife,202102,2021,Spring,110,6.23,1.2
+Alewife,202104,2021,Fall,52,8.73,1.89
+Alewife,202202,2022,Spring,86,5.84,1.6
+Alewife,202204,2022,Fall,50,8,1.26
+Alewife,202302,2023,Spring,10,6.52,0.98
+Alewife,202304,2023,Fall,29,9.14,1.78
+Alewife,202402,2024,Spring,36,6.23,1.16
+Atl. Herring,201702,2017,Spring,169,5.57,1.07
+Atl. Herring,201704,2017,Fall,146,5.84,1.29
+Atl. Herring,201802,2018,Spring,113,6.12,1.5
+Atl. Herring,201804,2018,Fall,50,5.42,1.43
+Atl. Herring,201902,2019,Spring,81,5.49,0.89
+Atl. Herring,201904,2019,Fall,84,5.87,1.31
+Atl. Herring,NA,2020,Fall,NA,NA,NA
+Atl. Herring,202002,2020,Spring,8,5.58,0.7
+Atl. Herring,202102,2021,Spring,117,6.36,1.4
+Atl. Herring,202104,2021,Fall,123,5.97,1.04
+Atl. Herring,202202,2022,Spring,200,6.16,1.5
+Atl. Herring,202204,2022,Fall,113,6.09,1.55
+Atl. Herring,202302,2023,Spring,66,8.12,1.04
+Atl. Herring,202304,2023,Fall,131,6.73,1.44
+Atl. Herring,202402,2024,Spring,161,5.77,1.28
+Atl. Mackerel,201702,2017,Spring,5,4.6,0.54
+Atl. Mackerel,201704,2017,Fall,111,6.93,1.39
+Atl. Mackerel,201802,2018,Spring,86,4.9,0.9
+Atl. Mackerel,201804,2018,Fall,50,6.75,1.1
+Atl. Mackerel,201902,2019,Spring,123,4.69,0.81
+Atl. Mackerel,201904,2019,Fall,44,6.69,1.32
+Atl. Mackerel,NA,2020,Fall,NA,NA,NA
+Atl. Mackerel,202002,2020,Spring,17,5.59,1.28
+Atl. Mackerel,202102,2021,Spring,100,4.94,0.79
+Atl. Mackerel,202104,2021,Fall,63,7.64,1.66
+Atl. Mackerel,202202,2022,Spring,105,4.96,0.98
+Atl. Mackerel,202204,2022,Fall,29,7.85,1.05
+Atl. Mackerel,202302,2023,Spring,23,5.7,0.77
+Atl. Mackerel,202304,2023,Fall,89,7,1.54
+Atl. Mackerel,202402,2024,Spring,142,4.92,0.79
+Butterfish,201702,2017,Spring,60,7.02,1.59
+Butterfish,201704,2017,Fall,163,7.5,1.47
+Butterfish,201802,2018,Spring,113,5.3,1.44
+Butterfish,201804,2018,Fall,105,7.34,2.37
+Butterfish,201902,2019,Spring,112,5.5,1.76
+Butterfish,201904,2019,Fall,198,7.24,2.28
+Butterfish,NA,2020,Fall,NA,NA,NA
+Butterfish,202002,2020,Spring,35,7.02,2.54
+Butterfish,202102,2021,Spring,90,6.1,1.51
+Butterfish,202104,2021,Fall,146,7.29,2.38
+Butterfish,202202,2022,Spring,117,5.69,1.85
+Butterfish,202204,2022,Fall,139,6.58,1.9
+Butterfish,202302,2023,Spring,37,6.89,1.02
+Butterfish,202304,2023,Fall,126,6.87,1.32
+Butterfish,202402,2024,Spring,97,5.83,1.2
+Illex,201702,2017,Spring,76,5.54,0.41
+Illex,201704,2017,Fall,85,5.55,0.57
+Illex,201802,2018,Spring,131,5.61,0.45
+Illex,201804,2018,Fall,136,5.13,0.79
+Illex,201902,2019,Spring,149,5.27,0.28
+Illex,201904,2019,Fall,190,5.52,0.49
+Illex,NA,2020,Fall,NA,NA,NA
+Illex,202002,2020,Spring,35,5.37,0.26
+Illex,202102,2021,Spring,109,5.47,0.33
+Illex,202104,2021,Fall,103,5.59,0.46
+Illex,202202,2022,Spring,63,5.36,0.26
+Illex,202204,2022,Fall,115,5.63,0.35
+Illex,202302,2023,Spring,23,5.65,0.27
+Illex,202304,2023,Fall,66,5.66,0.46
+Illex,202402,2024,Spring,59,5.23,0.21
+Loligo,201702,2017,Spring,104,5.24,0.33
+Loligo,201704,2017,Fall,104,5.25,0.23
+Loligo,201802,2018,Spring,109,4.95,0.54
+Loligo,201804,2018,Fall,180,5.16,0.55
+Loligo,201902,2019,Spring,120,5.09,0.19
+Loligo,201904,2019,Fall,189,5.19,0.21
+Loligo,NA,2020,Fall,NA,NA,NA
+Loligo,202002,2020,Spring,44,4.98,0.17
+Loligo,202102,2021,Spring,95,5.14,0.22
+Loligo,202104,2021,Fall,95,5.25,0.18
+Loligo,202202,2022,Spring,88,5.11,0.18
+Loligo,202204,2022,Fall,89,5.28,0.18
+Loligo,202302,2023,Spring,23,5.32,0.19
+Loligo,202304,2023,Fall,54,5.26,0.11
+Loligo,202402,2024,Spring,66,4.99,0.16
+Sand lance,NA,2017,Fall,NA,NA,NA
+Sand lance,201702,2017,Spring,17,6.55,0.48
+Sand lance,201802,2018,Spring,61,5.79,0.31
+Sand lance,201804,2018,Fall,8,7.84,0.69
+Sand lance,201902,2019,Spring,47,5.58,0.4
+Sand lance,201904,2019,Fall,4,8.02,1.07
+Sand lance,NA,2020,Fall,NA,NA,NA
+Sand lance,NA,2020,Spring,NA,NA,NA
+Sand lance,202102,2021,Spring,44,6.05,0.84
+Sand lance,202104,2021,Fall,1,6.16,NA
+Sand lance,NA,2022,Fall,NA,NA,NA
+Sand lance,202202,2022,Spring,1,6.4,NA
+Sand lance,202302,2023,Spring,19,6.64,0.75
+Sand lance,202402,2024,Spring,47,5.64,0.49
+Silver hake,201702,2017,Spring,204,4.23,0.39
+Silver hake,201704,2017,Fall,232,4.46,0.53
+Silver hake,201802,2018,Spring,178,4.31,0.55
+Silver hake,201804,2018,Fall,150,4.44,0.62
+Silver hake,201902,2019,Spring,185,3.96,0.45
+Silver hake,201904,2019,Fall,198,4.24,0.51
+Silver hake,NA,2020,Fall,NA,NA,NA
+Silver hake,202002,2020,Spring,69,4.16,0.42
+Silver hake,202102,2021,Spring,136,4.08,0.45
+Silver hake,202104,2021,Fall,121,4.29,0.43
+Silver hake,202202,2022,Spring,106,4.11,0.49
+Silver hake,202204,2022,Fall,131,4.3,0.47
+Silver hake,202302,2023,Spring,57,4.32,0.45
+Silver hake,202304,2023,Fall,102,4.39,0.55
+Silver hake,202402,2024,Spring,180,3.92,0.43

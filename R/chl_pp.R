@@ -1,4 +1,4 @@
-#' Chlorophyll \emph{a} and primary production
+#' Chlorophyll \emph{a} and primary production and phytoplankton size class
 #'
 #' These data are time series of remotely sensed chlorophyll \emph{a} (CHL) and primary production (PP) data from the Northeast Continental Shelf.
 #' Included are median and anomaly CHL and PP estimates for Ecological Production Units, along with subsets for CHL and PP by
@@ -17,7 +17,7 @@
 #'     \item EPU: Ecological Production Unit (EPU) where sampling occurred.
 #' }
 #'
-#' @details Methods used to calculate median and anomaly data are available at \url{https://noaa-edab.github.io/tech-doc/chl-pp.html}. Methods
+#' @details Methods used to calculate median and anomaly data are available at \url{https://noaa-edab.github.io/tech-doc/chl_pp.html}. Methods
 #' used to find phytoplankton size-class information are forthcoming.
 #'
 "chl_pp"

@@ -72,7 +72,7 @@ plot_setup <- function(shadedRegion = shadedRegion,
     x.shade.min <- shadedRegion[1]
     x.shade.max <- shadedRegion[2]
 
-    ## Additional parameters for 4 panel maps eg. plot_seasonal_sst_anomaly_gridded
+    ## Additional parameters for 4 panel maps eg. plot_seasonal_oisst_anom_gridded
     ###################################################
     ###################################################
 

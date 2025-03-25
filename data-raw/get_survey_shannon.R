@@ -4,12 +4,12 @@ library(stringr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-surv_shan_rdata <- "survey_shannon (1).RData"
+surv_shan_rdata <- "survey_shannon_25.RData"
 get_surv_shan <- function(save_clean = F){
 
   load(file.path(raw.dir, surv_shan_rdata))
 
-  survey_shannon<-shannon.mean %>%
+  survey_shannon<-survey_shannon %>%
     tibble::as_tibble() %>%
     dplyr::select(Time, Var, Value, EPU, Units)
 

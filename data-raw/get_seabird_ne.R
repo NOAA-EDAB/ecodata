@@ -17,7 +17,7 @@ library(readxl)
 
 #Get raw data
 raw.dir <- here::here("data-raw")
-seabird_ne_xlsx <- "Audubon Common Tern Data for 2023 NOAA EA Effort.xlsx"
+seabird_ne_xlsx <- "Audubon Common Tern Data for 2024 NOAA EA Effort.xlsx"
 
 get_seabird_ne <- function(save_clean = F){
 

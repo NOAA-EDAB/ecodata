@@ -2,12 +2,13 @@
 % Please edit documentation in R/plot_engagement.R
 \name{plot_engagement}
 \alias{plot_engagement}
-\title{plot engagement}
+\title{plot fishery engagement and community social vulnerability}
 \usage{
 plot_engagement(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  varName = "Commercial"
+  varName = "Commercial",
+  plottype = "plot"
 )
 }
 \arguments{
@@ -16,10 +17,17 @@ plot_engagement(
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
 \item{varName}{Character string. Which Fishery to plot ("Commercial","Recreational")}
+
+\item{plottype}{Character string. Which Social indicator group to tabulate ("plot","Social", "Economic", "Gentrification")}
 }
 \value{
-ggplot object
+one of 2 items depending on plottype argument
+
+\item{plottype = "plot"}{ggplot object}
+\item{plottype = indicator group name}{flextable of selected social indicators for highly engaged communities}
 }
 \description{
-Plot reliance vs engagement by community, recreational or commercial fishery.
+Plot population relative engagement vs engagement by community, recreational or commercial fishery.
+Provide table of social vulnerability indicators for highly engaged communities.
+Indicator definitions https://www.fisheries.noaa.gov/national/socioeconomics/social-indicators-supporting-information
 }
