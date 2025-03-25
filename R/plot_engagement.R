@@ -8,12 +8,12 @@
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which Fishery to plot ("Commercial","Recreational")
-#' @param plottype Character string. Which Social indicator group to tabulate ("EJ", "Economic", "Gentrification")
+#' @param plottype Character string. Which Social indicator group to tabulate ("plot","Social", "Economic", "Gentrification")
 #'
-#' @return list of 2 items
+#' @return one of 2 items depending on plottype argument
 #'
-#' \item{p}{ggplot object}
-#' \item{t}{data frame listing selected social indicators for highly engaged communities}
+#' \item{plottype = "plot"}{ggplot object}
+#' \item{plottype = indicator group name}{flextable of selected social indicators for highly engaged communities}
 #'
 #'
 #' @export
@@ -22,7 +22,7 @@
 plot_engagement <- function(shadedRegion = NULL,
                             report="MidAtlantic",
                             varName="Commercial",
-                            plottype="EJ") {
+                            plottype="plot") {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -63,7 +63,7 @@ plot_engagement <- function(shadedRegion = NULL,
   }
 
   # select social indicators by indicator group for table or shading
-  if(plottype == "EJ") indgroup <- c("personal_disruption_rank", "pop_composition_rank", "poverty_rank")
+  if(plottype == "Social" | plottype == "plot") indgroup <- c("personal_disruption_rank", "pop_composition_rank", "poverty_rank")
   if(plottype == "Economic") indgroup <- c("labor_force_str_rank", "housing_characteristics_rank")
   if(plottype == "Gentrification") indgroup <- c("housing_disrupt_rank", "retiree_migration_rank", "urban_sprawl_index_rank")
 
@@ -92,7 +92,7 @@ plot_engagement <- function(shadedRegion = NULL,
     dplyr::distinct()
 
   # raw scores not currently used but here for later
-  # EJ <- c("personal_disruption", "pop_composition", "poverty")
+  # Social <- c("personal_disruption", "pop_composition", "poverty")
   # Economic <- c("labor_force_str", "housing_characteristics")
   # Gentrification <- c("housing_disrupt", "retiree_migration", "urban_sprawl_index")
 
@@ -147,15 +147,17 @@ plot_engagement <- function(shadedRegion = NULL,
     dplyr::select(Community = Town,
                   dplyr::ends_with('_rank'))
 
+  t <- flextable::flextable(t)
 
 
-    return(list(p=p,t=t))
-
+    if (plottype == "plot") {
+      return(p)
+    } else {
+      return(t)
+    }
 
 }
 
 attr(plot_engagement,"report") <- c("MidAtlantic","NewEngland")
 attr(plot_engagement,"varName") <- c("Commercial","Recreational")
-attr(plot_engagement,"plottype") <- c("EJ","Economic","Gentrification")
-
-
+attr(plot_engagement,"plottype") <- c("plot","Social","Economic","Gentrification")

@@ -8,7 +8,7 @@ plot_engagement(
   shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "Commercial",
-  plottype = "EJ"
+  plottype = "plot"
 )
 }
 \arguments{
@@ -18,13 +18,13 @@ plot_engagement(
 
 \item{varName}{Character string. Which Fishery to plot ("Commercial","Recreational")}
 
-\item{plottype}{Character string. Which Social indicator group to tabulate ("EJ", "Economic", "Gentrification")}
+\item{plottype}{Character string. Which Social indicator group to tabulate ("plot","Social", "Economic", "Gentrification")}
 }
 \value{
-list of 2 items
+one of 2 items depending on plottype argument
 
-\item{p}{ggplot object}
-\item{t}{data frame listing selected social indicators for highly engaged communities}
+\item{plottype = "plot"}{ggplot object}
+\item{plottype = indicator group name}{flextable of selected social indicators for highly engaged communities}
 }
 \description{
 Plot population relative engagement vs engagement by community, recreational or commercial fishery.
