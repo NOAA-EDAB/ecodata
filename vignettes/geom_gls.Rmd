@@ -41,8 +41,6 @@ ggplot2::ggplot(data = data,aes(x = x, y = y)) +
   geom_gls()
 ```
 
-produces 
+produces
 
-```{r neusfig, echo=F}
-knitr::include_graphics(path="https://raw.githubusercontent.com/NOAA-EDAB/ecodata/master/docs/images/geom_gls.png")
-```
+![](figures/geom_gls.png)
