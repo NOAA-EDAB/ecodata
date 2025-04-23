@@ -1,4 +1,4 @@
-^data-raw$
+^data-raw*
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^other$
