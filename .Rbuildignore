@@ -1,9 +1,9 @@
 ^data-raw*
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^other$
+^other*
 ^README\.Rmd$
-^\.github$
+^\.github*
 
 # folders
 workshop
