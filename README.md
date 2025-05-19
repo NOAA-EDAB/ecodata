@@ -41,13 +41,13 @@ will be pulled into the main branch and
 For the last released complete data set
 
 ``` r
-remotes::install_github("noaa-edab/ecodata",build_vignettes=TRUE)
+pak::pak("noaa-edab/ecodata")
 ```
 
 For data used in the current developing cycle
 
 ``` r
-remotes::install_github("noaa-edab/ecodata@dev",build_vignettes=TRUE)
+pak::pak("noaa-edab/ecodata@dev")
 ```
 
 ## Loading data sets
