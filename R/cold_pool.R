@@ -6,11 +6,12 @@
 #'
 #' \itemize{
 #'     \item Time: Year
-#'     \item Val: Value of variable.
+#'     \item Value: Value of variable.
 #'     \item Var: Cold Pool model Temperature and volume parameters.
 #'     \item EPU: Ecological Production Unit (EPU) where data originated. Here "MAB" refers to the Mid-Atlantic Bight.
+#'     \item Source: Data source used
 #'
 #' }
 #'
-#' @details More information available at \url{https://noaa-edab.github.io/tech-doc/cold-pool-index.html}
+#' @details More information available at \url{https://noaa-edab.github.io/tech-doc/cold_pool.html}
 "cold_pool"
