@@ -1,0 +1,685 @@
+"Time","Var","Value","EPU","Units"
+1982,"cumulative intensity-SurfaceDetrended",307.4774,"GB","degrees C"
+1982,"cumulative intensity-SurfaceDetrended",393.8021,"GOM","degrees C"
+1982,"cumulative intensity-SurfaceDetrended",13.2678,"MAB","degrees C"
+1983,"cumulative intensity-SurfaceDetrended",52.8199,"GB","degrees C"
+1983,"cumulative intensity-SurfaceDetrended",130.8975,"GOM","degrees C"
+1983,"cumulative intensity-SurfaceDetrended",50.8534,"MAB","degrees C"
+1984,"cumulative intensity-SurfaceDetrended",124.6157,"GB","degrees C"
+1984,"cumulative intensity-SurfaceDetrended",259.9723,"GOM","degrees C"
+1984,"cumulative intensity-SurfaceDetrended",79.1617,"MAB","degrees C"
+1985,"cumulative intensity-SurfaceDetrended",15.6854,"GB","degrees C"
+1985,"cumulative intensity-SurfaceDetrended",113.9719,"GOM","degrees C"
+1985,"cumulative intensity-SurfaceDetrended",167.8399,"MAB","degrees C"
+1986,"cumulative intensity-SurfaceDetrended",52.2409,"GB","degrees C"
+1986,"cumulative intensity-SurfaceDetrended",27.6445,"GOM","degrees C"
+1986,"cumulative intensity-SurfaceDetrended",81.9932,"MAB","degrees C"
+1987,"cumulative intensity-SurfaceDetrended",9.6523,"GB","degrees C"
+1988,"cumulative intensity-SurfaceDetrended",13.9976,"GB","degrees C"
+1988,"cumulative intensity-SurfaceDetrended",14.4498,"MAB","degrees C"
+1989,"cumulative intensity-SurfaceDetrended",9.2117,"GB","degrees C"
+1989,"cumulative intensity-SurfaceDetrended",18.5826,"GOM","degrees C"
+1989,"cumulative intensity-SurfaceDetrended",27.0448,"MAB","degrees C"
+1990,"cumulative intensity-SurfaceDetrended",152.5042,"GB","degrees C"
+1990,"cumulative intensity-SurfaceDetrended",52.919,"GOM","degrees C"
+1990,"cumulative intensity-SurfaceDetrended",60.9342,"MAB","degrees C"
+1991,"cumulative intensity-SurfaceDetrended",30.7537,"GB","degrees C"
+1991,"cumulative intensity-SurfaceDetrended",26.4015,"GOM","degrees C"
+1991,"cumulative intensity-SurfaceDetrended",82.1042,"MAB","degrees C"
+1993,"cumulative intensity-SurfaceDetrended",31.2192,"MAB","degrees C"
+1994,"cumulative intensity-SurfaceDetrended",120.522,"GB","degrees C"
+1994,"cumulative intensity-SurfaceDetrended",28.8071,"GOM","degrees C"
+1994,"cumulative intensity-SurfaceDetrended",26.4982,"MAB","degrees C"
+1995,"cumulative intensity-SurfaceDetrended",25.8941,"GB","degrees C"
+1995,"cumulative intensity-SurfaceDetrended",64.4876,"MAB","degrees C"
+1996,"cumulative intensity-SurfaceDetrended",14.1917,"MAB","degrees C"
+1999,"cumulative intensity-SurfaceDetrended",96.6906,"GB","degrees C"
+1999,"cumulative intensity-SurfaceDetrended",61.8193,"GOM","degrees C"
+1999,"cumulative intensity-SurfaceDetrended",66.58,"MAB","degrees C"
+2000,"cumulative intensity-SurfaceDetrended",19.4739,"GB","degrees C"
+2000,"cumulative intensity-SurfaceDetrended",34.7295,"MAB","degrees C"
+2001,"cumulative intensity-SurfaceDetrended",53.4504,"GB","degrees C"
+2001,"cumulative intensity-SurfaceDetrended",39.1583,"MAB","degrees C"
+2002,"cumulative intensity-SurfaceDetrended",36.8983,"GB","degrees C"
+2002,"cumulative intensity-SurfaceDetrended",135.9578,"MAB","degrees C"
+2005,"cumulative intensity-SurfaceDetrended",26.5147,"GB","degrees C"
+2005,"cumulative intensity-SurfaceDetrended",7.5655,"GOM","degrees C"
+2005,"cumulative intensity-SurfaceDetrended",13.0098,"MAB","degrees C"
+2006,"cumulative intensity-SurfaceDetrended",13.3639,"GB","degrees C"
+2006,"cumulative intensity-SurfaceDetrended",52.2056,"GOM","degrees C"
+2006,"cumulative intensity-SurfaceDetrended",13.4571,"MAB","degrees C"
+2007,"cumulative intensity-SurfaceDetrended",41.1055,"GB","degrees C"
+2007,"cumulative intensity-SurfaceDetrended",89.1566,"MAB","degrees C"
+2008,"cumulative intensity-SurfaceDetrended",15.959,"GOM","degrees C"
+2009,"cumulative intensity-SurfaceDetrended",70.1079,"GB","degrees C"
+2009,"cumulative intensity-SurfaceDetrended",20.4297,"GOM","degrees C"
+2009,"cumulative intensity-SurfaceDetrended",19.7221,"MAB","degrees C"
+2010,"cumulative intensity-SurfaceDetrended",29.6756,"GB","degrees C"
+2010,"cumulative intensity-SurfaceDetrended",99.9524,"GOM","degrees C"
+2010,"cumulative intensity-SurfaceDetrended",63.8573,"MAB","degrees C"
+2011,"cumulative intensity-SurfaceDetrended",22.3479,"GB","degrees C"
+2011,"cumulative intensity-SurfaceDetrended",19.859,"GOM","degrees C"
+2011,"cumulative intensity-SurfaceDetrended",61.1856,"MAB","degrees C"
+2012,"cumulative intensity-SurfaceDetrended",198.2838,"GB","degrees C"
+2012,"cumulative intensity-SurfaceDetrended",252.5052,"GOM","degrees C"
+2012,"cumulative intensity-SurfaceDetrended",262.2834,"MAB","degrees C"
+2013,"cumulative intensity-SurfaceDetrended",41.2261,"GB","degrees C"
+2013,"cumulative intensity-SurfaceDetrended",55.2313,"GOM","degrees C"
+2014,"cumulative intensity-SurfaceDetrended",16.4298,"GOM","degrees C"
+2014,"cumulative intensity-SurfaceDetrended",18.1896,"MAB","degrees C"
+2015,"cumulative intensity-SurfaceDetrended",100.8557,"GB","degrees C"
+2015,"cumulative intensity-SurfaceDetrended",57.8245,"GOM","degrees C"
+2015,"cumulative intensity-SurfaceDetrended",181.6641,"MAB","degrees C"
+2016,"cumulative intensity-SurfaceDetrended",53.4328,"GB","degrees C"
+2016,"cumulative intensity-SurfaceDetrended",73.8058,"GOM","degrees C"
+2016,"cumulative intensity-SurfaceDetrended",47.9775,"MAB","degrees C"
+2017,"cumulative intensity-SurfaceDetrended",7.7752,"GB","degrees C"
+2017,"cumulative intensity-SurfaceDetrended",17.0617,"GOM","degrees C"
+2017,"cumulative intensity-SurfaceDetrended",22.36,"MAB","degrees C"
+2018,"cumulative intensity-SurfaceDetrended",9.3299,"GB","degrees C"
+2018,"cumulative intensity-SurfaceDetrended",77.829,"GOM","degrees C"
+2018,"cumulative intensity-SurfaceDetrended",63.3829,"MAB","degrees C"
+2019,"cumulative intensity-SurfaceDetrended",19.3336,"MAB","degrees C"
+2020,"cumulative intensity-SurfaceDetrended",70.4908,"GB","degrees C"
+2020,"cumulative intensity-SurfaceDetrended",69.617,"GOM","degrees C"
+2020,"cumulative intensity-SurfaceDetrended",14.0015,"MAB","degrees C"
+2021,"cumulative intensity-SurfaceDetrended",95.3004,"GB","degrees C"
+2021,"cumulative intensity-SurfaceDetrended",65.5594,"GOM","degrees C"
+2021,"cumulative intensity-SurfaceDetrended",60.3943,"MAB","degrees C"
+2022,"cumulative intensity-SurfaceDetrended",79.4837,"GB","degrees C"
+2022,"cumulative intensity-SurfaceDetrended",60.5411,"GOM","degrees C"
+2022,"cumulative intensity-SurfaceDetrended",32.9159,"MAB","degrees C"
+2023,"cumulative intensity-SurfaceDetrended",57.9045,"GB","degrees C"
+2023,"cumulative intensity-SurfaceDetrended",41.6399,"GOM","degrees C"
+2023,"cumulative intensity-SurfaceDetrended",41.0701,"MAB","degrees C"
+2024,"cumulative intensity-SurfaceDetrended",22.2109,"GOM","degrees C"
+1982,"maximum intensity-SurfaceDetrended",2.7552,"GB","degrees C"
+1982,"maximum intensity-SurfaceDetrended",2.5951,"GOM","degrees C"
+1982,"maximum intensity-SurfaceDetrended",1.964,"MAB","degrees C"
+1983,"maximum intensity-SurfaceDetrended",3.2294,"GB","degrees C"
+1983,"maximum intensity-SurfaceDetrended",2.9384,"GOM","degrees C"
+1983,"maximum intensity-SurfaceDetrended",2.2537,"MAB","degrees C"
+1984,"maximum intensity-SurfaceDetrended",2.8592,"GB","degrees C"
+1984,"maximum intensity-SurfaceDetrended",2.6091,"GOM","degrees C"
+1984,"maximum intensity-SurfaceDetrended",2.517,"MAB","degrees C"
+1985,"maximum intensity-SurfaceDetrended",2.2754,"GB","degrees C"
+1985,"maximum intensity-SurfaceDetrended",1.9428,"GOM","degrees C"
+1985,"maximum intensity-SurfaceDetrended",2.7898,"MAB","degrees C"
+1986,"maximum intensity-SurfaceDetrended",3.2058,"GB","degrees C"
+1986,"maximum intensity-SurfaceDetrended",2.5686,"GOM","degrees C"
+1986,"maximum intensity-SurfaceDetrended",2.2969,"MAB","degrees C"
+1987,"maximum intensity-SurfaceDetrended",2.0238,"GB","degrees C"
+1988,"maximum intensity-SurfaceDetrended",2.2692,"GB","degrees C"
+1988,"maximum intensity-SurfaceDetrended",2.025,"MAB","degrees C"
+1989,"maximum intensity-SurfaceDetrended",1.6513,"GB","degrees C"
+1989,"maximum intensity-SurfaceDetrended",1.9778,"GOM","degrees C"
+1989,"maximum intensity-SurfaceDetrended",2.0684,"MAB","degrees C"
+1990,"maximum intensity-SurfaceDetrended",3.5087,"GB","degrees C"
+1990,"maximum intensity-SurfaceDetrended",2.3377,"GOM","degrees C"
+1990,"maximum intensity-SurfaceDetrended",2.4012,"MAB","degrees C"
+1991,"maximum intensity-SurfaceDetrended",2.7118,"GB","degrees C"
+1991,"maximum intensity-SurfaceDetrended",2.8439,"GOM","degrees C"
+1991,"maximum intensity-SurfaceDetrended",3.3063,"MAB","degrees C"
+1993,"maximum intensity-SurfaceDetrended",1.9614,"MAB","degrees C"
+1994,"maximum intensity-SurfaceDetrended",3.4314,"GB","degrees C"
+1994,"maximum intensity-SurfaceDetrended",2.2112,"GOM","degrees C"
+1994,"maximum intensity-SurfaceDetrended",2.5667,"MAB","degrees C"
+1995,"maximum intensity-SurfaceDetrended",2.3575,"GB","degrees C"
+1995,"maximum intensity-SurfaceDetrended",1.7832,"MAB","degrees C"
+1996,"maximum intensity-SurfaceDetrended",2.0914,"MAB","degrees C"
+1999,"maximum intensity-SurfaceDetrended",2.7246,"GB","degrees C"
+1999,"maximum intensity-SurfaceDetrended",2.4895,"GOM","degrees C"
+1999,"maximum intensity-SurfaceDetrended",2.6566,"MAB","degrees C"
+2000,"maximum intensity-SurfaceDetrended",1.6785,"GB","degrees C"
+2000,"maximum intensity-SurfaceDetrended",2.3568,"MAB","degrees C"
+2001,"maximum intensity-SurfaceDetrended",2.7375,"GB","degrees C"
+2001,"maximum intensity-SurfaceDetrended",2.2475,"MAB","degrees C"
+2002,"maximum intensity-SurfaceDetrended",2.6041,"GB","degrees C"
+2002,"maximum intensity-SurfaceDetrended",3.3564,"MAB","degrees C"
+2005,"maximum intensity-SurfaceDetrended",2.7692,"GB","degrees C"
+2005,"maximum intensity-SurfaceDetrended",1.8728,"GOM","degrees C"
+2005,"maximum intensity-SurfaceDetrended",1.9359,"MAB","degrees C"
+2006,"maximum intensity-SurfaceDetrended",1.6626,"GB","degrees C"
+2006,"maximum intensity-SurfaceDetrended",1.81,"GOM","degrees C"
+2006,"maximum intensity-SurfaceDetrended",1.8927,"MAB","degrees C"
+2007,"maximum intensity-SurfaceDetrended",2.2923,"GB","degrees C"
+2007,"maximum intensity-SurfaceDetrended",2.792,"MAB","degrees C"
+2008,"maximum intensity-SurfaceDetrended",1.863,"GOM","degrees C"
+2009,"maximum intensity-SurfaceDetrended",3.2179,"GB","degrees C"
+2009,"maximum intensity-SurfaceDetrended",2.432,"GOM","degrees C"
+2009,"maximum intensity-SurfaceDetrended",1.9052,"MAB","degrees C"
+2010,"maximum intensity-SurfaceDetrended",2.5631,"GB","degrees C"
+2010,"maximum intensity-SurfaceDetrended",3.8771,"GOM","degrees C"
+2010,"maximum intensity-SurfaceDetrended",2.8915,"MAB","degrees C"
+2011,"maximum intensity-SurfaceDetrended",2.6889,"GB","degrees C"
+2011,"maximum intensity-SurfaceDetrended",2.4029,"GOM","degrees C"
+2011,"maximum intensity-SurfaceDetrended",4.3969,"MAB","degrees C"
+2012,"maximum intensity-SurfaceDetrended",3.0176,"GB","degrees C"
+2012,"maximum intensity-SurfaceDetrended",3.4655,"GOM","degrees C"
+2012,"maximum intensity-SurfaceDetrended",4.6032,"MAB","degrees C"
+2013,"maximum intensity-SurfaceDetrended",2.4205,"GB","degrees C"
+2013,"maximum intensity-SurfaceDetrended",3.0465,"GOM","degrees C"
+2014,"maximum intensity-SurfaceDetrended",1.9723,"GOM","degrees C"
+2014,"maximum intensity-SurfaceDetrended",2.0148,"MAB","degrees C"
+2015,"maximum intensity-SurfaceDetrended",3.1294,"GB","degrees C"
+2015,"maximum intensity-SurfaceDetrended",2.4783,"GOM","degrees C"
+2015,"maximum intensity-SurfaceDetrended",3.246,"MAB","degrees C"
+2016,"maximum intensity-SurfaceDetrended",3.0548,"GB","degrees C"
+2016,"maximum intensity-SurfaceDetrended",2.9329,"GOM","degrees C"
+2016,"maximum intensity-SurfaceDetrended",2.0595,"MAB","degrees C"
+2017,"maximum intensity-SurfaceDetrended",1.756,"GB","degrees C"
+2017,"maximum intensity-SurfaceDetrended",1.7341,"GOM","degrees C"
+2017,"maximum intensity-SurfaceDetrended",1.8008,"MAB","degrees C"
+2018,"maximum intensity-SurfaceDetrended",1.3337,"GB","degrees C"
+2018,"maximum intensity-SurfaceDetrended",3.0016,"GOM","degrees C"
+2018,"maximum intensity-SurfaceDetrended",3.5155,"MAB","degrees C"
+2019,"maximum intensity-SurfaceDetrended",1.9618,"MAB","degrees C"
+2020,"maximum intensity-SurfaceDetrended",3.2757,"GB","degrees C"
+2020,"maximum intensity-SurfaceDetrended",2.4955,"GOM","degrees C"
+2020,"maximum intensity-SurfaceDetrended",1.7077,"MAB","degrees C"
+2021,"maximum intensity-SurfaceDetrended",3.4943,"GB","degrees C"
+2021,"maximum intensity-SurfaceDetrended",2.1043,"GOM","degrees C"
+2021,"maximum intensity-SurfaceDetrended",2.3572,"MAB","degrees C"
+2022,"maximum intensity-SurfaceDetrended",2.8449,"GB","degrees C"
+2022,"maximum intensity-SurfaceDetrended",2.4196,"GOM","degrees C"
+2022,"maximum intensity-SurfaceDetrended",1.8468,"MAB","degrees C"
+2023,"maximum intensity-SurfaceDetrended",1.6608,"GB","degrees C"
+2023,"maximum intensity-SurfaceDetrended",2.4341,"GOM","degrees C"
+2023,"maximum intensity-SurfaceDetrended",2.0703,"MAB","degrees C"
+2024,"maximum intensity-SurfaceDetrended",2.0696,"GOM","degrees C"
+1982,"duration-SurfaceDetrended",135,"GB","N days"
+1982,"duration-SurfaceDetrended",165,"GOM","N days"
+1982,"duration-SurfaceDetrended",8,"MAB","N days"
+1983,"duration-SurfaceDetrended",8,"GB","N days"
+1983,"duration-SurfaceDetrended",25,"GOM","N days"
+1983,"duration-SurfaceDetrended",11,"MAB","N days"
+1984,"duration-SurfaceDetrended",21,"GB","N days"
+1984,"duration-SurfaceDetrended",81,"GOM","N days"
+1984,"duration-SurfaceDetrended",18,"MAB","N days"
+1985,"duration-SurfaceDetrended",5,"GB","N days"
+1985,"duration-SurfaceDetrended",72,"GOM","N days"
+1985,"duration-SurfaceDetrended",46,"MAB","N days"
+1986,"duration-SurfaceDetrended",10,"GB","N days"
+1986,"duration-SurfaceDetrended",6,"GOM","N days"
+1986,"duration-SurfaceDetrended",15,"MAB","N days"
+1987,"duration-SurfaceDetrended",6,"GB","N days"
+1988,"duration-SurfaceDetrended",7,"GB","N days"
+1988,"duration-SurfaceDetrended",9,"MAB","N days"
+1989,"duration-SurfaceDetrended",6,"GB","N days"
+1989,"duration-SurfaceDetrended",6,"GOM","N days"
+1989,"duration-SurfaceDetrended",10,"MAB","N days"
+1990,"duration-SurfaceDetrended",48,"GB","N days"
+1990,"duration-SurfaceDetrended",15,"GOM","N days"
+1990,"duration-SurfaceDetrended",14,"MAB","N days"
+1991,"duration-SurfaceDetrended",12,"GB","N days"
+1991,"duration-SurfaceDetrended",11,"GOM","N days"
+1991,"duration-SurfaceDetrended",13,"MAB","N days"
+1993,"duration-SurfaceDetrended",11,"MAB","N days"
+1994,"duration-SurfaceDetrended",54,"GB","N days"
+1994,"duration-SurfaceDetrended",18,"GOM","N days"
+1994,"duration-SurfaceDetrended",13,"MAB","N days"
+1995,"duration-SurfaceDetrended",11,"GB","N days"
+1995,"duration-SurfaceDetrended",33,"MAB","N days"
+1996,"duration-SurfaceDetrended",8,"MAB","N days"
+1999,"duration-SurfaceDetrended",24,"GB","N days"
+1999,"duration-SurfaceDetrended",14,"GOM","N days"
+1999,"duration-SurfaceDetrended",26,"MAB","N days"
+2000,"duration-SurfaceDetrended",14,"GB","N days"
+2000,"duration-SurfaceDetrended",8,"MAB","N days"
+2001,"duration-SurfaceDetrended",16,"GB","N days"
+2001,"duration-SurfaceDetrended",16,"MAB","N days"
+2002,"duration-SurfaceDetrended",13,"GB","N days"
+2002,"duration-SurfaceDetrended",38,"MAB","N days"
+2005,"duration-SurfaceDetrended",13,"GB","N days"
+2005,"duration-SurfaceDetrended",5,"GOM","N days"
+2005,"duration-SurfaceDetrended",8,"MAB","N days"
+2006,"duration-SurfaceDetrended",9,"GB","N days"
+2006,"duration-SurfaceDetrended",38,"GOM","N days"
+2006,"duration-SurfaceDetrended",8,"MAB","N days"
+2007,"duration-SurfaceDetrended",24,"GB","N days"
+2007,"duration-SurfaceDetrended",29,"MAB","N days"
+2008,"duration-SurfaceDetrended",5,"GOM","N days"
+2009,"duration-SurfaceDetrended",32,"GB","N days"
+2009,"duration-SurfaceDetrended",10,"GOM","N days"
+2009,"duration-SurfaceDetrended",12,"MAB","N days"
+2010,"duration-SurfaceDetrended",15,"GB","N days"
+2010,"duration-SurfaceDetrended",35,"GOM","N days"
+2010,"duration-SurfaceDetrended",21,"MAB","N days"
+2011,"duration-SurfaceDetrended",11,"GB","N days"
+2011,"duration-SurfaceDetrended",11,"GOM","N days"
+2011,"duration-SurfaceDetrended",21,"MAB","N days"
+2012,"duration-SurfaceDetrended",30,"GB","N days"
+2012,"duration-SurfaceDetrended",24,"GOM","N days"
+2012,"duration-SurfaceDetrended",49,"MAB","N days"
+2013,"duration-SurfaceDetrended",12,"GB","N days"
+2013,"duration-SurfaceDetrended",10,"GOM","N days"
+2014,"duration-SurfaceDetrended",5,"GOM","N days"
+2014,"duration-SurfaceDetrended",6,"MAB","N days"
+2015,"duration-SurfaceDetrended",31,"GB","N days"
+2015,"duration-SurfaceDetrended",9,"GOM","N days"
+2015,"duration-SurfaceDetrended",41,"MAB","N days"
+2016,"duration-SurfaceDetrended",19,"GB","N days"
+2016,"duration-SurfaceDetrended",19,"GOM","N days"
+2016,"duration-SurfaceDetrended",12,"MAB","N days"
+2017,"duration-SurfaceDetrended",5,"GB","N days"
+2017,"duration-SurfaceDetrended",12,"GOM","N days"
+2017,"duration-SurfaceDetrended",8,"MAB","N days"
+2018,"duration-SurfaceDetrended",8,"GB","N days"
+2018,"duration-SurfaceDetrended",21,"GOM","N days"
+2018,"duration-SurfaceDetrended",11,"MAB","N days"
+2019,"duration-SurfaceDetrended",7,"MAB","N days"
+2020,"duration-SurfaceDetrended",15,"GB","N days"
+2020,"duration-SurfaceDetrended",14,"GOM","N days"
+2020,"duration-SurfaceDetrended",10,"MAB","N days"
+2021,"duration-SurfaceDetrended",14,"GB","N days"
+2021,"duration-SurfaceDetrended",14,"GOM","N days"
+2021,"duration-SurfaceDetrended",24,"MAB","N days"
+2022,"duration-SurfaceDetrended",29,"GB","N days"
+2022,"duration-SurfaceDetrended",17,"GOM","N days"
+2022,"duration-SurfaceDetrended",11,"MAB","N days"
+2023,"duration-SurfaceDetrended",24,"GB","N days"
+2023,"duration-SurfaceDetrended",11,"GOM","N days"
+2023,"duration-SurfaceDetrended",10,"MAB","N days"
+2024,"duration-SurfaceDetrended",12,"GOM","N days"
+1984,"cumulative intensity-BottomDetrended",34.0513,"GOM","degrees C"
+1985,"cumulative intensity-BottomDetrended",50.2812,"GOM","degrees C"
+1985,"cumulative intensity-BottomDetrended",182.0184,"MAB","degrees C"
+1986,"cumulative intensity-BottomDetrended",36.0588,"GB","degrees C"
+1986,"cumulative intensity-BottomDetrended",231.1889,"GOM","degrees C"
+1986,"cumulative intensity-BottomDetrended",260.906,"MAB","degrees C"
+1990,"cumulative intensity-BottomDetrended",95.5928,"MAB","degrees C"
+1991,"cumulative intensity-BottomDetrended",63.53,"GB","degrees C"
+1991,"cumulative intensity-BottomDetrended",70.6294,"MAB","degrees C"
+1994,"cumulative intensity-BottomDetrended",132.0066,"GB","degrees C"
+1994,"cumulative intensity-BottomDetrended",55.1748,"GOM","degrees C"
+1995,"cumulative intensity-BottomDetrended",45.0605,"GB","degrees C"
+1999,"cumulative intensity-BottomDetrended",175.4996,"GB","degrees C"
+1999,"cumulative intensity-BottomDetrended",222.5429,"MAB","degrees C"
+2000,"cumulative intensity-BottomDetrended",63.198,"GB","degrees C"
+2009,"cumulative intensity-BottomDetrended",55.556,"GB","degrees C"
+2012,"cumulative intensity-BottomDetrended",332.6032,"GB","degrees C"
+2012,"cumulative intensity-BottomDetrended",413.8964,"MAB","degrees C"
+2013,"cumulative intensity-BottomDetrended",114.0542,"GOM","degrees C"
+2014,"cumulative intensity-BottomDetrended",173.0636,"GB","degrees C"
+2014,"cumulative intensity-BottomDetrended",205.5781,"MAB","degrees C"
+2015,"cumulative intensity-BottomDetrended",143.1777,"GB","degrees C"
+2015,"cumulative intensity-BottomDetrended",188.9938,"MAB","degrees C"
+2016,"cumulative intensity-BottomDetrended",97.7621,"GB","degrees C"
+2016,"cumulative intensity-BottomDetrended",83.6052,"GOM","degrees C"
+2019,"cumulative intensity-BottomDetrended",123.8852,"MAB","degrees C"
+2020,"cumulative intensity-BottomDetrended",249.6355,"GOM","degrees C"
+2021,"cumulative intensity-BottomDetrended",34.9468,"GB","degrees C"
+2021,"cumulative intensity-BottomDetrended",328.6791,"GOM","degrees C"
+2022,"cumulative intensity-BottomDetrended",47.4341,"GOM","degrees C"
+2023,"cumulative intensity-BottomDetrended",284.0419,"GOM","degrees C"
+1984,"maximum intensity-BottomDetrended",1.2857,"GOM","degrees C"
+1985,"maximum intensity-BottomDetrended",0.9636,"GOM","degrees C"
+1985,"maximum intensity-BottomDetrended",3.5614,"MAB","degrees C"
+1986,"maximum intensity-BottomDetrended",1.2276,"GB","degrees C"
+1986,"maximum intensity-BottomDetrended",1.0601,"GOM","degrees C"
+1986,"maximum intensity-BottomDetrended",3.2866,"MAB","degrees C"
+1990,"maximum intensity-BottomDetrended",2.1513,"MAB","degrees C"
+1991,"maximum intensity-BottomDetrended",1.4481,"GB","degrees C"
+1991,"maximum intensity-BottomDetrended",2.8881,"MAB","degrees C"
+1994,"maximum intensity-BottomDetrended",2.1923,"GB","degrees C"
+1994,"maximum intensity-BottomDetrended",0.8949,"GOM","degrees C"
+1995,"maximum intensity-BottomDetrended",1.405,"GB","degrees C"
+1999,"maximum intensity-BottomDetrended",2.2324,"GB","degrees C"
+1999,"maximum intensity-BottomDetrended",2.7101,"MAB","degrees C"
+2000,"maximum intensity-BottomDetrended",1.2697,"GB","degrees C"
+2009,"maximum intensity-BottomDetrended",2.225,"GB","degrees C"
+2012,"maximum intensity-BottomDetrended",1.9143,"GB","degrees C"
+2012,"maximum intensity-BottomDetrended",2.7303,"MAB","degrees C"
+2013,"maximum intensity-BottomDetrended",1.6819,"GOM","degrees C"
+2014,"maximum intensity-BottomDetrended",2.3349,"GB","degrees C"
+2014,"maximum intensity-BottomDetrended",2.2905,"MAB","degrees C"
+2015,"maximum intensity-BottomDetrended",2.1827,"GB","degrees C"
+2015,"maximum intensity-BottomDetrended",2.4703,"MAB","degrees C"
+2016,"maximum intensity-BottomDetrended",2.6659,"GB","degrees C"
+2016,"maximum intensity-BottomDetrended",1.12,"GOM","degrees C"
+2019,"maximum intensity-BottomDetrended",2.6041,"MAB","degrees C"
+2020,"maximum intensity-BottomDetrended",1.1791,"GOM","degrees C"
+2021,"maximum intensity-BottomDetrended",1.2493,"GB","degrees C"
+2021,"maximum intensity-BottomDetrended",2.0866,"GOM","degrees C"
+2022,"maximum intensity-BottomDetrended",0.8979,"GOM","degrees C"
+2023,"maximum intensity-BottomDetrended",1.7045,"GOM","degrees C"
+1984,"duration-BottomDetrended",34,"GOM","N days"
+1985,"duration-BottomDetrended",59,"GOM","N days"
+1985,"duration-BottomDetrended",70,"MAB","N days"
+1986,"duration-BottomDetrended",33,"GB","N days"
+1986,"duration-BottomDetrended",159,"GOM","N days"
+1986,"duration-BottomDetrended",73,"MAB","N days"
+1990,"duration-BottomDetrended",52,"MAB","N days"
+1991,"duration-BottomDetrended",52,"GB","N days"
+1991,"duration-BottomDetrended",32,"MAB","N days"
+1994,"duration-BottomDetrended",98,"GB","N days"
+1994,"duration-BottomDetrended",70,"GOM","N days"
+1995,"duration-BottomDetrended",36,"GB","N days"
+1999,"duration-BottomDetrended",108,"GB","N days"
+1999,"duration-BottomDetrended",114,"MAB","N days"
+2000,"duration-BottomDetrended",56,"GB","N days"
+2009,"duration-BottomDetrended",31,"GB","N days"
+2012,"duration-BottomDetrended",121,"GB","N days"
+2012,"duration-BottomDetrended",198,"MAB","N days"
+2013,"duration-BottomDetrended",93,"GOM","N days"
+2014,"duration-BottomDetrended",69,"GB","N days"
+2014,"duration-BottomDetrended",106,"MAB","N days"
+2015,"duration-BottomDetrended",83,"GB","N days"
+2015,"duration-BottomDetrended",89,"MAB","N days"
+2016,"duration-BottomDetrended",49,"GB","N days"
+2016,"duration-BottomDetrended",90,"GOM","N days"
+2019,"duration-BottomDetrended",61,"MAB","N days"
+2020,"duration-BottomDetrended",187,"GOM","N days"
+2021,"duration-BottomDetrended",31,"GB","N days"
+2021,"duration-BottomDetrended",202,"GOM","N days"
+2022,"duration-BottomDetrended",57,"GOM","N days"
+2023,"duration-BottomDetrended",232,"GOM","N days"
+1993,"cumulative intensity-SurfaceDetrended",0,"GB",NA
+1996,"cumulative intensity-SurfaceDetrended",0,"GB",NA
+2008,"cumulative intensity-SurfaceDetrended",0,"GB",NA
+2014,"cumulative intensity-SurfaceDetrended",0,"GB",NA
+2019,"cumulative intensity-SurfaceDetrended",0,"GB",NA
+2024,"cumulative intensity-SurfaceDetrended",0,"GB",NA
+1993,"maximum intensity-SurfaceDetrended",0,"GB",NA
+1996,"maximum intensity-SurfaceDetrended",0,"GB",NA
+2008,"maximum intensity-SurfaceDetrended",0,"GB",NA
+2014,"maximum intensity-SurfaceDetrended",0,"GB",NA
+2019,"maximum intensity-SurfaceDetrended",0,"GB",NA
+2024,"maximum intensity-SurfaceDetrended",0,"GB",NA
+1993,"duration-SurfaceDetrended",0,"GB",NA
+1996,"duration-SurfaceDetrended",0,"GB",NA
+2008,"duration-SurfaceDetrended",0,"GB",NA
+2014,"duration-SurfaceDetrended",0,"GB",NA
+2019,"duration-SurfaceDetrended",0,"GB",NA
+2024,"duration-SurfaceDetrended",0,"GB",NA
+1982,"cumulative intensity-BottomDetrended",0,"GB",NA
+1983,"cumulative intensity-BottomDetrended",0,"GB",NA
+1984,"cumulative intensity-BottomDetrended",0,"GB",NA
+1985,"cumulative intensity-BottomDetrended",0,"GB",NA
+1987,"cumulative intensity-BottomDetrended",0,"GB",NA
+1988,"cumulative intensity-BottomDetrended",0,"GB",NA
+1989,"cumulative intensity-BottomDetrended",0,"GB",NA
+1990,"cumulative intensity-BottomDetrended",0,"GB",NA
+1993,"cumulative intensity-BottomDetrended",0,"GB",NA
+1996,"cumulative intensity-BottomDetrended",0,"GB",NA
+2001,"cumulative intensity-BottomDetrended",0,"GB",NA
+2002,"cumulative intensity-BottomDetrended",0,"GB",NA
+2005,"cumulative intensity-BottomDetrended",0,"GB",NA
+2006,"cumulative intensity-BottomDetrended",0,"GB",NA
+2007,"cumulative intensity-BottomDetrended",0,"GB",NA
+2008,"cumulative intensity-BottomDetrended",0,"GB",NA
+2010,"cumulative intensity-BottomDetrended",0,"GB",NA
+2011,"cumulative intensity-BottomDetrended",0,"GB",NA
+2013,"cumulative intensity-BottomDetrended",0,"GB",NA
+2017,"cumulative intensity-BottomDetrended",0,"GB",NA
+2018,"cumulative intensity-BottomDetrended",0,"GB",NA
+2019,"cumulative intensity-BottomDetrended",0,"GB",NA
+2020,"cumulative intensity-BottomDetrended",0,"GB",NA
+2022,"cumulative intensity-BottomDetrended",0,"GB",NA
+2023,"cumulative intensity-BottomDetrended",0,"GB",NA
+2024,"cumulative intensity-BottomDetrended",0,"GB",NA
+1982,"maximum intensity-BottomDetrended",0,"GB",NA
+1983,"maximum intensity-BottomDetrended",0,"GB",NA
+1984,"maximum intensity-BottomDetrended",0,"GB",NA
+1985,"maximum intensity-BottomDetrended",0,"GB",NA
+1987,"maximum intensity-BottomDetrended",0,"GB",NA
+1988,"maximum intensity-BottomDetrended",0,"GB",NA
+1989,"maximum intensity-BottomDetrended",0,"GB",NA
+1990,"maximum intensity-BottomDetrended",0,"GB",NA
+1993,"maximum intensity-BottomDetrended",0,"GB",NA
+1996,"maximum intensity-BottomDetrended",0,"GB",NA
+2001,"maximum intensity-BottomDetrended",0,"GB",NA
+2002,"maximum intensity-BottomDetrended",0,"GB",NA
+2005,"maximum intensity-BottomDetrended",0,"GB",NA
+2006,"maximum intensity-BottomDetrended",0,"GB",NA
+2007,"maximum intensity-BottomDetrended",0,"GB",NA
+2008,"maximum intensity-BottomDetrended",0,"GB",NA
+2010,"maximum intensity-BottomDetrended",0,"GB",NA
+2011,"maximum intensity-BottomDetrended",0,"GB",NA
+2013,"maximum intensity-BottomDetrended",0,"GB",NA
+2017,"maximum intensity-BottomDetrended",0,"GB",NA
+2018,"maximum intensity-BottomDetrended",0,"GB",NA
+2019,"maximum intensity-BottomDetrended",0,"GB",NA
+2020,"maximum intensity-BottomDetrended",0,"GB",NA
+2022,"maximum intensity-BottomDetrended",0,"GB",NA
+2023,"maximum intensity-BottomDetrended",0,"GB",NA
+2024,"maximum intensity-BottomDetrended",0,"GB",NA
+1982,"duration-BottomDetrended",0,"GB",NA
+1983,"duration-BottomDetrended",0,"GB",NA
+1984,"duration-BottomDetrended",0,"GB",NA
+1985,"duration-BottomDetrended",0,"GB",NA
+1987,"duration-BottomDetrended",0,"GB",NA
+1988,"duration-BottomDetrended",0,"GB",NA
+1989,"duration-BottomDetrended",0,"GB",NA
+1990,"duration-BottomDetrended",0,"GB",NA
+1993,"duration-BottomDetrended",0,"GB",NA
+1996,"duration-BottomDetrended",0,"GB",NA
+2001,"duration-BottomDetrended",0,"GB",NA
+2002,"duration-BottomDetrended",0,"GB",NA
+2005,"duration-BottomDetrended",0,"GB",NA
+2006,"duration-BottomDetrended",0,"GB",NA
+2007,"duration-BottomDetrended",0,"GB",NA
+2008,"duration-BottomDetrended",0,"GB",NA
+2010,"duration-BottomDetrended",0,"GB",NA
+2011,"duration-BottomDetrended",0,"GB",NA
+2013,"duration-BottomDetrended",0,"GB",NA
+2017,"duration-BottomDetrended",0,"GB",NA
+2018,"duration-BottomDetrended",0,"GB",NA
+2019,"duration-BottomDetrended",0,"GB",NA
+2020,"duration-BottomDetrended",0,"GB",NA
+2022,"duration-BottomDetrended",0,"GB",NA
+2023,"duration-BottomDetrended",0,"GB",NA
+2024,"duration-BottomDetrended",0,"GB",NA
+1987,"cumulative intensity-SurfaceDetrended",0,"GOM",NA
+1988,"cumulative intensity-SurfaceDetrended",0,"GOM",NA
+1993,"cumulative intensity-SurfaceDetrended",0,"GOM",NA
+1995,"cumulative intensity-SurfaceDetrended",0,"GOM",NA
+1996,"cumulative intensity-SurfaceDetrended",0,"GOM",NA
+2000,"cumulative intensity-SurfaceDetrended",0,"GOM",NA
+2001,"cumulative intensity-SurfaceDetrended",0,"GOM",NA
+2002,"cumulative intensity-SurfaceDetrended",0,"GOM",NA
+2007,"cumulative intensity-SurfaceDetrended",0,"GOM",NA
+2019,"cumulative intensity-SurfaceDetrended",0,"GOM",NA
+1987,"maximum intensity-SurfaceDetrended",0,"GOM",NA
+1988,"maximum intensity-SurfaceDetrended",0,"GOM",NA
+1993,"maximum intensity-SurfaceDetrended",0,"GOM",NA
+1995,"maximum intensity-SurfaceDetrended",0,"GOM",NA
+1996,"maximum intensity-SurfaceDetrended",0,"GOM",NA
+2000,"maximum intensity-SurfaceDetrended",0,"GOM",NA
+2001,"maximum intensity-SurfaceDetrended",0,"GOM",NA
+2002,"maximum intensity-SurfaceDetrended",0,"GOM",NA
+2007,"maximum intensity-SurfaceDetrended",0,"GOM",NA
+2019,"maximum intensity-SurfaceDetrended",0,"GOM",NA
+1987,"duration-SurfaceDetrended",0,"GOM",NA
+1988,"duration-SurfaceDetrended",0,"GOM",NA
+1993,"duration-SurfaceDetrended",0,"GOM",NA
+1995,"duration-SurfaceDetrended",0,"GOM",NA
+1996,"duration-SurfaceDetrended",0,"GOM",NA
+2000,"duration-SurfaceDetrended",0,"GOM",NA
+2001,"duration-SurfaceDetrended",0,"GOM",NA
+2002,"duration-SurfaceDetrended",0,"GOM",NA
+2007,"duration-SurfaceDetrended",0,"GOM",NA
+2019,"duration-SurfaceDetrended",0,"GOM",NA
+1982,"cumulative intensity-BottomDetrended",0,"GOM",NA
+1983,"cumulative intensity-BottomDetrended",0,"GOM",NA
+1987,"cumulative intensity-BottomDetrended",0,"GOM",NA
+1988,"cumulative intensity-BottomDetrended",0,"GOM",NA
+1989,"cumulative intensity-BottomDetrended",0,"GOM",NA
+1990,"cumulative intensity-BottomDetrended",0,"GOM",NA
+1991,"cumulative intensity-BottomDetrended",0,"GOM",NA
+1993,"cumulative intensity-BottomDetrended",0,"GOM",NA
+1995,"cumulative intensity-BottomDetrended",0,"GOM",NA
+1996,"cumulative intensity-BottomDetrended",0,"GOM",NA
+1999,"cumulative intensity-BottomDetrended",0,"GOM",NA
+2000,"cumulative intensity-BottomDetrended",0,"GOM",NA
+2001,"cumulative intensity-BottomDetrended",0,"GOM",NA
+2002,"cumulative intensity-BottomDetrended",0,"GOM",NA
+2005,"cumulative intensity-BottomDetrended",0,"GOM",NA
+2006,"cumulative intensity-BottomDetrended",0,"GOM",NA
+2007,"cumulative intensity-BottomDetrended",0,"GOM",NA
+2008,"cumulative intensity-BottomDetrended",0,"GOM",NA
+2009,"cumulative intensity-BottomDetrended",0,"GOM",NA
+2010,"cumulative intensity-BottomDetrended",0,"GOM",NA
+2011,"cumulative intensity-BottomDetrended",0,"GOM",NA
+2012,"cumulative intensity-BottomDetrended",0,"GOM",NA
+2014,"cumulative intensity-BottomDetrended",0,"GOM",NA
+2015,"cumulative intensity-BottomDetrended",0,"GOM",NA
+2017,"cumulative intensity-BottomDetrended",0,"GOM",NA
+2018,"cumulative intensity-BottomDetrended",0,"GOM",NA
+2019,"cumulative intensity-BottomDetrended",0,"GOM",NA
+2024,"cumulative intensity-BottomDetrended",0,"GOM",NA
+1982,"maximum intensity-BottomDetrended",0,"GOM",NA
+1983,"maximum intensity-BottomDetrended",0,"GOM",NA
+1987,"maximum intensity-BottomDetrended",0,"GOM",NA
+1988,"maximum intensity-BottomDetrended",0,"GOM",NA
+1989,"maximum intensity-BottomDetrended",0,"GOM",NA
+1990,"maximum intensity-BottomDetrended",0,"GOM",NA
+1991,"maximum intensity-BottomDetrended",0,"GOM",NA
+1993,"maximum intensity-BottomDetrended",0,"GOM",NA
+1995,"maximum intensity-BottomDetrended",0,"GOM",NA
+1996,"maximum intensity-BottomDetrended",0,"GOM",NA
+1999,"maximum intensity-BottomDetrended",0,"GOM",NA
+2000,"maximum intensity-BottomDetrended",0,"GOM",NA
+2001,"maximum intensity-BottomDetrended",0,"GOM",NA
+2002,"maximum intensity-BottomDetrended",0,"GOM",NA
+2005,"maximum intensity-BottomDetrended",0,"GOM",NA
+2006,"maximum intensity-BottomDetrended",0,"GOM",NA
+2007,"maximum intensity-BottomDetrended",0,"GOM",NA
+2008,"maximum intensity-BottomDetrended",0,"GOM",NA
+2009,"maximum intensity-BottomDetrended",0,"GOM",NA
+2010,"maximum intensity-BottomDetrended",0,"GOM",NA
+2011,"maximum intensity-BottomDetrended",0,"GOM",NA
+2012,"maximum intensity-BottomDetrended",0,"GOM",NA
+2014,"maximum intensity-BottomDetrended",0,"GOM",NA
+2015,"maximum intensity-BottomDetrended",0,"GOM",NA
+2017,"maximum intensity-BottomDetrended",0,"GOM",NA
+2018,"maximum intensity-BottomDetrended",0,"GOM",NA
+2019,"maximum intensity-BottomDetrended",0,"GOM",NA
+2024,"maximum intensity-BottomDetrended",0,"GOM",NA
+1982,"duration-BottomDetrended",0,"GOM",NA
+1983,"duration-BottomDetrended",0,"GOM",NA
+1987,"duration-BottomDetrended",0,"GOM",NA
+1988,"duration-BottomDetrended",0,"GOM",NA
+1989,"duration-BottomDetrended",0,"GOM",NA
+1990,"duration-BottomDetrended",0,"GOM",NA
+1991,"duration-BottomDetrended",0,"GOM",NA
+1993,"duration-BottomDetrended",0,"GOM",NA
+1995,"duration-BottomDetrended",0,"GOM",NA
+1996,"duration-BottomDetrended",0,"GOM",NA
+1999,"duration-BottomDetrended",0,"GOM",NA
+2000,"duration-BottomDetrended",0,"GOM",NA
+2001,"duration-BottomDetrended",0,"GOM",NA
+2002,"duration-BottomDetrended",0,"GOM",NA
+2005,"duration-BottomDetrended",0,"GOM",NA
+2006,"duration-BottomDetrended",0,"GOM",NA
+2007,"duration-BottomDetrended",0,"GOM",NA
+2008,"duration-BottomDetrended",0,"GOM",NA
+2009,"duration-BottomDetrended",0,"GOM",NA
+2010,"duration-BottomDetrended",0,"GOM",NA
+2011,"duration-BottomDetrended",0,"GOM",NA
+2012,"duration-BottomDetrended",0,"GOM",NA
+2014,"duration-BottomDetrended",0,"GOM",NA
+2015,"duration-BottomDetrended",0,"GOM",NA
+2017,"duration-BottomDetrended",0,"GOM",NA
+2018,"duration-BottomDetrended",0,"GOM",NA
+2019,"duration-BottomDetrended",0,"GOM",NA
+2024,"duration-BottomDetrended",0,"GOM",NA
+1987,"cumulative intensity-SurfaceDetrended",0,"MAB",NA
+2008,"cumulative intensity-SurfaceDetrended",0,"MAB",NA
+2013,"cumulative intensity-SurfaceDetrended",0,"MAB",NA
+2024,"cumulative intensity-SurfaceDetrended",0,"MAB",NA
+1987,"maximum intensity-SurfaceDetrended",0,"MAB",NA
+2008,"maximum intensity-SurfaceDetrended",0,"MAB",NA
+2013,"maximum intensity-SurfaceDetrended",0,"MAB",NA
+2024,"maximum intensity-SurfaceDetrended",0,"MAB",NA
+1987,"duration-SurfaceDetrended",0,"MAB",NA
+2008,"duration-SurfaceDetrended",0,"MAB",NA
+2013,"duration-SurfaceDetrended",0,"MAB",NA
+2024,"duration-SurfaceDetrended",0,"MAB",NA
+1982,"cumulative intensity-BottomDetrended",0,"MAB",NA
+1983,"cumulative intensity-BottomDetrended",0,"MAB",NA
+1984,"cumulative intensity-BottomDetrended",0,"MAB",NA
+1987,"cumulative intensity-BottomDetrended",0,"MAB",NA
+1988,"cumulative intensity-BottomDetrended",0,"MAB",NA
+1989,"cumulative intensity-BottomDetrended",0,"MAB",NA
+1993,"cumulative intensity-BottomDetrended",0,"MAB",NA
+1994,"cumulative intensity-BottomDetrended",0,"MAB",NA
+1995,"cumulative intensity-BottomDetrended",0,"MAB",NA
+1996,"cumulative intensity-BottomDetrended",0,"MAB",NA
+2000,"cumulative intensity-BottomDetrended",0,"MAB",NA
+2001,"cumulative intensity-BottomDetrended",0,"MAB",NA
+2002,"cumulative intensity-BottomDetrended",0,"MAB",NA
+2005,"cumulative intensity-BottomDetrended",0,"MAB",NA
+2006,"cumulative intensity-BottomDetrended",0,"MAB",NA
+2007,"cumulative intensity-BottomDetrended",0,"MAB",NA
+2008,"cumulative intensity-BottomDetrended",0,"MAB",NA
+2009,"cumulative intensity-BottomDetrended",0,"MAB",NA
+2010,"cumulative intensity-BottomDetrended",0,"MAB",NA
+2011,"cumulative intensity-BottomDetrended",0,"MAB",NA
+2013,"cumulative intensity-BottomDetrended",0,"MAB",NA
+2016,"cumulative intensity-BottomDetrended",0,"MAB",NA
+2017,"cumulative intensity-BottomDetrended",0,"MAB",NA
+2018,"cumulative intensity-BottomDetrended",0,"MAB",NA
+2020,"cumulative intensity-BottomDetrended",0,"MAB",NA
+2021,"cumulative intensity-BottomDetrended",0,"MAB",NA
+2022,"cumulative intensity-BottomDetrended",0,"MAB",NA
+2023,"cumulative intensity-BottomDetrended",0,"MAB",NA
+2024,"cumulative intensity-BottomDetrended",0,"MAB",NA
+1982,"maximum intensity-BottomDetrended",0,"MAB",NA
+1983,"maximum intensity-BottomDetrended",0,"MAB",NA
+1984,"maximum intensity-BottomDetrended",0,"MAB",NA
+1987,"maximum intensity-BottomDetrended",0,"MAB",NA
+1988,"maximum intensity-BottomDetrended",0,"MAB",NA
+1989,"maximum intensity-BottomDetrended",0,"MAB",NA
+1993,"maximum intensity-BottomDetrended",0,"MAB",NA
+1994,"maximum intensity-BottomDetrended",0,"MAB",NA
+1995,"maximum intensity-BottomDetrended",0,"MAB",NA
+1996,"maximum intensity-BottomDetrended",0,"MAB",NA
+2000,"maximum intensity-BottomDetrended",0,"MAB",NA
+2001,"maximum intensity-BottomDetrended",0,"MAB",NA
+2002,"maximum intensity-BottomDetrended",0,"MAB",NA
+2005,"maximum intensity-BottomDetrended",0,"MAB",NA
+2006,"maximum intensity-BottomDetrended",0,"MAB",NA
+2007,"maximum intensity-BottomDetrended",0,"MAB",NA
+2008,"maximum intensity-BottomDetrended",0,"MAB",NA
+2009,"maximum intensity-BottomDetrended",0,"MAB",NA
+2010,"maximum intensity-BottomDetrended",0,"MAB",NA
+2011,"maximum intensity-BottomDetrended",0,"MAB",NA
+2013,"maximum intensity-BottomDetrended",0,"MAB",NA
+2016,"maximum intensity-BottomDetrended",0,"MAB",NA
+2017,"maximum intensity-BottomDetrended",0,"MAB",NA
+2018,"maximum intensity-BottomDetrended",0,"MAB",NA
+2020,"maximum intensity-BottomDetrended",0,"MAB",NA
+2021,"maximum intensity-BottomDetrended",0,"MAB",NA
+2022,"maximum intensity-BottomDetrended",0,"MAB",NA
+2023,"maximum intensity-BottomDetrended",0,"MAB",NA
+2024,"maximum intensity-BottomDetrended",0,"MAB",NA
+1982,"duration-BottomDetrended",0,"MAB",NA
+1983,"duration-BottomDetrended",0,"MAB",NA
+1984,"duration-BottomDetrended",0,"MAB",NA
+1987,"duration-BottomDetrended",0,"MAB",NA
+1988,"duration-BottomDetrended",0,"MAB",NA
+1989,"duration-BottomDetrended",0,"MAB",NA
+1993,"duration-BottomDetrended",0,"MAB",NA
+1994,"duration-BottomDetrended",0,"MAB",NA
+1995,"duration-BottomDetrended",0,"MAB",NA
+1996,"duration-BottomDetrended",0,"MAB",NA
+2000,"duration-BottomDetrended",0,"MAB",NA
+2001,"duration-BottomDetrended",0,"MAB",NA
+2002,"duration-BottomDetrended",0,"MAB",NA
+2005,"duration-BottomDetrended",0,"MAB",NA
+2006,"duration-BottomDetrended",0,"MAB",NA
+2007,"duration-BottomDetrended",0,"MAB",NA
+2008,"duration-BottomDetrended",0,"MAB",NA
+2009,"duration-BottomDetrended",0,"MAB",NA
+2010,"duration-BottomDetrended",0,"MAB",NA
+2011,"duration-BottomDetrended",0,"MAB",NA
+2013,"duration-BottomDetrended",0,"MAB",NA
+2016,"duration-BottomDetrended",0,"MAB",NA
+2017,"duration-BottomDetrended",0,"MAB",NA
+2018,"duration-BottomDetrended",0,"MAB",NA
+2020,"duration-BottomDetrended",0,"MAB",NA
+2021,"duration-BottomDetrended",0,"MAB",NA
+2022,"duration-BottomDetrended",0,"MAB",NA
+2023,"duration-BottomDetrended",0,"MAB",NA
+2024,"duration-BottomDetrended",0,"MAB",NA
