@@ -41,13 +41,13 @@ The main branch of this repository contains the data used in the most recently p
 For the last released complete data set
 
 ```{r, eval = F}
-remotes::install_github("noaa-edab/ecodata",build_vignettes=TRUE)
+pak::pak("noaa-edab/ecodata")
 ```
 
 For data used in the current developing cycle
 
 ```{r, eval = F}
-remotes::install_github("noaa-edab/ecodata@dev",build_vignettes=TRUE)
+pak::pak("noaa-edab/ecodata@dev")
 ```
 
 
