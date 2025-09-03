@@ -1,3 +1,10 @@
+# ecodata 6.0.1
+
+### Fixes
+
+- Resolved package installation errors on Windows machines related to long file paths
+- Updated package documentation to reflect new instructions for package installation
+
 # ecodata 6.0
 
 Release includes data/plots used to build the 2025 NEFMC and MAFMC State of the Ecosystem Reports submitted to both SSCs and councils (MAFMC & NEFMC). Date: 3/25/2025
