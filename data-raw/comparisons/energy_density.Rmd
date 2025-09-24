@@ -37,7 +37,7 @@ kable(datastats, digits = 2)
 ## `r paste("Energy Density")`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
 ecodata::plot_energy_density(report = report[1]) + 
-  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_energy_density(report = report[1]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
