@@ -7,7 +7,7 @@ library(dplyr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-harborporpoise_csv<-"Precoda-historical_harbp_est-20241114 - Kristin Precoda - NOAA Affiliate.csv"
+harborporpoise_csv<-"historical_harbp_est-20250812 - Kristin Precoda - NOAA Affiliate.csv"
 
 
 get_harborporpoise<- function(save_clean = F){
@@ -23,12 +23,6 @@ get_harborporpoise<- function(save_clean = F){
    } else {
      return(harborporpoise)
    }
-   # metadata ----
-   attr(harborporpoise, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/harbor-porpoise-bycatch.html"
-   attr(harborporpoise, "data_files")   <- list(
-    harborporpoise_csv = harborporpoise_csv)
-   attr(harborporpoise, "data_steward") <- c(
-    "Debra Palka <debra.palka@noaa.gov>")
+
 }
 get_harborporpoise(save_clean = T)
-
