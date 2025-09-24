@@ -7,7 +7,7 @@ library(dplyr)
 library(tidyr)
 
 raw.dir <- here::here("data-raw")
-grayseal_csv<-"historical_gray_est-20241114 - Kristin Precoda - NOAA Affiliate.csv"
+grayseal_csv<-"historical_gray_est-20250812 - Kristin Precoda - NOAA Affiliate.csv"
 
 
 get_grayseal<- function(save_clean = F){
@@ -23,11 +23,6 @@ get_grayseal<- function(save_clean = F){
   } else {
     return(grayseal)
   }
-  # metadata ----
-  attr(grayseal, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/harbor-porpoise-bycatch.html"
-  attr(grayseal, "data_files")   <- list(
-    grayseal_csv = grayseal_csv)
-  attr(grayseal, "data_steward") <- c(
-    "Debra Palka <debra.palka@noaa.gov>")
+
 }
 get_grayseal(save_clean = T)
