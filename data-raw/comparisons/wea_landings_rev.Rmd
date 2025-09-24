@@ -9,13 +9,13 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ecodata)
-library(ecodata24)
+library(ecodata25)
 library(dplyr)
 library(knitr)
 
 # Replace 'wea_landings_rev' with intended dataset
 dataset<-ecodata::wea_landings_rev
-dataset24<-ecodata24::wea_landings_rev
+dataset24<-ecodata25::wea_landings_rev
 
 # Define dataset-specific arguments for plot functions
 report<-list("MidAtlantic","NewEngland")
@@ -38,5 +38,5 @@ kable(datastats, digits = 2)
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
 ecodata::plot_wea_landings_rev(report = report[1], n = 10)
 
-ecodata24::plot_wea_landings_rev(report = report[1])
+ecodata25::plot_wea_landings_rev(report = report[1])
 ```

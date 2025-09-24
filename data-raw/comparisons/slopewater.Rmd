@@ -9,13 +9,13 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ecodata)
-library(ecodata24)
+library(ecodata25)
 library(dplyr)
 library(knitr)
 
 # Replace 'slopewater' with intended dataset
 dataset<-ecodata::slopewater
-dataset24<-ecodata24::slopewater
+dataset24<-ecodata25::slopewater
 
 # Define dataset-specific arguments for plot functions
 report<-list("NewEngland")
@@ -39,6 +39,6 @@ kable(datastats, digits = 2)
 ecodata::plot_slopewater(report = report[1],n=10) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_slopewater(report = report[1]) + 
+ecodata25::plot_slopewater(report = report[1]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```

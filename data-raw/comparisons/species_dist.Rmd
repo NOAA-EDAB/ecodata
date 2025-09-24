@@ -9,13 +9,13 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ecodata)
-library(ecodata24)
+library(ecodata25)
 library(dplyr)
 library(knitr)
 
 # Replace 'species_dist' with intended dataset
 dataset<-ecodata::species_dist
-dataset24<-ecodata24::species_dist
+dataset24<-ecodata25::species_dist
 
 # Define dataset-specific arguments for plot functions
 report<-list("MidAtlantic","NewEngland")
@@ -39,7 +39,7 @@ kable(datastats, digits = 2)
 ecodata::plot_species_dist(report = report[1], n = 10, varName = variable[1]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_species_dist(report = report[1], varName = variable[1]) + 
+ecodata25::plot_species_dist(report = report[1], varName = variable[1]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
@@ -48,6 +48,6 @@ ecodata24::plot_species_dist(report = report[1], varName = variable[1]) +
 ecodata::plot_species_dist(report = report[1], n = 10, varName = variable[2]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_species_dist(report = report[1], varName = variable[2]) + 
+ecodata25::plot_species_dist(report = report[1], varName = variable[2]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```

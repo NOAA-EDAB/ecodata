@@ -9,13 +9,13 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ecodata)
-library(ecodata24)
+library(ecodata25)
 library(dplyr)
 library(knitr)
 
 # Replace 'seasonal_oisst_anom_gridded' with intended dataset
 dataset<-ecodata::seasonal_oisst_anom_gridded
-dataset24<-ecodata24::seasonal_sst_anomaly_gridded
+dataset24<-ecodata25::seasonal_sst_anomaly_gridded
 
 # Define dataset-specific arguments for plot functions
 report<-list("MidAtlantic","NewEngland")
@@ -39,7 +39,7 @@ kable(datastats, digits = 2)
 ecodata::plot_seasonal_oisst_anom_gridded(report = report[1]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_seasonal_sst_anomaly_gridded(report = report[1]) + 
+ecodata25::plot_seasonal_sst_anomaly_gridded(report = report[1]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
@@ -48,6 +48,6 @@ ecodata24::plot_seasonal_sst_anomaly_gridded(report = report[1]) +
 ecodata::plot_seasonal_oisst_anom_gridded(report = report[2]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_seasonal_sst_anomaly_gridded(report = report[2]) + 
+ecodata25::plot_seasonal_sst_anomaly_gridded(report = report[2]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```

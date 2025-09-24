@@ -9,13 +9,13 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ecodata)
-library(ecodata24)
+library(ecodata25)
 library(dplyr)
 library(knitr)
 
 # Replace 'cold_pool' with intended dataset
 dataset<-ecodata::cold_pool
-dataset24<-ecodata24::cold_pool
+dataset24<-ecodata25::cold_pool
 
 # Define dataset-specific arguments for plot functions
 report<-list("MidAtlantic")
@@ -39,7 +39,7 @@ kable(datastats, digits = 2)
 ecodata::plot_cold_pool(report = report[1],varName = variable[1], n = 10) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_cold_pool(report = report[1],varName = variable[1]) + 
+ecodata25::plot_cold_pool(report = report[1],varName = variable[1]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
@@ -48,7 +48,7 @@ ecodata24::plot_cold_pool(report = report[1],varName = variable[1]) +
 ecodata::plot_cold_pool(report = report[1],varName = variable[2], n = 10) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_cold_pool(report = report[1],varName = variable[2]) + 
+ecodata25::plot_cold_pool(report = report[1],varName = variable[2]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
@@ -57,6 +57,6 @@ ecodata24::plot_cold_pool(report = report[1],varName = variable[2]) +
 ecodata::plot_cold_pool(report = report[1],varName = variable[3], n = 10) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_cold_pool(report = report[1],varName = variable[3]) + 
+ecodata25::plot_cold_pool(report = report[1],varName = variable[3]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```

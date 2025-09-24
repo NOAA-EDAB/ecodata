@@ -9,13 +9,13 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ecodata)
-library(ecodata24)
+library(ecodata25)
 library(dplyr)
 library(knitr)
 
 # Replace 'grayseal' with intended dataset
 dataset<-ecodata::grayseal
-dataset24<-ecodata24::grayseal
+dataset24<-ecodata25::grayseal
 
 # Define dataset-specific arguments for plot functions
 report<-list("MidAtlantic")
@@ -39,6 +39,6 @@ kable(datastats, digits = 2)
 ecodata::plot_grayseal(report = report[1]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_grayseal(report = report[1]) + 
+ecodata25::plot_grayseal(report = report[1]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```

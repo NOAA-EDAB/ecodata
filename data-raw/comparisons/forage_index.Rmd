@@ -9,13 +9,13 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ecodata)
-library(ecodata24)
+library(ecodata25)
 library(dplyr)
 library(knitr)
 
 # Replace 'forage_index' with intended dataset
 dataset<-ecodata::forage_index
-dataset24<-ecodata24::forage_index
+dataset24<-ecodata25::forage_index
 
 # Define dataset-specific arguments for plot functions
 report<-list("MidAtlantic","NewEngland")
@@ -39,7 +39,7 @@ kable(datastats, digits = 2)
 ecodata::plot_forage_index(report = report[1], n = 10, varName = variable[1]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_forage_index(report = report[1], varName = variable[1]) + 
+ecodata25::plot_forage_index(report = report[1], varName = variable[1]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
@@ -48,7 +48,7 @@ ecodata24::plot_forage_index(report = report[1], varName = variable[1]) +
 ecodata::plot_forage_index(report = report[2], n = 10, varName = variable[1]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_forage_index(report = report[2], varName = variable[1]) + 
+ecodata25::plot_forage_index(report = report[2], varName = variable[1]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
@@ -57,7 +57,7 @@ ecodata24::plot_forage_index(report = report[2], varName = variable[1]) +
 ecodata::plot_forage_index(report = report[1], n = 10, varName = variable[2]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_forage_index(report = report[1], varName = variable[2]) + 
+ecodata25::plot_forage_index(report = report[1], varName = variable[2]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
@@ -66,6 +66,6 @@ ecodata24::plot_forage_index(report = report[1], varName = variable[2]) +
 ecodata::plot_forage_index(report = report[2], n = 10, varName = variable[2]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_forage_index(report = report[2], varName = variable[2]) + 
+ecodata25::plot_forage_index(report = report[2], varName = variable[2]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```

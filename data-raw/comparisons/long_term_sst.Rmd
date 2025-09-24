@@ -9,13 +9,13 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ecodata)
-library(ecodata24)
+library(ecodata25)
 library(dplyr)
 library(knitr)
 
 # Replace 'long_term_sst' with intended dataset
 dataset<-ecodata::long_term_sst
-dataset24<-ecodata24::long_term_sst
+dataset24<-ecodata25::long_term_sst
 
 # Define dataset-specific arguments for plot functions
 report<-list("MidAtlantic","NewEngland")
@@ -39,6 +39,6 @@ kable(datastats, digits = 2)
 ecodata::plot_long_term_sst(report = report[1], n = 10) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_long_term_sst(report = report[1]) + 
+ecodata25::plot_long_term_sst(report = report[1]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```

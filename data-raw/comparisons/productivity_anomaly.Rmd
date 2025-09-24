@@ -9,13 +9,13 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ecodata)
-library(ecodata24)
+library(ecodata25)
 library(dplyr)
 library(knitr)
 
 # Replace 'productivity_anomaly' with intended dataset
 dataset<-ecodata::productivity_anomaly
-dataset24<-ecodata24::productivity_anomaly
+dataset24<-ecodata25::productivity_anomaly
 
 # Define dataset-specific arguments for plot functions
 report<-list("MidAtlantic","NewEngland")
@@ -39,7 +39,7 @@ kable(datastats, digits = 0)
 ecodata::plot_productivity_anomaly(report = report[1], varName = variable[1]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_productivity_anomaly(report = report[1], varName = variable[1]) + 
+ecodata25::plot_productivity_anomaly(report = report[1], varName = variable[1]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
@@ -48,7 +48,7 @@ ecodata24::plot_productivity_anomaly(report = report[1], varName = variable[1]) 
 ecodata::plot_productivity_anomaly(report = report[2], varName = variable[1], EPU = epu[1]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_productivity_anomaly(report = report[2], varName = variable[1], EPU = epu[1]) + 
+ecodata25::plot_productivity_anomaly(report = report[2], varName = variable[1], EPU = epu[1]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
@@ -57,7 +57,7 @@ ecodata24::plot_productivity_anomaly(report = report[2], varName = variable[1], 
 ecodata::plot_productivity_anomaly(report = report[2], varName = variable[1], EPU = epu[2]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_productivity_anomaly(report = report[2], varName = variable[1], EPU = epu[2]) + 
+ecodata25::plot_productivity_anomaly(report = report[2], varName = variable[1], EPU = epu[2]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
@@ -66,7 +66,7 @@ ecodata24::plot_productivity_anomaly(report = report[2], varName = variable[1], 
 ecodata::plot_productivity_anomaly(report = report[1], varName = variable[2]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_productivity_anomaly(report = report[1], varName = variable[2]) + 
+ecodata25::plot_productivity_anomaly(report = report[1], varName = variable[2]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
@@ -75,7 +75,7 @@ ecodata24::plot_productivity_anomaly(report = report[1], varName = variable[2]) 
 ecodata::plot_productivity_anomaly(report = report[2], varName = variable[2], EPU = epu[1]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_productivity_anomaly(report = report[2], varName = variable[2], EPU = epu[1]) + 
+ecodata25::plot_productivity_anomaly(report = report[2], varName = variable[2], EPU = epu[1]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
@@ -84,6 +84,6 @@ ecodata24::plot_productivity_anomaly(report = report[2], varName = variable[2], 
 ecodata::plot_productivity_anomaly(report = report[2], varName = variable[2], EPU = epu[2]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_productivity_anomaly(report = report[2], varName = variable[2], EPU = epu[2]) + 
+ecodata25::plot_productivity_anomaly(report = report[2], varName = variable[2], EPU = epu[2]) + 
   ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
