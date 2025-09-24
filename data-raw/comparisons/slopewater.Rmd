@@ -40,5 +40,5 @@ ecodata::plot_slopewater(report = report[1],n=10) +
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_slopewater(report = report[1]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```

@@ -40,7 +40,7 @@ ecodata::plot_seasonal_oisst_anom_gridded(report = report[1]) +
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_seasonal_sst_anomaly_gridded(report = report[1]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
 ## `r paste(report[2])`
@@ -49,5 +49,5 @@ ecodata::plot_seasonal_oisst_anom_gridded(report = report[2]) +
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_seasonal_sst_anomaly_gridded(report = report[2]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```

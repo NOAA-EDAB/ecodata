@@ -40,7 +40,7 @@ ecodata::plot_comdat(report = report[1], n = 10, varName = variable[1], plottype
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_comdat(report = report[1], varName = variable[1], plottype = plottype[1]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
 ## `r paste(report[2],variable[1],plottype[1])`
@@ -49,7 +49,7 @@ ecodata::plot_comdat(report = report[2], n = 10, varName = variable[1], plottype
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_comdat(report = report[2], varName = variable[1], plottype = plottype[1]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
 ## `r paste(report[1],variable[1],plottype[2])`
@@ -58,7 +58,7 @@ ecodata::plot_comdat(report = report[1], n = 10, varName = variable[1], plottype
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_comdat(report = report[1], varName = variable[1], plottype = plottype[2]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
 ## `r paste(report[2],variable[1],plottype[2])`
@@ -67,7 +67,7 @@ ecodata::plot_comdat(report = report[2], n = 10, varName = variable[1], plottype
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_comdat(report = report[2], varName = variable[1], plottype = plottype[2]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
 ## `r paste(report[1],variable[2],plottype[1])`
@@ -76,7 +76,7 @@ ecodata::plot_comdat(report = report[1], n = 10, varName = variable[2], plottype
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_comdat(report = report[1], varName = variable[2], plottype = plottype[1]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
 ## `r paste(report[2],variable[2],plottype[1])`
@@ -85,7 +85,7 @@ ecodata::plot_comdat(report = report[2], n = 10, varName = variable[2], plottype
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_comdat(report = report[2], varName = variable[2], plottype = plottype[1]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
 ## `r paste(report[1],variable[2],plottype[2])`
@@ -94,7 +94,7 @@ ecodata::plot_comdat(report = report[1], n = 10, varName = variable[2], plottype
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_comdat(report = report[1], varName = variable[2], plottype = plottype[2]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
 ## `r paste(report[2],variable[2],plottype[2])`
@@ -103,5 +103,5 @@ ecodata::plot_comdat(report = report[2], n = 10, varName = variable[2], plottype
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_comdat(report = report[2], varName = variable[2], plottype = plottype[2]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```

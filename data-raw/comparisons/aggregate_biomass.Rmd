@@ -40,7 +40,7 @@ ecodata::plot_aggregate_biomass(report = report[1], n = 10) +
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_aggregate_biomass(report = report[1]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
 ## `r paste(report[2],epu[1])`
@@ -49,7 +49,7 @@ ecodata::plot_aggregate_biomass(report = report[2], EPU = epu[1], n = 10) +
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_aggregate_biomass(report = report[2], EPU = epu[1]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
 ## `r paste(report[2],epu[2])`
@@ -58,5 +58,5 @@ ecodata::plot_aggregate_biomass(report = report[2], EPU = epu[2], n = 10) +
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_aggregate_biomass(report = report[2], EPU = epu[2]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
