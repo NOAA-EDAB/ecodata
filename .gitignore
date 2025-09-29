@@ -5,5 +5,7 @@ inst/doc
 .Ruserdata
 .DS_Store
 
-# folders
+# folders/files
+*.pdf
 docs
+_book
