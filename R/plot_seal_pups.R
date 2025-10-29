@@ -12,7 +12,7 @@
 #'
 
 plot_seal_pups <- function(shadedRegion = NULL,
-                              report="MidAtlantic") {
+                              report="NewEngland") {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -52,7 +52,8 @@ plot_seal_pups <- function(shadedRegion = NULL,
     #ecodata::geom_gls()+
     ecodata::theme_ts()+
     ecodata::theme_facet()+
-    ecodata::theme_title()
+    ecodata::theme_title()+
+    ggplot2::theme(legend.position = 'bottom')
 
    # # optional code for New England specific (2 panel) formatting
    #  if (report == "NewEngland") {

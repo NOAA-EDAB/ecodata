@@ -75,6 +75,7 @@ plot_species_dist <- function(shadedRegion = NULL,
                         alpha = setup$hline.alpha,
                         linetype = setup$hline.lty,
                         na.rm=T) +
+    ggplot2::coord_cartesian(xlim = c(1969, 2021)) +
     ecodata::geom_gls(na.rm=T) +
     ecodata::geom_lm(n=n,na.rm=T)+
     ecodata::theme_ts()+

@@ -47,7 +47,8 @@ plot_wind_dev_speed <- function(shadedRegion = NULL,
     #theme(axis.text.x = element_text(angle = 45, hjust = 1))+
     ggplot2::scale_x_continuous(breaks=c(2020,2022, 2024,2026, 2028, 2030))+
     ecodata::theme_title()+
-    ggplot2::scale_colour_discrete(name="Year Reported")
+    ggplot2::scale_colour_discrete(name="Year Reported") +
+    ggplot2::theme(legend.position = 'bottom')
 
   #  ggplot2::theme(legend.position = c(0.8, 0.2))
 

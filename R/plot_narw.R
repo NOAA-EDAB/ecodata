@@ -16,7 +16,7 @@
 plot_narw <- function(shadedRegion = NULL,
                       report="MidAtlantic",
                       varName = "adult",
-                      n = 0) {
+                      n = 10) {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -30,10 +30,10 @@ plot_narw <- function(shadedRegion = NULL,
   }
 
   if (varName == "calf") {
-    vtitle <- "NARW calf abundance"
+    vtitle <- "North Atlantic right whale calf abundance"
     vylab <- "Number of individuals"
   } else {
-    vtitle <- "NARW abundance"
+    vtitle <- "North Atlantic right whale abundance"
     vylab <- "Number of individuals"
   }
 

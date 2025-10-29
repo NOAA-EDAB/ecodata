@@ -66,7 +66,6 @@ plot_cetacean_dist <- function(shadedRegion = NULL,
       #ggplot2::scale_color_manual(values = c("blue", "black", "red"))+
       ggplot2::coord_sf(xlim = setup$xlims, ylim = setup$ylims) +
       ecodata::theme_map() +
-      ggplot2::ggtitle("Cetacean Species Distribution") +
     ggplot2::xlab("") +
     ggplot2::ylab("") +
     ggplot2::scale_x_continuous(breaks=c(-76,-72, -68) )+
@@ -77,8 +76,9 @@ plot_cetacean_dist <- function(shadedRegion = NULL,
                    strip.text = ggplot2::element_text(hjust=0),
                    axis.text = ggplot2::element_text(size = 8),
                    legend.title = ggplot2::element_blank())+#,
-    #ggplot2::legend.position = c(0.6, 0.15)) +
-    ggplot2::facet_wrap(~season)
+    ggplot2::ggtitle("Whale and Dolphin Distribution Shifts") +
+    ggplot2::facet_wrap(~season, nrow = 1) +
+    ggplot2::theme(legend.position = "bottom")
   # hms_map
 
    # # optional code for New England specific (2 panel) formatting

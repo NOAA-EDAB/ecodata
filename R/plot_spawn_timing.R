@@ -74,7 +74,7 @@ plot_spawn_timing <- function(shadedRegion = NULL,
     ecodata::theme_title()
 
   if(varName %in% c("Resting", "Ripe", "Spent", "Developing")){
-    p <- p + ggplot2::ggtitle(paste(stringr::str_to_sentence(filt$Season), varName, "Spawning Stage"))
+    p <- p +  ggplot2::ggtitle("Spring Resting Maturity Stage")
   }
 
   if(varName %in% c("MF", "meanTEMP", "meanJDAY")){
