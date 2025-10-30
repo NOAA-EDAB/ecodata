@@ -105,8 +105,6 @@ plot_mass_inshore_survey <- function(shadedRegion = NULL,
     ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
         xmin = setup$x.shade.min , xmax = setup$x.shade.max,
         ymin = -Inf, ymax = Inf) +
-    ggplot2::geom_point()+
-    ggplot2::geom_line()+
     ggplot2::geom_point(data = df2,ggplot2::aes(x=Time,y=max),alpha = 0)+
     ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
                                      group = Var),
@@ -117,6 +115,8 @@ plot_mass_inshore_survey <- function(shadedRegion = NULL,
                          ggplot2::aes(x = Time, ymin = pmax(lower,0), ymax = upper),
                          alpha = 0.5,
                          fill = "gray")+
+    ggplot2::geom_point()+
+    ggplot2::geom_line()+
     ggplot2::ggtitle("Massachusetts inshore BTS")+
     ggplot2::ylab(expression("Biomass (kg tow"^-1*")"))+
     ggplot2::xlab(ggplot2::element_blank())+

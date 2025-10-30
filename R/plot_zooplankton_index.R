@@ -120,7 +120,8 @@ plot_zooplankton_index <- function(shadedRegion = NULL,
       ecodata::geom_lm(n=n)+
       ecodata::theme_ts()+
       ecodata::theme_facet()+
-      ecodata::theme_title()
+      ecodata::theme_title() +
+      ggplot2::theme(legend.position = 'bottom')
 
   }
 

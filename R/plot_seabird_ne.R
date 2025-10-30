@@ -69,6 +69,7 @@ plot_seabird_ne <- function(shadedRegion = NULL,
       ggplot2::ggtitle("Common tern productivity")+
       ggplot2::ylab(expression("Fledged chicks per nest"))+
       ggplot2::xlab(ggplot2::element_blank())+
+      ggplot2::coord_cartesian(xlim = c(1992, 2023))+
       ecodata::geom_gls()+
       ecodata::geom_lm(n=n)+
       ecodata::theme_ts()+

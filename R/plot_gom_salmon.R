@@ -51,15 +51,16 @@ plot_gom_salmon <- function(shadedRegion = NULL,
                         strip.position = "left",
                         labeller = ggplot2::as_labeller(c(Total = yaxisLabel$Units[yaxisLabel$Var=="Total"], PSAR = yaxisLabel$Units[yaxisLabel$Var=="PSAR"]) ) )+
     ggplot2::ggtitle("Atlantic Salmon")+
-    #ggplot2::ylab()+
     ggplot2::xlab(ggplot2::element_blank())+
     ggplot2::ylab(ggplot2::element_blank())+
+    ggplot2::ylab('Returning proportion') +
     ecodata::geom_gls()+
     ecodata::geom_lm(n=n) +
     ecodata::theme_ts()+
     ecodata::theme_title()+
     ggplot2::theme(strip.placement = "outside",
-                   strip.background = ggplot2::element_blank())
+                   strip.background = ggplot2::element_blank())+
+    ggplot2::facet_wrap(~Var, nrow = 2, scales = "free_y")
 
 
     return(p)
