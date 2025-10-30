@@ -54,7 +54,7 @@ plot_lps_sharks <- function(shadedRegion = NULL,
     ggplot2::geom_point()+
     ggplot2::geom_line()+
     ecodata::geom_lm(n = n) +
-    ggplot2::ggtitle(paste(report, "Recreational Pelagic Shark Landings"))+
+    ggplot2::ggtitle(paste(report, "Large Pelagics Survey Rec. Shark Landings"))+
     ggplot2::ylab(expression("Number of Fish (1000s)"))+
     ggplot2::xlab(ggplot2::element_blank()) +
     ggplot2::geom_hline(ggplot2::aes(yintercept = ltm$hline),
@@ -65,7 +65,8 @@ plot_lps_sharks <- function(shadedRegion = NULL,
 #    ecodata::geom_gls()+
     ecodata::theme_ts()+
     ecodata::theme_facet()+
-    ecodata::theme_title()
+    ecodata::theme_title()+
+    ggplot2::theme(legend.background = ggplot2::element_rect(fill = "white"))
 
    # optional code for New England specific (2 panel) formatting
     # if (report == "NewEngland") {

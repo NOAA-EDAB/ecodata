@@ -246,7 +246,6 @@ plot_comdat <- function(shadedRegion = NULL,
       ggplot2::scale_color_manual(values = series.col2, aesthetics = "color")+
       ggplot2::facet_wrap(~EPU, scales = "free")+
       #ggplot2::guides(color = "none") +
-      ggplot2::ylab(ylabdat) +
       ggplot2::xlab(ggplot2::element_blank())+
       ggplot2::theme(legend.position = "bottom",
                      legend.title = ggplot2::element_blank())+
@@ -258,8 +257,20 @@ plot_comdat <- function(shadedRegion = NULL,
       ecodata::theme_ts() +
       ggplot2::ggtitle(setup$region)+
       ecodata::theme_title() +
-      ecodata::theme_facet()
+      ecodata::theme_facet() +
+      ggplot2::ylab(ylabdat)
+
+      if (report == "MidAtlantic") {
+        p <- p +
+          ggplot2::theme(strip.text.x = ggplot2::element_blank())
+      } else {
+        p <- p +
+          ggplot2::facet_wrap(~EPU,
+                              nrow = 2)
+      }
+
   }
+
 
   if(plottype == "guild") {
 
@@ -314,7 +325,9 @@ plot_comdat <- function(shadedRegion = NULL,
                      legend.position = "bottom",
                      legend.title = ggplot2::element_blank())+
       ggplot2::ggtitle(setup$region)+
-      ecodata::theme_title()
+      ecodata::theme_title() +
+      ggplot2::geom_point(size = 0.05) +
+      ggplot2::geom_line(size = 0.05)
 
   }
 

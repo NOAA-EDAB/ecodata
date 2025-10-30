@@ -81,6 +81,15 @@ plot_stock_status <- function(shadedRegion = NULL,
     ecodata::theme_ts()+
     ecodata::theme_title()
 
+  if (report == "MidAtlantic") {
+  p <-  p +
+      ggplot2::coord_cartesian(xlim = c(0, 2), ylim = c(0, 2)) +
+      ggplot2::theme(legend.position = 'bottom')
+  } else {
+   p <- p +
+      ggplot2::theme(legend.position = 'bottom')
+  }
+
    # # optional code for New England specific (2 panel) formatting
    #  if (report == "NewEngland") {
    #    p <- p +

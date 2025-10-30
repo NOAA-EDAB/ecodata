@@ -51,14 +51,19 @@ plot_rec_hms <- function(shadedRegion = NULL,
     ggplot2::geom_point()+
     ggplot2::geom_line()+
     ecodata::geom_lm(n = n) +
-    ggplot2::ggtitle(paste(report,"Recreational Shark Landings"))+
+    ggplot2::ggtitle(paste(report,"Marine Recreational Information Program (MRIP) Rec. Shark Landings"))+
     ggplot2::ylab(expression("Number of Fish (1000s)"))+
     ggplot2::xlab(ggplot2::element_blank()) +
+    ggplot2::scale_color_discrete(
+      limits = c("LargeCoastal", "Prohibited", "SmallCoastal"),
+      labels = c("Large Coastal", "Prohibited", "Small Coastal")
+    ) +
 
 #    ecodata::geom_gls()+
     ecodata::theme_ts()+
     ecodata::theme_facet()+
     ecodata::theme_title()
+
 
    # optional code for New England specific (2 panel) formatting
     # if (report == "NewEngland") {
