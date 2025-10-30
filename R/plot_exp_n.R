@@ -73,35 +73,28 @@ plot_exp_n <- function(shadedRegion = NULL,
                          alpha = 0.5) +
     ggplot2::geom_line(size = setup$lwd-0.5) +
     ggplot2::geom_point(size = setup$pcex-0.5) +
-    #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
-    #ecodata::geom_lm()+
-    # scale_color_manual(values = series.col, aesthetics = "color")+
-    #ggplot2::guides(color = FALSE) +
-    #ggplot2::geom_hline(aes(yintercept = hline,
-    #               group = Var),
-    #           size = hline.size,
-    #           alpha = hline.alpha,
-    #           linetype = hline.lty)+
     ggplot2::facet_wrap(EPU~.,scales = "free_y", ncol = 2) +
     ggplot2::ggtitle(paste("Expected Number of Species -", season))+
     ecodata::geom_gls() +
     ecodata::geom_lm(n=n) +
     #Axis and theme
-    ggplot2::scale_x_continuous(breaks = seq(start_year, 2015, by = 10), expand = c(0.01, 0.01)) +
-    ggplot2::ylab("n species per 1000 ind") +
+    ggplot2::scale_x_continuous(breaks = seq(1968, 2018, by = 10), expand = c(0.01, 0.01)) +
+    ggplot2::ylab("Number of species / 1000 Individuals") +
     ggplot2::xlab(ggplot2::element_blank())+
     ecodata::theme_facet()+
     ggplot2::theme(strip.text= ggplot2::element_text(hjust=0),
-                   legend.title = ggplot2::element_blank())+
+                   legend.title = ggplot2::element_blank(),
+                   axis.title.y = ggplot2::element_text(size = 8),
+                                  legend.position = 'bottom') +
     ecodata::theme_title()
 
-   # optional code for New England specific (2 panel) formatting
     if (report == "NewEngland") {
       p <- p +
-        ggplot2::theme(legend.position = "bottom",
-                       legend.title = ggplot2::element_blank())
-
+      ggplot2::facet_wrap(~EPU, nrow = 2)
     }
+  else {
+    p <- p
+  }
 
     return(p)
 

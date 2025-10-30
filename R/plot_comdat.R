@@ -216,6 +216,7 @@ plot_comdat <- function(shadedRegion = NULL,
       dplyr::filter(EPU %in% filterEPUs)
 
     ylabdat <- expression("Revenue (10"^6*" USD)")
+
   }
 
   # code for generating plot object p
@@ -262,13 +263,14 @@ plot_comdat <- function(shadedRegion = NULL,
 
       if (report == "MidAtlantic") {
         p <- p +
-          ggplot2::theme(strip.text.x = ggplot2::element_blank())
+          ggplot2::theme(strip.text.x = ggplot2::element_blank(),
+                         legend.position = "right",
+                         legend.title = ggplot2::element_blank())
       } else {
         p <- p +
           ggplot2::facet_wrap(~EPU,
                               nrow = 2)
       }
-
   }
 
 

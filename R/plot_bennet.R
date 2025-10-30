@@ -88,6 +88,17 @@ plot_bennet <- function(shadedRegion = NULL,
       ecodata::theme_title()+
       ecodata::theme_facet()
 
+    if (report == "MidAtlantic") {
+  p <- p +
+        ggplot2::theme(legend.position = "bottom") +
+        ggplot2::facet_wrap(~Var,
+                            nrow = 2)
+    } else {
+        p <- p +
+           ggplot2::theme(legend.position = "bottom",
+            legend.title = ggplot2::element_blank(),
+             strip.text.y = ggplot2::element_blank())
+    }
 
   } else if (varName == "total") {
 
@@ -123,8 +134,22 @@ plot_bennet <- function(shadedRegion = NULL,
       #                            limits = y.lim, expand = c(0.01, 0.01)) +
       ecodata::theme_ts() +
       ggplot2::xlab(ggplot2::element_blank())+
-      ggplot2::theme(title = ggplot2::element_text(size = 10))+
       ecodata::theme_title()
+
+    if (report == "MidAtlantic") {
+      p <- p +
+        ggplot2::theme(text = ggplot2::element_text(size = 14)) +
+        ggplot2::theme(
+          legend.position = "bottom")
+    } else {
+      p <- p +
+        ggplot2::ggtitle("GOM revenue components") +
+        ggplot2::theme(
+          legend.position = "bottom",,
+        ) +
+        ggplot2::ylab("Million USD (2023)") +
+        ggplot2::theme(text = ggplot2::element_text(size = 12))
+    }
 
 
   } else if (varName == "total_guild") {

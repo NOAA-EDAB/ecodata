@@ -4,9 +4,9 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
-#' @param varName Character string. Which variable:Trophic Level, Offspring Size, 
-#' Age at Maturity, Length at Maturity, Fecundity, Maximum Theoretical Length, Growth Rate, 
-#' Maximum Observed Length, and three Pricipal Components Axes Pace of Life (PC1), PC2, andPC3 
+#' @param varName Character string. Which variable:Trophic Level, Offspring Size,
+#' Age at Maturity, Length at Maturity, Fecundity, Maximum Theoretical Length, Growth Rate,
+#' Maximum Observed Length, and three Pricipal Components Axes Pace of Life (PC1), PC2, andPC3
 #' ("trophic_level","offspring_size","age_maturity","length_maturity","fecundity","l_inf","k",
 #' "max_obs_length","PC1","PC2","PC3")
 #' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
@@ -35,19 +35,19 @@ plot_finfish_traits <- function(shadedRegion = NULL,
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
-  
+
   varTitle <- c("Trophic Level", "Offspring Size", "Age at Maturity", "Length at Maturity",
                 "Fecundity", "Maximum Theoretical Length", "Growth Rate", "Maximum Observed Length",
                 "Pace of Life", "PC2", "PC3")
   names(varTitle) <- c("trophic_level","offspring_size","age_maturity","length_maturity",
                        "fecundity","l_inf","k","max_obs_length",
                        "PC1","PC2","PC3")
-  
+
    fix<- ecodata::finfish_traits |>
      tidyr::separate(Var, into = c("Season", "Var"), sep = "-") |>
      dplyr::group_by(Season, Var, EPU) |>
      dplyr::summarise(hline = mean(Value))
-   
+
    varUnit <- ecodata::finfish_traits |>
      tidyr::separate(Var, into = c("Season", "Var"), sep = "-") |>
      dplyr::filter(Var %in% c(varName)) |>
@@ -85,20 +85,18 @@ plot_finfish_traits <- function(shadedRegion = NULL,
                          linewidth = setup$hline.size,
                          alpha = setup$hline.alpha,
                          linetype = setup$hline.lty)+
+     ggplot2::theme(legend.position = "bottom") +
      ecodata::theme_ts()+
      ecodata::theme_facet()+
      ecodata::theme_title()
 
    # optional code for New England specific (2 panel) formatting
-    if (report == "NewEngland") {
+   if (report == "NewEngland") {
       p <- p +
-        ggplot2::theme(legend.position = "bottom",
-                       legend.title = ggplot2::element_blank())
-
+        ggplot2::ylab('Fecundity (number of \noffspring per mature female)')+
+        ggplot2::facet_wrap(~EPU, nrow = 2)
     }
-
     return(p)
-
 
 }
 

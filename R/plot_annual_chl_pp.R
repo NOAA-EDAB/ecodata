@@ -83,6 +83,17 @@ plot_annual_chl_pp <- function(shadedRegion = NULL,
       ecodata::theme_facet() +
       ecodata::theme_title()
 
+    if (report == "MidAtlantic") {
+      p <- p +
+        ggplot2::coord_cartesian(ylim = c(2e+07, 4e+07), xlim = c(1998, 2023)) +
+        ggplot2::ggtitle("MAB Primary Production") +
+        ggplot2::ylab("Carbon (mt)")
+    }
+    else {
+      p <- p +
+        ggplot2::theme(axis.title.x = ggplot2::element_blank())
+    }
+
   return(p)
 
 }

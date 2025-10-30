@@ -42,7 +42,7 @@ plot_recdat <- function(shadedRegion = NULL,
   } else if (varName == "effortdiversity") {
     varName <- "Recreational fleet effort diversity across modes"
     vtitle <- "Recreational fleet effort diversity"
-    vylab <- expression("Effective Shannon")
+    vylab <- expression("Effective Shannon Index")
     scalar <- 1
 
   } else if (varName =="catchdiversity") {

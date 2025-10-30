@@ -89,13 +89,15 @@ plot_commercial_div <- function(shadedRegion = NULL,
                         size = setup$hline.size,
                         alpha = setup$hline.alpha,
                         linetype = setup$hline.lty) +
+    ggplot2::theme(plot.margin = ggplot2::unit(c(0.25, 0.5, 0.25, 0.5), "cm")) +
     ecodata::theme_ts()+
     ecodata::theme_title()
    # optional code for New England specific (2 panel) formatting
     if (report == "NewEngland") {
       p <- p +
         ggplot2::theme(legend.position = "bottom",
-                       legend.title = ggplot2::element_blank())
+                       legend.title = ggplot2::element_blank()) +
+        ggplot2::ylab('Effective Shannon Index')
 
     }
 

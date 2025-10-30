@@ -56,16 +56,9 @@ plot_zoo_diversity <- function(shadedRegion = NULL,
         ymin = -Inf, ymax = Inf) +
     ggplot2::geom_point()+
     ggplot2::geom_line()+
-
-    ggplot2::ylab("Zooplankton Diversity (Shannon)")+
-    ggplot2::xlab(ggplot2::element_blank())
-
-  #if(report == "MidAtlantic"){
-   # p <-  p + ggplot2::ggtitle("MAB  Zooplankton Diversity")
-  #} else {
-    p <- p + ggplot2::facet_wrap(~EPU,scales = "free_y")#,labeller = to_string)
-  #}
-
+    ggplot2::ggtitle("Zooplankton Diversity")+
+    ggplot2::xlab(ggplot2::element_blank())+
+    ggplot2::ylab("Zooplankton Diversity Shannon")
 
     p <- p + ggplot2::geom_hline(ggplot2::aes(yintercept = mn),
                         linewidth = setup$hline.size,
@@ -77,6 +70,15 @@ plot_zoo_diversity <- function(shadedRegion = NULL,
     ecodata::theme_facet()+
     ecodata::theme_title()
 
+    if (region == "MidAtlantic") {
+      p <- p +
+        ggplot2::ylab("Shannon Index") +
+        ggplot2::theme(plot.title = ggplot2::element_text(vjust = -5))
+    }
+    else {
+      p <- p +
+        ggplot2::facet_wrap(~EPU, nrow = 2)
+    }
    # # optional code for New England specific (2 panel) formatting
    #  if (report == "NewEngland") {
    #    p <- p +
