@@ -130,6 +130,7 @@ plot_engagement <- function(shadedRegion = NULL,
                               label.size = NA,
                               fill = ggplot2::alpha(c("white"),0.1))+
     ggplot2::ggtitle(paste(setup$region, "Engagement in Top", varName, "Fishing Communities"))+
+    ggplot2::theme(plot.title = ggplot2::element_text(vjust = 0))+
     #ecodata::theme_ts()+
     ecodata::theme_title()
 

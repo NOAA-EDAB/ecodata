@@ -135,9 +135,14 @@ plot_chl_pp <- function(shadedRegion = NULL,
                             alpha = setup$hline.alpha,
                             linetype = setup$hline.lty)+
         ecodata::theme_facet() +
-        ggplot2::theme(axis.text.x = ggplot2::element_text(angle=45, hjust = 1),
+        ggplot2::theme(text = ggplot2::element_text(size = 16),
+                       axis.text.x = ggplot2::element_text(size = 8, angle=45, hjust = 1),
                        panel.spacing = ggplot2::unit(1, "lines"),
+                       panel.border = ggplot2::element_rect(color = "gray80"),
                        plot.margin = ggplot2::unit(c(0.1, 0, 0, 0), "cm"))+
+        ggplot2::facet_grid(rows = ggplot2::vars(EPU), cols = ggplot2::vars(Month)) +
+        ggplot2::geom_point(color = "white") + ggplot2::geom_line() +
+        ggplot2::scale_x_discrete(breaks = scales::pretty_breaks(n = 1)) +
         ecodata::theme_title()
 
     }
