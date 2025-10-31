@@ -75,7 +75,8 @@ plot_forage_index <- function(shadedRegion = NULL,
     if (report == "NewEngland") {
       p <- p +
         ggplot2::theme(legend.position = "bottom",
-                       legend.title = ggplot2::element_blank())
+                       legend.title = ggplot2::element_blank()) +
+        ggplot2::facet_wrap(~EPU, nrow = 2)
 
     }
   }

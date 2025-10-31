@@ -69,8 +69,8 @@ plot_benthos_index <- function(shadedRegion = NULL,
                         xmin = setup$x.shade.min , xmax = setup$x.shade.max,
                         ymin = -Inf, ymax = Inf) +
       ggplot2::geom_ribbon(ggplot2::aes(ymin = Lower, ymax = Upper, fill = Season), alpha = 0.5)+
-      ggplot2::geom_point()+
-      ggplot2::geom_line()+
+      ggplot2::geom_point(ggplot2::aes(color = .data$Season)) +
+      ggplot2::geom_line(ggplot2::aes(color = .data$Season)) +
       ggplot2::ggtitle("")+
       ggplot2::ylab(paste("Relative",varName,"Biomass"))+
       ggplot2::xlab(ggplot2::element_blank())+
@@ -86,6 +86,11 @@ plot_benthos_index <- function(shadedRegion = NULL,
         ggplot2::theme(legend.position = "bottom",
                        legend.title = ggplot2::element_blank())
 
+    }
+
+    if (varName == "Megabenthos") {
+      p <- p +
+      ggplot2::theme(legend.position = "none")
     }
   }
 

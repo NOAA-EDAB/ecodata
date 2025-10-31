@@ -86,12 +86,14 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
       ggplot2::ggtitle(paste0(filterEPUs," Recruitment Anomaly from Stock Assessments")) +
       #ggplot2::guides(fill = guide_legend(ncol = leg_ncol)) +
       ecodata::theme_ts()+
+      ggplot2::guides(fill = ggplot2::guide_legend(ncol = 2)) +
       ggplot2::theme(axis.title   = ggplot2::element_text(size = 10),
-                     axis.text    = ggplot2::element_text(size = 10),
-                     plot.title   = ggplot2::element_text(size = 12),
-                     #legend.text  = element_text(size = leg_font_size),
+                     axis.title.y = ggplot2::element_text(vjust = 0, size = 10),
+                     axis.text    = ggplot2::element_text(size = 11),
+                     plot.title   = ggplot2::element_text(size = 11),
                      legend.title = ggplot2::element_blank(),
-                     legend.text=ggplot2::element_text(size=6))
+                     legend.text =  ggplot2::element_text(size=8),
+                     legend.position = "bottom")
 
   }
 
@@ -117,7 +119,20 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
                                     leg_font_size = leg_font_size,
                                     label = "",
                                     y.text = 10,
-                                    aggregate = TRUE)
+                                    aggregate = TRUE) +
+            ggplot2::guides(
+              fill = ggplot2::guide_legend(
+              ncol = dplyr::case_when(
+              region == "NewEngland" ~ 3,
+              region == "MidAtlantic" ~ 2,
+              TRUE ~ 2))) +
+           ggplot2::theme(
+              legend.position = "bottom",
+              legend.title = ggplot2::element_blank(),
+              legend.text = ggplot2::element_text(size = 8),
+              plot.title = ggplot2::element_text(size = 11),
+              axis.text = ggplot2::element_text(size = 11),
+              axis.title.y = ggplot2::element_text(vjust = 0, size = 10))
 
 
 

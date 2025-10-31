@@ -59,7 +59,8 @@ plot_energy_density <- function(shadedRegion = NULL,
     ggplot2::ylab("Mean Energy Density (kJ/g)")+
     ggplot2::theme(axis.title.x= ggplot2::element_blank(),
                    axis.text.x = ggplot2::element_text(angle = 45,  hjust = 1),
-                   legend.title = ggplot2::element_blank())+
+                   legend.title = ggplot2::element_blank(),
+                   legend.position = "bottom")+
     #ggplot2::scale_x_continuous(breaks=c(2017,2018, 2019, 2020, 2021, 2022))+
     ggplot2::ggtitle("Forage Fish Energy Density")+
     ecodata::theme_facet()+

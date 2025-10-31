@@ -83,11 +83,14 @@ plot_condition <- function(shadedRegion = NULL,
     ggplot2::scale_fill_manual(values=vir) +
     ggplot2::guides(fill = ggplot2::guide_legend(reverse = TRUE)) +
     ggplot2::scale_x_continuous(breaks=round(seq(min(fix$Time), max(fix$Time), by = numberOfConditions))) +
-    ggplot2::theme(legend.position = "right", legend.box = "vertical", legend.title = ggplot2::element_text(size = 8),
-                   legend.text = ggplot2::element_text(size = 6),
+    ggplot2::theme(
+                   legend.title = ggplot2::element_text(size = 10),
+                   legend.text = ggplot2::element_text(size = 10),
                    axis.title = ggplot2::element_blank(),
-                   axis.text.x = ggplot2::element_text(size = 6),
-                   axis.text.y = ggplot2::element_text(size = 6),
+                   axis.text.x = ggplot2::element_text(size = 12),
+                   axis.text.y = ggplot2::element_text(size = 8),
+                   plot.title = ggplot2::element_text(size = 12),
+                   legend.position = "bottom",
                    panel.grid.major = ggplot2::element_blank(),
                    panel.grid.minor = ggplot2::element_blank()) +
     ggplot2::ggtitle(paste0("Relative condition for species sampled in ",EPU)) +
@@ -95,6 +98,21 @@ plot_condition <- function(shadedRegion = NULL,
     ggplot2::xlab(ggplot2::element_blank())+
     ecodata::theme_ts()+
     ecodata::theme_title()
+
+  if (report == "NewEngland") {
+    p <- p +
+      ggplot2::theme(
+          legend.text = ggplot2::element_text(size = 8),
+          legend.title = ggplot2::element_text(size = 8),
+          axis.text.x = ggplot2::element_text(size = 8),
+          axis.text.y = ggplot2::element_text(size = 6),
+          plot.title = ggplot2::element_text(size = 12)
+      )
+  }
+    else {
+      p <- p +
+        ggplot2::guides(fill= ggplot2::guide_legend(nrow=2,byrow=TRUE))
+    }
 
     return(p)
 
