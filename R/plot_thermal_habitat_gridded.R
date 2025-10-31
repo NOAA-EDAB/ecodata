@@ -65,6 +65,11 @@ plot_thermal_habitat_gridded <- function(shadedRegion = NULL,
     ggplot2::ggtitle(paste(Yr)) +
     ggplot2::theme(legend.position = "bottom")
 
+  if (report == "NewEngland") {
+    p <- p +
+      ggplot2::theme(plot.margin = grid::unit(c(0, 0, 0, 0), "cm"))
+  }
+
 
 
     return(p)

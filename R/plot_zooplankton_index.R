@@ -68,10 +68,11 @@ plot_zooplankton_index <- function(shadedRegion = NULL,
                         xmin = setup$x.shade.min , xmax = setup$x.shade.max,
                         ymin = -Inf, ymax = Inf) +
       ggplot2::geom_ribbon(ggplot2::aes(ymin = Lower, ymax = Upper, fill = Season), alpha = 0.5)+
-      ggplot2::geom_point()+
-      ggplot2::geom_line()+
+      ggplot2::theme(strip.text.x = ggplot2::element_blank()) +
+      ggplot2::geom_point(ggplot2::aes(color = .data$Season)) +
+      ggplot2::geom_line(ggplot2::aes(color = .data$Season)) +
       ggplot2::ggtitle("")+
-      ggplot2::ylab(paste("Relative",varName,"Biomass"))+
+      ggplot2::ylab("Relative Biomass") +
       ggplot2::xlab(ggplot2::element_blank())+
       ggplot2::facet_wrap(.~EPU)+
       ecodata::geom_gls()+
@@ -79,6 +80,22 @@ plot_zooplankton_index <- function(shadedRegion = NULL,
       ecodata::theme_ts()+
       ecodata::theme_facet()+
       ecodata::theme_title()
+
+      if (varName == "Lgcopeall") {
+        p <- p +
+          ggplot2::labs(title = "Large Copepods")
+      }
+
+      if (varName == "Smallcopeall") {
+        p <- p +
+          ggplot2::labs(title = "Small Copepods")
+      }
+
+      if (varName == "Euph") {
+        p <- p +
+          ggplot2::labs(title = "Euphausiids") +
+          ggplot2::theme(legend.background = ggplot2::element_rect(fill = "white"))
+      }
 
     if (report == "NewEngland") {
       p <- p +

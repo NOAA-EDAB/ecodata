@@ -4,6 +4,7 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
+#' @param data Data frame. Data to be plotted. Default is from 'all_data.csv'
 #'
 #' @return ggplot object
 #'
@@ -12,7 +13,8 @@
 #'
 
 plot_wind_port <- function(shadedRegion = NULL,
-                              report="MidAtlantic") {
+                           report="MidAtlantic",
+                           data = all_data) {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -25,69 +27,31 @@ plot_wind_port <- function(shadedRegion = NULL,
     filterEPUs <- c("NE")
   }
 
-  # optional code to wrangle ecodata object prior to plotting
-  # e.g., calculate mean, max or other needed values to join below
-   fix <- ecodata::wind_port |>
-     dplyr::filter(EPU %in% filterEPUs)
-   fix <- tidyr::pivot_wider(fix,names_from = Var, values_from = Value) |>
-     dplyr::mutate(ordering = MaxVal,
-                   City = paste0(City, ",", State),
-                   perc_dif =  c(perc_MAX - perc_MIN),
-                   TOT_MAX = c(100 - perc_dif - perc_MIN))
-   fix <- tidyr::pivot_longer(fix,cols = c(perc_MIN,  perc_dif, TOT_MAX), names_to="Var", values_to = "Value") |>
-     dplyr::arrange(ordering) |>
-     dplyr::mutate(City = factor(City, levels = unique(City))) |>
-     dplyr::filter(!Var %in% c("EJ","Gentrification","MaxVal")) |>
-     dplyr::mutate(Var = dplyr::recode(Var,"perc_MIN"= "WEA Revenue" ,
-                                "perc_dif" ="WEA Revenue Range",
-                                "TOT_MAX" = "Non-WEA Revenue"),
-                   Var = factor(Var, levels = c("Non-WEA Revenue",
-                                                "WEA Revenue Range",
-                                                "WEA Revenue")))
-
-   # add EJ port symbols
-   df.symbol <- ecodata::wind_port |>
-     dplyr::filter(EPU %in% filterEPUs,
-                   !Var %in% c("MaxVal", "TOT_MAX",
-                               "perc_MIN", "perc_MAX")) |>
-     tidyr::pivot_wider( names_from = Var, values_from = Value) |>
-     dplyr::mutate(City = paste0(City,",",State)) |>
-     dplyr::select(City, EJ, Gentrification) |>
-     tidyr::pivot_longer(cols = c(EJ, Gentrification), names_to = "Variable") |>
-     dplyr::filter(!value == "NA") |>
-     dplyr::mutate(symbol = dplyr::recode(Variable, EJ = -7, Gentrification = -3),
-                   Variable = dplyr::recode(Variable,"EJ"= "Mid-High to High Social-demographics Concerns" ,
-                                     "Gentrification" ="Mid-High to High Gentrification Concerns"))
-
-
-  # code for generating plot object p
-  # ensure that setup list objects are called as setup$...
-  # e.g. fill = setup$shade.fill, alpha = setup$shade.alpha,
-  # xmin = setup$x.shade.min , xmax = setup$x.shade.max
-  #
-  p <- fix |>
-    ggplot2::ggplot()+
-    ggplot2::geom_bar(ggplot2::aes(x = Value,y = City, fill=Var),stat="identity")+
-    ggplot2::scale_fill_brewer()+
-    ggplot2::theme(legend.position = "bottom",
+  p <- data |>
+    dplyr::filter(report == region) |>
+    dplyr::mutate(PORT_STATE = stringr::str_wrap(PORT_STATE, 20)) |>
+    ggplot2::ggplot(ggplot2::aes(x = PORT_STATE, y = perc_AVG, fill = lease_status)) +
+    ggplot2::geom_col(position = ggplot2::position_dodge(width = 1, preserve = "single")) +
+    ggplot2::geom_errorbar(ggplot2::aes(ymin = perc_MIN, ymax = perc_MAX),
+                           width = 0.5,
+                           position = ggplot2::position_dodge(width = 1, preserve = "single"),
+                           color = "gray20") +
+    ggplot2::scale_fill_manual(values = c("Active leases" = "#DB6015",
+                                          "Non-active leases" = "#002364",
+                                          "All leases" = "#4B8320")) +
+    ggplot2::theme_bw() +
+    ggplot2::coord_flip() +
+    ggplot2::facet_grid(rows = ggplot2::vars(PORT_STATE), scales = "free_y") +
+    ggplot2::theme(strip.background = ggplot2::element_blank(),
+                   strip.text = ggplot2::element_blank(),
+                   axis.title.y = ggplot2::element_blank(),
                    legend.title = ggplot2::element_blank(),
-                   legend.box="vertical", legend.margin=ggplot2::margin())+
-    ggplot2::geom_point(data = df.symbol, ggplot2::aes(x = symbol,y = City, shape = Variable)) +
-    ggplot2::scale_shape_manual(values = c(17, 16)) +
-    ggplot2::ggtitle(paste0(report,": Port Revenue from Leased Areas"))+
-    ggplot2::xlab(expression("Port Revenue (%)"))+
-    ggplot2::ylab(ggplot2::element_blank())+
-    ecodata::theme_ts()
+                   legend.position = "top") +
+    ggplot2::ylab("Percent revenue") +
+    ggplot2::ggtitle(report, "Port Revenue from Wind Lease Areas") +
+    ggplot2::facet_wrap(~PORT_STATE, ncol = 2, scales = "free_y")
 
-   # optional code for New England specific (2 panel) formatting
-    # if (report == "NewEngland") {
-    #   p <- p +
-    #     ggplot2::theme(legend.position = "bottom",
-    #                    legend.title = ggplot2::element_blank())
-    #
-    # }
-
-    return(p)
+  return(p)
 
 }
 

@@ -96,6 +96,7 @@ plot_wind_revenue <- function(shadedRegion = NULL,
        ggplot2::ylab(wind_label)+
        ggplot2::xlab(ggplot2::element_blank())+
        ecodata::geom_lm(n=n)+
+       ggplot2::theme(legend.position = "bottom")+
 
        #ecodata::geom_gls()+
        ecodata::theme_ts()+
