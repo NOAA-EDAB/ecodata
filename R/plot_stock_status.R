@@ -78,16 +78,16 @@ plot_stock_status <- function(shadedRegion = NULL,
     ggplot2::ylab(expression(~F/F[msy])) +
     ggplot2::guides(color = "none") +
     ggplot2::ggtitle(paste0(report,": stock status"))+
+ #   ggplot2::theme(legend.position = 'bottom')+
     ecodata::theme_ts()+
     ecodata::theme_title()
 
   if (report == "MidAtlantic") {
   p <-  p +
-      ggplot2::coord_cartesian(xlim = c(0, 2), ylim = c(0, 2)) +
-      ggplot2::theme(legend.position = 'bottom')
+      ggplot2::coord_cartesian(xlim = c(0, 2), ylim = c(0, 2))
   } else {
-   p <- p +
-      ggplot2::theme(legend.position = 'bottom')
+    p <- p +
+      ggplot2::theme(legend.position = "bottom")
   }
 
    # # optional code for New England specific (2 panel) formatting

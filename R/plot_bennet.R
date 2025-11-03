@@ -141,12 +141,24 @@ plot_bennet <- function(shadedRegion = NULL,
         ggplot2::theme(text = ggplot2::element_text(size = 14)) +
         ggplot2::theme(
           legend.position = "bottom")
-    } else {
+    }
+
+    if (EPU == "GB") {
+      p <- p +
+        ggplot2::ggtitle("GB revenue components") +
+        ggplot2::theme(
+          legend.position = "none",
+          legend.title = ggplot2::element_blank()) +
+        ggplot2::ylab("Million USD (2023)") +
+        ggplot2::theme(text = ggplot2::element_text(size = 12))
+    }
+
+    if (EPU == "GOM") {
       p <- p +
         ggplot2::ggtitle("GOM revenue components") +
         ggplot2::theme(
-          legend.position = "bottom",,
-        ) +
+          legend.position = "bottom",
+          legend.title = ggplot2::element_blank()) +
         ggplot2::ylab("Million USD (2023)") +
         ggplot2::theme(text = ggplot2::element_text(size = 12))
     }
