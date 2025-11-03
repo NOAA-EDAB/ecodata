@@ -264,7 +264,7 @@ plot_comdat <- function(shadedRegion = NULL,
       if (report == "MidAtlantic") {
         p <- p +
           ggplot2::theme(strip.text.x = ggplot2::element_blank(),
-                         legend.position = "right",
+                         legend.position = "bottom",
                          legend.title = ggplot2::element_blank())
       } else {
         p <- p +
