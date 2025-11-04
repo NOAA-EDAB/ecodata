@@ -125,7 +125,7 @@ plot_chl_pp <- function(shadedRegion = NULL,
         ggplot2::geom_point() +
         ggplot2::geom_line() +
         ecodata::geom_lm(n = n) +
-        ggplot2::scale_x_discrete(name = "", breaks = seq(min(out$Year),max(out$Year),10)) +
+        ggplot2::scale_x_discrete(name = "", breaks = scales::pretty_breaks(n = 1)) +
         ggplot2::facet_wrap(EPU~Month~., ncol = 12) +
         ggplot2::ggtitle(paste0("Monthly median ",varabbr)) +
         ggplot2::ylab(varunits) +
@@ -142,7 +142,6 @@ plot_chl_pp <- function(shadedRegion = NULL,
                        plot.margin = ggplot2::unit(c(0.1, 0, 0, 0), "cm"))+
         ggplot2::facet_grid(rows = ggplot2::vars(EPU), cols = ggplot2::vars(Month)) +
         ggplot2::geom_point(color = "white") + ggplot2::geom_line() +
-        ggplot2::scale_x_discrete(breaks = scales::pretty_breaks(n = 1)) +
         ecodata::theme_title()
 
     }

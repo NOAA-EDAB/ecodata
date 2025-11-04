@@ -92,9 +92,6 @@ plot_exp_n <- function(shadedRegion = NULL,
       p <- p +
       ggplot2::facet_wrap(~EPU, nrow = 2)
     }
-  else {
-    p <- p
-  }
 
     return(p)
 

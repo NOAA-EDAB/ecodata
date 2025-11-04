@@ -89,7 +89,7 @@ plot_condition <- function(shadedRegion = NULL,
                    axis.title = ggplot2::element_blank(),
                    axis.text.x = ggplot2::element_text(size = 12),
                    axis.text.y = ggplot2::element_text(size = 8),
-                   plot.title = ggplot2::element_text(size = 12),
+                   plot.title = ggplot2::element_text(size = 14),
                    legend.position = "bottom",
                    panel.grid.major = ggplot2::element_blank(),
                    panel.grid.minor = ggplot2::element_blank()) +

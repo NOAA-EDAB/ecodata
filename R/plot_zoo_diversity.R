@@ -72,8 +72,7 @@ plot_zoo_diversity <- function(shadedRegion = NULL,
 
     if (region == "MidAtlantic") {
       p <- p +
-        ggplot2::ylab("Shannon Index") +
-        ggplot2::theme(plot.title = ggplot2::element_text(vjust = -5))
+        ggplot2::ylab("Shannon Index")
     }
     else {
       p <- p +
