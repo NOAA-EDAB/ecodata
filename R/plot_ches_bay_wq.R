@@ -36,8 +36,8 @@ plot_ches_bay_wq <- function(shadedRegion = NULL,
   minl<- as.numeric(sprintf('%02d',minlab %% 100))
   maxl<- sprintf('%02d', maxlab %% 100)
 
-  CBwq <- ecodata::ches_bay_wq |>
-    dplyr::mutate(hline = mean(Value))
+  CBwq <- ecodata::ches_bay_wq #|>
+    #dplyr::mutate(hline = mean(Value))
 
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
@@ -61,10 +61,10 @@ plot_ches_bay_wq <- function(shadedRegion = NULL,
                                                            "97-99", "02-04",
                                                            "07-09", "12-14", "17-19")) +
     #ggplot2::scale_x_descrete(breaks = minl,labels = paste0(minl,"-",maxl),expand = c(0.01, 0.01)) +
-    ggplot2::geom_hline(ggplot2::aes(yintercept = hline),
-                        size = setup$hline.size,
-                        alpha = setup$hline.alpha,
-                        linetype = setup$hline.lty) +
+    #ggplot2::geom_hline(ggplot2::aes(yintercept = hline),
+    #                    size = setup$hline.size,
+    #                    alpha = setup$hline.alpha,
+    #                    linetype = setup$hline.lty) +
     ecodata::theme_ts()
 
    # # optional code for New England specific (2 panel) formatting
