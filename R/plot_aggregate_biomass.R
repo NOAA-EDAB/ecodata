@@ -349,9 +349,16 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
                           color = "#ca0020",na.rm = T)
   }
 
+  p <- ggpubr::ggarrange(
+    p1,
+    p2,
+    p3,
+    p4,
+    nrow = 4,
+    scale = 0.9)
 
-  p <- cowplot::plot_grid(p1, p2, p3, p4, nrow=4,scale = 0.9) +
-    cowplot::draw_label(expression("Biomass (kg tow"^-1*")"), x=  0, y=0.5, vjust= 1.5, angle=90)
+ # p <- cowplot::plot_grid(p1, p2, p3, p4, nrow=4,scale = 0.9) +
+  #  cowplot::draw_label(expression("Biomass (kg tow"^-1*")"), x=  0, y=0.5, vjust= 1.5, angle=90)
 
     #ggplot2::ylab(expression("Biomass (kg tow"^-1*")"))
   return(p)
