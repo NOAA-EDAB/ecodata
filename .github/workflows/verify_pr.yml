@@ -4,7 +4,7 @@ on: [pull_request]
 jobs:
   check_description:
     runs-on: ubuntu-latest
-    name: Verify DESCRIPTION Updated
+    name: Verify Files Are Updated
     steps:
     - name: Verify DESCRIPTION Updated
       uses: takanuva15/verify-file-updated@v1
