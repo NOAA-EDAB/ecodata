@@ -1,0 +1,17 @@
+name: Run PR Checks
+on: [pull_request]
+
+jobs:
+  check_description:
+    runs-on: ubuntu-latest
+    name: Verify DESCRIPTION Updated
+    steps:
+    - name: Verify DESCRIPTION Updated
+      uses: takanuva15/verify-file-updated@v1
+      with:
+        filename_to_check: DESCRIPTION
+
+    - name: Verify NEWS Updated
+      uses: takanuva15/verify-file-updated@v1
+      with:
+        filename_to_check: NEWS.md
