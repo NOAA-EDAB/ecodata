@@ -4,6 +4,7 @@ Date: 11/12/2025
 
 - Changed semantic versioning to reflect report year
 - Updated comparisons to use `ecodata25` fork
+- Added workflow that verifies `DESCRIPTION` and `NEWS.md` are updated
 
 ### Processed data updates for SOE 2026:
 
