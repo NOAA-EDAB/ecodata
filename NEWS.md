@@ -1,3 +1,17 @@
+# ecodata 2026.0.0
+
+Date: 11/12/2025
+
+- Changed semantic versioning to reflect report year
+- Update comparisons to use `ecodata25` fork
+
+### Initial data updates for SOE 2026
+
+- `abc_acl`
+- `ches_bay_wq`
+- `grayseal`
+- `harborporpoise`
+
 # ecodata 6.0.1
 
 ### Fixes
