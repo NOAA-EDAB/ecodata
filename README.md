@@ -8,6 +8,8 @@
 [![gitleaks](https://github.com/NOAA-EDAB/ecodata/actions/workflows/secretScan.yml/badge.svg)](https://github.com/NOAA-EDAB/ecodata/actions/workflows/secretScan.yml)
 [![gh-pages](https://github.com/NOAA-EDAB/ecodata/actions/workflows/pkgdown.yml/badge.svg)](https://github.com/NOAA-EDAB/ecodata/actions/workflows/pkgdown.yml)
 [![R-CMD-check](https://github.com/NOAA-EDAB/ecodata/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/NOAA-EDAB/ecodata/actions/workflows/R-CMD-check.yaml)
+[![Run PR
+Checks](https://github.com/NOAA-EDAB/ecodata/actions/workflows/verify_pr.yml/badge.svg)](https://github.com/NOAA-EDAB/ecodata/actions/workflows/verify_pr.yml)
 <!-- badges: end -->
 
 ## Overview

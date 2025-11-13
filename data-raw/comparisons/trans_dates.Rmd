@@ -9,13 +9,13 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ecodata)
-library(ecodata24)
+library(ecodata25)
 library(dplyr)
 library(knitr)
 
 # Replace 'trans_dates' with intended dataset
 dataset<-ecodata::trans_dates
-dataset24<-ecodata24::trans_dates
+dataset24<-ecodata25::trans_dates
 
 # Define dataset-specific arguments for plot functions
 report<-list("MidAtlantic","NewEngland")
@@ -37,35 +37,35 @@ kable(datastats, digits = 2)
 ## `r paste(report[1], variable[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
 ecodata::plot_trans_dates(report = report[1], n = 10, varName = variable[1]) + 
-  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_trans_dates(report = report[1], varName = variable[1]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+ecodata25::plot_trans_dates(report = report[1], varName = variable[1]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
 ## `r paste(report[2], variable[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
 ecodata::plot_trans_dates(report = report[2], n = 10, varName = variable[1]) + 
-  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_trans_dates(report = report[2], varName = variable[1]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+ecodata25::plot_trans_dates(report = report[2], varName = variable[1]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
 ## `r paste(report[1], variable[2])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
 ecodata::plot_trans_dates(report = report[1], n = 10, varName = variable[2]) + 
-  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_trans_dates(report = report[1], varName = variable[2]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+ecodata25::plot_trans_dates(report = report[1], varName = variable[2]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
 ## `r paste(report[2], variable[2])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
 ecodata::plot_trans_dates(report = report[2], n = 10, varName = variable[2]) + 
-  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_trans_dates(report = report[2], varName = variable[2]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+ecodata25::plot_trans_dates(report = report[2], varName = variable[2]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```

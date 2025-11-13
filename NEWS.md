@@ -1,3 +1,49 @@
+# ecodata 2026.0.0
+
+Date: 11/12/2025
+
+- Changed semantic versioning to reflect report year
+- Updated comparisons to use `ecodata25` fork
+- Added workflow that verifies `DESCRIPTION` and `NEWS.md` are updated
+
+### Processed data updates for SOE 2026:
+
+- `abc_acl`
+- `bennet`
+- `ches_bay_wq`
+- `comdat`
+- `commercial_div`
+- `grayseal`
+- `harborporpoise`
+- `recdat`
+
+### Removed old metadata and data files used in previous SOE reports:
+
+- `abc_acl`
+- `bennet`
+- `ches_bay_wq`
+- `comdat`
+- `commercial_div`
+- `grayseal`
+- `harborporpoise`
+- `recdat`
+
+### Refactored processing scripts to handle new workflow outputs:
+
+- `aggregate_biomass`
+- `bennet`
+- `comdat`
+- `condition`
+- `exp_n`
+- `heatwave`
+- `mass_inshore_survey`
+- `productivity_anomaly`
+- `rec_hms`
+- `species_dist`
+- `stock_status`
+- `survey_shannon`
+- `trans_dates`
+
 # ecodata 6.0.1
 
 ### Fixes
