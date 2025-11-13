@@ -2,7 +2,7 @@ name: Run PR Checks
 on:
   pull_request:
     branches:
-    - main
+    - master
 
 jobs:
   check_description:
