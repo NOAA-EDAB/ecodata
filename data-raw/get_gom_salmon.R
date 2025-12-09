@@ -2,10 +2,11 @@
 
 library(tidyverse)
 library(readr)
+library(readxl)
 
 raw.dir <- here::here("data-raw")
 
-gom_salmon_csv<-"Gulf of Maine Atlantic Salmon 2024 Update01NOV2024  - John Kocik - NOAA Federal.xlsx"
+gom_salmon_csv<-"Gulf of Maine Atlantic Salmon 2025 Updated21NOV2025 - John Kocik - NOAA Federal.xlsx"
 get_gom_salmon <- function(save_clean = F){
 
   gom_salmon<-read_excel(file.path(raw.dir,gom_salmon_csv), col_names = TRUE) %>%
