@@ -22,16 +22,6 @@ get_gom_salmon <- function(save_clean = F){
     dplyr::rename(Time = Year) %>%
     dplyr::select(!"Figure ##. Return Rate proportions and abundance of Atlantic salmon.")
 
-  # metadata ---- ### OLD METADATA FROM CH_BAY_SAL... NEEDS REPLACING
-  #attr(ch_bay_sal, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chesapeake-bay-salinity-and-temperature.html"
-  #attr(ch_bay_sal, "data_files")   <- list(
-    #ch_bay_sal_csv = ch_bay_sal_csv)
-  #attr(ch_bay_sal, "data_steward") <- c(
-    # "Charles Pellerin <charles.pellerin@noaa.gov>",
-    # "Bruce Vogt <bruce.vogt@noaa.gov")
-  #attr(ch_bay_sal, "plot_script") <- list(
-     #`ltl_MAB` = "LTL_MAB.Rmd-ch-bay-sal.R")
-
   if (save_clean){
     usethis::use_data(gom_salmon, overwrite = T)
   } else {
