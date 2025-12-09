@@ -2,7 +2,7 @@
 raw.dir <- here::here("data-raw/")
 
 # Define input file path
-shore_supp_csv <- "Shoreside_Support_2025 - Geret DePiper - NOAA Federal.csv"
+shore_supp_csv <- "Shoreside_Support_2026.csv"
 
 get_shoreside_support <- function(save_clean = F){
 
@@ -10,7 +10,8 @@ get_shoreside_support <- function(save_clean = F){
   shoreside_support <- read.csv(file.path(raw.dir, shore_supp_csv)) |>
     dplyr::select(!X) |>
     dplyr::rename(EPU = Region) |>
-    dplyr::mutate(EPU = dplyr::recode(EPU, "MA" = "MAB"))
+    dplyr::mutate(EPU = dplyr::recode(EPU, "MA" = "MAB")) |>
+    tibble::as_tibble()
 
   if (save_clean){
     usethis::use_data(shoreside_support, overwrite = T)
