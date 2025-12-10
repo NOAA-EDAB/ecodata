@@ -5,14 +5,16 @@ library(readxl)
 
 
 raw.dir <- here::here("data-raw")
-energy_density_csv<-"Forage_Fish_ED_SOE_long_10292024 - Mark Wuenschel - NOAA Federal.csv"
+energy_density_csv<-"2026_SOE_line_plot_data - Joseph Warren - NOAA Affiliate.csv"
+
 get_forage_energy_density <- function(save_clean = F){
 
   energy_density <-
     read.csv(file.path(raw.dir, energy_density_csv)) %>%
-    dplyr::mutate(Species = dplyr::recode(Species, "Loligo" = "Loligo squid")) %>%
-    dplyr::mutate(Species = dplyr::recode(Species, "Illex" = "Illex squid")) %>%
+    dplyr::mutate(SPECIES = dplyr::recode(SPECIES, "Loligo" = "Loligo squid")) %>%
+    dplyr::mutate(SPECIES = dplyr::recode(SPECIES, "Illex" = "Illex squid")) %>%
     dplyr::rename(
+      Species = "SPECIES",
       Energy.Density_Mean = "Energy.Density",
       Energy.Density_SD = "StdDev.of.Energy.Density",
       Time = Year
@@ -44,11 +46,5 @@ get_forage_energy_density <- function(save_clean = F){
 
     return(energy_density)
   }
-  # metadata ----
-  attr(energy_density, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/forage-fish-energy-density.html"
-  attr(energy_density, "data_files")   <- list(
-    energy_density_csv = energy_density_csv)
-  attr(energy_density, "data_steward") <- c(
-    " Mark Wuenschel <mark.wuenschel@noaa.gov>")
 }
 get_forage_energy_density(save_clean = T)
