@@ -13,11 +13,11 @@ rast_prep <- function(r){
   return(r)
 }
 
-ltm.dir <- here::here("data-raw/gridded")
+ltm.dir <- here::here("data-raw")
 raw.dir <- here::here("data-raw")
 crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40+lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 
-seasonal_oisst_anom_gridded_day_nc <-"sst.day.mean.2024.nc"
+seasonal_oisst_anom_gridded_day_nc <-"sst.day.mean.2025.nc"
 seasonal_oisst_anom_gridded_ltm_nc <- "sst.day.mean.ltm.1991-2020.nc"
 #These data are large files that are not included among ecodata source files. They are accessible
 #here: https://www.esrl.noaa.gov/psd/data/gridded/data.noaa.oisst.v2.highres.html
@@ -61,17 +61,6 @@ seasonal_oisst_anom_gridded <-
       rast_process(summer.anom, season = "Summer"),
       rast_process(fall.anom, season = "Fall")) %>%
   tibble::as_tibble()
-
-# metadata ----
-attr(seasonal_oisst_anom_gridded, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/seasonal-sst-anomalies.html"
-attr(seasonal_oisst_anom_gridded, "data_files")   <- list(
-  seasonal_oisst_anom_gridded_day_nc = seasonal_oisst_anom_gridded_day_nc,
-  seasonal_oisst_anom_gridded_ltm_nc = seasonal_oisst_anom_gridded_ltm_nc)
-attr(seasonal_oisst_anom_gridded, "data_steward") <- c(
-  "Kimberly Bastille <kimberly.bastille@noaa.gov>")
-attr(seasonal_oisst_anom_gridded, "plot_script") <- list(
-  `ltl_MAB_shelf` = "LTL_MAB.Rmd-shelf-seasonal-sst-anomaly-gridded.R",
-  `ltl_NE` = "LTL_NE.Rmd-seasonal-sst-anomaly-gridded.R")
 
 usethis::use_data(seasonal_oisst_anom_gridded, overwrite = T)
 
