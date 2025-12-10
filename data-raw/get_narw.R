@@ -9,8 +9,8 @@ library(stringr)
 library(readxl)
 
 raw.dir <- here::here("data-raw")
-narw_csv <- "Linden_NARW_abundance_2024-10-09 - Daniel Linden - NOAA Federal.csv"
-calves_csv <- "Linden_NARW_Calves_1990-present - Daniel Linden - NOAA Federal.csv"
+narw_csv <- "Linden_NARW_abundance_2025-10-01 - Daniel Linden - NOAA Federal.csv"
+calves_csv <- "Linden_NARW_Calves_Observed_1990-present - Daniel Linden - NOAA Federal.csv"
 
 get_narw <- function(save_clean = F){
 
@@ -35,15 +35,6 @@ get_narw <- function(save_clean = F){
     dplyr::arrange(Var) %>%
     dplyr::arrange(Time)
 
-  # metadata ----
-  attr(narw, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/right-whale-abundance.html"
-  attr(narw, "data_files")   <- list(
-    narw_csv = narw_csv)
-  attr(narw, "data_steward") <- c(
-    "Chris Orphanides <chris.orphanides@noaa.gov>")
-  attr(narw, "plot_script") <- list(
-    `mf_MAB_abundance` = "macrofauna_MAB.Rmd-narw-abundance.R")
-
   if (save_clean){
     usethis::use_data(narw, overwrite = T)
   } else {
@@ -51,5 +42,3 @@ get_narw <- function(save_clean = F){
   }
 }
 get_narw(save_clean = T)
-
-
