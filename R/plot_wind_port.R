@@ -37,7 +37,7 @@ plot_wind_port <- function(shadedRegion = NULL,
    fix <- tidyr::pivot_longer(fix,cols = c(perc_MIN,  perc_dif, TOT_MAX), names_to="Var", values_to = "Value") |>
      dplyr::arrange(ordering) |>
      dplyr::mutate(City = factor(City, levels = unique(City))) |>
-     dplyr::filter(!Var %in% c("EJ","Gentrification","MaxVal")) |>
+     dplyr::filter(!Var %in% c("Demographics","Gentrification","MaxVal")) |>
      dplyr::mutate(Var = dplyr::recode(Var,"perc_MIN"= "WEA Revenue" ,
                                 "perc_dif" ="WEA Revenue Range",
                                 "TOT_MAX" = "Non-WEA Revenue"),
@@ -45,18 +45,18 @@ plot_wind_port <- function(shadedRegion = NULL,
                                                 "WEA Revenue Range",
                                                 "WEA Revenue")))
 
-   # add EJ port symbols
+   # add Demographics port symbols
    df.symbol <- ecodata::wind_port |>
      dplyr::filter(EPU %in% filterEPUs,
                    !Var %in% c("MaxVal", "TOT_MAX",
                                "perc_MIN", "perc_MAX")) |>
      tidyr::pivot_wider( names_from = Var, values_from = Value) |>
      dplyr::mutate(City = paste0(City,",",State)) |>
-     dplyr::select(City, EJ, Gentrification) |>
-     tidyr::pivot_longer(cols = c(EJ, Gentrification), names_to = "Variable") |>
+     dplyr::select(City, Demographics, Gentrification) |>
+     tidyr::pivot_longer(cols = c(Demographics, Gentrification), names_to = "Variable") |>
      dplyr::filter(!value == "NA") |>
-     dplyr::mutate(symbol = dplyr::recode(Variable, EJ = -7, Gentrification = -3),
-                   Variable = dplyr::recode(Variable,"EJ"= "Mid-High to High Social-demographics Concerns" ,
+     dplyr::mutate(symbol = dplyr::recode(Variable, Demographics = -7, Gentrification = -3),
+                   Variable = dplyr::recode(Variable,"Demographics"= "Mid-High to High Social-demographics Concerns" ,
                                      "Gentrification" ="Mid-High to High Gentrification Concerns"))
 
 
