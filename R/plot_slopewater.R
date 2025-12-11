@@ -3,7 +3,7 @@
 #' plots warm and labridor slopewater entering the shelf. This is a shelfwide indicator
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
-#' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
+#' @param report Character string. New England only ("NewEngland")
 #' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
@@ -13,7 +13,7 @@
 #'
 
 plot_slopewater <- function(shadedRegion = NULL,
-                              report="MidAtlantic",
+                              report="NewEngland",
                             n=0) {
 
   # generate plot setup list (same for all plot functions)
