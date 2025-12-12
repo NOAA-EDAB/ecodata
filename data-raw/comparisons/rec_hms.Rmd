@@ -39,7 +39,7 @@ kable(datastats, digits = 2)
 ecodata::plot_rec_hms(report = report[1],n=10) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata25::plot_rec_hms(report = report[1]) + 
+ecodata25::plot_rec_hms(report = report[1], n = 10) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
@@ -48,6 +48,6 @@ ecodata25::plot_rec_hms(report = report[1]) +
 ecodata::plot_rec_hms(report = report[2],n=10) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata25::plot_rec_hms(report = report[2]) + 
+ecodata25::plot_rec_hms(report = report[2], n = 10) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```

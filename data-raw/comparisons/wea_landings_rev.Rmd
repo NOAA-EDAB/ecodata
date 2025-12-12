@@ -38,5 +38,5 @@ kable(datastats, digits = 2)
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
 ecodata::plot_wea_landings_rev(report = report[1], n = 10)
 
-ecodata25::plot_wea_landings_rev(report = report[1])
+ecodata25::plot_wea_landings_rev(report = report[1], n = 10)
 ```
