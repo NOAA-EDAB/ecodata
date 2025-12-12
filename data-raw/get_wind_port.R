@@ -11,8 +11,8 @@ raw.dir <- here::here("data-raw")
 wind_port_csv<-"wind_port_revenue_tyrell_2025-12-05 - Abigail Tyrell - NOAA Federal.csv"
 
 get_wind_port <- function(save_clean = F){
-  df<- data.frame(State = c(" ME", " MA", " RI", " CT", " NY", " NJ", " MD", " VA", " NC"),
-                  EPU = c("NE", "NE", "NE", "NE","MAB","MAB","MAB","MAB","MAB"))
+  df<- data.frame(State = c(" ME", " MA", " NH", " RI", " CT", " NY", " NJ", " MD", " VA", " NC"),
+                  EPU = c("NE", "NE", "NE", "NE", "NE","MAB","MAB","MAB","MAB","MAB"))
 
   # import data
   wind_port<-read.csv(file.path(raw.dir, wind_port_csv)) %>%
