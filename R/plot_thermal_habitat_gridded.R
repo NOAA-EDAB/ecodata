@@ -49,7 +49,7 @@ plot_thermal_habitat_gridded <- function(shadedRegion = NULL,
 
   p <- fix |>
     ggplot2::ggplot()+
-    ggplot2::geom_tile(ggplot2::aes(x=Longitude,y = Latitude, color = Value, width = 1/12, height = 1/12),
+    ggplot2::geom_tile(ggplot2::aes(x=Longitude,y = Latitude, fill = Value, width = 1/12, height = 1/12),
                        linewidth = setup$line.size) +
     ggplot2::geom_sf(data=ecodata::coast, size = setup$map.lwd) +
     ggplot2::facet_grid(Depth~Var)+

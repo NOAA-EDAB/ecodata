@@ -69,7 +69,7 @@ plot_wind_port <- function(shadedRegion = NULL,
 
   title <- ifelse(is.null(port_list),
                   paste(region, "Port Revenue from Wind Lease Areas"),
-                  "Port Revenue from WEA, Majority MAFMC Species")
+                  "Port Revenue from WEA, Majority NEFMC Species")
 
   plt <- data |>
     # dplyr::filter(.data$region == report) |>
@@ -86,7 +86,7 @@ plot_wind_port <- function(shadedRegion = NULL,
     ggplot2::theme_bw() +
     ggplot2::coord_flip() +
     ggplot2::facet_wrap(~PORT_STATE,
-                        ncol = ifelse(is.null(port_list), 2, 1),
+                        ncol = ifelse(is.null(port_list), 1, 1),
                         scales = "free_y") +
     ggplot2::theme(strip.background = ggplot2::element_blank(),
                    strip.text = ggplot2::element_blank(),
