@@ -5,7 +5,7 @@ dissolved_oxygen_input <- "merged_fishbot_glider_2025_daily_DO.csv"
 get_dissolved_oxygen <- function(save_clean = F){
 
   dissolved_oxygen <- read.csv(file.path(raw.dir, dissolved_oxygen_input)) |>
-    dplyr::select(!c(grid_id, data_providers_adjusted, stat_area, depth, geometry)) |>
+    dplyr::select(!c(grid_id, data_providers_adjusted, stat_area, depth)) |>
     dplyr::rename(Time = time, Lon = centroid_lon, Lat = centroid_lat) |>
     tidyr::pivot_longer(c(dissolved_oxygen, dissolved_oxygen_count, dissolved_oxygen_min, dissolved_oxygen_max),
                         names_to = "Var", values_to = "Value") |>
