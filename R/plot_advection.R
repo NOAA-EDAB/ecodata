@@ -4,7 +4,7 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
-#' @param varName Character string. Which variable to plot (top 15 m: "<15",15m-40m: "15_40",>40m: ">40")
+#' @param varName Character string. Which variable (months) to plot (3 = 'March', 4 = 'April', 5 = 'May', 6 = 'June'). Can be a vector
 #' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
@@ -29,29 +29,32 @@ plot_advection <- function(shadedRegion = NULL,
     filterEPUs <- c("NE")
   }
 
-  if (varName == "<15") {
-    var <- "T15m"
-  } else if(varName == "15_40"){
-    var <- "T15mto40m"
-  } else if(varName == ">40"){
-    var <- "TBlw40m"
-  } else{
-    stop("varName must be one of '<15','15_40', or '>40'")
+  if(!all(varName %in% c(3,4,5,6))){
+    stop('varName must be one of 3,4,5,6 (March:June) at this time')
+  }else{
+    var = varName
   }
+
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
 
   fix <- ecodata::advection  |>
-    dplyr::filter(Var == var & EPU %in% filterEPUs) |>
-    tidyr::separate(Time, c('Year','Var'),sep = '\\.') |>
+    tidyr::separate(Time, c('Year','Month'),sep = '\\.') |>
+    dplyr::filter(Month %in% var & EPU %in% filterEPUs) |>
     dplyr::mutate(Year = as.numeric(Year),
-                  Var = as.numeric(Var),
-                  Month.Name = factor(month.name[Var], levels = month.name))
+                  Month = as.numeric(Month),
+                  Month.Name = factor(month.name[Month], levels = month.name),
+                  VarLong = dplyr::case_match(Var,
+                    "T15m" ~ "<15 m",
+                    "T15mto40m" ~ "15-40 m",
+                    "TBlw40m" ~ ">40 m"
+                  ))
 
-  #check for count of obs in each year x var
-  obs_check <- fix |>
-    dplyr::group_by(Year, Month.Name) |>
-    dplyr::tally()
+  #set plot limits based on data
+  fix.mu = mean(ecodata::advection$Value,na.rm=T)
+  fix.sd = sd(ecodata::advection$Value,na.rm=T)
+  plot.lower = fix.mu - 1.5*fix.sd
+  plot.upper = fix.mu + 1.5*fix.sd
 
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
@@ -59,21 +62,22 @@ plot_advection <- function(shadedRegion = NULL,
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
   #
   p <- fix |>
-    ggplot2::ggplot(ggplot2::aes(x = Year, y = Value))+
+    ggplot2::ggplot(ggplot2::aes(x = Year, y = Value, color = VarLong))+
     ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
         xmin = setup$x.shade.min , xmax = setup$x.shade.max,
         ymin = -Inf, ymax = Inf) +
     ggplot2::geom_point()+
     ggplot2::geom_line()+
-    ggplot2::ggtitle(paste0(setup$region,": ",stringr::str_to_title(var)))+
+    ggplot2::ggtitle(paste0(setup$region,": ",stringr::str_to_title(paste0(sort(unique(fix$Month.Name)), collapse =', '))))+
     ggplot2::ylab(paste0("Net Advection (",fix$Units[1],")"))+
     ggplot2::xlab(ggplot2::element_blank())+
-    ggplot2::annotate('text',x = -Inf, y = Inf, label = 'On Shelf', hjust = 0, vjust = 2, size = setup$label.size*0.75)+
-    ggplot2::annotate('text',x = -Inf, y = -Inf, label = 'Off Shelf', hjust = 0, vjust = -2, size = setup$label.size*0.75)+
-    ggplot2::facet_wrap(~Month.Name)+
+    ggplot2::annotate('text',x = -Inf, y = Inf, label = 'On Shelf', hjust = -0.5, vjust = 2, size = setup$label.size*0.75)+
+    ggplot2::annotate('text',x = -Inf, y = -Inf, label = 'Off Shelf', hjust = -0.5, vjust = -2, size = setup$label.size*0.75)+
+    ggplot2::facet_wrap(~Month.Name,scale = 'free_y')+
     ecodata::geom_gls()+
     ecodata::geom_lm(n=n)+
     ecodata::theme_ts()+
+    ggplot2::coord_cartesian(ylim = c(plot.lower,plot.upper))+
     ggplot2::geom_hline(yintercept = 0,
                         linewidth = setup$hline.size,
                         alpha = setup$hline.alpha,
