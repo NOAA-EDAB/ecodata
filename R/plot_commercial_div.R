@@ -48,7 +48,7 @@ plot_commercial_div <- function(shadedRegion = NULL,
     ylim_fc <- c(min(comm_div[comm_div$Var == "Fleet count" & comm_div$EPU == setup$region_abbr ,]$Value, na.rm = TRUE) *0.95,
                  max(comm_div[comm_div$Var == "Fleet count"& comm_div$EPU == setup$region_abbr,]$Value, na.rm = TRUE) *1.05 )
   }else if(varName=="Fleet diversity in revenue"){
-    ylim_fc <- c(0, max(comm_div[comm_div$Var == "Fleet diversity in revenue" & comm_div$EPU == setup$region_abbr,]$Value) *1.1 )
+    ylim_fc <- c(NA, max(comm_div[comm_div$Var == "Fleet diversity in revenue" & comm_div$EPU == setup$region_abbr,]$Value) *1.1 )
   }else{
     ylim_fc <- c(NA, NA)
   }
