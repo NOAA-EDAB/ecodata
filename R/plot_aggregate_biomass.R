@@ -139,7 +139,7 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
                         linewidth = setup$hline.size,
                         alpha = setup$hline.alpha,
                         linetype = setup$hline.lty)+
-    ggplot2::facet_wrap(Var~.,ncol = 2) +
+    ggplot2::facet_wrap(Var~.,ncol = 2, scales = "free_y") +
     #Axis and theme
     ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
     #ylim(0, 1200)+
@@ -198,7 +198,7 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
                         linewidth = setup$hline.size,
                         alpha = setup$hline.alpha,
                         linetype = setup$hline.lty)+
-    ggplot2::facet_wrap(Var~.,ncol = 2) +
+    ggplot2::facet_wrap(Var~.,ncol = 2, scales = "free_y") +
     #Axis and theme
     ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
     #ylim(0, 1200)+
@@ -263,7 +263,7 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
                         linewidth = setup$hline.size,
                         alpha = setup$hline.alpha,
                         linetype = setup$hline.lty)+
-    ggplot2::facet_wrap(Var~.,ncol = 2) +
+    ggplot2::facet_wrap(Var~.,ncol = 2, scales = "free_y") +
     #Axis and theme
     ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
     #ylim(0, 1200)+
@@ -324,7 +324,7 @@ plot_aggregate_biomass <- function(shadedRegion = NULL,
                         linewidth = setup$hline.size,
                         alpha = setup$hline.alpha,
                         linetype = setup$hline.lty)+
-    ggplot2::facet_wrap(Var~.,ncol = 2) +
+    ggplot2::facet_wrap(Var~.,ncol = 2, scales = "free_y") +
     #Axis and theme
     ggplot2::scale_x_continuous(breaks = seq(1970, 2020, by = 10), expand = c(0.01, 0.01)) +
     #ylim(0, 1200)+
