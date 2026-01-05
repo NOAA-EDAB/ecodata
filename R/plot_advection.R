@@ -15,7 +15,7 @@
 
 plot_advection <- function(shadedRegion = NULL,
                      report="MidAtlantic",
-                     varName = "<15",
+                     varName = 3,
                      n = 0) {
 
   # generate plot setup list (same for all plot functions)
@@ -44,11 +44,15 @@ plot_advection <- function(shadedRegion = NULL,
     dplyr::mutate(Year = as.numeric(Year),
                   Month = as.numeric(Month),
                   Month.Name = factor(month.name[Month], levels = month.name),
-                  VarLong = dplyr::case_match(Var,
+                  VarLong = factor(
+                    dplyr::case_match(Var,
                     "T15m" ~ "<15 m",
                     "T15mto40m" ~ "15-40 m",
                     "TBlw40m" ~ ">40 m"
-                  ))
+                    ),
+                    levels = c("<15 m", "15-40 m", ">40 m")
+                    )
+    )
 
   #set plot limits based on data
   fix.mu = mean(ecodata::advection$Value,na.rm=T)
@@ -68,6 +72,7 @@ plot_advection <- function(shadedRegion = NULL,
         ymin = -Inf, ymax = Inf) +
     ggplot2::geom_point()+
     ggplot2::geom_line()+
+    ggplot2::labs(color = 'Depth')+
     ggplot2::ggtitle(paste0(setup$region,": ",stringr::str_to_title(paste0(sort(unique(fix$Month.Name)), collapse =', '))))+
     ggplot2::ylab(paste0("Net Advection (",fix$Units[1],")"))+
     ggplot2::xlab(ggplot2::element_blank())+
