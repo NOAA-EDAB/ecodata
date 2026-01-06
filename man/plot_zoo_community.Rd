@@ -4,12 +4,7 @@
 \alias{plot_zoo_community}
 \title{plot zooplankton community PCA}
 \usage{
-plot_zoo_community(
-  shadedRegion = NULL,
-  report = "MidAtlantic",
-  plottype = "index",
-  n = 0
-)
+plot_zoo_community(shadedRegion = NULL, report = "MidAtlantic", n = 0)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

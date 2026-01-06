@@ -14,7 +14,6 @@
 
 plot_zoo_community <- function(shadedRegion = NULL,
                               report="MidAtlantic",
-                              plottype = "index",
                               n = 0) {
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
