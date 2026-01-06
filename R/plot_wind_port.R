@@ -38,7 +38,10 @@ plot_wind_port <- function(
       names = c("Var", "lease_status")
     ) |>
     tidyr::pivot_wider(names_from = Var, values_from = Value) |>
-    dplyr::mutate(PORT_STATE = paste(.data$City, .data$State, sep = ", ")) |>
+    dplyr::mutate(
+      PORT_STATE = paste(.data$City, .data$State, sep = ", ") |>
+        stringr::str_squish()
+    ) |>
     dplyr::select(-c(State, City))
 
   data$lease_status <- factor(
@@ -66,6 +69,8 @@ plot_wind_port <- function(
 
   # only keep "all lease" column for ports that can't display by lease status
   plt_data <- data |>
+    # drop na's created by pivoting
+    tidyr::drop_na(perc_AVG) |>
     dplyr::group_by(PORT_STATE) |>
     dplyr::mutate(keep_all_lease = dplyr::n() == 1) |>
     dplyr::filter(
