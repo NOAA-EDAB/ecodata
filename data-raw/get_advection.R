@@ -12,7 +12,8 @@ get_advection <- function(save_clean = F){
     dplyr::mutate(EPU = dplyr::recode(EPU,
                                       "    GOMGB" = "NE",
                                       "      MAB" = "MAB")) |>
-    dplyr::mutate(Units = dplyr::recode(Units,"    10^6 m^3/s" = "10^6 m^3/s")) |>
+    dplyr::mutate(Units = dplyr::recode(Units,"    10^6 m^3/s" = "10^6 m^3/s"),
+                  Time = as.numeric(Time)) |>
     dplyr::select(Time, Var, Value, EPU, Units)
 
   if (save_clean){

@@ -4,12 +4,7 @@
 \alias{plot_advection}
 \title{plot shelf break advection index}
 \usage{
-plot_advection(
-  shadedRegion = NULL,
-  report = "MidAtlantic",
-  varName = "<15",
-  n = 0
-)
+plot_advection(shadedRegion = NULL, report = "MidAtlantic", varName = 3, n = 0)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

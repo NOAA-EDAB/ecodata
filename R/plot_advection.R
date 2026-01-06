@@ -95,4 +95,4 @@ plot_advection <- function(shadedRegion = NULL,
 
 
 attr(plot_advection,"report") <- c("MidAtlantic","NewEngland")
-attr(plot_advection,"varName") <- c("<15", "15_40",">40")
+attr(plot_advection,"varName") <- c(3,5,6)
