@@ -29,6 +29,10 @@ get_benthos_index <- function(save_clean = F){
 
   benthos_index<- rbind(fallmega, springmega, fallmegacog, springmegacog, fallmacro, springmacro, fallmacrocog, springmacrocog)
 
+    # Standardize the EPU column to "All"
+    benthos_index <- benthos_index  |>
+      dplyr::mutate(EPU = ifelse(EPU %in% c("ALLEPU", "AllEPU"), "All", EPU))
+
   if (save_clean){
     usethis::use_data(benthos_index, overwrite = T)
   } else {
