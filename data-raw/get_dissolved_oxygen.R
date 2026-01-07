@@ -9,7 +9,8 @@ get_dissolved_oxygen <- function(save_clean = F){
     dplyr::rename(Time = time, Lon = centroid_lon, Lat = centroid_lat) |>
     tidyr::pivot_longer(c(dissolved_oxygen, dissolved_oxygen_count, dissolved_oxygen_min, dissolved_oxygen_max),
                         names_to = "Var", values_to = "Value") |>
-    dplyr::mutate(Time = as.Date(Time))
+    dplyr::mutate(Time = as.Date(Time),
+                  EPU = 'All')
 
   if (save_clean){
     usethis::use_data(dissolved_oxygen, overwrite = T)

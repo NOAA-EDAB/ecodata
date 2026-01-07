@@ -3,14 +3,14 @@
 #' plots number of days below hypoxia threshold
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10), passed from plot function
-#' @param hypoxia.limit numeric value. Threshold for hypoxia in mg/L. Default = 5 mg/L
+#' @param threshold numeric value. Threshold for hypoxia in mg/L. Default <= 5 mg/L
 #'
 #' @return ggplot object
 #'
 #' @export
 
 plot_dissolved_oxygen <- function(shadedRegion = NULL,
-                                  hypoxia.limit = 5) {
+                                  threshold = 5) {
 
 
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -26,7 +26,7 @@ plot_dissolved_oxygen <- function(shadedRegion = NULL,
     sf::st_as_sf(wkt = 'geometry', crs = 4269) |>
     dplyr::mutate(Year = format(Time, '%Y')) |>
     dplyr::filter(Year == max(Year) & Var == 'dissolved_oxygen') |>
-    dplyr::mutate(below.hypoxia = Value < hypoxia.limit) |>
+    dplyr::mutate(below.hypoxia = Value < threshold) |>
     dplyr::group_by(Year,geometry) |>
     dplyr::summarise(hypoxia.count = sum(below.hypoxia,na.rm=T)) |>
     dplyr::mutate(hypoxia.count = ifelse(hypoxia.count == 0, NA, hypoxia.count))
@@ -44,7 +44,7 @@ plot_dissolved_oxygen <- function(shadedRegion = NULL,
 
     # ggplot2::facet_wrap(Var~.)+
     ecodata::theme_map() +
-    ggplot2::scale_fill_viridis_c(name = paste0('# Days \n <',hypoxia.limit,' mg/L'),na.value = 'lightgrey',option = 'inferno')+
+    ggplot2::scale_fill_viridis_c(name = paste0('# Days \n <',threshold,' mg/L'),na.value = 'lightgrey',option = 'inferno')+
     ggplot2::ggtitle(paste0('Hypoxia Events in ',max(fix$Year)))+
     ggplot2::xlab("Longitude") +
     ggplot2::ylab("Latitude") +

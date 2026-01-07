@@ -4,12 +4,12 @@
 \alias{plot_dissolved_oxygen}
 \title{plot dissolved oxygen from FishBOT}
 \usage{
-plot_dissolved_oxygen(shadedRegion = NULL, hypoxia.limit = 5)
+plot_dissolved_oxygen(shadedRegion = NULL, threshold = 5)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10), passed from plot function}
 
-\item{hypoxia.limit}{numeric value. Threshold for hypoxia in mg/L. Default = 5 mg/L}
+\item{threshold}{numeric value. Threshold for hypoxia in mg/L. Default <= 5 mg/L}
 }
 \value{
 ggplot object
