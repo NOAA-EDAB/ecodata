@@ -11,7 +11,7 @@ plot_advection(shadedRegion = NULL, report = "MidAtlantic", varName = 3, n = 0)
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
-\item{varName}{Character string. Which variable (months) to plot (3 = 'March', 4 = 'April', 5 = 'May', 6 = 'June'). Can be a vector}
+\item{varName}{Numeric scalar. Which variable (months) to plot (3 = 'March', 4 = 'April', 5 = 'May', 6 = 'June'). Can be a vector}
 
 \item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
