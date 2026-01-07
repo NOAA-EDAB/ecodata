@@ -7,7 +7,7 @@ library(tidyr)
 raw.dir <- here::here("data-raw")
 
 # Define input files
-comm_social_vuln_csv <- "fishdata_2022_CSVI_1-23-2025.csv"
+comm_social_vuln_csv <- "2023_National_Indicators_for__Northeast_120525.csv"
 
 get_engagement <- function(save_clean = F){
   # Create data frame to define State-EPU
@@ -15,47 +15,31 @@ get_engagement <- function(save_clean = F){
                   EPU = c("NE", "NE", "NE", "NE", "MAB", "NE","MAB","MAB","MAB","MAB","MAB","MAB"))
 
   # this reads numbers in as numbers
-  dat <- readr::read_csv(file.path(raw.dir,comm_social_vuln_csv))
-
-  # These are Bobby's data edits
-  #rename top communities
-  dat$GEO_NAME <- replace(dat$GEO_NAME,
-                          dat$GEO_NAME=="Port Clyde-Tenants Harbor/Saint George/Spruce Head, ME",
-                          "Port Clyde-Tenants Harbor, ME")
-
-
-  dat$GEO_NAME <- replace(dat$GEO_NAME,
-                          dat$GEO_NAME=="Sandwich/East Sandwich/Forestdale, MA",
-                          "Sandwich, MA")
-
-
-  dat$GEO_NAME <- replace(dat$GEO_NAME,
-                          dat$GEO_NAME=="Reedville/District 5 (Northumberland County), VA",
-                          "Reedville, VA")
+  dat <- readr::read_csv(file.path(raw.dir,comm_social_vuln_csv)) |>
+    dplyr::rename("State" = "STATEABBR") |>
+    dplyr::left_join(EPUlook, by = "State")
 
   # If we want a long dataset, these need to be numbers to have them with the Eng and Rel values
   # Otherwise we need a wide dataset
-  dat<- dat |>
-    dplyr::mutate(across(ComEng_ct:urban_sprawl_index_rank, ~
-                           as.numeric(case_when(
-                             . == "low" ~ "1",
-                             . == "med" ~ "2",
-                             . == "med high" ~ "3",
-                             . == "high" ~ "4",
-                             TRUE ~ NA_character_
-                           ))))
-
-
+  #dat<- dat |>
+    #dplyr::mutate(across(ComEng_ct:urban_sprawl_index_rank, ~
+                           #as.numeric(case_when(
+                           #   . == "low" ~ "1",
+                           #  . == "med" ~ "2",
+                           #   . == "med high" ~ "3",
+                           #  . == "high" ~ "4",
+                           #   TRUE ~ NA_character_
+                           #))))
 
   engagement <- dat |>
     # Filter only Northeast region
     #dplyr::filter(REGION == "Northeast") |>
     # Deselect unnecessary columns
-    dplyr::mutate(EPU = case_when(Council == "New England" ~ "NE",
-                                  Council == "Mid-Atlantic" ~ "MAB")) |>
-    dplyr::select(!c("Council", "MAPNAME", "geography", "REGION", "STATEABBR")) |>
+    #dplyr::mutate(EPU = case_when(Council == "New England" ~ "NE",
+    #                              Council == "Mid-Atlantic" ~ "MAB")) |>
+    dplyr::select(!c("MAPNAME", "geography", "REGION", "State", "GEO_ID2", "SUMLEVEL")) |>
     # can't do this and keep correct data attributes (numeric and factor)
-    tidyr::pivot_longer(cols = c("TOTPOP",
+    tidyr::pivot_longer(cols = c("totpop",
                                  "personal_disruption",
                                  "pop_composition",
                                  "poverty",
@@ -64,14 +48,6 @@ get_engagement <- function(save_clean = F){
                                  "housing_disrupt",
                                  "retiree_migration",
                                  "urban_sprawl_index",
-                                 "ComEng",
-                                 "ComRel",
-                                 "RecEng",
-                                 "RecRel",
-                                 "RecEng_ct",
-                                 "RecRel_ct",
-                                 "ComEng_ct",
-                                 "ComRel_ct",
                                  "personal_disruption_rank",
                                  "pop_composition_rank",
                                  "poverty_rank",
@@ -81,8 +57,8 @@ get_engagement <- function(save_clean = F){
                                  "retiree_migration_rank",
                                  "urban_sprawl_index_rank"),
                           names_to = "Var", values_to = "Value") |>
-    dplyr::mutate(Units = case_when(Var == "TOTPOP" ~ "number of individuals",
-                                    Var != "TOTPOP" ~ "unitless")) |>
+    dplyr::mutate(Units = case_when(Var == "totpop" ~ "number of individuals",
+                                    Var != "totpop" ~ "unitless")) |>
     tidyr::unite("Var", c(GEO_NAME,Var), sep = "-") |>
     dplyr::rename("Time" = "year") |>
     dplyr::select(Time, Var, Value, EPU, Units)
