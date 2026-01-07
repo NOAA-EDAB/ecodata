@@ -131,11 +131,13 @@ plot_aggregate_biomass <- function(
 
   benthivore <- agg_bio |>
     dplyr::filter(Var == "Benthivore Spring" | Var == "Benthivore Fall")
-  benthivore_new_max <- max((neamap.2$Value) * 1.2, na.rm = TRUE)
+  benthivore_new_max <- max((benthivore$Mean) * 1.2, na.rm = TRUE)
+  benthivore_neamap_new_max <- max((neamap.2$Value) * 1.2, na.rm = TRUE)
 
   planktivore <- agg_bio |>
     dplyr::filter(Var == "Planktivore Spring" | Var == "Planktivore Fall")
-  planktivore_new_max <- max((neamap.3$Value) * 1.2, na.rm = TRUE)
+  planktivore_new_max <- max((planktivore$Mean) * 1.2, na.rm = TRUE)
+  planktivore_neamap_new_max <- max((neamap.3$Value) * 1.2, na.rm = TRUE)
 
   benthos <- agg_bio |>
     dplyr::filter(Var == "Benthos Spring" | Var == "Benthos Fall")
@@ -571,7 +573,7 @@ plot_aggregate_biomass <- function(
   return(p)
 }
 
-# plot_aggregate_biomass()
+plot_aggregate_biomass()
 # plot_aggregate_biomass(report = "NewEngland", EPU = "GB")
 # plot_aggregate_biomass(report = "NewEngland", EPU = "GOM")
 
