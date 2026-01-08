@@ -87,7 +87,7 @@ plot_mass_inshore_survey <- function(shadedRegion = NULL,
       ggplot2::coord_cartesian(clip = "on") +
       ggplot2::facet_wrap(~Var, ncol = 2) +
       ecodata::geom_gls() +
-      ecodata::geom_lm(n = 10) +
+      ecodata::geom_lm(n = n) +
       ecodata::theme_ts() +
       ecodata::theme_facet() +
       ecodata::theme_title()
