@@ -87,7 +87,7 @@ plot_exp_n <- function(shadedRegion = NULL,
     ecodata::geom_gls() +
     ecodata::geom_lm(n=n) +
     #Axis and theme
-    ggplot2::scale_x_continuous(breaks = seq(start_year, 2015, by = 10), expand = c(0.01, 0.01)) +
+    ggplot2::scale_x_continuous(breaks = seq(start_year, 2018, by = 10), expand = c(0.01, 0.01)) +
     ggplot2::ylab("n species per 1000 ind") +
     ggplot2::xlab(ggplot2::element_blank())+
     ecodata::theme_facet()+
@@ -110,6 +110,8 @@ plot_exp_n <- function(shadedRegion = NULL,
 attr(plot_exp_n,"varName") <- c("fall","spring")
 attr(plot_exp_n,"report") <- c("MidAtlantic","NewEngland")
 
+#plot_exp_n(report = "MidAtlantic")
+#plot_exp_n(report = "NewEngland", varName = "fall")
 
   # Paste commented original plot code chunk for reference
   # exp<- ecodata::exp_n %>%
