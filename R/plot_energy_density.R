@@ -28,6 +28,10 @@ plot_energy_density <- function(shadedRegion = NULL,
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
   d<-ecodata::energy_density |>
+    dplyr::group_by(Var) |>
+    # This creates rows for every year in the range, filling missing values with NA
+    tidyr::complete(Time = tidyr::full_seq(Time, 1)) |>
+    dplyr::ungroup() |>
     tidyr::separate(Var, into = c("Species", "Season", "Var"), sep = "/") |>
     tidyr::pivot_wider(names_from = Var, values_from = Value) |>
     dplyr::mutate(Energy.Density_Mean = as.numeric(Energy.Density_Mean),
@@ -35,7 +39,6 @@ plot_energy_density <- function(shadedRegion = NULL,
                   upper = Energy.Density_Mean + Energy.Density_SD,
                   lower = Energy.Density_Mean - Energy.Density_SD) |>
     dplyr::group_by(Season, Species)
-
 
   old.ed<- data.frame("Species" = c("Alewife", "Atl. Herring","Atl. Mackerel","Butterfish", "Illex squid", "Loligo squid",  "Sand lance","Silver hake" ,  "Atl. Herring", "Illex squid","Sand lance"),
                       "Year" = c("1980s", "1980s", "1980s", "1980s", "1980s", "1980s","1980s", "1980s", "1990s",
@@ -76,6 +79,8 @@ plot_energy_density <- function(shadedRegion = NULL,
     return(p)
 }
 
+#plot_energy_density(report = "MidAtlantic")
+#plot_energy_density(report = "NewEngland")
 attr(plot_energy_density,"report") <- c("MidAtlantic","NewEngland")
 
   # Paste commented original plot code chunk for reference
