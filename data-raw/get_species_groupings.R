@@ -48,7 +48,11 @@ raw.dir <- here::here("data-raw")
 get_species_groupings <- function(save_clean = F){
 
   species<-readRDS(file.path(raw.dir, "speciesgroupingsFMP - Sarah Gaichas - NOAA Federal.rds"))
-  species_groupings <- species %>% tibble::as_tibble()
+  species_groupings <- species  |>  tibble::as_tibble()
+
+  # Fixing Windowpane with is showing NA in Fed.Managed when it should be NEFMC
+  species_groupings <- species_groupings  |>
+    dplyr::mutate(Fed.Managed = replace(Fed.Managed, COMNAME == "WINDOWPANE", "NEFMC"))
 
   if (save_clean){
     usethis::use_data(species_groupings, overwrite = T)
