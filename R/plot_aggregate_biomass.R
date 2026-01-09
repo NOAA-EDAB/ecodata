@@ -34,7 +34,7 @@ plot_aggregate_biomass <- function(
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
-
+  end_year <- max(ecodata::aggregate_biomass$Time)
   # this code from NE reports, works for Mid but includes Spring 2020
   agg <- ecodata::aggregate_biomass |>
     dplyr::mutate(EPU = factor(EPU)) |>
@@ -221,7 +221,7 @@ plot_aggregate_biomass <- function(
     ggplot2::facet_wrap(Var ~ ., ncol = 2) +
     #Axis and theme
     ggplot2::scale_x_continuous(
-      breaks = seq(1970, 2020, by = 10),
+      breaks = seq(1970, end_year, by = 10),
       expand = c(0.01, 0.01)
     ) +
     ggplot2::scale_y_continuous(
@@ -258,10 +258,6 @@ plot_aggregate_biomass <- function(
         na.rm = T,
         size = setup$pcex - 0.5,
         color = "#ca0020"
-      ) +
-      ggplot2::scale_y_continuous(
-        limits = c(0, piscivore_new_max),
-        oob = scales::oob_keep
       )
   }
 
@@ -325,7 +321,7 @@ plot_aggregate_biomass <- function(
     ggplot2::facet_wrap(Var ~ ., ncol = 2) +
     #Axis and theme
     ggplot2::scale_x_continuous(
-      breaks = seq(1970, 2020, by = 10),
+      breaks = seq(1970, end_year, by = 10),
       expand = c(0.01, 0.01)
     ) +
     ggplot2::scale_y_continuous(
@@ -362,10 +358,6 @@ plot_aggregate_biomass <- function(
         size = setup$pcex - 0.5,
         color = "#ca0020",
         na.rm = T
-      ) +
-      ggplot2::scale_y_continuous(
-        limits = c(0, benthivore_new_max),
-        oob = scales::oob_keep
       )
   }
 
@@ -433,7 +425,7 @@ plot_aggregate_biomass <- function(
     ggplot2::facet_wrap(Var ~ ., ncol = 2) +
     #Axis and theme
     ggplot2::scale_x_continuous(
-      breaks = seq(1970, 2020, by = 10),
+      breaks = seq(1970, end_year, by = 10),
       expand = c(0.01, 0.01)
     ) +
     ggplot2::scale_y_continuous(
@@ -470,10 +462,6 @@ plot_aggregate_biomass <- function(
         size = setup$pcex - 0.5,
         color = "#ca0020",
         na.rm = T
-      ) +
-      ggplot2::scale_y_continuous(
-        limits = c(0, planktivore_new_max),
-        oob = scales::oob_keep
       )
   }
 
@@ -539,7 +527,7 @@ plot_aggregate_biomass <- function(
     ggplot2::facet_wrap(Var ~ ., ncol = 2) +
     #Axis and theme
     ggplot2::scale_x_continuous(
-      breaks = seq(1970, 2020, by = 10),
+      breaks = seq(1970, end_year, by = 10),
       expand = c(0.01, 0.01)
     ) +
     ggplot2::scale_y_continuous(
@@ -576,10 +564,6 @@ plot_aggregate_biomass <- function(
         size = setup$pcex - 0.5,
         color = "#ca0020",
         na.rm = T
-      ) +
-      ggplot2::scale_y_continuous(
-        limits = c(0, benthos_new_max),
-        oob = scales::oob_keep
       )
   }
 
