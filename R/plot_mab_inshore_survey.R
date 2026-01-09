@@ -36,7 +36,7 @@ plot_mab_inshore_survey <- function(shadedRegion = NULL,
     dplyr::mutate(Value = as.numeric(Value),
                   CV = as.numeric(CV)) |>
     dplyr::group_by(Var) |>
-    dplyr::mutate(hline = mean(Value),
+    dplyr::mutate(hline = mean(Value, na.rm = TRUE),
                   SD = Value * CV, #calculate SD from CV
                   upper = Value + (2*SD),
                   lower = Value - (2*SD))
@@ -122,3 +122,4 @@ plot_mab_inshore_survey <- function(shadedRegion = NULL,
 }
 
 attr(plot_mab_inshore_survey,"report") <- c("MidAtlantic","NewEngland")
+

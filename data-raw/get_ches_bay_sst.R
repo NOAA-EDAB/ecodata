@@ -6,10 +6,10 @@ library(stars)
 raw.dir <- here::here("data-raw")
 
 # Chesapeake bay sst files from Ron
- ches_1_nc <-"Vogel_ChesBay_SST_Anomaly_2024_Winter - Ronald Vogel - NOAA Affiliate.nc4" #Winter
- ches_2_nc <-"Vogel_ChesBay_SST_Anomaly_2024_Spring - Ronald Vogel - NOAA Affiliate.nc4" #Spring
- ches_3_nc <-"Vogel_ChesBay_SST_Anomaly_2023_Summer - Ronald Vogel - NOAA Affiliate.nc4" #Summer
- ches_4_nc <-"Vogel_ChesBay_SST_Anomaly_2024_Fall - Ronald Vogel - NOAA Affiliate.nc4" #Fall
+ ches_1_nc <-"ACSPOCW_SEASON-1_ANOMALY-2025vs2007-2024_MULTISAT_SST-NGT_CD_750M - Julie Reichert-Nguyen - NOAA Federal.nc4" #Winter
+ ches_2_nc <-"ACSPOCW_SEASON-2_ANOMALY-2025vs2007-2024_MULTISAT_SST-NGT_CD_750M - Julie Reichert-Nguyen - NOAA Federal.nc4" #Spring
+ ches_3_nc <-"ACSPOCW_SEASON-3_ANOMALY-2025vs2007-2024_MULTISAT_SST-NGT_CD_750M - Julie Reichert-Nguyen - NOAA Federal.nc4" #Summer
+ ches_4_nc <-"ACSPOCW_SEASON-4_ANOMALY-2025vs2007-2024_MULTISAT_SST-NGT_CD_750M - Julie Reichert-Nguyen - NOAA Federal.nc4" #Fall
 
 
 get_ches_bay_sst <- function(save_clean = F){
@@ -28,29 +28,15 @@ get_ches_bay_sst <- function(save_clean = F){
   r <- as.data.frame(r)
 
   ches_bay_sst <- r %>%
-    dplyr::rename(Winter = "sea_surface_subskin_temperature.anomaly.2024.minus.2007.2023.1",
-                  Spring = "sea_surface_subskin_temperature.anomaly.2024.minus.2007.2023.2",
-                  Summer = "sea_surface_subskin_temperature.anomaly.2023.minus.2007.2022",
-                  Fall = "sea_surface_subskin_temperature.anomaly.2024.minus.2007.2023.3") %>%
+    dplyr::rename(Winter = "sea_surface_subskin_temperature.anomaly.2025.minus.2007.2024.1",
+                  Spring = "sea_surface_subskin_temperature.anomaly.2025.minus.2007.2024.2",
+                  Summer = "sea_surface_subskin_temperature.anomaly.2025.minus.2007.2024.3",
+                  Fall = "sea_surface_subskin_temperature.anomaly.2025.minus.2007.2024.4") %>%
     tidyr::pivot_longer(!c(x, y), names_to = "Season", values_to = "Value") %>%
     dplyr::rename(Longitude = "y",
                   Latitude = "x",
                   Var = "Season") %>%
     filter(!Value == "NaN")
-
-  # metadata ----
-  attr(ches_bay_sst, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/chesapeake-bay-seasonal-sst-anomalies.html"
-  attr(ches_bay_sst, "data_files")   <- list(
-    ches_1_nc = ches_1_nc,
-    ches_2_nc = ches_2_nc,
-    ches_3_nc = ches_3_nc,
-    ches_4_nc = ches_4_nc)
-  attr(ches_bay_sst, "data_steward") <- c(
-    "Bruce Vogt <bruce.vogt@noaa.gov>",
-    "Ron Vogel <ronald.vogel@noaa.gov>")
-  attr(ches_bay_sst, "plot_script") <- list(
-    `ltl_MAB` = "LTL_MAB.Rmd-ches-bay-sst.R")
-
 
   if (save_clean){
     usethis::use_data(ches_bay_sst, overwrite = T)
@@ -59,20 +45,3 @@ get_ches_bay_sst <- function(save_clean = F){
   }
 }
 get_ches_bay_sst(save_clean = T)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

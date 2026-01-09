@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_wind_port.R
 \name{plot_wind_port}
 \alias{plot_wind_port}
-\title{plot revenue by port from wind energy}
+\title{plot revenue by port from wind lease areas}
 \usage{
 plot_wind_port(shadedRegion = NULL, report = "MidAtlantic")
 }
