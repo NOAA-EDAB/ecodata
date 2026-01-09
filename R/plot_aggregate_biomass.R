@@ -14,10 +14,10 @@
 #'
 
 plot_aggregate_biomass <- function(
-    shadedRegion = NULL,
-    report = "MidAtlantic",
-    EPU = "MAB",
-    n = 0
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  EPU = "MAB",
+  n = 0
 ) {
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
@@ -34,7 +34,7 @@ plot_aggregate_biomass <- function(
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
-
+  end_year <- max(ecodata::aggregate_biomass$Time)
   # this code from NE reports, works for Mid but includes Spring 2020
   agg <- ecodata::aggregate_biomass |>
     dplyr::mutate(EPU = factor(EPU)) |>
@@ -87,6 +87,26 @@ plot_aggregate_biomass <- function(
     "Benthos" = expression("Benthos")
   )
 
+  # calculate max y values for each guild based on data
+  # this will be amended if neamap data in MAB has values that exceed this
+  piscivore <- agg_bio |>
+    dplyr::filter(Var == "Piscivore Spring" | Var == "Piscivore Fall")
+  piscivore_new_max <- max((piscivore$Mean) * 1.2, na.rm = TRUE)
+
+  benthivore <- agg_bio |>
+    dplyr::filter(Var == "Benthivore Spring" | Var == "Benthivore Fall")
+  benthivore_new_max <- max((benthivore$Mean) * 1.2, na.rm = TRUE)
+  #benthivore_neamap_new_max <- max((neamap.2$Value) * 1.2, na.rm = TRUE)
+
+  planktivore <- agg_bio |>
+    dplyr::filter(Var == "Planktivore Spring" | Var == "Planktivore Fall")
+  planktivore_new_max <- max((planktivore$Mean) * 1.2, na.rm = TRUE)
+  #planktivore_neamap_new_max <- max((neamap.3$Value) * 1.2, na.rm = TRUE)
+
+  benthos <- agg_bio |>
+    dplyr::filter(Var == "Benthos Spring" | Var == "Benthos Fall")
+  benthos_new_max <- max((benthos$Mean) * 1.2, na.rm = TRUE)
+
   if (report == "MidAtlantic") {
     #Get NEAMAP
     neamap <- ecodata::mab_inshore_survey |>
@@ -122,27 +142,19 @@ plot_aggregate_biomass <- function(
       dplyr::filter(stringr::str_detect(Var, "Planktivore"))
     neamap.4 <- neamap |>
       dplyr::filter(stringr::str_detect(Var, "Benthos"))
+
+    # find y limits of neamap data
+    piscivore_neamap_max <- max((neamap.1$Value) * 1.2, na.rm = TRUE)
+    benthivore_neamap_max <- max((neamap.2$Value) * 1.2, na.rm = TRUE)
+    planktivore_neamap_max <- max((neamap.3$Value) * 1.2, na.rm = TRUE)
+    benthos_neamap_max <- max((neamap.4$Value) * 1.2, na.rm = TRUE)
+
+    # update global limits for each guild for plotting purposes
+    piscivore_new_max <- max(piscivore_new_max, piscivore_neamap_max)
+    benthivore_new_max <- max(benthivore_new_max, benthivore_neamap_max)
+    planktivore_new_max <- max(planktivore_new_max, planktivore_neamap_max)
+    benthos_new_max <- max(benthos_new_max, benthos_neamap_max)
   }
-
-  # calculate max y values for each guild
-  piscivore <- agg_bio |>
-    dplyr::filter(Var == "Piscivore Spring" | Var == "Piscivore Fall")
-  piscivore_new_max <- max((piscivore$Mean) * 1.2, na.rm = TRUE)
-
-  benthivore <- agg_bio |>
-    dplyr::filter(Var == "Benthivore Spring" | Var == "Benthivore Fall")
-  benthivore_new_max <- max((benthivore$Mean) * 1.2, na.rm = TRUE)
-  benthivore_neamap_new_max <- max((neamap.2$Value) * 1.2, na.rm = TRUE)
-
-  planktivore <- agg_bio |>
-    dplyr::filter(Var == "Planktivore Spring" | Var == "Planktivore Fall")
-  planktivore_new_max <- max((planktivore$Mean) * 1.2, na.rm = TRUE)
-  planktivore_neamap_new_max <- max((neamap.3$Value) * 1.2, na.rm = TRUE)
-
-  benthos <- agg_bio |>
-    dplyr::filter(Var == "Benthos Spring" | Var == "Benthos Fall")
-  benthos_new_max <- max((benthos$Mean) * 1.2, na.rm = TRUE)
-
 
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
@@ -209,7 +221,7 @@ plot_aggregate_biomass <- function(
     ggplot2::facet_wrap(Var ~ ., ncol = 2) +
     #Axis and theme
     ggplot2::scale_x_continuous(
-      breaks = seq(1970, 2020, by = 10),
+      breaks = seq(1970, end_year, by = 10),
       expand = c(0.01, 0.01)
     ) +
     ggplot2::scale_y_continuous(
@@ -309,7 +321,7 @@ plot_aggregate_biomass <- function(
     ggplot2::facet_wrap(Var ~ ., ncol = 2) +
     #Axis and theme
     ggplot2::scale_x_continuous(
-      breaks = seq(1970, 2020, by = 10),
+      breaks = seq(1970, end_year, by = 10),
       expand = c(0.01, 0.01)
     ) +
     ggplot2::scale_y_continuous(
@@ -346,10 +358,6 @@ plot_aggregate_biomass <- function(
         size = setup$pcex - 0.5,
         color = "#ca0020",
         na.rm = T
-      ) +
-      ggplot2::scale_y_continuous(
-        limits = c(0, benthivore_neamap_new_max),
-        oob = scales::oob_keep
       )
   }
 
@@ -417,7 +425,7 @@ plot_aggregate_biomass <- function(
     ggplot2::facet_wrap(Var ~ ., ncol = 2) +
     #Axis and theme
     ggplot2::scale_x_continuous(
-      breaks = seq(1970, 2020, by = 10),
+      breaks = seq(1970, end_year, by = 10),
       expand = c(0.01, 0.01)
     ) +
     ggplot2::scale_y_continuous(
@@ -454,10 +462,6 @@ plot_aggregate_biomass <- function(
         size = setup$pcex - 0.5,
         color = "#ca0020",
         na.rm = T
-      ) +
-      ggplot2::scale_y_continuous(
-        limits = c(0, planktivore_neamap_new_max),
-        oob = scales::oob_keep
       )
   }
 
@@ -523,7 +527,7 @@ plot_aggregate_biomass <- function(
     ggplot2::facet_wrap(Var ~ ., ncol = 2) +
     #Axis and theme
     ggplot2::scale_x_continuous(
-      breaks = seq(1970, 2020, by = 10),
+      breaks = seq(1970, end_year, by = 10),
       expand = c(0.01, 0.01)
     ) +
     ggplot2::scale_y_continuous(
