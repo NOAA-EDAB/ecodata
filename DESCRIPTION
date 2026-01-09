@@ -17,7 +17,7 @@ Imports:
   tidyr,
   AICcmodavg,
   cowplot,
-  grid,
+  tibble,
   nlme,
   rpart,
   scales,
