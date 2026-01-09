@@ -6,7 +6,7 @@ library(tidyr)
 
 raw.dir <- here::here("data-raw")
 bt_input <- "GLORYS_bottom_temp_model_anom_1993_2025.rds"
-btannual_input <- "GLORYS_bottom_temp_model_annual_1993_2025.rds"
+btannual_input <- "GLORYS_bottom_temp_model_annual_1959_2025.rds"
 #bottom_temp_mom6_csv <- "BT_m6_gl_2024_soe.csv - Laura Gruenburg - NOAA Federal.csv"
 
 get_bottom_temp_model_anom <- function(save_clean = F){
