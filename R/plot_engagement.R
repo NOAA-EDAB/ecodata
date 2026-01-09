@@ -52,7 +52,7 @@ plot_engagement <- function(shadedRegion = NULL,
 
     eng.ts = eng |>
       dplyr::filter(Var == 'fishing_mean_score') |>
-      dplyr::mutate(label = if_else(Time == max(Time), as.character(Town), NA_character_))
+      dplyr::mutate(label = dplyr::if_else(Time == max(Time), as.character(Town), NA_character_))
 
     topEng <- eng |>
       dplyr::filter(Time == max(Time)) |>
