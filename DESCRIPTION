@@ -29,6 +29,7 @@ Imports:
   lubridate,
   vegan,
   viridis,
+  ggh4x,
   grid,
   gridExtra,
   flextable,
