@@ -38,7 +38,11 @@ get_forage_energy_density <- function(save_clean = F){
     dplyr::mutate(Var = paste0(Var, "/", Var2),
                   EPU = c("NA")) %>%
     dplyr::select(Time, Var, Value, EPU) %>%
-    dplyr::filter(!Time == "NA")
+    dplyr::filter(!Time == "NA") %>%
+    dplyr::group_by(Var) %>%
+    # This creates rows for every year in the range, filling missing values with NA
+    tidyr::complete(Time = tidyr::full_seq(Time, 1)) %>%
+    dplyr::ungroup()
 
   if (save_clean){
     usethis::use_data(energy_density, overwrite = T)
