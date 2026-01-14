@@ -3,7 +3,7 @@
 #' Creates multiplanel plot of energy density time series by species.
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
-#' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
+#' @param report Character string. Which SOE report ("MidAtlantic" only, default)
 #'
 #' @return ggplot object
 #'
@@ -22,6 +22,7 @@ plot_energy_density <- function(shadedRegion = NULL,
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
   } else {
+    message("This is a shelfwide indicator only used in the MidAtlantic report")
     filterEPUs <- c("GB", "GOM")
   }
 
@@ -76,12 +77,16 @@ plot_energy_density <- function(shadedRegion = NULL,
    #
    #  }
 
+    if (report == "NewEngland"){
+      p <- NULL
+    }
+
     return(p)
 }
 
 #plot_energy_density(report = "MidAtlantic")
 #plot_energy_density(report = "NewEngland")
-attr(plot_energy_density,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_energy_density,"report") <- c("MidAtlantic")
 
   # Paste commented original plot code chunk for reference
   # d<-ecodata::energy_density %>%
