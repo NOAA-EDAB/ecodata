@@ -1,8 +1,5 @@
 library(tidyverse)
 library(readxl)
-### File delivered almost unusable to save time edits made in excel
-## Orginal File "2021SOE_Forage_ED_summary_Table - Mark Wuenschel - NOAA Federal.csv"
-
 
 raw.dir <- here::here("data-raw")
 energy_density_csv<-"2026_SOE_line_plot_data - Joseph Warren - NOAA Affiliate.csv"
@@ -38,11 +35,13 @@ get_forage_energy_density <- function(save_clean = F){
     dplyr::mutate(Var = paste0(Var, "/", Var2),
                   EPU = c("NA")) %>%
     dplyr::select(Time, Var, Value, EPU) %>%
-    dplyr::filter(!Time == "NA") %>%
-    dplyr::group_by(Var) %>%
-    # This creates rows for every year in the range, filling missing values with NA
-    tidyr::complete(Time = tidyr::full_seq(Time, 1)) %>%
-    dplyr::ungroup()
+    dplyr::filter(!Time == "NA")
+
+  expanded <- expand.grid(Time = min(energy_density$Time):max(energy_density$Time),
+                          Var = unique(energy_density$Var),
+                          EPU = "NA")
+
+  energy_density <- full_join(energy_density, expanded)
 
   if (save_clean){
     usethis::use_data(energy_density, overwrite = T)
