@@ -29,10 +29,6 @@ plot_energy_density <- function(shadedRegion = NULL,
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
   d<-ecodata::energy_density |>
-    dplyr::group_by(Var) |>
-    # This creates rows for every year in the range, filling missing values with NA
-    tidyr::complete(Time = tidyr::full_seq(Time, 1)) |>
-    dplyr::ungroup() |>
     tidyr::separate(Var, into = c("Species", "Season", "Var"), sep = "/") |>
     tidyr::pivot_wider(names_from = Var, values_from = Value) |>
     dplyr::mutate(Energy.Density_Mean = as.numeric(Energy.Density_Mean),
