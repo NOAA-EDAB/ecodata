@@ -1,5 +1,5 @@
 ---
-title: "Bottom Temperature - Model Gridded"
+title: "Thermal Habitat Area"
 author: "Brandon Beltz"
 date: "`r Sys.Date()`"
 output:
@@ -13,15 +13,15 @@ library(ecodata25)
 library(dplyr)
 library(knitr)
 
-# Replace 'bottom_temp_model_gridded' with intended dataset
-dataset<-ecodata::bottom_temp_model_gridded
-dataset24<-ecodata25::bottom_temp_model_gridded
+# Replace 'thermal_habitat_area' with intended dataset
+dataset<-ecodata::thermal_habitat_area
+dataset24<-ecodata25::thermal_habitat_area
 
 # Define dataset-specific arguments for plot functions
 report<-list("MidAtlantic","NewEngland")
-#plottype<-list()
+#variable<-list("seasonal","annual")
 #plottype<-list("Stacked", "Catch")
-#epu<-list()
+epu<-list("GB","GOM")
 ```
 
 # Dataset Metrics {.tabset}
@@ -36,18 +36,27 @@ kable(datastats, digits = 2)
 
 ## `r paste(report[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_bottom_temp_model_gridded(report = report[1]) + 
+ecodata::plot_thermal_habitat_area(report = report[1]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata25::plot_bottom_temp_model_gridded(report = report[1]) + 
+ecodata25::plot_thermal_habitat_area(report = report[1]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
-## `r paste(report[2])`
+## `r paste(report[2],epu[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_bottom_temp_model_gridded(report = report[2]) + 
+ecodata::plot_thermal_habitat_area(report = report[2],EPU = epu[1]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata25::plot_bottom_temp_model_gridded(report = report[2]) + 
+ecodata25::plot_thermal_habitat_area(report = report[2],EPU = epu[1]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+```
+
+## `r paste(report[2],epu[2])`
+```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
+ecodata::plot_thermal_habitat_area(report = report[2],EPU = epu[2]) + 
+  ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+
+ecodata25::plot_thermal_habitat_area(report = report[2],EPU = epu[2]) + 
   ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```

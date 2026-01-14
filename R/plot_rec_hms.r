@@ -12,13 +12,9 @@
 #' @export
 #'
 
-plot_rec_hms <- function(shadedRegion = NULL,
-                              report="MidAtlantic",
-                         n=0) {
-
+plot_rec_hms <- function(shadedRegion = NULL, report = "MidAtlantic", n = 0) {
   # generate plot setup list (same for all plot functions)
-  setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
-                               report=report)
+  setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
 
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
@@ -29,14 +25,25 @@ plot_rec_hms <- function(shadedRegion = NULL,
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
-   fix <- ecodata::rec_hms |>
-     dplyr::filter(EPU %in% filterEPUs) |>
-     tidyr::separate(col = Var,into = c("Group","Trash"),sep="-") |>
-     dplyr::mutate(Value = Value/1000)
+  fix <- ecodata::rec_hms |>
+    dplyr::filter(EPU %in% filterEPUs) |>
+    tidyr::separate(col = Var, into = c("Group", "Trash"), sep = "-") |>
+    dplyr::mutate(Value = Value / 1000) |>
+    dplyr::mutate(
+      fac = dplyr::case_when(Group == "Scombridae" ~ "Tuna", TRUE ~ "Other")
+    )
 
-   ltm <- fix |>
-     dplyr::summarise(hline = mean(Value, na.rm = T))
+  fix <- fix |>
+    # merge in NA's to break lines
+    dplyr::full_join(expand.grid(
+      EPU = unique(fix$EPU),
+      Time = unique(fix$Time),
+      Group = unique(fix$Group),
+      fac = unique(fix$fac)
+    ))
 
+  ltm <- fix |>
+    dplyr::summarise(hline = mean(Value, na.rm = T))
 
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
@@ -44,52 +51,77 @@ plot_rec_hms <- function(shadedRegion = NULL,
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
   #
   p <- fix |>
-    ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color = Group))+
-    ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
-        xmin = setup$x.shade.min , xmax = setup$x.shade.max,
-        ymin = -Inf, ymax = Inf) +
-    ggplot2::geom_point()+
-    ggplot2::geom_line()+
-    ecodata::geom_lm(n = n) +
-    ggplot2::ggtitle(paste(report,"Recreational Shark Landings"))+
-    ggplot2::ylab(expression("Number of Fish (1000s)"))+
+    ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color = Group)) +
+    ggplot2::annotate(
+      "rect",
+      fill = setup$shade.fill,
+      alpha = setup$shade.alpha,
+      xmin = setup$x.shade.min,
+      xmax = setup$x.shade.max,
+      ymin = -Inf,
+      ymax = Inf
+    ) +
+    ggplot2::geom_point() +
+    ggplot2::geom_line() +
+    ecodata::geom_lm(
+      n = n,
+      # only assess for groups with enough data points
+      data = fix |>
+        tidyr::drop_na(Value) |>
+        dplyr::group_by(Group, EPU) |>
+        dplyr::mutate(n = dplyr::n()) |>
+        dplyr::filter(n >= 10)
+    ) +
+    ggplot2::ggtitle(paste(report, "Recreational Shark Landings")) +
+    ggplot2::ylab(expression("Number of Fish (1000s)")) +
     ggplot2::xlab(ggplot2::element_blank()) +
+    ggplot2::facet_wrap(~fac, scales = "free_y", ncol = 1) +
+    ecodata::geom_gls(
+      # only assess for groups with enough data points
+      data = fix |>
+        tidyr::drop_na(Value) |>
+        dplyr::group_by(Group, EPU) |>
+        dplyr::mutate(n = dplyr::n()) |>
+        dplyr::filter(n >= 30)
+    ) +
+    ecodata::theme_ts() +
+    ecodata::theme_facet() +
+    ecodata::theme_title() +
+    ggplot2::theme(
+      strip.text = ggplot2::element_blank(),
+      strip.background = ggplot2::element_blank()
+    )
 
-#    ecodata::geom_gls()+
-    ecodata::theme_ts()+
-    ecodata::theme_facet()+
-    ecodata::theme_title()
+  # optional code for New England specific (2 panel) formatting
+  # if (report == "NewEngland") {
+  #   p <- p +
+  #     ggplot2::theme(legend.position = "bottom",
+  #                    legend.title = ggplot2::element_blank())
+  #
+  # }
 
-   # optional code for New England specific (2 panel) formatting
-    # if (report == "NewEngland") {
-    #   p <- p +
-    #     ggplot2::theme(legend.position = "bottom",
-    #                    legend.title = ggplot2::element_blank())
-    #
-    # }
-
-    return(p)
+  return(p)
 }
 
-attr(plot_rec_hms,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_rec_hms, "report") <- c("MidAtlantic", "NewEngland")
 
-  # Paste commented original plot code chunk for reference
-  # ecodata::dataset |>
-  #   dplyr::filter(Var %in% c("..."),
-  #                 EPU == "...") |>
-  #   ... more dataset wrangling as necessary |>
-  #   ggplot2::ggplot(aes(x = Time, y = Mean, group = Season))+
-  #   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-  #                     xmin = x.shade.min , xmax = x.shade.max,
-  #                     ymin = -Inf, ymax = Inf) +
-  #   ggplot2::geom_ribbon(aes(ymin = Lower, ymax = Upper, fill = Season), alpha = 0.5)+
-  #   ggplot2::geom_point()+
-  #   ggplot2::geom_line()+
-  #   ggplot2::ggtitle("Title")+
-  #   ggplot2::ylab(expression("Y label"))+
-  #   ggplot2::xlab(element_blank())+
-  #   ecodata::geom_gls()+
-  #   ecodata::theme_ts()+
-  #   ecodata::theme_title()
-  #
-  #
+# Paste commented original plot code chunk for reference
+# ecodata::dataset |>
+#   dplyr::filter(Var %in% c("..."),
+#                 EPU == "...") |>
+#   ... more dataset wrangling as necessary |>
+#   ggplot2::ggplot(aes(x = Time, y = Mean, group = Season))+
+#   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+#                     xmin = x.shade.min , xmax = x.shade.max,
+#                     ymin = -Inf, ymax = Inf) +
+#   ggplot2::geom_ribbon(aes(ymin = Lower, ymax = Upper, fill = Season), alpha = 0.5)+
+#   ggplot2::geom_point()+
+#   ggplot2::geom_line()+
+#   ggplot2::ggtitle("Title")+
+#   ggplot2::ylab(expression("Y label"))+
+#   ggplot2::xlab(element_blank())+
+#   ecodata::geom_gls()+
+#   ecodata::theme_ts()+
+#   ecodata::theme_title()
+#
+#
