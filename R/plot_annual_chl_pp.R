@@ -7,6 +7,7 @@
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which Variable to plot ("chl","pp")
 #' @param plottype Character string. Which plot ("mean","total")
+#' @param EPU Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB
 #' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
