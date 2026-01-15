@@ -3,7 +3,7 @@
 #' Plots time series of maturity stage and associated data for available stocks
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
-#' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
+#' @param report Character string. Which SOE report ("MidAtlantic" only)
 #' @param varName Character string. Which variable to plot:
 #' maturity stage ("Resting", "Ripe", "Spent", "Developing"),
 #' number of mature females ("MF"),
@@ -122,6 +122,10 @@ plot_spawn_timing <- function(
   if (varName == "Resting") {
     p <- p +
       ggplot2::ylab("Percent of females that have spawned")
+  }
+
+  if (report == "NewEngland") {
+    p <- "This is a shelfwide indicator. Please use report = 'MidAtlantic' to view."
   }
 
   return(p)
