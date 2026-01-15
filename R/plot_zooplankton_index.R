@@ -5,7 +5,7 @@
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Zooplankton group ("Calfin", "Euph", "Smallcopesoe","Lgcopeall","Zoopvol","Smallcopeall")
-#' @param plotype Character string. Zooplankton biomass index by region, or coastwide center of gravity ("index", "cog")
+#' @param plottype Character string. Zooplankton biomass index by region, or coastwide center of gravity ("index", "cog")
 #' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
