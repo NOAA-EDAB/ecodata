@@ -6,6 +6,7 @@
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which variable to plot ("anomaly","assessment")
 #' @param EPU Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB
+#' @param plottype Character string. "region" (legacy) or "council" (plot species managed by corresponding council)
 #'
 #' @return ggplot object
 #'
@@ -15,6 +16,7 @@
 
 plot_productivity_anomaly <- function(shadedRegion = NULL,
                                       report="MidAtlantic",
+                                      plottype = "region",
                                       varName = "anomaly",
                                       EPU = "MAB") {
 
@@ -24,6 +26,26 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
 
   # this should be added to plot_setip
   leg_font_size <- 6
+
+  # base data object
+  prod_dat <- ecodata::productivity_anomaly
+
+  # council-level filtering
+  if (plottype == "council") {
+
+    if (report == "MidAtlantic") {
+      prod_dat <- prod_dat |>
+        dplyr::filter(Jurisdiction == "MAFMC")
+
+    } else if (report == "NewEngland") {
+      prod_dat <- prod_dat |>
+        dplyr::filter(Jurisdiction == "NEFMC")
+
+    } else {
+      stop("Invalid report value")
+    }
+  }
+
 
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
@@ -48,7 +70,7 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
   # e.g., calculate mean, max or other needed values to join below
 
   if (varName == "assessment") {
-    fix<- ecodata::productivity_anomaly |>
+    fix<- prod_dat |>
       tidyr::separate(Var, into = c("Stock", "Var"), sep = "-")  |>
       dplyr::filter(EPU == filterEPUs,
                     Var == "rs_anom") |>
@@ -59,7 +81,7 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
                     Total = ifelse(Count < max(Count), NA, Total)) |>
       dplyr::filter(!is.na(Total))
 
-    prod<- ecodata::productivity_anomaly |>
+    prod<- prod_dat |>
       tidyr::separate(Var, into = c("Stock", "Var"), sep = "-")  |>
       dplyr::filter(EPU == filterEPUs,
                     Var == "rs_anom") |>
@@ -96,7 +118,7 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
   }
 
   if (varName == "anomaly") {
-    bar_dat <- ecodata::productivity_anomaly |>
+    bar_dat <- prod_dat |>
       dplyr::filter(EPU == filterEPUs) |>
       tidyr::separate(Var, into = c("Var", "Survey"), sep = "_")
 
@@ -134,6 +156,8 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
 attr(plot_productivity_anomaly,"report") <- c("MidAtlantic","NewEngland")
 attr(plot_productivity_anomaly,"varName") <- c("anomaly","assessment")
 attr(plot_productivity_anomaly,"EPU") <- c("MAB","GB","GOM")
+attr(plot_productivity_anomaly,"plottype") <- c("region","council")
+
 
 
 #' anomaly stacked barchart. needs to be reworked
