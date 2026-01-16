@@ -35,11 +35,11 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
 
     if (report == "MidAtlantic") {
       prod_dat <- prod_dat |>
-        dplyr::filter(Jurisdiction == "MAFMC")
+        dplyr::filter(Jurisdiction %in% c("MAFMC", "JOINT"))
 
     } else if (report == "NewEngland") {
       prod_dat <- prod_dat |>
-        dplyr::filter(Jurisdiction == "NEFMC")
+        dplyr::filter(Jurisdiction %in% c("NEFMC", "JOINT"))
 
     } else {
       stop("Invalid report value")
