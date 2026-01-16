@@ -122,11 +122,14 @@ plot_chl_pp <- function(shadedRegion = NULL,
       p <- out |>
         ggplot2::ggplot(ggplot2::aes(x = Year, y = Value, group = Month)) +
         #ecodata::geom_lm(aes(x = Year, y = Value, group = Month))+
-        ggplot2::geom_point() +
+        ggplot2::geom_point(color = "white") +
         ggplot2::geom_line() +
         ecodata::geom_lm(n = n) +
-        ggplot2::scale_x_discrete(name = "", breaks = seq(min(out$Year),max(out$Year),10)) +
-        ggplot2::facet_wrap(EPU~Month~., ncol = 12) +
+        ggplot2::scale_x_discrete(breaks = scales::pretty_breaks(n = 1)) +
+        ggplot2::facet_grid(
+          rows = ggplot2::vars(EPU),
+          cols = ggplot2::vars(Month)
+        ) +
         ggplot2::ggtitle(paste0("Monthly median ",varabbr)) +
         ggplot2::ylab(varunits) +
         ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
@@ -135,9 +138,12 @@ plot_chl_pp <- function(shadedRegion = NULL,
                             alpha = setup$hline.alpha,
                             linetype = setup$hline.lty)+
         ecodata::theme_facet() +
-        ggplot2::theme(axis.text.x = ggplot2::element_text(angle=45, hjust = 1),
-                       panel.spacing = ggplot2::unit(1, "lines"),
-                       plot.margin = ggplot2::unit(c(0.1, 0, 0, 0), "cm"))+
+        ggplot2::theme(
+          panel.border = ggplot2::element_rect(color = "gray80"),
+          panel.spacing = ggplot2::unit(1, "lines"),
+          plot.margin = ggplot2::unit(c(0.1, 0, 0, 0), "cm"),
+          text = ggplot2::element_text(size = 16),
+          axis.text.x = ggplot2::element_text(angle=45, hjust = 1, size = 8))+
         ecodata::theme_title()
 
     }
