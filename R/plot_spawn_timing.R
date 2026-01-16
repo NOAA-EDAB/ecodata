@@ -125,7 +125,7 @@ plot_spawn_timing <- function(
   }
 
   if (report == "NewEngland") {
-    p <- "This is a shelfwide indicator. Please use report = 'MidAtlantic' to view."
+    p <- "This is a shelfwide indicator only used in the MidAtlantic report"
   }
 
   return(p)
