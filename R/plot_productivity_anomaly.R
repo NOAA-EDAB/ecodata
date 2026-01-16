@@ -70,16 +70,23 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
   # e.g., calculate mean, max or other needed values to join below
 
   if (varName == "assessment") {
-    fix<- prod_dat |>
-      tidyr::separate(Var, into = c("Stock", "Var"), sep = "-")  |>
+    fix <- prod_dat |>
+      tidyr::separate(Var, into = c("Stock", "Var"), sep = "-") |>
       dplyr::filter(EPU == filterEPUs,
                     Var == "rs_anom") |>
       dplyr::group_by(Time) |>
-      dplyr::summarise(Total = sum(Value, na.rm = T),
-                       Count = dplyr::n()) |> # SG add a count of species
-      dplyr::mutate(Totalold = ifelse(Total == 0, NA, Total),
-                    Total = ifelse(Count < max(Count), NA, Total)) |>
-      dplyr::filter(!is.na(Total))
+      dplyr::summarise(
+        Total = sum(Value, na.rm = TRUE),
+        Count = dplyr::n(),
+        .groups = "drop"
+      ) |>
+      dplyr::mutate(
+        Total = ifelse(Count < max(Count), NA, Total)
+      ) |>
+      tidyr::complete(
+        Time = seq(min(Time), max(Time), by = 1),
+        fill = list(Total = NA)
+      )
 
     prod<- prod_dat |>
       tidyr::separate(Var, into = c("Stock", "Var"), sep = "-")  |>
@@ -119,7 +126,10 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
 
   if (varName == "anomaly") {
     bar_dat <- prod_dat |>
-      dplyr::filter(EPU == filterEPUs) |>
+      dplyr::filter(
+        EPU == filterEPUs,
+        abs(Value) < 20        # anomalies only; previous code included raw values
+      ) |>
       tidyr::separate(Var, into = c("Var", "Survey"), sep = "_")
 
     adjustAxes <-
@@ -237,9 +247,15 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
   if (aggregate){
     agg <- dat2plot |>
       dplyr::group_by(YEAR) |>
-      dplyr::summarise(Total = sum(value, na.rm = T)) |>
-      dplyr::mutate(Total = ifelse(Total == 0, NA, Total)) |>
-      dplyr::filter(!is.na(Total))
+      dplyr::summarise(
+        Total = sum(value, na.rm = TRUE),
+        .groups = "drop"
+      ) |>
+      tidyr::complete(
+        YEAR = seq(min(YEAR), max(YEAR), by = 1),
+        fill = list(Total = NA)
+      )
+
   }
 
   p <-
