@@ -42,14 +42,20 @@ plot_comdat_profit <- function(shadedRegion = NULL,
     indextype <- "Revenue Index"
   }
 
+
+
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
   # e.g. fill = setup$shade.fill, alpha = setup$shade.alpha,
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
 
+  fix = ecodata::comdat_profit|>
+    dplyr::filter(EPU %in% filterEPUs) |>
+    dplyr::group_by(Var) |>
+    dplyr::mutate(hline = mean(Value,na.rm=T))
+
   if (varName == "all") {
-    p <-  ecodata::comdat_profit |>
-      dplyr::filter(EPU %in% filterEPUs) |>
+    p <-  fix |>
       ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color = Var))+
       ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
                         xmin = setup$x.shade.min , xmax = setup$x.shade.max,
@@ -61,12 +67,16 @@ plot_comdat_profit <- function(shadedRegion = NULL,
       ggplot2::ylab("Index")+
       ggplot2::ggtitle(paste0(EPU,": Profitability, Cost and Revenue Indices"))+
       ecodata::theme_facet()+
-      ecodata::geom_lm(n=n)
+      ecodata::geom_lm(n=n)+
+      ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
+                                       color = Var),
+                          size = setup$hline.size,
+                          alpha = setup$hline.alpha,
+                          linetype = setup$hline.lty)
   } else {
 
-  p <-  ecodata::comdat_profit |>
-     dplyr::filter(Var == varName,
-                   EPU %in% filterEPUs) |>
+  p <-  fix |>
+     dplyr::filter(Var == varName) |>
      ggplot2::ggplot(ggplot2::aes(x = Time, y = Value))+
      ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
                        xmin = setup$x.shade.min , xmax = setup$x.shade.max,
@@ -78,13 +88,17 @@ plot_comdat_profit <- function(shadedRegion = NULL,
      ggplot2::ylab(paste0(indextype))+
      ggplot2::ggtitle(paste0(EPU,": ",indextype))+
      ecodata::theme_facet()+
-     ecodata::geom_lm(n=n)
+     ecodata::geom_lm(n=n)+
+    ggplot2::geom_hline(yintercept = hline,
+                        size = setup$hline.size,
+                        alpha = setup$hline.alpha,
+                        linetype = setup$hline.lty)
   }
 
   return(p)
 
 }
-attr(plot_comdat_profit,"varName") <- c("profit_index","cost_index","revenue_index")
+attr(plot_comdat_profit,"varName") <- c("all","profit_index","cost_index","revenue_index")
 attr(plot_comdat_profit,"report") <- c("MidAtlantic","NewEngland")
 attr(plot_comdat_profit,"EPU") <- c("MAB","GB","GOM")
 
