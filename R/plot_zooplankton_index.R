@@ -68,8 +68,8 @@ plot_zooplankton_index <- function(shadedRegion = NULL,
                         xmin = setup$x.shade.min , xmax = setup$x.shade.max,
                         ymin = -Inf, ymax = Inf) +
       ggplot2::geom_ribbon(ggplot2::aes(ymin = Lower, ymax = Upper, fill = Season), alpha = 0.5)+
-      ggplot2::geom_point(ggplot2::aes(color = .data$Season)) +
-      ggplot2::geom_line(ggplot2::aes(color = .data$Season)) +
+      ggplot2::geom_point() +
+      ggplot2::geom_line() +
       ggplot2::theme(strip.text.x = ggplot2::element_blank(),
                      plot.background = ggplot2::element_rect(fill = "white")) +
       ggplot2::ggtitle("")+
@@ -117,7 +117,12 @@ plot_zooplankton_index <- function(shadedRegion = NULL,
       ggplot2::ggtitle("")+
       ggplot2::ylab(paste(varName,"Center of Gravity, km"))+
       ggplot2::xlab(ggplot2::element_blank())+
-      ggplot2::facet_wrap(~Direction, scales = "free_y")+ #Season
+      ggplot2::theme(legend.position = 'bottom') +
+      ggplot2::facet_grid(
+        cols = ggplot2::vars(Season),
+        rows = ggplot2::vars(Direction),
+        scales = "free_y"
+      ) +
       ecodata::geom_gls()+
       ecodata::geom_lm(n=n)+
       ecodata::theme_ts()+
