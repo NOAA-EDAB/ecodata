@@ -5,7 +5,7 @@ library(stringr)
 raw.dir <- here::here("data-raw")
 
 # input files ----
-chl_pp_csv <- "raw_input_chl_pp.csv"
+chl_pp_csv <- "chl_pp_input.csv"
 
 # transformation ----
 chl_pp <- read.csv(file.path(raw.dir, chl_pp_csv)) %>%
