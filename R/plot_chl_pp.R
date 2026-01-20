@@ -122,10 +122,10 @@ plot_chl_pp <- function(shadedRegion = NULL,
       p <- out |>
         ggplot2::ggplot(ggplot2::aes(x = Year, y = Value, group = Month)) +
         #ecodata::geom_lm(aes(x = Year, y = Value, group = Month))+
-        ggplot2::geom_point(color = "white") +
+      #  ggplot2::geom_point(color = "white") +
         ggplot2::geom_line() +
         ecodata::geom_lm(n = n) +
-        ggplot2::scale_x_discrete(breaks = scales::pretty_breaks(n = 1)) +
+        ggplot2::scale_x_discrete(breaks = scales::breaks_pretty(n = 1)) +
         ggplot2::facet_grid(
           rows = ggplot2::vars(EPU),
           cols = ggplot2::vars(Month)
