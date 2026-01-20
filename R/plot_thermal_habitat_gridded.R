@@ -3,7 +3,7 @@
 #' plots thermal_habitat_gridded data set. Current SOE Year only
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
-#' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
+#' @param report Character string. Which SOE report (Shelfwide indicator, use "MidAtlantic" only)
 #' @param thresholds numeric vector for the temperature thresholds (0.5 degree increments from 0.5 to 30)
 #' @param depths Character string. Which depth bands do you want to plot ('0-25m','25-100m','100-300m','AllDepths')
 #'
@@ -65,7 +65,9 @@ plot_thermal_habitat_gridded <- function(shadedRegion = NULL,
     ggplot2::ggtitle(paste(Yr)) +
     ggplot2::theme(legend.position = "bottom")
 
-
+  if (report == "NewEngland") {
+    p <- "This is a shelfwide indicator only used in the MidAtlantic report"
+  }
 
     return(p)
 

@@ -15,7 +15,7 @@ plot_thermal_habitat_gridded(
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
-\item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
+\item{report}{Character string. Which SOE report (Shelfwide indicator, use "MidAtlantic" only)}
 
 \item{thresholds}{numeric vector for the temperature thresholds (0.5 degree increments from 0.5 to 30)}
 
