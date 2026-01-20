@@ -57,17 +57,17 @@ plot_seasonal_oisst_anom_gridded <- function(shadedRegion = NULL,
     sst <- sst |>
       dplyr::mutate(Value = (9/5)*Value )
     label <- "Temp.\nAnomaly (\u00B0F)"
-    breaks <- c(-9.0, -4.5,  0.0,  4.5,  9.0)
-    labelLegend <- c("<-9", "-4.5", "0", "4.5", ">9")
-    limits <- c(-9,9)
-    maxVal <- 9
+    breaks <- c(-11, -5.5,  0,  5.5,  11)
+    labelLegend <- c("<-11", "-5.5", "0", "5.5", ">11")
+    limits <- c(-11,11)
+    maxVal <- 11
     midpoint <- 0
   } else {
     label <- "Temp.\nAnomaly (\u00B0C)"
-    breaks <- c(-5,-2.5,0,2.5,5)
-    labelLegend <- c("<-5", "-2.5", "0", "2.5", ">5")
-    limits <- c(-5,5)
-    maxVal <- 5
+    breaks <- c(-6,-3,0,3,6)
+    labelLegend <- c("<-6", "-3", "0", "3", ">6")
+    limits <- c(-6,6)
+    maxVal <- 6
     midpoint <- 0
   }
 
