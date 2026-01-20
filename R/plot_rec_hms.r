@@ -31,7 +31,8 @@ plot_rec_hms <- function(shadedRegion = NULL, report = "MidAtlantic", n = 0) {
     dplyr::mutate(Value = Value / 1000) |>
     dplyr::mutate(
       fac = dplyr::case_when(Group == "Scombridae" ~ "Tuna", TRUE ~ "Other")
-    )
+    ) |>
+    dplyr::filter(Group %in% c("LargeCoastal","SmallCoastal","Prohibited"))
 
   fix <- fix |>
     # merge in NA's to break lines
