@@ -3,7 +3,7 @@
 #' plots thermal_habitat_gridded data set. Current SOE Year only
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
-#' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
+#' @param report Character string. Which SOE report (Shelfwide indicator, use "MidAtlantic" only)
 #' @param thresholds numeric vector for the temperature thresholds (0.5 degree increments from 0.5 to 30)
 #' @param depths Character string. Which depth bands do you want to plot ('0-25m','25-100m','100-300m','AllDepths')
 #'
@@ -49,11 +49,11 @@ plot_thermal_habitat_gridded <- function(shadedRegion = NULL,
 
   p <- fix |>
     ggplot2::ggplot()+
-    ggplot2::geom_tile(ggplot2::aes(x=Longitude,y = Latitude, color = Value, width = 1/12, height = 1/12),
+    ggplot2::geom_tile(ggplot2::aes(x=Longitude,y = Latitude, fill = Value, width = 1/12, height = 1/12),
                        linewidth = setup$line.size) +
     ggplot2::geom_sf(data=ecodata::coast, size = setup$map.lwd) +
     ggplot2::facet_grid(Depth~Var)+
-    ggplot2::scale_color_viridis_c(legendTitle)+
+    ggplot2::scale_fill_viridis_c(legendTitle)+
     ggplot2::coord_sf(xlim = c(setup$xmin,setup$xmax), ylim = c(setup$ymin,setup$ymax)) +
     #ggplot2::annotation_map(neus.map,fill = "grey70")+
 
@@ -65,7 +65,9 @@ plot_thermal_habitat_gridded <- function(shadedRegion = NULL,
     ggplot2::ggtitle(paste(Yr)) +
     ggplot2::theme(legend.position = "bottom")
 
-
+  if (report == "NewEngland") {
+    p <- "This is a shelfwide indicator only used in the MidAtlantic report"
+  }
 
     return(p)
 
