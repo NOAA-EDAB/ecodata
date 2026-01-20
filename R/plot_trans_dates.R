@@ -62,6 +62,14 @@ plot_trans_dates <- function(shadedRegion = NULL,
       dplyr::filter(EPU %in% filterEPUs,
                     Var == "sumlen",
                     !Value == "NA")
+    mn <- fix |>
+      dplyr::group_by(EPU,Var) |>
+      dplyr::summarise(mn = mean(Value,na.rm = T),
+                       .groups="drop")
+
+    fix <- fix |>
+      dplyr::left_join(mn,by=c("Var","EPU"))
+
     p <- fix |>
       #dplyr::filter(Var %in% season) %>%
       ggplot2::ggplot(ggplot2::aes(x= Time, y = Value))+
@@ -72,6 +80,10 @@ plot_trans_dates <- function(shadedRegion = NULL,
       ggplot2::geom_line()+
       ecodata::geom_gls() +
       ecodata::geom_lm(n=n)+
+      ggplot2::geom_hline(ggplot2::aes(yintercept = mn),
+                          linewidth = setup$hline.size,
+                          alpha = setup$hline.alpha,
+                          linetype = setup$hline.lty)+
       # ggplot2::theme(strip.text=ggplot2::element_text(hjust=0),
       #                plot.title = ggplot2::element_text(size = 12))+
       ecodata::theme_title()+
