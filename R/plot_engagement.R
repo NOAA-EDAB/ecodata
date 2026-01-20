@@ -75,14 +75,14 @@ plot_engagement <- function(shadedRegion = NULL,
                                             size = 0.2,
                                             linetype = 2))+
       ggplot2::scale_y_continuous(limits = c(0, 1)) +
-      ggplot2::scale_x_continuous(expand = ggplot2::expansion(mult = c(0.1, .2)),
-                         breaks = c(2007, 2010, 2015, 2020,2024))+
+      ggplot2::scale_x_continuous(breaks = c(2007, 2010, 2015, 2020,2024))+
       ggplot2::scale_alpha_discrete(range = c(0.15, 0.9)) +
-      ggplot2::scale_color_brewer(palette = "Paired")+
-      ggplot2::theme(legend.position = "none")+
-      ggrepel::geom_label_repel(ggplot2::aes(label = label),hjust=0,
-                       nudge_x = 1, xlim=c(2025,2028),
-                       na.rm = TRUE, max.overlaps = Inf)+
+      ggplot2::theme(
+        legend.position = "bottom",
+        legend.title = ggplot2::element_text(face = "bold"),
+        legend.box = "horizontal"
+      ) +
+      ggplot2::guides(color = ggplot2::guide_legend(nrow = 4)) +
       ggplot2::ggtitle(paste(setup$region, "Port Activity in Top", varName, "Fishing Communities"))
 
     # code for generating table of community social vulnerabilities
