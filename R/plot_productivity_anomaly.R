@@ -136,7 +136,7 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
   if (varName == "anomaly") {
 
     bar_dat <- prod_dat |>
-      dplyr::filter(abs(Value) < 20)
+      dplyr::filter(grepl('_Survey',Var))
 
     if (!is.null(filterEPUs)) {
       bar_dat <- bar_dat |>
@@ -182,7 +182,7 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
 
 attr(plot_productivity_anomaly,"report") <- c("MidAtlantic","NewEngland")
 attr(plot_productivity_anomaly,"varName") <- c("anomaly","assessment")
-attr(plot_productivity_anomaly,"EPU") <- c("MAB","GB","GOM")
+attr(plot_productivity_anomaly,"EPU") <- c(NULL,"MAB","GB","GOM")
 attr(plot_productivity_anomaly,"plottype") <- c("region","council")
 
 
