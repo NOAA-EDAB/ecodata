@@ -47,23 +47,33 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
   }
 
 
-  # which report? this may be bypassed for some figures
-  if (report == "MidAtlantic") {
-    if (varName == "anomaly") {
-      filterEPUs <- "MAB"
-    } else {
-      filterEPUs <- c("MA")
-    }
-  } else {
-    if (varName == "anomaly") {
-      if (!(EPU %in% c("GB","GOM"))) {
-        stop("For NewEngland the epu must be either 'GB' or 'GOM'")
+  # determine EPU filtering logic
+  filterEPUs <- NULL
+
+  if (varName == "anomaly") {
+
+    if (plottype == "region") {
+
+      if (report == "MidAtlantic") {
+        filterEPUs <- "MAB"
+
+      } else if (report == "NewEngland") {
+
+        if (!(EPU %in% c("GB","GOM"))) {
+          stop("For NewEngland the epu must be either 'GB' or 'GOM'")
+        }
+
+        filterEPUs <- EPU
       }
-      filterEPUs <- EPU
-    } else {
-      filterEPUs <- c("NE")
+
+    } else if (plottype == "council") {
+
+      # council-level anomaly plots should use EPU == "All"
+      filterEPUs <- "All"
     }
   }
+
+
 
 
   # optional code to wrangle ecodata object prior to plotting
@@ -72,8 +82,7 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
   if (varName == "assessment") {
     fix <- prod_dat |>
       tidyr::separate(Var, into = c("Stock", "Var"), sep = "-") |>
-      dplyr::filter(EPU == filterEPUs,
-                    Var == "rs_anom") |>
+      dplyr::filter(Var == "rs_anom") |>
       dplyr::group_by(Time) |>
       dplyr::summarise(
         Total = sum(Value, na.rm = TRUE),
@@ -88,11 +97,11 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
         fill = list(Total = NA)
       )
 
-    prod<- prod_dat |>
-      tidyr::separate(Var, into = c("Stock", "Var"), sep = "-")  |>
-      dplyr::filter(EPU == filterEPUs,
-                    Var == "rs_anom") |>
+    prod <- prod_dat |>
+      tidyr::separate(Var, into = c("Stock", "Var"), sep = "-") |>
+      dplyr::filter(Var == "rs_anom") |>
       dplyr::mutate(Stock = toupper(Stock))
+
 
     # code for generating plot object p
     # ensure that setup list objects are called as setup$...
@@ -112,7 +121,7 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
       ggplot2::geom_hline(size = 0.3, ggplot2::aes(yintercept = 0)) +
       ggplot2::xlab("") +
       ggplot2::ylab("Recruitment Anomaly") +
-      ggplot2::ggtitle(paste0(filterEPUs," Recruitment Anomaly from Stock Assessments")) +
+      ggplot2::ggtitle(" Recruitment Anomaly from Stock Assessments") +
       #ggplot2::guides(fill = guide_legend(ncol = leg_ncol)) +
       ecodata::theme_ts()+
       ggplot2::theme(axis.title   = ggplot2::element_text(size = 10),
@@ -125,35 +134,43 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
   }
 
   if (varName == "anomaly") {
+
     bar_dat <- prod_dat |>
-      dplyr::filter(
-        EPU == filterEPUs,
-        abs(Value) < 20        # anomalies only; previous code included raw values
-      ) |>
-      tidyr::separate(Var, into = c("Var", "Survey"), sep = "_")
+      dplyr::filter(abs(Value) < 20)
 
-    adjustAxes <-
-      ggplot2::theme(axis.title   = ggplot2::element_text(size = 10),
-                     axis.text    = ggplot2::element_text(size = 10),
-                     plot.title   = ggplot2::element_text(size = 15))
+    if (!is.null(filterEPUs)) {
+      bar_dat <- bar_dat |>
+        dplyr::filter(EPU == filterEPUs)
+    }
 
-    p <- plot_stackbarcpts_single(YEAR = bar_dat$Time,
-                                    var2bar = bar_dat$Var,
-                                    x = bar_dat$Value,
-                                    titl = paste0(EPU, " from survey data"),
-                                    xlab = "",
-                                    ylab = "Small fish per large fish biomass (anomaly)",
-                                    height = 5.5,
-                                    width = 9,
-                                    filt = FALSE,
-                                    leg_font_size = leg_font_size,
-                                    label = "",
-                                    y.text = 10,
-                                    aggregate = TRUE)
+    bar_dat <- bar_dat |>
+      tidyr::separate(Var, into = c("Var", "Survey"), sep = "_") |>
+      dplyr::mutate(
+        Var = gsub("^NM LME\\s+", "", Var)
+      )
 
 
-
+    p <- plot_stackbarcpts_single(
+      YEAR = bar_dat$Time,
+      var2bar = bar_dat$Var,
+      x = bar_dat$Value,
+      titl = if (plottype == "council") {
+        paste0(report, " council from survey data")
+      } else {
+        paste0(EPU, " from survey data")
+      },
+      xlab = "",
+      ylab = "Small fish per large fish biomass (anomaly)",
+      height = 5.5,
+      width = 9,
+      filt = FALSE,
+      leg_font_size = leg_font_size,
+      label = "",
+      y.text = 10,
+      aggregate = TRUE
+    )
   }
+
 
   if (varName == "assessment" & EPU == "GOM") {
     p <- "Assessment variable includes GB and GOM. See plot for EPU = GB."
@@ -196,9 +213,9 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
                                          "BLUELINE TILEFISH","SPINY DOGFISH", "GOOSEFISH")
   dat2plot <- dat2bar |>
     tidyr::gather(variable, value, -YEAR, -var2bar) |>
-    dplyr::mutate(var2bar = gsub(pattern      = "_",
-                                 replacement  = " ",
-                                 x            = var2bar),
+    dplyr::mutate(
+      var2bar = gsub("^[A-Z]{2}\\s+LME\\s+", "", var2bar),
+      var2bar = gsub("_", " ", var2bar),
                   var2bar = gsub(pattern      = "Atl.",
                                  replacement  = "ATLANTIC",
                                  x            = var2bar),
@@ -219,12 +236,12 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
                                  x            = var2bar)) |>
     dplyr::filter(var2bar %in% mab_species)
   } else if (filt == FALSE){
-    dat2plot <-
-      dat2bar |>
+    dat2plot <- dat2bar |>
       tidyr::gather(variable, value, -YEAR, -var2bar) |>
-      dplyr::mutate(var2bar = gsub(pattern      = "_",
-                                   replacement  = " ",
-                                   x            = var2bar),
+      dplyr::mutate(
+        var2bar = gsub("^[A-Z]{2}\\s+LME\\s+", "", var2bar),
+        var2bar = gsub("_", " ", var2bar),
+
                     var2bar = gsub(pattern      = "Atl.",
                                    replacement  = "ATLANTIC",
                                    x            = var2bar),
