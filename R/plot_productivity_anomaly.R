@@ -18,7 +18,7 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
                                       report="MidAtlantic",
                                       plottype = "region",
                                       varName = "anomaly",
-                                      EPU = "MAB") {
+                                      EPU = NULL) {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -172,7 +172,7 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
   }
 
 
-  if (varName == "assessment" & EPU == "GOM") {
+  if (varName == "assessment" && !is.null(EPU) && EPU == "GOM") {
     p <- "Assessment variable includes GB and GOM. See plot for EPU = GB."
   }
 
