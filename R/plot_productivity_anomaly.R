@@ -262,18 +262,22 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
                                    x            = var2bar))
   }
   if (aggregate){
+
     agg <- dat2plot |>
+      dplyr::mutate(
+        value = ifelse(is.nan(value), NA_real_, value)
+      ) |>
       dplyr::group_by(YEAR) |>
       dplyr::summarise(
-        Total = sum(value, na.rm = TRUE),
+        Total = if (all(is.na(value))) NA_real_ else sum(value, na.rm = TRUE),
         .groups = "drop"
       ) |>
       tidyr::complete(
         YEAR = seq(min(YEAR), max(YEAR), by = 1),
-        fill = list(Total = NA)
+        fill = list(Total = NA_real_)
       )
-
   }
+
 
   p <-
     ggplot2::ggplot(dat2plot,
