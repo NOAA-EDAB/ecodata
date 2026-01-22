@@ -5,6 +5,7 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
+#' @param EPU Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB
 #' @param varName Character string. Which Variable to plot ("chl","pp","size")
 #' @param plottype Character string. Which plot ("weekly", "monthly")
 #' Weekly and monthly plots are for both variables.
