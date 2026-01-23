@@ -47,6 +47,7 @@ plot_engagement <- function(shadedRegion = NULL,
       tidyr::separate(Var, into = c("Town", "StateVar"), sep = ", ") |> #using two steps because some towns have - in the name
       tidyr::separate(StateVar, into = c("State", "Var"), sep = "-") |> # which also seps the variable
       tidyr::unite("Town", c(Town, State), sep = ",") |>
+      dplyr::mutate(Town = dplyr::recode(Town, "OTHER,VA" = "OTHER,VA (includes REEDVILLE)")) |>
       # tidyr::pivot_wider(names_from = Var, values_from = Value) |>
       dplyr::filter(EPU == filterEPUs)
 
