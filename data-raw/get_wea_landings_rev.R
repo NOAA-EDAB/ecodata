@@ -26,7 +26,7 @@ get_wea_landings_rev <- function(save_clean = F){
     dplyr::mutate(perc_landings_max = as.numeric(perc_landings_max)*100,
                   perc_revenue_max = as.numeric(perc_revenue_max)*100,
                   Units = c("Percent")) %>%
-    dplyr::mutate(across(where(is.numeric), ~round(., 0))) %>%
+    dplyr::mutate(across(where(is.numeric), ~round(., 2))) %>%
     dplyr::mutate(Council = "NEFMC")
 
    # Add council data to dataset
