@@ -112,7 +112,8 @@ plot_trans_dates <- function(shadedRegion = NULL,
       ecodata::theme_facet()
 
     if (report == "NewEngland") {
-      p <- p + ggplot2::facet_wrap(~EPU, nrow = 2)
+      p <- p + ggplot2::facet_wrap(~EPU, nrow = 2) +
+        ggplot2::theme(strip.text.x = ggplot2::element_text(size = 10))
     } else {
       p <- p
     }
