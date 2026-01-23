@@ -60,6 +60,13 @@ plot_annual_chl_pp <- function(shadedRegion = NULL,
 
   hline <- mean(fix$Value)
   varunits <- unique(fix$Units)
+
+  if (varName == "pp" & plottype == "total") {
+    fix <- dplyr::mutate(fix, Value = Value/1000000)
+    hline <- mean(fix$Value)
+    varunits <- "Carbon (million MT)"
+  }
+
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
   # e.g. fill = setup$shade.fill, alpha = setup$shade.alpha,
