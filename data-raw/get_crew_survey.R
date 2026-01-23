@@ -66,7 +66,8 @@ get_crew_survey <- function(save_clean = F){
                   )) |>
     tidyr::pivot_longer(cols = -c(Time,EPU,Var.long,Var,Var.Answer),
                         names_to = "Metric",
-                        values_to = "Value",values_transform = as.numeric)
+                        values_to = "Value",values_transform = as.numeric) |>
+    tibble::as_tibble()
 
 
   if (save_clean){
