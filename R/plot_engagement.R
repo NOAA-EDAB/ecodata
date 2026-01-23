@@ -8,12 +8,8 @@
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which Fishery to plot ("Commercial","Recreational")
-#' @param plottype Character string. Which Social indicator group to tabulate ("plot","Social", "Economic", "Gentrification")
 #'
-#' @return one of 2 items depending on plottype argument
-#'
-#' \item{plottype = "plot"}{ggplot object}
-#' \item{plottype = indicator group name}{flextable of selected social indicators for highly engaged communities}
+#' @return ggplot object
 #'
 #'
 #' @export
@@ -21,17 +17,14 @@
 
 plot_engagement <- function(shadedRegion = NULL,
                             report="MidAtlantic",
-                            varName="Commercial",
-                            plottype="plot") {
+                            varName="Commercial") {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
                                report=report)
 
   # select social indicators by indicator group for table or shading
-  if(plottype == "Social" | plottype == "plot") indgroup <- c("personal_disruption_rank", "pop_composition_rank", "poverty_rank")
-  if(plottype == "Economic") indgroup <- c("labor_force_str_rank", "housing_characteristics_rank")
-  if(plottype == "Gentrification") indgroup <- c("housing_disrupt_rank", "retiree_migration_rank", "urban_sprawl_index_rank")
+  indgroup <- c("personal_disruption_rank", "pop_composition_rank", "poverty_rank")
 
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
@@ -85,22 +78,6 @@ plot_engagement <- function(shadedRegion = NULL,
       ) +
       ggplot2::guides(color = ggplot2::guide_legend(nrow = 4)) +
       ggplot2::ggtitle(paste(setup$region, "Port Activity in Top", varName, "Fishing Communities"))
-
-    # code for generating table of community social vulnerabilities
-    t <- eng |>
-      dplyr::filter(tolower(Town) %in% tolower(topEng) & grepl('*_rank',Var) & !is.na(Value) & Var %in% indgroup) |>
-
-      dplyr::mutate(dplyr::across(dplyr::ends_with('_rank'), ~
-                                    dplyr::case_when(
-                                      . ==  1~ "low",
-                                      . == 2 ~ "med",
-                                      . == 3 ~ "med high",
-                                      . == 4 ~ "high",
-                                      TRUE ~ NA_character_
-                                    ))) |>
-      tidyr::pivot_wider(names_from = Var, values_from = Value) |>
-      dplyr::select(Community = Town,
-                    dplyr::ends_with('_rank'))
 
   }
 
@@ -186,34 +163,10 @@ plot_engagement <- function(shadedRegion = NULL,
       #ecodata::theme_ts()+
       ecodata::theme_title()
 
-    # code for generating table of community social vulnerabilities
-    t <- eng |>
-      dplyr::filter(tolower(Town) %in% tolower(topTowns)) |>
-
-      dplyr::mutate(dplyr::across(dplyr::ends_with('_rank'), ~
-                                    dplyr::case_when(
-                                      . ==  1~ "low",
-                                      . == 2 ~ "med",
-                                      . == 3 ~ "med high",
-                                      . == 4 ~ "high",
-                                      TRUE ~ NA_character_
-                                    ))) |>
-      dplyr::select(Community = Town,
-                    dplyr::all_of(indgroup))
-
   }
 
-  t <- flextable::flextable(t)
-
-
-    if (plottype == "plot") {
       return(p)
-    } else {
-      return(t)
-    }
-
 }
 
 attr(plot_engagement,"report") <- c("MidAtlantic","NewEngland")
 attr(plot_engagement,"varName") <- c("Commercial","Recreational")
-attr(plot_engagement,"plottype") <- c("plot","Social","Economic","Gentrification")
