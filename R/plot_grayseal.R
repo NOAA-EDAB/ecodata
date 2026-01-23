@@ -45,13 +45,13 @@ plot_grayseal <- function(shadedRegion = NULL,
                       ymin = -Inf, ymax = Inf) +
     ggplot2::geom_line(ggplot2::aes(x = Time, y = Value, linetype = Var, color = Var))+
     ggplot2::geom_ribbon(data = ribbon, ggplot2::aes(ymin = total5yLCI, ymax =total5yUCI, x = Time), fill = "blue", alpha = 0.2)+
-    ggplot2::ggtitle("Gray Seal Bycatch")+
+    ggplot2::ggtitle("U.S. Gray Seal Bycatch")+
     ggplot2::ylab("Estimated Bycatch (n)")+
     ggplot2::scale_linetype_manual(name="",
                                    values=c(1,2,1),
-                                   labels = c("PBR", "Annual Estimates", "5yr rolling mean and CI"))+
+                                   labels = c("U.S. PBR", "Annual U.S. Estimates", "5yr rolling mean and CI"))+
     ggplot2::scale_color_manual(name="",values = c('red', 'black','blue'),
-                                labels = c("PBR", "Annual Estimates", "5yr rolling mean and CI"))+
+                                labels = c("U.S. PBR", "Annual U.S. Estimates", "5yr rolling mean and CI"))+
     ggplot2::theme(#legend.position = "none",
       legend.title = ggplot2::element_blank(),
       legend.position = c(0.2, 0.8),
