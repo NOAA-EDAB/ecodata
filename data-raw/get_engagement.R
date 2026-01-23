@@ -40,7 +40,9 @@ get_engagement <- function(save_clean = F){
 
 
   dat.act.ma = readr::read_csv(file.path(raw.dir,ma_activity_csv)) |>
-    dplyr::mutate(EPU = "MAB")
+    dplyr::mutate(EPU = "MAB") |>
+    # Recode "OTHER VA" to conform with all other place_ids
+    dplyr::mutate(place_id = dplyr::recode(place_id, "OTHER VA (includes REEDVILLE)" = "OTHER_VA"))
   dat.act.ne = readr::read_csv(file.path(raw.dir,ne_activity_csv)) |>
     dplyr::mutate(EPU = 'NE')
 
@@ -103,6 +105,7 @@ get_engagement <- function(save_clean = F){
     tidyr::unite('Var', c(place_id2, Var), sep = '-') |>
     dplyr::mutate(Units = 'unitless') |>
     dplyr::select(Time, Var, Value, EPU, Units)
+
 
   engagement = dat.soc.out |>
     dplyr::bind_rows(dat.act.out)
