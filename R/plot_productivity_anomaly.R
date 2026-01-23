@@ -269,14 +269,23 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
       ) |>
       dplyr::group_by(YEAR) |>
       dplyr::summarise(
-        Total = if (all(is.na(value))) NA_real_ else sum(value, na.rm = TRUE),
+        Total = sum(value, na.rm = TRUE),
+        Count = sum(!is.na(value)),
         .groups = "drop"
+      )
+
+    max_count <- max(agg$Count, na.rm = TRUE)
+
+    agg <- agg |>
+      dplyr::mutate(
+        Total = ifelse(Count < max_count, NA_real_, Total)
       ) |>
       tidyr::complete(
         YEAR = seq(min(YEAR), max(YEAR), by = 1),
         fill = list(Total = NA_real_)
       )
   }
+
 
 
   p <-
