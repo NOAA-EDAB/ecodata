@@ -14,6 +14,9 @@ get_zoo_community <- function(save_clean = F){
   zoo_community <- (temp.env[[data[1]]])%>%
     dplyr::rename(Time = year,
                   EPU = epu) %>%
+    dplyr::mutate(Units = dplyr::recode(Units,
+                                        "Principal Compenent 1" = "Principal Component 1",
+                                        "Principal Compenent 2" = "Principal Component 2")) %>%
     mutate(Value  = as.numeric(Value)) %>%
     dplyr::select(Time, Var, Value, EPU, Units)
 
