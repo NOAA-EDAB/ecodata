@@ -38,6 +38,14 @@ plot_trans_dates <- function(shadedRegion = NULL,
                                  "sprtrans" = "Spring",
                                  "maxday" = "Max"))
 
+    mn <- fix |>
+      dplyr::group_by(EPU,Var) |>
+      dplyr::summarise(mn = mean(Value,na.rm = T),
+                       .groups="drop")
+
+    fix <- fix |>
+      dplyr::left_join(mn,by=c("Var","EPU"))
+
     p <-  fix |>
 
       ggplot2::ggplot(ggplot2::aes(x= Time, y = Value, color = Var)) +
@@ -48,6 +56,10 @@ plot_trans_dates <- function(shadedRegion = NULL,
       ggplot2::geom_line() +
       ecodata::geom_gls() +
       ecodata::geom_lm(n=n)+
+      ggplot2::geom_hline(ggplot2::aes(yintercept = mn),
+                          linewidth = setup$hline.size,
+                          alpha = setup$hline.alpha,
+                          linetype = setup$hline.lty)+
       # ggplot2::theme(strip.text=ggplot2::element_text(hjust=0),
       #                plot.title = ggplot2::element_text(size = 12)) +
       ecodata::theme_title("") +
@@ -62,6 +74,14 @@ plot_trans_dates <- function(shadedRegion = NULL,
       dplyr::filter(EPU %in% filterEPUs,
                     Var == "sumlen",
                     !Value == "NA")
+    mn <- fix |>
+      dplyr::group_by(EPU,Var) |>
+      dplyr::summarise(mn = mean(Value,na.rm = T),
+                       .groups="drop")
+
+    fix <- fix |>
+      dplyr::left_join(mn,by=c("Var","EPU"))
+
     p <- fix |>
       #dplyr::filter(Var %in% season) %>%
       ggplot2::ggplot(ggplot2::aes(x= Time, y = Value))+
@@ -72,18 +92,31 @@ plot_trans_dates <- function(shadedRegion = NULL,
       ggplot2::geom_line()+
       ecodata::geom_gls() +
       ecodata::geom_lm(n=n)+
+      ggplot2::geom_hline(ggplot2::aes(yintercept = mn),
+                          linewidth = setup$hline.size,
+                          alpha = setup$hline.alpha,
+                          linetype = setup$hline.lty)+
       # ggplot2::theme(strip.text=ggplot2::element_text(hjust=0),
       #                plot.title = ggplot2::element_text(size = 12))+
       ecodata::theme_title()+
       ggplot2::ylab("Number of Days")+
-      ggplot2::ggtitle(paste0(report,": Number of days between spring and fall transition dates")) +
-      #ggplot2::xlab(ggplot2::element_blank())+
+      ggplot2::ggtitle(paste(
+        "Time between spring and fall transition in",
+        report
+      )) +
+      ggplot2::theme(
+        strip.background = ggplot2::element_blank(),
+        strip.text.x = ggplot2::element_blank()) +
       ecodata::theme_ts()+
       ggplot2::facet_wrap(.~EPU)+
       ecodata::theme_facet()
 
-
-
+    if (report == "NewEngland") {
+      p <- p + ggplot2::facet_wrap(~EPU, nrow = 2) +
+        ggplot2::theme(strip.text.x = ggplot2::element_text(size = 10))
+    } else {
+      p <- p
+    }
 
 
   } else {
