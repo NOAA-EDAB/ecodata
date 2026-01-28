@@ -2,14 +2,14 @@
 % Please edit documentation in R/plot_wbts_zoo.R
 \name{plot_wbts_zoo}
 \alias{plot_wbts_zoo}
-\title{plot zoo_diversity}
+\title{plot WBTS zooplankton indicator}
 \usage{
 plot_wbts_zoo(shadedRegion = NULL, report = "NewEngland", n = 0)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
-\item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
+\item{report}{Character string. Which SOE report (only accepts "NewEngland")}
 
 \item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
@@ -17,5 +17,5 @@ plot_wbts_zoo(shadedRegion = NULL, report = "NewEngland", n = 0)
 ggplot object
 }
 \description{
-zooplanktn diversity index (Shannon index)
+WBTS Zooplankton indicator provided by Runge Lab at the Univeristy of Maine
 }
