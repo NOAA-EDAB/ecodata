@@ -14,7 +14,7 @@
 #' @export
 #'
 
-table_community_factors <- function(shadedRegion = NULL,
+plot_community_factors <- function(shadedRegion = NULL,
                      report="MidAtlantic",
                      varName = "Social",
                      plottype = 'Commercial',
@@ -88,6 +88,6 @@ table_community_factors <- function(shadedRegion = NULL,
 }
 
 
-attr(table_community_factors,"report") <- c("MidAtlantic","NewEngland")
-attr(table_community_factors,"varName") <- c("Social","Economic","Gentrification")
-attr(table_community_factors,"plottype") <- c("Commercial","Recreational")
+attr(plot_community_factors,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_community_factors,"varName") <- c("Social","Economic","Gentrification")
+attr(plot_community_factors,"plottype") <- c("Commercial","Recreational")
