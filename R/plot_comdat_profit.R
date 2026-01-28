@@ -14,15 +14,15 @@
 #' @export
 #'
 
-plot_comdat_profit <- function(shadedRegion = NULL,
-                               report = "MidAtlantic",
-                               varName = "all",
-                               EPU = "MAB",
-                               n = 0) {
-
+plot_comdat_profit <- function(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  varName = "all",
+  EPU = "MAB",
+  n = 0
+) {
   # generate plot setup list (same for all plot functions)
-  setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
-                               report=report)
+  setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
 
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
@@ -42,63 +42,85 @@ plot_comdat_profit <- function(shadedRegion = NULL,
     indextype <- "Revenue Index"
   }
 
-
-
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
   # e.g. fill = setup$shade.fill, alpha = setup$shade.alpha,
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
 
-  fix = ecodata::comdat_profit|>
+  fix = ecodata::comdat_profit |>
     dplyr::filter(EPU %in% filterEPUs) |>
     dplyr::group_by(Var) |>
-    dplyr::mutate(hline = mean(Value,na.rm=T))
+    dplyr::mutate(hline = mean(Value, na.rm = T))
 
   if (varName == "all") {
-    p <-  fix |>
-      ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color = Var))+
-      ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
-                        xmin = setup$x.shade.min , xmax = setup$x.shade.max,
-                        ymin = -Inf, ymax = Inf)+
-      ggplot2::geom_point()+
-      ggplot2::geom_line()+
-      ecodata::theme_ts()+
-      ecodata::theme_title()+
-      ggplot2::ylab("Index")+
-      ggplot2::ggtitle(paste0(EPU,": Profitability, Cost and Revenue Indices"))+
-      ecodata::theme_facet()+
-      ecodata::geom_lm(n=n)+
-      ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
-                                       color = Var),
-                          size = setup$hline.size,
-                          alpha = setup$hline.alpha,
-                          linetype = setup$hline.lty)
+    p <- fix |>
+      ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color = Var)) +
+      ggplot2::annotate(
+        "rect",
+        fill = setup$shade.fill,
+        alpha = setup$shade.alpha,
+        xmin = setup$x.shade.min,
+        xmax = setup$x.shade.max,
+        ymin = -Inf,
+        ymax = Inf
+      ) +
+      ggplot2::geom_point() +
+      ggplot2::geom_line() +
+      ecodata::theme_ts() +
+      ecodata::theme_title() +
+      ggplot2::ylab("Index") +
+      ggplot2::ggtitle(paste0(
+        EPU,
+        ": Profitability, Cost and Revenue Indices"
+      )) +
+      ecodata::theme_facet() +
+      ecodata::geom_lm(n = n) +
+      ggplot2::geom_hline(
+        ggplot2::aes(yintercept = hline, color = Var),
+        size = setup$hline.size,
+        alpha = setup$hline.alpha,
+        linetype = setup$hline.lty
+      )
   } else {
-
-  p <-  fix |>
-     dplyr::filter(Var == varName) |>
-     ggplot2::ggplot(ggplot2::aes(x = Time, y = Value))+
-     ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
-                       xmin = setup$x.shade.min , xmax = setup$x.shade.max,
-                       ymin = -Inf, ymax = Inf)+
-     ggplot2::geom_point()+
-     ggplot2::geom_line()+
-     ecodata::theme_ts()+
-     ecodata::theme_title()+
-     ggplot2::ylab(paste0(indextype))+
-     ggplot2::ggtitle(paste0(EPU,": ",indextype))+
-     ecodata::theme_facet()+
-     ecodata::geom_lm(n=n)+
-    ggplot2::geom_hline(yintercept = hline,
-                        size = setup$hline.size,
-                        alpha = setup$hline.alpha,
-                        linetype = setup$hline.lty)
+    p <- fix |>
+      dplyr::filter(Var == varName) |>
+      ggplot2::ggplot(ggplot2::aes(x = Time, y = Value)) +
+      ggplot2::annotate(
+        "rect",
+        fill = setup$shade.fill,
+        alpha = setup$shade.alpha,
+        xmin = setup$x.shade.min,
+        xmax = setup$x.shade.max,
+        ymin = -Inf,
+        ymax = Inf
+      ) +
+      ggplot2::geom_point() +
+      ggplot2::geom_line() +
+      ecodata::theme_ts() +
+      ecodata::theme_title() +
+      ggplot2::ylab(paste0(indextype)) +
+      ggplot2::ggtitle(paste0(EPU, ": ", indextype)) +
+      ecodata::theme_facet() +
+      ecodata::geom_lm(n = n) +
+      ggplot2::geom_hline(
+        ggplot2::aes(yintercept = hline),
+        size = setup$hline.size,
+        alpha = setup$hline.alpha,
+        linetype = setup$hline.lty
+      )
   }
 
   return(p)
-
 }
-attr(plot_comdat_profit,"varName") <- c("all","profit_index","cost_index","revenue_index")
-attr(plot_comdat_profit,"report") <- c("MidAtlantic","NewEngland")
-attr(plot_comdat_profit,"EPU") <- c("MAB","GB","GOM")
+attr(plot_comdat_profit, "varName") <- c(
+  "all",
+  "profit_index",
+  "cost_index",
+  "revenue_index"
+)
+attr(plot_comdat_profit, "report") <- c("MidAtlantic", "NewEngland")
+attr(plot_comdat_profit, "EPU") <- c("MAB", "GB", "GOM")
 
+# plot_comdat_profit(n = 30)
+# plot_comdat_profit(report = "NewEngland", EPU = "GB", n = 30)
+# plot_comdat_profit(report = "NewEngland", EPU = "GOM", n = 30)
