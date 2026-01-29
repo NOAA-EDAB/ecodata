@@ -7,14 +7,17 @@
 plot_productivity_anomaly(
   shadedRegion = NULL,
   report = "MidAtlantic",
+  plottype = "region",
   varName = "anomaly",
-  EPU = "MAB"
+  EPU = NULL
 )
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
+
+\item{plottype}{Character string. "region" (legacy) or "council" (plot species managed by corresponding council)}
 
 \item{varName}{Character string. Which variable to plot ("anomaly","assessment")}
 
