@@ -47,11 +47,11 @@ plot_condition <- function(shadedRegion = NULL,
    fix <- fix |>
      dplyr::mutate(category = cut(scaleCond,
                                   breaks = xs,
-                                  labels = c( "Poor Condition",
-                                              "Below Average",
-                                              "Neutral",
-                                              "Above Average",
-                                              "Good Condition"),
+                                  labels = c( "Very Low",
+                                              "Low",
+                                              "Average",
+                                              "High",
+                                              "Very High"),
                                   include.lowest = TRUE))
 
    sortNames <- fix  |>
