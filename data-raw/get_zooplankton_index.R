@@ -33,9 +33,9 @@ sprzoopvolcog <- "springzoopvolcog - Sarah Gaichas - NOAA Federal.rds"
 
 # Define file paths for small copepods index and center of gravity
 falsmallcopeALL <- "fallsmallcopeALLindex - Sarah Gaichas - NOAA Federal.rds"
-sprsmallcopeALL <- "springsmallcopeALLindex - Sarah Gaichas - NOAA Federal.rds"
+sprsmallcopeALL <- "spring_smcopeall_index_2025-12-16.rds"
 falsmallcopecogALL <- "fallsmallcopeALLcog - Sarah Gaichas - NOAA Federal.rds"
-sprsmallcopecogALL <- "springsmallcopeALLcog - Sarah Gaichas - NOAA Federal.rds"
+sprsmallcopecogALL <- "spring_smcopeall_cog_2025-12-16.rds"
 
 get_zooplankton_index <- function(save_clean = F){
 
@@ -103,9 +103,17 @@ get_zooplankton_index <- function(save_clean = F){
 
   # Load input files for small copepods index and center of gravity
   fallsmallcopeALL <- readRDS(file.path(raw.dir, falsmallcopeALL))
-  springsmallcopeALL <- readRDS(file.path(raw.dir, sprsmallcopeALL))
+  springsmallcopeALL <- readRDS(file.path(raw.dir, sprsmallcopeALL)) |>
+    dplyr::mutate(Var = dplyr::recode(Var,
+                                      "Spring Smcopeall Abundance Index Estimate" = "Spring Smallcopeall Abundance Index Estimate",
+                                      "Spring Smcopeall Abundance Index Estimate SE" = "Spring Smallcopeall Abundance Index Estimate SE"))
   fallsmallcopeALLcog <- readRDS(file.path(raw.dir, falsmallcopecogALL))
-  springsmallcopeALLcog <- readRDS(file.path(raw.dir, sprsmallcopecogALL))
+  springsmallcopeALLcog <- readRDS(file.path(raw.dir, sprsmallcopecogALL)) |>
+    dplyr::mutate(Var = dplyr::recode(Var,
+                                      "Spring Smcopeall Eastward Center of Gravity" = "Spring Smallcopeall Eastward Center of Gravity",
+                                      "Spring Smcopeall Eastward Center of Gravity SE" = "Spring Smallcopeall Eastward Center of Gravity SE",
+                                      "Spring Smcopeall Northward Center of Gravity" = "Spring Smallcopeall Northward Center of Gravity",
+                                      "Spring Smcopeall Northward Center of Gravity SE" = "Spring Smallcopeall Northward Center of Gravity SE"))
 
   zooplankton_index<- rbind(fallcalfin, springcalfin, fallcalfincog, springcalfincog,
                             falleuph, springeuph, falleuphcog, springeuphcog, fallsmallcope,
