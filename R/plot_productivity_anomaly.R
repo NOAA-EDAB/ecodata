@@ -335,8 +335,3 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
   return(p)
 }
 
-plot_productivity_anomaly(report = "MidAtlantic", varName = "anomaly", plottype = "council")
-plot_productivity_anomaly(report = "MidAtlantic", varName = "assessment", plottype = "council")
-
-plot_productivity_anomaly(report = "NewEngland", varName = "anomaly", plottype = "council")
-plot_productivity_anomaly(report = "NewEngland", varName = "assessment", plottype = "council")
