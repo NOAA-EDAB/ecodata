@@ -64,7 +64,7 @@ plot_stock_status <- function(shadedRegion = NULL, report = "MidAtlantic") {
         is.na(F.Fmsy) & !is.na(B.Bmsy) ~ 100,
         TRUE ~ F.Fmsy
       ),
-      Cat = dplyr::case_when(F.Fmsy == 100 ~ "A", F.Fmsy > 2 ~ "B", TRUE ~ "C")
+      Cat = dplyr::case_when(F.Fmsy == 100 ~ FALSE, TRUE ~ TRUE)
     ) |>
     dplyr::filter(!is.na(B.Bmsy))
 
@@ -92,18 +92,13 @@ plot_stock_status <- function(shadedRegion = NULL, report = "MidAtlantic") {
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
   #
 
-  max_f <- fix |>
-    dplyr::filter(Cat == "C") |>
-    dplyr::pull(F.Fmsy) |>
-    max()
+  max_f <- max(fix$F.Fmsy[which(fix$F.Fmsy < 50)], na.rm = TRUE)
 
-  # max_f <- max(fix$F.Fmsy[which(fix$F.Fmsy < 50)], na.rm = TRUE)
-
-  # ybreaks <- seq(
-  #   0,
-  #   ifelse(max_f > 1, max_f, 1),
-  #   by = 0.25
-  # )
+  ybreaks <- seq(
+    0,
+    ifelse(max_f > 1, max_f, 1),
+    by = 0.25
+  )
 
   # offset_y <- fix |>
   #   dplyr::mutate(
@@ -121,7 +116,7 @@ plot_stock_status <- function(shadedRegion = NULL, report = "MidAtlantic") {
     ggplot2::geom_hline(
       ggplot2::aes(yintercept = yval),
       linetype = "dashed",
-      data = tibble::tibble(Cat = c("A", "B", "C"), yval = c(NA, NA, 1))
+      data = tibble::tibble(Cat = c(TRUE, FALSE), yval = c(1, NA))
     ) +
     ggplot2::geom_point(ggplot2::aes(
       x = B.Bmsy,
@@ -147,9 +142,8 @@ plot_stock_status <- function(shadedRegion = NULL, report = "MidAtlantic") {
       # box.padding = 1,
     ) +
     ggplot2::scale_y_continuous(
-      # breaks = c(ybreaks, 100),
-      # labels = c(ybreaks, "No F/Fmsy\nEstimate")
-      labels = function(x) ifelse(x == 100, "No F/Fmsy\nEstimate", x)
+      breaks = c(ybreaks, 100),
+      labels = c(ybreaks, "No F/Fmsy\nEstimate")
     ) +
     ggplot2::facet_grid(
       rows = ggplot2::vars(Cat),
@@ -176,7 +170,8 @@ plot_stock_status <- function(shadedRegion = NULL, report = "MidAtlantic") {
   return(list(p = p, unknown = unknown))
 }
 
-attr(plot_stock_status, "report") <- c("MidAtlantic", "NewEngland")
+attr(plot_stock_status,"report") <- c("MidAtlantic","NewEngland")
+
 
 #plot_stock_status(report = "NewEngland")
 #ggplot2::ggsave(
