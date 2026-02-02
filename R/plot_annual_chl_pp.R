@@ -91,6 +91,10 @@ plot_annual_chl_pp <- function(shadedRegion = NULL,
       ecodata::theme_facet() +
       ecodata::theme_title()
 
+  if (varName == "chl" & plottype == "total") {
+    p <- "Plot type 'total' is not available for the chlorophyll variable. Please use plottype = `mean`."
+  }
+
   return(p)
 
 }
