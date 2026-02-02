@@ -110,4 +110,4 @@ plot_wbts_zoo <- function(shadedRegion = NULL, report = "NewEngland", n = 0) {
 # plot_wbts_zoo()
 
 attr(plot_wbts_zoo, "report") <- c("NewEngland")
-attr(plot_gsi, "varName") <- c("wbts_zoo")
+attr(plot_wbts_zoo, "varName") <- c("wbts_zoo")
