@@ -25,7 +25,7 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
                                report=report)
 
   # this should be added to plot_setip
-  leg_font_size <- 6
+  leg_font_size <- 8
 
   # base data object
   prod_dat <- ecodata::productivity_anomaly
@@ -122,15 +122,23 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
       ggplot2::xlab("") +
       ggplot2::ylab("Recruitment Anomaly") +
       ggplot2::ggtitle(" Recruitment Anomaly from Stock Assessments") +
-      #ggplot2::guides(fill = guide_legend(ncol = leg_ncol)) +
+      ggplot2::guides(fill = ggplot2::guide_legend(ncol = 3)) +
       ecodata::theme_ts()+
-      ggplot2::theme(axis.title   = ggplot2::element_text(size = 10),
-                     axis.text    = ggplot2::element_text(size = 10),
-                     plot.title   = ggplot2::element_text(size = 12),
+      ggplot2::theme(axis.title   = ggplot2::element_text(size = 12),
+                     axis.text    = ggplot2::element_text(size = 12),
+                     plot.title   = ggplot2::element_text(size = 14),
                      #legend.text  = element_text(size = leg_font_size),
                      legend.title = ggplot2::element_blank(),
-                     legend.text=ggplot2::element_text(size=6))
+                     legend.text=ggplot2::element_text(size=8),
+                     legend.position = "bottom")
 
+    if (report == "NewEngland") {
+      p <- p + ggplot2::guides(
+        fill = ggplot2::guide_legend(
+          ncol = 4))
+    } else {
+      p <- p
+    }
   }
 
   if (varName == "anomaly") {
@@ -169,6 +177,13 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
       y.text = 10,
       aggregate = TRUE
     )
+    if (report == "NewEngland") {
+      p <- p + ggplot2::guides(
+        fill = ggplot2::guide_legend(
+          ncol = 4))
+    } else {
+      p <- p
+    }
   }
 
 
@@ -195,7 +210,7 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
                                      file_suffix,
                                      leg_font_size = leg_font_size,
                                      remove_leg = FALSE,
-                                     leg_ncol = 1,
+                                     leg_ncol = 3,
                                      wcpts = TRUE,
                                      wdashed = TRUE,
                                      height = 5.5,
@@ -306,10 +321,11 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
     ggplot2::guides(fill = ggplot2::guide_legend(ncol = leg_ncol)) +
     ecodata::theme_ts()+
     ggplot2::theme(axis.title   = ggplot2::element_text(size = 12),
-                   axis.text    = ggplot2::element_text(size = 12),
-                   plot.title   = ggplot2::element_text(size = 15),
+                   axis.text    = ggplot2::element_text(size = 10),
+                   plot.title   = ggplot2::element_text(size = 14),
                    legend.text  = ggplot2::element_text(size = leg_font_size),
-                   legend.title = ggplot2::element_blank()) +
+                   legend.title = ggplot2::element_blank(),
+                   legend.position = "bottom") +
     ggplot2::annotate("text", label = label, x = 1980, y = y.text,size = 8, colour = "black")
 
 
@@ -318,3 +334,9 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
 
   return(p)
 }
+
+plot_productivity_anomaly(report = "MidAtlantic", varName = "anomaly", plottype = "council")
+plot_productivity_anomaly(report = "MidAtlantic", varName = "assessment", plottype = "council")
+
+plot_productivity_anomaly(report = "NewEngland", varName = "anomaly", plottype = "council")
+plot_productivity_anomaly(report = "NewEngland", varName = "assessment", plottype = "council")
