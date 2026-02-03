@@ -43,6 +43,8 @@ get_wea_landings_rev <- function(save_clean = F){
                   "Offshore Hake", "Atlantic Herring", "Atlantic Halibut", "Witch Flounder",
                   "Haddock", "Thorny Skate", "American Plaice", "Redfish", "Pollock", "White Hake")
 
+    asmfc <- list("Silver Hake", "American Lobster")
+
     both_councils <- list("Monkfish", "Spiny Dogfish")
 
     for (i in 1:length(mafmc)){
@@ -53,6 +55,11 @@ get_wea_landings_rev <- function(save_clean = F){
     for (i in 1:length(nefmc)){
       wea_landings_rev <- wea_landings_rev %>%
         dplyr::mutate(Council = replace(Council, stringr::str_detect(wea_landings_rev$`NEFMC, MAFMC, and ASMFC Managed Species`, paste0(nefmc[i])), "NEFMC"))
+    }
+
+    for (i in 1:length(asmfc)){
+      wea_landings_rev <- wea_landings_rev %>%
+        dplyr::mutate(Council = replace(Council, stringr::str_detect(wea_landings_rev$`NEFMC, MAFMC, and ASMFC Managed Species`, paste0(asmfc[i])), "ASMFC"))
     }
 
     for (i in 1:length(both_councils)){
