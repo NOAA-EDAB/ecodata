@@ -53,9 +53,15 @@ plot_community_factors <- function(shadedRegion = NULL,
     dplyr::mutate(city = stringr::str_to_title(city))|>
     tidyr::unite("Town", city, state, sep = ", ")
 
+  all.towns = fix |>
+    dplyr::filter(!(Var %in% ('fishing_mean_score'))) |>
+    dplyr::pull(Town) |>
+    unique() |>
+    tolower()
+
   top.coms = fix |>
     dplyr::filter(Var == filterVar & !is.na(Value)) |>
-    dplyr::filter(Time == max(Time)) |>
+    dplyr::filter(Time == max(Time) & tolower(Town) %in% all.towns) |>
     dplyr::arrange(desc(Value)) |>
     dplyr::slice_head(n = n) |>
     dplyr::pull(Town)
