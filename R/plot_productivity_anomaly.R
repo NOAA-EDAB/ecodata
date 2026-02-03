@@ -59,9 +59,13 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
 
       } else if (report == "NewEngland") {
 
-        if (!(EPU %in% c("GB","GOM"))) {
-          stop("For NewEngland the epu must be either 'GB' or 'GOM'")
+        if (is.null(EPU)) {
+          stop("EPU must be provided for NewEngland region plots: use 'GB' or 'GOM'")
         }
+        if (!(EPU %in% c("GB","GOM"))) {
+          stop("Invalid EPU. For NewEngland use 'GB' or 'GOM'")
+        }
+
 
         filterEPUs <- EPU
       }
