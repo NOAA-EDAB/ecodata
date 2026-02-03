@@ -290,6 +290,7 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
         .groups = "drop"
       )
 
+    # maximum number of species ever observed in a single year
     max_count <- max(agg$Count, na.rm = TRUE)
 
     # allow line when >= 75% of species are present
@@ -298,13 +299,13 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
     agg <- agg |>
       dplyr::mutate(
         Total = ifelse(Count < threshold, NA_real_, Total)
-      )
-    |>
+      ) |>
       tidyr::complete(
         YEAR = seq(min(YEAR), max(YEAR), by = 1),
         fill = list(Total = NA_real_)
       )
   }
+
 
 
 
