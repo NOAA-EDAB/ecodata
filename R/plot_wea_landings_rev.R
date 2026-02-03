@@ -4,7 +4,7 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
-#' @param n numeric scalar. The number of species to show (default = n = 10, top 10 species)
+#' @param n numeric scalar. The number of species to show (default = n = NULL, all species)
 #'
 #' @return kable object
 #'
@@ -14,7 +14,7 @@
 
 plot_wea_landings_rev <- function(shadedRegion = NULL,
                               report="MidAtlantic",
-                              n = 10) {
+                              n = NULL) {
 
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
@@ -22,15 +22,21 @@ plot_wea_landings_rev <- function(shadedRegion = NULL,
 
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
-    filterEPUs <- c("MAB")
+    filterEPUs <- c("MAFMC")
   } else {
-    filterEPUs <- c("NE")
+    filterEPUs <- c("NEFMC","ASMFC")
+  }
+
+  # set n to dataset length if n is not specified in function call
+  if (is.null(n)) {
+    n <- as.numeric(nrow(ecodata::wea_landings_rev))
   }
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
 
   fix<- ecodata::wea_landings_rev |>
+    dplyr::filter(Council %in% c(filterEPUs, "MAFMC/NEFMC")) |>
     dplyr::select("NEFMC, MAFMC, and ASMFC Managed Species",
                   "perc_landings_max","perc_revenue_max" ) |>
     dplyr::slice_head(n=n)  |>
@@ -39,9 +45,14 @@ plot_wea_landings_rev <- function(shadedRegion = NULL,
     dplyr::rename("Maximum Percent Total Annual Regional Species Landings"="perc_landings_max",
                   "Maximum Percent Total Annual Regional Species Revenue"="perc_revenue_max")
 
-  t <- kableExtra::kable(fix, caption = "Top ten species Landings and Revenue from Leased Areas." ) |>
-    kableExtra::kable_classic(full_width = F, html_font = "Cambria")
+  if (report == "MidAtlantic") {
+    fix <- dplyr::rename(fix, "MAFMC and Joint Managed Species" = "NEFMC, MAFMC, and ASMFC Managed Species")
+  } else {
+    fix <- dplyr::rename(fix, "NEFMC, ASMFC and Joint Managed Species" = "NEFMC, MAFMC, and ASMFC Managed Species")
+  }
 
+  t <- kableExtra::kable(fix, caption = "Species Landings and Revenue from Leased Areas." ) |>
+    kableExtra::kable_classic(full_width = F, html_font = "Cambria")
 
   return(t)
 }
