@@ -109,6 +109,9 @@ plot_bottom_temp_model_anom <- function(shadedRegion=NULL,
     #                plot.title = ggplot2::element_text(size = 12))+
     ecodata::theme_title()
 
+  if (plottype == "MOM6") {
+    p <- "The MOM6 plot type is currently unavailable. Please use plottype = 'GLORYS'."
+  }
 
   return(p)
 }
@@ -117,4 +120,4 @@ plot_bottom_temp_model_anom <- function(shadedRegion=NULL,
 attr(plot_bottom_temp_model_anom,"EPU") <- c("MAB","GB","GOM")
 attr(plot_bottom_temp_model_anom,"report") <- c("MidAtlantic","NewEngland")
 attr(plot_bottom_temp_model_anom, "varName") <- c("seasonal", "annual")
-attr(plot_bottom_temp_model_anom, "plottype") <- c("GLORYS", "MOM6")
+attr(plot_bottom_temp_model_anom, "plottype") <- c("GLORYS")
