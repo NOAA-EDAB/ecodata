@@ -124,12 +124,12 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
       ggplot2::ggtitle(" Recruitment Anomaly from Stock Assessments") +
       ggplot2::guides(fill = ggplot2::guide_legend(ncol = 3)) +
       ecodata::theme_ts()+
-      ggplot2::theme(axis.title   = ggplot2::element_text(size = 12),
-                     axis.text    = ggplot2::element_text(size = 12),
-                     plot.title   = ggplot2::element_text(size = 14),
+      ggplot2::theme(axis.title   = ggplot2::element_text(size = setup$label.size*2.4),
+                     axis.text    = ggplot2::element_text(size = setup$label.size*2.4),
+                     plot.title   = ggplot2::element_text(size = setup$label.size*2.8),
                      #legend.text  = element_text(size = leg_font_size),
                      legend.title = ggplot2::element_blank(),
-                     legend.text=ggplot2::element_text(size=8),
+                     legend.text=ggplot2::element_text(size = setup$label.size*1.8),
                      legend.position = "bottom")
 
     if (report == "NewEngland") {
@@ -194,6 +194,7 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
   return(p)
 
 }
+
 
 attr(plot_productivity_anomaly,"report") <- c("MidAtlantic","NewEngland")
 attr(plot_productivity_anomaly,"varName") <- c("anomaly","assessment")
@@ -335,3 +336,8 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
   return(p)
 }
 
+plot_productivity_anomaly(report = "MidAtlantic", varName = "anomaly", plottype = "council")
+plot_productivity_anomaly(report = "MidAtlantic", varName = "assessment", plottype = "council")
+
+plot_productivity_anomaly(report = "NewEngland", varName = "anomaly", plottype = "council")
+plot_productivity_anomaly(report = "NewEngland", varName = "assessment", plottype = "council")
