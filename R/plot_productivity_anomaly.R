@@ -20,6 +20,42 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
                                       varName = "anomaly",
                                       EPU = NULL) {
 
+  # Input validation
+
+  if (!report %in% c("MidAtlantic", "NewEngland")) {
+    stop("report must be 'MidAtlantic' or 'NewEngland'")
+  }
+
+  if (!plottype %in% c("region", "council")) {
+    stop("plottype must be 'region' or 'council'")
+  }
+
+  if (!varName %in% c("anomaly", "assessment")) {
+    stop("varName must be 'anomaly' or 'assessment'")
+  }
+
+  if (varName == "assessment" && !is.null(EPU)) {
+    warning("EPU is ignored for assessment plots.")
+  }
+
+  if (varName == "anomaly") {
+
+    if (report == "MidAtlantic" && plottype == "region" &&
+        !identical(EPU, "MAB")) {
+      stop("MidAtlantic region anomaly plots require EPU = 'MAB'")
+    }
+
+    if (report == "NewEngland" && plottype == "region" &&
+        (is.null(EPU) || !EPU %in% c("GB", "GOM"))) {
+      stop("NewEngland region anomaly plots require EPU = 'GB' or 'GOM'")
+    }
+
+    if (plottype == "council" &&
+        !is.null(EPU) && !identical(EPU, "All")) {
+      stop("Council anomaly plots require EPU = 'All'")
+    }
+  }
+
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
                                report=report)
