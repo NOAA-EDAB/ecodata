@@ -40,10 +40,12 @@ plot_wea_landings_rev <- function(shadedRegion = NULL,
     dplyr::select("NEFMC, MAFMC, and ASMFC Managed Species",
                   "perc_landings_max","perc_revenue_max" ) |>
     dplyr::slice_head(n=n)  |>
+    dplyr::arrange(desc(perc_revenue_max)) |>
     dplyr::mutate(perc_landings_max = paste0(perc_landings_max, " %"),
                   perc_revenue_max = paste0(perc_revenue_max, " %")) |>
     dplyr::rename("Maximum Percent Total Annual Regional Species Landings"="perc_landings_max",
                   "Maximum Percent Total Annual Regional Species Revenue"="perc_revenue_max")
+
 
   if (report == "MidAtlantic") {
     fix <- dplyr::rename(fix, "MAFMC and Joint Managed Species" = "NEFMC, MAFMC, and ASMFC Managed Species")
