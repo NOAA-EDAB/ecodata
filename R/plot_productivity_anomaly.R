@@ -143,7 +143,20 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
       dplyr::mutate(Stock = toupper(Stock))
 
 
-    # code for generating plot object p
+    # Title + subtitle logic for assessment plots
+
+    prefix <- if (report == "MidAtlantic") "MA" else "NE"
+
+    subtitle_text <- NULL
+    if (plottype == "council") {
+      subtitle_text <- if (report == "MidAtlantic") {
+        "MAFMC managed species"
+      } else {
+        "NEFMC managed species"
+      }
+    }
+
+      # code for generating plot object p
     # ensure that setup list objects are called as setup$...
     # e.g. fill = setup$shade.fill, alpha = setup$shade.alpha,
     # xmin = setup$x.shade.min , xmax = setup$x.shade.max
@@ -161,7 +174,10 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
       ggplot2::geom_hline(size = 0.3, ggplot2::aes(yintercept = 0)) +
       ggplot2::xlab("") +
       ggplot2::ylab("Recruitment Anomaly") +
-      ggplot2::ggtitle(" Recruitment Anomaly from Stock Assessments") +
+      ggplot2::labs(
+        title = paste0(prefix, " Recruitment Anomaly from Stock Assessments"),
+        subtitle = subtitle_text
+      ) +
       ggplot2::guides(fill = ggplot2::guide_legend(ncol = 3)) +
       ecodata::theme_ts()+
       ggplot2::theme(axis.title   = ggplot2::element_text(size = setup$label.size*2.4),
