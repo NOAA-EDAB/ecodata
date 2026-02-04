@@ -12,32 +12,32 @@
 #' @export
 #'
 
-plot_ches_bay_wq <- function(shadedRegion = NULL,
-                              report="MidAtlantic",
-                             n = 0) {
-
+plot_ches_bay_wq <- function(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  n = 0
+) {
   # generate plot setup list (same for all plot functions)
-  setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
-                               report=report)
+  setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
 
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
   } else {
-    message("This indicator is only present in the `MidAtlantic` report")
+    return("This indicator is only present in the `MidAtlantic` report")
     filterEPUs <- c("GB", "GOM")
   }
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
   # three year moving average, these labels requested for clarity
-  minlab <- seq(1987,2017,5)
-  maxlab <- seq(1989,2019,5)
-  minl<- as.numeric(sprintf('%02d',minlab %% 100))
-  maxl<- sprintf('%02d', maxlab %% 100)
+  minlab <- seq(1987, 2017, 5)
+  maxlab <- seq(1989, 2019, 5)
+  minl <- as.numeric(sprintf('%02d', minlab %% 100))
+  maxl <- sprintf('%02d', maxlab %% 100)
 
   CBwq <- ecodata::ches_bay_wq #|>
-    #dplyr::mutate(hline = mean(Value))
+  #dplyr::mutate(hline = mean(Value))
 
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
@@ -46,20 +46,27 @@ plot_ches_bay_wq <- function(shadedRegion = NULL,
   #
   p <- CBwq |>
     ggplot2::ggplot(ggplot2::aes(x = Time, y = Value)) +
-    ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
-                      xmin = setup$x.shade.min , xmax = setup$x.shade.max,
-                      ymin = -Inf, ymax = Inf) +
+    ggplot2::annotate(
+      "rect",
+      fill = setup$shade.fill,
+      alpha = setup$shade.alpha,
+      xmin = setup$x.shade.min,
+      xmax = setup$x.shade.max,
+      ymin = -Inf,
+      ymax = Inf
+    ) +
     ggplot2::geom_line() +
     ggplot2::geom_point() +
     ecodata::geom_gls() +
-    ecodata::geom_lm(n=n)+
+    ecodata::geom_lm(n = n) +
     #ecodata::geom_lm()+
     ggplot2::ylab(expression("Estimated attainment (%)")) +
-    ggplot2::xlab(ggplot2::element_blank())+
+    ggplot2::xlab(ggplot2::element_blank()) +
     ggplot2::ggtitle("Chesapeake Bay Water Quality Attainment") +
-    ggplot2::scale_x_continuous(breaks = minlab,labels = c("87-89", "92-94",
-                                                           "97-99", "02-04",
-                                                           "07-09", "12-14", "17-19")) +
+    ggplot2::scale_x_continuous(
+      breaks = minlab,
+      labels = c("87-89", "92-94", "97-99", "02-04", "07-09", "12-14", "17-19")
+    ) +
     #ggplot2::scale_x_descrete(breaks = minl,labels = paste0(minl,"-",maxl),expand = c(0.01, 0.01)) +
     #ggplot2::geom_hline(ggplot2::aes(yintercept = hline),
     #                    size = setup$hline.size,
@@ -67,51 +74,44 @@ plot_ches_bay_wq <- function(shadedRegion = NULL,
     #                    linetype = setup$hline.lty) +
     ecodata::theme_ts()
 
-   # # optional code for New England specific (2 panel) formatting
-   #  if (report == "NewEngland") {
-   #    p <- p +
-   #      ggplot2::theme(legend.position = "bottom",
-   #                     legend.title = ggplot2::element_blank())
-   #
-   #  }
+  # # optional code for New England specific (2 panel) formatting
+  #  if (report == "NewEngland") {
+  #    p <- p +
+  #      ggplot2::theme(legend.position = "bottom",
+  #                     legend.title = ggplot2::element_blank())
+  #
+  #  }
 
-    if (report == "NewEngland"){
-      p <- NULL
-    }
-
-    return(p)
-
+  return(p)
 }
 
-attr(plot_ches_bay_wq,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_ches_bay_wq, "report") <- c("MidAtlantic", "NewEngland")
 
-  # Paste commented original plot code chunk for reference
-  # minlab <- seq(1987,2017,5)
-  # maxlab <- seq(1989,2019,5)
-  # minl<- as.numeric(sprintf('%02d',minlab %% 100))
-  # maxl<- sprintf('%02d', maxlab %% 100)
-  # ecodata::ches_bay_wq %>%
-  #   dplyr::mutate(hline = mean(Value)) %>%
-  #   ggplot2::ggplot(aes(x = Time, y = Value)) +
-  #   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-  #                     xmin = x.shade.min , xmax = x.shade.max,
-  #                     ymin = -Inf, ymax = Inf) +
-  #   ggplot2::geom_line() +
-  #   ggplot2::geom_point() +
-  #   ecodata::geom_gls() +
-  #   #ecodata::geom_lm()+
-  #   ggplot2::ylab(expression("Estimated attainment (%)")) +
-  #   ggplot2::xlab(element_blank())+
-  #   ggplot2::ggtitle("Chesapeake Bay Water Quality Attainment") +
-  #   ggplot2::scale_x_continuous(breaks = minlab,labels = c("87-89", "92-94",
-  #                                                          "97-99", "02-04",
-  #                                                          "07-09", "12-14", "17-19")) +
-  #   #ggplot2::scale_x_descrete(breaks = minl,labels = paste0(minl,"-",maxl),expand = c(0.01, 0.01)) +
-  #   ggplot2::geom_hline(aes(yintercept = hline),
-  #                       size = hline.size,
-  #                       alpha = hline.alpha,
-  #                       linetype = hline.lty) +
-  #   ecodata::theme_ts()
-  #
-
-
+# Paste commented original plot code chunk for reference
+# minlab <- seq(1987,2017,5)
+# maxlab <- seq(1989,2019,5)
+# minl<- as.numeric(sprintf('%02d',minlab %% 100))
+# maxl<- sprintf('%02d', maxlab %% 100)
+# ecodata::ches_bay_wq %>%
+#   dplyr::mutate(hline = mean(Value)) %>%
+#   ggplot2::ggplot(aes(x = Time, y = Value)) +
+#   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+#                     xmin = x.shade.min , xmax = x.shade.max,
+#                     ymin = -Inf, ymax = Inf) +
+#   ggplot2::geom_line() +
+#   ggplot2::geom_point() +
+#   ecodata::geom_gls() +
+#   #ecodata::geom_lm()+
+#   ggplot2::ylab(expression("Estimated attainment (%)")) +
+#   ggplot2::xlab(element_blank())+
+#   ggplot2::ggtitle("Chesapeake Bay Water Quality Attainment") +
+#   ggplot2::scale_x_continuous(breaks = minlab,labels = c("87-89", "92-94",
+#                                                          "97-99", "02-04",
+#                                                          "07-09", "12-14", "17-19")) +
+#   #ggplot2::scale_x_descrete(breaks = minl,labels = paste0(minl,"-",maxl),expand = c(0.01, 0.01)) +
+#   ggplot2::geom_hline(aes(yintercept = hline),
+#                       size = hline.size,
+#                       alpha = hline.alpha,
+#                       linetype = hline.lty) +
+#   ecodata::theme_ts()
+#

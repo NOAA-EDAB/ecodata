@@ -12,18 +12,18 @@
 #' @export
 #'
 
-plot_mass_inshore_survey <- function(shadedRegion = NULL,
-                              report="MidAtlantic",
-                              n = 0) {
-
+plot_mass_inshore_survey <- function(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  n = 0
+) {
   # generate plot setup list (same for all plot functions)
-  setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
-                               report=report)
+  setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
 
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
-    stop("Indicator for 'NewEngland' report only")
+    return("Indicator for 'NewEngland' report only")
   } else {
     filterEPUs <- c("GB", "GOM")
   }
@@ -31,23 +31,32 @@ plot_mass_inshore_survey <- function(shadedRegion = NULL,
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
   fix <- ecodata::mass_inshore_survey |>
-    dplyr::filter(EPU %in% filterEPUs,
-                  !grepl("Other",Var)) |>
-    tidyr::separate(Var, into = c("Var",  "Trash"), sep = " - ") |>
+    dplyr::filter(EPU %in% filterEPUs, !grepl("Other", Var)) |>
+    tidyr::separate(Var, into = c("Var", "Trash"), sep = " - ") |>
     dplyr::select(!Trash) |>
     tidyr::separate(Var, into = c("Var", "Val"), sep = " Biomass ") |>
     tidyr::pivot_wider(names_from = Val, values_from = Value) |>
-    dplyr::mutate(Index = as.numeric(Index),
-                  SE = as.numeric(SE)) |>
+    dplyr::mutate(Index = as.numeric(Index), SE = as.numeric(SE)) |>
     dplyr::group_by(Var) |>
-    dplyr::mutate(hline = mean(Index),
-                  upper = Index + (2*SE),
-                  lower = Index - (2*SE))
+    dplyr::mutate(
+      hline = mean(Index),
+      upper = Index + (2 * SE),
+      lower = Index - (2 * SE)
+    )
 
-  fix$Var <- factor(fix$Var,levels = c("Piscivore Spring","Piscivore Fall",
-                                       "Benthivore Spring", "Benthivore Fall",
-                                       "Planktivore Spring", "Planktivore Fall",
-                                       "Benthos Spring", "Benthos Fall"))
+  fix$Var <- factor(
+    fix$Var,
+    levels = c(
+      "Piscivore Spring",
+      "Piscivore Fall",
+      "Benthivore Spring",
+      "Benthivore Fall",
+      "Planktivore Spring",
+      "Planktivore Fall",
+      "Benthos Spring",
+      "Benthos Fall"
+    )
+  )
 
   # Determine the order of your facets
   facet_order <- levels(fix$Var)
@@ -93,7 +102,7 @@ plot_mass_inshore_survey <- function(shadedRegion = NULL,
       ecodata::theme_title()
   }
 
-  p1 <-  fix |>
+  p1 <- fix |>
     dplyr::filter(Var == "Piscivore Spring" | Var == "Piscivore Fall") |>
     plot_custom_lims()
 
@@ -117,9 +126,9 @@ plot_mass_inshore_survey <- function(shadedRegion = NULL,
     left = ggpubr::text_grob("Biomass (kg tow ^-1)", rot = 90, size = 16)
   )
 
-    return(p)
+  return(p)
 }
 
-attr(plot_mass_inshore_survey,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_mass_inshore_survey, "report") <- c("MidAtlantic", "NewEngland")
 
 #plot_mass_inshore_survey(report = "NewEngland")
