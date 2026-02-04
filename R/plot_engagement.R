@@ -77,7 +77,7 @@ plot_engagement <- function(shadedRegion = NULL,
         legend.box = "horizontal"
       ) +
       ggplot2::guides(color = ggplot2::guide_legend(nrow = 4)) +
-      ggplot2::ggtitle(paste(setup$region, "Port Activity in Top", varName, "Fishing Communities"))
+      ggplot2::ggtitle(paste("Top ",varName," Port Activity: ", setup$region))
 
   }
 
@@ -159,7 +159,7 @@ plot_engagement <- function(shadedRegion = NULL,
                                 max.overlaps=Inf,
                                 label.size = NA,
                                 fill = ggplot2::alpha(c("white"),0.1))+
-      ggplot2::ggtitle(paste(setup$region, "Engagement in Top", varName, "Fishing Communities: ",max(eng$Time)))+
+      ggplot2::ggtitle(paste("Top ",varName," Port Activity: ", setup$region,' ',max(eng$Time)))+
       #ecodata::theme_ts()+
       ecodata::theme_title()
 
