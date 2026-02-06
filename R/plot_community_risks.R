@@ -17,7 +17,7 @@
 #' @export
 #'
 
-plot_community_climate_vulnerability <- function(
+plot_community_risks <- function(
   shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "vulnSum",
@@ -50,15 +50,15 @@ plot_community_climate_vulnerability <- function(
     "Ocean Acidification Sensitivity",
     "Temperature Sensitivity",
     "Biomass Status Sensitivity",
-    "Total Climate Sensitivity",
-    "Total Climate Vulnerability"
+    "Total Sensitivity",
+    "Total Vulnerability"
   )
   names(varTitle) <- c("oaSum", "tempSum", "stckSum", "sensSum", "vulnSum")
 
   if (plottype == "propcomm") {
     #proportion of communities
 
-    props <- ecodata::community_climate_vulnerability |>
+    props <- ecodata::community_risks |>
       dplyr::filter(!stringr::str_detect(Var, "Regional-")) |>
       tidyr::separate(Var, into = c("Town", "StateVar"), sep = ",") |> #using two steps because some towns have - in the name
       tidyr::separate(StateVar, into = c("State", "Var"), sep = "-") |> # which also seps the variable
@@ -149,7 +149,7 @@ plot_community_climate_vulnerability <- function(
       plottype == "regionland" ~ "_region_lb"
     )
 
-    regional <- ecodata::community_climate_vulnerability |>
+    regional <- ecodata::community_risks |>
       # dplyr::filter(stringr::str_detect(Var, "Regional-")) |>
       # dplyr::mutate(Varin = stringr::str_extract(Var, '\\b\\w+$'), #keep everything before -
       #               Varpre = stringr::str_to_lower(stringr::str_split_i(Varin, "Sum", 1)),
@@ -225,18 +225,18 @@ plot_community_climate_vulnerability <- function(
   }
 }
 
-attr(plot_community_climate_vulnerability, "report") <- c(
+attr(plot_community_risks, "report") <- c(
   "MidAtlantic",
   "NewEngland"
 )
-attr(plot_community_climate_vulnerability, "varName") <- c(
+attr(plot_community_risks, "varName") <- c(
   "oaSum",
   "tempSum",
   "stckSum",
   "sensSum",
   "vulnSum"
 )
-attr(plot_community_climate_vulnerability, "plottype") <- c(
+attr(plot_community_risks, "plottype") <- c(
   "propcomm",
   "regionrev",
   "regionland"
