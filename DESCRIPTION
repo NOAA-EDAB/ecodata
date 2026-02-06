@@ -37,7 +37,8 @@ Imports:
   forcats,
   patchwork,
   ggpubr,
-  arfit
+  arfit,
+  Polychrome
 Suggests:
   knitr,
   rmarkdown,
