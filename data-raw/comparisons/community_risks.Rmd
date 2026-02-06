@@ -14,8 +14,8 @@ library(ecodata25)
 library(dplyr)
 library(knitr)
 
-# Replace 'community_climate_vulnerability' with intended dataset
-dataset<-ecodata::community_climate_vulnerability
+# Replace 'community_risks' with intended dataset
+dataset<-ecodata::community_risks
 dataset24<-ecodata25::community_climate_vulnerability
 
 # Define dataset-specific arguments for plot functions
@@ -29,7 +29,7 @@ plottype<-list("propcomm", "regionrev", "regionland")
 
 ## `r paste(report[1],"oaSum",plottype[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "oaSum", plottype = plottype[1]) + 
+ecodata::plot_community_risks(report = report[1], n = 10, varName = "oaSum", plottype = plottype[1]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "oaSum", plottype = plottype[1]) + 
@@ -38,7 +38,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varN
 
 ## `r paste(report[2],"oaSum",plottype[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "oaSum", plottype = plottype[1]) + 
+ecodata::plot_community_risks(report = report[2], n = 10, varName = "oaSum", plottype = plottype[1]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "oaSum", plottype = plottype[1]) + 
@@ -47,7 +47,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varN
 
 ## `r paste(report[1],"oaSum",plottype[2])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "oaSum", plottype = plottype[2]) + 
+ecodata::plot_community_risks(report = report[1], n = 10, varName = "oaSum", plottype = plottype[2]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "oaSum", plottype = plottype[2]) + 
@@ -56,7 +56,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varN
 
 ## `r paste(report[2],"oaSum",plottype[2])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "oaSum", plottype = plottype[2]) + 
+ecodata::plot_community_risks(report = report[2], n = 10, varName = "oaSum", plottype = plottype[2]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "oaSum", plottype = plottype[2]) + 
@@ -65,7 +65,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varN
 
 ## `r paste(report[1],"oaSum",plottype[3])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "oaSum", plottype = plottype[3]) + 
+ecodata::plot_community_risks(report = report[1], n = 10, varName = "oaSum", plottype = plottype[3]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "oaSum", plottype = plottype[3]) + 
@@ -74,7 +74,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varN
 
 ## `r paste(report[2],"oaSum",plottype[3])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "oaSum", plottype = plottype[3]) + 
+ecodata::plot_community_risks(report = report[2], n = 10, varName = "oaSum", plottype = plottype[3]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "oaSum", plottype = plottype[3]) + 
@@ -83,7 +83,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varN
 
 ## `r paste(report[1],"tempSum",plottype[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "tempSum", plottype = plottype[1]) + 
+ecodata::plot_community_risks(report = report[1], n = 10, varName = "tempSum", plottype = plottype[1]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "tempSum", plottype = plottype[1]) + 
@@ -92,7 +92,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varN
 
 ## `r paste(report[2],"tempSum",plottype[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "tempSum", plottype = plottype[1]) + 
+ecodata::plot_community_risks(report = report[2], n = 10, varName = "tempSum", plottype = plottype[1]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "tempSum", plottype = plottype[1]) + 
@@ -101,7 +101,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varN
 
 ## `r paste(report[1],"tempSum",plottype[2])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "tempSum", plottype = plottype[2]) + 
+ecodata::plot_community_risks(report = report[1], n = 10, varName = "tempSum", plottype = plottype[2]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "tempSum", plottype = plottype[2]) + 
@@ -110,7 +110,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varN
 
 ## `r paste(report[2],"tempSum",plottype[2])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "tempSum", plottype = plottype[2]) + 
+ecodata::plot_community_risks(report = report[2], n = 10, varName = "tempSum", plottype = plottype[2]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "tempSum", plottype = plottype[2]) + 
@@ -119,7 +119,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varN
 
 ## `r paste(report[1],"tempSum",plottype[3])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "tempSum", plottype = plottype[3]) + 
+ecodata::plot_community_risks(report = report[1], n = 10, varName = "tempSum", plottype = plottype[3]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "tempSum", plottype = plottype[3]) + 
@@ -128,7 +128,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varN
 
 ## `r paste(report[2],"tempSum",plottype[3])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "tempSum", plottype = plottype[3]) + 
+ecodata::plot_community_risks(report = report[2], n = 10, varName = "tempSum", plottype = plottype[3]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "tempSum", plottype = plottype[3]) + 
@@ -137,7 +137,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varN
 
 ## `r paste(report[1],"sensSum",plottype[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "sensSum", plottype = plottype[1]) + 
+ecodata::plot_community_risks(report = report[1], n = 10, varName = "sensSum", plottype = plottype[1]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "sensSum", plottype = plottype[1]) + 
@@ -146,7 +146,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varN
 
 ## `r paste(report[2],"sensSum",plottype[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "sensSum", plottype = plottype[1]) + 
+ecodata::plot_community_risks(report = report[2], n = 10, varName = "sensSum", plottype = plottype[1]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "sensSum", plottype = plottype[1]) + 
@@ -155,7 +155,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varN
 
 ## `r paste(report[1],"sensSum",plottype[2])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "sensSum", plottype = plottype[2]) + 
+ecodata::plot_community_risks(report = report[1], n = 10, varName = "sensSum", plottype = plottype[2]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "sensSum", plottype = plottype[2]) + 
@@ -164,7 +164,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varN
 
 ## `r paste(report[2],"sensSum",plottype[2])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "sensSum", plottype = plottype[2]) + 
+ecodata::plot_community_risks(report = report[2], n = 10, varName = "sensSum", plottype = plottype[2]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "sensSum", plottype = plottype[2]) + 
@@ -173,7 +173,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varN
 
 ## `r paste(report[1],"sensSum",plottype[3])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "sensSum", plottype = plottype[3]) + 
+ecodata::plot_community_risks(report = report[1], n = 10, varName = "sensSum", plottype = plottype[3]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "sensSum", plottype = plottype[3]) + 
@@ -182,7 +182,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varN
 
 ## `r paste(report[2],"sensSum",plottype[3])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "sensSum", plottype = plottype[3]) + 
+ecodata::plot_community_risks(report = report[2], n = 10, varName = "sensSum", plottype = plottype[3]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "sensSum", plottype = plottype[3]) + 
@@ -191,7 +191,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varN
 
 ## `r paste(report[1],"vulnSum",plottype[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "vulnSum", plottype = plottype[1]) + 
+ecodata::plot_community_risks(report = report[1], n = 10, varName = "vulnSum", plottype = plottype[1]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "vulnSum", plottype = plottype[1]) + 
@@ -200,7 +200,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varN
 
 ## `r paste(report[2],"vulnSum",plottype[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "vulnSum", plottype = plottype[1]) + 
+ecodata::plot_community_risks(report = report[2], n = 10, varName = "vulnSum", plottype = plottype[1]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "vulnSum", plottype = plottype[1]) + 
@@ -209,7 +209,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varN
 
 ## `r paste(report[1],"vulnSum",plottype[2])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "vulnSum", plottype = plottype[2]) + 
+ecodata::plot_community_risks(report = report[1], n = 10, varName = "vulnSum", plottype = plottype[2]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "vulnSum", plottype = plottype[2]) + 
@@ -218,7 +218,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varN
 
 ## `r paste(report[2],"vulnSum",plottype[2])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "vulnSum", plottype = plottype[2]) + 
+ecodata::plot_community_risks(report = report[2], n = 10, varName = "vulnSum", plottype = plottype[2]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "vulnSum", plottype = plottype[2]) + 
@@ -227,7 +227,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varN
 
 ## `r paste(report[1],"vulnSum",plottype[3])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "vulnSum", plottype = plottype[3]) + 
+ecodata::plot_community_risks(report = report[1], n = 10, varName = "vulnSum", plottype = plottype[3]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varName = "vulnSum", plottype = plottype[3]) + 
@@ -236,7 +236,7 @@ ecodata25::plot_community_climate_vulnerability(report = report[1], n = 10, varN
 
 ## `r paste(report[2],"vulnSum",plottype[3])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
-ecodata::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "vulnSum", plottype = plottype[3]) + 
+ecodata::plot_community_risks(report = report[2], n = 10, varName = "vulnSum", plottype = plottype[3]) + 
   ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
 ecodata25::plot_community_climate_vulnerability(report = report[2], n = 10, varName = "vulnSum", plottype = plottype[3]) + 
