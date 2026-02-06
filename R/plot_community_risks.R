@@ -50,8 +50,8 @@ plot_community_risks <- function(
     "Ocean Acidification Sensitivity",
     "Temperature Sensitivity",
     "Biomass Status Sensitivity",
-    "Total Climate Sensitivity",
-    "Total Climate Vulnerability"
+    "Total Sensitivity",
+    "Total Vulnerability"
   )
   names(varTitle) <- c("oaSum", "tempSum", "stckSum", "sensSum", "vulnSum")
 

@@ -10,9 +10,9 @@
 \itemize{
 \item Time: Year.
 \item Var: Community, State-climate vulnerability indicator.
-\item Value: Value of climate vulnerability indicator.
+\item Value: Value of Community Risk indicator.
 \item EPU: Region where sampling occurred: NE New England, MAB Mid-Atlantic.
-\item Units: Units of climate vulnerability indicator.
+\item Units: Units of Community Risk indicator.
 }
 }
 \usage{
@@ -26,7 +26,7 @@ vulnerability.
 }
 \details{
 Reciprocal Simpson's Diversity scores for each community, Regional Quotients,
-and Regional climate vulnerability scores are also included. More information
+and Regional Community vulnerability scores are also included. More information
 including processing and indicator derivation steps are available at
 \url{https://noaa-edab.github.io/tech-doc/community-climate-vulnerability.html}.
 }
