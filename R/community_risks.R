@@ -1,8 +1,8 @@
-#' Community climate vulnerability indicators
+#' Community risk indicators (CEVRI)
 #'
-#' Data include time series of Northeast U.S. community scores for community commercial fishing 
-#' revenue sensitivity to temperature, ocean acidification, stock size/status, 
-#' total sensitivity, and total vulnerability based on Hare et al. 2016. species 
+#' Data include time series of Northeast U.S. community scores for community commercial fishing
+#' revenue sensitivity to temperature, ocean acidification, stock size/status,
+#' total sensitivity, and total vulnerability based on Hare et al. 2016. species
 #' vulnerability.
 #'
 #' @format 273424 rows and 5 columns.
@@ -16,10 +16,10 @@
 #' }
 #'
 #' @details
-#' Reciprocal Simpson's Diversity scores for each community, Regional Quotients, 
-#' and Regional climate vulnerability scores are also included. More information 
+#' Reciprocal Simpson's Diversity scores for each community, Regional Quotients,
+#' and Regional climate vulnerability scores are also included. More information
 #' including processing and indicator derivation steps are available at
 #' \url{https://noaa-edab.github.io/tech-doc/community-climate-vulnerability.html}.
-"community_climate_vulnerability"
+"community_risks"
 
 
