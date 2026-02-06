@@ -1,4 +1,4 @@
-#### Get Community Climate Change Risk Indicators (CCCRI)
+#### Get Community Risks Indicators (CEVRI)
 
 library(readxl)
 library(dplyr)
@@ -12,7 +12,7 @@ comm_clim_vuln_xlsx <- "CEVRI_NE_Subregions_Clean.xlsx"
 comm_clim_vuln_xlsx_lbs <- "CEVRI_NE_Subregions_LBS_Clean.xlsx"
 # comm_clim_subregion_xlsx <- "SOE SubRegions_CCCRI_Clean.xlsx"
 
-get_community_climate_vulnerability <- function(save_clean = F) {
+get_community_risks <- function(save_clean = F) {
   # Create data frame to define State-EPU
   df <- data.frame(
     State = c("ME", "MA", "RI", "CT", "DE", "NH", "NY", "NJ", "MD", "VA", "NC"),
@@ -32,7 +32,7 @@ get_community_climate_vulnerability <- function(save_clean = F) {
   )
 
   # Transform vulnerability input file into SOE format ----
-  community_climate_vulnerability <- readxl::read_excel(
+  community_risks <- readxl::read_excel(
     file.path(raw.dir, comm_clim_vuln_xlsx),
     sheet = "CEVRI_NE_Subregions"
   ) |>
@@ -70,7 +70,7 @@ get_community_climate_vulnerability <- function(save_clean = F) {
     dplyr::select(Time, Var, Value, EPU, Units)
 
   # LBS: Transform vulnerability input file into SOE format ----
-  community_climate_vulnerability_lbs <- readxl::read_excel(
+  community_risks_lbs <- readxl::read_excel(
     file.path(raw.dir, comm_clim_vuln_xlsx_lbs),
     sheet = "CEVRI_NE_Subregions_LBS"
   ) |>
@@ -104,22 +104,22 @@ get_community_climate_vulnerability <- function(save_clean = F) {
     dplyr::select(Time, Var, Value, EPU, Units)
 
   # combine data ----
-  community_climate_vulnerability <- rbind(
-    community_climate_vulnerability,
-    community_climate_vulnerability_lbs
+  community_risks <- rbind(
+    community_risks,
+    community_risks_lbs
   )
 
   # 2022 data were found to be incomplete
   # Removing from ecodata until further review
-  community_climate_vulnerability <- dplyr::filter(
-    community_climate_vulnerability,
+  community_risks <- dplyr::filter(
+    community_risks,
     Time != 2025
   )
 
   if (save_clean) {
-    usethis::use_data(community_climate_vulnerability, overwrite = T)
+    usethis::use_data(community_risks, overwrite = T)
   } else {
-    return(community_climate_vulnerability)
+    return(community_risks)
   }
 }
-get_community_climate_vulnerability(save_clean = T)
+get_community_risks(save_clean = T)
