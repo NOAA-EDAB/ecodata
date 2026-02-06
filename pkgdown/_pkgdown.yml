@@ -61,6 +61,7 @@ reference:
     - comdat
     - commercial_div
     - community_risks
+    - crew_survey
     - engagement
     - hms_landings
     - hms_stock_status
@@ -106,6 +107,7 @@ reference:
   - title: "LTL/Hab/Env Indicators"
     desc: "Data files containing Low Trophic Level, Habitat and Environmental indicators used in the State of the Ecosystem Reports"
     contents:
+    - advection
     - bottom_temp_insitu
     - bottom_temp_model_anom
     - bottom_temp_model_gridded
@@ -118,6 +120,7 @@ reference:
     - ches_bay_wq
     - chl_pp
     - cold_pool
+    - dissolved_oxygen
     - gsi
     - forage_anomaly
     - habitat_diversity
