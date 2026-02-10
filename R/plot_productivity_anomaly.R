@@ -251,7 +251,7 @@ plot_productivity_anomaly <- function(
   }
 
   if (varName == "assessment" && EPU == "GOM") {
-    p <- "Assessment variable includes GB and GOM. See plot for EPU = GB."
+    p <- "Assessment plots combine data across EPUs. See plot for EPU = GB."
   }
 
   return(p)
