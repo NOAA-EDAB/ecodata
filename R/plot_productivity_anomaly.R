@@ -14,14 +14,16 @@
 #' @export
 #'
 
-plot_productivity_anomaly <- function(shadedRegion = NULL,
-                                      report="MidAtlantic",
-                                      plottype = "region",
-                                      varName = "anomaly",
-                                      EPU = NULL) {
-
+plot_productivity_anomaly <- function(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  plottype = "region",
+  varName = "anomaly",
+  EPU = "MAB"
+) {
+  # Need to generalize this in a function and add validation checks for
+  # arguments in all functions
   # Input validation
-
   if (!report %in% c("MidAtlantic", "NewEngland")) {
     stop("report must be 'MidAtlantic' or 'NewEngland'")
   }
@@ -34,31 +36,42 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
     stop("varName must be 'anomaly' or 'assessment'")
   }
 
-  if (varName == "assessment" && !is.null(EPU)) {
-    warning("EPU is ignored for assessment plots.")
+  if (varName == "assessment") {
+    message("EPU is ignored for assessment plots.")
   }
 
-  if (varName == "anomaly") {
+  # EPUs are only filtered for region/anomaly
+  if (report == "MidAtlantic") {
+    filterEPUs <- c("MAB")
+  } else {
+    filterEPUs <- EPU
+  }
+  # for council/ anomaly all EPUs used
+  # for region/assessment plots all epus are ignored. jurisdiction is used
 
-    if (report == "MidAtlantic" && plottype == "region" &&
-        !identical(EPU, "MAB")) {
+  if (varName == "anomaly") {
+    if (
+      report == "MidAtlantic" && plottype == "region" && !identical(EPU, "MAB")
+    ) {
       stop("MidAtlantic region anomaly plots require EPU = 'MAB'")
     }
 
-    if (report == "NewEngland" && plottype == "region" &&
-        (is.null(EPU) || !EPU %in% c("GB", "GOM"))) {
+    if (
+      report == "NewEngland" &&
+        plottype == "region" &&
+        (!EPU %in% c("GB", "GOM"))
+    ) {
       stop("NewEngland region anomaly plots require EPU = 'GB' or 'GOM'")
     }
 
-    if (plottype == "council" &&
-        !is.null(EPU) && !identical(EPU, "All")) {
-      stop("Council anomaly plots require EPU = 'All'")
+    if (plottype == "council") {
+      filterEPUs <- "All"
+      message("EPU argument ignored. Council anomaly plots use all EPU data")
     }
   }
 
   # generate plot setup list (same for all plot functions)
-  setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
-                               report=report)
+  setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
 
   # this should be added to plot_setip
   leg_font_size <- 8
@@ -68,53 +81,36 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
 
   # council-level filtering
   if (plottype == "council") {
-
     if (report == "MidAtlantic") {
       prod_dat <- prod_dat |>
         dplyr::filter(Jurisdiction %in% c("MAFMC", "JOINT"))
-
     } else if (report == "NewEngland") {
       prod_dat <- prod_dat |>
         dplyr::filter(Jurisdiction %in% c("NEFMC", "JOINT"))
-
     } else {
       stop("Invalid report value")
     }
   }
 
-
   # determine EPU filtering logic
-  filterEPUs <- NULL
+  # filterEPUs <- NULL
 
-  if (varName == "anomaly") {
-
-    if (plottype == "region") {
-
-      if (report == "MidAtlantic") {
-        filterEPUs <- "MAB"
-
-      } else if (report == "NewEngland") {
-
-        if (is.null(EPU)) {
-          stop("EPU must be provided for NewEngland region plots: use 'GB' or 'GOM'")
-        }
-        if (!(EPU %in% c("GB","GOM"))) {
-          stop("Invalid EPU. For NewEngland use 'GB' or 'GOM'")
-        }
-
-
-        filterEPUs <- EPU
-      }
-
-    } else if (plottype == "council") {
-
-      # council-level anomaly plots should use EPU == "All"
-      filterEPUs <- "All"
-    }
-  }
-
-
-
+  # if (varName == "anomaly") {
+  #   if (plottype == "region") {
+  #     if (report == "MidAtlantic") {
+  #       filterEPUs <- "MAB"
+  #     } else if (report == "NewEngland") {
+  #       if (!(EPU %in% c("GB", "GOM"))) {
+  #         stop("Invalid EPU. For NewEngland use 'GB' or 'GOM'")
+  #       }
+  #
+  #       filterEPUs <- EPU
+  #     }
+  #   } else if (plottype == "council") {
+  #     # council-level anomaly plots should use EPU == "All"
+  #     filterEPUs <- "All"
+  #   }
+  # }
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
@@ -142,7 +138,6 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
       dplyr::filter(Var == "rs_anom") |>
       dplyr::mutate(Stock = toupper(Stock))
 
-
     # Title + subtitle logic for assessment plots
 
     prefix <- if (report == "MidAtlantic") "MA" else "NE"
@@ -156,21 +151,28 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
       }
     }
 
-      # code for generating plot object p
+    # code for generating plot object p
     # ensure that setup list objects are called as setup$...
     # e.g. fill = setup$shade.fill, alpha = setup$shade.alpha,
     # xmin = setup$x.shade.min , xmax = setup$x.shade.max
     #
     p <-
       ggplot2::ggplot(prod, ggplot2::aes(x = Time)) +
-      ggplot2::geom_bar(data = prod |> dplyr::filter(Value > 0),
-                        ggplot2::aes(y = Value, fill = Stock),
-                        stat = "identity") +
-      ggplot2::geom_bar(data = prod |> dplyr::filter(Value < 0),
-                        ggplot2::aes(y = Value, fill = Stock),
-                        stat = "identity") +
-      ggplot2::geom_line(data = fix, ggplot2::aes(x = Time, y = Total),
-                         linewidth = 1) +
+      ggplot2::geom_bar(
+        data = prod |> dplyr::filter(Value > 0),
+        ggplot2::aes(y = Value, fill = Stock),
+        stat = "identity"
+      ) +
+      ggplot2::geom_bar(
+        data = prod |> dplyr::filter(Value < 0),
+        ggplot2::aes(y = Value, fill = Stock),
+        stat = "identity"
+      ) +
+      ggplot2::geom_line(
+        data = fix,
+        ggplot2::aes(x = Time, y = Total),
+        linewidth = 1
+      ) +
       ggplot2::geom_hline(size = 0.3, ggplot2::aes(yintercept = 0)) +
       ggplot2::xlab("") +
       ggplot2::ylab("Recruitment Anomaly") +
@@ -179,28 +181,32 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
         subtitle = subtitle_text
       ) +
       ggplot2::guides(fill = ggplot2::guide_legend(ncol = 3)) +
-      ecodata::theme_ts()+
-      ggplot2::theme(axis.title   = ggplot2::element_text(size = setup$label.size*2.4),
-                     axis.text    = ggplot2::element_text(size = setup$label.size*2.4),
-                     plot.title   = ggplot2::element_text(size = setup$label.size*2.8),
-                     #legend.text  = element_text(size = leg_font_size),
-                     legend.title = ggplot2::element_blank(),
-                     legend.text=ggplot2::element_text(size = setup$label.size*1.8),
-                     legend.position = "bottom")
+      ecodata::theme_ts() +
+      ggplot2::theme(
+        axis.title = ggplot2::element_text(size = setup$label.size * 2.4),
+        axis.text = ggplot2::element_text(size = setup$label.size * 2.4),
+        plot.title = ggplot2::element_text(size = setup$label.size * 2.8),
+        #legend.text  = element_text(size = leg_font_size),
+        legend.title = ggplot2::element_blank(),
+        legend.text = ggplot2::element_text(size = setup$label.size * 1.8),
+        legend.position = "bottom"
+      )
 
     if (report == "NewEngland") {
-      p <- p + ggplot2::guides(
-        fill = ggplot2::guide_legend(
-          ncol = 4))
+      p <- p +
+        ggplot2::guides(
+          fill = ggplot2::guide_legend(
+            ncol = 4
+          )
+        )
     } else {
       p <- p
     }
   }
 
   if (varName == "anomaly") {
-
     bar_dat <- prod_dat |>
-      dplyr::filter(grepl('_Survey',Var))
+      dplyr::filter(grepl('_Survey', Var))
 
     if (!is.null(filterEPUs)) {
       bar_dat <- bar_dat |>
@@ -212,7 +218,6 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
       dplyr::mutate(
         Var = gsub("^NM LME\\s+", "", Var)
       )
-
 
     p <- plot_stackbarcpts_single(
       YEAR = bar_dat$Time,
@@ -234,107 +239,109 @@ plot_productivity_anomaly <- function(shadedRegion = NULL,
       aggregate = TRUE
     )
     if (report == "NewEngland") {
-      p <- p + ggplot2::guides(
-        fill = ggplot2::guide_legend(
-          ncol = 4))
+      p <- p +
+        ggplot2::guides(
+          fill = ggplot2::guide_legend(
+            ncol = 4
+          )
+        )
     } else {
       p <- p
     }
   }
 
-
-  if (varName == "assessment" && !is.null(EPU) && EPU == "GOM") {
-    p <- "Assessment variable includes GB and GOM. See plot for EPU = GB."
+  if (varName == "assessment" && EPU == "GOM") {
+    p <- "Assessment plots combine data across EPUs. See plot for EPU = GB."
   }
 
   return(p)
-
 }
 
 
-attr(plot_productivity_anomaly,"report") <- c("MidAtlantic","NewEngland")
-attr(plot_productivity_anomaly,"varName") <- c("anomaly","assessment")
-attr(plot_productivity_anomaly,"EPU") <- c(NULL,"MAB","GB","GOM")
-attr(plot_productivity_anomaly,"plottype") <- c("region","council")
-
+attr(plot_productivity_anomaly, "report") <- c("MidAtlantic", "NewEngland")
+attr(plot_productivity_anomaly, "varName") <- c("anomaly", "assessment")
+attr(plot_productivity_anomaly, "EPU") <- c("MAB", "GB", "GOM")
+attr(plot_productivity_anomaly, "plottype") <- c("region", "council")
 
 
 #' anomaly stacked barchart. needs to be reworked
 #' @noRd
-plot_stackbarcpts_single <- function(YEAR, var2bar,
-                                     x, xlab, ylab,
-                                     titl,
-                                     file_suffix,
-                                     leg_font_size = leg_font_size,
-                                     remove_leg = FALSE,
-                                     leg_ncol = 3,
-                                     wcpts = TRUE,
-                                     wdashed = TRUE,
-                                     height = 5.5,
-                                     width = 8,
-                                     filt = TRUE,
-                                     label = label,
-                                     y.text = y.text,
-                                     aggregate = FALSE) {
+plot_stackbarcpts_single <- function(
+  YEAR,
+  var2bar,
+  x,
+  xlab,
+  ylab,
+  titl,
+  file_suffix,
+  leg_font_size = leg_font_size,
+  remove_leg = FALSE,
+  leg_ncol = 3,
+  wcpts = TRUE,
+  wdashed = TRUE,
+  height = 5.5,
+  width = 8,
+  filt = TRUE,
+  label = label,
+  y.text = y.text,
+  aggregate = FALSE
+) {
+  dat2bar <- data.frame(YEAR, var2bar, x)
 
-  dat2bar <- data.frame(YEAR, var2bar,x)
-
-  if (filt == TRUE){mab_species <-  list("SUMMER FLOUNDER","SCUP","BLACK SEA BASS","BLUEFISH",
-                                         "NORTHERN SHORTFIN SQUID", "LONGFIN SQUID", "ATLANTIC MACKEREL",
-                                         "BUTTERFISH","ATLANTIC SURFCLAM", "OCEAN QUAHOG", "TILEFISH",
-                                         "BLUELINE TILEFISH","SPINY DOGFISH", "GOOSEFISH")
-  dat2plot <- dat2bar |>
-    tidyr::gather(variable, value, -YEAR, -var2bar) |>
-    dplyr::mutate(
-      var2bar = gsub("^[A-Z]{2}\\s+LME\\s+", "", var2bar),
-      var2bar = gsub("_", " ", var2bar),
-                  var2bar = gsub(pattern      = "Atl.",
-                                 replacement  = "ATLANTIC",
-                                 x            = var2bar),
-                  var2bar = gsub(pattern      = "Atl",
-                                 replacement  = "ATLANTIC",
-                                 x            = var2bar),
-                  var2bar = gsub(pattern      = "NS and combined",
-                                 replacement  = "",
-                                 x            = var2bar),
-                  var2bar = gsub(pattern      = "YT",
-                                 replacement  = "Yellowtail",
-                                 x            = var2bar),
-                  var2bar = gsub(pattern      = " GoM",
-                                 replacement  = " GOM",
-                                 x            = var2bar),
-                  var2bar = gsub(pattern      = " by EPU",
-                                 replacement  = "",
-                                 x            = var2bar)) |>
-    dplyr::filter(var2bar %in% mab_species)
-  } else if (filt == FALSE){
+  if (filt == TRUE) {
+    mab_species <- list(
+      "SUMMER FLOUNDER",
+      "SCUP",
+      "BLACK SEA BASS",
+      "BLUEFISH",
+      "NORTHERN SHORTFIN SQUID",
+      "LONGFIN SQUID",
+      "ATLANTIC MACKEREL",
+      "BUTTERFISH",
+      "ATLANTIC SURFCLAM",
+      "OCEAN QUAHOG",
+      "TILEFISH",
+      "BLUELINE TILEFISH",
+      "SPINY DOGFISH",
+      "GOOSEFISH"
+    )
+    dat2plot <- dat2bar |>
+      tidyr::gather(variable, value, -YEAR, -var2bar) |>
+      dplyr::mutate(
+        var2bar = gsub("^[A-Z]{2}\\s+LME\\s+", "", var2bar),
+        var2bar = gsub("_", " ", var2bar),
+        var2bar = gsub(pattern = "Atl.", replacement = "ATLANTIC", x = var2bar),
+        var2bar = gsub(pattern = "Atl", replacement = "ATLANTIC", x = var2bar),
+        var2bar = gsub(
+          pattern = "NS and combined",
+          replacement = "",
+          x = var2bar
+        ),
+        var2bar = gsub(pattern = "YT", replacement = "Yellowtail", x = var2bar),
+        var2bar = gsub(pattern = " GoM", replacement = " GOM", x = var2bar),
+        var2bar = gsub(pattern = " by EPU", replacement = "", x = var2bar)
+      ) |>
+      dplyr::filter(var2bar %in% mab_species)
+  } else if (filt == FALSE) {
     dat2plot <- dat2bar |>
       tidyr::gather(variable, value, -YEAR, -var2bar) |>
       dplyr::mutate(
         var2bar = gsub("^[A-Z]{2}\\s+LME\\s+", "", var2bar),
         var2bar = gsub("_", " ", var2bar),
 
-                    var2bar = gsub(pattern      = "Atl.",
-                                   replacement  = "ATLANTIC",
-                                   x            = var2bar),
-                    var2bar = gsub(pattern      = "Atl",
-                                   replacement  = "ATLANTIC",
-                                   x            = var2bar),
-                    var2bar = gsub(pattern      = "NS and combined",
-                                   replacement  = "",
-                                   x            = var2bar),
-                    var2bar = gsub(pattern      = "YT",
-                                   replacement  = "Yellowtail",
-                                   x            = var2bar),
-                    var2bar = gsub(pattern      = " GoM",
-                                   replacement  = " GOM",
-                                   x            = var2bar),
-                    var2bar = gsub(pattern      = " by EPU",
-                                   replacement  = "",
-                                   x            = var2bar))
+        var2bar = gsub(pattern = "Atl.", replacement = "ATLANTIC", x = var2bar),
+        var2bar = gsub(pattern = "Atl", replacement = "ATLANTIC", x = var2bar),
+        var2bar = gsub(
+          pattern = "NS and combined",
+          replacement = "",
+          x = var2bar
+        ),
+        var2bar = gsub(pattern = "YT", replacement = "Yellowtail", x = var2bar),
+        var2bar = gsub(pattern = " GoM", replacement = " GOM", x = var2bar),
+        var2bar = gsub(pattern = " by EPU", replacement = "", x = var2bar)
+      )
   }
-  if (aggregate){
-
+  if (aggregate) {
     agg <- dat2plot |>
       dplyr::mutate(
         value = ifelse(is.nan(value), NA_real_, value)
@@ -362,37 +369,53 @@ plot_stackbarcpts_single <- function(YEAR, var2bar,
       )
   }
 
-
-
-
   p <-
-    ggplot2::ggplot(dat2plot,
-                    ggplot2::aes(x = YEAR)) +
-    ggplot2::geom_bar(data = dat2plot |> dplyr::filter(value > 0),
-                      ggplot2::aes(y = value, fill = var2bar),
-                      stat = "identity") +
-    ggplot2::geom_bar(data = dat2plot |> dplyr::filter(value < 0),
-                      ggplot2::aes(y = value, fill = var2bar),
-                      stat = "identity") +
-    {if(aggregate) ggplot2::geom_line(data = agg,ggplot2::aes(x = YEAR, y = Total),
-                             linewidth = 1)} +
+    ggplot2::ggplot(dat2plot, ggplot2::aes(x = YEAR)) +
+    ggplot2::geom_bar(
+      data = dat2plot |> dplyr::filter(value > 0),
+      ggplot2::aes(y = value, fill = var2bar),
+      stat = "identity"
+    ) +
+    ggplot2::geom_bar(
+      data = dat2plot |> dplyr::filter(value < 0),
+      ggplot2::aes(y = value, fill = var2bar),
+      stat = "identity"
+    ) +
+    {
+      if (aggregate) {
+        ggplot2::geom_line(
+          data = agg,
+          ggplot2::aes(x = YEAR, y = Total),
+          linewidth = 1
+        )
+      }
+    } +
     ggplot2::geom_hline(size = 0.3, ggplot2::aes(yintercept = 0)) +
     ggplot2::xlab(xlab) +
     ggplot2::ylab(ylab) +
     ggplot2::ggtitle(titl) +
     ggplot2::guides(fill = ggplot2::guide_legend(ncol = leg_ncol)) +
-    ecodata::theme_ts()+
-    ggplot2::theme(axis.title   = ggplot2::element_text(size = 12),
-                   axis.text    = ggplot2::element_text(size = 10),
-                   plot.title   = ggplot2::element_text(size = 14),
-                   legend.text  = ggplot2::element_text(size = leg_font_size),
-                   legend.title = ggplot2::element_blank(),
-                   legend.position = "bottom") +
-    ggplot2::annotate("text", label = label, x = 1980, y = y.text,size = 8, colour = "black")
+    ecodata::theme_ts() +
+    ggplot2::theme(
+      axis.title = ggplot2::element_text(size = 12),
+      axis.text = ggplot2::element_text(size = 10),
+      plot.title = ggplot2::element_text(size = 14),
+      legend.text = ggplot2::element_text(size = leg_font_size),
+      legend.title = ggplot2::element_blank(),
+      legend.position = "bottom"
+    ) +
+    ggplot2::annotate(
+      "text",
+      label = label,
+      x = 1980,
+      y = y.text,
+      size = 8,
+      colour = "black"
+    )
 
-
-
-  if(remove_leg) p <- p + theme(legend.position = "none")
+  if (remove_leg) {
+    p <- p + theme(legend.position = "none")
+  }
 
   return(p)
 }
