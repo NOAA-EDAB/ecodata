@@ -9,7 +9,7 @@ plot_productivity_anomaly(
   report = "MidAtlantic",
   plottype = "region",
   varName = "anomaly",
-  EPU = NULL
+  EPU = "MAB"
 )
 }
 \arguments{
