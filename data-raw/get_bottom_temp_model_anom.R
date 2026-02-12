@@ -34,11 +34,11 @@ get_bottom_temp_model_anom <- function(save_clean = F){
 get_bottom_temp_model_anom(save_clean = T)
 
 
-btsg_csv <- "bottom_temp_seasonal_gridded_2025.csv"
+btsg_csv <- "GLORYS_bottom_temp_model_gridded_1993_2025.rds"
 
 get_bottom_temp_model_gridded <- function(save_clean = F){
 
-  bottom_temp_model_gridded<- read.csv(file.path(raw.dir,btsg_csv))
+  bottom_temp_model_gridded<- readRDS(file.path(raw.dir,btsg_csv))
 
   if (save_clean){
     usethis::use_data(bottom_temp_model_gridded, overwrite = T)
