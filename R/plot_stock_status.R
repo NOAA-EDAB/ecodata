@@ -100,6 +100,24 @@ plot_stock_status <- function(shadedRegion = NULL, report = "MidAtlantic") {
     by = 0.25
   )
 
+  # --- Logic to force top panel to 1/4 height ---
+  # Calculate the range of the bottom panel (Cat = TRUE)
+  range_bottom <- max(ybreaks)
+
+  # Calculate required range for top panel to be 1/3 of bottom (1:3 ratio = 1/4 total)
+  req_range_top <- range_bottom / 3
+
+  # Create dummy data centered at 100 to force this range
+  # We include Council/score placeholders to satisfy the global mapping
+  dummy_limits <- tibble::tibble(
+    Cat = FALSE,
+    B.Bmsy = 1, # Arbitrary valid X
+    F.Fmsy = c(100 - (req_range_top / 2), 100 + (req_range_top / 2)),
+    Council = "MAFMC", # Placeholder factor level
+    score = "a"        # Placeholder factor level
+  )
+  # ----------------------------------------------
+
   # offset_y <- fix |>
   #   dplyr::mutate(
   #     new_ffmsy = dplyr::case_when(
@@ -110,6 +128,8 @@ plot_stock_status <- function(shadedRegion = NULL, report = "MidAtlantic") {
 
   p <- fix |>
     ggplot2::ggplot() +
+    # Add invisible dummy points to force panel sizing
+    ggplot2::geom_blank(data = dummy_limits, ggplot2::aes(x = B.Bmsy, y = F.Fmsy)) +
     ggplot2::geom_vline(xintercept = 1, linetype = "dotted") +
     ggplot2::geom_vline(xintercept = 0.5, linetype = "dashed") +
     # don't plot hline for missing ffmsy
