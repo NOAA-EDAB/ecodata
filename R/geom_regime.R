@@ -37,16 +37,17 @@
 #'   geom_regime()
 #'}
 
-geom_regime <- function(data = NULL, mapping = NULL,
-                       stat = "REGIME",
-                       geom = "vline",
-                       position = "identity",
-                       inherit.aes = TRUE,
-                       na.rm = FALSE,
-                       color = "red",
-                       show.legend = NA) {
-
-
+geom_regime <- function(
+  data = NULL,
+  mapping = NULL,
+  stat = "REGIME",
+  geom = "vline",
+  position = "identity",
+  inherit.aes = TRUE,
+  na.rm = FALSE,
+  color = "red",
+  show.legend = NA
+) {
   ggplot2::layer(
     data = data,
     mapping = mapping,

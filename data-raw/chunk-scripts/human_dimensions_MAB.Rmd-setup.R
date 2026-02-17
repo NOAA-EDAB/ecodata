@@ -1,12 +1,13 @@
-
 # Image Directory
 image.dir <- here::here("docs/images")
 gis.dir <- here::here("data-raw/gis")
 #Default Rmd options
-knitr::opts_chunk$set(echo = FALSE,
-                      message = FALSE,
-                      warning = FALSE,
-                      fig.align = 'center') #allows for inserting R code into captions
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  fig.align = 'center'
+) #allows for inserting R code into captions
 
 #Plotting and data libraries
 library(ggplot2)
@@ -39,4 +40,4 @@ council_abbr <- "MAFMC"
 epu <- "Mid-Atlantic Bight"
 epu_abbr <- "MAB"
 region <- "Mid-Atlantic"
-region_abbr <- "MA" #Some commercial data organized by "MA" or "NE" regions, not by EPU 
+region_abbr <- "MA" #Some commercial data organized by "MA" or "NE" regions, not by EPU

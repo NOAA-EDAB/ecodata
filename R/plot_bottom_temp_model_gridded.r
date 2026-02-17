@@ -10,13 +10,12 @@
 #'
 #' @export
 
-plot_bottom_temp_model_gridded <- function(shadedRegion = NULL,
-                                              report = "MidAtlantic",
-                                              scale = "celsius") {
-
-
-  setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
-                               report=report)
+plot_bottom_temp_model_gridded <- function(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  scale = "celsius"
+) {
+  setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
 
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
@@ -27,8 +26,6 @@ plot_bottom_temp_model_gridded <- function(shadedRegion = NULL,
     ymax = 45
     xlims <- c(xmin, xmax)
     ylims <- c(ymin, ymax)
-
-
   } else {
     filterEPUs <- c("GB", "GOM")
     # Set lat/lon window for maps
@@ -40,79 +37,87 @@ plot_bottom_temp_model_gridded <- function(shadedRegion = NULL,
     ylims <- c(ymin, ymax)
   }
 
-
   #EPU shapefile
   ne_epu_sf <- ecodata::epu_sf |>
     dplyr::filter(EPU %in% filterEPUs)
 
-
   fix <- ecodata::bottom_temp_model_gridded |>
     dplyr::filter(Time == max(Time)) |>
     dplyr::select(-Time) |>
-    dplyr::mutate(Var = factor(Var, levels = c("winter","spring","summer","fall")))
-
-
+    dplyr::mutate(
+      Var = factor(Var, levels = c("winter", "spring", "summer", "fall"))
+    )
 
   if (scale == "fahrenheit") {
     # convert celsius to fahrenheit
     fix <- fix |>
-      dplyr::mutate(Value = (9/5)*Value + 32)
+      dplyr::mutate(Value = (9 / 5) * Value + 32)
     label <- "Temp. (\u00B0F)"
-    breaks <- c(32,41, 50, 59, 68, 77)
-    labelLegend <- c("32","41", "50", "59", "68", "77")
-    limits <- c(31.6,84.2)
+    breaks <- c(32, 41, 50, 59, 68, 77)
+    labelLegend <- c("32", "41", "50", "59", "68", "77")
+    limits <- c(31.6, 84.2)
     midpoint <- 50
   } else {
     label <- "Temp. (\u00B0C)"
-    breaks <- c(0,5,10,15,20,25)
-    labelLegend <- c("0","5", "10", "15", "20", "25")
-    limits <- c(-0.2,29)
-    midpoint <-10
+    breaks <- c(0, 5, 10, 15, 20, 25)
+    labelLegend <- c("0", "5", "10", "15", "20", "25")
+    limits <- c(-0.2, 29)
+    midpoint <- 10
   }
 
- # fix <- fix |> dplyr::mutate(Value = replace(Value, Value > maxVal, maxVal))
+  # fix <- fix |> dplyr::mutate(Value = replace(Value, Value > maxVal, maxVal))
 
-
-
-
-  p <- ggplot2::ggplot(data = fix)+
-    ggplot2::geom_tile(ggplot2::aes(x = Longitude, y = Latitude, fill = sqrt(Value+1))) +
+  p <- ggplot2::ggplot(data = fix) +
+    ggplot2::geom_tile(ggplot2::aes(
+      x = Longitude,
+      y = Latitude,
+      fill = sqrt(Value + 1)
+    )) +
     ggplot2::geom_sf(data = ecodata::coast, size = setup$map.lwd) +
-    ggplot2::geom_sf(data = ne_epu_sf, fill = "transparent", size = setup$map.lwd) +
+    ggplot2::geom_sf(
+      data = ne_epu_sf,
+      fill = "transparent",
+      size = setup$map.lwd
+    ) +
     ggplot2::coord_sf(xlim = xlims, ylim = ylims) +
-    ggplot2::facet_wrap(Var~.)+
+    ggplot2::facet_wrap(Var ~ .) +
     ecodata::theme_map() +
     #scales::show_col(viridis::inferno(n=3)) Find the colors
-    ggplot2::scale_fill_gradient2(name = label,
-                                  low = "#000004FF",
-                                  mid = "#BB3754FF",
-                                  high = "#FCFFA4FF",
-                                  breaks = sqrt(breaks+1),
-                                  limits = sqrt(limits+1),
-                                  labels = labelLegend,
-                                  midpoint = sqrt(midpoint+1)) +
+    ggplot2::scale_fill_gradient2(
+      name = label,
+      low = "#000004FF",
+      mid = "#BB3754FF",
+      high = "#FCFFA4FF",
+      breaks = sqrt(breaks + 1),
+      limits = sqrt(limits + 1),
+      labels = labelLegend,
+      midpoint = sqrt(midpoint + 1)
+    ) +
     #ggplot2::scale_color_viridis_c(option = 'B',name = 'Bottom \n Temp')+
-    ggplot2::ggtitle('Seasonal Mean Bottom Temperature')+
+    ggplot2::ggtitle('Seasonal Mean Bottom Temperature') +
     ggplot2::xlab("Longitude") +
     ggplot2::ylab("Latitude") +
-    ggplot2::theme(panel.border = ggplot2::element_rect(colour = "black", fill=NA, linewidth=0.75),
-                   legend.key = ggplot2::element_blank(),
-                   axis.title = ggplot2::element_text(size = 11),
-                   strip.background = ggplot2::element_blank(),
-                   strip.text=ggplot2::element_text(hjust=0),
-                   axis.text = ggplot2::element_text(size = 8),
-                   axis.title.y = ggplot2::element_text(angle = 90))+
+    ggplot2::theme(
+      panel.border = ggplot2::element_rect(
+        colour = "black",
+        fill = NA,
+        linewidth = 0.75
+      ),
+      legend.key = ggplot2::element_blank(),
+      axis.title = ggplot2::element_text(size = 11),
+      strip.background = ggplot2::element_blank(),
+      strip.text = ggplot2::element_text(hjust = 0),
+      axis.text = ggplot2::element_text(size = 8),
+      axis.title.y = ggplot2::element_text(angle = 90)
+    ) +
     ecodata::theme_title() +
 
     ecodata::theme_ts()
 
-
   return(p)
 }
 
-attr(plot_bottom_temp_model_gridded,"report") <- c("MidAtlantic","NewEngland")
-
-
+attr(plot_bottom_temp_model_gridded, "report") <- c("MidAtlantic", "NewEngland")
 
 # p <-
 #   ggplot2::ggplot() +

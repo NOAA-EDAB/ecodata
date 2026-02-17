@@ -7,21 +7,21 @@
 #' @return Character vector. Names of the files that contain the text
 #'
 
-find_text <- function(textSnippet){
+find_text <- function(textSnippet) {
   # read yml file
   filenames <- list.files(here::here("chunk-scripts"))
 
-  options(warn=-1)
+  options(warn = -1)
   # loop over each rmd file
   for (afile in filenames) {
     # read in rmd
-    chapterContent <- readLines(here::here("chunk-scripts",paste0(afile)))
+    chapterContent <- readLines(here::here("chunk-scripts", paste0(afile)))
 
-    lineContrib <- chapterContent[grepl(textSnippet,chapterContent)]
-    if (length(lineContrib) == 0) next
+    lineContrib <- chapterContent[grepl(textSnippet, chapterContent)]
+    if (length(lineContrib) == 0) {
+      next
+    }
 
     print(afile)
-
   }
-
 }

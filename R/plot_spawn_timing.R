@@ -39,10 +39,14 @@ plot_spawn_timing <- function(
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
   fix <- ecodata::spawn_timing |>
-    dplyr::mutate(Units = dplyr::recode(Units,
-                                        "julian day" = "Julian Day",
-                                        "bottom temperature degrees C" = "Bottom Temperature (C)",
-                                        "number of mature females sampled" = "Number of Mature Females Sampled")) |>
+    dplyr::mutate(
+      Units = dplyr::recode(
+        Units,
+        "julian day" = "Julian Day",
+        "bottom temperature degrees C" = "Bottom Temperature (C)",
+        "number of mature females sampled" = "Number of Mature Females Sampled"
+      )
+    ) |>
     tidyr::separate(
       Var,
       into = c("Season", "Species", "Stock", "Var"),
@@ -108,7 +112,8 @@ plot_spawn_timing <- function(
       ggplot2::ylab(paste(
         "Percent",
         varName,
-        "Maturity Stage")) +
+        "Maturity Stage"
+      )) +
       ggplot2::ggtitle(paste(
         stringr::str_to_sentence(filt$Season),
         varName,

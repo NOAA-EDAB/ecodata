@@ -21,5 +21,3 @@
 #' including processing and indicator derivation steps are available at
 #' \url{https://noaa-edab.github.io/tech-doc/community-climate-vulnerability.html}.
 "community_risks"
-
-

@@ -24,9 +24,6 @@
 # for each species group in each survey. The coefficient of variation, standard error, and 95%
 # confidence intervals were also calculated for each species group and provided.
 
-
-
-
 library(dplyr)
 library(tidyr)
 library(readxl)
@@ -36,58 +33,70 @@ raw.dir <- here::here("data-raw")
 ne_inshore_survey_rda <- "MENH_TrawlSurvey_SOE26_Data - Trawl Survey.RData"
 ne_inshore_survey_species_xlsx <- "MENH_TrawlSpeciesinSOE_2024.xlsx"
 
-get_ne_inshore_survey <- function(save_clean = F){
-
+get_ne_inshore_survey <- function(save_clean = F) {
   load(file.path(raw.dir, ne_inshore_survey_rda))
   ne_inshore_survey <- Trawl.Strat4Indices %>%
-    dplyr::rename(Var = SOE.24,
-                  Value = StratMean_Weight,
-                  Time = Year) %>%
-    dplyr::mutate(EPU = "NE",
-                  Units = "(KG/tow)") %>%
-    dplyr::select(-CV_Weight, - SE_Weight,
-                  -Low_CI_Weight, -High_CI_Weight, -Survey ) %>%
-    dplyr::mutate(Season = dplyr::recode(Season, "FL"= "Fall","SP" = "Spring" )) %>%
-    tidyr::unite(.,Var, c("Var","Season"),sep = " ")%>%
+    dplyr::rename(Var = SOE.24, Value = StratMean_Weight, Time = Year) %>%
+    dplyr::mutate(EPU = "NE", Units = "(KG/tow)") %>%
+    dplyr::select(
+      -CV_Weight,
+      -SE_Weight,
+      -Low_CI_Weight,
+      -High_CI_Weight,
+      -Survey
+    ) %>%
+    dplyr::mutate(
+      Season = dplyr::recode(Season, "FL" = "Fall", "SP" = "Spring")
+    ) %>%
+    tidyr::unite(., Var, c("Var", "Season"), sep = " ") %>%
     dplyr::select(Time, Var, Value, EPU, Units)
-  if (save_clean){
+  if (save_clean) {
     usethis::use_data(ne_inshore_survey, overwrite = T)
   } else {
     return(list(ne_inshore_survey))
   }
   # metadata ----
-  attr(ne_inshore_survey, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/inshoresurvdat.html"
-  attr(ne_inshore_survey, "data_files")   <- list(
-    ne_inshore_survey_csv = ne_inshore_survey_rda)
+  attr(
+    ne_inshore_survey,
+    "tech-doc_url"
+  ) <- "https://noaa-edab.github.io/tech-doc/inshoresurvdat.html"
+  attr(ne_inshore_survey, "data_files") <- list(
+    ne_inshore_survey_csv = ne_inshore_survey_rda
+  )
   attr(ne_inshore_survey, "data_steward") <- c(
-    "Rebecca Peters <rebecca.j.peters@maine.gov>")
+    "Rebecca Peters <rebecca.j.peters@maine.gov>"
+  )
 }
 
 
-
-
-
-
-get_ne_inshore_survey_species <- function(save_clean = F){
-  ne_inshore_survey_species <- read_excel(file.path(raw.dir, ne_inshore_survey_species_xlsx)) %>%
+get_ne_inshore_survey_species <- function(save_clean = F) {
+  ne_inshore_survey_species <- read_excel(file.path(
+    raw.dir,
+    ne_inshore_survey_species_xlsx
+  )) %>%
     dplyr::mutate(Var = "Maine and NH inshore survey species") %>%
-    dplyr::rename(Species = CommonName,
-           Group = SOE.24) %>%
+    dplyr::rename(Species = CommonName, Group = SOE.24) %>%
     dplyr::select(-ITISSPP, -COMNAME, -SVSPP, -SCINAME)
 
   # metadata ----
-  attr(ne_inshore_survey_species, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/inshoresurvdat.html"
-  attr(ne_inshore_survey_species, "data_files")   <- list(
-    ne_inshore_survey_species_xlsx = ne_inshore_survey_species_xlsx)
+  attr(
+    ne_inshore_survey_species,
+    "tech-doc_url"
+  ) <- "https://noaa-edab.github.io/tech-doc/inshoresurvdat.html"
+  attr(ne_inshore_survey_species, "data_files") <- list(
+    ne_inshore_survey_species_xlsx = ne_inshore_survey_species_xlsx
+  )
   attr(ne_inshore_survey_species, "data_steward") <- c(
-    "Rebecca Peters <rebecca.j.peters@maine.gov>")
+    "Rebecca Peters <rebecca.j.peters@maine.gov>"
+  )
   attr(ne_inshore_survey, "plot_script") <- list(
-    `mf_NE` = "macrofauna_NE.Rmd-ne-inshore-survey.R")
+    `mf_NE` = "macrofauna_NE.Rmd-ne-inshore-survey.R"
+  )
 
-  if (save_clean){
+  if (save_clean) {
     usethis::use_data(ne_inshore_survey_species, overwrite = T)
   } else {
-    return(list( ne_inshore_survey_species))
+    return(list(ne_inshore_survey_species))
   }
 }
 get_ne_inshore_survey(save_clean = T)

@@ -13,8 +13,7 @@ sprmacro <- "springmacrobenthosindex.rds"
 falmacrocog <- "fallmacrobenthoscog.rds"
 sprmacrocog <- "springmacrobenthoscog.rds"
 
-get_benthos_index <- function(save_clean = F){
-
+get_benthos_index <- function(save_clean = F) {
   # Load input files for megabenthos index and center of gravity
   fallmega <- readRDS(file.path(raw.dir, falmega))
   springmega <- readRDS(file.path(raw.dir, sprmega))
@@ -27,21 +26,25 @@ get_benthos_index <- function(save_clean = F){
   fallmacrocog <- readRDS(file.path(raw.dir, falmacrocog))
   springmacrocog <- readRDS(file.path(raw.dir, sprmacrocog))
 
-  benthos_index<- rbind(fallmega, springmega, fallmegacog, springmegacog, fallmacro, springmacro, fallmacrocog, springmacrocog)
+  benthos_index <- rbind(
+    fallmega,
+    springmega,
+    fallmegacog,
+    springmegacog,
+    fallmacro,
+    springmacro,
+    fallmacrocog,
+    springmacrocog
+  )
 
-    # Standardize the EPU column to "All"
-    benthos_index <- benthos_index  |>
-      dplyr::mutate(EPU = ifelse(EPU %in% c("ALLEPU", "AllEPU"), "All", EPU))
+  # Standardize the EPU column to "All"
+  benthos_index <- benthos_index |>
+    dplyr::mutate(EPU = ifelse(EPU %in% c("ALLEPU", "AllEPU"), "All", EPU))
 
-  if (save_clean){
+  if (save_clean) {
     usethis::use_data(benthos_index, overwrite = T)
   } else {
     return(benthos_index)
   }
 }
 get_benthos_index(save_clean = T)
-
-
-
-
-

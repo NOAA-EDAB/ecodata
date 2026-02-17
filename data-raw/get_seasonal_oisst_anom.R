@@ -19,20 +19,25 @@ library(stringr)
 ### SST from ecopull
 # https://github.com/kimberly-bastille/ecopull/blob/main/data/new_sst_anomaly.rda
 raw.dir <- here::here("data-raw")
-sst_rda<- "new_sst_anomaly.rda"
+sst_rda <- "new_sst_anomaly.rda"
 
-get_seasonal_oisst_anom<- function(save_clean = F){
+get_seasonal_oisst_anom <- function(save_clean = F) {
   load(file.path(raw.dir, sst_rda))
   seasonal_oisst_anom <- new_sst_anomaly %>%
     dplyr::rename(Time = Year) %>%
     tidyr::separate(Var, into = c("X", "Var", "A", "b"), sep = "_") %>%
     dplyr::select(Time, Var, Value, EPU) %>%
-    dplyr::mutate(Var = dplyr::recode(Var, "winter"="Winter",
-                                      "spring" = "Spring",
-                                      "summer" = "Summer",
-                                      "fall" = "Fall"))
+    dplyr::mutate(
+      Var = dplyr::recode(
+        Var,
+        "winter" = "Winter",
+        "spring" = "Spring",
+        "summer" = "Summer",
+        "fall" = "Fall"
+      )
+    )
 
-  if (save_clean){
+  if (save_clean) {
     usethis::use_data(seasonal_oisst_anom, overwrite = T)
   } else {
     return(seasonal_oisst_anom)

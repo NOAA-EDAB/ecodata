@@ -1,12 +1,13 @@
-
 #Image Directory
 image.dir <- here::here("docs/images")
 
 #Default Rmd options
-knitr::opts_chunk$set(echo = FALSE,
-                      message = FALSE,
-                      warning = FALSE,
-                      fig.align = 'center') #allows for inserting R code into captions
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  fig.align = 'center'
+) #allows for inserting R code into captions
 
 #Plotting and data libraries
 library(ggplot2)
@@ -32,7 +33,7 @@ library(raster)
 
 
 #GIS directory
-gis.dir <- here::here("data-raw","gridded")
+gis.dir <- here::here("data-raw", "gridded")
 
 #General inline text input for report
 #Council
@@ -41,6 +42,6 @@ council_abbr <- "NEFMC"
 
 #Region identifiers
 epu <- "Gulf of Maine and Georges Bank"
-epu_abbr <- c("GB","GOM")
+epu_abbr <- c("GB", "GOM")
 region <- "New England"
-region_abbr <- "NE" #Some commercial data organized by "MA" or "NE" regions, not by EPU 
+region_abbr <- "NE" #Some commercial data organized by "MA" or "NE" regions, not by EPU
