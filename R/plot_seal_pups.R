@@ -11,12 +11,9 @@
 #' @export
 #'
 
-plot_seal_pups <- function(shadedRegion = NULL,
-                              report="MidAtlantic") {
-
+plot_seal_pups <- function(shadedRegion = NULL, report = "MidAtlantic") {
   # generate plot setup list (same for all plot functions)
-  setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
-                               report=report)
+  setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
 
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
@@ -27,12 +24,13 @@ plot_seal_pups <- function(shadedRegion = NULL,
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
-   fix <- ecodata::seal_pups  |>
-     tidyr::separate(Var, into = c("Var", "colony"), sep = "-") |>
-     dplyr::filter(!colony == "Green",
-                   Var == "count") |>
-     dplyr::mutate(Var = dplyr::recode(Var, "count" = "Counts"),
-                   colony = dplyr::recode(colony, "Nomans.Land" = "Nomans Land"))
+  fix <- ecodata::seal_pups |>
+    tidyr::separate(Var, into = c("Var", "colony"), sep = "-") |>
+    dplyr::filter(!colony == "Green", Var == "count") |>
+    dplyr::mutate(
+      Var = dplyr::recode(Var, "count" = "Counts"),
+      colony = dplyr::recode(colony, "Nomans.Land" = "Nomans Land")
+    )
 
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
@@ -41,29 +39,40 @@ plot_seal_pups <- function(shadedRegion = NULL,
   #
   p <- fix |>
     ggplot2::ggplot(ggplot2::aes(x = Time, y = Value)) +
-    ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
-        xmin = setup$x.shade.min , xmax = setup$x.shade.max,
-        ymin = -Inf, ymax = Inf) +
-    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, color=colony, shape=colony))+
-    ggplot2::geom_line(ggplot2::aes(x = Time, y = Value,color = colony))+
-    ggplot2::ggtitle("Estimated Gray Seal Pup Births")+
-    ggplot2::ylab(expression("Pup Count"))+
-    ggplot2::xlab("")+
+    ggplot2::annotate(
+      "rect",
+      fill = setup$shade.fill,
+      alpha = setup$shade.alpha,
+      xmin = setup$x.shade.min,
+      xmax = setup$x.shade.max,
+      ymin = -Inf,
+      ymax = Inf
+    ) +
+    ggplot2::geom_point(ggplot2::aes(
+      x = Time,
+      y = Value,
+      color = colony,
+      shape = colony
+    )) +
+    ggplot2::geom_line(ggplot2::aes(x = Time, y = Value, color = colony)) +
+    ggplot2::ggtitle("Estimated Gray Seal Pup Births") +
+    ggplot2::ylab(expression("Pup Count")) +
+    ggplot2::xlab("") +
     #ecodata::geom_gls()+
-    ecodata::theme_ts()+
-    ecodata::theme_facet()+
+    ecodata::theme_ts() +
+    ecodata::theme_facet() +
     ecodata::theme_title()
 
-   # # optional code for New England specific (2 panel) formatting
-   #  if (report == "NewEngland") {
-   #    p <- p +
-   #      ggplot2::theme(legend.position = "bottom",
-   #                     legend.title = ggplot2::element_blank())
-   #
-   #  }
+  # # optional code for New England specific (2 panel) formatting
+  #  if (report == "NewEngland") {
+  #    p <- p +
+  #      ggplot2::theme(legend.position = "bottom",
+  #                     legend.title = ggplot2::element_blank())
+  #
+  #  }
 
-    return(p)
+  return(p)
 }
 
 
-attr(plot_seal_pups,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_seal_pups, "report") <- c("MidAtlantic", "NewEngland")

@@ -33,7 +33,7 @@ plot_rec_hms <- function(shadedRegion = NULL, report = "MidAtlantic", n = 0) {
       fac = dplyr::case_when(Group == "Scombridae" ~ "Tuna", TRUE ~ "Other")
     ) |>
     # Exclude billfishes and tuna from plot, per HMS request - January 2026
-    dplyr::filter(Group %in% c("LargeCoastal","SmallCoastal","Prohibited"))
+    dplyr::filter(Group %in% c("LargeCoastal", "SmallCoastal", "Prohibited"))
 
   fix <- fix |>
     # merge in NA's to break lines

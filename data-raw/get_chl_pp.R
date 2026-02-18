@@ -10,8 +10,13 @@ chl_pp_csv <- "chl_pp_input.csv"
 # transformation ----
 chl_pp <- read.csv(file.path(raw.dir, chl_pp_csv)) %>%
   dplyr::select(PERIOD, VARIABLE, VALUE, SUBAREA, UNITS) %>%
-  dplyr::rename(Time = PERIOD, Units = UNITS, Var = VARIABLE,
-                EPU = SUBAREA, Value = VALUE) %>%
+  dplyr::rename(
+    Time = PERIOD,
+    Units = UNITS,
+    Var = VARIABLE,
+    EPU = SUBAREA,
+    Value = VALUE
+  ) %>%
   dplyr::mutate(Value = as.numeric(Value)) %>%
   dplyr::filter(Var != "ANNUAL_PPD_RATIO_ANOMALY") %>%
   dplyr::distinct(Time, Var, EPU, .keep_all = T)

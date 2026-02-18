@@ -15,13 +15,17 @@
 #'   theme_facet()
 #'
 #'
-theme_facet <- function(...){
+theme_facet <- function(...) {
   ggplot2::theme(
     strip.background = ggplot2::element_blank(),
     panel.grid.major = ggplot2::element_blank(),
     panel.grid.minor = ggplot2::element_blank(),
     panel.background = ggplot2::element_blank(),
-    panel.border = ggplot2::element_rect(colour = "black", fill=NA, size=0.75),
+    panel.border = ggplot2::element_rect(
+      colour = "black",
+      fill = NA,
+      size = 0.75
+    ),
     legend.key = ggplot2::element_blank(),
     axis.title = ggplot2::element_text(size = 10)
   )

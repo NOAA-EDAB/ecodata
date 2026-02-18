@@ -5,7 +5,6 @@
 # on the Northeast Continental Shelf. Raw data is split
 # into four files by EPU (SS, GOM, GB, and MAB).
 
-
 library(dplyr)
 library(tidyr)
 library(lubridate)
@@ -14,35 +13,50 @@ library(readr)
 #Get raw
 raw.dir <- here::here("data-raw") #input raw
 
-bottom_temp_GOM_csv<-"fratantoni_bot_temp_GOM - Paula Fratantoni - NOAA Federal.csv"
-bottom_temp_GB_csv<-"fratantoni_bot_temp_GB - Paula Fratantoni - NOAA Federal.csv"
-bottom_temp_MAB_csv<-"fratantoni_bot_temp_MAB - Paula Fratantoni - NOAA Federal.csv"
-bottom_temp_SS_csv<-"fratantoni_bot_temp_SS - Paula Fratantoni - NOAA Federal.csv"
+bottom_temp_GOM_csv <- "fratantoni_bot_temp_GOM - Paula Fratantoni - NOAA Federal.csv"
+bottom_temp_GB_csv <- "fratantoni_bot_temp_GB - Paula Fratantoni - NOAA Federal.csv"
+bottom_temp_MAB_csv <- "fratantoni_bot_temp_MAB - Paula Fratantoni - NOAA Federal.csv"
+bottom_temp_SS_csv <- "fratantoni_bot_temp_SS - Paula Fratantoni - NOAA Federal.csv"
 
-get_bottom_temp_insitu <- function(save_clean = F){
-
-  ss <- read.csv(file.path(raw.dir,bottom_temp_SS_csv)) %>% mutate(EPU = "SS")
-  gom <- read.csv(file.path(raw.dir,bottom_temp_GOM_csv)) %>% mutate(EPU = "GOM")
-  gb <- read.csv(file.path(raw.dir,bottom_temp_GB_csv)) %>% mutate(EPU = "GB")
-  mab <- read.csv(file.path(raw.dir,bottom_temp_MAB_csv)) %>% mutate(EPU = "MAB")
+get_bottom_temp_insitu <- function(save_clean = F) {
+  ss <- read.csv(file.path(raw.dir, bottom_temp_SS_csv)) %>% mutate(EPU = "SS")
+  gom <- read.csv(file.path(raw.dir, bottom_temp_GOM_csv)) %>%
+    mutate(EPU = "GOM")
+  gb <- read.csv(file.path(raw.dir, bottom_temp_GB_csv)) %>% mutate(EPU = "GB")
+  mab <- read.csv(file.path(raw.dir, bottom_temp_MAB_csv)) %>%
+    mutate(EPU = "MAB")
 
   bottom_temp_insitu <- rbind(ss, gom, gb, mab) %>% #bind all
-    dplyr::mutate(Units = "degreesC", Time = as.Date(format(lubridate::date_decimal(Time), "%Y-%b-%d"), "%Y-%b-%d"),
-           Var, Var = plyr::mapvalues(Var, from = c("Tsfc_anom",#Rename variables
-                                                    "Tsfc_ref",
-                                                    "Tbot_anom",
-                                                    "Tbot_ref"),
-                                      to = c("sst anomaly in situ",
-                                             "reference sst in situ (1981-2010)",
-                                             "bottom temp anomaly in situ",
-                                             "reference bt in situ (1981-2010)"))) %>%
+    dplyr::mutate(
+      Units = "degreesC",
+      Time = as.Date(
+        format(lubridate::date_decimal(Time), "%Y-%b-%d"),
+        "%Y-%b-%d"
+      ),
+      Var,
+      Var = plyr::mapvalues(
+        Var,
+        from = c(
+          "Tsfc_anom", #Rename variables
+          "Tsfc_ref",
+          "Tbot_anom",
+          "Tbot_ref"
+        ),
+        to = c(
+          "sst anomaly in situ",
+          "reference sst in situ (1981-2010)",
+          "bottom temp anomaly in situ",
+          "reference bt in situ (1981-2010)"
+        )
+      )
+    ) %>%
     dplyr::group_by(Time = lubridate::year(Time), EPU, Var, Units) %>%
     dplyr::summarise(Value = mean(Value)) %>%
-    as.data.frame()%>%
+    as.data.frame() %>%
     tibble::as_tibble() %>%
     dplyr::select(Time, Var, Value, EPU, Units)
 
-  if (save_clean){
+  if (save_clean) {
     usethis::use_data(bottom_temp_insitu, overwrite = T)
   } else {
     return(bottom_temp_insitu)
@@ -51,31 +65,31 @@ get_bottom_temp_insitu <- function(save_clean = F){
 get_bottom_temp_insitu(save_clean = T)
 
 
-
-
-
-
 #### GLORYS Data
 
-bottom_temp_glorys_csv<-"GLORYS12v1_bottom_temp_anomaly_EPU - Joseph Caracappa - NOAA Affiliate.csv"
+bottom_temp_glorys_csv <- "GLORYS12v1_bottom_temp_anomaly_EPU - Joseph Caracappa - NOAA Affiliate.csv"
 
 
-get_bottom_temp_glorys <- function(save_clean = F){
-
-  bottom_temp_glorys <- read.csv(file.path(raw.dir,bottom_temp_glorys_csv)) %>%
+get_bottom_temp_glorys <- function(save_clean = F) {
+  bottom_temp_glorys <- read.csv(file.path(raw.dir, bottom_temp_glorys_csv)) %>%
     tibble::as_tibble()
 
-  if (save_clean){
+  if (save_clean) {
     usethis::use_data(bottom_temp_glorys, overwrite = T)
   } else {
     return(bottom_temp_glorys)
   }
 
   # metadata ----
-  attr(bottom_temp_glorys, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/bottom-temperature---glorys.html"
-  attr(bottom_temp_glorys, "data_files")   <- list(
-    bottom_temp_glorys_csv = bottom_temp_glorys_csv)
+  attr(
+    bottom_temp_glorys,
+    "tech-doc_url"
+  ) <- "https://noaa-edab.github.io/tech-doc/bottom-temperature---glorys.html"
+  attr(bottom_temp_glorys, "data_files") <- list(
+    bottom_temp_glorys_csv = bottom_temp_glorys_csv
+  )
   attr(bottom_temp_glorys, "data_steward") <- c(
-    "Joseph Caracappa <joseph.caracappa@noaa.gov>")
+    "Joseph Caracappa <joseph.caracappa@noaa.gov>"
+  )
 }
 get_bottom_temp_glorys(save_clean = T)

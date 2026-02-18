@@ -5,13 +5,10 @@ library(tidyr)
 
 raw.dir <- here::here("data-raw")
 
-get_long_term_sst <- function(save_clean = F){
-  long_term_sst <- read.csv(file.path(raw.dir,"annual_ersst.csv")) %>%
-    dplyr::rename(Time = year,
-                  Value = mean) %>%
-    dplyr::mutate(Var = "long-term sst",
-           EPU = "All",
-           Units = "degreesC") %>%
+get_long_term_sst <- function(save_clean = F) {
+  long_term_sst <- read.csv(file.path(raw.dir, "annual_ersst.csv")) %>%
+    dplyr::rename(Time = year, Value = mean) %>%
+    dplyr::mutate(Var = "long-term sst", EPU = "All", Units = "degreesC") %>%
     tibble::as_tibble()
 
   if (save_clean) {

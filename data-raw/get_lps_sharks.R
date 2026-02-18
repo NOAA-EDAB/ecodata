@@ -8,68 +8,69 @@ library(readxl)
 raw.dir <- here::here("data-raw")
 lps_xlsx <- "LPS Pelagic Shark Harvest Estimates 2002-2024.xlsx"
 
-get_lps_sharks <- function(save_clean = F){
+get_lps_sharks <- function(save_clean = F) {
   # Load and format data for SOE
-  lps_sharks <- readxl::read_excel(file.path(raw.dir,lps_xlsx), sheet = "Sheet3") |>
+  lps_sharks <- readxl::read_excel(
+    file.path(raw.dir, lps_xlsx),
+    sheet = "Sheet3"
+  ) |>
     janitor::row_to_names(1) |>
     dplyr::select(-"(blank)")
 
   # Split dataset into MAB and NE subsets
   # MAB
-  lps_sharks_mab <- lps_sharks[2:24,] |>
-    dplyr::mutate(Units = "N of Fish",
-                  EPU = "MAB") |>
-    dplyr::rename("Total" = "Grand Total",
-                  "Time" = "Row Labels",
-                  "Blue_Shark" = "BLUE SHARK",
-                  "Common_Thresher" = "COMMON THRESHER",
-                  "Shortfin_Mako" = "SHORTFIN MAKO") |>
-    tidyr::pivot_longer(cols = c("Blue_Shark",
-                                 "Common_Thresher",
-                                 "Shortfin_Mako",
-                                 "Total"),
-                        names_to = "Var", values_to = "Value") |>
+  lps_sharks_mab <- lps_sharks[2:24, ] |>
+    dplyr::mutate(Units = "N of Fish", EPU = "MAB") |>
+    dplyr::rename(
+      "Total" = "Grand Total",
+      "Time" = "Row Labels",
+      "Blue_Shark" = "BLUE SHARK",
+      "Common_Thresher" = "COMMON THRESHER",
+      "Shortfin_Mako" = "SHORTFIN MAKO"
+    ) |>
+    tidyr::pivot_longer(
+      cols = c("Blue_Shark", "Common_Thresher", "Shortfin_Mako", "Total"),
+      names_to = "Var",
+      values_to = "Value"
+    ) |>
     dplyr::select(Time, Var, Value, EPU, Units)
 
   # NE
-  lps_sharks_ne <- lps_sharks[26:48,] |>
-    dplyr::mutate(Units = "N of Fish",
-                  EPU = "NE") |>
-    dplyr::rename("Total" = "Grand Total",
-                  "Time" = "Row Labels",
-                  "Blue_Shark" = "BLUE SHARK",
-                  "Common_Thresher" = "COMMON THRESHER",
-                  "Shortfin_Mako" = "SHORTFIN MAKO") |>
-    tidyr::pivot_longer(cols = c("Blue_Shark",
-                                 "Common_Thresher",
-                                 "Shortfin_Mako",
-                                 "Total"),
-                        names_to = "Var", values_to = "Value") |>
+  lps_sharks_ne <- lps_sharks[26:48, ] |>
+    dplyr::mutate(Units = "N of Fish", EPU = "NE") |>
+    dplyr::rename(
+      "Total" = "Grand Total",
+      "Time" = "Row Labels",
+      "Blue_Shark" = "BLUE SHARK",
+      "Common_Thresher" = "COMMON THRESHER",
+      "Shortfin_Mako" = "SHORTFIN MAKO"
+    ) |>
+    tidyr::pivot_longer(
+      cols = c("Blue_Shark", "Common_Thresher", "Shortfin_Mako", "Total"),
+      names_to = "Var",
+      values_to = "Value"
+    ) |>
     dplyr::select(Time, Var, Value, EPU, Units)
 
   lps_sharks <- rbind(lps_sharks_mab, lps_sharks_ne) |>
-    dplyr::mutate(Value = as.numeric(Value),
-                  Time = as.numeric(Time))
+    dplyr::mutate(Value = as.numeric(Value), Time = as.numeric(Time))
 
   # metadata ----
-  attr(lps_sharks, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/recreational-shark-fishing-indicators.html"
-  attr(lps_sharks, "data_files")   <- list(
-    lps_xlsx = lps_xlsx)
+  attr(
+    lps_sharks,
+    "tech-doc_url"
+  ) <- "https://noaa-edab.github.io/tech-doc/recreational-shark-fishing-indicators.html"
+  attr(lps_sharks, "data_files") <- list(
+    lps_xlsx = lps_xlsx
+  )
   attr(lps_sharks, "data_steward") <- c(
-    "Kimberly Bastille <kimberly.bastille@noaa.gov>")
+    "Kimberly Bastille <kimberly.bastille@noaa.gov>"
+  )
 
-  if (save_clean){
+  if (save_clean) {
     usethis::use_data(lps_sharks, overwrite = T)
   } else {
     return(lps_sharks)
   }
 }
 get_lps_sharks(save_clean = T)
-
-
-
-
-
-
-
-

@@ -13,42 +13,54 @@
 #'
 #' @export
 
-plot_bottom_temp_model_anom <- function(shadedRegion=NULL,
-                                  report="MidAtlantic",
-                                  varName="seasonal",
-                                  EPU="MAB",
-                                  plottype = 'GLORYS',
-                                  n = 0) {
-
-  setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
-                               report=report)
+plot_bottom_temp_model_anom <- function(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  varName = "seasonal",
+  EPU = "MAB",
+  plottype = 'GLORYS',
+  n = 0
+) {
+  setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
 
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
   } else {
-    if (!(EPU %in% c("GB","GOM"))) {
+    if (!(EPU %in% c("GB", "GOM"))) {
       stop("For NewEngland the epu must be either 'GB' or 'GOM'")
     }
     filterEPUs <- EPU
   }
 
-
   fix <- ecodata::bottom_temp_model_anom |>
     dplyr::filter(EPU %in% filterEPUs) |>
-    dplyr::mutate(Time = as.numeric(Time),
-                  Var = stringr::str_to_title(stringr::str_extract(Var,"Winter|Spring|Summer|Fall|Annual"))) |>
+    dplyr::mutate(
+      Time = as.numeric(Time),
+      Var = stringr::str_to_title(stringr::str_extract(
+        Var,
+        "Winter|Spring|Summer|Fall|Annual"
+      ))
+    ) |>
     dplyr::filter(!Var == "NA") |>
     dplyr::mutate(Source = as.factor(Source)) |>
-    dplyr::arrange(Source,Time,EPU,Var)
+    dplyr::arrange(Source, Time, EPU, Var)
 
   # Add statement to properly assign source (GLORYS+PSY or MOM6)
   if (plottype == "MOM6") {
     fix <- dplyr::filter(fix, Source == "MOM6")
   } else {
-    fix <- dplyr::filter(fix, (Source == "GLORYS" & Time >= 1993) | (Source == "ROMS") | (Source != "MOM6"))
+    fix <- dplyr::filter(
+      fix,
+      (Source == "GLORYS" & Time >= 1993) |
+        (Source == "ROMS") |
+        (Source != "MOM6")
+    )
   }
 
-  fix$Var <- factor(fix$Var, levels= c("Winter","Spring","Summer","Fall", "Annual"))
+  fix$Var <- factor(
+    fix$Var,
+    levels = c("Winter", "Spring", "Summer", "Fall", "Annual")
+  )
 
   # psy <- ecodata::bottom_temp_model_anom |>
   #   dplyr::filter(Source == "PSY") |>
@@ -71,38 +83,49 @@ plot_bottom_temp_model_anom <- function(shadedRegion=NULL,
   #   fix <- rbind(fix,addpsy)
   # }
 
-
-    # ne_anom <- ne_anom |>
+  # ne_anom <- ne_anom |>
   #   dplyr::filter(Var %in% season)
 
-  if(varName == "seasonal"){
+  if (varName == "seasonal") {
     fix <- fix |>
       dplyr::filter(Var != "Annual")
 
-    ylabvar <-expression("Bottom Temperature Anomaly (C)")
-  } else if(varName == "annual"){
+    ylabvar <- expression("Bottom Temperature Anomaly (C)")
+  } else if (varName == "annual") {
     fix <- fix |>
       dplyr::filter(Var == "Annual")
 
-    ylabvar <-expression("Bottom Temperature (C)")
+    ylabvar <- expression("Bottom Temperature (C)")
   }
 
-  p <-  fix |>
-    ggplot2::ggplot(ggplot2::aes(x = Time, y = Value,   color = Source)) + #color = EPU,
-    ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
-                      xmin = setup$x.shade.min , xmax = setup$x.shade.max,
-                      ymin = -Inf, ymax = Inf) +
-    ggplot2::geom_line()+
-    ggplot2::geom_point()+
+  p <- fix |>
+    ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color = Source)) + #color = EPU,
+    ggplot2::annotate(
+      "rect",
+      fill = setup$shade.fill,
+      alpha = setup$shade.alpha,
+      xmin = setup$x.shade.min,
+      xmax = setup$x.shade.max,
+      ymin = -Inf,
+      ymax = Inf
+    ) +
+    ggplot2::geom_line() +
+    ggplot2::geom_point() +
     ggplot2::ylab(ylabvar) +
-    ggplot2::xlab(ggplot2::element_blank())+
-    {if(varName == "seasonal")ggplot2::geom_hline(yintercept=0,linetype=setup$hline.lty)}+
-    ggplot2::ggtitle(paste0(EPU,": Bottom Temperature")) +
-    ggplot2::scale_color_manual(values = c("black","indianred",'steelblue4'))+
-    ggplot2::facet_wrap(Var~., scales="free_y") +
+    ggplot2::xlab(ggplot2::element_blank()) +
+    {
+      if (varName == "seasonal") {
+        ggplot2::geom_hline(yintercept = 0, linetype = setup$hline.lty)
+      }
+    } +
+    ggplot2::ggtitle(paste0(EPU, ": Bottom Temperature")) +
+    ggplot2::scale_color_manual(
+      values = c("black", "indianred", 'steelblue4')
+    ) +
+    ggplot2::facet_wrap(Var ~ ., scales = "free_y") +
     ecodata::theme_ts() +
     ecodata::theme_facet() +
-    ecodata::geom_gls(inherit.aes =T) +
+    ecodata::geom_gls(inherit.aes = T) +
     # ecodata::geom_lm(n=10)+
     # ecodata::geom_lm(ggplot2::aes(x = Time, y = Value))+
     # ggplot2::theme(strip.text=ggplot2::element_text(hjust=0),
@@ -117,7 +140,7 @@ plot_bottom_temp_model_anom <- function(shadedRegion=NULL,
 }
 
 
-attr(plot_bottom_temp_model_anom,"EPU") <- c("MAB","GB","GOM")
-attr(plot_bottom_temp_model_anom,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_bottom_temp_model_anom, "EPU") <- c("MAB", "GB", "GOM")
+attr(plot_bottom_temp_model_anom, "report") <- c("MidAtlantic", "NewEngland")
 attr(plot_bottom_temp_model_anom, "varName") <- c("seasonal", "annual")
 attr(plot_bottom_temp_model_anom, "plottype") <- c("GLORYS")

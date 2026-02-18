@@ -114,7 +114,7 @@ plot_stock_status <- function(shadedRegion = NULL, report = "MidAtlantic") {
     B.Bmsy = 1, # Arbitrary valid X
     F.Fmsy = c(100 - (req_range_top / 2), 100 + (req_range_top / 2)),
     Council = "MAFMC", # Placeholder factor level
-    score = "a"        # Placeholder factor level
+    score = "a" # Placeholder factor level
   )
   # ----------------------------------------------
 
@@ -129,7 +129,10 @@ plot_stock_status <- function(shadedRegion = NULL, report = "MidAtlantic") {
   p <- fix |>
     ggplot2::ggplot() +
     # Add invisible dummy points to force panel sizing
-    ggplot2::geom_blank(data = dummy_limits, ggplot2::aes(x = B.Bmsy, y = F.Fmsy)) +
+    ggplot2::geom_blank(
+      data = dummy_limits,
+      ggplot2::aes(x = B.Bmsy, y = F.Fmsy)
+    ) +
     ggplot2::geom_vline(xintercept = 1, linetype = "dotted") +
     ggplot2::geom_vline(xintercept = 0.5, linetype = "dashed") +
     # don't plot hline for missing ffmsy
@@ -190,8 +193,7 @@ plot_stock_status <- function(shadedRegion = NULL, report = "MidAtlantic") {
   return(list(p = p, unknown = unknown))
 }
 
-attr(plot_stock_status,"report") <- c("MidAtlantic","NewEngland")
-
+attr(plot_stock_status, "report") <- c("MidAtlantic", "NewEngland")
 
 #plot_stock_status(report = "NewEngland")
 #ggplot2::ggsave(
