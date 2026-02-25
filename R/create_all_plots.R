@@ -36,7 +36,8 @@ create_all_plots <- function(ecodata_name = NULL, write_only = F, n = 0) {
 
   # Remove unused "srcref" attributes, which exist in some plot functions
   if ("srcref" %in% colnames(all_combinations)) {
-    dplyr::select(all_combinations, !srcref)
+    all_combinations <- all_combinations |>
+    dplyr::select(!srcref)
   }
 
   # For plot functions that include an "EPU" argument:
