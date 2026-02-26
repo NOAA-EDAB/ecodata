@@ -4,17 +4,17 @@
 \alias{create_all_plots}
 \title{Create all variations of an ecodata plot function}
 \usage{
-create_all_plots(ecodata_name = NULL, write_only = F, n = 0)
+create_all_plots(ecodata_name = NULL, write_only = FALSE, n = 0)
 }
 \arguments{
 \item{ecodata_name}{string. the data name of the target ecodata dataset or plot function (default = NULL)}
 
-\item{write_only}{boolean. should the function output the plotting code, as text, for all plot variations (default = F)}
+\item{write_only}{boolean. should the function output the plotting code, as text, for all plot variations (default = FALSE)}
 
 \item{n}{numeric. number of data points for short term trend (default = 0)}
 }
 \value{
-list containing plots when write_only = F and text when write_only = T. plots are also exported to the IDE plot pane.
+list containing plots when write_only = FALSE and text when write_only = TRUE. plots are also exported to the IDE plot pane.
 }
 \description{
 This function can flexibly plot all possible variations given the arguments and attributes of an ecodata plot function
