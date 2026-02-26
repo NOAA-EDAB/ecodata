@@ -5,14 +5,14 @@
 #' This may be useful for reviewing data submissions, creating catalog pages, automating QA/QC protocols and comparing against other ecodata versions.
 #'
 #' @param ecodata_name string. the data name of the target ecodata dataset or plot function (default = NULL)
-#' @param write_only boolean. should the function output the plotting code, as text, for all plot variations (default = F)
+#' @param write_only boolean. should the function output the plotting code, as text, for all plot variations (default = FALSE)
 #' @param n numeric. number of data points for short term trend (default = 0)
 #'
-#' @return list containing plots when write_only = F and text when write_only = T. plots are also exported to the IDE plot pane.
+#' @return list containing plots when write_only = FALSE and text when write_only = TRUE. plots are also exported to the IDE plot pane.
 #'
 #' @export
 
-create_all_plots <- function(ecodata_name = NULL, write_only = F, n = 0) {
+create_all_plots <- function(ecodata_name = NULL, write_only = FALSE, n = 0) {
   # Define plot function syntax based on user input
   function_name <- paste0("ecodata::plot_", ecodata_name)
 
@@ -37,7 +37,7 @@ create_all_plots <- function(ecodata_name = NULL, write_only = F, n = 0) {
   # Remove unused "srcref" attributes, which exist in some plot functions
   if ("srcref" %in% colnames(all_combinations)) {
     all_combinations <- all_combinations |>
-    dplyr::select(!srcref)
+      dplyr::select(!srcref)
   }
 
   # For plot functions that include an "EPU" argument:
@@ -97,14 +97,17 @@ create_all_plots <- function(ecodata_name = NULL, write_only = F, n = 0) {
     # IF 'write_only' is TRUE, each iteration outputs the 'function_call' string
     # to a list called 'plotting_results'
     # IF 'write_only' is FALSE, each iteration outputs the resulting plot instead
-    if (write_only == T) {
+    if (write_only == TRUE) {
       plotting_results[[i]] <- function_call
     } else {
       plotting_results[[i]] <- eval(parse(text = function_call))
     }
+
+    print(plotting_results[[i]])
   }
+
   # The function returns the 'plotting_results' list to the user
-  # If stored as a session variable, all combinations of plotting code ('write_only' = T)
-  # or the plots themselves ('write_only' = F) can be recalled from the user's IDE environment
-  return(plotting_results)
+  # If stored as a session variable, all combinations of plotting code ('write_only' = TRUE)
+  # or the plots themselves ('write_only' = FALSE) can be recalled from the user's IDE environment
+  return(invisible(plotting_results))
 }
