@@ -27,7 +27,7 @@ create_all_plots <- function(ecodata_name = NULL, write_only = FALSE, n = 0) {
     attributes(eval(parse(
       text = function_name
     ))),
-    stringsAsFactors = F
+    stringsAsFactors = FALSE
   )
 
   # Initialize a new data table based on the expanded grid of all atrributes
