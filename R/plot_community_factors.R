@@ -94,7 +94,7 @@ plot_community_factors <- function(
   top.coms <- eng |>
     dplyr::filter(Time == max(Time)) |>
     dplyr::arrange(desc(Value)) |>
-    head(n = 10) |>
+    head(n = n) |>
     dplyr::mutate(
       Town = dplyr::recode(Town, "Other, VA (includes REEDVILLE)" = "Reedville, VA")
     ) |>
