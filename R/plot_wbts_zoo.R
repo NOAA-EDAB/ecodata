@@ -9,7 +9,6 @@
 #' @return ggplot object
 #'
 #'
-#' @export
 #'
 
 plot_wbts_zoo <- function(shadedRegion = NULL, report = "NewEngland", n = 0) {
