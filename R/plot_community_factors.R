@@ -19,9 +19,6 @@ plot_community_factors <- function(
   plottype = 'Commercial',
   n = 10
 ) {
-  # generate plot setup list (same for all plot functions)
-  setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
-
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
@@ -61,14 +58,20 @@ plot_community_factors <- function(
     tidyr::separate(StateVar, into = c("State", "Var"), sep = "-") |> # which also seps the variable
     dplyr::filter(Var %in% c(filterVar, indgroup) & !is.na(Value)) |>
     tidyr::unite("Town", c(Town, State), sep = ",") |>
-    dplyr::mutate(Town = dplyr::case_when(
-      stringr::str_detect(Town, "OTHER,VA") ~ "OTHER,VA (includes REEDVILLE)",
-      stringr::str_detect(Town, "Bronx/City Island") ~ "BRONX,NY",
-      stringr::str_detect(Town, "Reedville/District 5") ~ "Reedville,VA",
-      stringr::str_detect(Town, "Harpswell/Bailey Island") ~ "Harpswell,ME",
-      stringr::str_detect(Town, "South Kingstown/Kingston/Wakefield-Peacedale") ~ "South Kingstown,RI",
-      TRUE ~ Town # This keeps everything else the same
-    ))|>
+    dplyr::mutate(
+      Town = dplyr::case_when(
+        stringr::str_detect(Town, "OTHER,VA") ~ "OTHER,VA (includes REEDVILLE)",
+        stringr::str_detect(Town, "Bronx/City Island") ~ "BRONX,NY",
+        stringr::str_detect(Town, "Reedville/District 5") ~ "Reedville,VA",
+        stringr::str_detect(Town, "Harpswell/Bailey Island") ~ "Harpswell,ME",
+        stringr::str_detect(
+          Town,
+          "South Kingstown/Kingston/Wakefield-Peacedale"
+        ) ~
+          "South Kingstown,RI",
+        TRUE ~ Town # This keeps everything else the same
+      )
+    ) |>
     # tidyr::pivot_wider(names_from = Var, values_from = Value) |>
     dplyr::filter(EPU == filterEPUs) |>
     tidyr::separate(
@@ -86,7 +89,10 @@ plot_community_factors <- function(
     dplyr::arrange(desc(Value)) |>
     head(n = n) |>
     dplyr::mutate(
-      Town = dplyr::recode(Town, "Other, VA (includes REEDVILLE)" = "Reedville, VA")
+      Town = dplyr::recode(
+        Town,
+        "Other, VA (includes REEDVILLE)" = "Reedville, VA"
+      )
     ) |>
     dplyr::pull(Town)
 
