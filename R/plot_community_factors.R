@@ -61,6 +61,7 @@ plot_community_factors <- function(
     #dplyr::distinct(Time, Var,  EPU, Units, .keep_all = T) |> #hack, remove later
     tidyr::separate(Var, into = c("Town", "StateVar"), sep = ", ") |> #using two steps because some towns have - in the name
     tidyr::separate(StateVar, into = c("State", "Var"), sep = "-") |> # which also seps the variable
+    dplyr::filter(Var %in% c(filterVar, indgroup) & !is.na(Value)) |>
     tidyr::unite("Town", c(Town, State), sep = ",") |>
     dplyr::mutate(Town = dplyr::case_when(
       stringr::str_detect(Town, "OTHER,VA") ~ "OTHER,VA (includes REEDVILLE)",
@@ -81,17 +82,8 @@ plot_community_factors <- function(
     dplyr::mutate(city = stringr::str_to_title(city)) |>
     tidyr::unite("Town", city, state, sep = ", ")
 
-  eng.ts = eng |>
-    dplyr::filter(Var == 'fishing_mean_score') |>
-    dplyr::mutate(
-      label = dplyr::if_else(
-        Time == max(Time),
-        as.character(Town),
-        NA_character_
-      )
-    )
-
   top.coms <- eng |>
+    dplyr::filter(Var == filterVar) |>
     dplyr::filter(Time == max(Time)) |>
     dplyr::arrange(desc(Value)) |>
     head(n = n) |>
@@ -100,22 +92,6 @@ plot_community_factors <- function(
     ) |>
     dplyr::pull(Town)
 
-  #
-  # all.towns = fix |>
-  #   dplyr::filter(!(Var %in% ('fishing_mean_score'))) |>
-  #   dplyr::pull(Town) |>
-  #   unique() |>
-  #   tolower()
-  #
-  # top.coms = fix |>
-  #   dplyr::filter(Var == filterVar & !is.na(Value)) |>
-  #   dplyr::filter(Time == max(Time) & tolower(Town) %in% all.towns) |>
-  #   dplyr::arrange(desc(Value)) |>
-  #   dplyr::slice_head(n = n) |>
-  #   dplyr::pull(Town)
-
-  # optional code to wrangle ecodata object prior to plotting
-  # e.g., calculate mean, max or other needed values to join below
   data = eng |>
     dplyr::filter(Var %in% indgroup) |>
     dplyr::group_by(Town) |>
