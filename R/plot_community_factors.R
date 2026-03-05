@@ -2,7 +2,6 @@
 #'
 #' returns community indicators with highest engagement or port activity
 #'
-#' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which variable sets to plot ("Social","Economic","Gentrification")
 #' @param plottype Character string. Which Fishery to plot ("Commercial","Recreational")
@@ -15,7 +14,6 @@
 #'
 
 plot_community_factors <- function(
-  shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "Social",
   plottype = 'Commercial',
