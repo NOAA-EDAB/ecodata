@@ -2,11 +2,10 @@
 #'
 #' returns community indicators with highest engagement or port activity
 #'
-#' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which variable sets to plot ("Social","Economic","Gentrification")
 #' @param plottype Character string. Which Fishery to plot ("Commercial","Recreational")
-#' @param n Numeric scalar. Number of rows to return (top in plottype category)
+#' @param n Numeric scalar. Number of rows to return (top in plottype category port activity or recreational engagement)
 #'
 #' @return dataframe
 #'
@@ -15,15 +14,11 @@
 #'
 
 plot_community_factors <- function(
-  shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "Social",
   plottype = 'Commercial',
   n = 10
 ) {
-  # generate plot setup list (same for all plot functions)
-  setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
-
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
@@ -57,10 +52,26 @@ plot_community_factors <- function(
     )
   }
 
-  fix <- ecodata::engagement |>
+  eng <- ecodata::engagement |>
+    #dplyr::distinct(Time, Var,  EPU, Units, .keep_all = T) |> #hack, remove later
     tidyr::separate(Var, into = c("Town", "StateVar"), sep = ", ") |> #using two steps because some towns have - in the name
     tidyr::separate(StateVar, into = c("State", "Var"), sep = "-") |> # which also seps the variable
+    dplyr::filter(Var %in% c(filterVar, indgroup) & !is.na(Value)) |>
     tidyr::unite("Town", c(Town, State), sep = ",") |>
+    dplyr::mutate(
+      Town = dplyr::case_when(
+        stringr::str_detect(Town, "OTHER,VA") ~ "OTHER,VA (includes REEDVILLE)",
+        stringr::str_detect(Town, "Bronx/City Island") ~ "BRONX,NY",
+        stringr::str_detect(Town, "Reedville/District 5") ~ "Reedville,VA",
+        stringr::str_detect(Town, "Harpswell/Bailey Island") ~ "Harpswell,ME",
+        stringr::str_detect(
+          Town,
+          "South Kingstown/Kingston/Wakefield-Peacedale"
+        ) ~
+          "South Kingstown,RI",
+        TRUE ~ Town # This keeps everything else the same
+      )
+    ) |>
     # tidyr::pivot_wider(names_from = Var, values_from = Value) |>
     dplyr::filter(EPU == filterEPUs) |>
     tidyr::separate(
@@ -72,22 +83,20 @@ plot_community_factors <- function(
     dplyr::mutate(city = stringr::str_to_title(city)) |>
     tidyr::unite("Town", city, state, sep = ", ")
 
-  all.towns = fix |>
-    dplyr::filter(!(Var %in% ('fishing_mean_score'))) |>
-    dplyr::pull(Town) |>
-    unique() |>
-    tolower()
-
-  top.coms = fix |>
-    dplyr::filter(Var == filterVar & !is.na(Value)) |>
-    dplyr::filter(Time == max(Time) & tolower(Town) %in% all.towns) |>
+  top.coms <- eng |>
+    dplyr::filter(Var == filterVar) |>
+    dplyr::filter(Time == max(Time)) |>
     dplyr::arrange(desc(Value)) |>
-    dplyr::slice_head(n = n) |>
+    head(n = n) |>
+    dplyr::mutate(
+      Town = dplyr::recode(
+        Town,
+        "Other, VA (includes REEDVILLE)" = "Reedville, VA"
+      )
+    ) |>
     dplyr::pull(Town)
 
-  # optional code to wrangle ecodata object prior to plotting
-  # e.g., calculate mean, max or other needed values to join below
-  data = fix |>
+  data = eng |>
     dplyr::filter(Var %in% indgroup) |>
     dplyr::group_by(Town) |>
     dplyr::mutate(total = sum(Value, na.rm = T)) |>
