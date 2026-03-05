@@ -5,7 +5,6 @@
 \title{table of community factor indicators}
 \usage{
 plot_community_factors(
-  shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "Social",
   plottype = "Commercial",
@@ -13,15 +12,13 @@ plot_community_factors(
 )
 }
 \arguments{
-\item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
-
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
 \item{varName}{Character string. Which variable sets to plot ("Social","Economic","Gentrification")}
 
 \item{plottype}{Character string. Which Fishery to plot ("Commercial","Recreational")}
 
-\item{n}{Numeric scalar. Number of rows to return (top in plottype category)}
+\item{n}{Numeric scalar. Number of rows to return (top in plottype category port activity or recreational engagement)}
 }
 \value{
 dataframe

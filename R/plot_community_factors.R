@@ -5,7 +5,7 @@
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which variable sets to plot ("Social","Economic","Gentrification")
 #' @param plottype Character string. Which Fishery to plot ("Commercial","Recreational")
-#' @param n Numeric scalar. Number of rows to return (top in plottype category)
+#' @param n Numeric scalar. Number of rows to return (top in plottype category port activity or recreational engagement)
 #'
 #' @return dataframe
 #'
