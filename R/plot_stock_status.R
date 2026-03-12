@@ -94,6 +94,17 @@ plot_stock_status <- function(shadedRegion = NULL, report = "MidAtlantic") {
 
   max_f <- max(fix$F.Fmsy[which(fix$F.Fmsy < 50)], na.rm = TRUE)
 
+  # if there are many stocks with very low ffmsy, add a break at -1 to spread out the points and avoid overplotting
+  # should be replaced with a better fix in the future
+  min <- ifelse(
+    fix |>
+      dplyr::filter(F.Fmsy < 0.2) |>
+      nrow() >
+      4,
+    -2,
+    0
+  )
+
   ybreaks <- seq(
     0,
     ifelse(max_f > 1, max_f, 1),
@@ -133,6 +144,17 @@ plot_stock_status <- function(shadedRegion = NULL, report = "MidAtlantic") {
       data = dummy_limits,
       ggplot2::aes(x = B.Bmsy, y = F.Fmsy)
     ) +
+    # add more dummy points to make blank space for text at bottom of fig
+    ggplot2::geom_blank(
+      data = tibble::tibble(
+        F.Fmsy = min,
+        B.Bmsy = 1,
+        Cat = TRUE,
+        Council = "MAFMC", # Placeholder factor level
+        score = "a" # Placeholder factor level
+      ),
+      ggplot2::aes(x = B.Bmsy, y = F.Fmsy)
+    ) +
     ggplot2::geom_vline(xintercept = 1, linetype = "dotted") +
     ggplot2::geom_vline(xintercept = 0.5, linetype = "dashed") +
     # don't plot hline for missing ffmsy
@@ -156,13 +178,13 @@ plot_stock_status <- function(shadedRegion = NULL, report = "MidAtlantic") {
       ),
       # data = offset_y,
       max.overlaps = 50,
-      min.segment.length = 0.1
+      min.segment.length = 0.1,
       # direction = "y"
       # max.time = 5,
       # max.iter = 10^6#,
-      # force = 5,
+      force = 5,
       # force_pull = 0,
-      # box.padding = 1,
+      # box.padding = 1
     ) +
     ggplot2::scale_y_continuous(
       breaks = c(ybreaks, 100),
