@@ -98,7 +98,7 @@ plot_finfish_traits <- function(
     ggplot2::ggtitle(paste(varTitle[varName])) +
     ggplot2::ylab(paste0(varName, " (", unlist(varUnit), ")")) +
     ggplot2::xlab(ggplot2::element_blank()) +
-    ggplot2::facet_wrap(~EPU) +
+    ggplot2::facet_grid(EPU~Season) +
     ecodata::geom_gls(
       ggplot2::aes(x = Time, y = Value, group = Season),
       alpha = setup$trend.alpha,
@@ -126,6 +126,7 @@ plot_finfish_traits <- function(
       ggplot2::theme(
         legend.position = "bottom",
         legend.title = ggplot2::element_blank()
+
       )
   }
 
