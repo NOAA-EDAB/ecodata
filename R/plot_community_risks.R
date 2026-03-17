@@ -18,11 +18,11 @@
 #'
 
 plot_community_risks <- function(
-  shadedRegion = NULL,
-  report = "MidAtlantic",
-  varName = "vulnSum",
-  plottype = "propcomm",
-  n = 0
+    shadedRegion = NULL,
+    report = "MidAtlantic",
+    varName = "vulnSum",
+    plottype = "propcomm",
+    n = 0
 ) {
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
@@ -127,7 +127,14 @@ plot_community_risks <- function(
       #ggplot2::ggtitle("Mid-Atlantic") +
       #ggplot2::theme(legend.position = "blank")
       ggplot2::ylab("Proportion communities") +
-      ecodata::geom_lm(n = n) +
+      # ecodata::geom_lm(n = n) +
+      ecodata::geom_lm(
+        data = propsonly,
+        n = n,
+        ggplot2::aes(x = Time, y = propcat, group = risk),
+        alpha = setup$trend.alpha,
+        size = setup$trend.size
+      )+
       ecodata::theme_ts() +
       ecodata::theme_facet() +
       ecodata::theme_title()
