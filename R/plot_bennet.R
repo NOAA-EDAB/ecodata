@@ -109,6 +109,11 @@ plot_bennet <- function(
       ecodata::theme_ts() +
       ggplot2::scale_fill_brewer(palette = "Set1") +
       ggplot2::theme(title = ggplot2::element_text(size = 10)) +
+      ggplot2::guides(color = "none") +
+      ggplot2::theme(
+        legend.position = "bottom",
+        legend.title = ggplot2::element_blank()
+      ) +
       ecodata::theme_title() +
       ecodata::theme_facet()
   } else if (varName == "total") {
@@ -175,6 +180,11 @@ plot_bennet <- function(
       ecodata::theme_ts() +
       ggplot2::xlab(ggplot2::element_blank()) +
       ggplot2::theme(title = ggplot2::element_text(size = 10)) +
+      ggplot2::guides(color = "none") +
+      ggplot2::theme(
+        legend.position = "bottom",
+        legend.title = ggplot2::element_blank()
+      ) +
       ecodata::theme_title()
   } else if (varName == "total_guild") {
     indicators$Var <- gsub("Predator", "", indicators$Var)
@@ -324,3 +334,4 @@ attr(plot_bennet, "EPU") <- c("MAB", "GB", "GOM")
 #   ecodata::theme_facet()
 #
 #
+
