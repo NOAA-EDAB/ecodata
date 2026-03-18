@@ -47,7 +47,7 @@ plot_species_dist <- function(
     #dplyr::filter(!Var == "Season") %>%
     dplyr::mutate(Value = as.numeric(Value)) |>
     dplyr::group_by(Var) |>
-    dplyr::mutate(hline = mean(Value)) |>
+    dplyr::mutate(hline = mean(Value, na.rm = TRUE)) |>
     dplyr::ungroup() |>
     dplyr::filter(Var == varName)
 
