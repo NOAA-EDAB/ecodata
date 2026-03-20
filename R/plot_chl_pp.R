@@ -163,7 +163,8 @@ plot_chl_pp <- function(
         #ecodata::geom_lm(aes(x = Year, y = Value, group = Month))+
         #  ggplot2::geom_point(color = "white") +
         ggplot2::geom_line() +
-        ecodata::geom_lm(n = n) +
+        ecodata::geom_lm(n = n)+
+        ecodata::geom_lm(n = 100)+
         ggplot2::scale_x_discrete(breaks = scales::breaks_pretty(n = 3)) +
         ggplot2::facet_grid(
           rows = ggplot2::vars(EPU),
