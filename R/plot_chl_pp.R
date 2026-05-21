@@ -34,7 +34,10 @@ plot_chl_pp <- function(
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
   } else {
-    filterEPUs <- c("GB", "GOM")
+    if (!(EPU %in% c("GB", "GOM"))) {
+      stop("For NewEngland the epu must be either 'GB' or 'GOM'")
+    }
+    filterEPUs <- EPU
   }
 
   # plot chl and pp
@@ -163,14 +166,13 @@ plot_chl_pp <- function(
         #ecodata::geom_lm(aes(x = Year, y = Value, group = Month))+
         #  ggplot2::geom_point(color = "white") +
         ggplot2::geom_line() +
-        ecodata::geom_lm(n = n)+
-        ecodata::geom_lm(n = 100)+
+        ecodata::geom_lm(n = n) +
+        ecodata::geom_lm(n = 100) +
         ggplot2::scale_x_discrete(breaks = scales::breaks_pretty(n = 3)) +
         ggplot2::facet_grid(
-          rows = ggplot2::vars(EPU),
           cols = ggplot2::vars(Month)
         ) +
-        ggplot2::ggtitle(paste0("Monthly median ", varabbr)) +
+        ggplot2::ggtitle(paste0(EPU, " Monthly median ", varabbr)) +
         ggplot2::ylab(varunits) +
         ggplot2::geom_hline(
           ggplot2::aes(yintercept = hline, group = Month),
@@ -246,9 +248,8 @@ plot_chl_pp <- function(
         #             fill = "grey1") +
         # ggplot2::geom_line(data = ne_pp_late,aes(x = Time, y = Value),
         #           size = 1,color = "#33a02c", linetype = "dashed") +
-        ggplot2::ggtitle(paste(varabbr, titleyear)) +
+        ggplot2::ggtitle(paste(EPU, varabbr, titleyear)) +
         ggplot2::guides(color = "none") +
-        ggplot2::facet_wrap(EPU ~ ., ncol = 2) +
         ggplot2::xlab("") +
         ggplot2::ylab(varunits) +
         ggplot2::scale_x_continuous(
