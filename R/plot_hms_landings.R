@@ -71,6 +71,9 @@ plot_hms_landings <- function(
     ) +
     ggplot2::ylab(ylabdat) +
     ggplot2::xlab("Time") +
+    ggplot2::scale_x_continuous(
+      breaks = seq(min(apex$Time), max(apex$Time), by = 2)
+    ) +
     ggplot2::ggtitle(paste("HMS", setup$region, "Commercial", varName)) +
     ecodata::theme_title()
 
