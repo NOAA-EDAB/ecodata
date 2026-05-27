@@ -60,9 +60,11 @@ plot_ches_bay_wq <- function(
     ecodata::geom_gls() +
     ecodata::geom_lm(n = n) +
     #ecodata::geom_lm()+
-    ggplot2::ylab(expression("Estimated attainment (%)")) +
-    ggplot2::xlab(ggplot2::element_blank()) +
-    ggplot2::ggtitle("Chesapeake Bay Water Quality Attainment") +
+    ggplot2::labs(
+      x = "Assessment Period",
+      y = "Estimated attainment (%)",
+      title = "Chesapeake Bay Water Quality Attainment"
+    ) +
     ggplot2::scale_x_continuous(
       breaks = minlab,
       labels = c("87-89", "92-94", "97-99", "02-04", "07-09", "12-14", "17-19")
