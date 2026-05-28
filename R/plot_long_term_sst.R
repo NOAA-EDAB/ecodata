@@ -61,4 +61,4 @@ plot_long_term_sst <- function(
   return(p)
 }
 
-attr(plot_long_term_sst, "report") <- c("MidAtlantic", "NewEngland")
+attr(plot_long_term_sst, "report") <- c("MidAtlantic")

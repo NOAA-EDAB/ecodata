@@ -89,7 +89,7 @@ plot_SAV <- function(shadedRegion = NULL, report = "MidAtlantic", n = 0) {
 }
 
 
-attr(plot_SAV, "report") <- c("MidAtlantic", "NewEngland")
+attr(plot_SAV, "report") <- c("MidAtlantic")
 
 # Paste commented original plot code chunk for reference
 # ecodata::SAV %>%

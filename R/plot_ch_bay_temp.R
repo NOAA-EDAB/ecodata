@@ -77,7 +77,7 @@ plot_ch_bay_temp <- function(shadedRegion = NULL, report = "MidAtlantic") {
 }
 
 
-attr(plot_ch_bay_temp, "report") <- c("MidAtlantic", "NewEngland")
+attr(plot_ch_bay_temp, "report") <- c("MidAtlantic")
 
 # Paste commented original plot code chunk for reference
 # MAB only

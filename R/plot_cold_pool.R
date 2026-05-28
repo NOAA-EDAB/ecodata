@@ -264,7 +264,7 @@ plot_cold_pool <- function(
   return(p)
 }
 
-attr(plot_cold_pool, "report") <- c("MidAtlantic", "NewEngland")
+attr(plot_cold_pool, "report") <- c("MidAtlantic")
 attr(plot_cold_pool, "varName") <- c("cold_pool", "persistence", "extent")
 #attr(plot_cold_pool, "source") <- c("GLORYS", "MOM6")
 

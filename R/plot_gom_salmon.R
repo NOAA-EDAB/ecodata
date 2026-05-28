@@ -72,4 +72,4 @@ plot_gom_salmon <- function(shadedRegion = NULL, report = "NewEngland", n = 0) {
   return(p)
 }
 
-attr(plot_gom_salmon, "report") <- c("MidAtlantic", "NewEngland")
+attr(plot_gom_salmon, "report") <- c("MidAtlantic")
