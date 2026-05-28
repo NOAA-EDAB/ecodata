@@ -87,7 +87,7 @@ plot_ches_bay_wq <- function(
   return(p)
 }
 
-attr(plot_ches_bay_wq, "report") <- c("MidAtlantic", "NewEngland")
+attr(plot_ches_bay_wq, "report") <- c("MidAtlantic")
 
 # Paste commented original plot code chunk for reference
 # minlab <- seq(1987,2017,5)
