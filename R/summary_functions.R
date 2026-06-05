@@ -24,6 +24,17 @@
 #' }
 
 long_term_trend <- function(data) {
+  # rename x and y if present in data
+  if ("x" %in% colnames(data)) {
+    data <- data |>
+      dplyr::rename(Time = x)
+  }
+
+  if ("y" %in% colnames(data)) {
+    data <- data |>
+      dplyr::rename(Value = y)
+  }
+
   if (!("Value" %in% colnames(data) | "Time" %in% colnames(data))) {
     stop(
       "Expected to find 'Time' and 'Value' in colnames but they are not present"
@@ -105,8 +116,8 @@ long_term_trend <- function(data) {
         model == "linear_ar1" ~ "long-term linear (AR1 error)"
       ),
       trend = dplyr::case_when(
-        coefs..Intercept. > 0 ~ "positive",
-        coefs..Intercept. < 0 ~ "negative",
+        coefs.Time > 0 ~ "positive",
+        coefs.Time < 0 ~ "negative",
         TRUE ~ "model did not converge"
       )
     ) |>
@@ -142,6 +153,17 @@ long_term_trend <- function(data) {
 #' }
 
 short_term_trend <- function(data) {
+  # rename x and y if present in data
+  if ("x" %in% colnames(data)) {
+    data <- data |>
+      dplyr::rename(Time = x)
+  }
+
+  if ("y" %in% colnames(data)) {
+    data <- data |>
+      dplyr::rename(Value = y)
+  }
+
   if (!("Value" %in% colnames(data) | "Time" %in% colnames(data))) {
     stop(
       "Expected to find 'Time' and 'Value' in colnames but they are not present"
@@ -222,6 +244,17 @@ short_term_trend <- function(data) {
 #' summary_stats(df)
 
 summary_stats <- function(data) {
+  # rename x and y if present in data
+  if ("x" %in% colnames(data)) {
+    data <- data |>
+      dplyr::rename(Time = x)
+  }
+
+  if ("y" %in% colnames(data)) {
+    data <- data |>
+      dplyr::rename(Value = y)
+  }
+
   if (!("Value" %in% colnames(data) | "Time" %in% colnames(data))) {
     stop(
       "Expected to find 'Time' and 'Value' in colnames but they are not present"
@@ -250,6 +283,50 @@ summary_stats <- function(data) {
 
   output <- output |>
     dplyr::mutate(recent_value = recent_value, status = status)
+
+  return(output)
+}
+
+#' Compile Long-Term and Short-Term Trend Summaries
+#'
+#' A wrapper function that executes both \code{\link{long_term_trend}} and
+#' \code{\link{short_term_trend}} on the input dataset, binding their results
+#' together into a unified data frame for easy trend comparison.
+#'
+#' @param data A data frame or tibble containing at least the columns \code{Time} (numeric/integer)
+#'   and \code{Value} (numeric values to model).
+#'
+#' @return A data frame/tibble combining the rows of both trend analyses. It contains
+#'   the following structured columns:
+#'   \file{model} Character string indicating the model type (e.g., long-term linear models
+#'     or the short-term AR1 model windows).
+#'   \file{aicc} Calculated AICc for model selection (will be \code{NA} for the short-term bootstrap model).
+#'   \file{trend} Character string or numeric coefficient indicating the direction/magnitude of the trend.
+#'   \file{pval} P-value associated with the respective trend model's significance test.
+#'   \file{sig} Logical indicating if the trend is statistically significant (p < 0.05).
+#'
+#' @importFrom dplyr bind_rows
+#' @export
+#'
+#' @seealso
+#' \code{\link{long_term_trend}}, \code{\link{short_term_trend}}
+#'
+#' @examples
+#' \dontrun{
+#' df <- data.frame(Time = 1:50, Value = rnorm(50, mean = 10 + (1:50)*0.05))
+#' trend_summaries(df)
+#' }
+
+trend_summaries <- function(data) {
+  dat1 <- long_term_trend(data)
+  dat2 <- short_term_trend(data)
+
+  output <- dplyr::bind_rows(dat1, dat2) |>
+    tidyr::pivot_wider(
+      names_from = model,
+      values_from = c(aicc, trend, pval, sig)
+    ) |>
+    janitor::clean_names()
 
   return(output)
 }
