@@ -271,18 +271,25 @@ summary_stats <- function(data) {
     lower = mean - sd
   )
 
-  recent_value <- data |>
+  this_recent_value <- data |>
     dplyr::filter(Time == max(Time)) |>
     dplyr::pull(Value)
 
-  status <- dplyr::case_when(
-    recent_value < output$lower ~ "below average",
-    recent_value > output$upper ~ "above average",
+  if (length(this_recent_value) > 1) {
+    message(
+      data |>
+        dplyr::filter(Time == max(Time))
+    )
+  }
+
+  this_status <- dplyr::case_when(
+    this_recent_value < output$lower ~ "below average",
+    this_recent_value > output$upper ~ "above average",
     TRUE ~ "near average"
   )
 
   output <- output |>
-    dplyr::mutate(recent_value = recent_value, status = status)
+    dplyr::mutate(recent_value = this_recent_value, status = this_status)
 
   return(output)
 }
