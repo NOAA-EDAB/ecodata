@@ -41,6 +41,18 @@ long_term_trend <- function(data) {
     )
   }
 
+  if (nrow(data |> tidyr::drop_na()) < 30) {
+    output <- tibble::tibble(
+      model = c("linear_norm", "linear_ar1"),
+      n_years = "long-term models not run; less than 30 years of data",
+      aicc = NA,
+      trend = NA,
+      pval = NA,
+      sig = NA
+    )
+    return(output)
+  }
+
   set.seed(123)
 
   constant_norm <- nlme::gls(Value ~ 1, data = data, na.action = na.omit)
@@ -109,12 +121,17 @@ long_term_trend <- function(data) {
       )
     )
 
+  nyear <- data |>
+    tidyr::drop_na() |>
+    nrow()
+
   output <- df_aicc |>
     dplyr::mutate(
       model = dplyr::case_when(
         model == "linear_norm" ~ "long-term linear (normal error)",
         model == "linear_ar1" ~ "long-term linear (AR1 error)"
       ),
+      n_year = nyear,
       trend = dplyr::case_when(
         coefs.Time > 0 ~ "positive",
         coefs.Time < 0 ~ "negative",
@@ -175,7 +192,12 @@ short_term_trend <- function(data) {
   ## Geom removes NAs from data. arfit needs full timeseries with NAs
   # arfit pads the time series and returns this padded data set.
   # the returned data set is used in plotting the fitted model
-  n <- ifelse(nrow(data) < 30, nrow(data), 10)
+  years <- data |>
+    tidyr::drop_na()
+
+  max_year_with_data <- max(years$Time)
+
+  n <- ifelse(nrow(years) < 30, nrow(data), 10)
 
   data <- data |>
     dplyr::rename(x = Time, y = Value)
@@ -183,11 +205,11 @@ short_term_trend <- function(data) {
   dataUse <- data |>
     dplyr::arrange(x) |>
     # Select last n years
-    dplyr::filter(x %in% (max(x) - (n - 1)):max(x)) |>
+    dplyr::filter(x %in% (max_year_with_data - (n - 1)):max_year_with_data) |>
     dplyr::mutate(x = x - min(x) + 1)
 
-  xmax <- max(data$x)
-  xmin <- xmax - n + 1
+  # xmax <- max(data$x)
+  # xmin <- xmax - n + 1
 
   # Linear model with AR1 error
   linear_ar1 <-
@@ -202,8 +224,11 @@ short_term_trend <- function(data) {
       sig = NA
     )
   } else {
+    miss <- ifelse(nrow(years) != nrow(data), " (some missing data)", "")
+
     output <- tibble::tibble(
-      model = paste0("short-term AR1 (", n, " years)"),
+      model = "short-term AR1",
+      n_years = paste0(n, " years", miss),
       aicc = NA,
       trend = dplyr::case_when(
         linear_ar1$alt$betaEst[2, 1] > 0 ~ "positive",
@@ -271,16 +296,25 @@ summary_stats <- function(data) {
     lower = mean - sd
   )
 
-  this_recent_value <- data |>
-    dplyr::filter(Time == max(Time)) |>
+  max_year <- data |>
+    # drop missing years
+    tidyr::drop_na(Value) |>
+    dplyr::filter(Time == max(Time))
+
+  # print(max_year)
+
+  this_recent_value <- max_year |>
     dplyr::pull(Value)
 
-  if (length(this_recent_value) > 1) {
-    message(
-      data |>
-        dplyr::filter(Time == max(Time))
-    )
-  }
+  this_recent_year <- max_year |>
+    dplyr::pull(Time)
+
+  # if (length(this_recent_value) > 1) {
+  #   message(
+  #     data |>
+  #       dplyr::filter(Time == max(Time))
+  #   )
+  # }
 
   this_status <- dplyr::case_when(
     this_recent_value < output$lower ~ "below average",
@@ -289,7 +323,11 @@ summary_stats <- function(data) {
   )
 
   output <- output |>
-    dplyr::mutate(recent_value = this_recent_value, status = this_status)
+    dplyr::mutate(
+      recent_year = this_recent_year,
+      recent_value = this_recent_value,
+      status = this_status
+    )
 
   return(output)
 }
@@ -325,13 +363,14 @@ summary_stats <- function(data) {
 #' }
 
 trend_summaries <- function(data) {
+  ## TODO: pad out NAs
   dat1 <- long_term_trend(data)
   dat2 <- short_term_trend(data)
 
   output <- dplyr::bind_rows(dat1, dat2) |>
     tidyr::pivot_wider(
       names_from = model,
-      values_from = c(aicc, trend, pval, sig)
+      values_from = c(n_years, aicc, trend, pval, sig)
     ) |>
     janitor::clean_names()
 
