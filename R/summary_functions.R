@@ -43,7 +43,10 @@ long_term_trend <- function(data) {
 
   if (nrow(data |> tidyr::drop_na()) < 30) {
     output <- tibble::tibble(
-      model = c("linear_norm", "linear_ar1"),
+      model = c(
+        "long-term linear (normal error)",
+        "long-term linear (AR1 error)"
+      ),
       n_years = "long-term models not run; less than 30 years of data",
       aicc = NA,
       trend = NA,
@@ -363,7 +366,6 @@ summary_stats <- function(data) {
 #' }
 
 trend_summaries <- function(data) {
-  ## TODO: pad out NAs
   dat1 <- long_term_trend(data)
   dat2 <- short_term_trend(data)
 
