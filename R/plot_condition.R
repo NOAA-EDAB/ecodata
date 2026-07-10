@@ -71,14 +71,15 @@ plot_condition <- function(
     )
 
   sortNames <- fix |>
-    dplyr::filter(Time <= 2014) |>
+    # group the species that have a dip in the 2000s
+    dplyr::filter(Time <= 2014, Time >= 2000) |>
     dplyr::group_by(Var) |>
-    dplyr::summarize(total = sum(scaleCond)) |>
+    dplyr::summarize(total = sum(scaleCond, na.rm = TRUE)) |>
     dplyr::arrange(total) |>
     dplyr::mutate(Species = factor(Var, levels = unique(Var))) |>
     dplyr::pull(Species)
 
-  # fix$Var <- factor(fix$Var, levels = sortNames)
+  fix$Var <- factor(fix$Var, levels = sortNames)
 
   #See 5 scale colors for viridis:
   vir <- viridis::viridis_pal()(numberOfConditions)
@@ -87,7 +88,6 @@ plot_condition <- function(
   # ensure that setup list objects are called as setup$...
   # e.g. fill = setup$shade.fill, alpha = setup$shade.alpha,
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
-  #
 
   if (plottype == "scaled") {
     p <- fix |>
@@ -104,14 +104,8 @@ plot_condition <- function(
         y = forcats::fct_rev(Var),
         fill = scaleCond
       )) +
-      # viridis::scale_fill_viridis(
-      #   discrete = FALSE #,
-      #   # option = "turbo",
-      #   # direction = -1
-      # )
       ggplot2::scale_fill_gradientn(
         colors = c(viridis::rocket(4)[2:4], viridis::mako(4)[4:2]),
-        # limits = c(min(fix$scaleCond), max(fix$scaleCond)),
         values = scales::rescale(xs, from = c(min(xs), max(xs)), to = c(0, 1))
       )
   }
