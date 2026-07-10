@@ -9,7 +9,7 @@ plot_energy_density(shadedRegion = NULL, report = "MidAtlantic")
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
-\item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
+\item{report}{Character string. Which SOE report ("MidAtlantic" only, default)}
 }
 \value{
 ggplot object
