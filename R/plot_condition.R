@@ -5,6 +5,7 @@
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param EPU Character string. Which EPU in the report ("GB", "GOM", "MAB")
+#' @param plottype Character string. How categories should be assigned ("scaled" rescales and assigns by quantiles, while "raw" assigns based on relative condition)
 #'
 #' @return ggplot object
 #'
@@ -15,7 +16,8 @@
 plot_condition <- function(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  EPU = "MAB"
+  EPU = "MAB",
+  plottype = "scaled"
 ) {
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
@@ -35,20 +37,35 @@ plot_condition <- function(
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
 
-  fix <- ecodata::condition |>
-    dplyr::filter(EPU == filterEPUs) |>
-    dplyr::group_by(Var) |>
-    dplyr::mutate(scaleCond = scale(Value, scale = T, center = T))
+  if (plottype == "scaled") {
+    fix <- ecodata::condition |>
+      dplyr::filter(EPU == filterEPUs) |>
+      dplyr::group_by(Var) |>
+      dplyr::mutate(scaleCond = scale(Value, scale = T, center = T))
+  } else if (plottype == "raw") {
+    fix <- ecodata::condition |>
+      dplyr::filter(EPU == filterEPUs) |>
+      dplyr::group_by(Var) |>
+      dplyr::mutate(scaleCond = Value)
+  } else {
+    stop("plottype must be either 'scaled' or 'raw'")
+  }
 
   # finds quantiles
   xs <- quantile(fix$scaleCond, seq(0, 1, length.out = 6), na.rm = TRUE)
-  # labels quantiles
+
   fix <- fix |>
     dplyr::mutate(
       category = cut(
         scaleCond,
         breaks = xs,
-        labels = c("Very Low", "Low", "Average", "High", "Very High"),
+        labels = c(
+          "Poor Condition",
+          "Below Average",
+          "Neutral",
+          "Above Average",
+          "Good Condition"
+        ),
         include.lowest = TRUE
       )
     )
@@ -61,7 +78,7 @@ plot_condition <- function(
     dplyr::mutate(Species = factor(Var, levels = unique(Var))) |>
     dplyr::pull(Species)
 
-  fix$Var <- factor(fix$Var, levels = sortNames)
+  # fix$Var <- factor(fix$Var, levels = sortNames)
 
   #See 5 scale colors for viridis:
   vir <- viridis::viridis_pal()(numberOfConditions)
@@ -72,18 +89,39 @@ plot_condition <- function(
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
   #
 
-  p <- fix |>
-    ggplot2::ggplot(ggplot2::aes(
-      x = Time,
-      y = forcats::fct_rev(Var),
-      fill = category
-    )) +
-    ggplot2::labs(fill = "Quantiles of Condition") +
+  if (plottype == "scaled") {
+    p <- fix |>
+      ggplot2::ggplot(ggplot2::aes(
+        x = Time,
+        y = forcats::fct_rev(Var),
+        fill = category
+      )) +
+      ggplot2::scale_fill_manual(values = vir)
+  } else if (plottype == "raw") {
+    p <- fix |>
+      ggplot2::ggplot(ggplot2::aes(
+        x = Time,
+        y = forcats::fct_rev(Var),
+        fill = scaleCond
+      )) +
+      # viridis::scale_fill_viridis(
+      #   discrete = FALSE #,
+      #   # option = "turbo",
+      #   # direction = -1
+      # )
+      ggplot2::scale_fill_gradientn(
+        colors = c(viridis::rocket(4)[2:4], viridis::mako(4)[4:2]),
+        # limits = c(min(fix$scaleCond), max(fix$scaleCond)),
+        values = scales::rescale(xs, from = c(min(xs), max(xs)), to = c(0, 1))
+      )
+  }
+
+  p <- p +
     ggplot2::geom_tile() +
     ggplot2::coord_equal() +
     ggplot2::theme_bw() +
-    ggplot2::scale_fill_manual(values = vir) +
-    ggplot2::guides(fill = ggplot2::guide_legend(reverse = TRUE)) +
+    # ggplot2::guides(fill = ggplot2::guide_legend(reverse = TRUE)) +
+
     ggplot2::scale_x_continuous(
       breaks = round(seq(min(fix$Time), max(fix$Time), by = numberOfConditions))
     ) +
@@ -107,9 +145,86 @@ plot_condition <- function(
     ecodata::theme_ts() +
     ecodata::theme_title()
 
+  if (plottype == "scaled") {
+    p <- p +
+      ggplot2::labs(fill = "Quantiles of Condition")
+  } else if (plottype == "raw") {
+    p <- p +
+      ggplot2::labs(fill = "Relative Condition")
+  }
+
   return(p)
 }
 
-
-attr(plot_condition, "EPU") <- c("MAB", "GB", "GOM")
-attr(plot_condition, "report") <- c("MidAtlantic", "NewEngland")
+# plot_condition(plottype = "raw")
+# plot_condition()
+#
+# dat <- ecodata::condition |>
+#   dplyr::group_by(Var, EPU) |>
+#   dplyr::filter(EPU != "SS") |>
+#   dplyr::mutate(
+#     scaleCond = scale(Value, scale = T, center = T)
+#   ) |>
+#   dplyr::ungroup() |>
+#   dplyr::mutate(
+#     cat = cut(
+#       scaleCond,
+#       breaks = quantile(
+#         dat$scaleCond,
+#         seq(0, 1, length.out = 6),
+#         na.rm = TRUE
+#       ),
+#       labels = c(
+#         "Poor Condition",
+#         "Below Average",
+#         "Neutral",
+#         "Above Average",
+#         "Good Condition"
+#       ),
+#       include.lowest = TRUE
+#     ),
+#     cat2 = cut(
+#       Value,
+#       breaks = quantile(
+#         dat$Value,
+#         seq(0, 1, length.out = 6),
+#         na.rm = TRUE
+#       ),
+#       labels = c(
+#         "Poor Condition",
+#         "Below Average",
+#         "Neutral",
+#         "Above Average",
+#         "Good Condition"
+#       ),
+#       include.lowest = TRUE
+#     )
+#   )
+#
+# dat |>
+#   dplyr::group_by(cat) |>
+#   dplyr::summarise(min = min(Value), max = max(Value))
+#
+# dat |>
+#   dplyr::group_by(cat2) |>
+#   dplyr::summarise(min = min(Value), max = max(Value))
+#
+# dat |>
+#   dplyr::group_by(Var) |>
+#   dplyr::summarise(delta = max(Value) - min(Value)) |>
+#   dplyr::arrange(delta)
+#
+# dat |>
+#   ggplot2::ggplot(ggplot2::aes(x = Value, y = scaleCond, color = Var)) +
+#   ggplot2::geom_point() +
+#   ggplot2::theme_bw() +
+#   ggplot2::facet_wrap(~EPU, ncol = 1) +
+#   ggplot2::geom_hline(
+#     yintercept = quantile(
+#       dat$scaleCond,
+#       seq(0, 1, length.out = 6),
+#       na.rm = TRUE
+#     ),
+#     lty = 2
+#   ) +
+#   ggplot2::theme(legend.position = "none")
