@@ -72,9 +72,11 @@ plot_condition <- function(
 
   sortNames <- fix |>
     # group the species that have a dip in the 2000s
-    dplyr::filter(Time <= 2014, Time >= 2000) |>
+    # dplyr::filter(Time <= 2014, Time >= 2000) |>
     dplyr::group_by(Var) |>
-    dplyr::summarize(total = sum(scaleCond, na.rm = TRUE)) |>
+    # dplyr::summarize(total = sum(scaleCond, na.rm = TRUE)) |>
+    # order by mean condition
+    dplyr::summarize(total = mean(scaleCond, na.rm = TRUE)) |>
     dplyr::arrange(total) |>
     dplyr::mutate(Species = factor(Var, levels = unique(Var))) |>
     dplyr::pull(Species)
