@@ -34,6 +34,7 @@ reference:
     contents:
     - ecodata
     - coast
+    - create_all_plots
     - cold_pool_sf
     - ches_bay_sf
     - epu_sf
