@@ -13,6 +13,7 @@
 <url><loc>https://noaa-edab.github.io/ecodata/reference/SAV.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/StatLM.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/abc_acl.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/advection.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/aggregate_biomass.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/aquaculture.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/bennet.html</loc></url>
@@ -34,8 +35,11 @@
 <url><loc>https://noaa-edab.github.io/ecodata/reference/cold_pool_sf.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/comdat.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/commercial_div.html</loc></url>
-<url><loc>https://noaa-edab.github.io/ecodata/reference/community_climate_vulnerability.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/community_risks.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/condition.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/create_all_plots.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/crew_survey.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/dissolved_oxygen.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/ecodata-package.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/energy_density.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/engagement.html</loc></url>
@@ -75,6 +79,7 @@
 <url><loc>https://noaa-edab.github.io/ecodata/reference/observed_sharks.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_SAV.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_abc_acl.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_advection.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_aggregate_biomass.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_annual_chl_pp.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_aquaculture.html</loc></url>
@@ -95,10 +100,13 @@
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_cold_pool.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_cold_pool_sf.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_comdat.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_comdat_profit.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_commercial_div.html</loc></url>
-<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_community_climate_vulnerability.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_community_factors.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_community_risks.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_condition.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_demo.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_dissolved_oxygen.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_energy_density.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_engagement.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_exp_n.html</loc></url>
@@ -151,6 +159,7 @@
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_thermal_habitat_area.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_thermal_habitat_gridded.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_trans_dates.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_wbts_zoo.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_wcr.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_wea_landings_rev.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_wind_dev_speed.html</loc></url>
@@ -158,6 +167,7 @@
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_wind_port.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_wind_revenue.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_zoo_abundance_anom.html</loc></url>
+<url><loc>https://noaa-edab.github.io/ecodata/reference/plot_zoo_community.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_zoo_diversity.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_zoo_regime.html</loc></url>
 <url><loc>https://noaa-edab.github.io/ecodata/reference/plot_zoo_strat_abun.html</loc></url>

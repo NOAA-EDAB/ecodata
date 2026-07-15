@@ -1,0 +1,60 @@
+# ecodata maintenance
+
+The purpose of the `ecodata` package is to hold and facilitate the use
+of ecosystem indicator datasets used in the annual State of the
+Ecosystem reports developed for the New England and Mid-Atlantic
+Fisheries Management Councils. Since these reports are iterative, the
+indicators used to develop the reports are added to or changed
+regularly. To ensure continuity between years and package authors, the
+following protocols have been established.
+
+## Workflow Overview
+
+![](figures/ecodata_schematic.png)
+
+## Update existing indicator
+
+From year to year most datasets will be delivered in the same format
+using the same name. In this case, ensure delivered .csv/.xls/.Rdata
+file is in the data-raw folder and run the get_example.R script.
+
+In some cases the data will not arrive in the same format or naming
+convention. In this case, ensure the delivered .csv/.xls/.Rdata file is
+in the data-raw folder and edit the get_example.R script to ensure that
+the output data frame is structured correctly (i.e. 5 columns (Time,
+Var, Value, Units, EPU)).
+
+## Add new indicator
+
+To add a new indicator dataset to the `ecodata` package, first ensure
+the delivered .csv/.xls/.Rdata file is in the data-raw folder. Write a
+get_example.R function which wrangles the raw data set into the desired
+format. Be sure to include a `get_example(save_clean = T)` line after
+closing the function. This will store the data frame in the data folder
+which is used to lazy load the data when the package is installed.
+
+The **data-raw** folder should hold contributor datasets, functions for
+wrangling data into SOE format (get_example.R scripts) and any
+supplimental functions used to create those datasets.
+
+The **data** folder should hold only wrangled .rda files.
+
+## Document indicator
+
+1.  For each new indicator add a .R file to the **R** folder. This file
+    should include the name of the dataset, a short description of the
+    dataset, a “@format” section describing the dataframe structure, an
+    itemized list of all of the columns in the dataframe and a
+    “@details” section which links to the relevant tech doc chapter and
+    any other important information.
+
+2.  When the package is built, the files in the *R* folder will be used
+    to populate the *man* folder.
+
+3.  Ecodata uses [pkgdown](https://pkgdown.r-lib.org/index.html) so once
+    the manual documentation is complete run
+    [`pkgdown::build_site()`](https://pkgdown.r-lib.org/reference/build_site.html).
+    This will populate the website with is updated indicator dataset
+    information.
+
+Website link - <https://noaa-edab.github.io/ecodata/landing_page>
