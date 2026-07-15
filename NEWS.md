@@ -1,3 +1,7 @@
+# ecodata 7.0.0
+
+Release includes data/plots used to build the 2026 NEFMC and MAFMC State of the Ecosystem Reports submitted to both SSCs and councils (MAFMC & NEFMC). Date: 07/15/2026
+
 # ecodata 6.0.1
 
 ### Fixes

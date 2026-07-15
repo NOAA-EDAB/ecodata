@@ -1,12 +1,13 @@
-
 # Image Directory
 image.dir <- here::here("docs/images")
 gis.dir <- here::here("data-raw/gis")
 #Default Rmd options
-knitr::opts_chunk$set(echo = FALSE,
-                      message = FALSE,
-                      warning = FALSE,
-                      fig.align = 'center') #allows for inserting R code into captions
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  fig.align = 'center'
+) #allows for inserting R code into captions
 
 #Plotting and data libraries
 library(ggplot2)
@@ -37,6 +38,6 @@ council_abbr <- "NEFMC"
 
 #Region identifiers
 epu <- "New England"
-epu_abbr <- c("GOM","GB")
+epu_abbr <- c("GOM", "GB")
 region <- "New England"
 region_abbr <- "NE"

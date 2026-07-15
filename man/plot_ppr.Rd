@@ -2,11 +2,12 @@
 % Please edit documentation in R/plot_ppr.R
 \name{plot_ppr}
 \alias{plot_ppr}
-\title{plot ecosystem overfishing indices}
+\title{Plot ecosystem overfishing indices}
 \usage{
 plot_ppr(
   shadedRegion = NULL,
   report = "MidAtlantic",
+  EPU = "MAB",
   varName = "ryther",
   threshold = "global"
 )
@@ -16,7 +17,9 @@ plot_ppr(
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
-\item{varName}{Character string. Variable to plot ("pp","fogarty","ryther")}
+\item{EPU}{Character string. Which EPU for New England report ("GB", "GOM") Mid will always be "MAB"}
+
+\item{varName}{Character string. Variable to plot ("pp","fogarty","ryther","ppr","mtl")}
 
 \item{threshold}{Character string. Select how thresholds are calculated ("global","regional")}
 }
@@ -24,5 +27,5 @@ plot_ppr(
 ggplot object
 }
 \description{
-plots ppr dataset. Primary production (PP), Fogarty, Ryther indices
+Plots ppr dataset. Primary production (PP), Fogarty and Ryther indices. Primary production required scaled by Primary production and mean trophic level index
 }

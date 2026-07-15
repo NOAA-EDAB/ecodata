@@ -1,10 +1,9 @@
-
 #CRS
 crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 
 #EPU shapefile
-epu_sf <- ecodata::epu_sf %>% 
-  filter(EPU %in% c("MAB","GB","GOM"))
+epu_sf <- ecodata::epu_sf %>%
+  filter(EPU %in% c("MAB", "GB", "GOM"))
 
 #Map line parameters
 map.lwd <- 0.4
@@ -30,15 +29,21 @@ hline.lty <- "dashed"
 label.size <- 5
 hjust.label <- 1.5
 letter_size <- 4
-feeding.guilds1<- c("Piscivore","Planktivore","Benthivore","Benthos")
-feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
+feeding.guilds1 <- c("Piscivore", "Planktivore", "Benthivore", "Benthos")
+feeding.guilds <- c(
+  "Apex Predator",
+  "Piscivore",
+  "Planktivore",
+  "Benthivore",
+  "Benthos"
+)
 x.shade.min <- 2012
 x.shade.max <- 2022
 
 #Define constants for figure plot
-series.col <- c("indianred","black")
+series.col <- c("indianred", "black")
 
 #Function for custom ggplot facet labels
-label <- function(variable,value){
+label <- function(variable, value) {
   return(facet_names[value])
 }

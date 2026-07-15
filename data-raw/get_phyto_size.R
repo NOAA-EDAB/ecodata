@@ -4,43 +4,61 @@ library(stringr)
 
 raw.dir <- here::here("data-raw")
 
-nano_csv<- "19980101_20231231-OCCCI_GLOBCOLOUR-PSC_FNANO-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_PHYTOPLANKTON-SOE_FORMAT.csv"
-pico_csv<- "19980101_20231231-OCCCI_GLOBCOLOUR-PSC_FPICO-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_PHYTOPLANKTON-SOE_FORMAT.csv"
-micro_csv<-"19980101_20231231-OCCCI_GLOBCOLOUR-PSC_FMICRO-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_PHYTOPLANKTON-SOE_FORMAT.csv"
+nano_csv <- "19980101_20231231-OCCCI_GLOBCOLOUR-PSC_FNANO-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_PHYTOPLANKTON-SOE_FORMAT.csv"
+pico_csv <- "19980101_20231231-OCCCI_GLOBCOLOUR-PSC_FPICO-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_PHYTOPLANKTON-SOE_FORMAT.csv"
+micro_csv <- "19980101_20231231-OCCCI_GLOBCOLOUR-PSC_FMICRO-STATS_ANOMS-NES_EPU_NOESTUARIES-SOE_PHYTOPLANKTON-SOE_FORMAT.csv"
 
-nano<- read.csv(file.path(raw.dir, nano_csv)) %>%
+nano <- read.csv(file.path(raw.dir, nano_csv)) %>%
   dplyr::select(PERIOD, UNITS, VARIABLE, VALUE, SUBAREA) %>%
-  dplyr::rename(Time = PERIOD, Units = UNITS, Var = VARIABLE,
-                EPU =SUBAREA, Value = VALUE)
-pico<- read.csv(file.path(raw.dir, pico_csv)) %>%
+  dplyr::rename(
+    Time = PERIOD,
+    Units = UNITS,
+    Var = VARIABLE,
+    EPU = SUBAREA,
+    Value = VALUE
+  )
+pico <- read.csv(file.path(raw.dir, pico_csv)) %>%
   dplyr::select(PERIOD, UNITS, VARIABLE, VALUE, SUBAREA) %>%
-  dplyr::rename(Time = PERIOD, Units = UNITS, Var = VARIABLE,
-                EPU =SUBAREA, Value = VALUE)
-micro<- read.csv(file.path(raw.dir, micro_csv)) %>%
+  dplyr::rename(
+    Time = PERIOD,
+    Units = UNITS,
+    Var = VARIABLE,
+    EPU = SUBAREA,
+    Value = VALUE
+  )
+micro <- read.csv(file.path(raw.dir, micro_csv)) %>%
   dplyr::select(PERIOD, UNITS, VARIABLE, VALUE, SUBAREA) %>%
-  dplyr::rename(Time = PERIOD, Units = UNITS, Var = VARIABLE,
-                EPU =SUBAREA, Value = VALUE)
+  dplyr::rename(
+    Time = PERIOD,
+    Units = UNITS,
+    Var = VARIABLE,
+    EPU = SUBAREA,
+    Value = VALUE
+  )
 
 
-phyto_size <- nano %>% rbind( pico, micro)%>%
+phyto_size <- nano %>%
+  rbind(pico, micro) %>%
   dplyr::select(Time, Var, Value, EPU, Units) %>%
   tibble::as_tibble()
 
 # metadata ----
-attr(phyto_size, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/phytoplankton-size-class.html"
-attr(phyto_size, "data_files")   <- list(
-)
+attr(
+  phyto_size,
+  "tech-doc_url"
+) <- "https://noaa-edab.github.io/tech-doc/phytoplankton-size-class.html"
+attr(phyto_size, "data_files") <- list()
 attr(phyto_size, "data_steward") <- c(
-  "Kimberly Hyde <kimberly.hyde@noaa.gov>")
+  "Kimberly Hyde <kimberly.hyde@noaa.gov>"
+)
 attr(phyto_size, "plot_script") <- list(
   `ltl_MAB_weekly` = "LTL_MAB.Rmd-weekly-phyto-size.R",
   `ltl_NE_weekly` = "LTL_NE.Rmd-weekly-phyto-size.R",
   `ltl_NE_weekly-gb` = "LTL_NE.Rmd-weekly-phyto-size-gb.R",
-  `ltl_NE_weekly-gom` = "LTL_NE.Rmd-weekly-phyto-size-gom.R")
+  `ltl_NE_weekly-gom` = "LTL_NE.Rmd-weekly-phyto-size-gom.R"
+)
 
 usethis::use_data(phyto_size, overwrite = T)
-
-
 
 # phyto_year_nano<- phyto_size %>%
 #   dplyr::filter(EPU == c("GB"),
@@ -112,13 +130,3 @@ usethis::use_data(phyto_size, overwrite = T)
 #   scale_x_continuous(breaks = month_numeric,
 #                      labels = month_label)+
 #   ecodata::theme_title()
-
-
-
-
-
-
-
-
-
-

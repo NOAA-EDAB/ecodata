@@ -9,17 +9,16 @@ library(rgdal)
 library(sf)
 
 # Directories
-gis.dir <- here::here("data-raw","gis") #shapefiles for clipping OI data
+gis.dir <- here::here("data-raw", "gis") #shapefiles for clipping OI data
 raw.dir <- here::here("data-raw") #input raw
 
 #First function to build EPU rasters
-create_epu_mask_oi <- function(EPU){
-
+create_epu_mask_oi <- function(EPU) {
   #Read in EPU shapefile (will be downsampled to match OI raster resolution)
   epu <- readOGR(file.path(gis.dir, "EPU_Extended.shp"), verbose = F)
 
   #Filter raster by EPU
-  epu <- epu[epu$EPU == EPU,]
+  epu <- epu[epu$EPU == EPU, ]
 
   #Build empty raster
   r1 <- raster::raster()
@@ -36,11 +35,10 @@ create_epu_mask_oi <- function(EPU){
   raster::crs(r2) <- NA
 
   #Downsample high res EPU raster to match data
-  r.new <- raster::resample(r1, r2, method="bilinear")
+  r.new <- raster::resample(r1, r2, method = "bilinear")
   r.new[is.finite(r.new)] <- 1
 
   return(r.new)
-
 }
 
 #Raster data

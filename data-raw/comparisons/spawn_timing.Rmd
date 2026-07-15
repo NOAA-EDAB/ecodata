@@ -9,13 +9,13 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ecodata)
-library(ecodata24)
+library(ecodata25)
 library(dplyr)
 library(knitr)
 
 # Replace 'spawn_timing' with intended dataset
 dataset<-ecodata::spawn_timing
-dataset24<-ecodata24::spawn_timing
+dataset24<-ecodata25::spawn_timing
 
 # Define dataset-specific arguments for plot functions
 report<-list("MidAtlantic")
@@ -37,62 +37,62 @@ kable(datastats, digits = 2)
 ## `r paste(report[1],variable[1])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
 ecodata::plot_spawn_timing(report = report[1], n = 10, varName = variable[1]) + 
-  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_spawn_timing(report = report[1], varName = variable[1]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+ecodata25::plot_spawn_timing(report = report[1], varName = variable[1]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
 ## `r paste(report[1],variable[2])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
 ecodata::plot_spawn_timing(report = report[1], n = 10, varName = variable[2]) + 
-  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_spawn_timing(report = report[1], varName = variable[2]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+ecodata25::plot_spawn_timing(report = report[1], varName = variable[2]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
 ## `r paste(report[1],variable[3])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
 ecodata::plot_spawn_timing(report = report[1], n = 10, varName = variable[3]) + 
-  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_spawn_timing(report = report[1], varName = variable[3]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+ecodata25::plot_spawn_timing(report = report[1], varName = variable[3]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
 ## `r paste(report[1],variable[4])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
 ecodata::plot_spawn_timing(report = report[1], n = 10, varName = variable[4]) + 
-  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_spawn_timing(report = report[1], varName = variable[4]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+ecodata25::plot_spawn_timing(report = report[1], varName = variable[4]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
 ## `r paste(report[1],variable[5])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
 ecodata::plot_spawn_timing(report = report[1], n = 10, varName = variable[5]) + 
-  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_spawn_timing(report = report[1], varName = variable[5]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+ecodata25::plot_spawn_timing(report = report[1], varName = variable[5]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
 ## `r paste(report[1],variable[6])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
 ecodata::plot_spawn_timing(report = report[1], n = 10, varName = variable[6]) + 
-  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_spawn_timing(report = report[1], varName = variable[6]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+ecodata25::plot_spawn_timing(report = report[1], varName = variable[6]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```
 
 ## `r paste(report[1],variable[7])`
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
 ecodata::plot_spawn_timing(report = report[1], n = 10, varName = variable[7]) + 
-  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+  ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 
-ecodata24::plot_spawn_timing(report = report[1], varName = variable[7]) + 
-  ggplot2::ggtitle("SOE 2024") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+ecodata25::plot_spawn_timing(report = report[1], varName = variable[7]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
 ```

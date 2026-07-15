@@ -17,16 +17,15 @@
 # removed temporarily from params documentation, add back later:
 # @param source character vector. Which source data should be plotted (e.g. 'GLORYS','MOM6')
 
-
-plot_cold_pool <- function(shadedRegion = NULL,
-                           report="MidAtlantic",
-                           varName = NULL,
-                           #source = 'GLORYS',
-                           n = 0) {
-
+plot_cold_pool <- function(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  varName = NULL,
+  #source = 'GLORYS',
+  n = 0
+) {
   # generate plot setup list (same for all plot functions)
-  setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
-                               report=report)
+  setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
 
   # # which report? this may be bypassed for some figures
   # if (report == "MidAtlantic") {
@@ -46,13 +45,15 @@ plot_cold_pool <- function(shadedRegion = NULL,
   cpdup <- ecodata::cold_pool |>
     dplyr::group_by(Time, Var, EPU) |>
     #dplyr::filter(Source %in% source) |>
-    dplyr::mutate(duplicated = dplyr::n()>1) |>
+    dplyr::mutate(duplicated = dplyr::n() > 1) |>
     dplyr::ungroup()
 
   cpts <- cpdup |>
     dplyr::filter(!duplicated) |>
-    dplyr::bind_rows(cpdup |>
-                       dplyr::filter(duplicated & Source %in% c("GLORYS","ROMS"))) |>
+    dplyr::bind_rows(
+      cpdup |>
+        dplyr::filter(duplicated & Source %in% c("GLORYS", "ROMS"))
+    ) |>
     dplyr::select(-duplicated)
 
   # code for generating plot object p
@@ -60,103 +61,191 @@ plot_cold_pool <- function(shadedRegion = NULL,
   # e.g. fill = setup$shade.fill, alpha = setup$shade.alpha,
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
   #
-  cpi<- cpts |>
+  cpi <- cpts |>
     dplyr::filter(stringr::str_detect(Var, pattern = "cold_pool")) |>
-    dplyr::mutate(Value = Value*-1) |>
-    tidyr::pivot_wider(names_from = Var, values_from = Value)  |>
-    dplyr::mutate(Upper = cold_pool_index + se_cold_pool_index,
-                  Lower = cold_pool_index - se_cold_pool_index) |>
-    dplyr::select(!se_cold_pool_index)|>
-    dplyr::rename(Value = cold_pool_index)|>
+    dplyr::mutate(Value = Value * -1) |>
+    tidyr::pivot_wider(names_from = Var, values_from = Value) |>
+    dplyr::mutate(
+      Upper = cold_pool_index + se_cold_pool_index,
+      Lower = cold_pool_index - se_cold_pool_index
+    ) |>
+    dplyr::select(!se_cold_pool_index) |>
+    dplyr::rename(Value = cold_pool_index) |>
     dplyr::mutate(Var = c("cold_pool_index")) |>
     ggplot2::ggplot() +
     #Highlight last ten years
-    ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
-                      xmin = setup$x.shade.min , xmax = setup$x.shade.max,
-                      ymin = -Inf, ymax = Inf)+
+    ggplot2::annotate(
+      "rect",
+      fill = setup$shade.fill,
+      alpha = setup$shade.alpha,
+      xmin = setup$x.shade.min,
+      xmax = setup$x.shade.max,
+      ymin = -Inf,
+      ymax = Inf
+    ) +
     ggplot2::geom_line(ggplot2::aes(x = Time, y = Value), size = setup$lwd) + #, color = Source
-    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, shape = Source), size = setup$pcex) + #color = Source
-    ggplot2::scale_shape_manual(values = c(16, 1))+
-    ggplot2::theme(legend.position = "none")+
+    ggplot2::geom_point(
+      ggplot2::aes(x = Time, y = Value, shape = Source),
+      size = setup$pcex
+    ) + #color = Source
+    ggplot2::scale_shape_manual(values = c(16, 1)) +
+    ggplot2::theme(legend.position = "none") +
     # ggplot2::geom_ribbon(aes(x = Time, ymin = Lower, ymax = Upper), fill = "gray")+
-    ggplot2::geom_hline(ggplot2::aes(yintercept = 0))+
-    ecodata::geom_gls(ggplot2::aes(x = Time, y = Value))+
-    ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Value))+
+    ggplot2::geom_hline(ggplot2::aes(yintercept = 0)) +
+    ecodata::geom_gls(ggplot2::aes(x = Time, y = Value)) +
+    ecodata::geom_lm(n = n, ggplot2::aes(x = Time, y = Value)) +
     #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
-    ggplot2::ylab(bquote("Cold Pool Index, (\u00B0C)" ~ (x^{-1}))) +
+    ggplot2::ylab(bquote(
+      "Cold Pool Index, (\u00B0C)" ~
+        (x^{
+          -1
+        })
+    )) +
     #ggplot2::scale_y_reverse()+
-    ggplot2::xlab("")+
-    ecodata::theme_ts()+
-    ecodata::theme_title()+
-    ggplot2::annotate("text", x = 1990, y = 2.2, label = "Colder", size = 4,colour = "blue")+
-    ggplot2::annotate("text", x = 1990, y = -2.5, label = "Warmer",size = 4, colour = "red")
-
+    ggplot2::xlab("") +
+    ecodata::theme_ts() +
+    ecodata::theme_title() +
+    ggplot2::annotate(
+      "text",
+      x = 1990,
+      y = 2.2,
+      label = "Colder",
+      size = 4,
+      colour = "blue"
+    ) +
+    ggplot2::annotate(
+      "text",
+      x = 1990,
+      y = -2.5,
+      label = "Warmer",
+      size = 4,
+      colour = "red"
+    )
 
   #Cold Pool Extent units originall number of cells. Assuming 111km/deg to convert to area
   #One cell is 9.25^2 or 85.5 km2
 
-  ei<- cpts |>
+  ei <- cpts |>
     dplyr::filter(stringr::str_detect(Var, pattern = "extent")) |>
-    tidyr::pivot_wider(names_from = Var, values_from = Value)  |>
-    dplyr::mutate(Upper = extent_index + se_extent_index,
-                  Lower = extent_index - se_extent_index) |>
-    dplyr::select(!se_extent_index)|>
-    dplyr::rename(Value = extent_index)|>
+    tidyr::pivot_wider(names_from = Var, values_from = Value) |>
+    dplyr::mutate(
+      Upper = extent_index + se_extent_index,
+      Lower = extent_index - se_extent_index
+    ) |>
+    dplyr::select(!se_extent_index) |>
+    dplyr::rename(Value = extent_index) |>
     dplyr::mutate(Var = c("extent_index")) |>
     ggplot2::ggplot() +
-    ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
-                      xmin = setup$x.shade.min , xmax = setup$x.shade.max,
-                      ymin = -Inf, ymax = Inf)+
-    ggplot2::geom_line(ggplot2::aes(x = Time, y = Value*85.5), size = setup$lwd) + #, color = Source
-    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value*85.5, shape = Source), size = setup$pcex) + #color = Source
-    ggplot2::scale_shape_manual(values = c(16, 1))+
-    ggplot2::theme(legend.position = "none")+
-    ggplot2::geom_hline(ggplot2::aes(yintercept = 0))+
-    ecodata::geom_gls(ggplot2::aes(x = Time, y = Value*85.5))+
-    ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Value*85.5))+
+    ggplot2::annotate(
+      "rect",
+      fill = setup$shade.fill,
+      alpha = setup$shade.alpha,
+      xmin = setup$x.shade.min,
+      xmax = setup$x.shade.max,
+      ymin = -Inf,
+      ymax = Inf
+    ) +
+    ggplot2::geom_line(
+      ggplot2::aes(x = Time, y = Value * 85.5),
+      size = setup$lwd
+    ) + #, color = Source
+    ggplot2::geom_point(
+      ggplot2::aes(x = Time, y = Value * 85.5, shape = Source),
+      size = setup$pcex
+    ) + #color = Source
+    ggplot2::scale_shape_manual(values = c(16, 1)) +
+    ggplot2::theme(legend.position = "none") +
+    ggplot2::geom_hline(ggplot2::aes(yintercept = 0)) +
+    ecodata::geom_gls(ggplot2::aes(x = Time, y = Value * 85.5)) +
+    ecodata::geom_lm(n = n, ggplot2::aes(x = Time, y = Value * 85.5)) +
     #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
-    ggplot2::ylab(bquote("Spatial Extent Index, " ~ (km^{2}))) +
-    ggplot2::xlab("")+
-    ecodata::theme_ts()+
-    ecodata::theme_title()+
+    ggplot2::ylab(bquote(
+      "Spatial Extent Index, " ~
+        (km^{
+          2
+        })
+    )) +
+    ggplot2::xlab("") +
+    ecodata::theme_ts() +
+    ecodata::theme_title() +
     # ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.05, yend = 50,
     #          colour = "blue", size = 0.70, arrow = arrow())+
     # ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -250,
     #          colour = "red", size = 0.70, arrow = arrow())+
-    ggplot2::annotate("text", x = 1990, y = Inf,vjust = 1.5, label = "Larger",size = 4, colour = "blue")+
-    ggplot2::annotate("text", x = 1990, y = -Inf,vjust = -1.5, label = "Smaller",size = 4, colour = "red")
+    ggplot2::annotate(
+      "text",
+      x = 1990,
+      y = Inf,
+      vjust = 1.5,
+      label = "Larger",
+      size = 4,
+      colour = "blue"
+    ) +
+    ggplot2::annotate(
+      "text",
+      x = 1990,
+      y = -Inf,
+      vjust = -1.5,
+      label = "Smaller",
+      size = 4,
+      colour = "red"
+    )
 
-
-  pi<- cpts |>
+  pi <- cpts |>
     dplyr::filter(stringr::str_detect(Var, pattern = "persistence")) |>
-    tidyr::pivot_wider(names_from = Var, values_from = Value)  |>
-    dplyr::mutate(Upper = persistence_index + se_persistence_index,
-                  Lower = persistence_index - se_persistence_index) |>
-    dplyr::select(!se_persistence_index)|>
-    dplyr::rename(Value = persistence_index)|>
-    dplyr::mutate(Var = c("persistence_index"))|>
+    tidyr::pivot_wider(names_from = Var, values_from = Value) |>
+    dplyr::mutate(
+      Upper = persistence_index + se_persistence_index,
+      Lower = persistence_index - se_persistence_index
+    ) |>
+    dplyr::select(!se_persistence_index) |>
+    dplyr::rename(Value = persistence_index) |>
+    dplyr::mutate(Var = c("persistence_index")) |>
     ggplot2::ggplot() +
-    ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
-                      xmin = setup$x.shade.min , xmax = setup$x.shade.max,
-                      ymin = -Inf, ymax = Inf)+
+    ggplot2::annotate(
+      "rect",
+      fill = setup$shade.fill,
+      alpha = setup$shade.alpha,
+      xmin = setup$x.shade.min,
+      xmax = setup$x.shade.max,
+      ymin = -Inf,
+      ymax = Inf
+    ) +
     ggplot2::geom_line(ggplot2::aes(x = Time, y = Value), size = setup$lwd) + #, color = Source
-    ggplot2::geom_point(ggplot2::aes(x = Time, y = Value, shape = Source), size = setup$pcex) + #color = Source
-    ggplot2::scale_shape_manual(values = c(16, 1))+
-    ggplot2::theme(legend.position = "none")+
-    ggplot2::geom_hline(ggplot2::aes(yintercept = 0))+
-    ecodata::geom_gls(ggplot2::aes(x = Time, y = Value))+
-    ecodata::geom_lm(n=n, ggplot2::aes(x = Time, y = Value))+
+    ggplot2::geom_point(
+      ggplot2::aes(x = Time, y = Value, shape = Source),
+      size = setup$pcex
+    ) + #color = Source
+    ggplot2::scale_shape_manual(values = c(16, 1)) +
+    ggplot2::theme(legend.position = "none") +
+    ggplot2::geom_hline(ggplot2::aes(yintercept = 0)) +
+    ecodata::geom_gls(ggplot2::aes(x = Time, y = Value)) +
+    ecodata::geom_lm(n = n, ggplot2::aes(x = Time, y = Value)) +
     #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
     ggplot2::ylab("Persistence Index (months)") +
-    ggplot2::xlab("")+
-    ecodata::theme_ts()+
-    ecodata::theme_title()+
+    ggplot2::xlab("") +
+    ecodata::theme_ts() +
+    ecodata::theme_title() +
     # ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.01, yend = 0.6,
     #          colour = "blue", size = 0.70, arrow = arrow())+
     # ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -1.6,
     #          colour = "red", size = 0.70, arrow = arrow())+
-    ggplot2::annotate("text", x = 1990, y = 1.5, label = "Longer", size = 4,colour = "blue")+
-    ggplot2::annotate("text", x = 1990, y = -1.5, label = "Shorter", size = 4, colour = "red")
+    ggplot2::annotate(
+      "text",
+      x = 1990,
+      y = 1.5,
+      label = "Longer",
+      size = 4,
+      colour = "blue"
+    ) +
+    ggplot2::annotate(
+      "text",
+      x = 1990,
+      y = -1.5,
+      label = "Shorter",
+      size = 4,
+      colour = "red"
+    )
 
   #cowplot::plot_grid(cpi, pi, ei, labels = c('a', 'b', 'c'), align = "h")
 
@@ -169,124 +258,123 @@ plot_cold_pool <- function(shadedRegion = NULL,
       p <- ei
     }
   } else {
-    p <- gridExtra::grid.arrange(cpi, pi,ei, ncol=3)
+    p <- gridExtra::grid.arrange(cpi, pi, ei, ncol = 3)
   }
 
   return(p)
 }
 
-attr(plot_cold_pool,"report") <- c("MidAtlantic","NewEngland")
-attr(plot_cold_pool,"varName") <- c("cold_pool", "persistence","extent")
+attr(plot_cold_pool, "report") <- c("MidAtlantic")
+attr(plot_cold_pool, "varName") <- c("cold_pool", "persistence", "extent")
 #attr(plot_cold_pool, "source") <- c("GLORYS", "MOM6")
 
-
-  # Paste commented original plot code chunk for reference
-  # cp1<- ecodata::cold_pool %>%
-  #   dplyr::filter(Time >= 2021) %>%
-  #   dplyr::mutate(Source = c("PSY"))
-  # cpts<- ecodata::cold_pool %>%
-  #   dplyr::filter(Time <= 2020) %>%
-  #   dplyr::mutate(Source = c("Glorys")) %>%
-  #   rbind(cp1)
-  #
-  #
-  #
-  # cpi<- cpts %>%
-  #   dplyr::filter(stringr::str_detect(Var, pattern = "cold_pool")) %>%
-  #   dplyr::mutate(Value = Value*-1) %>%
-  #   tidyr::pivot_wider(names_from = Var, values_from = Value)  %>%
-  #   dplyr::mutate(Upper = cold_pool_index + se_cold_pool_index,
-  #                 Lower = cold_pool_index - se_cold_pool_index) %>%
-  #   dplyr::select(!se_cold_pool_index)%>%
-  #   dplyr::rename(Value = cold_pool_index)%>%
-  #   dplyr::mutate(Var = c("cold_pool_index")) %>%
-  #   ggplot2::ggplot() +
-  #   #Highlight last ten years
-  #   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-  #                     xmin = x.shade.min , xmax = x.shade.max,
-  #                     ymin = -Inf, ymax = Inf)+
-  #   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
-  #   ggplot2::geom_point(aes(x = Time, y = Value, shape = Source), size = pcex) +
-  #   ggplot2::scale_shape_manual(values = c(16, 1))+
-  #   ggplot2::theme(legend.position = "none")+
-  #   # ggplot2::geom_ribbon(aes(x = Time, ymin = Lower, ymax = Upper), fill = "gray")+
-  #   ggplot2::geom_hline(aes(yintercept = 0))+
-  #   ecodata::geom_gls(aes(x = Time, y = Value))+
-  #   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
-  #   ggplot2::ylab("Cold Pool Index (x(-1))") +
-  #   #ggplot2::scale_y_reverse()+
-  #   ggplot2::xlab("")+
-  #   ecodata::theme_ts()+
-  #   ecodata::theme_title()+
-  #   ggplot2::annotate("text", x = 1990, y = 2.2, label = "Colder", size = 4,colour = "blue")+
-  #   ggplot2::annotate("text", x = 1990, y = -2.5, label = "Warmer",size = 4, colour = "red")
-  #
-  #
-  #
-  #
-  # ei<- cpts %>%
-  #   dplyr::filter(stringr::str_detect(Var, pattern = "extent")) %>%
-  #   tidyr::pivot_wider(names_from = Var, values_from = Value)  %>%
-  #   dplyr::mutate(Upper = extent_index + se_extent_index,
-  #                 Lower = extent_index - se_extent_index) %>%
-  #   dplyr::select(!se_extent_index)%>%
-  #   dplyr::rename(Value = extent_index)%>%
-  #   dplyr::mutate(Var = c("extent_index")) %>%
-  #   ggplot2::ggplot() +
-  #   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-  #                     xmin = x.shade.min , xmax = x.shade.max,
-  #                     ymin = -Inf, ymax = Inf)+
-  #   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
-  #   ggplot2::geom_point(aes(x = Time, y = Value, shape = Source), size = pcex) +
-  #   ggplot2::scale_shape_manual(values = c(16, 1))+
-  #   ggplot2::theme(legend.position = "none")+
-  #   ggplot2::geom_hline(aes(yintercept = 0))+
-  #   ecodata::geom_gls(aes(x = Time, y = Value))+
-  #   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
-  #   ggplot2::ylab("Spatial Extent Index") +
-  #   ggplot2::xlab("")+
-  #   ecodata::theme_ts()+
-  #   ecodata::theme_title()+
-  #   # ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.05, yend = 50,
-  #   #          colour = "blue", size = 0.70, arrow = arrow())+
-  #   # ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -250,
-  #   #          colour = "red", size = 0.70, arrow = arrow())+
-  #   ggplot2::annotate("text", x = 1990, y = 125, label = "Larger",size = 4, colour = "blue")+
-  #   ggplot2::annotate("text", x = 1990, y = -400, label = "Smaller",size = 4, colour = "red")
-  #
-  #
-  # pi<- cpts %>%
-  #   dplyr::filter(stringr::str_detect(Var, pattern = "persistence")) %>%
-  #   tidyr::pivot_wider(names_from = Var, values_from = Value)  %>%
-  #   dplyr::mutate(Upper = persistence_index + se_persistence_index,
-  #                 Lower = persistence_index - se_persistence_index) %>%
-  #   dplyr::select(!se_persistence_index)%>%
-  #   dplyr::rename(Value = persistence_index)%>%
-  #   dplyr::mutate(Var = c("persistence_index"))%>%
-  #   ggplot2::ggplot() +
-  #   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-  #                     xmin = x.shade.min , xmax = x.shade.max,
-  #                     ymin = -Inf, ymax = Inf)+
-  #   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
-  #   ggplot2::geom_point(aes(x = Time, y = Value, shape = Source), size = pcex) +
-  #   ggplot2::scale_shape_manual(values = c(16, 1))+
-  #   ggplot2::theme(legend.position = "none")+
-  #   ggplot2::geom_hline(aes(yintercept = 0))+
-  #   ecodata::geom_gls(aes(x = Time, y = Value))+
-  #   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
-  #   ggplot2::ylab("Persistence Index") +
-  #   ggplot2::xlab("")+
-  #   ecodata::theme_ts()+
-  #   ecodata::theme_title()+
-  #   # ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.01, yend = 0.6,
-  #   #          colour = "blue", size = 0.70, arrow = arrow())+
-  #   # ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -1.6,
-  #   #          colour = "red", size = 0.70, arrow = arrow())+
-  #   ggplot2::annotate("text", x = 1990, y = 0.8, label = "Longer", size = 4,colour = "blue")+
-  #   ggplot2::annotate("text", x = 1990, y = -1.8, label = "Shorter", size = 4, colour = "red")
-  #
-  # #cowplot::plot_grid(cpi, pi, ei, labels = c('a', 'b', 'c'), align = "h")
-  #
-  # gridExtra::grid.arrange(cpi, pi,ei, ncol=3)
-  #
-  #
+# Paste commented original plot code chunk for reference
+# cp1<- ecodata::cold_pool %>%
+#   dplyr::filter(Time >= 2021) %>%
+#   dplyr::mutate(Source = c("PSY"))
+# cpts<- ecodata::cold_pool %>%
+#   dplyr::filter(Time <= 2020) %>%
+#   dplyr::mutate(Source = c("Glorys")) %>%
+#   rbind(cp1)
+#
+#
+#
+# cpi<- cpts %>%
+#   dplyr::filter(stringr::str_detect(Var, pattern = "cold_pool")) %>%
+#   dplyr::mutate(Value = Value*-1) %>%
+#   tidyr::pivot_wider(names_from = Var, values_from = Value)  %>%
+#   dplyr::mutate(Upper = cold_pool_index + se_cold_pool_index,
+#                 Lower = cold_pool_index - se_cold_pool_index) %>%
+#   dplyr::select(!se_cold_pool_index)%>%
+#   dplyr::rename(Value = cold_pool_index)%>%
+#   dplyr::mutate(Var = c("cold_pool_index")) %>%
+#   ggplot2::ggplot() +
+#   #Highlight last ten years
+#   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+#                     xmin = x.shade.min , xmax = x.shade.max,
+#                     ymin = -Inf, ymax = Inf)+
+#   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
+#   ggplot2::geom_point(aes(x = Time, y = Value, shape = Source), size = pcex) +
+#   ggplot2::scale_shape_manual(values = c(16, 1))+
+#   ggplot2::theme(legend.position = "none")+
+#   # ggplot2::geom_ribbon(aes(x = Time, ymin = Lower, ymax = Upper), fill = "gray")+
+#   ggplot2::geom_hline(aes(yintercept = 0))+
+#   ecodata::geom_gls(aes(x = Time, y = Value))+
+#   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
+#   ggplot2::ylab("Cold Pool Index (x(-1))") +
+#   #ggplot2::scale_y_reverse()+
+#   ggplot2::xlab("")+
+#   ecodata::theme_ts()+
+#   ecodata::theme_title()+
+#   ggplot2::annotate("text", x = 1990, y = 2.2, label = "Colder", size = 4,colour = "blue")+
+#   ggplot2::annotate("text", x = 1990, y = -2.5, label = "Warmer",size = 4, colour = "red")
+#
+#
+#
+#
+# ei<- cpts %>%
+#   dplyr::filter(stringr::str_detect(Var, pattern = "extent")) %>%
+#   tidyr::pivot_wider(names_from = Var, values_from = Value)  %>%
+#   dplyr::mutate(Upper = extent_index + se_extent_index,
+#                 Lower = extent_index - se_extent_index) %>%
+#   dplyr::select(!se_extent_index)%>%
+#   dplyr::rename(Value = extent_index)%>%
+#   dplyr::mutate(Var = c("extent_index")) %>%
+#   ggplot2::ggplot() +
+#   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+#                     xmin = x.shade.min , xmax = x.shade.max,
+#                     ymin = -Inf, ymax = Inf)+
+#   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
+#   ggplot2::geom_point(aes(x = Time, y = Value, shape = Source), size = pcex) +
+#   ggplot2::scale_shape_manual(values = c(16, 1))+
+#   ggplot2::theme(legend.position = "none")+
+#   ggplot2::geom_hline(aes(yintercept = 0))+
+#   ecodata::geom_gls(aes(x = Time, y = Value))+
+#   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
+#   ggplot2::ylab("Spatial Extent Index") +
+#   ggplot2::xlab("")+
+#   ecodata::theme_ts()+
+#   ecodata::theme_title()+
+#   # ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.05, yend = 50,
+#   #          colour = "blue", size = 0.70, arrow = arrow())+
+#   # ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -250,
+#   #          colour = "red", size = 0.70, arrow = arrow())+
+#   ggplot2::annotate("text", x = 1990, y = 125, label = "Larger",size = 4, colour = "blue")+
+#   ggplot2::annotate("text", x = 1990, y = -400, label = "Smaller",size = 4, colour = "red")
+#
+#
+# pi<- cpts %>%
+#   dplyr::filter(stringr::str_detect(Var, pattern = "persistence")) %>%
+#   tidyr::pivot_wider(names_from = Var, values_from = Value)  %>%
+#   dplyr::mutate(Upper = persistence_index + se_persistence_index,
+#                 Lower = persistence_index - se_persistence_index) %>%
+#   dplyr::select(!se_persistence_index)%>%
+#   dplyr::rename(Value = persistence_index)%>%
+#   dplyr::mutate(Var = c("persistence_index"))%>%
+#   ggplot2::ggplot() +
+#   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
+#                     xmin = x.shade.min , xmax = x.shade.max,
+#                     ymin = -Inf, ymax = Inf)+
+#   ggplot2::geom_line(aes(x = Time, y = Value), size = lwd) +
+#   ggplot2::geom_point(aes(x = Time, y = Value, shape = Source), size = pcex) +
+#   ggplot2::scale_shape_manual(values = c(16, 1))+
+#   ggplot2::theme(legend.position = "none")+
+#   ggplot2::geom_hline(aes(yintercept = 0))+
+#   ecodata::geom_gls(aes(x = Time, y = Value))+
+#   #ecodata::geom_lm(aes(x = Time, y = Value, group = Var))+
+#   ggplot2::ylab("Persistence Index") +
+#   ggplot2::xlab("")+
+#   ecodata::theme_ts()+
+#   ecodata::theme_title()+
+#   # ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.01, yend = 0.6,
+#   #          colour = "blue", size = 0.70, arrow = arrow())+
+#   # ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -1.6,
+#   #          colour = "red", size = 0.70, arrow = arrow())+
+#   ggplot2::annotate("text", x = 1990, y = 0.8, label = "Longer", size = 4,colour = "blue")+
+#   ggplot2::annotate("text", x = 1990, y = -1.8, label = "Shorter", size = 4, colour = "red")
+#
+# #cowplot::plot_grid(cpi, pi, ei, labels = c('a', 'b', 'c'), align = "h")
+#
+# gridExtra::grid.arrange(cpi, pi,ei, ncol=3)
+#
+#

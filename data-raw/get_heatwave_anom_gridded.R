@@ -1,15 +1,14 @@
 ## Heatwave maps
 
-
 library(raster)
 library(sf)
 library(ggplot2)
 library(ncdf4)
 library(reshape2)
 
-rast_prep <- function(r){
+rast_prep <- function(r) {
   r <- rotate(r) #Rotate
-  r <- crop(r, extent(-77,-60,35,46)) #Crop
+  r <- crop(r, extent(-77, -60, 35, 46)) #Crop
   return(r)
 }
 
@@ -29,20 +28,25 @@ gb.ltm <- ltm[[227]] # Aug 23
 gom.ltm <- ltm[[214]] # Aug 1
 mab.ltm <- ltm[[209]] # July 22
 
-gb.anom<-sst.2019[[227]] - gb.ltm
-gom.anom<-sst.2019[[214]] - gom.ltm
-mab.anom<-sst.2019[[209]] - mab.ltm
+gb.anom <- sst.2019[[227]] - gb.ltm
+gom.anom <- sst.2019[[214]] - gom.ltm
+mab.anom <- sst.2019[[209]] - mab.ltm
 
-rast_process <- function(r, epu){
-  r <- raster::stackApply(r, indices = rep(1,nlayers(r)),mean) #Find mean anomaly
+rast_process <- function(r, epu) {
+  r <- raster::stackApply(r, indices = rep(1, nlayers(r)), mean) #Find mean anomaly
   crs(r) <- crs #Add SOE CRS
   r <- raster::disaggregate(r, 5) #interpolate step 1 - create higher res grid
-  r <- raster::focal(r, w=matrix(1,nrow=5,ncol=5), fun=mean,
-             na.rm=TRUE, pad=TRUE) #interpolate step 2 - moving window
+  r <- raster::focal(
+    r,
+    w = matrix(1, nrow = 5, ncol = 5),
+    fun = mean,
+    na.rm = TRUE,
+    pad = TRUE
+  ) #interpolate step 2 - moving window
   r <- as(r, "SpatialPointsDataFrame") #Convert to ggplot-able object
   r <- as.data.frame(r)
   r <- r %>%
-    reshape2::melt(id = c("y","x")) %>%
+    reshape2::melt(id = c("y", "x")) %>%
     dplyr::rename(Latitude = y, Longitude = x) %>%
     dplyr::select(-variable) %>%
     dplyr::mutate(EPU = c(epu)) %>%
@@ -51,16 +55,23 @@ rast_process <- function(r, epu){
   return(r)
 }
 
-heatwave_anom_gridded<-
-  rbind(rast_process(gb.anom, epu = "GB"),
-        rast_process(gom.anom,epu = "GOM"),
-        rast_process(mab.anom, epu = "MAB"))
+heatwave_anom_gridded <-
+  rbind(
+    rast_process(gb.anom, epu = "GB"),
+    rast_process(gom.anom, epu = "GOM"),
+    rast_process(mab.anom, epu = "MAB")
+  )
 
 # metadata ----
-attr(heatwave_anom_gridded, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc/marine-heatwave.html"
-attr(heatwave_anom_gridded, "data_files")   <- list(
+attr(
+  heatwave_anom_gridded,
+  "tech-doc_url"
+) <- "https://noaa-edab.github.io/tech-doc/marine-heatwave.html"
+attr(heatwave_anom_gridded, "data_files") <- list(
   heatwave_anom_gridded_day_nc = heatwave_anom_gridded_day_nc,
-  heatwave_anom_gridded_ltm_nc = heatwave_anom_gridded_ltm_nc)
+  heatwave_anom_gridded_ltm_nc = heatwave_anom_gridded_ltm_nc
+)
 attr(heatwave_anom_gridded, "data_steward") <- c(
-  "Kimberly Bastille <kimberly.bastille@noaa.gov>")
+  "Kimberly Bastille <kimberly.bastille@noaa.gov>"
+)
 usethis::use_data(heatwave_anom_gridded, overwrite = T)

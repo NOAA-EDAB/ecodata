@@ -4,6 +4,8 @@ inst/doc
 .RData
 .Ruserdata
 .DS_Store
+ecodata.Rproj
+plot_forage_index.R
 
 # folders
 docs

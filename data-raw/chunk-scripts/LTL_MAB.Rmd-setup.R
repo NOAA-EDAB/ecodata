@@ -1,10 +1,11 @@
-
-image.dir<- here::here("docs/images")
+image.dir <- here::here("docs/images")
 #Default Rmd options
-knitr::opts_chunk$set(echo = FALSE,
-                      message = FALSE,
-                      warning = FALSE,
-                      fig.align = 'center') #allows for inserting R code into captions
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  fig.align = 'center'
+) #allows for inserting R code into captions
 
 #Plotting and data libraries
 library(ggplot2)
@@ -30,7 +31,7 @@ council_abbr <- "MAFMC"
 epu <- "Mid-Atlantic Bight"
 epu_abbr <- "MAB"
 region <- "Mid-Atlantic"
-region_abbr <- "MA" #Some commercial data organized by "MA" or "NE" regions, not by EPU 
+region_abbr <- "MA" #Some commercial data organized by "MA" or "NE" regions, not by EPU
 
 ############################# GIS SETUP ######################################################
 
@@ -42,8 +43,8 @@ library(raster)
 crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40 +lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 
 #EPU shapefile
-epu_sf <- ecodata::epu_sf %>% 
-  filter(EPU %in% c("MAB","GB","GOM"))
+epu_sf <- ecodata::epu_sf %>%
+  filter(EPU %in% c("MAB", "GB", "GOM"))
 
 #Map line parameters
 map.lwd <- 0.4
@@ -69,10 +70,16 @@ hline.lty <- "dashed"
 label.size <- 5
 hjust.label <- 1.5
 letter_size <- 4
-feeding.guilds <- c("Apex Predator","Piscivore","Planktivore","Benthivore","Benthos")
+feeding.guilds <- c(
+  "Apex Predator",
+  "Piscivore",
+  "Planktivore",
+  "Benthivore",
+  "Benthos"
+)
 x.shade.min <- 2012
 x.shade.max <- 2022
 #Function for custom ggplot facet labels
-label <- function(variable,value){
+label <- function(variable, value) {
   return(facet_names[value])
 }

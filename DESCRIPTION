@@ -1,6 +1,6 @@
 Package: ecodata
 Title: Documentation of Ecosystem Indicator Reporting
-Version: 6.0.1
+Version: 7.0.0
 Authors@R: c(person("Brandon", "Beltz", email = "brandon.beltz@noaa.gov", role = c("cre", "aut")),
              person("Andy", "Beet", email = "andrew.beet@noaa.gov", role = "aut", comment = c(ORCID = "0000-0001-8270-7090")),
              person("Kimberly", "Bastille", email = "kimberly.bastille@noaa.gov", role = "aut"),
@@ -17,7 +17,7 @@ Imports:
   tidyr,
   AICcmodavg,
   cowplot,
-  grid,
+  tibble,
   nlme,
   rpart,
   scales,
@@ -29,6 +29,7 @@ Imports:
   lubridate,
   vegan,
   viridis,
+  ggh4x,
   grid,
   gridExtra,
   flextable,
@@ -36,7 +37,8 @@ Imports:
   forcats,
   patchwork,
   ggpubr,
-  arfit
+  arfit,
+  Polychrome
 Suggests:
   knitr,
   rmarkdown,

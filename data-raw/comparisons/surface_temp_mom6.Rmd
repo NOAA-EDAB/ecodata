@@ -9,7 +9,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ecodata)
-library(ecodata24)
+library(ecodata25)
 library(dplyr)
 library(knitr)
 library(ggplot2)
