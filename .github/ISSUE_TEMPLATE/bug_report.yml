@@ -1,31 +1,77 @@
-name: Ecodata - Bug Report
-description: Use this issue template to report bugs found in ecodata.
-title: "[Bug Report]: "
+name: Bug Report
+description: Identify a problem or unexpected outcome
+title: "[Bug]: "
 labels: ["bug"]
-assignees: "BBeltz1"
 body:
-  - type: markdown
+  - type: textarea
+    id: bug-description
     attributes:
+      label: Bug description
+      description: Please explain the problem you are experiencing
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: What version of our product are you using?
+      placeholder: X.X.X
+    validations:
+      required: true
+  - type: dropdown
+    id: operating-system
+    attributes:
+      label: Operating system
+      description: What operating system are you using?
+      options:
+        - Windows
+        - Mac
+        - Linux
+    validations:
+      required: true
+  - type: textarea
+    id: system-info
+    attributes:
+      label: System information
+      description: Please provide the following system information
       value: |
-        Please use the fields below to identify the bug and provide related information we can use to troubleshoot. Thanks.
-  - type: textarea
-    id: bugdesc
-    attributes:
-      label: Describe the bug
-      description: A clear and concise description of what the bug is.
+        - R version: 
+        - IDE: 
+        - IDE version: 
     validations:
       required: true
   - type: textarea
-    id: bugdisc
+    id: reproduction-steps
     attributes:
-      label: Describe the situation
-      description: How did you discover this bug? What were you trying to accomplish?
+      label: Reproduction steps
+      description: Please explain the steps required to reproduce the problem. Ideally, include a minimal reproducible example (AKA a reprex). If you've never heard of a [reprex](http://reprex.tidyverse.org/) before, start by reading <https://www.tidyverse.org/help/#reprex>.
     validations:
       required: true
   - type: textarea
-    id: addinfo
+    id: actual-result
     attributes:
-      label: Additional information
-      description: Add any other information about the problem here.
+      label: Actual result
+      description: What is the observed outcome of following the steps above?
+    validations:
+      required: true
+  - type: textarea
+    id: expected-result
+    attributes:
+      label: Expected result
+      description: What outcome did you expect from following the steps above?
+    validations:
+      required: true
+  - type: input
+    id: bug-impact
+    attributes:
+      label: Bug impact
+      description: How severely does this problem impact you and/or your work?
+    validations:
+      required: true
+  - type: upload
+    id: screenshots
+    attributes:
+      label: Upload screenshots
+      description: If applicable, you may upload screenshots to demonstrate the problem.
     validations:
       required: false
