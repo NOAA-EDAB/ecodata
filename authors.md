@@ -13,7 +13,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/NOAA-EDAB/ecodata/blob/master/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/NOAA-EDAB/ecodata/blob/main/DESCRIPTION)
 
 Beltz B, Beet A, Bastille K, Hardison S (2026). *ecodata: Documentation
 of Ecosystem Indicator Reporting*. R package version 7.0.0,
