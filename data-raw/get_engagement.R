@@ -8,9 +8,9 @@ raw.dir <- here::here("data-raw")
 
 # Define input files
 comm_social_vuln_csv <- "2023_National_Indicators_for__Northeast_120525.csv"
-comm_social_old_csv = "fishdata_2022_CSVI_1-23-2025.csv"
-ma_activity_csv = "MA_normalized_soe.csv"
-ne_activity_csv = "NE_normalized_soe.csv"
+comm_social_old_csv <- "fishdata_2022_CSVI_1-23-2025.csv"
+ma_activity_csv <- "MA_normalized_soe.csv"
+ne_activity_csv <- "NE_normalized_soe.csv"
 
 
 get_engagement <- function(save_clean = F) {
@@ -48,7 +48,7 @@ get_engagement <- function(save_clean = F) {
 
   # this reads numbers in as numbers
   #Get rec engagement
-  dat.soc.old = readr::read_csv(file.path(raw.dir, comm_social_old_csv)) |>
+  dat.soc.old <- readr::read_csv(file.path(raw.dir, comm_social_old_csv)) |>
     dplyr::rename("State" = "STATEABBR", 'totpotp' = 'TOTPOP') |>
     dplyr::left_join(EPUlook, by = "State") |>
     dplyr::select(year, EPU, GEO_NAME, dplyr::starts_with('Rec')) |>
@@ -67,7 +67,7 @@ get_engagement <- function(save_clean = F) {
     dplyr::rename("State" = "STATEABBR") |>
     dplyr::left_join(EPUlook, by = "State")
 
-  dat.act.ma = readr::read_csv(file.path(raw.dir, ma_activity_csv)) |>
+  dat.act.ma <- readr::read_csv(file.path(raw.dir, ma_activity_csv)) |>
     dplyr::mutate(EPU = "MAB") |>
     # Recode "OTHER VA" to conform with all other place_ids
     dplyr::mutate(
@@ -76,7 +76,7 @@ get_engagement <- function(save_clean = F) {
         "OTHER VA (includes REEDVILLE)" = "OTHER_VA"
       )
     )
-  dat.act.ne = readr::read_csv(file.path(raw.dir, ne_activity_csv)) |>
+  dat.act.ne <- readr::read_csv(file.path(raw.dir, ne_activity_csv)) |>
     dplyr::mutate(EPU = 'NE')
 
   # If we want a long dataset, these need to be numbers to have them with the Eng and Rel values
@@ -140,7 +140,7 @@ get_engagement <- function(save_clean = F) {
     dplyr::select(Time, Var, Value, EPU, Units) |>
     dplyr::filter(!is.na(Time))
 
-  dat.act.out = dat.act.ma |>
+  dat.act.out <- dat.act.ma |>
     dplyr::bind_rows(dat.act.ne) |>
     dplyr::mutate(place_id2 = gsub('_', ', ', place_id)) |>
     dplyr::rename(Time = 'YEAR') |>
@@ -153,7 +153,7 @@ get_engagement <- function(save_clean = F) {
     dplyr::mutate(Units = 'unitless') |>
     dplyr::select(Time, Var, Value, EPU, Units)
 
-  engagement = dat.soc.out |>
+  engagement <- dat.soc.out |>
     dplyr::bind_rows(dat.act.out)
 
   if (save_clean) {

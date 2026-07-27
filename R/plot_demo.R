@@ -33,7 +33,7 @@ plot_demo <- function(shadedRegion = NULL, report = "MidAtlantic", n = 0) {
   # set up data to plot
   data <- data.frame(x = x, y = y)
   #Define constants for figure plot
-  hline = mean(y)
+  hline <- mean(y)
 
   #Plot series with trend
   psample <- ggplot2::ggplot(data = data, ggplot2::aes(x = x, y = y)) +
@@ -60,7 +60,7 @@ plot_demo <- function(shadedRegion = NULL, report = "MidAtlantic", n = 0) {
       ymax = Inf
     ) +
     ggplot2::scale_y_continuous(labels = function(l) {
-      trans = l / 1000
+      trans <- l / 1000
     }) +
     ggplot2::scale_x_continuous(
       breaks = seq(1985, setup$shadedRegion[2] + 1, by = 5),

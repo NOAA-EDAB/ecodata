@@ -3,10 +3,10 @@ sst <- ecodata::ches_bay_sst
 map.lwd <- 0.4
 
 # Set lat/lon window for maps
-xmin = -78
-xmax = -74
-ymin = 36
-ymax = 40
+xmin <- -78
+xmax <- -74
+ymin <- 36
+ymax <- 40
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
 #sst <- ecodata::seasonal_oisst_anom_gridded

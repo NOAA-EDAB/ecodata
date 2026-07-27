@@ -9,7 +9,7 @@ get_crew_survey <- function(save_clean = F) {
     path = file.path(raw.dir, crew_survey_xlsx)
   )
 
-  used.vars = c(
+  used.vars <- c(
     'Survey wave',
     'Primary port region',
     'Education Combined',
@@ -27,7 +27,7 @@ get_crew_survey <- function(save_clean = F) {
     'Years in commercial fishing (0 if less than a year) Combined'
   )
 
-  crew_survey = crew_survey_orig |>
+  crew_survey <- crew_survey_orig |>
     dplyr::mutate(
       `Subject number` = as.character(`Subject number`),
       ID = dplyr::coalesce(`Subject number`, `Case ID...2`, `Case ID...3`)

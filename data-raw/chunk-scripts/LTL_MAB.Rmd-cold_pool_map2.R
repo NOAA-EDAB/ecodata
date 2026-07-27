@@ -9,10 +9,10 @@ cpsf <- ecodata::cold_pool_sf %>%
 map.lwd <- 0.4
 
 # Set lat/lon window for maps
-xmin = -80
-xmax = -68
-ymin = 35.5
-ymax = 43
+xmin <- -80
+xmax <- -68
+ymin <- 35.5
+ymax <- 43
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
 

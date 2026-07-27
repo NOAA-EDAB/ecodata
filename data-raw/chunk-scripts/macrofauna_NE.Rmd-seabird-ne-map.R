@@ -1,8 +1,8 @@
 # Set lat/lon window for maps
-xmin = -70.5
-xmax = -68.25
-ymin = 43
-ymax = 44.5
+xmin <- -70.5
+xmax <- -68.25
+ymin <- 43
+ymax <- 44.5
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
 
@@ -41,10 +41,10 @@ islands <- ggplot2::ggplot() +
 #                                                          "Massachusetts"))
 
 # Set lat/lon window for maps
-xmin2 = -72
-xmax2 = -66.25
-ymin2 = 42.5
-ymax2 = 47.5
+xmin2 <- -72
+xmax2 <- -66.25
+ymin2 <- 42.5
+ymax2 <- 47.5
 xlims2 <- c(xmin2, xmax2)
 ylims2 <- c(ymin2, ymax2)
 

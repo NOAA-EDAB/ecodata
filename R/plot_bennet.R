@@ -334,4 +334,3 @@ attr(plot_bennet, "EPU") <- c("MAB", "GB", "GOM")
 #   ecodata::theme_facet()
 #
 #
-

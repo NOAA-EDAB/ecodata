@@ -50,7 +50,7 @@ plot_engagement <- function(
       # tidyr::pivot_wider(names_from = Var, values_from = Value) |>
       dplyr::filter(EPU == filterEPUs)
 
-    eng.ts = eng |>
+    eng.ts <- eng |>
       dplyr::filter(Var == 'fishing_mean_score') |>
       dplyr::mutate(
         label = dplyr::if_else(
@@ -66,10 +66,10 @@ plot_engagement <- function(
       head(n = 10) |>
       dplyr::pull(Town)
 
-    eng.ts = eng.ts |>
+    eng.ts <- eng.ts |>
       dplyr::filter(Town %in% topEng)
 
-    p = ggplot2::ggplot(
+    p <- ggplot2::ggplot(
       data = eng.ts,
       ggplot2::aes(x = Time, y = Value, color = Town)
     ) +

@@ -32,7 +32,7 @@ plot_advection <- function(
   if (!all(varName %in% c(3, 4, 5, 6))) {
     stop('varName must be one of 3,4,5,6 (March:June) at this time')
   } else {
-    var = varName
+    var <- varName
   }
 
   # optional code to wrangle ecodata object prior to plotting
@@ -57,10 +57,10 @@ plot_advection <- function(
     )
 
   #set plot limits based on data
-  fix.mu = mean(ecodata::advection$Value, na.rm = T)
-  fix.sd = sd(ecodata::advection$Value, na.rm = T)
-  plot.lower = fix.mu - 1.5 * fix.sd
-  plot.upper = fix.mu + 1.5 * fix.sd
+  fix.mu <- mean(ecodata::advection$Value, na.rm = T)
+  fix.sd <- sd(ecodata::advection$Value, na.rm = T)
+  plot.lower <- fix.mu - 1.5 * fix.sd
+  plot.upper <- fix.mu + 1.5 * fix.sd
 
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...

@@ -7,7 +7,7 @@ library(stringr)
 raw.dir <- here::here("data-raw")
 
 get_rec <- function(save_clean = F) {
-  files = list.files(
+  files <- list.files(
     raw.dir,
     pattern = "REC_HARVEST_2026|Rec_angler_effort_2026|Rec_Species_Diversity_2026"
   )

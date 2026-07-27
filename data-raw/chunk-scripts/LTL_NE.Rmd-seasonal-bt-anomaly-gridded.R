@@ -6,10 +6,10 @@ ne_epu_sf <- ecodata::epu_sf %>%
 map.lwd <- 0.4
 
 # Set lat/lon window for maps
-xmin = -73
-xmax = -66
-ymin = 39
-ymax = 44.1
+xmin <- -73
+xmax <- -66
+ymin <- 39
+ymax <- 44.1
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
 bt <- ecodata::seasonal_bt_anomaly_gridded

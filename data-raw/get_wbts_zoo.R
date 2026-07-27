@@ -54,7 +54,7 @@ get_wbts_zoo <- function(save_clean = F) {
     pred_high = preds_ci$fit + 1.96 * preds_ci$se.fit
   )
 
-  wbts_zoo = list(
+  wbts_zoo <- list(
     data = ci_data |>
       dplyr::select(year, day_of_year, CI) |>
       tidyr::pivot_longer(

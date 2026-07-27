@@ -6,10 +6,10 @@ mab_epu_sf <- ecodata::epu_sf %>%
 map.lwd <- 0.4
 
 # Set lat/lon window for maps
-xmin = -81
-xmax = -66
-ymin = 35.5
-ymax = 43
+xmin <- -81
+xmax <- -66
+ymin <- 35.5
+ymax <- 43
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
 hw <- ecodata::heatwave_peak_date %>%

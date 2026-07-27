@@ -21,7 +21,7 @@ plot_wbts_zoo <- function(shadedRegion = NULL, report = "NewEngland", n = 0) {
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
-  wbts.zoo.data = ecodata::wbts_zoo$data |>
+  wbts.zoo.data <- ecodata::wbts_zoo$data |>
     tidyr::separate(Time, into = c("Year", "day_of_year")) |>
     dplyr::mutate(
       year_period = dplyr::case_when(
@@ -34,7 +34,7 @@ plot_wbts_zoo <- function(shadedRegion = NULL, report = "NewEngland", n = 0) {
       day_of_year = as.numeric(day_of_year)
     )
 
-  wbts.zoo.model = ecodata::wbts_zoo$model |>
+  wbts.zoo.model <- ecodata::wbts_zoo$model |>
     tidyr::pivot_wider(names_from = Var, values_from = c(Value))
 
   p <- #fix |>
