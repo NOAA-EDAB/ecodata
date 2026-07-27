@@ -57,10 +57,10 @@ plot_ppr <- function(
     vtitle <- "Fogarty Index"
     vylab <- "Parts per thousand"
     if (threshold == "global") {
-      gr_up = 0.92
-      rd_up = 2.5
-      gr_lw = 0.22
-      rd_lw = 1
+      gr_up <- 0.92
+      rd_up <- 2.5
+      gr_lw <- 0.22
+      rd_lw <- 1
     } else {}
   } else if (tolower(varName) == "ryther") {
     varName <- "Ryther"
@@ -68,18 +68,18 @@ plot_ppr <- function(
     vtitle <- "Ryther Index"
     vylab <- expression("mt km"^-2 * " y"^-1 * "")
     if (threshold == "global") {
-      gr_up = 1.1
-      rd_up = 5
-      gr_lw = 0.3
-      rd_lw = 3
+      gr_up <- 1.1
+      rd_up <- 5
+      gr_lw <- 0.3
+      rd_lw <- 3
     } else {}
   } else if (tolower(varName) == "mtl") {
-    varName = "MTL"
+    varName <- "MTL"
     scalar <- 1
     vtitle <- "Mean trophic level of landings"
     vylab <- "Trophic Level"
   } else if (tolower(varName) == "ppr") {
-    varName = "PPR"
+    varName <- "PPR"
     scalar <- 1
     vtitle <- "Primary production required (scaled)"
     vylab <- "Proportion"

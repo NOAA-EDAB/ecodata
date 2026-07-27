@@ -47,7 +47,7 @@ plot_thermal_habitat_area <- function(
   fix <- fix |>
     dplyr::left_join(limits, by = c("Var", "Time"))
 
-  fix.this.year = fix |>
+  fix.this.year <- fix |>
     dplyr::filter(Time == max(Time)) |>
     dplyr::mutate(ReportYear = max(Time))
 

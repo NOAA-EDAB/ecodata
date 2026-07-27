@@ -18,7 +18,7 @@ plot_dissolved_oxygen <- function(shadedRegion = NULL, threshold = 5) {
   #EPU shapefile
   ne_epu_sf <- ecodata::epu_sf
 
-  ne_coast = sf::st_transform(ecodata::coast, crs = 4269)
+  ne_coast <- sf::st_transform(ecodata::coast, crs = 4269)
 
   fix <- ecodata::dissolved_oxygen |>
     sf::st_as_sf(wkt = 'geometry', crs = 4269) |>
@@ -30,9 +30,9 @@ plot_dissolved_oxygen <- function(shadedRegion = NULL, threshold = 5) {
     dplyr::mutate(hypoxia.count = ifelse(hypoxia.count == 0, NA, hypoxia.count))
 
   #transform epu and data to North American Albers Equal Area (EPSG: 5070)
-  fix_flat = sf::st_transform(fix, crs = 3857)
-  epu_flat = sf::st_transform(ne_epu_sf, crs = 3857)
-  coast_flat = sf::st_transform(ne_coast, crs = 3857)
+  fix_flat <- sf::st_transform(fix, crs = 3857)
+  epu_flat <- sf::st_transform(ne_epu_sf, crs = 3857)
+  coast_flat <- sf::st_transform(ne_coast, crs = 3857)
 
   p <- ggplot2::ggplot() +
     ggplot2::geom_sf(data = coast_flat, size = setup$map.lwd) +

@@ -39,10 +39,10 @@ plot_setup <- function(shadedRegion = shadedRegion, report = report) {
   map.lwd <- 0.4
 
   # Set lat/lon window for maps
-  xmin = -77
-  xmax = -65
-  ymin = 36
-  ymax = 45
+  xmin <- -77
+  xmax <- -65
+  ymin <- 36
+  ymax <- 45
 
   ################################################################
   ### Different lat and lons used for bt seasonal anomalies ####

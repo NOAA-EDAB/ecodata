@@ -4,7 +4,7 @@ library(readxl)
 library(stringr)
 
 raw.dir <- here::here("data-raw")
-zoo_comm_file = "Morse_20251216_PC_zoo - Ryan Morse - NOAA Affiliate.rdata"
+zoo_comm_file <- "Morse_20251216_PC_zoo - Ryan Morse - NOAA Affiliate.rdata"
 ### Zooplankton Diversity
 get_zoo_community <- function(save_clean = F) {
   #submitted as Rdata. Read into temp env then write new name

@@ -28,10 +28,10 @@ hms$season <- factor(
 epu_sf <- ecodata::epu_sf %>%
   dplyr::filter(EPU %in% c("GOM", "GB", "MAB"))
 map.lwd <- 0.4
-xmin = -77
-xmax = -65
-ymin = 35
-ymax = 45
+xmin <- -77
+xmax <- -65
+ymin <- 35
+ymax <- 45
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
 hms_map <- hms %>%

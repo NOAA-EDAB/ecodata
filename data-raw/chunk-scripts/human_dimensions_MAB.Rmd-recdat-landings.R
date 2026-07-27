@@ -27,7 +27,7 @@ ggplot2::ggplot(data = landings_rec) +
   ggplot2::geom_point(aes(x = Time, y = Value, color = Var), size = pcex) +
 
   ggplot2::scale_y_continuous(labels = function(l) {
-    trans = l / 1000000
+    trans <- l / 1000000
   }) +
   ggplot2::scale_x_continuous(
     breaks = seq(1985, 2020, by = 5),

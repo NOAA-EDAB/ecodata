@@ -23,19 +23,19 @@ plot_heatwave_peak_date <- function(
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
     # Set lat/lon window for maps
-    setup$xmin = -81
-    setup$xmax = -66
-    setup$ymin = 35.5
-    setup$ymax = 43
+    setup$xmin <- -81
+    setup$xmax <- -66
+    setup$ymin <- 35.5
+    setup$ymax <- 43
     setup$xlims <- c(setup$xmin, setup$xmax)
     setup$ylims <- c(setup$ymin, setup$ymax)
   } else {
     filterEPUs <- c("GB", "GOM")
     # Set lat/lon window for maps
-    setup$xmin = -73
-    setup$xmax = -65
-    setup$ymin = 39
-    setup$ymax = 45
+    setup$xmin <- -73
+    setup$xmax <- -65
+    setup$ymin <- 39
+    setup$ymax <- 45
     setup$xlims <- c(setup$xmin, setup$xmax)
     setup$ylims <- c(setup$ymin, setup$ymax)
   }

@@ -6,7 +6,7 @@ raw.dir <- here::here("data-raw")
 effective_sweptarea_rdata <- "ATT87886.RData"
 
 get_effective_sweptarea <- function(save_clean = F) {
-  temp_env = environment()
+  temp_env <- environment()
   load(file.path(raw.dir, effective_sweptarea_rdata), envir = temp_env)
 
   assign("effective_sweptarea", temp_env$final_sweptarea, envir = .GlobalEnv)

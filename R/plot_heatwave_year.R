@@ -32,7 +32,7 @@ plot_heatwave_year <- function(
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
 
-  plotvar = paste0(varName, "Detrended")
+  plotvar <- paste0(varName, "Detrended")
 
   year <- max(ecodata::heatwave_year$Year, na.rm = TRUE)
 

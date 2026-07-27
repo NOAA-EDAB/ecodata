@@ -167,7 +167,7 @@ get_group_mean <- function(fname, ESP_name, anom = T) {
       var <- "absolute"
     }
 
-    year = out@data@names[i]
+    year <- out@data@names[i]
     df <- data.frame(Value = sst, year = year, ESP = ESP_name, Var = var)
 
     assign('mean_sst', rbind(mean_sst, df))

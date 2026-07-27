@@ -53,7 +53,7 @@ rec_effort <- recdat %>%
   ggplot2::scale_x_continuous(expand = c(0.01, 0.02)) +
   ggplot2::scale_y_continuous(
     labels = function(l) {
-      trans = l / 1000000
+      trans <- l / 1000000
     },
     limits = ylim_re
   ) +
