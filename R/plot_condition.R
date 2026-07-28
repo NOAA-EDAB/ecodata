@@ -45,7 +45,6 @@ plot_condition <- function(
   } else if (plottype == "raw") {
     fix <- ecodata::condition |>
       dplyr::filter(EPU == filterEPUs) |>
-      dplyr::group_by(Var) |>
       dplyr::mutate(scaleCond = Value)
   } else {
     stop("plottype must be either 'scaled' or 'raw'")
@@ -71,10 +70,7 @@ plot_condition <- function(
     )
 
   sortNames <- fix |>
-    # group the species that have a dip in the 2000s
-    # dplyr::filter(Time <= 2014, Time >= 2000) |>
     dplyr::group_by(Var) |>
-    # dplyr::summarize(total = sum(scaleCond, na.rm = TRUE)) |>
     # order by mean condition
     dplyr::summarize(total = mean(scaleCond, na.rm = TRUE)) |>
     dplyr::arrange(total) |>
@@ -116,8 +112,6 @@ plot_condition <- function(
     ggplot2::geom_tile() +
     ggplot2::coord_equal() +
     ggplot2::theme_bw() +
-    # ggplot2::guides(fill = ggplot2::guide_legend(reverse = TRUE)) +
-
     ggplot2::scale_x_continuous(
       breaks = round(seq(min(fix$Time), max(fix$Time), by = numberOfConditions))
     ) +
@@ -154,73 +148,3 @@ plot_condition <- function(
 
 # plot_condition(plottype = "raw")
 # plot_condition()
-#
-# dat <- ecodata::condition |>
-#   dplyr::group_by(Var, EPU) |>
-#   dplyr::filter(EPU != "SS") |>
-#   dplyr::mutate(
-#     scaleCond = scale(Value, scale = T, center = T)
-#   ) |>
-#   dplyr::ungroup() |>
-#   dplyr::mutate(
-#     cat = cut(
-#       scaleCond,
-#       breaks = quantile(
-#         dat$scaleCond,
-#         seq(0, 1, length.out = 6),
-#         na.rm = TRUE
-#       ),
-#       labels = c(
-#         "Poor Condition",
-#         "Below Average",
-#         "Neutral",
-#         "Above Average",
-#         "Good Condition"
-#       ),
-#       include.lowest = TRUE
-#     ),
-#     cat2 = cut(
-#       Value,
-#       breaks = quantile(
-#         dat$Value,
-#         seq(0, 1, length.out = 6),
-#         na.rm = TRUE
-#       ),
-#       labels = c(
-#         "Poor Condition",
-#         "Below Average",
-#         "Neutral",
-#         "Above Average",
-#         "Good Condition"
-#       ),
-#       include.lowest = TRUE
-#     )
-#   )
-#
-# dat |>
-#   dplyr::group_by(cat) |>
-#   dplyr::summarise(min = min(Value), max = max(Value))
-#
-# dat |>
-#   dplyr::group_by(cat2) |>
-#   dplyr::summarise(min = min(Value), max = max(Value))
-#
-# dat |>
-#   dplyr::group_by(Var) |>
-#   dplyr::summarise(delta = max(Value) - min(Value)) |>
-#   dplyr::arrange(delta)
-#
-# dat |>
-#   ggplot2::ggplot(ggplot2::aes(x = Value, y = scaleCond, color = Var)) +
-#   ggplot2::geom_point() +
-#   ggplot2::theme_bw() +
-#   ggplot2::facet_wrap(~EPU, ncol = 1) +
-#   ggplot2::geom_hline(
-#     yintercept = quantile(
-#       dat$scaleCond,
-#       seq(0, 1, length.out = 6),
-#       na.rm = TRUE
-#     ),
-#     lty = 2
-#   ) +
-#   ggplot2::theme(legend.position = "none")
