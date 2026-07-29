@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">ecodata</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">7.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">8.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,26 +64,61 @@
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p><code>ecodata</code> is an R data package developed by the Ecosystems Dynamics and Assessment Branch of the Northeast Fisheries Science Center for use in State of the Ecosystem (SOE) reporting. SOE reports are high-level overviews of ecosystem indicator status and trends occurring on the Northeast Continental Shelf. Unless otherwise stated, data are representative of specific Ecological Production Units (EPUs), referring to the Mid-Atlantic Bight (MAB), Georges Bank (GB), Gulf of Maine (GOM), and Scotian Shelf (SS). SOE reports are developed for US Fishery Management Councils (FMCs), and therefore indicator data for Scotian Shelf are included when available, but this is not always the case.</p>
-<div class="section level3">
-<h3 id="please-consult-the-technical-documentation-of-soe-indicators-before-using-data-sets">Please consult the <a href="https://noaa-edab.github.io/tech-doc/" class="external-link">technical documentation</a> of SOE indicators before using data sets.<a class="anchor" aria-label="anchor" href="#please-consult-the-technical-documentation-of-soe-indicators-before-using-data-sets"></a>
-</h3>
-</div>
-</div>
-<div class="section level2">
-<h2 id="state-of-the-ecosystem-cycle">State of the Ecosystem cycle<a class="anchor" aria-label="anchor" href="#state-of-the-ecosystem-cycle"></a>
-</h2>
-<p>The main branch of this repository contains the data used in the most recently published <a href="https://www.fisheries.noaa.gov/new-england-mid-atlantic/ecosystems/state-ecosystem-reports-northeast-us-shelf" class="external-link">State of the Ecosystem</a> reports (Mid Atlantic and New England reports). Data for use in the following years report can be found on the <code>dev</code> branch of the repository. Once the reports are written and the cycle ends this data will be pulled into the main branch and <a href="https://github.com/NOAA-EDAB/ecodata/releases" class="external-link">released</a></p>
+<p><a href="https://noaa-edab.github.io/ecodata/"><code>ecodata</code></a> is an R data package developed by the Ecosystems Dynamics and Assessment Branch of the Northeast Fisheries Science Center for use in State of the Ecosystem (SOE) reporting. SOE reports are high-level overviews of ecosystem indicator status and trends occurring on the Northeast Continental Shelf. Unless otherwise stated, data are representative of specific Ecological Production Units (EPUs), referring to the Mid-Atlantic Bight (MAB), Georges Bank (GB), Gulf of Maine (GOM), and Scotian Shelf (SS). SOE reports are developed for US Fishery Management Councils (FMCs), and therefore indicator data for Scotian Shelf are included when available, but this is not always the case. <code>ecodata</code> has two companion bookdown documents: 1) <a href="https://noaa-edab.github.io/tech-doc/" class="external-link">Tech-Doc</a>, which details the methods used in the SOE, and 2) the <a href="https://noaa-edab.github.io/catalog/" class="external-link">Northeast US Ecosystem Indicator Catalog</a>, which provides expanded ecological context for SOE indicators. The <code>ecodata</code> package can be used to access to all of the indicators, datasets and plots featured in the SOE reports, which can be accessed using the table below. <strong>Please consult the <a href="https://noaa-edab.github.io/tech-doc/" class="external-link">technical documentation</a> of SOE indicators before using data sets.</strong></p>
+<table class="table">
+<colgroup>
+<col width="33%">
+<col width="33%">
+<col width="33%">
+</colgroup>
+<thead><tr>
+<th>Year</th>
+<th>State of the Ecosystem: New England</th>
+<th>State of the Ecosystem: Mid-Atlantic</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>2020</td>
+<td><a href="https://doi.org/10.25923/4tdk-eg57" class="external-link">State of the Ecosystem 2020: New England</a></td>
+<td><a href="https://doi.org/10.25923/1f8j-d564" class="external-link">State of the Ecosystem 2020: Mid-Atlantic</a></td>
+</tr>
+<tr>
+<td>2021</td>
+<td><a href="https://doi.org/10.25923/6pww-mw45" class="external-link">State of the Ecosystem 2021: New England</a></td>
+<td><a href="https://doi.org/10.25923/jd1w-dc26" class="external-link">State of the Ecosystem 2021: Mid-Atlantic</a></td>
+</tr>
+<tr>
+<td>2022</td>
+<td><a href="https://doi.org/10.25923/ypv2-mw79" class="external-link">State of the Ecosystem 2022: New England</a></td>
+<td><a href="https://doi.org/10.25923/5s5y-0h81" class="external-link">State of the Ecosystem 2022: Mid-Atlantic</a></td>
+</tr>
+<tr>
+<td>2023</td>
+<td><a href="https://doi.org/10.25923/9sb9-nj66" class="external-link">State of the Ecosystem 2023: New England</a></td>
+<td><a href="https://doi.org/10.25923/vy6j-w454" class="external-link">State of the Ecosystem 2023: Mid-Atlantic</a></td>
+</tr>
+<tr>
+<td>2024</td>
+<td><a href="https://doi.org/10.25923/f8xc-hj17" class="external-link">State of the Ecosystem 2024: New England</a></td>
+<td><a href="https://doi.org/10.25923/vz5a-d111" class="external-link">State of the Ecosystem 2024: Mid-Atlantic</a></td>
+</tr>
+<tr>
+<td>2025</td>
+<td><a href="https://doi.org/10.25923/zr75-a788" class="external-link">State of the Ecosystem 2025: New England</a></td>
+<td><a href="https://doi.org/10.25923/23nx-qf59" class="external-link">State of the Ecosystem 2025: Mid-Atlantic</a></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>For the last released complete data set</p>
+<p>For the latest data and plots:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu">pak</span><span class="op">(</span><span class="st">"noaa-edab/ecodata"</span><span class="op">)</span></span></code></pre></div>
-<p>For data used in the current developing cycle</p>
+<p>For data used in the past, please replace “X.X.X” below with the desired <a href="https://github.com/NOAA-EDAB/ecodata/releases" class="external-link"><code>ecodata</code> version</a>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu">pak</span><span class="op">(</span><span class="st">"noaa-edab/ecodata@dev"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu">pak</span><span class="op">(</span><span class="st">"noaa-edab/ecodata@X.X.X"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="loading-data-sets">Loading data sets<a class="anchor" aria-label="anchor" href="#loading-data-sets"></a>
@@ -93,6 +128,24 @@
 </li>
 </ol>
 <p><img src="reference/figures/ecodata1.gif"></p>
+</div>
+<div class="section level2">
+<h2 id="maintainers">Maintainers<a class="anchor" aria-label="anchor" href="#maintainers"></a>
+</h2>
+<table class="table">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
+<thead><tr>
+<th><a href="https://github.com/BBeltz1" class="external-link">Brandon Beltz</a></th>
+<th><a href="https://github.com/andybeet" class="external-link">Andy Beet</a></th>
+</tr></thead>
+<tbody><tr>
+<td><a href="https://github.com/BBeltz1" class="external-link"><img src="https://avatars.githubusercontent.com/u/136381970?v=4" alt="Brandon Beltz avatar" width="100" align="center"></a></td>
+<td><a href="https://github.com/andybeet" class="external-link"><img src="https://avatars.githubusercontent.com/u/22455149?v=4" alt="Andy Beet avatar" width="100" align="center"></a></td>
+</tr></tbody>
+</table>
 <div class="section level3">
 <h3 id="legal-disclaimer">Legal disclaimer<a class="anchor" aria-label="anchor" href="#legal-disclaimer"></a>
 </h3>
@@ -115,6 +168,13 @@
 </ul>
 </div>
 
+<div class="community">
+<h2 data-toc-skip>Community</h2>
+<ul class="list-unstyled">
+<li><a href="CONTRIBUTING.html">Contributing guide</a></li>
+<li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
+</ul>
+</div>
 
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
@@ -126,7 +186,7 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Brandon Beltz <br><small class="roles"> Maintainer, author </small>   </li>
+<li>Brandon Beltz <br><small class="roles"> Maintainer, author </small> <a href="https://orcid.org/0009-0002-7385-5950" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 <li>Andy Beet <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-8270-7090" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 <li>Kimberly Bastille <br><small class="roles"> Author </small>   </li>
 <li>Sean Hardison <br><small class="roles"> Author </small>   </li>
