@@ -1,4 +1,19 @@
-# ecodata 7.0.0
+# ecodata v8.0.0
+
+Date: 07/29/2026
+
+## Improvements
+
+- Renamed default branch from `master` to `main`
+- Deployed suite of new and revised issue templates
+- Deployed suite of new pull request templates
+- Added new repository documentation (CONTRIBUTING, CODE_OF_CONDUCT)
+- Revised README
+- Adjusted workflow triggers and bumped versions of external actions
+- Deployed Air reformatter workflows and style guide
+- Reformatted codebase according to new style guide
+
+# ecodata v7.0.0
 
 Release includes data/plots used to build the 2026 NEFMC and MAFMC State of the Ecosystem Reports submitted to both SSCs and councils (MAFMC & NEFMC). Date: 07/15/2026
 

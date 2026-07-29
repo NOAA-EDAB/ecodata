@@ -1,8 +1,8 @@
 # Set lat/lon window for maps
-xmin = -77
-xmax = -65
-ymin = 36
-ymax = 45
+xmin <- -77
+xmax <- -65
+ymin <- 36
+ymax <- 45
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
 sst <- ecodata::seasonal_oisst_anom_gridded

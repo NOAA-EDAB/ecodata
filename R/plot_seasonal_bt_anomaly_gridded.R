@@ -16,18 +16,18 @@ plot_seasonal_bt_anomaly_gridded <- function(
 
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
-    xmin = -81
-    xmax = -67
-    ymin = 36.5
-    ymax = 43
+    xmin <- -81
+    xmax <- -67
+    ymin <- 36.5
+    ymax <- 43
     xlims <- c(xmin, xmax)
     ylims <- c(ymin, ymax)
   } else {
     filterEPUs <- c("GB", "GOM")
-    xmin = -73
-    xmax = -66
-    ymin = 39
-    ymax = 44.1
+    xmin <- -73
+    xmax <- -66
+    ymin <- 39
+    ymax <- 44.1
     xlims <- c(xmin, xmax)
     ylims <- c(ymin, ymax)
   }

@@ -50,10 +50,10 @@ epu_sf <- ecodata::epu_sf %>%
 map.lwd <- 0.4
 
 # Set lat/lon window for maps
-xmin = -77
-xmax = -65
-ymin = 36
-ymax = 45
+xmin <- -77
+xmax <- -65
+ymin <- 36
+ymax <- 45
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
 

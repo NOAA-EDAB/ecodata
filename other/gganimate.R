@@ -118,10 +118,10 @@ for (i in 1:length(unique(nuts$Year))) {
 
 #ggplot----------------------------------------------------------------
 
-xmin = -76
-xmax = -66
-ymin = 36
-ymax = 45
+xmin <- -76
+xmax <- -66
+ymin <- 36
+ymax <- 45
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
 

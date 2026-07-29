@@ -1,7 +1,7 @@
 Package: ecodata
 Title: Documentation of Ecosystem Indicator Reporting
-Version: 7.0.0
-Authors@R: c(person("Brandon", "Beltz", email = "brandon.beltz@noaa.gov", role = c("cre", "aut")),
+Version: 8.0.0
+Authors@R: c(person("Brandon", "Beltz", email = "brandon.beltz@noaa.gov", role = c("cre", "aut"), comment = c(ORCID = "0009-0002-7385-5950")),
              person("Andy", "Beet", email = "andrew.beet@noaa.gov", role = "aut", comment = c(ORCID = "0000-0001-8270-7090")),
              person("Kimberly", "Bastille", email = "kimberly.bastille@noaa.gov", role = "aut"),
              person("Sean", "Hardison", role = "aut"))

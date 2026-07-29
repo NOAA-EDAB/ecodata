@@ -27,9 +27,9 @@ plot_community_factors <- function(
   }
 
   if (plottype == 'Commercial') {
-    filterVar = 'fishing_mean_score'
+    filterVar <- 'fishing_mean_score'
   } else if (plottype == 'Recreational') {
-    filterVar = 'RecEng'
+    filterVar <- 'RecEng'
   } else {
     stop('plottype must be either "Commercial" or "Recreational"')
   }
@@ -96,7 +96,7 @@ plot_community_factors <- function(
     ) |>
     dplyr::pull(Town)
 
-  data = eng |>
+  data <- eng |>
     dplyr::filter(Var %in% indgroup) |>
     dplyr::group_by(Town) |>
     dplyr::mutate(total = sum(Value, na.rm = T)) |>

@@ -41,7 +41,7 @@ process_oi <- function(variable, type = NULL, season, genus = NULL, epu) {
   # }
 
   #create null df to fill with results
-  data = data.frame(array(NA, dim = c(raster::nlayers(ecsa_dat), 5)))
+  data <- data.frame(array(NA, dim = c(raster::nlayers(ecsa_dat), 5)))
   #data = data.frame(array(NA,dim= c(raster::nlayers(str_detect(ecsa_dat),5))))
 
   #loops through layers in raster brick
@@ -56,11 +56,11 @@ process_oi <- function(variable, type = NULL, season, genus = NULL, epu) {
     data[i, 3] <- layer_id[[1]][[3]]
 
     #trim to stock area
-    masked.raster = ecsa_dat[[i]] * epumask.raster
+    masked.raster <- ecsa_dat[[i]] * epumask.raster
 
     #find mean BT of stock area
-    data[i, 4] = raster::cellStats(masked.raster, stat = 'mean', na.rm = TRUE)
-    data[i, 5] = raster::cellStats(masked.raster, stat = 'sd', na.rm = TRUE)
+    data[i, 4] <- raster::cellStats(masked.raster, stat = 'mean', na.rm = TRUE)
+    data[i, 5] <- raster::cellStats(masked.raster, stat = 'sd', na.rm = TRUE)
     #
     # if (layer_id[[1]][[1]] == "1995"){
     #   break

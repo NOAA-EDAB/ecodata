@@ -33,9 +33,9 @@ plot_exp_n <- function(
   season <- stringr::str_to_upper(varName)
 
   if (season == "FALL") {
-    start_year = 1965
+    start_year <- 1965
   } else {
-    start_year = 1968
+    start_year <- 1968
   }
   end_year <- max(ecodata::exp_n$Time)
 

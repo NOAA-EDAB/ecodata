@@ -40,7 +40,7 @@ p1 <- apex %>%
   ) +
   #Axis and theme
   ggplot2::scale_y_continuous(labels = function(l) {
-    trans = l / 1000
+    trans <- l / 1000
   }) +
   ggplot2::scale_x_continuous(
     breaks = seq(1985, 2015, by = 5),
@@ -155,7 +155,7 @@ gom_landings <- landings %>%
   ggplot2::facet_wrap(~feeding.guild, ncol = 1, scales = "free") +
   #Axis and theme
   ggplot2::scale_y_continuous(labels = function(l) {
-    trans = l / 1000
+    trans <- l / 1000
   }) +
   ggplot2::scale_x_continuous(
     breaks = seq(1985, 2015, by = 5),
@@ -201,7 +201,7 @@ gb_landings <- landings %>%
   ggplot2::facet_wrap(~feeding.guild, ncol = 1, scales = "free") +
   #Axis and theme
   ggplot2::scale_y_continuous(labels = function(l) {
-    trans = l / 1000
+    trans <- l / 1000
   }) +
   ggplot2::scale_x_continuous(
     breaks = seq(1985, 2015, by = 5),

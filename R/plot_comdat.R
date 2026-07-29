@@ -381,7 +381,7 @@ plot_comdat <- function(
       #Axis and theme
       #ggplot2::ylim(0, 200)+
       ggplot2::scale_y_continuous(labels = function(l) {
-        trans = l / 1000
+        trans <- l / 1000
       }) +
       ggplot2::scale_x_continuous(
         breaks = seq(1980, 2020, by = 5),

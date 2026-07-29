@@ -47,7 +47,7 @@ plot_comdat_profit <- function(
   # e.g. fill = setup$shade.fill, alpha = setup$shade.alpha,
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
 
-  fix = ecodata::comdat_profit |>
+  fix <- ecodata::comdat_profit |>
     dplyr::filter(EPU %in% filterEPUs) |>
     dplyr::group_by(Var) |>
     dplyr::mutate(hline = mean(Value, na.rm = T))

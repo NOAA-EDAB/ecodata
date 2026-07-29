@@ -104,7 +104,7 @@ gb_landings <- landings %>%
   #Axis and theme
   ggplot2::ylim(1, NA) +
   ggplot2::scale_y_continuous(labels = function(l) {
-    trans = l / 1000
+    trans <- l / 1000
   }) +
   ggplot2::scale_x_continuous(
     breaks = seq(1985, 2020, by = 5),

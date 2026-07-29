@@ -6,10 +6,10 @@ ne_epu_sf <- ecodata::epu_sf %>%
 map.lwd <- 0.4
 
 # Set lat/lon window for maps
-xmin = -73
-xmax = -65
-ymin = 39
-ymax = 45
+xmin <- -73
+xmax <- -65
+ymin <- 39
+ymax <- 45
 xlims <- c(xmin, xmax)
 ylims <- c(ymin, ymax)
 sst <- ecodata::seasonal_oisst_anom_gridded

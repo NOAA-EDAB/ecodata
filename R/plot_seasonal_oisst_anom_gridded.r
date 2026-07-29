@@ -19,19 +19,19 @@ plot_seasonal_oisst_anom_gridded <- function(
   if (report == "MidAtlantic") {
     filterEPUs <- c("MAB")
 
-    xmin = -77
-    xmax = -66
-    ymin = 35.5
-    ymax = 43
+    xmin <- -77
+    xmax <- -66
+    ymin <- 35.5
+    ymax <- 43
     xlims <- c(xmin, xmax)
     ylims <- c(ymin, ymax)
   } else {
     filterEPUs <- c("GB", "GOM")
     # Set lat/lon window for maps
-    xmin = -73
-    xmax = -65
-    ymin = 39
-    ymax = 45
+    xmin <- -73
+    xmax <- -65
+    ymin <- 39
+    ymax <- 45
     xlims <- c(xmin, xmax)
     ylims <- c(ymin, ymax)
   }

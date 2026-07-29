@@ -18,7 +18,7 @@ ylim_fd <- c(
 #                         labels = LETTERS[1:2],
 #                         Var = c("Fleet count","Fleet diversity in revenue"))
 
-series.col = c("black")
+series.col <- c("black")
 
 fleet_count <- comm_div %>%
   dplyr::filter(Var == "Fleet count") %>%
