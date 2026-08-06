@@ -1,11 +1,9 @@
-inst/doc
+.DS_Store
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
-.DS_Store
-ecodata.Rproj
-plot_forage_index.R
+*.Rproj
 
-# folders
+# files and folders
 docs
