@@ -20,15 +20,16 @@ To learn more about using \code{ecodata}, start with the vignette: \code{browseV
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://noaa-edab.github.io/ecodata/,https://github.com/NOAA-EDAB/ecodata}
+  \item \url{https://noaa-edab.github.io/ecodata/},\url{https://github.com/NOAA-EDAB/ecodata}
 }
 
 }
 \author{
-\strong{Maintainer}: Brandon Beltz \email{brandon.beltz@noaa.gov}
+\strong{Maintainer}: Brandon Beltz \email{brandon.beltz@noaa.gov} (\href{https://orcid.org/0009-0002-7385-5950}{ORCID})
 
 Authors:
 \itemize{
+  \item Brandon Beltz \email{brandon.beltz@noaa.gov} (\href{https://orcid.org/0009-0002-7385-5950}{ORCID})
   \item Andy Beet \email{andrew.beet@noaa.gov} (\href{https://orcid.org/0000-0001-8270-7090}{ORCID})
   \item Kimberly Bastille \email{kimberly.bastille@noaa.gov}
   \item Sean Hardison
