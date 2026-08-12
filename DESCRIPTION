@@ -52,6 +52,6 @@ URL: https://noaa-edab.github.io/ecodata/,https://github.com/NOAA-EDAB/ecodata
 Remotes:
   NOAA-EDAB/arfit
 VignetteBuilder: knitr
-RoxygenNote: 7.3.2
 Depends: 
-    R (>= 3.5)
+    R (>= 4.1.0)
+Config/roxygen2/version: 8.1.0
