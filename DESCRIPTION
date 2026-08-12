@@ -53,5 +53,5 @@ Remotes:
   NOAA-EDAB/arfit
 VignetteBuilder: knitr
 Depends: 
-    R (>= 3.5)
+    R (>= 4.1.0)
 Config/roxygen2/version: 8.1.0
