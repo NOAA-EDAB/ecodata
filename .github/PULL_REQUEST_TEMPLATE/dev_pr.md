@@ -17,9 +17,10 @@ This will inform the new release number.
 - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
 - [ ] Other change (if none of the other choices apply)
 
-### Reviewer instructions
-
-The underlying PRs should have been reviewed. Please check that the proposed merge is correct before approving.
-If any checkboxes other than "Other change" have been selected please prepare the following file changes for a new release version:
+If "Fix", "Feature" or "Breaking Change" have been selected above, the following files should be revised for a new release:
 - [ ] NEWS.md - add release notes
 - [ ] DESCRIPTION - increment the version number according to [Semantic Versioning](https://semver.org)
+
+### Reviewer instructions
+
+The underlying PRs should have been reviewed. Please check that `dev` is merging into `main` and that `NEWS.md` and `DESCRIPTION` have been included correctly.
