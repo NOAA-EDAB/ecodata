@@ -2,7 +2,7 @@
 
 Date: 08/13/2026
 
-## Breaking Change
+## Breaking Changes
 
 - Incremented R dependency to 4.1.0 or higher
 
