@@ -1,3 +1,11 @@
+# ecodata v9.0.0
+
+Date: 08/20/2026
+
+## Breaking Changes
+
+- Incremented R dependency to 4.1.0 or higher
+
 # ecodata v8.0.0
 
 Date: 07/29/2026

@@ -1,6 +1,6 @@
 Package: ecodata
 Title: Documentation of Ecosystem Indicator Reporting
-Version: 8.0.0
+Version: 9.0.0
 Authors@R: c(person("Brandon", "Beltz", email = "brandon.beltz@noaa.gov", role = c("cre", "aut"), comment = c(ORCID = "0009-0002-7385-5950")),
              person("Andy", "Beet", email = "andrew.beet@noaa.gov", role = "aut", comment = c(ORCID = "0000-0001-8270-7090")),
              person("Kimberly", "Bastille", email = "kimberly.bastille@noaa.gov", role = "aut"),
@@ -52,6 +52,6 @@ URL: https://noaa-edab.github.io/ecodata/,https://github.com/NOAA-EDAB/ecodata
 Remotes:
   NOAA-EDAB/arfit
 VignetteBuilder: knitr
-RoxygenNote: 7.3.2
 Depends: 
-    R (>= 3.5)
+    R (>= 4.1.0)
+Config/roxygen2/version: 8.1.0

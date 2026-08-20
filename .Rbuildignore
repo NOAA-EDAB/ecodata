@@ -5,7 +5,10 @@
 ^README\.Rmd$
 ^\.github$
 
-# folders
+# folders and files
 workshop
 docs
 pkgdown
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+air.toml
