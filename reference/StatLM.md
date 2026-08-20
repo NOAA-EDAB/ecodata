@@ -7,8 +7,3 @@ nBootSamples, pVal significance, number datapoints
 ``` r
 StatLM
 ```
-
-## Format
-
-An object of class `StatLM` (inherits from `Stat`, `ggproto`, `gg`) of
-length 4.

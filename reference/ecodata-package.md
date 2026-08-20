@@ -24,13 +24,17 @@ To learn more about using `ecodata`, start with the vignette:
 
 Useful links:
 
-- <https://noaa-edab.github.io/ecodata/,https://github.com/NOAA-EDAB/ecodata>
+- <https://noaa-edab.github.io/ecodata/>,<https://github.com/NOAA-EDAB/ecodata>
 
 ## Author
 
 **Maintainer**: Brandon Beltz <brandon.beltz@noaa.gov>
+([ORCID](https://orcid.org/0009-0002-7385-5950))
 
 Authors:
+
+- Brandon Beltz <brandon.beltz@noaa.gov>
+  ([ORCID](https://orcid.org/0009-0002-7385-5950))
 
 - Andy Beet <andrew.beet@noaa.gov>
   ([ORCID](https://orcid.org/0000-0001-8270-7090))

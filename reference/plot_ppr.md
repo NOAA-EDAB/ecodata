@@ -1,8 +1,8 @@
 # Plot ecosystem overfishing indices
 
-Plots ppr dataset. Primary production (PP), Fogarty and Ryther indices.
-Primary production required scaled by Primary production and mean
-trophic level index
+Plots ppr dataset. Primary production (PP), Fogarty and Ryther indices,
+primary production required (ppr) scaled by primary production, and mean
+trophic level (mtl) index
 
 ## Usage
 
