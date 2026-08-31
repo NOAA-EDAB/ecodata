@@ -6,13 +6,19 @@
 #'
 #' @param ecodata_name string. the data name of the target ecodata dataset or plot function (default = NULL)
 #' @param write_only boolean. should the function output the plotting code, as text, for all plot variations (default = FALSE)
+#' @param print boolean. should the function print output to the session window (default = TRUE)
 #' @param n numeric. number of data points for short term trend (default = 0)
 #'
 #' @return list containing plots when write_only = FALSE and text when write_only = TRUE. plots are also exported to the IDE plot pane.
 #'
 #' @export
 
-create_all_plots <- function(ecodata_name = NULL, write_only = FALSE, n = 0) {
+create_all_plots <- function(
+  ecodata_name = NULL,
+  write_only = FALSE,
+  print = TRUE,
+  n = 0
+) {
   # Define plot function syntax based on user input
   function_name <- paste0("ecodata::plot_", ecodata_name)
 
@@ -103,7 +109,9 @@ create_all_plots <- function(ecodata_name = NULL, write_only = FALSE, n = 0) {
       plotting_results[[i]] <- eval(parse(text = function_call))
     }
 
-    print(plotting_results[[i]])
+    if (print == TRUE) {
+      print(plotting_results[[i]])
+    }
   }
 
   # The function returns the 'plotting_results' list to the user
