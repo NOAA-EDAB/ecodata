@@ -4,12 +4,14 @@
 \alias{create_all_plots}
 \title{Create all variations of an ecodata plot function}
 \usage{
-create_all_plots(ecodata_name = NULL, write_only = FALSE, n = 0)
+create_all_plots(ecodata_name = NULL, write_only = FALSE, print = TRUE, n = 0)
 }
 \arguments{
 \item{ecodata_name}{string. the data name of the target ecodata dataset or plot function (default = NULL)}
 
 \item{write_only}{boolean. should the function output the plotting code, as text, for all plot variations (default = FALSE)}
+
+\item{print}{boolean. should the function print output to the session window (default = TRUE)}
 
 \item{n}{numeric. number of data points for short term trend (default = 0)}
 }
