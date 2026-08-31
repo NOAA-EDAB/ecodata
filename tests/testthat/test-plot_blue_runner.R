@@ -5,7 +5,7 @@ test_that("'plot_blue_runner' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_blue_runner' creates an object", {
-  expect_type(invisible(ecodata::plot_blue_runner(), "object"))
+  expect_type(invisible(ecodata::plot_blue_runner()), "object")
 })
 
 # Test that the plot function has user-defined arguments

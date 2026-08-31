@@ -5,7 +5,7 @@ test_that("'plot_phyto_size' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_phyto_size' creates an object", {
-  expect_type(invisible(ecodata::plot_phyto_size(), "object"))
+  expect_type(invisible(ecodata::plot_phyto_size()), "object")
 })
 
 # Test that the plot function has user-defined arguments

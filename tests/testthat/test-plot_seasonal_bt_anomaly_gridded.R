@@ -5,7 +5,7 @@ test_that("'plot_seasonal_bt_anomaly_gridded' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_seasonal_bt_anomaly_gridded' creates an object", {
-  expect_type(invisible(ecodata::plot_seasonal_bt_anomaly_gridded(), "object"))
+  expect_type(invisible(ecodata::plot_seasonal_bt_anomaly_gridded()), "object")
 })
 
 # Test that the plot function has user-defined arguments

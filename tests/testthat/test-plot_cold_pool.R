@@ -5,7 +5,7 @@ test_that("'plot_cold_pool' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_cold_pool' creates an object", {
-  expect_type(invisible(ecodata::plot_cold_pool(), "object"))
+  expect_type(invisible(ecodata::plot_cold_pool()), "object")
 })
 
 # Test that the plot function has user-defined arguments

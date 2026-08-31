@@ -5,7 +5,7 @@ test_that("'plot_wea_landings_rev' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_wea_landings_rev' creates an object", {
-  expect_type(invisible(ecodata::plot_wea_landings_rev(), "object"))
+  expect_type(invisible(ecodata::plot_wea_landings_rev()), "object")
 })
 
 # Test that the plot function has user-defined arguments

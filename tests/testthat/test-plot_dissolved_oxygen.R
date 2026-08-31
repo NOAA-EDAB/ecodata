@@ -5,7 +5,7 @@ test_that("'plot_dissolved_oxygen' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_dissolved_oxygen' creates an object", {
-  expect_type(invisible(ecodata::plot_dissolved_oxygen(), "object"))
+  expect_type(invisible(ecodata::plot_dissolved_oxygen()), "object")
 })
 
 # Test that the plot function has user-defined arguments

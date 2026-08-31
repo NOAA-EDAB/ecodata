@@ -5,7 +5,7 @@ test_that("'plot_gom_salmon' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_gom_salmon' creates an object", {
-  expect_type(invisible(ecodata::plot_gom_salmon(), "object"))
+  expect_type(invisible(ecodata::plot_gom_salmon()), "object")
 })
 
 # Test that the plot function has user-defined arguments

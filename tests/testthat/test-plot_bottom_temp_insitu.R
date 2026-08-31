@@ -5,7 +5,7 @@ test_that("'plot_bottom_temp_insitu' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_bottom_temp_insitu' creates an object", {
-  expect_type(invisible(ecodata::plot_bottom_temp_insitu(), "object"))
+  expect_type(invisible(ecodata::plot_bottom_temp_insitu()), "object")
 })
 
 # Test that the plot function has user-defined arguments

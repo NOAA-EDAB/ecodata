@@ -5,7 +5,7 @@ test_that("'plot_slopewater' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_slopewater' creates an object", {
-  expect_type(invisible(ecodata::plot_slopewater(), "object"))
+  expect_type(invisible(ecodata::plot_slopewater()), "object")
 })
 
 # Test that the plot function has user-defined arguments

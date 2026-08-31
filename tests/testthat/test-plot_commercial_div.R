@@ -5,7 +5,7 @@ test_that("'plot_commercial_div' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_commercial_div' creates an object", {
-  expect_type(invisible(ecodata::plot_commercial_div(), "object"))
+  expect_type(invisible(ecodata::plot_commercial_div()), "object")
 })
 
 # Test that the plot function has user-defined arguments

@@ -5,7 +5,7 @@ test_that("'plot_rec_hms' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_rec_hms' creates an object", {
-  expect_type(invisible(ecodata::plot_rec_hms(), "object"))
+  expect_type(invisible(ecodata::plot_rec_hms()), "object")
 })
 
 # Test that the plot function has user-defined arguments

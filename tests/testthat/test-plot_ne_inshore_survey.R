@@ -5,7 +5,7 @@ test_that("'plot_ne_inshore_survey' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_ne_inshore_survey' creates an object", {
-  expect_type(invisible(ecodata::plot_ne_inshore_survey(), "object"))
+  expect_type(invisible(ecodata::plot_ne_inshore_survey()), "object")
 })
 
 # Test that the plot function has user-defined arguments

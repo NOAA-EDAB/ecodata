@@ -5,7 +5,7 @@ test_that("'plot_gsi' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_gsi' creates an object", {
-  expect_type(invisible(ecodata::plot_gsi(), "object"))
+  expect_type(invisible(ecodata::plot_gsi()), "object")
 })
 
 # Test that the plot function has user-defined arguments

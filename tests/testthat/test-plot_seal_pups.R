@@ -5,7 +5,7 @@ test_that("'plot_seal_pups' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_seal_pups' creates an object", {
-  expect_type(invisible(ecodata::plot_seal_pups(), "object"))
+  expect_type(invisible(ecodata::plot_seal_pups()), "object")
 })
 
 # Test that the plot function has user-defined arguments

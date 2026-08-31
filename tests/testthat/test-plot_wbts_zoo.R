@@ -5,7 +5,7 @@ test_that("'plot_wbts_zoo' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_wbts_zoo' creates an object", {
-  expect_type(invisible(ecodata::plot_wbts_zoo(), "object"))
+  expect_type(invisible(ecodata::plot_wbts_zoo()), "object")
 })
 
 # Test that the plot function has user-defined arguments

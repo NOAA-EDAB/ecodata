@@ -5,7 +5,7 @@ test_that("'plot_wind_dev_speed' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_wind_dev_speed' creates an object", {
-  expect_type(invisible(ecodata::plot_wind_dev_speed(), "object"))
+  expect_type(invisible(ecodata::plot_wind_dev_speed()), "object")
 })
 
 # Test that the plot function has user-defined arguments

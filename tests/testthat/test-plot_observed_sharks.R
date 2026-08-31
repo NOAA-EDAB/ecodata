@@ -5,7 +5,7 @@ test_that("'plot_observed_sharks' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_observed_sharks' creates an object", {
-  expect_type(invisible(ecodata::plot_observed_sharks(), "object"))
+  expect_type(invisible(ecodata::plot_observed_sharks()), "object")
 })
 
 # Test that the plot function has user-defined arguments

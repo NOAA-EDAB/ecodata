@@ -5,7 +5,7 @@ test_that("'plot_comdat_profit' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_comdat_profit' creates an object", {
-  expect_type(invisible(ecodata::plot_comdat_profit(), "object"))
+  expect_type(invisible(ecodata::plot_comdat_profit()), "object")
 })
 
 # Test that the plot function has user-defined arguments

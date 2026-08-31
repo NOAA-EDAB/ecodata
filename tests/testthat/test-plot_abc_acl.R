@@ -5,7 +5,7 @@ test_that("'plot_abc_acl' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_abc_acl' creates an object", {
-  expect_type(invisible(ecodata::plot_abc_acl(), "object"))
+  expect_type(invisible(ecodata::plot_abc_acl()), "object")
 })
 
 # Test that the plot function has user-defined arguments

@@ -5,7 +5,7 @@ test_that("'plot_thermal_habitat_area' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_thermal_habitat_area' creates an object", {
-  expect_type(invisible(ecodata::plot_thermal_habitat_area(), "object"))
+  expect_type(invisible(ecodata::plot_thermal_habitat_area()), "object")
 })
 
 # Test that the plot function has user-defined arguments

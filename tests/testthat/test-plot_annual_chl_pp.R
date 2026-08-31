@@ -5,7 +5,7 @@ test_that("'plot_annual_chl_pp' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_annual_chl_pp' creates an object", {
-  expect_type(invisible(ecodata::plot_annual_chl_pp(), "object"))
+  expect_type(invisible(ecodata::plot_annual_chl_pp()), "object")
 })
 
 # Test that the plot function has user-defined arguments

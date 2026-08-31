@@ -5,7 +5,7 @@ test_that("'plot_heatwave_year' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_heatwave_year' creates an object", {
-  expect_type(invisible(ecodata::plot_heatwave_year(), "object"))
+  expect_type(invisible(ecodata::plot_heatwave_year()), "object")
 })
 
 # Test that the plot function has user-defined arguments

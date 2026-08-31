@@ -5,7 +5,7 @@ test_that("'plot_ichthyo_diversity' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_ichthyo_diversity' creates an object", {
-  expect_type(invisible(ecodata::plot_ichthyo_diversity(), "object"))
+  expect_type(invisible(ecodata::plot_ichthyo_diversity()), "object")
 })
 
 # Test that the plot function has user-defined arguments

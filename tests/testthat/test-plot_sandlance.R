@@ -5,7 +5,7 @@ test_that("'plot_sandlance' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_sandlance' creates an object", {
-  expect_type(invisible(ecodata::plot_sandlance(), "object"))
+  expect_type(invisible(ecodata::plot_sandlance()), "object")
 })
 
 # Test that the plot function has user-defined arguments

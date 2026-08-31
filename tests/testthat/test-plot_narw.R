@@ -5,7 +5,7 @@ test_that("'plot_narw' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_narw' creates an object", {
-  expect_type(invisible(ecodata::plot_narw(), "object"))
+  expect_type(invisible(ecodata::plot_narw()), "object")
 })
 
 # Test that the plot function has user-defined arguments

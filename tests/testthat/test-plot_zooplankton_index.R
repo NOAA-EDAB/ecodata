@@ -5,7 +5,7 @@ test_that("'plot_zooplankton_index' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_zooplankton_index' creates an object", {
-  expect_type(invisible(ecodata::plot_zooplankton_index(), "object"))
+  expect_type(invisible(ecodata::plot_zooplankton_index()), "object")
 })
 
 # Test that the plot function has user-defined arguments

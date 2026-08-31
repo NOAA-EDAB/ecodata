@@ -5,7 +5,7 @@ test_that("'plot_trans_dates' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_trans_dates' creates an object", {
-  expect_type(invisible(ecodata::plot_trans_dates(), "object"))
+  expect_type(invisible(ecodata::plot_trans_dates()), "object")
 })
 
 # Test that the plot function has user-defined arguments

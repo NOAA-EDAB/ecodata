@@ -5,7 +5,7 @@ test_that("'plot_grayseal' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_grayseal' creates an object", {
-  expect_type(invisible(ecodata::plot_grayseal(), "object"))
+  expect_type(invisible(ecodata::plot_grayseal()), "object")
 })
 
 # Test that the plot function has user-defined arguments

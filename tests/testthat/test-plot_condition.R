@@ -5,7 +5,7 @@ test_that("'plot_condition' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_condition' creates an object", {
-  expect_type(invisible(ecodata::plot_condition(), "object"))
+  expect_type(invisible(ecodata::plot_condition()), "object")
 })
 
 # Test that the plot function has user-defined arguments

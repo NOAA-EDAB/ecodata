@@ -5,7 +5,7 @@ test_that("'plot_forage_anomaly' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_forage_anomaly' creates an object", {
-  expect_type(invisible(ecodata::plot_forage_anomaly(), "object"))
+  expect_type(invisible(ecodata::plot_forage_anomaly()), "object")
 })
 
 # Test that the plot function has user-defined arguments

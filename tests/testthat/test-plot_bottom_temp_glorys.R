@@ -5,7 +5,7 @@ test_that("'plot_bottom_temp_glorys' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_bottom_temp_glorys' creates an object", {
-  expect_type(invisible(ecodata::plot_bottom_temp_glorys(), "object"))
+  expect_type(invisible(ecodata::plot_bottom_temp_glorys()), "object")
 })
 
 # Test that the plot function has user-defined arguments

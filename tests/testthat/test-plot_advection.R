@@ -5,7 +5,7 @@ test_that("'plot_advection' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_advection' creates an object", {
-  expect_type(invisible(ecodata::plot_advection(), "object"))
+  expect_type(invisible(ecodata::plot_advection()), "object")
 })
 
 # Test that the plot function has user-defined arguments

@@ -5,7 +5,7 @@ test_that("'plot_aggregate_biomass' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_aggregate_biomass' creates an object", {
-  expect_type(invisible(ecodata::plot_aggregate_biomass(), "object"))
+  expect_type(invisible(ecodata::plot_aggregate_biomass()), "object")
 })
 
 # Test that the plot function has user-defined arguments

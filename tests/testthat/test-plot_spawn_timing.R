@@ -5,7 +5,7 @@ test_that("'plot_spawn_timing' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_spawn_timing' creates an object", {
-  expect_type(invisible(ecodata::plot_spawn_timing(), "object"))
+  expect_type(invisible(ecodata::plot_spawn_timing()), "object")
 })
 
 # Test that the plot function has user-defined arguments

@@ -5,7 +5,7 @@ test_that("'plot_ch_bay_temp' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_ch_bay_temp' creates an object", {
-  expect_type(invisible(ecodata::plot_ch_bay_temp(), "object"))
+  expect_type(invisible(ecodata::plot_ch_bay_temp()), "object")
 })
 
 # Test that the plot function has user-defined arguments

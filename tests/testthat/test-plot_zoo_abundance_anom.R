@@ -5,7 +5,7 @@ test_that("'plot_zoo_abundance_anom' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_zoo_abundance_anom' creates an object", {
-  expect_type(invisible(ecodata::plot_zoo_abundance_anom(), "object"))
+  expect_type(invisible(ecodata::plot_zoo_abundance_anom()), "object")
 })
 
 # Test that the plot function has user-defined arguments

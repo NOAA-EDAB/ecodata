@@ -5,7 +5,7 @@ test_that("'plot_zoo_community' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_zoo_community' creates an object", {
-  expect_type(invisible(ecodata::plot_zoo_community(), "object"))
+  expect_type(invisible(ecodata::plot_zoo_community()), "object")
 })
 
 # Test that the plot function has user-defined arguments

@@ -5,7 +5,7 @@ test_that("'plot_hudson_river_flow' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_hudson_river_flow' creates an object", {
-  expect_type(invisible(ecodata::plot_hudson_river_flow(), "object"))
+  expect_type(invisible(ecodata::plot_hudson_river_flow()), "object")
 })
 
 # Test that the plot function has user-defined arguments

@@ -5,7 +5,7 @@ test_that("'plot_calanus_stage' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_calanus_stage' creates an object", {
-  expect_type(invisible(ecodata::plot_calanus_stage(), "object"))
+  expect_type(invisible(ecodata::plot_calanus_stage()), "object")
 })
 
 # Test that the plot function has user-defined arguments

@@ -5,7 +5,7 @@ test_that("'plot_zoo_strat_abun' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_zoo_strat_abun' creates an object", {
-  expect_type(invisible(ecodata::plot_zoo_strat_abun(), "object"))
+  expect_type(invisible(ecodata::plot_zoo_strat_abun()), "object")
 })
 
 # Test that the plot function has user-defined arguments

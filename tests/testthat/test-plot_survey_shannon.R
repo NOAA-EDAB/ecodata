@@ -5,7 +5,7 @@ test_that("'plot_survey_shannon' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_survey_shannon' creates an object", {
-  expect_type(invisible(ecodata::plot_survey_shannon(), "object"))
+  expect_type(invisible(ecodata::plot_survey_shannon()), "object")
 })
 
 # Test that the plot function has user-defined arguments

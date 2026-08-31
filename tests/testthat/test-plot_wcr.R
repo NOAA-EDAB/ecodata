@@ -5,7 +5,7 @@ test_that("'plot_wcr' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_wcr' creates an object", {
-  expect_type(invisible(ecodata::plot_wcr(), "object"))
+  expect_type(invisible(ecodata::plot_wcr()), "object")
 })
 
 # Test that the plot function has user-defined arguments

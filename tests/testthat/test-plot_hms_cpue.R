@@ -5,7 +5,7 @@ test_that("'plot_hms_cpue' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_hms_cpue' creates an object", {
-  expect_type(invisible(ecodata::plot_hms_cpue(), "object"))
+  expect_type(invisible(ecodata::plot_hms_cpue()), "object")
 })
 
 # Test that the plot function has user-defined arguments

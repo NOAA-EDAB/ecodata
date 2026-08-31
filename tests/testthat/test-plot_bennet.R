@@ -5,7 +5,7 @@ test_that("'plot_bennet' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_bennet' creates an object", {
-  expect_type(invisible(ecodata::plot_bennet(), "object"))
+  expect_type(invisible(ecodata::plot_bennet()), "object")
 })
 
 # Test that the plot function has user-defined arguments

@@ -5,7 +5,7 @@ test_that("'plot_nao' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_nao' creates an object", {
-  expect_type(invisible(ecodata::plot_nao(), "object"))
+  expect_type(invisible(ecodata::plot_nao()), "object")
 })
 
 # Test that the plot function has user-defined arguments

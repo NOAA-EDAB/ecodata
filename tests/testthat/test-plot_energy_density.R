@@ -5,7 +5,7 @@ test_that("'plot_energy_density' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_energy_density' creates an object", {
-  expect_type(invisible(ecodata::plot_energy_density(), "object"))
+  expect_type(invisible(ecodata::plot_energy_density()), "object")
 })
 
 # Test that the plot function has user-defined arguments

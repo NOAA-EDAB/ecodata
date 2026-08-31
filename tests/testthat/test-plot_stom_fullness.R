@@ -5,7 +5,7 @@ test_that("'plot_stom_fullness' has valid default arguments", {
 
 # Test that the plot function creates an object
 test_that("'plot_stom_fullness' creates an object", {
-  expect_type(invisible(ecodata::plot_stom_fullness(), "object"))
+  expect_type(invisible(ecodata::plot_stom_fullness()), "object")
 })
 
 # Test that the plot function has user-defined arguments
