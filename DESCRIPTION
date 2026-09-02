@@ -1,6 +1,6 @@
 Package: ecodata
 Title: Documentation of Ecosystem Indicator Reporting
-Version: 9.0.0
+Version: 9.1.0
 Authors@R: c(person("Brandon", "Beltz", email = "brandon.beltz@noaa.gov", role = c("cre", "aut"), comment = c(ORCID = "0009-0002-7385-5950")),
              person("Andy", "Beet", email = "andrew.beet@noaa.gov", role = "aut", comment = c(ORCID = "0000-0001-8270-7090")),
              person("Kimberly", "Bastille", email = "kimberly.bastille@noaa.gov", role = "aut"),
@@ -40,14 +40,15 @@ Imports:
   arfit,
   Polychrome
 Suggests:
-  knitr,
-  rmarkdown,
-  tufte,
-  here,
-  usethis,
-	mgcv,
-	zoo,
-	rlang
+    knitr,
+    rmarkdown,
+    tufte,
+    here,
+    usethis,
+    mgcv,
+    zoo,
+    rlang,
+    testthat (>= 3.0.0)
 URL: https://noaa-edab.github.io/ecodata/,https://github.com/NOAA-EDAB/ecodata
 Remotes:
   NOAA-EDAB/arfit
@@ -55,3 +56,4 @@ VignetteBuilder: knitr
 Depends: 
     R (>= 4.1.0)
 Config/roxygen2/version: 8.1.0
+Config/testthat/edition: 3
