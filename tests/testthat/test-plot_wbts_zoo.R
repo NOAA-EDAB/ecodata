@@ -8,7 +8,7 @@ test_that("'plot_wbts_zoo' creates an object", {
   expect_type(invisible(ecodata::plot_wbts_zoo()), "object")
 })
 
-# Test that the plot function has user-defined arguments
+# Test that the plot function has user-defined attributes
 test_that("'plot_wbts_zoo' has user-defined attributes", {
   expect_gte(length(attributes(ecodata::plot_wbts_zoo)), 1)
   expect_no_match(

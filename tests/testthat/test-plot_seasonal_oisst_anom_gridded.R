@@ -8,7 +8,7 @@ test_that("'plot_seasonal_oisst_anom_gridded' creates an object", {
   expect_type(invisible(ecodata::plot_seasonal_oisst_anom_gridded()), "object")
 })
 
-# Test that the plot function has user-defined arguments
+# Test that the plot function has user-defined attributes
 test_that("'plot_seasonal_oisst_anom_gridded' has user-defined attributes", {
   expect_gte(length(attributes(ecodata::plot_seasonal_oisst_anom_gridded)), 1)
   expect_no_match(

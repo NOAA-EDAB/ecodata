@@ -8,7 +8,7 @@ test_that("'plot_heatwave_year' creates an object", {
   expect_type(invisible(ecodata::plot_heatwave_year()), "object")
 })
 
-# Test that the plot function has user-defined arguments
+# Test that the plot function has user-defined attributes
 test_that("'plot_heatwave_year' has user-defined attributes", {
   expect_gte(length(attributes(ecodata::plot_heatwave_year)), 1)
   expect_no_match(

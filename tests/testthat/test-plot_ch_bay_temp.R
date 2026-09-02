@@ -8,7 +8,7 @@ test_that("'plot_ch_bay_temp' creates an object", {
   expect_type(invisible(ecodata::plot_ch_bay_temp()), "object")
 })
 
-# Test that the plot function has user-defined arguments
+# Test that the plot function has user-defined attributes
 test_that("'plot_ch_bay_temp' has user-defined attributes", {
   expect_gte(length(attributes(ecodata::plot_ch_bay_temp)), 1)
   expect_no_match(

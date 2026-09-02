@@ -8,7 +8,7 @@ test_that("'plot_hudson_river_flow' creates an object", {
   expect_type(invisible(ecodata::plot_hudson_river_flow()), "object")
 })
 
-# Test that the plot function has user-defined arguments
+# Test that the plot function has user-defined attributes
 test_that("'plot_hudson_river_flow' has user-defined attributes", {
   expect_gte(length(attributes(ecodata::plot_hudson_river_flow)), 1)
   expect_no_match(

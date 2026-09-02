@@ -8,7 +8,7 @@ test_that("'plot_annual_chl_pp' creates an object", {
   expect_type(invisible(ecodata::plot_annual_chl_pp()), "object")
 })
 
-# Test that the plot function has user-defined arguments
+# Test that the plot function has user-defined attributes
 test_that("'plot_annual_chl_pp' has user-defined attributes", {
   expect_gte(length(attributes(ecodata::plot_annual_chl_pp)), 1)
   expect_no_match(

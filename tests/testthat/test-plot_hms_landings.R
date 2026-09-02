@@ -8,7 +8,7 @@ test_that("'plot_hms_landings' creates an object", {
   expect_type(invisible(ecodata::plot_hms_landings()), "object")
 })
 
-# Test that the plot function has user-defined arguments
+# Test that the plot function has user-defined attributes
 test_that("'plot_hms_landings' has user-defined attributes", {
   expect_gte(length(attributes(ecodata::plot_hms_landings)), 1)
   expect_no_match(

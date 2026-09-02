@@ -8,7 +8,7 @@ test_that("'plot_aquaculture' creates an object", {
   expect_type(invisible(ecodata::plot_aquaculture()), "object")
 })
 
-# Test that the plot function has user-defined arguments
+# Test that the plot function has user-defined attributes
 test_that("'plot_aquaculture' has user-defined attributes", {
   expect_gte(length(attributes(ecodata::plot_aquaculture)), 1)
   expect_no_match(

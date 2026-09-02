@@ -8,7 +8,7 @@ test_that("'plot_seabird_mab' creates an object", {
   expect_type(invisible(ecodata::plot_seabird_mab()), "object")
 })
 
-# Test that the plot function has user-defined arguments
+# Test that the plot function has user-defined attributes
 test_that("'plot_seabird_mab' has user-defined attributes", {
   expect_gte(length(attributes(ecodata::plot_seabird_mab)), 1)
   expect_no_match(

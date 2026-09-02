@@ -8,7 +8,7 @@ test_that("'plot_wcr' creates an object", {
   expect_type(invisible(ecodata::plot_wcr()), "object")
 })
 
-# Test that the plot function has user-defined arguments
+# Test that the plot function has user-defined attributes
 test_that("'plot_wcr' has user-defined attributes", {
   expect_gte(length(attributes(ecodata::plot_wcr)), 1)
   expect_no_match(

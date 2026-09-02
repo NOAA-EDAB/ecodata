@@ -8,7 +8,7 @@ test_that("'plot_community_factors' creates an object", {
   expect_type(invisible(ecodata::plot_community_factors()), "object")
 })
 
-# Test that the plot function has user-defined arguments
+# Test that the plot function has user-defined attributes
 test_that("'plot_community_factors' has user-defined attributes", {
   expect_gte(length(attributes(ecodata::plot_community_factors)), 1)
   expect_no_match(

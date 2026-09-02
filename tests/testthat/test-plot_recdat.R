@@ -8,7 +8,7 @@ test_that("'plot_recdat' creates an object", {
   expect_type(invisible(ecodata::plot_recdat()), "object")
 })
 
-# Test that the plot function has user-defined arguments
+# Test that the plot function has user-defined attributes
 test_that("'plot_recdat' has user-defined attributes", {
   expect_gte(length(attributes(ecodata::plot_recdat)), 1)
   expect_no_match(

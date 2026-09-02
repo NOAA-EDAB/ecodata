@@ -8,7 +8,7 @@ test_that("'plot_long_term_sst' creates an object", {
   expect_type(invisible(ecodata::plot_long_term_sst()), "object")
 })
 
-# Test that the plot function has user-defined arguments
+# Test that the plot function has user-defined attributes
 test_that("'plot_long_term_sst' has user-defined attributes", {
   expect_gte(length(attributes(ecodata::plot_long_term_sst)), 1)
   expect_no_match(

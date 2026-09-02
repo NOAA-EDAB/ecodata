@@ -8,7 +8,7 @@ test_that("'plot_habitat_diversity' creates an object", {
   expect_type(invisible(ecodata::plot_habitat_diversity()), "object")
 })
 
-# Test that the plot function has user-defined arguments
+# Test that the plot function has user-defined attributes
 test_that("'plot_habitat_diversity' has user-defined attributes", {
   expect_gte(length(attributes(ecodata::plot_habitat_diversity)), 1)
   expect_no_match(

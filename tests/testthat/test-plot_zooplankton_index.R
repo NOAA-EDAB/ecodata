@@ -8,7 +8,7 @@ test_that("'plot_zooplankton_index' creates an object", {
   expect_type(invisible(ecodata::plot_zooplankton_index()), "object")
 })
 
-# Test that the plot function has user-defined arguments
+# Test that the plot function has user-defined attributes
 test_that("'plot_zooplankton_index' has user-defined attributes", {
   expect_gte(length(attributes(ecodata::plot_zooplankton_index)), 1)
   expect_no_match(

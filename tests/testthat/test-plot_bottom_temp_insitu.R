@@ -8,7 +8,7 @@ test_that("'plot_bottom_temp_insitu' creates an object", {
   expect_type(invisible(ecodata::plot_bottom_temp_insitu()), "object")
 })
 
-# Test that the plot function has user-defined arguments
+# Test that the plot function has user-defined attributes
 test_that("'plot_bottom_temp_insitu' has user-defined attributes", {
   expect_gte(length(attributes(ecodata::plot_bottom_temp_insitu)), 1)
   expect_no_match(

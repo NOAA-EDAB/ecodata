@@ -8,7 +8,7 @@ test_that("'plot_wind_port' creates an object", {
   expect_type(invisible(ecodata::plot_wind_port()), "object")
 })
 
-# Test that the plot function has user-defined arguments
+# Test that the plot function has user-defined attributes
 test_that("'plot_wind_port' has user-defined attributes", {
   expect_gte(length(attributes(ecodata::plot_wind_port)), 1)
   expect_no_match(

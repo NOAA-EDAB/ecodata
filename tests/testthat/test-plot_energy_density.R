@@ -8,7 +8,7 @@ test_that("'plot_energy_density' creates an object", {
   expect_type(invisible(ecodata::plot_energy_density()), "object")
 })
 
-# Test that the plot function has user-defined arguments
+# Test that the plot function has user-defined attributes
 test_that("'plot_energy_density' has user-defined attributes", {
   expect_gte(length(attributes(ecodata::plot_energy_density)), 1)
   expect_no_match(
