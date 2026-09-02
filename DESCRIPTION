@@ -40,14 +40,15 @@ Imports:
   arfit,
   Polychrome
 Suggests:
-  knitr,
-  rmarkdown,
-  tufte,
-  here,
-  usethis,
-	mgcv,
-	zoo,
-	rlang
+    knitr,
+    rmarkdown,
+    tufte,
+    here,
+    usethis,
+    mgcv,
+    zoo,
+    rlang,
+    testthat (>= 3.0.0)
 URL: https://noaa-edab.github.io/ecodata/,https://github.com/NOAA-EDAB/ecodata
 Remotes:
   NOAA-EDAB/arfit
@@ -55,3 +56,4 @@ VignetteBuilder: knitr
 Depends: 
     R (>= 4.1.0)
 Config/roxygen2/version: 8.1.0
+Config/testthat/edition: 3
