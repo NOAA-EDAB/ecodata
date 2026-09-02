@@ -7,6 +7,6 @@ test_that("'hp_density' is a tibble", {
 test_that("'hp_density' has acceptable column names", {
   expect_in(
     colnames(ecodata::hp_density),
-    c("Time", "Var", "Value", "EPU", "Units")
+    c("Time", "Var", "Value", "EPU", "Units", "Latitude", "Longitude")
   )
 })

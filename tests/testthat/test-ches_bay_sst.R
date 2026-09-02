@@ -7,6 +7,6 @@ test_that("'ches_bay_sst' is a tibble", {
 test_that("'ches_bay_sst' has acceptable column names", {
   expect_in(
     colnames(ecodata::ches_bay_sst),
-    c("Time", "Var", "Value", "EPU", "Units")
+    c("Time", "Var", "Value", "Latitude", "Longitude", "Units")
   )
 })

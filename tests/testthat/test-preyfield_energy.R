@@ -7,6 +7,6 @@ test_that("'preyfield_energy' is a tibble", {
 test_that("'preyfield_energy' has acceptable column names", {
   expect_in(
     colnames(ecodata::preyfield_energy),
-    c("Time", "Var", "Value", "EPU", "Units")
+    c("Time", "Var", "Value", "EPU", "Units", "Latitude", "Longitude")
   )
 })

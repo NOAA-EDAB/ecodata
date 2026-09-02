@@ -7,6 +7,6 @@ test_that("'aquaculture' is a tibble", {
 test_that("'aquaculture' has acceptable column names", {
   expect_in(
     colnames(ecodata::aquaculture),
-    c("Time", "Var", "Value", "EPU", "Units")
+    c("Time", "Var", "Value", "Region", "Units")
   )
 })

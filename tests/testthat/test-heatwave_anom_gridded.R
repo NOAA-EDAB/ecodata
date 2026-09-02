@@ -7,6 +7,6 @@ test_that("'heatwave_anom_gridded' is a tibble", {
 test_that("'heatwave_anom_gridded' has acceptable column names", {
   expect_in(
     colnames(ecodata::heatwave_anom_gridded),
-    c("Time", "Var", "Value", "EPU", "Units")
+    c("Time", "Var", "Value", "EPU", "Units", "Latitude", "Longitude")
   )
 })

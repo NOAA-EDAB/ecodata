@@ -7,6 +7,6 @@ test_that("'heatwave_peak_date' is a tibble", {
 test_that("'heatwave_peak_date' has acceptable column names", {
   expect_in(
     colnames(ecodata::heatwave_peak_date),
-    c("Time", "Var", "Value", "EPU", "Units")
+    c("Time", "Var", "Value", "EPU", "Units", "Longitude", "Latitude")
   )
 })
