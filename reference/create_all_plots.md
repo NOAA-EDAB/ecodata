@@ -9,7 +9,7 @@ automating QA/QC protocols and comparing against other ecodata versions.
 ## Usage
 
 ``` r
-create_all_plots(ecodata_name = NULL, write_only = FALSE, n = 0)
+create_all_plots(ecodata_name = NULL, write_only = FALSE, print = TRUE, n = 0)
 ```
 
 ## Arguments
@@ -23,6 +23,11 @@ create_all_plots(ecodata_name = NULL, write_only = FALSE, n = 0)
 
   boolean. should the function output the plotting code, as text, for
   all plot variations (default = FALSE)
+
+- print:
+
+  boolean. should the function print output to the session window
+  (default = TRUE)
 
 - n:
 

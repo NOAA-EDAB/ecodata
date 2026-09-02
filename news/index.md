@@ -1,5 +1,13 @@
 # Changelog
 
+## ecodata v9.1.0
+
+Date: 09/02/2026
+
+### Features
+
+- Added `print` argument to `create_all_plots` function
+
 ## ecodata v9.0.0
 
 Date: 08/20/2026

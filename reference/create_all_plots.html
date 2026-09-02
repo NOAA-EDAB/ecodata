@@ -11,7 +11,7 @@ This may be useful for reviewing data submissions, creating catalog pages, autom
 
     <a class="navbar-brand me-2" href="../index.html">ecodata</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">9.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">9.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +53,7 @@ This may be useful for reviewing data submissions, creating catalog pages, autom
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_all_plots</span><span class="op">(</span>ecodata_name <span class="op">=</span> <span class="cn">NULL</span>, write_only <span class="op">=</span> <span class="cn">FALSE</span>, n <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_all_plots</span><span class="op">(</span>ecodata_name <span class="op">=</span> <span class="cn">NULL</span>, write_only <span class="op">=</span> <span class="cn">FALSE</span>, print <span class="op">=</span> <span class="cn">TRUE</span>, n <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -66,6 +66,10 @@ This may be useful for reviewing data submissions, creating catalog pages, autom
 
 <dt id="arg-write-only">write_only<a class="anchor" aria-label="anchor" href="#arg-write-only"></a></dt>
 <dd><p>boolean. should the function output the plotting code, as text, for all plot variations (default = FALSE)</p></dd>
+
+
+<dt id="arg-print">print<a class="anchor" aria-label="anchor" href="#arg-print"></a></dt>
+<dd><p>boolean. should the function print output to the session window (default = TRUE)</p></dd>
 
 
 <dt id="arg-n">n<a class="anchor" aria-label="anchor" href="#arg-n"></a></dt>
