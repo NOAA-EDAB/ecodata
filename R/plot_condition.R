@@ -148,6 +148,7 @@ plot_condition <- function(
 
 attr(plot_condition, "EPU") <- c("MAB", "GB", "GOM")
 attr(plot_condition, "report") <- c("MidAtlantic", "NewEngland")
+attr(plot_condition, "plottype") <- c("scaled", "raw")
 
 # setwd("C:/Users/abigail.tyrell/Documents/code/ecodata")
 # devtools::load_all()
