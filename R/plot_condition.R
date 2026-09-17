@@ -146,5 +146,11 @@ plot_condition <- function(
   return(p)
 }
 
-# plot_condition(plottype = "raw")
-# plot_condition()
+attr(plot_condition, "EPU") <- c("MAB", "GB", "GOM")
+attr(plot_condition, "report") <- c("MidAtlantic", "NewEngland")
+
+# setwd("C:/Users/abigail.tyrell/Documents/code/ecodata")
+# devtools::load_all()
+# plot_condition() # original behavior
+# plot_condition(plottype = "raw") # new colors for "raw" data
+# reprex::reprex()
