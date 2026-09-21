@@ -94,7 +94,8 @@ plot_condition <- function(
         y = forcats::fct_rev(Var),
         fill = category
       )) +
-      ggplot2::scale_fill_manual(values = vir)
+      ggplot2::scale_fill_manual(values = vir) +
+      ggplot2::labs(fill = "Quantiles of Condition")
   } else if (plottype == "raw") {
     p <- fix |>
       ggplot2::ggplot(ggplot2::aes(
@@ -105,7 +106,8 @@ plot_condition <- function(
       ggplot2::scale_fill_gradientn(
         colors = c(viridis::rocket(4)[2:4], viridis::mako(4)[4:2]),
         values = scales::rescale(xs, from = c(min(xs), max(xs)), to = c(0, 1))
-      )
+      ) +
+      ggplot2::labs(fill = "Relative Condition")
   }
 
   p <- p +
@@ -134,14 +136,6 @@ plot_condition <- function(
     ggplot2::xlab(ggplot2::element_blank()) +
     ecodata::theme_ts() +
     ecodata::theme_title()
-
-  if (plottype == "scaled") {
-    p <- p +
-      ggplot2::labs(fill = "Quantiles of Condition")
-  } else if (plottype == "raw") {
-    p <- p +
-      ggplot2::labs(fill = "Relative Condition")
-  }
 
   return(p)
 }
