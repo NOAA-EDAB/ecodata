@@ -73,3 +73,5 @@ plot_wea_landings_rev <- function(
 
   return(t)
 }
+
+attr(plot_wea_landings_rev, "report") <- c("MidAtlantic", "NewEngland")
