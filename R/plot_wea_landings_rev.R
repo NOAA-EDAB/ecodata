@@ -15,7 +15,7 @@
 plot_wea_landings_rev <- function(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  n = NULL
+  n = 0
 ) {
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
@@ -28,7 +28,7 @@ plot_wea_landings_rev <- function(
   }
 
   # set n to dataset length if n is not specified in function call
-  if (is.null(n)) {
+  if (n == 0) {
     n <- as.numeric(nrow(ecodata::wea_landings_rev))
   }
 
