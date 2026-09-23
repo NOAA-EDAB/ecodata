@@ -4,7 +4,7 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
-#' @param n numeric scalar. The number of species to show (default = n = NULL, all species)
+#' @param n numeric scalar. The number of species to show (default = n = 0, all species)
 #'
 #' @return kable object
 #'
@@ -15,7 +15,7 @@
 plot_wea_landings_rev <- function(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  n = NULL
+  n = 0
 ) {
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
@@ -28,7 +28,7 @@ plot_wea_landings_rev <- function(
   }
 
   # set n to dataset length if n is not specified in function call
-  if (is.null(n)) {
+  if (n == 0) {
     n <- as.numeric(nrow(ecodata::wea_landings_rev))
   }
 
@@ -73,3 +73,5 @@ plot_wea_landings_rev <- function(
 
   return(t)
 }
+
+attr(plot_wea_landings_rev, "report") <- c("MidAtlantic", "NewEngland")

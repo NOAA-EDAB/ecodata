@@ -79,3 +79,6 @@ plot_stom_fullness <- function(
   #
   #
 }
+
+attr(plot_stom_fullness, "report") <- c("MidAtlantic", "NewEngland")
+attr(plot_stom_fullness, "EPU") <- c("MAB", "GB", "GOM")
