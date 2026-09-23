@@ -11,7 +11,7 @@ plot_wea_landings_rev(shadedRegion = NULL, report = "MidAtlantic", n = 0)
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
-\item{n}{numeric scalar. The number of species to show (default = n = NULL, all species)}
+\item{n}{numeric scalar. The number of species to show (default = n = 0, all species)}
 }
 \value{
 kable object
