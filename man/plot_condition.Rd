@@ -4,7 +4,12 @@
 \alias{plot_condition}
 \title{plots Fish Condition}
 \usage{
-plot_condition(shadedRegion = NULL, report = "MidAtlantic", EPU = "MAB")
+plot_condition(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  EPU = "MAB",
+  plottype = "scaled"
+)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
@@ -12,6 +17,8 @@ plot_condition(shadedRegion = NULL, report = "MidAtlantic", EPU = "MAB")
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
 \item{EPU}{Character string. Which EPU in the report ("GB", "GOM", "MAB")}
+
+\item{plottype}{Character string. How categories should be assigned ("scaled" rescales and assigns by quantiles, while "raw" assigns based on relative condition)}
 }
 \value{
 ggplot object
