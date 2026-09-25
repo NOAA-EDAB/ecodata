@@ -14,7 +14,7 @@
 
 plot_habs <- function(
   shadedRegion = NULL,
-  report = "MidAtlantic",
+  report = "NewEngland",
   varName = "Alexandrium"
 ) {
   # generate plot setup list (same for all plot functions)
