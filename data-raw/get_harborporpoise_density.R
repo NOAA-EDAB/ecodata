@@ -79,6 +79,8 @@ spring_hp <- process_hp(season = "Spring")
 
 hp_density <- rbind(fall_hp, spring_hp)
 
+hp_density <- tibble::as_tibble(hp_density)
+
 
 # metadata ----
 attr(
