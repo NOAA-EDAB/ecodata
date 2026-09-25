@@ -69,4 +69,4 @@ plot_habs <- function(
   return(p)
 }
 attr(plot_habs, "varName") <- c("Alexandrium", "PSP")
-attr(plot_habs, "report") <- c("MidAtlantic", "NewEngland")
+attr(plot_habs, "report") <- c("NewEngland")
