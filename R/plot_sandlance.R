@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_sandlance <- function(shadedRegion = NULL, report = "MidAtlantic") {
+plot_sandlance <- function(shadedRegion = NULL, report = "NewEngland") {
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
 
