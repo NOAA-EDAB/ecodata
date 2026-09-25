@@ -129,6 +129,6 @@ plot_mass_inshore_survey <- function(
   return(p)
 }
 
-attr(plot_mass_inshore_survey, "report") <- c("MidAtlantic", "NewEngland")
+attr(plot_mass_inshore_survey, "report") <- c("NewEngland")
 
 #plot_mass_inshore_survey(report = "NewEngland")
