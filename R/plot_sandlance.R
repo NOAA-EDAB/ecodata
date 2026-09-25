@@ -58,4 +58,4 @@ plot_sandlance <- function(shadedRegion = NULL, report = "MidAtlantic") {
   return(p)
 }
 
-attr(plot_sandlance, "report") <- c("MidAtlantic", "NewEngland")
+attr(plot_sandlance, "report") <- c("NewEngland")
