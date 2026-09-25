@@ -15,6 +15,8 @@ get_thermal_habitat_gridded <- function(save_clean = F) {
 
   #thermal_habitat_gridded$Depth <- factor(thermal_habitat_gridded$Depth, levels = c('0-25m','25-100m','100-3000m'))
 
+  thermal_habitat_gridded <- tibble::as_tibble(thermal_habitat_gridded)
+
   if (save_clean) {
     usethis::use_data(thermal_habitat_gridded, overwrite = T)
   } else {
