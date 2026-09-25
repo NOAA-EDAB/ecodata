@@ -14,7 +14,7 @@
 
 plot_mass_inshore_survey <- function(
   shadedRegion = NULL,
-  report = "MidAtlantic",
+  report = "NewEngland",
   n = 0
 ) {
   # generate plot setup list (same for all plot functions)
