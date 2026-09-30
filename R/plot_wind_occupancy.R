@@ -5,7 +5,7 @@
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #'
-#' @return kable object
+#' @return flextable object
 #'
 #'
 #' @export
@@ -27,8 +27,8 @@ plot_wind_occupancy <- function(shadedRegion = NULL, report = "MidAtlantic") {
   wind1 <- ecodata::wind_occupancy
   wind1$trend <- ifelse(
     wind1$Trend == "pos",
-    "$\\nearrow$",
-    ifelse(wind1$Trend == "neg", "$\\searrow$", " ")
+    "\u2197",
+    ifelse(wind1$Trend == "neg", "\u2198", " ")
   )
   wind2 <- wind1 |> dplyr::select(Area, Season, Species, trend)
   names <- c("Area", "Season", "Species", "trend")
@@ -51,36 +51,40 @@ plot_wind_occupancy <- function(shadedRegion = NULL, report = "MidAtlantic") {
     dplyr::rename_at(dplyr::vars(names), ~enew)
   all <- a |> cbind(b, c, d, e) |> dplyr::select(2:4, 7:8, 11:12, 15:16, 19:20)
 
-  tab <- kableExtra::kable(
-    all,
-    escape = FALSE,
-    col.names = c(
-      "Season",
-      "Species",
-      "Trend",
-      "Species",
-      "Trend",
-      "Species",
-      "Trend",
-      "Species",
-      "Trend",
-      "Species",
-      "Trend"
-    ),
-    caption = "Species with highest probability of occupancy species each season and area, with observed trends",
-    booktabs = T
-  ) |>
-    kableExtra::add_header_above(c(
-      " " = 1,
-      "Existing - North" = 2,
-      "Proposed - North" = 2,
-      "Existing - Mid" = 2,
-      "Proposed - Mid" = 2,
-      "Existing - South" = 2
-    )) |>
-    kableExtra::kable_styling(latex_options = c("hold_position", "scale_down"))
+  p <- flextable::flextable(all) |>
+    flextable::set_caption(
+      caption = flextable::as_paragraph(flextable::as_b(
+        'Species with highest probability of occupancy species each season and area, with observed trends'
+      ))
+    ) |>
+    flextable::add_header_row(
+      values = c(
+        "",
+        "Existing - North",
+        "Proposed - North",
+        "Existing - Mid",
+        "Proposed - Mid",
+        "Existing - South"
+      ),
+      colwidths = c(1, 2, 2, 2, 2, 2)
+    ) |>
+    flextable::fontsize(size = 10, part = "all") |>
+    flextable::set_header_labels(
+      trend = "Trend",
+      trend.1 = "Trend",
+      trend.2 = "Trend",
+      trend.3 = "Trend",
+      trend.4 = "Trend",
+      Species.1 = "Species",
+      Species.2 = "Species",
+      Species.3 = "Species",
+      Species.4 = "Species"
+    ) |>
+    flextable::fontsize(size = 20, j = c(3, 5, 7, 9, 11), part = "body") |>
+    flextable::bold(part = "header") |>
+    flextable::align(i = 1, align = "center", part = "header")
 
-  return(tab)
+  return(p)
 }
 
 attr(plot_wind_occupancy, "report") <- c("MidAtlantic", "NewEngland")
