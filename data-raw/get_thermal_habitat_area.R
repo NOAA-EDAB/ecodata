@@ -11,6 +11,8 @@ get_thermal_habitat_area <- function(save_clean = F) {
     levels = c('0-25m', '25-100m', '100-300m', 'AllDepths')
   )
 
+  thermal_habitat_area <- tibble::as_tibble(thermal_habitat_area)
+
   if (save_clean) {
     usethis::use_data(thermal_habitat_area, overwrite = T)
   } else {

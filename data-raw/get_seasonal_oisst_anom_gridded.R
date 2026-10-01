@@ -103,4 +103,6 @@ heatwave_peak_date <-
     rast_process_epu(gom_peak_hw, epu = "GOM")
   )
 
+heatwave_peak_date <- tibble::as_tibble(heatwave_peak_date)
+
 usethis::use_data(heatwave_peak_date, overwrite = T)

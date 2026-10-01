@@ -62,6 +62,8 @@ heatwave_anom_gridded <-
     rast_process(mab.anom, epu = "MAB")
   )
 
+heatwave_anom_gridded <- tibble::as_tibble(heatwave_anom_gridded)
+
 # metadata ----
 attr(
   heatwave_anom_gridded,
