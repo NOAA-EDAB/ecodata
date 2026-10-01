@@ -4,7 +4,7 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic" only, default)
-#' @param varName Character string. Which variable to plot (NULL, "cold_pool", "persistence","extent"). NULL plots all three.
+#' @param varName Character string. Which variable to plot ("cold_pool", "persistence","extent"). Default = "cold_pool"
 #' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
@@ -20,7 +20,7 @@
 plot_cold_pool <- function(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  varName = NULL,
+  varName = "cold_pool",
   #source = 'GLORYS',
   n = 0
 ) {
@@ -249,16 +249,14 @@ plot_cold_pool <- function(
 
   #cowplot::plot_grid(cpi, pi, ei, labels = c('a', 'b', 'c'), align = "h")
 
-  if (!is.null(varName)) {
-    if (varName == "cold_pool") {
-      p <- cpi
-    } else if (varName == "persistence") {
-      p <- pi
-    } else if (varName == "extent") {
-      p <- ei
-    }
+  if (varName == "cold_pool") {
+    p <- cpi
+  } else if (varName == "persistence") {
+    p <- pi
+  } else if (varName == "extent") {
+    p <- ei
   } else {
-    p <- gridExtra::grid.arrange(cpi, pi, ei, ncol = 3)
+    stop("Argument `varName` must be 'cold_pool', 'persistence' or 'extent'")
   }
 
   return(p)
