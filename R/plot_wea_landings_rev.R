@@ -6,7 +6,7 @@
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param n numeric scalar. The number of species to show (default = n = 0, all species)
 #'
-#' @return kable object
+#' @return flextable object
 #'
 #'
 #' @export
@@ -65,11 +65,12 @@ plot_wea_landings_rev <- function(
     )
   }
 
-  t <- kableExtra::kable(
-    fix,
-    caption = "Species Landings and Revenue from Leased Areas."
-  ) |>
-    kableExtra::kable_classic(full_width = F, html_font = "Cambria")
+  t <- flextable::flextable(fix) |>
+    flextable::set_caption(
+      caption = "Species Landings and Revenue from Leased Areas."
+    ) |>
+    flextable::font(fontname = "Cambria", part = "all") |>
+    flextable::autofit()
 
   return(t)
 }

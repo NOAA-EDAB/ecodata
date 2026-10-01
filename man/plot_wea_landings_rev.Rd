@@ -14,7 +14,7 @@ plot_wea_landings_rev(shadedRegion = NULL, report = "MidAtlantic", n = 0)
 \item{n}{numeric scalar. The number of species to show (default = n = 0, all species)}
 }
 \value{
-kable object
+flextable object
 }
 \description{
 plot wea_landings_rev.
