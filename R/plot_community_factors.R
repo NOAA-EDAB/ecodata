@@ -7,7 +7,7 @@
 #' @param plottype Character string. Which Fishery to plot ("Commercial","Recreational")
 #' @param n Numeric scalar. Number of rows to return (top in plottype category port activity or recreational engagement)
 #'
-#' @return dataframe
+#' @return flextable object
 #'
 #'
 #' @export
@@ -116,7 +116,9 @@ plot_community_factors <- function(
     )) |>
     dplyr::filter(Community %in% top.coms)
 
-  return(data)
+  p <- flextable::flextable(data)
+
+  return(p)
 }
 
 
