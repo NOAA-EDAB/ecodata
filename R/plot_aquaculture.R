@@ -25,7 +25,7 @@ plot_aquaculture <- function(
     filterEPUs <- c("MAB") # no EPU in 2023 dataset
     ylabel <- "Oyster production"
     aqua <- ecodata::aquaculture |>
-      dplyr::filter(Region %in% c("MD", "VA", "NJ")) |>
+      dplyr::filter(State %in% c("MD", "VA", "NJ")) |>
       dplyr::filter(!Value == "NA") |>
       dplyr::mutate(Time = as.integer(Time), Value = as.numeric(Value))
   } else {
@@ -33,12 +33,12 @@ plot_aquaculture <- function(
     ylabel <- "Production/Acre"
     aqua <- ecodata::aquaculture |>
       dplyr::ungroup() |>
-      dplyr::mutate(Region = as.character(Region)) |>
+      dplyr::mutate(State = as.character(State)) |>
       dplyr::filter(
-        !Region == "VA",
-        !Region == "NJ",
-        !Region == "MD",
-        !Region == "NA",
+        !State == "VA",
+        !State == "NJ",
+        !State == "MD",
+        !State == "NA",
         !Value == "NA"
       ) |>
       dplyr::mutate(Time = as.integer(Time), Value = as.numeric(Value)) |>
@@ -63,7 +63,7 @@ plot_aquaculture <- function(
 
   if (report == "MidAtlantic") {
     p <- aqua |>
-      ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color = Region)) +
+      ggplot2::ggplot(ggplot2::aes(x = Time, y = Value, color = State)) +
       ggplot2::geom_line(linewidth = setup$lwd) +
       ggplot2::geom_point(size = setup$lwd)
   }

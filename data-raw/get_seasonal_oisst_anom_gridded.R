@@ -52,7 +52,7 @@ rast_process <- function(r, season) {
     reshape2::melt(id = c("y", "x")) %>%
     dplyr::rename(Latitude = y, Longitude = x) %>%
     dplyr::select(-variable) %>%
-    dplyr::mutate(Season = season) %>%
+    dplyr::mutate(Var = season) %>%
     dplyr::rename(Value = value)
 
   return(r)
