@@ -11,13 +11,38 @@ btannual_input <- "GLORYS_bottom_temp_model_annual_1959_2025.rds"
 
 get_bottom_temp_model_anom <- function(save_clean = F) {
   bottom_temp_model_anom <- readRDS(file.path(raw.dir, bt_input)) |>
-    tidyr::unite(col = "Var", Source, Var, sep = "_")
+    dplyr::mutate(
+      Var = gsub(
+        "Fall_Bottom Temp Anomaly",
+        "Bottom Temp Anomaly_Fall",
+        Var
+      ),
+      Var = gsub(
+        "Spring_Bottom Temp Anomaly",
+        "Bottom Temp Anomaly_Spring",
+        Var
+      ),
+      Var = gsub(
+        "Summer_Bottom Temp Anomaly",
+        "Bottom Temp Anomaly_Summer",
+        Var
+      ),
+      Var = gsub(
+        "Winter_Bottom Temp Anomaly",
+        "Bottom Temp Anomaly_Winter",
+        Var
+      )
+    ) |>
+    tidyr::unite(col = "Var", Var, Source, sep = "_")
 
   bottom_temp_model_anom_annual <- readRDS(file.path(
     raw.dir,
     btannual_input
   )) |>
-    tidyr::unite(col = "Var", Source, Var, sep = "_")
+    dplyr::mutate(
+      Var = gsub("Annual_Bottom Temp", "Bottom Temp_Annual", Var)
+    ) |>
+    tidyr::unite(col = "Var", Var, Source, sep = "_")
 
   bottom_temp_model_anom <- rbind(
     bottom_temp_model_anom,
