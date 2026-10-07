@@ -36,6 +36,7 @@ plot_bottom_temp_model_anom <- function(
     dplyr::filter(EPU %in% filterEPUs) |>
     dplyr::mutate(
       Time = as.numeric(Time),
+      Source = stringr::str_extract(Var, "GLORYS|ROMS"),
       Var = stringr::str_to_title(stringr::str_extract(
         Var,
         "Winter|Spring|Summer|Fall|Annual"

@@ -10,21 +10,22 @@ btannual_input <- "GLORYS_bottom_temp_model_annual_1959_2025.rds"
 #bottom_temp_mom6_csv <- "BT_m6_gl_2024_soe.csv - Laura Gruenburg - NOAA Federal.csv"
 
 get_bottom_temp_model_anom <- function(save_clean = F) {
-  bottom_temp_model_anom <- readRDS(file.path(raw.dir, bt_input)) %>%
-    dplyr::arrange(Source, Time, EPU, Var)
+  bottom_temp_model_anom <- readRDS(file.path(raw.dir, bt_input)) |>
+    tidyr::unite(col = "Var", Source, Var, sep = "_")
 
   bottom_temp_model_anom_annual <- readRDS(file.path(
     raw.dir,
     btannual_input
-  )) %>%
-    dplyr::arrange(Source, Time, EPU, Var)
+  )) |>
+    tidyr::unite(col = "Var", Source, Var, sep = "_")
 
   bottom_temp_model_anom <- rbind(
     bottom_temp_model_anom,
     bottom_temp_model_anom_annual
-  )
-
-  bottom_temp_model_anom <- tibble::as_tibble(bottom_temp_model_anom)
+  ) |>
+    dplyr::arrange(Time, EPU, Var) |>
+    dplyr::select(Time, EPU, Var, Value, Units) |>
+    tibble::as_tibble()
 
   if (save_clean) {
     usethis::use_data(bottom_temp_model_anom, overwrite = T)
