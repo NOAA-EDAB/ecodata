@@ -10,5 +10,10 @@
 #'
 #'To learn more about using \code{ecodata}, start with the vignette: \code{browseVignettes(package="ecodata")} or click the index link below
 #'
-#'
+#' @importFrom tibble tibble
 "_PACKAGE"
+
+
+## usethis namespace: start
+## usethis namespace: end
+NULL

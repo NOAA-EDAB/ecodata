@@ -7,7 +7,7 @@
 plot_cold_pool(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  varName = NULL,
+  varName = "cold_pool",
   n = 0
 )
 }
@@ -16,7 +16,7 @@ plot_cold_pool(
 
 \item{report}{Character string. Which SOE report ("MidAtlantic" only, default)}
 
-\item{varName}{Character string. Which variable to plot (NULL, "cold_pool", "persistence","extent"). NULL plots all three.}
+\item{varName}{Character string. Which variable to plot ("cold_pool", "persistence","extent"). Default = "cold_pool"}
 
 \item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }

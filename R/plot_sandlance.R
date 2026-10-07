@@ -11,7 +11,7 @@
 #' @export
 #'
 
-plot_sandlance <- function(shadedRegion = NULL, report = "MidAtlantic") {
+plot_sandlance <- function(shadedRegion = NULL, report = "NewEngland") {
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
 
@@ -56,27 +56,6 @@ plot_sandlance <- function(shadedRegion = NULL, report = "MidAtlantic") {
   }
 
   return(p)
-
-  # Paste commented original plot code chunk for reference
-  # ecodata::dataset |>
-  #   dplyr::filter(Var %in% c("..."),
-  #                 EPU == "...") |>
-  #   ... more dataset wrangling as necessary |>
-  #   ggplot2::ggplot(aes(x = Time, y = Mean, group = Season))+
-  #   ggplot2::annotate("rect", fill = shade.fill, alpha = shade.alpha,
-  #                     xmin = x.shade.min , xmax = x.shade.max,
-  #                     ymin = -Inf, ymax = Inf) +
-  #   ggplot2::geom_ribbon(aes(ymin = Lower, ymax = Upper, fill = Season), alpha = 0.5)+
-  #   ggplot2::geom_point()+
-  #   ggplot2::geom_line()+
-  #   ggplot2::ggtitle("Title")+
-  #   ggplot2::ylab(expression("Y label"))+
-  #   ggplot2::xlab(element_blank())+
-  #   ecodata::geom_gls()+
-  #   ecodata::theme_ts()+
-  #   ecodata::theme_title()
-  #
-  #
 }
 
-attr(plot_sandlance, "report") <- c("MidAtlantic", "NewEngland")
+attr(plot_sandlance, "report") <- c("NewEngland")
