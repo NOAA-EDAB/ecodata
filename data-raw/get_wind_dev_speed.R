@@ -121,7 +121,9 @@ get_wind_dev_speed <- function(save_clean = F) {
     wind_dev_speed_2022,
     wind_dev_speed_2023,
     wind_dev_speed_2024
-  )
+  ) |>
+    tidyr::unite(col = "Var", Var, Report_year, sep = "_") |>
+    dplyr::select(Time, EPU, Var, Value)
 
   if (save_clean) {
     usethis::use_data(wind_dev_speed, overwrite = T)

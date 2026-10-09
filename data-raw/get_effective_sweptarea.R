@@ -1,18 +1,17 @@
-library(dplyr)
-library(stringr)
-library(tidyr)
+# Ingest and process Effective Swept Area data
 
+# Define input file path
 raw.dir <- here::here("data-raw")
 effective_sweptarea_rdata <- "ATT87886.RData"
 
 get_effective_sweptarea <- function(save_clean = F) {
-  temp_env <- environment()
-  load(file.path(raw.dir, effective_sweptarea_rdata), envir = temp_env)
+  # Load original Effective Swept Area data file
+  load(file.path(raw.dir, effective_sweptarea_rdata))
 
-  assign("effective_sweptarea", temp_env$final_sweptarea, envir = .GlobalEnv)
-
-  # 5. Remove the temporary environment to clean up memory
-  rm(temp_env)
+  effective_sweptarea <- final_sweptarea |>
+    dplyr::rename(Time = YEAR, EPU = MGMT_AREA, Value = value) |>
+    tidyr::unite(col = "Var", Measure, TRIP_TYPE, sep = "_") |>
+    dplyr::select(Time, EPU, Var, Value)
 
   if (save_clean) {
     usethis::use_data(effective_sweptarea, overwrite = T)

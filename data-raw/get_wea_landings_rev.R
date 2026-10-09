@@ -25,7 +25,7 @@ get_wea_landings_rev <- function(save_clean = F) {
       "Maximum Percent Total Annual Regional Species Revenue...28"
     ) %>%
     dplyr::rename(
-      "NEFMC, MAFMC, and ASMFC Managed Species" = "NEFMC and MAFMC Managed Species",
+      "Species" = "NEFMC and MAFMC Managed Species",
       "perc_landings_max" = "Maximum Percent Total Annual Regional Species Landings...27",
       "perc_revenue_max" = "Maximum Percent Total Annual Regional Species Revenue...28"
     ) %>%
@@ -36,7 +36,7 @@ get_wea_landings_rev <- function(save_clean = F) {
       Units = c("Percent")
     ) %>%
     dplyr::mutate(across(where(is.numeric), ~ round(., 2))) %>%
-    dplyr::mutate(Council = "Unknown") %>%
+    dplyr::mutate(Jurisdiction = "Unknown") %>%
     dplyr::distinct()
 
   # Add council data to dataset
@@ -87,10 +87,10 @@ get_wea_landings_rev <- function(save_clean = F) {
   for (i in 1:length(mafmc)) {
     wea_landings_rev <- wea_landings_rev %>%
       dplyr::mutate(
-        Council = replace(
-          Council,
+        Jurisdiction = replace(
+          Jurisdiction,
           stringr::str_detect(
-            wea_landings_rev$`NEFMC, MAFMC, and ASMFC Managed Species`,
+            wea_landings_rev$Species,
             paste0(mafmc[i])
           ),
           "MAFMC"
@@ -101,10 +101,10 @@ get_wea_landings_rev <- function(save_clean = F) {
   for (i in 1:length(nefmc)) {
     wea_landings_rev <- wea_landings_rev %>%
       dplyr::mutate(
-        Council = replace(
-          Council,
+        Jurisdiction = replace(
+          Jurisdiction,
           stringr::str_detect(
-            wea_landings_rev$`NEFMC, MAFMC, and ASMFC Managed Species`,
+            wea_landings_rev$Species,
             paste0(nefmc[i])
           ),
           "NEFMC"
@@ -115,10 +115,10 @@ get_wea_landings_rev <- function(save_clean = F) {
   for (i in 1:length(asmfc)) {
     wea_landings_rev <- wea_landings_rev %>%
       dplyr::mutate(
-        Council = replace(
-          Council,
+        Jurisdiction = replace(
+          Jurisdiction,
           stringr::str_detect(
-            wea_landings_rev$`NEFMC, MAFMC, and ASMFC Managed Species`,
+            wea_landings_rev$Species,
             paste0(asmfc[i])
           ),
           "ASMFC"
@@ -129,16 +129,31 @@ get_wea_landings_rev <- function(save_clean = F) {
   for (i in 1:length(both_councils)) {
     wea_landings_rev <- wea_landings_rev %>%
       dplyr::mutate(
-        Council = replace(
-          Council,
+        Jurisdiction = replace(
+          Jurisdiction,
           stringr::str_detect(
-            wea_landings_rev$`NEFMC, MAFMC, and ASMFC Managed Species`,
+            wea_landings_rev$Species,
             paste0(both_councils[i])
           ),
           "MAFMC/NEFMC"
         )
       )
   }
+
+  wea_landings_rev <- wea_landings_rev |>
+    dplyr::mutate(Time = c("2024")) |>
+    dplyr::rename(
+      "perc landings max" = perc_landings_max,
+      "perc revenue max" = perc_revenue_max
+    ) |>
+    tidyr::pivot_longer(
+      cols = c("perc landings max", "perc revenue max"),
+      names_to = "Var",
+      values_to = "Value",
+      values_transform = list(Value = as.character)
+    ) |>
+    tidyr::unite(col = "Var", Species, Var, sep = "_") |>
+    dplyr::select(Time, Jurisdiction, Var, Value, Units)
 
   if (save_clean) {
     usethis::use_data(wea_landings_rev, overwrite = T)
