@@ -31,6 +31,7 @@ plot_ne_inshore_survey <- function(
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
   fix <- ecodata::ne_inshore_survey |>
+    dplyr::mutate(Var = gsub("_", " ", Var)) |>
     dplyr::filter(
       EPU %in% filterEPUs,
       !grepl("Other", Var),
