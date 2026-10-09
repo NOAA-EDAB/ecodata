@@ -12,12 +12,9 @@
 #' @export
 #'
 
-plot_grayseal <- function(shadedRegion = NULL,
-                              report="MidAtlantic") {
-
+plot_grayseal <- function(shadedRegion = NULL, report = "MidAtlantic") {
   # generate plot setup list (same for all plot functions)
-  setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
-                               report=report)
+  setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
 
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
@@ -28,7 +25,7 @@ plot_grayseal <- function(shadedRegion = NULL,
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
-  ribbon<- ecodata::grayseal |>
+  ribbon <- ecodata::grayseal |>
     tidyr::pivot_wider(names_from = Var, values_from = Value)
 
   # code for generating plot object p
@@ -38,58 +35,81 @@ plot_grayseal <- function(shadedRegion = NULL,
   #
   p <- ecodata::grayseal |>
     dplyr::filter(Var %in% c("pbr", "totalest5y", "totalest1y")) |>
-    ggplot2::ggplot()+
+    ggplot2::ggplot() +
     #Highlight last ten years
-    ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
-                      xmin = setup$x.shade.min , xmax = setup$x.shade.max,
-                      ymin = -Inf, ymax = Inf) +
-    ggplot2::geom_line(ggplot2::aes(x = Time, y = Value, linetype = Var, color = Var))+
-    ggplot2::geom_ribbon(data = ribbon, ggplot2::aes(ymin = total5yLCI, ymax =total5yUCI, x = Time), fill = "blue", alpha = 0.2)+
-    ggplot2::ggtitle("Gray Seal Bycatch")+
-    ggplot2::ylab("Estimated Bycatch (n)")+
-    ggplot2::scale_linetype_manual(name="",
-                                   values=c(1,2,1),
-                                   labels = c("PBR", "Annual Estimates", "5yr rolling mean and CI"))+
-    ggplot2::scale_color_manual(name="",values = c('red', 'black','blue'),
-                                labels = c("PBR", "Annual Estimates", "5yr rolling mean and CI"))+
-    ggplot2::theme(#legend.position = "none",
+    ggplot2::annotate(
+      "rect",
+      fill = setup$shade.fill,
+      alpha = setup$shade.alpha,
+      xmin = setup$x.shade.min,
+      xmax = setup$x.shade.max,
+      ymin = -Inf,
+      ymax = Inf
+    ) +
+    ggplot2::geom_line(ggplot2::aes(
+      x = Time,
+      y = Value,
+      linetype = Var,
+      color = Var
+    )) +
+    ggplot2::geom_ribbon(
+      data = ribbon,
+      ggplot2::aes(ymin = total5yLCI, ymax = total5yUCI, x = Time),
+      fill = "blue",
+      alpha = 0.2
+    ) +
+    ggplot2::ggtitle("U.S. Gray Seal Bycatch") +
+    ggplot2::ylab("Estimated Bycatch (n)") +
+    ggplot2::scale_linetype_manual(
+      name = "",
+      values = c(1, 2, 1),
+      labels = c("U.S. PBR", "Annual U.S. Estimates", "5yr rolling mean and CI")
+    ) +
+    ggplot2::scale_color_manual(
+      name = "",
+      values = c('red', 'black', 'blue'),
+      labels = c("U.S. PBR", "Annual U.S. Estimates", "5yr rolling mean and CI")
+    ) +
+    ggplot2::theme(
+      #legend.position = "none",
       legend.title = ggplot2::element_blank(),
       legend.position = c(0.2, 0.8),
       legend.text = ggplot2::element_text(size = 8),
       legend.background = ggplot2::element_rect(
-        colour = "transparent", fill = "transparent"))+
+        colour = "transparent",
+        fill = "transparent"
+      )
+    ) +
     #ggplot2::guides(color = "none")+
-    ecodata::theme_ts()+
+    ecodata::theme_ts() +
     ecodata::theme_title()
 
-
-    return(p)
+  return(p)
 }
 
-attr(plot_grayseal,"report") <- c("MidAtlantic","NewEngland")
-  # Paste commented original plot code chunk for reference
-  # ribbon<- ecodata::grayseal %>%
-  #   tidyr::pivot_wider(names_from = Var, values_from = Value)
-  #
-  # ecodata::grayseal %>%
-  #   dplyr::filter(Var %in% c("pbr", "totalest5y", "totalest1y")) %>%
-  #   ggplot2::ggplot()+
-  #   ggplot2::geom_line(aes(x = Time, y = Value, linetype = Var, color = Var))+
-  #   ggplot2::geom_ribbon(data = ribbon, aes(ymin = total5yLCI, ymax =total5yUCI, x = Time), fill = "blue", alpha = 0.2)+
-  #   ggplot2::ggtitle("Gray Seal Bycatch")+
-  #   ggplot2::ylab("Estimated Bycatch (n)")+
-  #   ggplot2::scale_color_manual(name = element_blank(), values = c('red', 'black','blue'))+
-  #   ggplot2::scale_linetype_manual(values=c(1,2,1),
-  #                                  labels = c("PBR", "Annual Estimates", "5yr rolling mean and CI"))+
-  #   ggplot2::theme(#legend.position = "none",
-  #     legend.title = element_blank(),
-  #     legend.position = c(0.2, 0.8),
-  #     legend.text = element_text(size = 8),
-  #     legend.background = element_rect(
-  #       colour = "transparent", fill = "transparent"))+
-  #   guides(color = FALSE)+
-  #   ecodata::theme_ts()+
-  #   ecodata::theme_title()
-  #
-  #
-
+attr(plot_grayseal, "report") <- c("MidAtlantic")
+# Paste commented original plot code chunk for reference
+# ribbon<- ecodata::grayseal %>%
+#   tidyr::pivot_wider(names_from = Var, values_from = Value)
+#
+# ecodata::grayseal %>%
+#   dplyr::filter(Var %in% c("pbr", "totalest5y", "totalest1y")) %>%
+#   ggplot2::ggplot()+
+#   ggplot2::geom_line(aes(x = Time, y = Value, linetype = Var, color = Var))+
+#   ggplot2::geom_ribbon(data = ribbon, aes(ymin = total5yLCI, ymax =total5yUCI, x = Time), fill = "blue", alpha = 0.2)+
+#   ggplot2::ggtitle("Gray Seal Bycatch")+
+#   ggplot2::ylab("Estimated Bycatch (n)")+
+#   ggplot2::scale_color_manual(name = element_blank(), values = c('red', 'black','blue'))+
+#   ggplot2::scale_linetype_manual(values=c(1,2,1),
+#                                  labels = c("PBR", "Annual Estimates", "5yr rolling mean and CI"))+
+#   ggplot2::theme(#legend.position = "none",
+#     legend.title = element_blank(),
+#     legend.position = c(0.2, 0.8),
+#     legend.text = element_text(size = 8),
+#     legend.background = element_rect(
+#       colour = "transparent", fill = "transparent"))+
+#   guides(color = FALSE)+
+#   ecodata::theme_ts()+
+#   ecodata::theme_title()
+#
+#

@@ -22,6 +22,8 @@ plot_annual_chl_pp(
 
 \item{plottype}{Character string. Which plot ("mean","total")}
 
+\item{EPU}{Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB}
+
 \item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
 \value{

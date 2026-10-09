@@ -16,4 +16,3 @@
 #' @details
 #' Technical details related to the MA inshore survey are available at \url{https://www.mass.gov/files/documents/2016/08/tm/tr-38.pdf}.
 "mass_inshore_survey"
-

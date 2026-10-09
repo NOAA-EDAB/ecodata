@@ -19,9 +19,9 @@ plot_zooplankton_index(
 
 \item{varName}{Character string. Zooplankton group ("Calfin", "Euph", "Smallcopesoe","Lgcopeall","Zoopvol","Smallcopeall")}
 
-\item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
+\item{plottype}{Character string. Zooplankton biomass index by region, or coastwide center of gravity ("index", "cog")}
 
-\item{plotype}{Character string. Zooplankton biomass index by region, or coastwide center of gravity ("index", "cog")}
+\item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
 \value{
 ggplot object

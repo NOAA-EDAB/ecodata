@@ -1,9 +1,9 @@
-inst/doc
+.DS_Store
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
-.DS_Store
+*.Rproj
 
-# folders
+# files and folders
 docs

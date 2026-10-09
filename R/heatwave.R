@@ -17,4 +17,3 @@
 #' More information including processing and indicator derivation steps are available at
 #' \url{https://noaa-edab.github.io/tech-doc/marine-heatwave.html}.
 "heatwave"
-

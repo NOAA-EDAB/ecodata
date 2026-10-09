@@ -4,17 +4,17 @@
 \alias{plot_wea_landings_rev}
 \title{plot revenue from top 10 landings}
 \usage{
-plot_wea_landings_rev(shadedRegion = NULL, report = "MidAtlantic", n = 10)
+plot_wea_landings_rev(shadedRegion = NULL, report = "MidAtlantic", n = 0)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 
-\item{n}{numeric scalar. The number of species to show (default = n = 10, top 10 species)}
+\item{n}{numeric scalar. The number of species to show (default = n = 0, all species)}
 }
 \value{
-kable object
+flextable object
 }
 \description{
 plot wea_landings_rev.

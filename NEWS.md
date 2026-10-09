@@ -1,48 +1,37 @@
-# ecodata 2026.0.0
+# ecodata v9.1.0
 
-Date: 11/12/2025
+Date: 09/02/2026
 
-- Changed semantic versioning to reflect report year
-- Updated comparisons to use `ecodata25` fork
-- Added workflow that verifies `DESCRIPTION` and `NEWS.md` are updated
+## Features
 
-### Processed data updates for SOE 2026:
+- Added `print` argument to `create_all_plots` function
 
-- `abc_acl`
-- `bennet`
-- `ches_bay_wq`
-- `comdat`
-- `commercial_div`
-- `grayseal`
-- `harborporpoise`
-- `recdat`
+# ecodata v9.0.0
 
-### Removed old metadata and data files used in previous SOE reports:
+Date: 08/20/2026
 
-- `abc_acl`
-- `bennet`
-- `ches_bay_wq`
-- `comdat`
-- `commercial_div`
-- `grayseal`
-- `harborporpoise`
-- `recdat`
+## Breaking Changes
 
-### Refactored processing scripts to handle new workflow outputs:
+- Incremented R dependency to 4.1.0 or higher
 
-- `aggregate_biomass`
-- `bennet`
-- `comdat`
-- `condition`
-- `exp_n`
-- `heatwave`
-- `mass_inshore_survey`
-- `productivity_anomaly`
-- `rec_hms`
-- `species_dist`
-- `stock_status`
-- `survey_shannon`
-- `trans_dates`
+# ecodata v8.0.0
+
+Date: 07/29/2026
+
+## Improvements
+
+- Renamed default branch from `master` to `main`
+- Deployed suite of new and revised issue templates
+- Deployed suite of new pull request templates
+- Added new repository documentation (CONTRIBUTING, CODE_OF_CONDUCT)
+- Revised README
+- Adjusted workflow triggers and bumped versions of external actions
+- Deployed Air reformatter workflows and style guide
+- Reformatted codebase according to new style guide
+
+# ecodata v7.0.0
+
+Release includes data/plots used to build the 2026 NEFMC and MAFMC State of the Ecosystem Reports submitted to both SSCs and councils (MAFMC & NEFMC). Date: 07/15/2026
 
 # ecodata 6.0.1
 

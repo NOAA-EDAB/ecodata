@@ -1,0 +1,43 @@
+---
+title: "Community Port Landings and WEA Revenue"
+author: "Brandon Beltz"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ecodata)
+library(ecodata25)
+library(dplyr)
+library(knitr)
+
+# Replace 'wind_port' with intended dataset
+dataset<-ecodata::wind_port
+dataset24<-ecodata25::wind_port
+
+# Define dataset-specific arguments for plot functions
+report<-list("MidAtlantic","NewEngland")
+#plottype<-list()
+#plottype<-list("Stacked", "Catch")
+#epu<-list()
+```
+
+## `r paste(report[1])`
+```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
+ecodata::plot_wind_port(report = report[1]) + 
+  ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+
+ecodata25::plot_wind_port(report = report[1]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+```
+
+## `r paste(report[2])`
+```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
+ecodata::plot_wind_port(report = report[2]) + 
+  ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+
+ecodata25::plot_wind_port(report = report[2]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+```

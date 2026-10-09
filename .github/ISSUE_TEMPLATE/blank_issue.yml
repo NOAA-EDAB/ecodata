@@ -1,0 +1,17 @@
+name: Blank issue
+description: Create a new issue from scratch
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for contributing an issue to our project!
+  - type: markdown
+    attributes:
+      value: |
+        If you are reporting a bug or requesting a feature, please click "Choose a different template" above.
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+    validations:
+      required: true

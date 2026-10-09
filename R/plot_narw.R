@@ -13,14 +13,14 @@
 #' @export
 #'
 
-plot_narw <- function(shadedRegion = NULL,
-                      report="MidAtlantic",
-                      varName = "adult",
-                      n = 0) {
-
+plot_narw <- function(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  varName = "adult",
+  n = 0
+) {
   # generate plot setup list (same for all plot functions)
-  setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
-                               report=report)
+  setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
 
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
@@ -41,17 +41,19 @@ plot_narw <- function(shadedRegion = NULL,
   # e.g., calculate mean, max or other needed values to join below
 
   if (varName == "calf") {
-    fix<- ecodata::narw |>
+    fix <- ecodata::narw |>
       dplyr::filter(Var == "Calves") |>
       dplyr::mutate(hline = mean(Value, na.rm = TRUE))
   } else {
-    fix<- ecodata::narw |>
-       dplyr::filter(Var != "Calves") |>
-       tidyr::pivot_wider(  id_cols = c(Time,EPU,Units),
-                              names_from = Var,
-                              values_from = Value) |>
-       dplyr::rename(Value = Median) |>
-       dplyr::mutate(hline = mean(Value, na.rm = TRUE))
+    fix <- ecodata::narw |>
+      dplyr::filter(Var != "Calves") |>
+      tidyr::pivot_wider(
+        id_cols = c(Time, EPU, Units),
+        names_from = Var,
+        values_from = Value
+      ) |>
+      dplyr::rename(Value = Median) |>
+      dplyr::mutate(hline = mean(Value, na.rm = TRUE))
   }
 
   # code for generating plot object p
@@ -60,36 +62,46 @@ plot_narw <- function(shadedRegion = NULL,
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
   #
   p <- fix |>
-    ggplot2::ggplot(ggplot2::aes(x = Time, y = Value))+
-    ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
-        xmin = setup$x.shade.min , xmax = setup$x.shade.max,
-        ymin = -Inf, ymax = Inf) +
-    ggplot2::geom_point()+
-    ggplot2::geom_line()+
-    ecodata::geom_lm(n=n) +
+    ggplot2::ggplot(ggplot2::aes(x = Time, y = Value)) +
+    ggplot2::annotate(
+      "rect",
+      fill = setup$shade.fill,
+      alpha = setup$shade.alpha,
+      xmin = setup$x.shade.min,
+      xmax = setup$x.shade.max,
+      ymin = -Inf,
+      ymax = Inf
+    ) +
+    ggplot2::geom_point() +
+    ggplot2::geom_line() +
+    ecodata::geom_lm(n = n) +
     ecodata::geom_gls() +
-    ggplot2::ggtitle(vtitle)+
-    ggplot2::ylab(vylab)+
-    ggplot2::geom_hline(ggplot2::aes(yintercept = hline),
-                        linewidth = setup$hline.size,
-                        alpha = setup$hline.alpha,
-                        linetype = setup$hline.lty) +
-    ggplot2::xlab(ggplot2::element_blank())+
-    ecodata::theme_ts()+
+    ggplot2::ggtitle(vtitle) +
+    ggplot2::ylab(vylab) +
+    ggplot2::geom_hline(
+      ggplot2::aes(yintercept = hline),
+      linewidth = setup$hline.size,
+      alpha = setup$hline.alpha,
+      linetype = setup$hline.lty
+    ) +
+    ggplot2::xlab(ggplot2::element_blank()) +
+    ecodata::theme_ts() +
     ecodata::theme_title()
 
-  if(varName == "adult"){
-    p <- p + ggplot2::geom_ribbon(ggplot2::aes(ymin = Lower95, ymax = Upper95, x = Time), alpha = setup$shade.alpha)
+  if (varName == "adult") {
+    p <- p +
+      ggplot2::geom_ribbon(
+        ggplot2::aes(ymin = Lower95, ymax = Upper95, x = Time),
+        alpha = setup$shade.alpha
+      )
   }
 
-    if (report == "NewEngland") {
-      p <- "This is a shelfwide indicator. Please use report = 'MidAtlantic' to view."
-    }
+  if (report == "NewEngland") {
+    p <- "This is a shelfwide indicator. Please use report = 'MidAtlantic' to view."
+  }
 
-
-    return(p)
-
+  return(p)
 }
 
-attr(plot_narw,"varName") <- c("adult","calf")
-attr(plot_narw,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_narw, "varName") <- c("adult", "calf")
+attr(plot_narw, "report") <- c("MidAtlantic", "NewEngland")

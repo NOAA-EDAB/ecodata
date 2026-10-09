@@ -17,12 +17,16 @@
 #'   geom_gls(aes(x = x, y = y))+
 #'   theme_ts()
 
-theme_ts <- function(...){
+theme_ts <- function(...) {
   ggplot2::theme(
     panel.grid.major = ggplot2::element_blank(),
     panel.grid.minor = ggplot2::element_blank(),
     panel.background = ggplot2::element_blank(),
-    panel.border = ggplot2::element_rect(colour = "black", fill=NA, size=0.75),
+    panel.border = ggplot2::element_rect(
+      colour = "black",
+      fill = NA,
+      size = 0.75
+    ),
     legend.key = ggplot2::element_blank(),
     axis.title = ggplot2::element_text(size = 10)
   )

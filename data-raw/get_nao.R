@@ -8,17 +8,18 @@ library(dplyr)
 raw.dir <- here::here("data-raw") #input raw
 
 
-get_nao <- function(save_clean = F){
-
+get_nao <- function(save_clean = F) {
   nao <- read.csv(file.path(raw.dir, "NAO_index.csv")) %>%
-    dplyr::mutate(Var = "north atlantic oscillation",
-           Units = "unitless",
-           EPU = "All") %>%
-    as.data.frame()%>%
+    dplyr::mutate(
+      Var = "north atlantic oscillation",
+      Units = "unitless",
+      EPU = "All"
+    ) %>%
+    as.data.frame() %>%
     tibble::as_tibble() %>%
     dplyr::select(Time, Var, Value, EPU, Units)
 
-  if (save_clean){
+  if (save_clean) {
     usethis::use_data(nao, overwrite = T)
   } else {
     return(nao)

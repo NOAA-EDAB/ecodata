@@ -14,42 +14,49 @@ Checks](https://github.com/NOAA-EDAB/ecodata/actions/workflows/verify_pr.yml/bad
 
 ## Overview
 
-`ecodata` is an R data package developed by the Ecosystems Dynamics and
-Assessment Branch of the Northeast Fisheries Science Center for use in
-State of the Ecosystem (SOE) reporting. SOE reports are high-level
-overviews of ecosystem indicator status and trends occurring on the
-Northeast Continental Shelf. Unless otherwise stated, data are
-representative of specific Ecological Production Units (EPUs), referring
-to the Mid-Atlantic Bight (MAB), Georges Bank (GB), Gulf of Maine (GOM),
-and Scotian Shelf (SS). SOE reports are developed for US Fishery
-Management Councils (FMCs), and therefore indicator data for Scotian
-Shelf are included when available, but this is not always the case.
+[`ecodata`](https://noaa-edab.github.io/ecodata/) is an R data package
+developed by the Ecosystems Dynamics and Assessment Branch of the
+Northeast Fisheries Science Center for use in State of the Ecosystem
+(SOE) reporting. SOE reports are high-level overviews of ecosystem
+indicator status and trends occurring on the Northeast Continental
+Shelf. Unless otherwise stated, data are representative of specific
+Ecological Production Units (EPUs), referring to the Mid-Atlantic Bight
+(MAB), Georges Bank (GB), Gulf of Maine (GOM), and Scotian Shelf (SS).
+SOE reports are developed for US Fishery Management Councils (FMCs), and
+therefore indicator data for Scotian Shelf are included when available,
+but this is not always the case. `ecodata` has two companion bookdown
+documents: 1) [Tech-Doc](https://noaa-edab.github.io/tech-doc/), which
+details the methods used in the SOE, and 2) the [Northeast US Ecosystem
+Indicator Catalog](https://noaa-edab.github.io/catalog/), which provides
+expanded ecological context for SOE indicators. The `ecodata` package
+can be used to access to all of the indicators, datasets and plots
+featured in the SOE reports, which can be accessed using the table
+below. **Please consult the [technical
+documentation](https://noaa-edab.github.io/tech-doc/) of SOE indicators
+before using data sets.**
 
-### Please consult the [technical documentation](https://noaa-edab.github.io/tech-doc/) of SOE indicators before using data sets.
-
-## State of the Ecosystem cycle
-
-The main branch of this repository contains the data used in the most
-recently published [State of the
-Ecosystem](https://www.fisheries.noaa.gov/new-england-mid-atlantic/ecosystems/state-ecosystem-reports-northeast-us-shelf)
-reports (Mid Atlantic and New England reports). Data for use in the
-following years report can be found on the `dev` branch of the
-repository. Once the reports are written and the cycle ends this data
-will be pulled into the main branch and
-[released](https://github.com/NOAA-EDAB/ecodata/releases)
+| Year | State of the Ecosystem: New England | State of the Ecosystem: Mid-Atlantic |
+|----|----|----|
+| 2020 | [State of the Ecosystem 2020: New England](https://doi.org/10.25923/4tdk-eg57) | [State of the Ecosystem 2020: Mid-Atlantic](https://doi.org/10.25923/1f8j-d564) |
+| 2021 | [State of the Ecosystem 2021: New England](https://doi.org/10.25923/6pww-mw45) | [State of the Ecosystem 2021: Mid-Atlantic](https://doi.org/10.25923/jd1w-dc26) |
+| 2022 | [State of the Ecosystem 2022: New England](https://doi.org/10.25923/ypv2-mw79) | [State of the Ecosystem 2022: Mid-Atlantic](https://doi.org/10.25923/5s5y-0h81) |
+| 2023 | [State of the Ecosystem 2023: New England](https://doi.org/10.25923/9sb9-nj66) | [State of the Ecosystem 2023: Mid-Atlantic](https://doi.org/10.25923/vy6j-w454) |
+| 2024 | [State of the Ecosystem 2024: New England](https://doi.org/10.25923/f8xc-hj17) | [State of the Ecosystem 2024: Mid-Atlantic](https://doi.org/10.25923/vz5a-d111) |
+| 2025 | [State of the Ecosystem 2025: New England](https://doi.org/10.25923/zr75-a788) | [State of the Ecosystem 2025: Mid-Atlantic](https://doi.org/10.25923/23nx-qf59) |
 
 ## Installation
 
-For the last released complete data set
+For the latest data and plots:
 
 ``` r
 pak::pak("noaa-edab/ecodata")
 ```
 
-For data used in the current developing cycle
+For data used in the past, please replace “X.X.X” below with the desired
+[`ecodata` version](https://github.com/NOAA-EDAB/ecodata/releases):
 
 ``` r
-pak::pak("noaa-edab/ecodata@dev")
+pak::pak("noaa-edab/ecodata@X.X.X")
 ```
 
 ## Loading data sets
@@ -59,6 +66,12 @@ pak::pak("noaa-edab/ecodata@dev")
     `ecodata::...`
 
 ![](man/figures/ecodata1.gif)
+
+## Maintainers
+
+| [Brandon Beltz](https://github.com/BBeltz1) | [Andy Beet](https://github.com/andybeet) |
+|----|----|
+| <a href="https://github.com/BBeltz1"><img src="https://avatars.githubusercontent.com/u/136381970?v=4" alt="Brandon Beltz avatar" width="100" align="center"></a> | <a href="https://github.com/andybeet"><img src="https://avatars.githubusercontent.com/u/22455149?v=4" alt="Andy Beet avatar" width="100" align="center"></a> |
 
 ### Legal disclaimer
 

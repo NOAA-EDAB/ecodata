@@ -12,13 +12,13 @@
 #' @export
 #'
 
-plot_long_term_sst <- function(shadedRegion = NULL,
-                              report="MidAtlantic",
-                              n = 0) {
-
+plot_long_term_sst <- function(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  n = 0
+) {
   # generate plot setup list (same for all plot functions)
-  setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
-                               report=report)
+  setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
 
   # which report? this may be bypassed for some figures
   if (report == "MidAtlantic") {
@@ -29,8 +29,8 @@ plot_long_term_sst <- function(shadedRegion = NULL,
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
-   fix<- ecodata::long_term_sst |>
-     dplyr::mutate(hline = mean(Value, na.rm = TRUE))
+  fix <- ecodata::long_term_sst |>
+    dplyr::mutate(hline = mean(Value, na.rm = TRUE))
 
   # code for generating plot object p
   # ensure that setup list objects are called as setup$...
@@ -38,24 +38,27 @@ plot_long_term_sst <- function(shadedRegion = NULL,
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
   #
   p <- fix |>
-    ggplot2::ggplot(ggplot2::aes(x = Time, y = Value))+
-    ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
-        xmin = setup$x.shade.min , xmax = setup$x.shade.max,
-        ymin = -Inf, ymax = Inf) +
-    ggplot2::geom_point()+
-    ggplot2::geom_line()+
-    ggplot2::ggtitle("Long-term SST")+
-    ggplot2::ylab(expression("Temperature (\u00B0C)"))+
-    ggplot2::xlab(ggplot2::element_blank())+
-    ecodata::geom_gls()+
-    ecodata::geom_lm(n=n) +
-    ecodata::theme_ts()+
+    ggplot2::ggplot(ggplot2::aes(x = Time, y = Value)) +
+    ggplot2::annotate(
+      "rect",
+      fill = setup$shade.fill,
+      alpha = setup$shade.alpha,
+      xmin = setup$x.shade.min,
+      xmax = setup$x.shade.max,
+      ymin = -Inf,
+      ymax = Inf
+    ) +
+    ggplot2::geom_point() +
+    ggplot2::geom_line() +
+    ggplot2::ggtitle("Long-term SST") +
+    ggplot2::ylab(expression("Temperature (\u00B0C)")) +
+    ggplot2::xlab(ggplot2::element_blank()) +
+    ecodata::geom_gls() +
+    ecodata::geom_lm(n = n) +
+    ecodata::theme_ts() +
     ecodata::theme_title()
 
-
-
-    return(p)
-
+  return(p)
 }
 
-attr(plot_long_term_sst,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_long_term_sst, "report") <- c("MidAtlantic")

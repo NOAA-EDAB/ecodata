@@ -1,12 +1,11 @@
 ## Spawn timing
-raw.dir<- here::here("data-raw/")
+raw.dir <- here::here("data-raw/")
 sptime <- "spawn_timing - Sarah Gaichas - NOAA Federal.rds"
 
-get_spawn_timing <- function(save_clean = F){
+get_spawn_timing <- function(save_clean = F) {
+  spawn_timing <- readRDS(file.path(raw.dir, sptime))
 
-  spawn_timing<- readRDS(file.path(raw.dir, sptime))
-
-  if (save_clean){
+  if (save_clean) {
     usethis::use_data(spawn_timing, overwrite = T)
   } else {
     return(spawn_timing)

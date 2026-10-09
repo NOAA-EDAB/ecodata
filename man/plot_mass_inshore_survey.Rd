@@ -4,7 +4,7 @@
 \alias{plot_mass_inshore_survey}
 \title{plot massachusetts inshore data}
 \usage{
-plot_mass_inshore_survey(shadedRegion = NULL, report = "MidAtlantic", n = 0)
+plot_mass_inshore_survey(shadedRegion = NULL, report = "NewEngland", n = 0)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}

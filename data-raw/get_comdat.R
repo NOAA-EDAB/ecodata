@@ -7,11 +7,10 @@ raw.dir <- here::here("data-raw")
 
 comdat_input <- "comdat.rds"
 
-get_comdat <- function(save_clean = F){
-
+get_comdat <- function(save_clean = F) {
   comdat <- readRDS(file.path(raw.dir, comdat_input))
 
-  if (save_clean){
+  if (save_clean) {
     usethis::use_data(comdat, overwrite = T)
   } else {
     return(comdat)

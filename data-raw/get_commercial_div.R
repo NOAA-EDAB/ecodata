@@ -15,18 +15,22 @@ library(stringr)
 raw.dir <- here::here("data-raw")
 commercial_div_csv <- "Commercial_Diversity_2026.csv"
 
-get_commercial_div <- function(save_clean = F){
+get_commercial_div <- function(save_clean = F) {
   commercial_div <- read.csv(file.path(raw.dir, commercial_div_csv)) %>%
     dplyr::select(-X, -Source) %>%
     dplyr::rename(EPU = Region) %>%
-    as.data.frame()%>%
+    as.data.frame() %>%
     tibble::as_tibble() %>%
     dplyr::select(Time, Var, Value, EPU, Units) %>%
-    dplyr::filter(Time >2002)
+    dplyr::filter(Time > 2002)
 
-  commercial_div$Var <- stringr::str_replace(commercial_div$Var, "diveristy", "diversity")
+  commercial_div$Var <- stringr::str_replace(
+    commercial_div$Var,
+    "diveristy",
+    "diversity"
+  )
 
-  if(save_clean){
+  if (save_clean) {
     usethis::use_data(commercial_div, overwrite = T)
   } else {
     return(commercial_div)

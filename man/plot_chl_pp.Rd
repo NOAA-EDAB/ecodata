@@ -26,6 +26,8 @@ Weekly and monthly plots are for both variables.}
 
 \item{year}{Numeric value. Optional. Year for weekly plot, defaults to max year in data.}
 
+\item{EPU}{Character string. Which EPU for New England report ("GB", "GOM") Mid will always be MAB}
+
 \item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }
 \value{

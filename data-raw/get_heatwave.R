@@ -2,11 +2,10 @@
 raw.dir <- here::here("data-raw")
 heatwave_input <- "heatwave.rds"
 
-get_heatwave <- function(save_clean = F){
-
+get_heatwave <- function(save_clean = F) {
   heatwave <- readRDS(file.path(raw.dir, heatwave_input))
 
-  if (save_clean){
+  if (save_clean) {
     usethis::use_data(heatwave, overwrite = T)
   } else {
     return(heatwave)
@@ -21,11 +20,10 @@ get_heatwave(save_clean = T)
 raw.dir <- here::here("data-raw")
 heatwave_year_input <- "heatwave_year.rds"
 
-get_heatwave_year <- function(save_clean = F){
-
+get_heatwave_year <- function(save_clean = F) {
   heatwave_year <- readRDS(file.path(raw.dir, heatwave_year_input))
 
-  if (save_clean){
+  if (save_clean) {
     usethis::use_data(heatwave_year, overwrite = T)
   } else {
     return(heatwave_year)

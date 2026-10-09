@@ -14,7 +14,7 @@ plot_spawn_timing(
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
-\item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
+\item{report}{Character string. Which SOE report ("MidAtlantic" only)}
 
 \item{varName}{Character string. Which variable to plot:
 maturity stage ("Resting", "Ripe", "Spent", "Developing"),

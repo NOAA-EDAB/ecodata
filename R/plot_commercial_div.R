@@ -15,17 +15,14 @@
 #' @export
 #'
 
-plot_commercial_div <- function(shadedRegion = NULL,
-                              report="MidAtlantic",
-                              varName="Fleet count",
-                              n = 0) {
-
-
-
-
+plot_commercial_div <- function(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  varName = "Fleet count",
+  n = 0
+) {
   # generate plot setup list (same for all plot functions)
-  setup <- ecodata::plot_setup(shadedRegion = shadedRegion,
-                               report=report)
+  setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
 
   # # which report? this may be bypassed for some figures
   # if (report == "MidAtlantic") {
@@ -41,15 +38,41 @@ plot_commercial_div <- function(shadedRegion = NULL,
     dplyr::group_by(Var) |>
     dplyr::mutate(hline = mean(Value))
 
-  ylabdat <- ifelse(varName=="Fleet count", expression("Count (n)"),
-                    expression("Effective Shannon"))
+  ylabdat <- ifelse(
+    varName == "Fleet count",
+    expression("Count (n)"),
+    expression("Effective Shannon")
+  )
 
-  if(varName=="Fleet count"){
-    ylim_fc <- c(min(comm_div[comm_div$Var == "Fleet count" & comm_div$EPU == setup$region_abbr ,]$Value, na.rm = TRUE) *0.95,
-                 max(comm_div[comm_div$Var == "Fleet count"& comm_div$EPU == setup$region_abbr,]$Value, na.rm = TRUE) *1.05 )
-  }else if(varName=="Fleet diversity in revenue"){
-    ylim_fc <- c(0, max(comm_div[comm_div$Var == "Fleet diversity in revenue" & comm_div$EPU == setup$region_abbr,]$Value) *1.1 )
-  }else{
+  if (varName == "Fleet count") {
+    ylim_fc <- c(
+      min(
+        comm_div[
+          comm_div$Var == "Fleet count" & comm_div$EPU == setup$region_abbr,
+        ]$Value,
+        na.rm = TRUE
+      ) *
+        0.95,
+      max(
+        comm_div[
+          comm_div$Var == "Fleet count" & comm_div$EPU == setup$region_abbr,
+        ]$Value,
+        na.rm = TRUE
+      ) *
+        1.05
+    )
+  } else if (varName == "Fleet diversity in revenue") {
+    ylim_fc <- c(
+      NA,
+      max(
+        comm_div[
+          comm_div$Var == "Fleet diversity in revenue" &
+            comm_div$EPU == setup$region_abbr,
+        ]$Value
+      ) *
+        1.1
+    )
+  } else {
     ylim_fc <- c(NA, NA)
   }
 
@@ -70,36 +93,44 @@ plot_commercial_div <- function(shadedRegion = NULL,
     #            alpha = trend.alpha, size = trend.size) +
     ggplot2::geom_line(linewidth = setup$lwd) +
     ggplot2::geom_point(size = setup$pcex) +
-    ecodata::geom_lm(n=n) +
+    ecodata::geom_lm(n = n) +
     #Highlight last ten years
-    ggplot2::annotate("rect", fill = setup$shade.fill, alpha = setup$shade.alpha,
-                      xmin = setup$x.shade.min , xmax = setup$x.shade.max,
-                      ymin = -Inf, ymax = Inf) +
+    ggplot2::annotate(
+      "rect",
+      fill = setup$shade.fill,
+      alpha = setup$shade.alpha,
+      xmin = setup$x.shade.min,
+      xmax = setup$x.shade.max,
+      ymin = -Inf,
+      ymax = Inf
+    ) +
     # ecodata::geom_lm(aes(x = Time, y = Value,
     #              group = Var))+
     ggplot2::ylim(ylim_fc) +
     ggplot2::scale_x_continuous(expand = c(0.01, 0.01)) +
-    ggplot2::scale_color_manual(values = "black", aesthetics = "color")+
+    ggplot2::scale_color_manual(values = "black", aesthetics = "color") +
     ggplot2::guides(color = "none") +
-    ggplot2::ggtitle(paste(setup$region, varName))+
+    ggplot2::ggtitle(paste(setup$region, varName)) +
     ggplot2::ylab(ylabdat) +
-    ggplot2::xlab(ggplot2::element_blank())+
-    ggplot2::geom_hline(ggplot2::aes(yintercept = hline,
-                            color = Var),
-                        size = setup$hline.size,
-                        alpha = setup$hline.alpha,
-                        linetype = setup$hline.lty) +
-    ecodata::theme_ts()+
+    ggplot2::xlab(ggplot2::element_blank()) +
+    ggplot2::geom_hline(
+      ggplot2::aes(yintercept = hline, color = Var),
+      size = setup$hline.size,
+      alpha = setup$hline.alpha,
+      linetype = setup$hline.lty
+    ) +
+    ecodata::theme_ts() +
     ecodata::theme_title()
-   # optional code for New England specific (2 panel) formatting
-    if (report == "NewEngland") {
-      p <- p +
-        ggplot2::theme(legend.position = "bottom",
-                       legend.title = ggplot2::element_blank())
+  # optional code for New England specific (2 panel) formatting
+  if (report == "NewEngland") {
+    p <- p +
+      ggplot2::theme(
+        legend.position = "bottom",
+        legend.title = ggplot2::element_blank()
+      )
+  }
 
-    }
-
-    return(p)
+  return(p)
 
   # Paste commented original plot code chunk for reference
   # ecodata::dataset |>
@@ -121,9 +152,12 @@ plot_commercial_div <- function(shadedRegion = NULL,
   #   ecodata::theme_title()
   #
   #
-
 }
 
 
-attr(plot_commercial_div,"varName") <- c("Fleet count","Fleet diversity in revenue", "Permit revenue species diversity")
-attr(plot_commercial_div,"report") <- c("MidAtlantic","NewEngland")
+attr(plot_commercial_div, "varName") <- c(
+  "Fleet count",
+  "Fleet diversity in revenue",
+  "Permit revenue species diversity"
+)
+attr(plot_commercial_div, "report") <- c("MidAtlantic", "NewEngland")

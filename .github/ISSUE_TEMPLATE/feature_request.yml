@@ -1,0 +1,33 @@
+name: Feature Request
+description: Request the addition of a new feature
+title: "[Feature]: "
+labels: ["feature"]
+body:
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: Feature description
+      description: Please explain the feature you are requesting
+    validations:
+      required: true
+  - type: textarea
+    id: feature-reason
+    attributes:
+      label: Justification
+      description: How would this feature improve your use of our product?
+    validations:
+      required: true 
+  - type: textarea
+    id: example-features
+    attributes:
+      label: Examples
+      description: If applicable, please provide an example of the feature. If you have seen or used an analagous feature elsewhere, please provide a link to it.
+    validations:
+      required: false
+  - type: upload
+    id: screenshots
+    attributes:
+      label: Upload screenshots
+      description: If applicable, you may upload screenshots to supplement your request.
+    validations:
+      required: false

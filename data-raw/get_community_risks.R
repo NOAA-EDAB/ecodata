@@ -1,0 +1,125 @@
+#### Get Community Risks Indicators (CEVRI)
+
+library(readxl)
+library(dplyr)
+library(tidyr)
+
+# Set directory
+raw.dir <- here::here("data-raw")
+
+# Define input files
+comm_clim_vuln_xlsx <- "CEVRI_NE_Subregions_Clean.xlsx"
+comm_clim_vuln_xlsx_lbs <- "CEVRI_NE_Subregions_LBS_Clean.xlsx"
+# comm_clim_subregion_xlsx <- "SOE SubRegions_CCCRI_Clean.xlsx"
+
+get_community_risks <- function(save_clean = F) {
+  # Create data frame to define State-EPU
+  df <- data.frame(
+    State = c("ME", "MA", "RI", "CT", "DE", "NH", "NY", "NJ", "MD", "VA", "NC"),
+    EPU = c(
+      "NE",
+      "NE",
+      "NE",
+      "NE",
+      "MAB",
+      "NE",
+      "MAB",
+      "MAB",
+      "MAB",
+      "MAB",
+      "MAB"
+    )
+  )
+
+  # Transform vulnerability input file into SOE format ----
+  community_risks <- readxl::read_excel(
+    file.path(raw.dir, comm_clim_vuln_xlsx),
+    sheet = "CEVRI_NE_Subregions"
+  ) |>
+    dplyr::mutate(Units = NA_character_) |>
+    tidyr::pivot_longer(
+      cols = c(
+        # "class_lbs_percent",
+        # "class_val_percent",
+        "oaSum",
+        "tempSum",
+        "stckSum",
+        "sensSum",
+        "vulnSum",
+        # "RegionalQuotientLbs",
+        # "RegionalQuotientVal",
+        # "recsimplb_all",
+        # "recsimplvl_all",
+        "oaSum_region",
+        "tempSum_region",
+        "stckSum_region",
+        "sensSum_region",
+        "vulnSum_region"
+      ),
+      names_to = "Var",
+      values_to = "Value"
+    ) |>
+    dplyr::rename(
+      "State" = "STATE_ABB",
+      "Port" = "PORT_NAME",
+      "Time" = "YEAR"
+    ) |>
+    left_join(df, by = "State") |>
+    tidyr::unite("PortState", c(Port, State), sep = ", ") |>
+    tidyr::unite("Var", c(PortState, Var), sep = "-") |>
+    dplyr::select(Time, Var, Value, EPU, Units)
+
+  # LBS: Transform vulnerability input file into SOE format ----
+  community_risks_lbs <- readxl::read_excel(
+    file.path(raw.dir, comm_clim_vuln_xlsx_lbs),
+    sheet = "CEVRI_NE_Subregions_LBS"
+  ) |>
+    dplyr::mutate(Units = NA_character_) |>
+    tidyr::pivot_longer(
+      cols = c(
+        # "class_lbs_percent",
+        # "class_val_percent",
+        "oaSum_lb",
+        "tempSum_lb",
+        "stckSum_lb",
+        "sensSum_lb",
+        "vulnSum_lb",
+        "oaSum_region_lb",
+        "tempSum_region_lb",
+        "stckSum_region_lb",
+        "sensSum_region_lb",
+        "vulnSum_region_lb"
+      ),
+      names_to = "Var",
+      values_to = "Value"
+    ) |>
+    dplyr::rename(
+      "State" = "STATE_ABB",
+      "Port" = "PORT_NAME",
+      "Time" = "YEAR"
+    ) |>
+    left_join(df, by = "State") |>
+    tidyr::unite("PortState", c(Port, State), sep = ", ") |>
+    tidyr::unite("Var", c(PortState, Var), sep = "-") |>
+    dplyr::select(Time, Var, Value, EPU, Units)
+
+  # combine data ----
+  community_risks <- rbind(
+    community_risks,
+    community_risks_lbs
+  )
+
+  # 2022 data were found to be incomplete
+  # Removing from ecodata until further review
+  community_risks <- dplyr::filter(
+    community_risks,
+    Time != 2025
+  )
+
+  if (save_clean) {
+    usethis::use_data(community_risks, overwrite = T)
+  } else {
+    return(community_risks)
+  }
+}
+get_community_risks(save_clean = T)

@@ -1,0 +1,36 @@
+---
+title: "Thermal Habitat Area"
+author: "Brandon Beltz"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ecodata)
+library(ecodata25)
+library(dplyr)
+library(knitr)
+
+# Replace 'thermal_habitat_gridded' with intended dataset
+dataset<-ecodata::thermal_habitat_gridded
+dataset24<-ecodata25::thermal_habitat_gridded
+
+# Define dataset-specific arguments for plot functions
+report<-list("MidAtlantic","NewEngland")
+#variable<-list("seasonal","annual")
+#plottype<-list("Stacked", "Catch")
+#epu<-list("GB","GOM")
+```
+
+# Dataset Metrics {.tabset}
+
+## `r paste(report[1])`
+```{r, fig.show="hold", out.width="50%", echo=FALSE, message=FALSE, warning=FALSE}
+ecodata::plot_thermal_habitat_gridded(report = report[1]) + 
+  ggplot2::ggtitle("SOE 2026") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+
+ecodata25::plot_thermal_habitat_gridded(report = report[1]) + 
+  ggplot2::ggtitle("SOE 2025") + ggplot2::theme(plot.title = ggplot2::element_text(size = 20))
+```
