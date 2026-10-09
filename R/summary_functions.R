@@ -269,7 +269,7 @@ short_term_trend <- function(data) {
 #' df <- data.frame(Time = 2010:2020, Value = c(12, 11, 14, 15, 13, 12, 14, 15, 11, 10, 22))
 #' summary_stats(df)
 
-summary_stats <- function(data) {
+susummary_stats <- function(data) {
   # rename x and y if present in data
   if ("x" %in% colnames(data)) {
     data <- data |>
@@ -334,6 +334,7 @@ summary_stats <- function(data) {
 #'
 #' @param data A data frame or tibble containing at least the columns \code{Time} (numeric/integer)
 #'   and \code{Value} (numeric values to model).
+#' @param format Character string indicating the desired output format. "long" returns a long-format data frame, while "wide" returns a wide-format data frame with separate columns for each model's statistics.
 #'
 #' @return A data frame/tibble combining the rows of both trend analyses. It contains
 #'   the following structured columns:
@@ -356,16 +357,20 @@ summary_stats <- function(data) {
 #' trend_summaries(df)
 #' }
 
-trend_summaries <- function(data) {
+trend_summaries <- function(data, format = "long") {
   dat1 <- long_term_trend(data)
   dat2 <- short_term_trend(data)
 
-  output <- dplyr::bind_rows(dat1, dat2) |>
-    tidyr::pivot_wider(
-      names_from = model,
-      values_from = c(n_years, aicc, trend, pval, sig)
-    ) |>
-    janitor::clean_names()
+  output <- dplyr::bind_rows(dat1, dat2)
+
+  if (format == "wide") {
+    output <- dplyr::bind_rows(dat1, dat2) |>
+      tidyr::pivot_wider(
+        names_from = model,
+        values_from = c(n_years, aicc, trend, pval, sig)
+      ) |>
+      janitor::clean_names()
+  }
 
   return(output)
 }
