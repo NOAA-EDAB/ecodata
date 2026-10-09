@@ -4,6 +4,10 @@ raw.dir <- here::here("data-raw")
 wind_occupancy_csv <- "wind-occupancy-1.csv"
 get_wind_occupancy <- function(save_clean = F) {
   wind_occupancy <- read.csv(file.path(raw.dir, wind_occupancy_csv)) %>%
+    dplyr::mutate(Time = c("2019")) |>
+    tidyr::pivot_longer(cols = c("Mean", "Trend"), names_to = "Var", values_to = "Value", values_transform = list(Value = as.character)) |>
+    tidyr::unite(col = "Var", Species, Var, Season, Area, sep = "_") |>
+    dplyr::select(Time, Var, Value) |>
     tibble::as_tibble()
 
   # metadata ----
