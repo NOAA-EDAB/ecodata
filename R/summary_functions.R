@@ -56,7 +56,7 @@ long_term_trend <- function(data) {
     return(output)
   }
 
-  set.seed(123)
+  set.seed(1234)
 
   constant_norm <- nlme::gls(Value ~ 1, data = data, na.action = na.omit)
 
@@ -212,9 +212,6 @@ short_term_trend <- function(data) {
     dplyr::filter(x %in% (max_year_with_data - (n - 1)):max_year_with_data) |>
     dplyr::mutate(x = x - min(x) + 1)
 
-  # xmax <- max(data$x)
-  # xmin <- xmax - n + 1
-
   # Linear model with AR1 error
   linear_ar1 <-
     try(arfit::fit_real_data(dataUse, nBootSims = 499))
@@ -313,13 +310,6 @@ summary_stats <- function(data) {
   this_recent_year <- max_year |>
     dplyr::pull(Time)
 
-  # if (length(this_recent_value) > 1) {
-  #   message(
-  #     data |>
-  #       dplyr::filter(Time == max(Time))
-  #   )
-  # }
-
   this_status <- dplyr::case_when(
     this_recent_value < output$lower ~ "below average",
     this_recent_value > output$upper ~ "above average",
@@ -379,10 +369,3 @@ trend_summaries <- function(data) {
 
   return(output)
 }
-
-# data <- ecodata::comdat |>
-#   dplyr::filter(Var == "Apex Predator Landings", EPU == "GB")
-#
-# long_term_trend(data)
-# short_term_trend(data)
-# summary_stats(data)
