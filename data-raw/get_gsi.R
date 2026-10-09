@@ -22,7 +22,8 @@ get_gsi <- function(save_clean = F) {
       names_to = "Var",
       values_to = "Value"
     ) %>%
-    dplyr::mutate(EPU = c("All"))
+    dplyr::mutate(EPU = c("All")) |>
+    dplyr::select(Time, EPU, Var, Value)
 
   if (save_clean) {
     usethis::use_data(gsi, overwrite = T)
