@@ -344,6 +344,7 @@ susummary_stats <- function(data) {
 #'   \file{trend} Character string or numeric coefficient indicating the direction/magnitude of the trend.
 #'   \file{pval} P-value associated with the respective trend model's significance test.
 #'   \file{sig} Logical indicating if the trend is statistically significant (p < 0.05).
+#'   \file{n_years} The number of years assessed for the short-term trend.
 #'
 #' @importFrom dplyr bind_rows
 #' @export
