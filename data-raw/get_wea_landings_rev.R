@@ -146,12 +146,12 @@ get_wea_landings_rev <- function(save_clean = F) {
       "perc landings max" = perc_landings_max,
       "perc revenue max" = perc_revenue_max
     ) |>
-  tidyr::pivot_longer(
-    cols = c("perc landings max", "perc revenue max"),
-    names_to = "Var",
-    values_to = "Value",
-    values_transform = list(Value = as.character)
-  ) |>
+    tidyr::pivot_longer(
+      cols = c("perc landings max", "perc revenue max"),
+      names_to = "Var",
+      values_to = "Value",
+      values_transform = list(Value = as.character)
+    ) |>
     tidyr::unite(col = "Var", Species, Var, sep = "_") |>
     dplyr::select(Time, Jurisdiction, Var, Value, Units)
 
