@@ -24,7 +24,14 @@ plot_wind_occupancy <- function(shadedRegion = NULL, report = "MidAtlantic") {
 
   # optional code to wrangle ecodata object prior to plotting
   # e.g., calculate mean, max or other needed values to join below
-  wind1 <- ecodata::wind_occupancy
+  wind1 <- ecodata::wind_occupancy |>
+    tidyr::separate_wider_delim(
+      cols = c("Var"),
+      names = c("Species", "Var", "Season", "Area"),
+      delim = "_"
+    ) |>
+    tidyr::pivot_wider(names_from = Var, values_from = Value)
+
   wind1$trend <- ifelse(
     wind1$Trend == "pos",
     "\u2197",

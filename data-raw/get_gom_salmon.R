@@ -22,16 +22,18 @@ get_gom_salmon <- function(save_clean = F) {
       names_to = "Var",
       values_to = "Value"
     ) %>%
-    dplyr::mutate(Units = c("number of salmon"), Value = as.numeric(Value)) %>%
+    dplyr::mutate(
+      Units = c("number of salmon"),
+      Value = as.numeric(Value),
+      EPU = c("GOM")
+    ) %>%
     dplyr::arrange(Var) %>%
     dplyr::mutate(
       Units = c(rep("percent return rate", 54), rep("number of salmon", 54))
     ) %>%
     dplyr::arrange(Year) %>%
     dplyr::rename(Time = Year) %>%
-    dplyr::select(
-      !"Figure ##. Return Rate proportions and abundance of Atlantic salmon."
-    )
+    dplyr::select(Time, EPU, Var, Value, Units)
 
   if (save_clean) {
     usethis::use_data(gom_salmon, overwrite = T)

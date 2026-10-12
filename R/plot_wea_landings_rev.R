@@ -36,21 +36,29 @@ plot_wea_landings_rev <- function(
   # e.g., calculate mean, max or other needed values to join below
 
   fix <- ecodata::wea_landings_rev |>
-    dplyr::filter(Council %in% c(filterEPUs, "MAFMC/NEFMC")) |>
+    dplyr::mutate(
+      "NEFMC, MAFMC, and ASMFC Managed Species" = stringr::str_remove(
+        Var,
+        "_perc.*"
+      )
+    ) |>
+    dplyr::mutate(Var = stringr::str_remove(Var, ".*_")) |>
+    tidyr::pivot_wider(names_from = Var, values_from = Value) |>
+    dplyr::filter(Jurisdiction %in% c(filterEPUs, "MAFMC/NEFMC")) |>
     dplyr::select(
       "NEFMC, MAFMC, and ASMFC Managed Species",
-      "perc_landings_max",
-      "perc_revenue_max"
+      "perc landings max",
+      "perc revenue max"
     ) |>
-    dplyr::arrange(desc(perc_revenue_max)) |>
+    dplyr::arrange(desc("perc revenue max")) |>
     dplyr::slice_head(n = n) |>
     dplyr::mutate(
-      perc_landings_max = paste0(perc_landings_max, " %"),
-      perc_revenue_max = paste0(perc_revenue_max, " %")
+      "perc landings max" = paste0(`perc landings max`, " %"),
+      "perc revenue max" = paste0(`perc revenue max`, " %")
     ) |>
     dplyr::rename(
-      "Maximum Percent Total Annual Regional Species Landings" = "perc_landings_max",
-      "Maximum Percent Total Annual Regional Species Revenue" = "perc_revenue_max"
+      "Maximum Percent Total Annual Regional Species Landings" = "perc landings max",
+      "Maximum Percent Total Annual Regional Species Revenue" = "perc revenue max"
     )
 
   if (report == "MidAtlantic") {

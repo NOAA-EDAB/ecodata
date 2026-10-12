@@ -7,6 +7,6 @@ test_that("'productivity_anomaly' is a tibble", {
 test_that("'productivity_anomaly' has acceptable column names", {
   expect_in(
     colnames(ecodata::productivity_anomaly),
-    c("Time", "Var", "Value", "EPU", "Units")
+    c("Time", "Var", "Value", "EPU", "Units", "Jurisdiction")
   )
 })

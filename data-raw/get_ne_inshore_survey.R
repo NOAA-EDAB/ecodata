@@ -37,7 +37,7 @@ get_ne_inshore_survey <- function(save_clean = F) {
   load(file.path(raw.dir, ne_inshore_survey_rda))
   ne_inshore_survey <- Trawl.Strat4Indices %>%
     dplyr::rename(Var = SOE.24, Value = StratMean_Weight, Time = Year) %>%
-    dplyr::mutate(EPU = "NE", Units = "(KG/tow)") %>%
+    dplyr::mutate(EPU = "NE", Units = "(KG/tow)", Time = as.integer(Time)) %>%
     dplyr::select(
       -CV_Weight,
       -SE_Weight,
@@ -48,8 +48,10 @@ get_ne_inshore_survey <- function(save_clean = F) {
     dplyr::mutate(
       Season = dplyr::recode(Season, "FL" = "Fall", "SP" = "Spring")
     ) %>%
-    tidyr::unite(., Var, c("Var", "Season"), sep = " ") %>%
-    dplyr::select(Time, Var, Value, EPU, Units)
+    dplyr::group_by(Season) |>
+    tidyr::unite(col = "Var", Var, Season, sep = "_") %>%
+    dplyr::select(Time, EPU, Var, Value, Units)
+
   if (save_clean) {
     usethis::use_data(ne_inshore_survey, overwrite = T)
   } else {

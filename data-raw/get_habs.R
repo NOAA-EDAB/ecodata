@@ -13,7 +13,7 @@ get_habs <- function(save_clean = F) {
   dat <- readxl::read_excel(file.path(raw.dir, habs1_csv))
 
   habs1 <- dat %>%
-    pivot_longer(
+    tidyr::pivot_longer(
       cols = c(
         "West_Gulf_of_Maine",
         "East_Gulf_of_Maine",
@@ -23,7 +23,7 @@ get_habs <- function(save_clean = F) {
       names_to = "Var",
       values_to = "Value"
     ) %>%
-    mutate(EPU = c("GOM"), Source = c("Alexandrium")) %>%
+    dplyr::mutate(EPU = c("GOM"), Source = c("Alexandrium")) %>%
     dplyr::rename(Time = Year)
 
   # PSP
@@ -62,7 +62,10 @@ get_habs <- function(save_clean = F) {
     rbind(nh_psp2, ma_psp2) %>%
     dplyr::mutate(EPU = c("NE"), Source = c("PSP"))
 
-  habs <- habs1 %>% rbind(psp)
+  habs <- habs1 %>%
+    rbind(psp) |>
+    tidyr::unite(col = "Var", Var, Source, sep = "_") |>
+    dplyr::select(Time, EPU, Var, Value)
 
   # metadata ----
   attr(habs, "tech-doc_url") <- "https://noaa-edab.github.io/tech-doc.html"
