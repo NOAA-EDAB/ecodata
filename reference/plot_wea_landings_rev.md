@@ -5,7 +5,7 @@ plot wea_landings_rev.
 ## Usage
 
 ``` r
-plot_wea_landings_rev(shadedRegion = NULL, report = "MidAtlantic", n = NULL)
+plot_wea_landings_rev(shadedRegion = NULL, report = "MidAtlantic", n = 0)
 ```
 
 ## Arguments
@@ -21,9 +21,9 @@ plot_wea_landings_rev(shadedRegion = NULL, report = "MidAtlantic", n = NULL)
 
 - n:
 
-  numeric scalar. The number of species to show (default = n = NULL, all
+  numeric scalar. The number of species to show (default = n = 0, all
   species)
 
 ## Value
 
-kable object
+flextable object

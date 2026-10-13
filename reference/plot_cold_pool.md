@@ -9,7 +9,7 @@ time series.
 plot_cold_pool(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  varName = NULL,
+  varName = "cold_pool",
   n = 0
 )
 ```
@@ -27,8 +27,8 @@ plot_cold_pool(
 
 - varName:
 
-  Character string. Which variable to plot (NULL, "cold_pool",
-  "persistence","extent"). NULL plots all three.
+  Character string. Which variable to plot ("cold_pool",
+  "persistence","extent"). Default = "cold_pool"
 
 - n:
 

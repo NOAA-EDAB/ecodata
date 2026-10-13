@@ -5,7 +5,7 @@ Plots mass_inshore_survey
 ## Usage
 
 ``` r
-plot_mass_inshore_survey(shadedRegion = NULL, report = "MidAtlantic", n = 0)
+plot_mass_inshore_survey(shadedRegion = NULL, report = "NewEngland", n = 0)
 ```
 
 ## Arguments

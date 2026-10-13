@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ecodata</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">9.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">10.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,6 +40,61 @@
       <small>Source: <a href="https://github.com/NOAA-EDAB/ecodata/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="10.0.0" id="ecodata-v1000">ecodata v10.0.0<a class="anchor" aria-label="anchor" href="#ecodata-v1000"></a></h2>
+<p>Date: 10/13/2026</p>
+<div class="section level3">
+<h3 id="breaking-changes-10-0-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-10-0-0"></a></h3>
+<ul><li>Standardized the column names of the following datasets:
+<ul><li><code>aquaculture</code></li>
+<li><code>bottom_temp_model_anom</code></li>
+<li><code>cold_pool</code></li>
+<li><code>crew_survey</code></li>
+<li><code>dissolved_oxygen</code></li>
+<li><code>effective_sweptarea</code></li>
+<li><code>gom_salmon</code></li>
+<li><code>gsi</code></li>
+<li><code>habs</code></li>
+<li><code>ne_inshore_survey</code></li>
+<li><code>preyfield_energy</code></li>
+<li><code>productivity_anomaly</code></li>
+<li><code>seasonal_bt_anomaly_gridded</code></li>
+<li><code>seasonal_oisst_anom_gridded</code></li>
+<li><code>shoreside_support</code></li>
+<li><code>storminess</code></li>
+<li><code>wea_landings_rev</code></li>
+<li><code>wind_dev_speed</code></li>
+<li><code>wind_occupancy</code></li>
+</ul></li>
+</ul></div>
+<div class="section level3">
+<h3 id="features-10-0-0">Features<a class="anchor" aria-label="anchor" href="#features-10-0-0"></a></h3>
+<ul><li>Changed default <code>n</code> argument of <code>plot_wea_landings_rev</code> to <code>n = 0</code>
+</li>
+<li>Changed default <code>report</code> argument to <code>report = "NewEngland"</code> for:
+<ul><li><code>plot_habs</code></li>
+<li><code>plot_mass_inshore_survey</code></li>
+<li><code>plot_ne_inshore_survey</code></li>
+<li><code>plot_sandlance</code></li>
+</ul></li>
+<li>Added <code>plottype</code> argument to <code>plot_condition</code> with options <code>scaled</code> and <code>raw</code>
+</li>
+<li>Converted the following plot functions to <code>flextable</code>:
+<ul><li><code>plot_community_factors</code></li>
+<li><code>plot_wea_landings_rev</code></li>
+<li><code>plot_wind_occupancy</code></li>
+</ul></li>
+<li>Removed faceted behavior from <code>plot_cold_pool</code>
+</li>
+<li>Added a seed to <code>geom_lm</code>
+</li>
+</ul></div>
+<div class="section level3">
+<h3 id="fixes-10-0-0">Fixes<a class="anchor" aria-label="anchor" href="#fixes-10-0-0"></a></h3>
+<ul><li>Added explicit function calls to <code>plot_forage_anomaly</code>
+</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="9.1.0" id="ecodata-v910">ecodata v9.1.0<a class="anchor" aria-label="anchor" href="#ecodata-v910"></a></h2>
 <p>Date: 09/02/2026</p>

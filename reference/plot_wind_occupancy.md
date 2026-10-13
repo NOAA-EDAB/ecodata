@@ -21,4 +21,4 @@ plot_wind_occupancy(shadedRegion = NULL, report = "MidAtlantic")
 
 ## Value
 
-kable object
+flextable object

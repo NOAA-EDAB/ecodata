@@ -35,4 +35,4 @@ plot_community_factors(
 
 ## Value
 
-dataframe
+flextable object

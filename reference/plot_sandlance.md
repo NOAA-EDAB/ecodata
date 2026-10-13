@@ -5,7 +5,7 @@ Plots sandlance data.
 ## Usage
 
 ``` r
-plot_sandlance(shadedRegion = NULL, report = "MidAtlantic")
+plot_sandlance(shadedRegion = NULL, report = "NewEngland")
 ```
 
 ## Arguments

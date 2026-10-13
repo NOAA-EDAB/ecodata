@@ -24,7 +24,7 @@ ggplot(data = ecodata::cold_pool) +
 ``` r
 
 ggplot(data = ecodata::aquaculture) +
-  geom_line(aes(x=Time,y=Value,color=as.factor(Region))) +
+  geom_line(aes(x=Time,y=Value,color=as.factor(State))) +
   facet_wrap(vars(Var),scales = "free_y")
 ```
 

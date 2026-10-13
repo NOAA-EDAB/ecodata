@@ -22,11 +22,11 @@ plot_zoo_strat_abun(
 
 - report:
 
-  Character string. Which SOE report ("MidAtlantic", "NewEngland")
+  Character string. Which SOE report ("MidAtlantic" only, default)
 
 - EPU:
 
-  Character string. Which EPU in the report ("GB", "GOM", "MAB")
+  Character string. Which EPU in the report ("MAB" only, default)
 
 - n:
 

@@ -1,5 +1,53 @@
 # Changelog
 
+## ecodata v10.0.0
+
+Date: 10/13/2026
+
+### Breaking Changes
+
+- Standardized the column names of the following datasets:
+  - `aquaculture`
+  - `bottom_temp_model_anom`
+  - `cold_pool`
+  - `crew_survey`
+  - `dissolved_oxygen`
+  - `effective_sweptarea`
+  - `gom_salmon`
+  - `gsi`
+  - `habs`
+  - `ne_inshore_survey`
+  - `preyfield_energy`
+  - `productivity_anomaly`
+  - `seasonal_bt_anomaly_gridded`
+  - `seasonal_oisst_anom_gridded`
+  - `shoreside_support`
+  - `storminess`
+  - `wea_landings_rev`
+  - `wind_dev_speed`
+  - `wind_occupancy`
+
+### Features
+
+- Changed default `n` argument of `plot_wea_landings_rev` to `n = 0`
+- Changed default `report` argument to `report = "NewEngland"` for:
+  - `plot_habs`
+  - `plot_mass_inshore_survey`
+  - `plot_ne_inshore_survey`
+  - `plot_sandlance`
+- Added `plottype` argument to `plot_condition` with options `scaled`
+  and `raw`
+- Converted the following plot functions to `flextable`:
+  - `plot_community_factors`
+  - `plot_wea_landings_rev`
+  - `plot_wind_occupancy`
+- Removed faceted behavior from `plot_cold_pool`
+- Added a seed to `geom_lm`
+
+### Fixes
+
+- Added explicit function calls to `plot_forage_anomaly`
+
 ## ecodata v9.1.0
 
 Date: 09/02/2026

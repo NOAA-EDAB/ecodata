@@ -5,7 +5,12 @@ plots the condition data set
 ## Usage
 
 ``` r
-plot_condition(shadedRegion = NULL, report = "MidAtlantic", EPU = "MAB")
+plot_condition(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  EPU = "MAB",
+  plottype = "scaled"
+)
 ```
 
 ## Arguments
@@ -22,6 +27,12 @@ plot_condition(shadedRegion = NULL, report = "MidAtlantic", EPU = "MAB")
 - EPU:
 
   Character string. Which EPU in the report ("GB", "GOM", "MAB")
+
+- plottype:
+
+  Character string. How categories should be assigned ("scaled" rescales
+  and assigns by quantiles, while "raw" assigns based on relative
+  condition)
 
 ## Value
 

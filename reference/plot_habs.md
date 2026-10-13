@@ -5,7 +5,7 @@ Plots Alexandrium counts or PSP
 ## Usage
 
 ``` r
-plot_habs(shadedRegion = NULL, report = "MidAtlantic", varName = "Alexandrium")
+plot_habs(shadedRegion = NULL, report = "NewEngland", varName = "Alexandrium")
 ```
 
 ## Arguments
