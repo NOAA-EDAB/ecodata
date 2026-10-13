@@ -14,9 +14,9 @@ plot_zoo_strat_abun(
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
 
-\item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
+\item{report}{Character string. Which SOE report ("MidAtlantic" only, default)}
 
-\item{EPU}{Character string. Which EPU in the report ("GB", "GOM", "MAB")}
+\item{EPU}{Character string. Which EPU in the report ("MAB" only, default)}
 
 \item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
 }

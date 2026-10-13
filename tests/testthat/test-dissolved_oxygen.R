@@ -7,6 +7,6 @@ test_that("'dissolved_oxygen' is a tibble", {
 test_that("'dissolved_oxygen' has acceptable column names", {
   expect_in(
     colnames(ecodata::dissolved_oxygen),
-    c("Time", "Var", "Value", "EPU", "Units", "Latitude", "Longitude")
+    c("Time", "EPU", "Latitude", "Longitude", "Var", "Value", "Units")
   )
 })

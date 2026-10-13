@@ -4,9 +4,9 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
-#' @param n numeric scalar. The number of species to show (default = n = NULL, all species)
+#' @param n numeric scalar. The number of species to show (default = n = 0, all species)
 #'
-#' @return kable object
+#' @return flextable object
 #'
 #'
 #' @export
@@ -15,7 +15,7 @@
 plot_wea_landings_rev <- function(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  n = NULL
+  n = 0
 ) {
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
@@ -28,7 +28,7 @@ plot_wea_landings_rev <- function(
   }
 
   # set n to dataset length if n is not specified in function call
-  if (is.null(n)) {
+  if (n == 0) {
     n <- as.numeric(nrow(ecodata::wea_landings_rev))
   }
 
@@ -36,21 +36,29 @@ plot_wea_landings_rev <- function(
   # e.g., calculate mean, max or other needed values to join below
 
   fix <- ecodata::wea_landings_rev |>
-    dplyr::filter(Council %in% c(filterEPUs, "MAFMC/NEFMC")) |>
+    dplyr::mutate(
+      "NEFMC, MAFMC, and ASMFC Managed Species" = stringr::str_remove(
+        Var,
+        "_perc.*"
+      )
+    ) |>
+    dplyr::mutate(Var = stringr::str_remove(Var, ".*_")) |>
+    tidyr::pivot_wider(names_from = Var, values_from = Value) |>
+    dplyr::filter(Jurisdiction %in% c(filterEPUs, "MAFMC/NEFMC")) |>
     dplyr::select(
       "NEFMC, MAFMC, and ASMFC Managed Species",
-      "perc_landings_max",
-      "perc_revenue_max"
+      "perc landings max",
+      "perc revenue max"
     ) |>
-    dplyr::arrange(desc(perc_revenue_max)) |>
+    dplyr::arrange(desc("perc revenue max")) |>
     dplyr::slice_head(n = n) |>
     dplyr::mutate(
-      perc_landings_max = paste0(perc_landings_max, " %"),
-      perc_revenue_max = paste0(perc_revenue_max, " %")
+      "perc landings max" = paste0(`perc landings max`, " %"),
+      "perc revenue max" = paste0(`perc revenue max`, " %")
     ) |>
     dplyr::rename(
-      "Maximum Percent Total Annual Regional Species Landings" = "perc_landings_max",
-      "Maximum Percent Total Annual Regional Species Revenue" = "perc_revenue_max"
+      "Maximum Percent Total Annual Regional Species Landings" = "perc landings max",
+      "Maximum Percent Total Annual Regional Species Revenue" = "perc revenue max"
     )
 
   if (report == "MidAtlantic") {
@@ -65,11 +73,14 @@ plot_wea_landings_rev <- function(
     )
   }
 
-  t <- kableExtra::kable(
-    fix,
-    caption = "Species Landings and Revenue from Leased Areas."
-  ) |>
-    kableExtra::kable_classic(full_width = F, html_font = "Cambria")
+  t <- flextable::flextable(fix) |>
+    flextable::set_caption(
+      caption = "Species Landings and Revenue from Leased Areas."
+    ) |>
+    flextable::font(fontname = "Cambria", part = "all") |>
+    flextable::autofit()
 
   return(t)
 }
+
+attr(plot_wea_landings_rev, "report") <- c("MidAtlantic", "NewEngland")

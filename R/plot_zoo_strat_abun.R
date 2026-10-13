@@ -3,8 +3,8 @@
 #' Plots zoo_abund_strat data set
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
-#' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
-#' @param EPU Character string. Which EPU in the report ("GB", "GOM", "MAB")
+#' @param report Character string. Which SOE report ("MidAtlantic" only, default)
+#' @param EPU Character string. Which EPU in the report ("MAB" only, default)
 #' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
@@ -87,3 +87,6 @@ plot_zoo_strat_abun <- function(
 
   return(p)
 }
+
+attr(plot_zoo_strat_abun, "report") <- c("MidAtlantic")
+attr(plot_zoo_strat_abun, "EPU") <- c("MAB")

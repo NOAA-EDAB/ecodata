@@ -18,10 +18,10 @@ get_aquaculture <- function(save_clean = F) {
       names_to = "Var",
       values_to = "Value"
     ) %>%
-    dplyr::rename(Time = Year, Region = State) %>%
+    dplyr::rename(Time = Year) %>%
     dplyr::mutate(
-      Region = dplyr::recode(
-        Region,
+      State = dplyr::recode(
+        State,
         "Maine" = "ME",
         "NEwHampshire" = "NH",
         "Mass" = "MA",
@@ -35,11 +35,11 @@ get_aquaculture <- function(save_clean = F) {
   )
 
   mab_aquaculture <- dat2 %>%
-    dplyr::rename(Time = Year, Region = State, Value = Pieces) %>%
+    dplyr::rename(Time = Year, Value = Pieces) %>%
     dplyr::mutate(Var = c("Pieces"))
 
   aquaculture <- rbind(ne_aquaculture, mab_aquaculture) %>%
-    dplyr::select(Time, Var, Value, Region)
+    dplyr::select(Time, Var, Value, State)
 
   # metadata ----
   attr(

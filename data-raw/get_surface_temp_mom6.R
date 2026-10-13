@@ -43,6 +43,8 @@ get_surface_temp_mom6 <- function(save_clean = F) {
     surface_temp_mom6_hindcast
   )
 
+  surface_temp_mom6 <- tibble::as_tibble(surface_temp_mom6)
+
   if (save_clean) {
     usethis::use_data(surface_temp_mom6, overwrite = T)
   } else {

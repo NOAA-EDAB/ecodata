@@ -21,7 +21,7 @@ get_storminess <- function(save_clean = F) {
       values_to = "Value"
     ) %>%
     dplyr::mutate(
-      units = "Number of Events",
+      Units = "Number of Events",
       EPU = dplyr::recode(
         Var,
         "Southern Mid-Atlantic Bight" = "MAB",
@@ -51,7 +51,7 @@ get_storminess <- function(save_clean = F) {
       values_to = "Value"
     ) %>%
     dplyr::mutate(
-      units = "Number of Events",
+      Units = "Number of Events",
       EPU = dplyr::recode(
         Var,
         "Southern Mid-Atlantic Bight" = "MAB",
@@ -64,6 +64,9 @@ get_storminess <- function(save_clean = F) {
     )
 
   storminess <- rbind(storminess1, storminess2)
+
+  storminess <- storminess |>
+    dplyr::rename(Time = Year)
 
   if (save_clean) {
     usethis::use_data(storminess, overwrite = T)

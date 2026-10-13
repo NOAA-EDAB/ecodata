@@ -43,7 +43,7 @@ plot_seasonal_oisst_anom_gridded <- function(
 
   sst <- ecodata::seasonal_oisst_anom_gridded |>
     dplyr::mutate(
-      Season = factor(Season, levels = c("Winter", "Spring", "Summer", "Fall"))
+      Var = factor(Var, levels = c("Winter", "Spring", "Summer", "Fall"))
     )
 
   if (scale == "fahrenheit") {
@@ -94,7 +94,7 @@ plot_seasonal_oisst_anom_gridded <- function(
       midpoint = midpoint
     ) +
     ggplot2::coord_sf(xlim = xlims, ylim = ylims) +
-    ggplot2::facet_wrap(Season ~ .) +
+    ggplot2::facet_wrap(Var ~ .) +
     ecodata::theme_map() +
     ggplot2::ggtitle("SST anomaly") +
     ggplot2::xlab("Longitude") +

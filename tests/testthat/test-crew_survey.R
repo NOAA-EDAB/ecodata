@@ -7,6 +7,6 @@ test_that("'crew_survey' is a tibble", {
 test_that("'crew_survey' has acceptable column names", {
   expect_in(
     colnames(ecodata::crew_survey),
-    c("Time", "Var", "Value", "EPU", "Units")
+    c("Time", "ResponseID", "Var", "Value")
   )
 })

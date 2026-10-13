@@ -161,6 +161,7 @@ StatLM <- ggplot2::ggproto(
         xmin <- xmax - n + 1
 
         # Linear model with AR1 error
+        set.seed(1234)
         linear_ar1 <-
           try(arfit::fit_real_data(dataUse, nBootSims = nBootSamples))
         #print(linear_ar1$pValue)

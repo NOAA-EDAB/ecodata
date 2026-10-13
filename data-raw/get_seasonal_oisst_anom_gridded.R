@@ -52,7 +52,7 @@ rast_process <- function(r, season) {
     reshape2::melt(id = c("y", "x")) %>%
     dplyr::rename(Latitude = y, Longitude = x) %>%
     dplyr::select(-variable) %>%
-    dplyr::mutate(Season = season) %>%
+    dplyr::mutate(Var = season) %>%
     dplyr::rename(Value = value)
 
   return(r)
@@ -102,5 +102,7 @@ heatwave_peak_date <-
     rast_process_epu(gb_peak_hw, epu = "GB"),
     rast_process_epu(gom_peak_hw, epu = "GOM")
   )
+
+heatwave_peak_date <- tibble::as_tibble(heatwave_peak_date)
 
 usethis::use_data(heatwave_peak_date, overwrite = T)

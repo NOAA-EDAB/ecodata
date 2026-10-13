@@ -21,7 +21,7 @@ plot_community_factors(
 \item{n}{Numeric scalar. Number of rows to return (top in plottype category port activity or recreational engagement)}
 }
 \value{
-dataframe
+flextable object
 }
 \description{
 returns community indicators with highest engagement or port activity

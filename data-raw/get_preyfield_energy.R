@@ -16,13 +16,13 @@ get_preyfield_energy <- function(save_clean = F) {
     )) |>
     tidyr::unite(Time, YEAR, MONTH, DAY, sep = "-") |>
     dplyr::mutate(Time = as.Date(Time)) |>
-    dplyr::rename(Lon = LONGITUDE, Lat = LATITUDE, EPU = REGION) |>
+    dplyr::rename(Longitude = LONGITUDE, Latitude = LATITUDE, EPU = REGION) |>
     tidyr::pivot_longer(
       c(VOLUME_100M3, TOTAL_CONC),
       names_to = "Var",
       values_to = "Value"
     ) |>
-    dplyr::select(Time, Lat, Lon, Var, Value, EPU)
+    dplyr::select(Time, Latitude, Longitude, Var, Value, EPU)
 
   if (save_clean) {
     usethis::use_data(preyfield_energy, overwrite = T)

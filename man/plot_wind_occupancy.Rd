@@ -12,7 +12,7 @@ plot_wind_occupancy(shadedRegion = NULL, report = "MidAtlantic")
 \item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
 }
 \value{
-kable object
+flextable object
 }
 \description{
 plot wind_occupancy data. This is not region specific?

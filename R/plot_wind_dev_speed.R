@@ -26,6 +26,8 @@ plot_wind_dev_speed <- function(shadedRegion = NULL, report = "MidAtlantic") {
   # e.g., calculate mean, max or other needed values to join below
   fix <- ecodata::wind_dev_speed |>
     dplyr::mutate(
+      Report_year = stringr::str_extract(Var, pattern = "year.*"),
+      Var = stringr::str_remove(Var, pattern = "_year.*"),
       Value = as.numeric(Value) / 1000000,
       Time = as.integer(Time)
     ) |>

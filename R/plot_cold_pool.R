@@ -4,7 +4,7 @@
 #'
 #' @param shadedRegion Numeric vector. Years denoting the shaded region of the plot (most recent 10)
 #' @param report Character string. Which SOE report ("MidAtlantic" only, default)
-#' @param varName Character string. Which variable to plot (NULL, "cold_pool", "persistence","extent"). NULL plots all three.
+#' @param varName Character string. Which variable to plot ("cold_pool", "persistence","extent"). Default = "cold_pool"
 #' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
 #'
 #' @return ggplot object
@@ -20,7 +20,7 @@
 plot_cold_pool <- function(
   shadedRegion = NULL,
   report = "MidAtlantic",
-  varName = NULL,
+  varName = "cold_pool",
   #source = 'GLORYS',
   n = 0
 ) {
@@ -45,7 +45,11 @@ plot_cold_pool <- function(
   cpdup <- ecodata::cold_pool |>
     dplyr::group_by(Time, Var, EPU) |>
     #dplyr::filter(Source %in% source) |>
-    dplyr::mutate(duplicated = dplyr::n() > 1) |>
+    dplyr::mutate(
+      duplicated = dplyr::n() > 1,
+      Source = stringr::str_extract(Var, "GLORYS|ROMS"),
+      Var = stringr::str_remove(Var, "_GLORYS|_ROMS")
+    ) |>
     dplyr::ungroup()
 
   cpts <- cpdup |>
@@ -62,15 +66,15 @@ plot_cold_pool <- function(
   # xmin = setup$x.shade.min , xmax = setup$x.shade.max
   #
   cpi <- cpts |>
-    dplyr::filter(stringr::str_detect(Var, pattern = "cold_pool")) |>
+    dplyr::filter(stringr::str_detect(Var, pattern = "Cold Pool")) |>
     dplyr::mutate(Value = Value * -1) |>
     tidyr::pivot_wider(names_from = Var, values_from = Value) |>
     dplyr::mutate(
-      Upper = cold_pool_index + se_cold_pool_index,
-      Lower = cold_pool_index - se_cold_pool_index
+      Upper = `Cold Pool Index` + `Cold Pool Index SE`,
+      Lower = `Cold Pool Index` - `Cold Pool Index SE`
     ) |>
-    dplyr::select(!se_cold_pool_index) |>
-    dplyr::rename(Value = cold_pool_index) |>
+    dplyr::select(!`Cold Pool Index SE`) |>
+    dplyr::rename(Value = `Cold Pool Index`) |>
     dplyr::mutate(Var = c("cold_pool_index")) |>
     ggplot2::ggplot() +
     #Highlight last ten years
@@ -126,14 +130,14 @@ plot_cold_pool <- function(
   #One cell is 9.25^2 or 85.5 km2
 
   ei <- cpts |>
-    dplyr::filter(stringr::str_detect(Var, pattern = "extent")) |>
+    dplyr::filter(stringr::str_detect(Var, pattern = "Extent")) |>
     tidyr::pivot_wider(names_from = Var, values_from = Value) |>
     dplyr::mutate(
-      Upper = extent_index + se_extent_index,
-      Lower = extent_index - se_extent_index
+      Upper = `Extent Index` + `Extent Index SE`,
+      Lower = `Extent Index` - `Extent Index SE`
     ) |>
-    dplyr::select(!se_extent_index) |>
-    dplyr::rename(Value = extent_index) |>
+    dplyr::select(!`Extent Index SE`) |>
+    dplyr::rename(Value = `Extent Index`) |>
     dplyr::mutate(Var = c("extent_index")) |>
     ggplot2::ggplot() +
     ggplot2::annotate(
@@ -192,14 +196,14 @@ plot_cold_pool <- function(
     )
 
   pi <- cpts |>
-    dplyr::filter(stringr::str_detect(Var, pattern = "persistence")) |>
+    dplyr::filter(stringr::str_detect(Var, pattern = "Persistence")) |>
     tidyr::pivot_wider(names_from = Var, values_from = Value) |>
     dplyr::mutate(
-      Upper = persistence_index + se_persistence_index,
-      Lower = persistence_index - se_persistence_index
+      Upper = `Persistence Index` + `Persistence Index SE`,
+      Lower = `Persistence Index` - `Persistence Index SE`
     ) |>
-    dplyr::select(!se_persistence_index) |>
-    dplyr::rename(Value = persistence_index) |>
+    dplyr::select(!`Persistence Index SE`) |>
+    dplyr::rename(Value = `Persistence Index`) |>
     dplyr::mutate(Var = c("persistence_index")) |>
     ggplot2::ggplot() +
     ggplot2::annotate(
@@ -249,16 +253,14 @@ plot_cold_pool <- function(
 
   #cowplot::plot_grid(cpi, pi, ei, labels = c('a', 'b', 'c'), align = "h")
 
-  if (!is.null(varName)) {
-    if (varName == "cold_pool") {
-      p <- cpi
-    } else if (varName == "persistence") {
-      p <- pi
-    } else if (varName == "extent") {
-      p <- ei
-    }
+  if (varName == "cold_pool") {
+    p <- cpi
+  } else if (varName == "persistence") {
+    p <- pi
+  } else if (varName == "extent") {
+    p <- ei
   } else {
-    p <- gridExtra::grid.arrange(cpi, pi, ei, ncol = 3)
+    stop("Argument `varName` must be 'cold_pool', 'persistence' or 'extent'")
   }
 
   return(p)

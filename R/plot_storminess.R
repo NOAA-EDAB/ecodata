@@ -31,7 +31,7 @@ plot_storminess <- function(
   # e.g., calculate mean, max or other needed values to join below
   fix <- ecodata::storminess |>
     dplyr::filter(EPU %in% filterEPUs) |>
-    dplyr::mutate(Time = as.numeric(Year), Value = as.numeric(Value)) |>
+    dplyr::mutate(Time = as.numeric(Time), Value = as.numeric(Value)) |>
     dplyr::group_by(Var) |>
     dplyr::mutate(hline = mean(Value))
 

@@ -17,7 +17,7 @@ get_cold_pool <- function(save_clean = F) {
   #dplyr::select(-c("X", "Unit")) %>%
   #dplyr::mutate(Var = "cold_pool_index", EPU = "MAB")
 
-  cold_pool <- read.csv(file.path(raw.dir, cold_pool_csv)) %>%
+  cold_pool <- read.csv(file.path(raw.dir, cold_pool_csv)) |>
     tidyr::pivot_longer(
       cols = c(
         "cold_pool_index",
@@ -29,9 +29,19 @@ get_cold_pool <- function(save_clean = F) {
       ),
       names_to = "Var",
       values_to = "Value"
-    ) %>%
-    dplyr::mutate(EPU = c("MAB")) %>%
-    dplyr::rename(Time = year)
+    ) |>
+    dplyr::mutate(
+      EPU = c("MAB"),
+      Var = stringr::str_to_title(gsub("_", " ", Var))
+    ) |>
+    dplyr::mutate(
+      Var = gsub("Se Cold Pool Index", "Cold Pool Index SE", Var),
+      Var = gsub("Se Extent Index", "Extent Index SE", Var),
+      Var = gsub("Se Persistence Index", "Persistence Index SE", Var)
+    ) |>
+    dplyr::rename(Time = year) |>
+    tidyr::unite(col = "Var", Var, Source, sep = "_") |>
+    dplyr::select(Time, EPU, Var, Value)
 
   #cold_pool <- rbind(cold_pool, cold_pool_mom6)
 

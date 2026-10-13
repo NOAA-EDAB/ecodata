@@ -7,6 +7,6 @@ test_that("'wea_landings_rev' is a tibble", {
 test_that("'wea_landings_rev' has acceptable column names", {
   expect_in(
     colnames(ecodata::wea_landings_rev),
-    c("Time", "Var", "Value", "EPU", "Units")
+    c("Time", "Jurisdiction", "Var", "Value", "Units")
   )
 })

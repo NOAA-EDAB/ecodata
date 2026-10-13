@@ -40,7 +40,7 @@ plot_seasonal_bt_anomaly_gridded <- function(
 
   fix <- ecodata::seasonal_bt_anomaly_gridded |>
     dplyr::mutate(
-      Season = factor(Season, levels = c("Winter", "Spring", "Summer", "Fall"))
+      Var = factor(Var, levels = c("Winter", "Spring", "Summer", "Fall"))
     ) |>
     dplyr::mutate(Value = replace(Value, Value > 5, 5))
 
@@ -65,7 +65,7 @@ plot_seasonal_bt_anomaly_gridded <- function(
       labels = c("<-5", "-2", "0", "2", ">5")
     ) +
     ggplot2::coord_sf(xlim = xlims, ylim = ylims) +
-    ggplot2::facet_wrap(Season ~ .) +
+    ggplot2::facet_wrap(Var ~ .) +
     ecodata::theme_map() +
     ggplot2::ggtitle("BT anomaly") +
     ggplot2::xlab("Longitude") +

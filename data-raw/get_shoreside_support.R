@@ -7,9 +7,9 @@ shore_supp_csv <- "Shoreside_Support_2026.csv"
 get_shoreside_support <- function(save_clean = F) {
   # Load data file
   shoreside_support <- read.csv(file.path(raw.dir, shore_supp_csv)) |>
-    dplyr::select(!X) |>
     dplyr::rename(EPU = Region) |>
     dplyr::mutate(EPU = dplyr::recode(EPU, "MA" = "MAB")) |>
+    dplyr::select(Time, EPU, Var, Value, Units) |>
     tibble::as_tibble()
 
   if (save_clean) {
