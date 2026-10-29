@@ -1,0 +1,72 @@
+---
+title: "Crew survey test"
+format: html
+toc: true
+---
+
+## Quarto
+
+
+```{r}
+#Testing Plot combinations for plot_crew_survey
+varName.options <- c(
+  'port',
+  'fishery',
+  'demographic',
+  'personal_life',
+  'history',
+  'employment_history',
+  'employment_conditions',
+  'compensation',
+  'expenses',
+  'satisfaction',
+  'perceptions'
+)
+report.options <- c('MidAtlantic', 'NewEngland')
+plottype.options <- c('ts', 'bar')
+
+plot.combs <- expand.grid(
+  varName = varName.options,
+  report = report.options,
+  plottype = plottype.options
+)
+
+devtools::load_all()
+```
+
+```{r, results = "asis"}
+for (i in 1:nrow(plot.combs)) {
+  # plot.title <- paste(
+  #   plot.combs$report[i],
+  #   plot.combs$varName[i],
+  #   plot.combs$plottype[i],
+  #   sep = ': '
+  # )
+
+  p <- plot_crew_survey(
+    report = plot.combs$report[i],
+    varName = plot.combs$varName[i],
+    plottype = plot.combs$plottype[i],
+    n = 0
+  )
+title <- paste("Plot", i)
+combo <- plot.combs[i,]
+
+res <- knitr::knit_child(text = paste(
+  paste("##", title),
+  "This plot is showing the following parameter inputs:",
+  "`r knitr::kable(combo)`",
+  "Plots:",
+  "```{r, echo = FALSE}",
+  "print(p)",
+  "```",
+  "end of plot", i,
+  "\n\n",
+  sep = "\n\n"
+),
+quiet = TRUE)
+cat(res, sep = "\n\n")
+  # print(p)
+}
+```
+
