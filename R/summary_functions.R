@@ -269,7 +269,7 @@ short_term_trend <- function(data) {
 #' df <- data.frame(Time = 2010:2020, Value = c(12, 11, 14, 15, 13, 12, 14, 15, 11, 10, 22))
 #' summary_stats(df)
 
-susummary_stats <- function(data) {
+summary_stats <- function(data) {
   # rename x and y if present in data
   if ("x" %in% colnames(data)) {
     data <- data |>
