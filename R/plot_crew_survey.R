@@ -202,6 +202,7 @@ plot_crew_survey <- function(
               y = "Proportion",
               fill = "Answer"
             ) +
+            viridis::scale_fill_viridis(discrete = TRUE) +
             ggplot2::theme(
               plot.title = ggplot2::element_text(size = 10, face = "bold"),
               legend.position = "right",
