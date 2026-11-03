@@ -35,17 +35,26 @@ plot_crew_survey <- function(
   }
 
   possible.types <- unique(ecodata::crew_survey$Var.Group)
+  individual_types <- unique(ecodata::crew_survey$Var)
 
-  if (!(varName %in% possible.types)) {
+  group_plot <- varName %in% possible.types
+  individual_plot <- varName %in% individual_types
+
+  if (!(group_plot | individual_plot)) {
     stop(
-      "Unexpected varName. Needs to be one of: ",
-      paste(na.omit(possible.types), collapse = ', ')
+      "Unexpected varName. Needs to be one of: 
+      Var.Group:",
+      paste(na.omit(possible.types), collapse = ', '),
+      "\n\n or Var:",
+      paste(na.omit(individual_types), collapse = ', ')
     )
   }
 
   #Isolate Var.Group and define type of plot to use
   data <- ecodata::crew_survey |>
-    dplyr::filter(Var.Group == varName & EPU %in% filterEPUs) |>
+    dplyr::filter(
+      (Var.Group == varName | Var == varName) & EPU %in% filterEPUs
+    ) |>
     dplyr::mutate(
       plot.type = dplyr::case_when(
         grepl('proportion', Units) ~ 'bar',
@@ -201,7 +210,11 @@ plot_crew_survey <- function(
         }
       )
 
-    p <- patchwork::wrap_plots(plot_list, ncol = 2)
+    if (length(plot_list) > 1) {
+      p <- patchwork::wrap_plots(plot_list, ncol = 2)
+    } else {
+      p <- plot_list[[1]]
+    }
   }
 
   return(p)
@@ -209,6 +222,7 @@ plot_crew_survey <- function(
 
 attr(plot_crew_survey, "report") <- c("MidAtlantic", "NewEngland")
 attr(plot_crew_survey, "varName") <- c(
+  # Var.Group
   'port',
   'fishery',
   'demographic',
@@ -219,6 +233,87 @@ attr(plot_crew_survey, "varName") <- c(
   'compensation',
   'expenses',
   'satisfaction',
-  'perceptions'
+  'perceptions',
+
+  # Var
+  "port.intercept",
+  "port.primary",
+  "port.state",
+  "port.landing",
+  "fishery.reported",
+  "fishery.category",
+  "age.category",
+  "education",
+  "race",
+  "race.white",
+  "hispanic",
+  "income.reported",
+  "income.category",
+  "insurance.category",
+  "insurance.binary",
+  "marital.status.category",
+  "marital.status.binary",
+  "birth.place",
+  "language",
+  "fishing.involvement",
+  "fishing.generations",
+  "fishing.generations.category",
+  "fishing.years",
+  "fishing.years.category",
+  "fish.years.category.naomit",
+  "employer.count",
+  "employer.count.category",
+  "first.position",
+  "experience.current.vessel.numeric",
+  "experience.current.vessel.category",
+  "employment.path",
+  "employment.difficulty",
+  "trip.duration",
+  "trip.duration.category",
+  "daily.hours",
+  "daily.hours.category",
+  "crew.size",
+  "crew.size.category",
+  "operator.status",
+  "position",
+  "position.condensed",
+  "position.captain",
+  "payment",
+  "payment.condensed",
+  "share.boat",
+  "share.crew",
+  "expense.deduction.fuel",
+  "expense.deduction.ice",
+  "expense.deduction.quota",
+  "expense.deduction.food",
+  "expense.deduction.supplies",
+  "expense.deduction.bait",
+  "expense.deduction.other",
+  "satisfaction.earnings",
+  "satisfaction.earnings.naomit",
+  "satisfaction.predictability",
+  "satisfaction.predictability.naomit",
+  "satisfaction.safety",
+  "satisfaction.safety.naomit",
+  "satisfaction.away",
+  "satisfaction.away.naomit",
+  "satisfaction.fatigue",
+  "satisfaction.fatigue.naomit",
+  "satisfaction.health",
+  "satisfaction.health.naomit",
+  "satisfaction.adventure",
+  "satisfaction.adventure.naomit",
+  "satisfaction.challenge",
+  "satisfaction.challenge.naomit",
+  "satisfaction.boss",
+  "satisfaction.boss.naomit",
+  "advise.entry",
+  "fish.again",
+  "just.job",
+  "leave.industry",
+  "management.participation",
+  "regs.change",
+  "regs.fines",
+  "regs.restrict"
 )
 attr(plot_crew_survey, 'plottype') <- c('ts', 'bar')
