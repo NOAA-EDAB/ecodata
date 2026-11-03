@@ -148,7 +148,7 @@ plot_crew_survey <- function(
         dplyr::group_by(Var.Long) |>
         dplyr::mutate(
           Var.Answer = forcats::fct_lump_n(
-            f = as.character(Var.Answer),
+            f = Var.Answer,
             n = max.n,
             w = Value,
             other_level = "Other"
@@ -164,21 +164,13 @@ plot_crew_survey <- function(
           Units,
           plot.type
         ) |>
-        dplyr::summarise(Value = sum(Value, na.rm = TRUE), .groups = "drop") |>
-        dplyr::mutate(
-          # 1. Convert NA to "No Response" (using character conversion temporarily)
-          Var.Answer = as.character(Var.Answer),
-          Var.Answer = ifelse(is.na(Var.Answer), "No Response", Var.Answer),
+        dplyr::summarise(Value = sum(Value, na.rm = TRUE), .groups = "drop")
 
-          # 2. Convert back to factor and force "Other" and "No Response" to the end (bottom)
-          Var.Answer = as.factor(Var.Answer),
-          Var.Answer = forcats::fct_relevel(
-            Var.Answer,
-            "Other",
-            "No Response",
-            after = Inf
-          )
-        )
+      # refactor Var.Answer -- messed up by forcats::fct_lump_n
+      data.plot$Var.Answer <- factor(
+        data.plot$Var.Answer,
+        levels = levels(ecodata::crew_survey$Var.Answer)
+      )
     }
 
     plot_list <- data.plot |>
@@ -214,7 +206,6 @@ plot_crew_survey <- function(
 
   return(p)
 }
-
 
 attr(plot_crew_survey, "report") <- c("MidAtlantic", "NewEngland")
 attr(plot_crew_survey, "varName") <- c(

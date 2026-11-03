@@ -4,6 +4,7 @@
 raw.dir <- here::here("data-raw")
 crew_survey_xlsx <- "2012_2024_Crew Survey SOE Dataset_01052026.xlsx"
 crew_survey_index_file <- 'crew_survey_key.csv'
+factor_levels <- here::here("data-raw/crew_survey_factor_levels.csv")
 
 get_crew_survey <- function(save_clean = F) {
   # Read in original Crew Survey data file
@@ -256,6 +257,9 @@ get_crew_survey <- function(save_clean = F) {
     dplyr::mutate(
       Var.Answer = ifelse(is.na(Var.Answer), "No Response", Var.Answer)
     )
+
+  lvls <- read.csv(factor_levels) |> dplyr::pull(Var.Answer)
+  crew_survey$Var.Answer <- factor(crew_survey$Var.Answer, levels = lvls)
 
   if (save_clean) {
     usethis::use_data(crew_survey, overwrite = T)
