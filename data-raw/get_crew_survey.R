@@ -90,7 +90,8 @@ get_crew_survey <- function(save_clean = F) {
             'Very Dissatisfied',
             'Strongly Disagree',
             'Very Difficult'
-          ) ~ 1,
+          ) ~
+          1,
         Value %in% c('2', 'Dissatisfied', 'Disagree', 'Difficult') ~ 2,
         Value %in% c('3', 'Neutral', 'Neither easy nor difficult') ~ 3,
         Value %in% c('4', 'Satisfied', 'Agree', 'Easy') ~ 4,
@@ -250,6 +251,10 @@ get_crew_survey <- function(save_clean = F) {
       Var.Group,
       Value,
       Units
+    ) |>
+    # replace NAs with "No Answer"
+    dplyr::mutate(
+      Var.Answer = ifelse(is.na(Var.Answer), "No Answer", Var.Answer)
     )
 
   if (save_clean) {
