@@ -114,7 +114,13 @@ plot_crew_survey <- function(
       ) +
       ggplot2::geom_point() +
       ggplot2::geom_line() +
-      ggplot2::facet_wrap(~Var.Long, scale = 'free_y', ncol = 1) +
+      ggplot2::facet_wrap(
+        ~ (Var.Long |>
+          stringr::str_remove("Combined") |>
+          stringr::str_trim()),
+        scale = 'free_y',
+        ncol = 1
+      ) +
       ggplot2::ylab(plot.ylab) +
       ggplot2::xlab(ggplot2::element_blank()) +
       ecodata::geom_gls() +
@@ -188,7 +194,9 @@ plot_crew_survey <- function(
             ggplot2::geom_col(position = "stack") +
             ggplot2::theme_minimal() +
             ggplot2::labs(
-              title = question_name,
+              title = question_name |>
+                stringr::str_remove("Combined") |>
+                stringr::str_trim(),
               x = '',
               y = "Proportion",
               fill = "Answer"
