@@ -252,9 +252,9 @@ get_crew_survey <- function(save_clean = F) {
       Value,
       Units
     ) |>
-    # replace NAs with "No Answer"
+    # replace NAs with "No Response"
     dplyr::mutate(
-      Var.Answer = ifelse(is.na(Var.Answer), "No Answer", Var.Answer)
+      Var.Answer = ifelse(is.na(Var.Answer), "No Response", Var.Answer)
     )
 
   if (save_clean) {
