@@ -43,9 +43,9 @@ plot_crew_survey <- function(
   if (!(group_plot | individual_plot)) {
     stop(
       "Unexpected varName. Needs to be one of: 
-      Var.Group:",
+      Var.Group: ",
       paste(na.omit(possible.types), collapse = ', '),
-      "\n\n or Var:",
+      "\n\n or Var: ",
       paste(na.omit(individual_types), collapse = ', ')
     )
   }

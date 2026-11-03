@@ -31,13 +31,14 @@ for (i in 1:nrow(plot.combs)) {
   #   sep = ': '
   # )
 
-  p <- ecodata::plot_crew_survey(
+  p <- plot_crew_survey(
     report = plot.combs$report[i],
     varName = plot.combs$varName[i],
     plottype = plot.combs$plottype[i],
     n = 0
   )
 
+  print(paste("Plot", i))
   print(p)
 }
 dev.off()

@@ -1,6 +1,8 @@
 ---
 title: "Crew survey test"
-format: html
+format: 
+  html:
+    embed-resources: true
 toc: true
 ---
 
