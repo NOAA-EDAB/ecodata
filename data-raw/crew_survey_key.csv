@@ -1,0 +1,98 @@
+Var,var.short,type,plot.group,metric,binary.yes,binary.no,likehart.direction
+Subject number,subject,id,NA,NA,NA,NA,NA
+Case ID...2,case.id.2,id,NA,NA,NA,NA,NA
+Case ID...3,case.id.3,id,NA,NA,NA,NA,NA
+Survey wave,survey.wave,time,NA,NA,NA,NA,NA
+Survey completion status,status,categorical,NA,NA,NA,NA,NA
+Intercept Port Combined,port.intercept,categorical,port,prop,NA,NA,NA
+Primary Port Combined,port.primary,categorical,port,prop,NA,NA,NA
+Landing Port Combined,port.landing,categorical,port,prop,NA,NA,NA
+Primary Fishery Combined,fishery.reported,categorical,fishery,prop,NA,NA,NA
+Fishery 4 cat,fishery.category,categorical,NA,prop,NA,NA,NA
+Primary Fishery - Groundfish,fishery.groundfish,binary,NA,NA,Groundfish,Other,NA
+Primary Fishery - Lobster,fishery.lobster,binary,NA,NA,Lobster,Other,NA
+Primary Fishery - Scallop,fishery.scallop,binary,NA,NA,Scallop,Other,NA
+Age (Categorical) Combined,age.category,categorical,demographic,prop,NA,NA,NA
+Age (Numerical) Combined,age.reported,numeric,NA,NA,NA,NA,NA
+Education Combined,education,categorical,personal_life,prop,NA,NA,NA
+Education ordered cat DK/NA missing,education.naomit,categorical,NA,NA,NA,NA,NA
+Race Combined,race,categorical,demographic,prop,NA,NA,NA
+Race binary,race.white,binary,demographic,prop,White,Non-White,NA
+Hispanic indicator,hispanic,binary,demographic,prop,Yes,No,NA
+Income Combined,income.reported,categorical,personal_life,prop,NA,NA,NA
+Income 5 cat,income.category,categorical,NA,prop,NA,NA,NA
+Health Insurance Combined,insurance.category,categorical,personal_life,prop,NA,NA,NA
+Health insurance status binary,insurance.binary,binary,NA,prop,Insured,Not insured,NA
+Marital Status Combined,marital.status.category,categorical,personal_life,prop,NA,NA,NA
+Marital Status binary,marital.status.binary,binary,NA,prop,Married,Other/Single,NA
+Place of Birth Combined,birth.place,binary,demographic,prop,U.S.,Outside U.S.,NA
+Primary Language Combined,language,categorical,demographic,prop,NA,NA,NA
+Family involved in comm. fishing Combined,fishing.involvement,binary,history,prop,Yes,No,NA
+Number of generations in comm. fishing Combined,fishing.generations,numeric,history,mean,NA,NA,NA
+Generation in fishing Categorical,fishing.generations.category,categorical,history,prop,NA,NA,NA
+Years in commercial fishing (0 if less than a year) Combined,fishing.years,numeric,history,mean,NA,NA,NA
+Years in comm. fishing Categorical,fishing.years.category,categorical,history,prop,NA,NA,NA
+Years in comm. fishing NO DK/NA,fish.years.category.naomit,numeric,NA,mean,NA,NA,NA
+Number of different vessel owners employed by in past year Combined,employer.count,numeric,employment_history,mean,NA,NA,NA
+Number of owners Categorical,employer.count.category,categorical,employment_history,prop,NA,NA,NA
+First crew position in commercial fishing Combined,first.position,categorical,employment_history,prop,NA,NA,NA
+Number of years on current vessel (0 if less than a year) Combined,experience.current.vessel.numeric,numeric,employment_history,mean,NA,NA,NA
+Years on current vessel Categorical,experience.current.vessel.category,categorical,employment_history,prop,NA,NA,NA
+Path to employment on current vessel Combined,employment.path,categorical,employment_history,prop,NA,NA,NA
+Difficulty finding employment Combined,employment.difficulty,likehart,employment_conditions,prop,NA,NA,easy
+Trip duration (days) Combined,trip.duration,numeric,employment_conditions,mean,NA,NA,NA
+Trip duration Categorical,trip.duration.category,categorical,employment_conditions,prop,NA,NA,NA
+Hours worked per day Combined,daily.hours,numeric,employment_conditions,mean,NA,NA,NA
+Hours worked per day Categorical,daily.hours.category,categorical,employment_conditions,prop,NA,NA,NA
+Average Crew Size Combined,crew.size,numeric,employment_conditions,mean,NA,NA,NA
+Average Crew Size Categorical,crew.size.category,categorical,employment_conditions,prop,NA,NA,NA
+Owner-operator status Combined,operator.status,categorical,employment_conditions,prop,NA,NA,NA
+Position on current vessel Combined,position,categorical,NA,prop,NA,NA,NA
+Position on vessel Condensed,position.condensed,categorical,employment_conditions,prop,NA,NA,NA
+Position on vessel non-captain vs. captain,position.captain,binary,employment_conditions,prop,1,0,NA
+Payment system Combined,payment,categorical,NA,prop,NA,NA,NA
+Payment system Condensed,payment.condensed,categorical,compensation,prop,NA,NA,NA
+Boat Percent Share Combined,share.boat,numeric,compensation,mean,NA,NA,NA
+Crew Percent Share Combined,share.crew,numeric,compensation,mean,NA,NA,NA
+[Fuel/Oil] Expenses deducted from share Combined,expense.deduction.fuel,binary,expenses,prop,Yes,No,NA
+[Ice] Expenses deducted from share Combined,expense.deduction.ice,binary,expenses,prop,Yes,No,NA
+[Fishing quota] Expenses deducted from share Combined,expense.deduction.quota,binary,expenses,prop,Yes,No,NA
+[Food] Expenses deducted from share Combined,expense.deduction.food,binary,expenses,prop,Yes,No,NA
+[Fishing Supplies] Expenses deducted from share Combined,expense.deduction.supplies,binary,expenses,prop,Yes,No,NA
+[Bait] Expenses deducted from share Combined,expense.deduction.bait,binary,expenses,prop,Yes,No,NA
+[Other] Expenses deducted from share Combined,expense.deduction.other,binary,expenses,prop,Yes,No,NA
+[Your actual earnings] Job satisfaction Combined,satisfaction.earnings,likehart,satisfaction,prop,NA,NA,satisfied
+Your actual earnings No DK,satisfaction.earnings.naomit,likehart,NA,mean,NA,NA,satisfied
+[Predictability of earnings] Job satisfaction Combined,satisfaction.predictability,likehart,satisfaction,prop,NA,NA,satisfied
+Predictability of earnings No DK,satisfaction.predictability.naomit,likehart,NA,mean,NA,NA,satisfied
+[Job safety] Job satisfaction Combined,satisfaction.safety,likehart,satisfaction,prop,NA,NA,satisfied
+Job safety No DK,satisfaction.safety.naomit,likehart,NA,mean,NA,NA,satisfied
+[Time away] Job satisfaction Combined,satisfaction.away,likehart,satisfaction,prop,NA,NA,satisfied
+Time away No DK,satisfaction.away.naomit,likehart,NA,mean,NA,NA,satisfied
+[Physical fatigue] Job satisfaction Combined,satisfaction.fatigue,likehart,satisfaction,prop,NA,NA,satisfied
+Physical fatigue No DK,satisfaction.fatigue.naomit,likehart,NA,mean,NA,NA,satisfied
+[Healthfulness] Job satisfaction Combined,satisfaction.health,likehart,satisfaction,prop,NA,NA,satisfied
+Healthfulness No DK,satisfaction.health.naomit,likehart,NA,mean,NA,NA,satisfied
+[Adventure] Job satisfaction Combined,satisfaction.adventure,likehart,satisfaction,prop,NA,NA,satisfied
+Adventure No DK,satisfaction.adventure.naomit,likehart,NA,mean,NA,NA,satisfied
+[Challenge] Job satisfaction Combined,satisfaction.challenge,likehart,satisfaction,prop,NA,NA,satisfied
+Challenge No DK,satisfaction.challenge.naomit,likehart,NA,mean,NA,NA,satisfied
+[Own boss] Job satisfaction Combined,satisfaction.boss,likehart,satisfaction,prop,NA,NA,satisfied
+Own boss No DK,satisfaction.boss.naomit,likehart,NA,mean,NA,NA,satisfied
+'Would Advise Young to Enter Fishing' Combined,advise.entry,categorical,perceptions,prop,NA,NA,agree
+'Would Fish Again if Life Lived Over' Combined,fish.again,categorical,perceptions,prop,NA,NA,agree
+'Fishing is Just a Job to Me' Combined,just.job,likehart,perceptions,prop,NA,NA,agree
+'Considered Leaving the Industry' Combined,leave.industry,likehart,perceptions,prop,NA,NA,agree
+'Participated in Fisheries Management' Combined,management.participation,binary,perceptions,prop,Yes,No,agree
+'The rules and regulations change so quickly it is hard to keep up' Combined,regs.change,likehart,perceptions,prop,NA,NA,agree
+'The fines that are associated with breaking the rules... are fair' Combined,regs.fines,likehart,perceptions,prop,NA,NA,agree
+'I feel that the regulations... are too restrictive' Combined,regs.restrict,likehart,perceptions,prop,NA,NA,agree
+Primary Port Latitude,port.lat,coordinate,NA,NA,NA,NA,NA
+Primary Port Longitude,port.lon,coordinate,NA,NA,NA,NA,NA
+Primary Port Zip Code,port.zip,categorical,NA,NA,NA,NA,NA
+2010 USDA Rural-Urban Commuting Area Codes,commuting.area.code,categorical,NA,NA,NA,NA,NA
+basic,basic,numeric,NA,NA,NA,NA,NA
+socpsy,socpsy,numeric,NA,NA,NA,NA,NA
+selfact,selfact,numeric,NA,NA,NA,NA,NA
+Primary port region,port.region,categorical,port,prop,NA,NA,NA
+Primary port state,port.state,categorical,port,prop,NA,NA,NA
