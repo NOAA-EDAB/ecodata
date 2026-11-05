@@ -22,15 +22,15 @@
 #'
 
 plot_thermal_suitability <- function(
-    shadedRegion = NULL,
-    report = "MidAtlantic",
-    plottype = "scaled",
-    include_asmfc = FALSE,
-    data_file = "//nefscdata/EDAB_Indicators/SOE_ecodata/SOE_2027/thermal_habitat_soe.rds"
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  plottype = "scaled",
+  include_asmfc = FALSE,
+  data_file = "//nefscdata/EDAB_Indicators/SOE_ecodata/SOE_2027/thermal_habitat_soe.rds"
 ) {
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
-  
+
   # which report? Data are reported by Council region, not EPU
   if (report == "MidAtlantic") {
     filterEPUs <- "MA"
@@ -41,11 +41,11 @@ plot_thermal_suitability <- function(
   } else {
     stop("report must be either 'MidAtlantic' or 'NewEngland'")
   }
-  
+
   if (!(plottype %in% c("scaled", "raw", "spaghetti"))) {
     stop("plottype must be 'scaled', 'raw', or 'spaghetti'")
   }
-  
+
   # species jurisdictions to show, and the matching regional mean
   jurisdictions <- c("NEFMC", "MAFMC", "JOINT")
   meanGroup <- "Federal"
@@ -55,16 +55,17 @@ plot_thermal_suitability <- function(
     meanGroup <- "All"
     titleSuffix <- " (incl. ASMFC)"
   }
-  
+
   # read the indicator directly from the network drive (not stored in ecodata)
   if (!file.exists(data_file)) {
     stop(
-      "Thermal suitability data not found at: ", data_file,
+      "Thermal suitability data not found at: ",
+      data_file,
       "\nCheck the network drive connection or supply data_file."
     )
   }
   thermal_suitability <- readRDS(data_file)
-  
+
   # Var is "<Species> - <metric>"; split into species and metric
   fix <- thermal_suitability |>
     dplyr::filter(EPU == filterEPUs) |>
@@ -72,29 +73,35 @@ plot_thermal_suitability <- function(
       Species = sub(" - [^-]*$", "", Var),
       Metric = sub("^.* - ", "", Var)
     )
-  
+
   speciesData <- fix |>
     dplyr::filter(Jurisdiction %in% jurisdictions)
-  
+
   numberOfConditions <- 5
-  
+
   if (plottype %in% c("scaled", "raw")) {
     heat <- speciesData |>
       dplyr::filter(Metric == "Percent suitable") |>
       dplyr::group_by(Species)
-    
+
     if (plottype == "scaled") {
       heat <- heat |>
-        dplyr::mutate(scaleVal = as.numeric(scale(Value, scale = TRUE, center = TRUE)))
+        dplyr::mutate(
+          scaleVal = as.numeric(scale(Value, scale = TRUE, center = TRUE))
+        )
     } else {
       heat <- heat |>
         dplyr::mutate(scaleVal = Value)
     }
     heat <- dplyr::ungroup(heat)
-    
+
     # finds quantiles
-    xs <- quantile(heat$scaleVal, seq(0, 1, length.out = numberOfConditions + 1), na.rm = TRUE)
-    
+    xs <- quantile(
+      heat$scaleVal,
+      seq(0, 1, length.out = numberOfConditions + 1),
+      na.rm = TRUE
+    )
+
     heat <- heat |>
       dplyr::mutate(
         category = cut(
@@ -110,19 +117,19 @@ plot_thermal_suitability <- function(
           include.lowest = TRUE
         )
       )
-    
+
     # order species by mean percent suitable (scaled means are all ~0)
     sortNames <- heat |>
       dplyr::group_by(Species) |>
       dplyr::summarize(total = mean(Value, na.rm = TRUE)) |>
       dplyr::arrange(total) |>
       dplyr::pull(Species)
-    
+
     heat$Species <- factor(heat$Species, levels = sortNames)
-    
+
     # 5 scale colors for viridis
     vir <- viridis::viridis_pal()(numberOfConditions)
-    
+
     if (plottype == "scaled") {
       p <- heat |>
         ggplot2::ggplot(ggplot2::aes(
@@ -145,13 +152,17 @@ plot_thermal_suitability <- function(
         ) +
         ggplot2::labs(fill = "Suitable\nHabitat (%)")
     }
-    
+
     p <- p +
       ggplot2::geom_tile() +
       ggplot2::coord_equal() +
       ggplot2::theme_bw() +
       ggplot2::scale_x_continuous(
-        breaks = round(seq(min(heat$Time), max(heat$Time), by = numberOfConditions))
+        breaks = round(seq(
+          min(heat$Time),
+          max(heat$Time),
+          by = numberOfConditions
+        ))
       ) +
       ggplot2::theme(
         legend.position = "right",
@@ -177,10 +188,10 @@ plot_thermal_suitability <- function(
     # spaghetti: species anomalies (grey) and mean of managed species (bold)
     anom <- speciesData |>
       dplyr::filter(Metric == "Anomaly")
-    
+
     meanLine <- fix |>
       dplyr::filter(Jurisdiction == meanGroup)
-    
+
     p <- anom |>
       ggplot2::ggplot(ggplot2::aes(x = Time, y = Value)) +
       ggplot2::annotate(
@@ -192,8 +203,16 @@ plot_thermal_suitability <- function(
         ymin = -Inf,
         ymax = Inf
       ) +
-      ggplot2::geom_hline(yintercept = 0, colour = "grey40", linetype = "dashed") +
-      ggplot2::geom_line(ggplot2::aes(group = Species), colour = "grey70", linewidth = 0.3) +
+      ggplot2::geom_hline(
+        yintercept = 0,
+        colour = "grey40",
+        linetype = "dashed"
+      ) +
+      ggplot2::geom_line(
+        ggplot2::aes(group = Species),
+        colour = "grey70",
+        linewidth = 0.3
+      ) +
       ggplot2::geom_line(data = meanLine, colour = "black", linewidth = 1.1) +
       ecodata::geom_gls(data = meanLine, ggplot2::aes(x = Time, y = Value)) +
       ggplot2::ylab("Anomaly (percentage points)") +
@@ -206,7 +225,7 @@ plot_thermal_suitability <- function(
       ecodata::theme_ts() +
       ecodata::theme_title()
   }
-  
+
   return(p)
 }
 
