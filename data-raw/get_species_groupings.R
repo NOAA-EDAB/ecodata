@@ -1,38 +1,5 @@
 # Processing species groupings
 
-# These data identify species groupings used in analyses of marine community
-# structure and function in the Northeast Large Marine Ecosystem (NE-LME).
-# Included are species common names (COMNAME) along with scientific names
-# (SCINAME) and several species codes. SVSPP codes are used by the NEFSC
-# Ecosystems Surveys Branch in their fishery-independent Survey Database
-# (SVDBS) while NESPP3 codes refer to the codes used by the Commercial
-# Fisheries Database System (CFDBS) for fishery-dependent data. A third species
-# code provided is the ITISSPP, which refers to species identifiers used by the
-# Integrated Taxonomic Information System (ITIS). Digits within ITIS codes are
-# hierarchical, with different positions in the identifier referring to higher
-# or lower taxonomic levels.  More information about the SVDBS, CFDBS, and ITIS
-# species codes are available in the links provided below.
-#
-# The column variable "Fed.managed" refers to the species' management body
-# (limited to NEFMC, MAFMC, or jointly managed species ("JOINT")). Group names
-# listed under columns containing "SOE" are species groupings that were used in
-# the State of the Ecosystem Reports, which are delivered to the New England
-# Fishery Management Council (NEFMC) and Mid-Atlantic Fishery Management
-# Council (MAFMC) to provide ecosystems context. SOE groupings classify species
-# according to feeding guilds derived from Garrison and Link (2000) and Link et
-# al. (2006). These groupings are refined annually for more effective reporting
-# and differ slightly between years. The columns "EMAX" and "Garrison.Link"
-# refer to the species groupings presented in Link et al. (2006) and Garrison
-# and Link (2000) respectively.
-#
-# Species groupings listed in the "NEIEA" column were developed for
-# presentation on the Northeast Integrated Ecosystem Assessment (NE-IEA)
-# website. These groupings are based on EMAX groupings, but were adjusted based
-# on conceptual models developed for the NE-IEA program that highlight focal
-# components in the NE-LME (i.e. those components with the largest potential
-# for perturbing ecosystem dynamics). NE-IEA groupings were further simplified
-# to allow for effective communication through the NE-IEA website.
-#
 # See the following links for more information regarding the NEFSC ESB Bottom
 # Trawl Survey, CFDBS, and ITIS:
 # https://www.itis.gov/
@@ -46,17 +13,14 @@
 raw.dir <- here::here("data-raw")
 
 get_species_groupings <- function(save_clean = F) {
-  species <- readRDS(file.path(
-    raw.dir,
-    "speciesgroupingsFMP - Sarah Gaichas - NOAA Federal.rds"
-  ))
-  species_groupings <- species |> tibble::as_tibble()
-
-  # Fixing Windowpane with is showing NA in Fed.Managed when it should be NEFMC
-  species_groupings <- species_groupings |>
-    dplyr::mutate(
-      Fed.Managed = replace(Fed.Managed, COMNAME == "WINDOWPANE", "NEFMC")
-    )
+  ## last downloaded 2026-11-13, "updated new_species_groupings" sheet
+  ## from: https://docs.google.com/spreadsheets/d/1Bbmi_GzFiWfOqABwzcGHwAA_uKwdDiKuGkVDYD6DYa8/edit?gid=1143921734#gid=1143921734
+  species <- read.csv(here::here(raw.dir, "updated new_species_groupings.csv"))
+  species_groupings <- species |>
+    tibble::as_tibble() |>
+    ## OVERWRITING SOE.24 WITH Guild as temp fix so col name doesn't have to be changed downstream
+    dplyr::mutate(SOE.24 = Guild) |>
+    dplyr::select(-Reviewed)
 
   if (save_clean) {
     usethis::use_data(species_groupings, overwrite = T)

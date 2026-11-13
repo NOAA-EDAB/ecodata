@@ -2,7 +2,7 @@
 #'
 #' Species groupings from a variety of NEFSC EDAB products are included in this data set.
 #'
-#' @format 1022 rows and 15 columns
+#' @format 1020 rows and 11 columns
 #'
 #' \itemize{
 #'     \item COMNAME: Common name of listed species.
@@ -11,19 +11,29 @@
 #'     \item NESPP3: Species codes used in CFDBS.
 #'     \item SCINAME: Scientific name of listed species.
 #'     \item Fed.managed: Management body. One of \code{NEFMC}, \code{MAFMC}, \code{JOINT} (MAFMC/NEFMC), or \code{NA}.
-#'     \item SOE.17: Feeding guild groupings used in 2017-2018 SOE reports.
-#'     \item EMAX: Groupings adapted from Link et al. 2006.
 #'     \item RPATH: Groupings from Rpath - the R version of the Ecopath with Ecosim model.
-#'     \item SOE.18: Feeding guild groupings used in 2018-2019 SOE reports.
 #'     \item SizeCat: Size category.
-#'     \item Min.size: Minimum size.
-#'     \item Garrison.Link: Groupings adapted from Garrison and Link 2000.
-#'     \item NEIEA: Simplified feeding guilds for NE-IEA website.
-#'     \item SOE.20: Feeding guild groupings used in 2020+ SOE reports.
+#'     \item SOE.24: Alias column - same contents as the Guild column. Temporary fix to prevent downstream impacts at this point in time.
+#'     \item FMP: Fisheries management plan of the listed species, or \code{NA}.
+#'     \item Guild: Feeding guild groupings used in the 2027+ SOE reports
 #' }
 #'
 #' @details
 #' More information about these species groupings may be found at \url{https://noaa-edab.github.io/tech-doc/aggroups.html}.
+#'
+#' Guilds were assigned according to the following definitions:
+#'
+#' \itemize{
+#'     \item Benthos:	sessile/benthic-associated organisms that are not predators of managed species
+#'     \item Apex predator:	highly migratory species at the highest trophic levels. max size >1.5m
+#'     \item Benthivore:	eats benthos; may be an invertebrate
+#'     \item Piscivore:	pelagic consumer of fish
+#'     \item Planktivore:	pelagic consumer of plankton or early life stage fish
+#'     \item Freshwater:	any species that lives in freshwater
+#'     \item Flora:	non-animal species (algae, etc)
+#'     \item Aquaculture:	species marked with "aquaculture" in their name
+#'     \item Other:	species marked "other" or "trash"; squid eggs
+#'     }
 #'
 #' @references
 #' Garrison, Lance P, and Jason S Link. 2000. “Dietary guild structure of the fish community in the Northeast United
