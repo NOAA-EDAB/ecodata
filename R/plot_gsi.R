@@ -17,7 +17,8 @@ plot_gsi <- function(
   shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "gsi",
-  n = 0
+  n = 0,
+  trend.fit = FALSE # New flag added here
 ) {
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
@@ -35,8 +36,6 @@ plot_gsi <- function(
   } else {
     var <- "western gulf stream index"
   }
-  # optional code to wrangle ecodata object prior to plotting
-  # e.g., calculate mean, max or other needed values to join below
 
   fix <- ecodata::gsi |>
     dplyr::filter(Var == var) |>
@@ -46,11 +45,6 @@ plot_gsi <- function(
     dplyr::mutate(hline = mean(Value)) |>
     dplyr::rename(Time = Year)
 
-  # code for generating plot object p
-  # ensure that setup list objects are called as setup$...
-  # e.g. fill = setup$shade.fill, alpha = setup$shade.alpha,
-  # xmin = setup$x.shade.min , xmax = setup$x.shade.max
-  #
   p <- fix |>
     ggplot2::ggplot(ggplot2::aes(x = Time, y = Value)) +
     ggplot2::annotate(
@@ -78,21 +72,21 @@ plot_gsi <- function(
     ) +
     ecodata::theme_title()
 
-  # optional code for New England specific (2 panel) formatting
-  # if (report == "NewEngland") {
-  #   p <- p +
-  #     ggplot2::theme(legend.position = "bottom",
-  #                    legend.title = ggplot2::element_blank())
-  #
-  # }
-
   if (report == "NewEngland") {
     p <- "This indicator is only present in the `MidAtlantic` report"
+    if (trend.fit) {
+      return(list(plot = p, stats = NULL))
+    }
+    return(p)
   }
 
-  return(p)
+  if (trend.fit) {
+    fit_stats <- ecodata:::get_gls_stats(p)
+    return(list(plot = p, stats = fit_stats))
+  } else {
+    return(p)
+  }
 }
-
 
 attr(plot_gsi, "report") <- c("MidAtlantic", "NewEngland")
 attr(plot_gsi, "varName") <- c("gsi", "westgsi")

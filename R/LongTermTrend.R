@@ -15,9 +15,7 @@
 #'
 #'@export
 #'
-#'@return If slope is significantly different from 0 (p < 0.05), then a line of best fit is returned. Otherwise output
-#'is \code{NULL}.
-#'
+#'@return Outputs a trendline (solid for normal errors, dashed for AR1 errors) and appends an asterisk if p < 0.05.
 #'
 #'@examples
 #'library(ggplot2)
@@ -59,7 +57,7 @@ geom_gls <- function(
   )
 }
 
-
+# defines line appearance
 # defines line appearance
 GeomGLS <- ggplot2::ggproto(
   "GeomGLS",
@@ -79,17 +77,25 @@ GeomGLS <- ggplot2::ggproto(
   draw_group = function(data, panel_params, coord) {
     coords <- coord$transform(data, panel_params)
     first_row <- coords[1, , drop = FALSE]
+    last_row <- coords[nrow(coords), , drop = FALSE]
 
-    #Select default color based on positive/negative trend
+    # Select default color based on positive/negative trend
     if (coords$y[1] < coords$y[which.max(coords$x)]) {
       first_row$color <- "orange"
     } else {
       first_row$color <- "purple"
     }
 
-    grid::linesGrob(
+    # Override linetype based on the winning model's error structure
+    if (!is.null(first_row$model_type)) {
+      first_row$linetype <- ifelse(first_row$model_type == "linear_ar1", 2, 1) # 2 = dashed, 1 = solid
+    }
+
+    # Create the trendline
+    line_grob <- grid::linesGrob(
       coords$x,
       coords$y,
+      default.units = "npc", # Explicitly set default units for the line
       gp = grid::gpar(
         col = first_row$color,
         alpha = first_row$alpha,
@@ -97,9 +103,27 @@ GeomGLS <- ggplot2::ggproto(
         lty = first_row$linetype
       )
     )
+
+    # Conditionally create the asterisk for significant trends
+    if (!is.null(first_row$is_sig) && isTRUE(first_row$is_sig)) {
+      star_grob <- grid::textGrob(
+        label = "*",
+        # FIX: Wrap raw coordinates in grid::unit(..., "npc") before arithmetic
+        x = grid::unit(last_row$x, "npc") + grid::unit(2, "mm"),
+        y = grid::unit(last_row$y, "npc"),
+        gp = grid::gpar(col = first_row$color, fontsize = 16)
+      )
+      # Return both graphics
+      return(grid::gList(line_grob, star_grob))
+    }
+
+    # Return only the trendline if not significant
+    return(line_grob)
   }
 )
 
+# where all the computation takes place
+# where all the computation takes place
 # where all the computation takes place
 StatGLS <- ggplot2::ggproto(
   "StatGLS",
@@ -109,116 +133,133 @@ StatGLS <- ggplot2::ggproto(
     `%>%` <- magrittr::`%>%`
     data <- data %>%
       dplyr::arrange(x) %>%
-      #Fill in time steps if there are missing values
       tidyr::complete(x = tidyr::full_seq(min(data$x):max(data$x), 1))
 
     if (warn & nrow(data) < 30) {
       message("N < 30")
     }
 
-    #Model fitting -------------------------------------------------------
-    constant_norm <-
-      nlme::gls(y ~ 1, data = data, na.action = na.omit)
-    constant_ar1 <-
-      try(nlme::gls(
+    # Model fitting (suppressing errors) -----------------------------------
+    constant_norm <- try(
+      nlme::gls(y ~ 1, data = data, na.action = na.omit),
+      silent = TRUE
+    )
+    constant_ar1 <- try(
+      nlme::gls(
         y ~ 1,
         data = data,
         correlation = nlme::corAR1(form = ~x),
         na.action = na.omit
-      ))
-    if (class(constant_ar1) == "try-error") {
-      return(
-        best_lm <- data.frame(
-          model = NA,
-          aicc = NA,
-          coefs..Intercept = NA,
-          coefs.time = NA,
-          coefs.time2 = NA,
-          pval = NA
-        )
-      )
-    }
-
-    # Linear model with normal error
-    linear_norm <- nlme::gls(y ~ x, data = data, na.action = na.omit)
-
-    # Linear model with AR1 error
-    linear_ar1 <-
-      try(nlme::gls(
+      ),
+      silent = TRUE
+    )
+    linear_norm <- try(
+      nlme::gls(y ~ x, data = data, na.action = na.omit),
+      silent = TRUE
+    )
+    linear_ar1 <- try(
+      nlme::gls(
         y ~ x,
         data = data,
         correlation = nlme::corAR1(form = ~x),
         na.action = na.omit
-      ))
-    if (class(linear_ar1) == "try-error") {
-      return(
-        best_lm <- data.frame(
-          model = NA,
-          aicc = NA,
-          coefs..Intercept = NA,
-          coefs.time = NA,
-          coefs.time2 = NA,
-          pval = NA
-        )
-      )
+      ),
+      silent = TRUE
+    )
+
+    # Initialize stats as NA
+    norm_aicc <- NA
+    norm_pval <- NA
+    ar1_aicc <- NA
+    ar1_pval <- NA
+
+    # Extract stats if normal models succeeded
+    if (
+      !inherits(constant_norm, "try-error") &&
+        !inherits(linear_norm, "try-error")
+    ) {
+      norm_aicc <- AICcmodavg::AICc(linear_norm)
+      norm_pval <- anova(
+        update(constant_norm, method = "ML"),
+        update(linear_norm, method = "ML")
+      )$`p-value`[2]
     }
 
-    # Polynomial model with normal error
-    # data$x2 <- data$x^2
-    # poly_norm <- nlme::gls(y ~ x + x2, data = data, na.action = na.omit)
-    #
-    # # Polynomial model with AR1 error
-    # poly_ar1 <-
-    #   try(nlme::gls(y ~ x + x2,
-    #                 data = data,
-    #                 correlation = nlme::corAR1(form = ~x),
-    #                 na.action = na.omit))
-    # if (class(poly_ar1) == "try-error"){
-    #   return(best_lm <- data.frame(model = NA,
-    #                                aicc  = NA,
-    #                                coefs..Intercept = NA,
-    #                                coefs.time = NA,
-    #                                coefs.time2 = NA,
-    #                                pval = NA))
-    # }
+    # Extract stats if AR1 models succeeded
+    if (
+      !inherits(constant_ar1, "try-error") && !inherits(linear_ar1, "try-error")
+    ) {
+      ar1_aicc <- AICcmodavg::AICc(linear_ar1)
+      ar1_pval <- anova(
+        update(constant_ar1, method = "ML"),
+        update(linear_ar1, method = "ML")
+      )$`p-value`[2]
+    }
 
-    # Calculate AICs for all models
-    df_aicc <-
-      data.frame(
-        model = c("linear_norm", "linear_ar1"),
-        aicc = c(AICcmodavg::AICc(linear_norm), AICcmodavg::AICc(linear_ar1)),
-        coefs = rbind(c(coef(linear_norm), NA), c(coef(linear_ar1), NA)),
-        # Calculate overall significance (need to use
-        # ML not REML for this)
-        pval = c(
-          anova(
-            update(constant_norm, method = "ML"),
-            update(linear_norm, method = "ML")
-          )$`p-value`[2],
-          anova(
-            update(constant_ar1, method = "ML"),
-            update(linear_ar1, method = "ML")
-          )$`p-value`[2]
-        )
-      )
+    # Abort if both linear models failed
+    if (is.na(norm_aicc) && is.na(ar1_aicc)) {
+      return(data.frame(x = numeric(0), y = numeric(0)))
+    }
 
-    best_lm <- df_aicc %>%
-      #dplyr::filter(grepl("linear",model)) %>% #Select only linear models (removal of poly fit)
-      dplyr::filter(aicc == min(aicc)) #Select model with lowest AICc
+    # Determine the winning model (handling NAs safely)
+    min_aicc <- min(c(norm_aicc, ar1_aicc), na.rm = TRUE)
 
-    if (best_lm$model == "linear_norm") {
+    if (!is.na(norm_aicc) && norm_aicc == min_aicc) {
+      best_model_name <- "linear_norm"
       model <- linear_norm
-    } else if (best_lm$model == "linear_ar1") {
+      best_pval <- norm_pval
+    } else {
+      best_model_name <- "linear_ar1"
       model <- linear_ar1
+      best_pval <- ar1_pval
     }
 
-    if (best_lm$pval < 0.05) {
-      newtime <- seq(min(data$x), max(data$x), length.out = length(data$x))
-      newdata <- data.frame(x = newtime, x2 = newtime^2)
-      lm_pred <- AICcmodavg::predictSE(model, newdata = newdata, se.fit = TRUE) #Get BLUE
-      data <- data.frame(x = data$x, y = lm_pred$fit)
+    # Always generate the BLUE line
+    newtime <- seq(min(data$x), max(data$x), length.out = length(data$x))
+    newdata <- data.frame(x = newtime, x2 = newtime^2)
+    lm_pred <- AICcmodavg::predictSE(model, newdata = newdata, se.fit = TRUE)
 
-      return(data)
-    }
+    # Return coordinates alongside wide-format model stats
+    data.frame(
+      x = newtime,
+      y = lm_pred$fit,
+      model_type = best_model_name,
+      is_sig = !is.na(best_pval) && best_pval < 0.05,
+      norm_aicc = norm_aicc,
+      norm_pval = norm_pval,
+      ar1_aicc = ar1_aicc,
+      ar1_pval = ar1_pval
+    )
   }
 )
+
+get_gls_stats <- function(p) {
+  built_p <- ggplot2::ggplot_build(p)
+  gls_data <- built_p$data[[4]]
+
+  if ("norm_aicc" %in% names(gls_data)) {
+    # Grab the single unique row of stats
+    raw_stats <- unique(gls_data[, c(
+      "model_type",
+      "norm_aicc",
+      "norm_pval",
+      "ar1_aicc",
+      "ar1_pval"
+    )])
+
+    # Restructure into a clean, readable dataframe
+    fit_stats <- data.frame(
+      model = c("linear_norm", "linear_ar1"),
+      aicc = c(raw_stats$norm_aicc, raw_stats$ar1_aicc),
+      pval = c(raw_stats$norm_pval, raw_stats$ar1_pval),
+      is_winning_model = c(
+        raw_stats$model_type == "linear_norm",
+        raw_stats$model_type == "linear_ar1"
+      )
+    )
+  } else {
+    fit_stats <- NULL
+  }
+
+  return(fit_stats)
+}

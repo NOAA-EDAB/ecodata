@@ -4,7 +4,13 @@
 \alias{plot_gsi}
 \title{plot gulf stream index}
 \usage{
-plot_gsi(shadedRegion = NULL, report = "MidAtlantic", varName = "gsi", n = 0)
+plot_gsi(
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  varName = "gsi",
+  n = 0,
+  trend.fit = FALSE
+)
 }
 \arguments{
 \item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
