@@ -2,7 +2,7 @@
 % Please edit documentation in R/shortTermTrend.R
 \name{StatLM}
 \alias{StatLM}
-\title{StatLM Stat protto based on ecodata StatGLS
+\title{StatLM Stat proto based on ecodata StatGLS
 Need to pass arguments}
 \usage{
 StatLM

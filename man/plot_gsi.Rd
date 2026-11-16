@@ -9,7 +9,7 @@ plot_gsi(
   report = "MidAtlantic",
   varName = "gsi",
   n = 0,
-  trend.fit = FALSE
+  trendStats = FALSE
 )
 }
 \arguments{
@@ -20,6 +20,8 @@ plot_gsi(
 \item{varName}{Character string. Which variable to plot ("gsi","westgsi")}
 
 \item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
+
+\item{trendStats}{logical. If TRUE returns a list object of plot and model fit statistics}
 }
 \value{
 ggplot object

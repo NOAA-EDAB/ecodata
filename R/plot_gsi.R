@@ -6,6 +6,7 @@
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which variable to plot ("gsi","westgsi")
 #' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
+#' @param trendStats logical. If TRUE returns a list object of plot and model fit statistics
 #'
 #' @return ggplot object
 #'
@@ -18,7 +19,7 @@ plot_gsi <- function(
   report = "MidAtlantic",
   varName = "gsi",
   n = 0,
-  trend.fit = FALSE # New flag added here
+  trendStats = FALSE
 ) {
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
@@ -60,7 +61,7 @@ plot_gsi <- function(
     ggplot2::geom_line() +
     ggplot2::ggtitle(stringr::str_to_title(var)) +
     ggplot2::ylab("Anomaly") +
-    ggplot2::xlab(ggplot2::element_blank()) +
+    ggplot2::xlab(NULL) +
     ecodata::geom_gls() +
     ecodata::geom_lm(n = n) +
     ecodata::theme_ts() +
@@ -74,14 +75,14 @@ plot_gsi <- function(
 
   if (report == "NewEngland") {
     p <- "This indicator is only present in the `MidAtlantic` report"
-    if (trend.fit) {
+    if (trendStats) {
       return(list(plot = p, stats = NULL))
     }
     return(p)
   }
 
-  if (trend.fit) {
-    fit_stats <- ecodata:::get_gls_stats(p)
+  if (trendStats) {
+    fit_stats <- ecodata:::get_trend_stats(p)
     return(list(plot = p, stats = fit_stats))
   } else {
     return(p)

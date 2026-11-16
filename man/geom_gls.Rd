@@ -37,7 +37,7 @@ assigns the top-level plotting \code{aes()} to the GLS geom.}
 \item{...}{Other arguments may be passed to the stat, including fixed aesthetics.}
 }
 \value{
-Outputs a trendline (solid for normal errors, dashed for AR1 errors) and appends an asterisk if p < 0.05.
+Outputs a normal linear trendline (solid if p < 0.05, dashed if 0.05 <= p < 0.20).
 }
 \description{
 A geom to fit a GLS model to a time series

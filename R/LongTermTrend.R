@@ -15,7 +15,7 @@
 #'
 #'@export
 #'
-#'@return Outputs a trendline (solid for normal errors, dashed for AR1 errors) and appends an asterisk if p < 0.05.
+#'@return Outputs a normal linear trendline (solid if p < 0.05, dashed if 0.05 <= p < 0.20).
 #'
 #'@examples
 #'library(ggplot2)
@@ -58,7 +58,6 @@ geom_gls <- function(
 }
 
 # defines line appearance
-# defines line appearance
 GeomGLS <- ggplot2::ggproto(
   "GeomGLS",
   ggplot2::Geom,
@@ -77,7 +76,11 @@ GeomGLS <- ggplot2::ggproto(
   draw_group = function(data, panel_params, coord) {
     coords <- coord$transform(data, panel_params)
     first_row <- coords[1, , drop = FALSE]
-    last_row <- coords[nrow(coords), , drop = FALSE]
+
+    # The Visibility Gatekeeper: If p >= 0.05, draw nothing
+    if (!is.null(first_row$is_plotted) && !isTRUE(first_row$is_plotted)) {
+      return(grid::nullGrob())
+    }
 
     # Select default color based on positive/negative trend
     if (coords$y[1] < coords$y[which.max(coords$x)]) {
@@ -86,16 +89,15 @@ GeomGLS <- ggplot2::ggproto(
       first_row$color <- "purple"
     }
 
-    # Override linetype based on the winning model's error structure
-    if (!is.null(first_row$model_type)) {
-      first_row$linetype <- ifelse(first_row$model_type == "linear_ar1", 2, 1) # 2 = dashed, 1 = solid
+    # Contextual Linetype Logic: Dashed (2) if autocorrelated, Solid (1) if not
+    if (!is.null(first_row$is_autocorrelated)) {
+      first_row$linetype <- ifelse(isTRUE(first_row$is_autocorrelated), 2, 1)
     }
 
-    # Create the trendline
-    line_grob <- grid::linesGrob(
+    # Return just the trendline
+    grid::linesGrob(
       coords$x,
       coords$y,
-      default.units = "npc", # Explicitly set default units for the line
       gp = grid::gpar(
         col = first_row$color,
         alpha = first_row$alpha,
@@ -103,27 +105,9 @@ GeomGLS <- ggplot2::ggproto(
         lty = first_row$linetype
       )
     )
-
-    # Conditionally create the asterisk for significant trends
-    if (!is.null(first_row$is_sig) && isTRUE(first_row$is_sig)) {
-      star_grob <- grid::textGrob(
-        label = "*",
-        # FIX: Wrap raw coordinates in grid::unit(..., "npc") before arithmetic
-        x = grid::unit(last_row$x, "npc") + grid::unit(2, "mm"),
-        y = grid::unit(last_row$y, "npc"),
-        gp = grid::gpar(col = first_row$color, fontsize = 16)
-      )
-      # Return both graphics
-      return(grid::gList(line_grob, star_grob))
-    }
-
-    # Return only the trendline if not significant
-    return(line_grob)
   }
 )
 
-# where all the computation takes place
-# where all the computation takes place
 # where all the computation takes place
 StatGLS <- ggplot2::ggproto(
   "StatGLS",
@@ -170,8 +154,10 @@ StatGLS <- ggplot2::ggproto(
     # Initialize stats as NA
     norm_aicc <- NA
     norm_pval <- NA
+    norm_slope <- NA
     ar1_aicc <- NA
     ar1_pval <- NA
+    ar1_slope <- NA
 
     # Extract stats if normal models succeeded
     if (
@@ -183,6 +169,7 @@ StatGLS <- ggplot2::ggproto(
         update(constant_norm, method = "ML"),
         update(linear_norm, method = "ML")
       )$`p-value`[2]
+      norm_slope <- as.numeric(coef(linear_norm)["x"])
     }
 
     # Extract stats if AR1 models succeeded
@@ -194,72 +181,44 @@ StatGLS <- ggplot2::ggproto(
         update(constant_ar1, method = "ML"),
         update(linear_ar1, method = "ML")
       )$`p-value`[2]
+      ar1_slope <- as.numeric(coef(linear_ar1)["x"])
     }
 
-    # Abort if both linear models failed
-    if (is.na(norm_aicc) && is.na(ar1_aicc)) {
+    # Abort if the Normal linear model failed (since it's the geometric baseline)
+    if (is.na(norm_aicc)) {
       return(data.frame(x = numeric(0), y = numeric(0)))
     }
 
-    # Determine the winning model (handling NAs safely)
-    min_aicc <- min(c(norm_aicc, ar1_aicc), na.rm = TRUE)
-
-    if (!is.na(norm_aicc) && norm_aicc == min_aicc) {
-      best_model_name <- "linear_norm"
-      model <- linear_norm
-      best_pval <- norm_pval
-    } else {
-      best_model_name <- "linear_ar1"
-      model <- linear_ar1
-      best_pval <- ar1_pval
+    # Determine if system is autocorrelated (AR1 provides a better fit)
+    sys_autocorrelated <- FALSE
+    if (!is.na(ar1_aicc) && ar1_aicc < norm_aicc) {
+      sys_autocorrelated <- TRUE
     }
 
-    # Always generate the BLUE line
+    # Evaluate strict significance for the plot gate
+    is_significant <- !is.na(norm_pval) && norm_pval < 0.05
+
+    # ALWAYS calculate the normal model coordinates to pass the stats through ggplot_build
     newtime <- seq(min(data$x), max(data$x), length.out = length(data$x))
     newdata <- data.frame(x = newtime, x2 = newtime^2)
-    lm_pred <- AICcmodavg::predictSE(model, newdata = newdata, se.fit = TRUE)
+    lm_pred <- AICcmodavg::predictSE(
+      linear_norm,
+      newdata = newdata,
+      se.fit = TRUE
+    )
 
-    # Return coordinates alongside wide-format model stats
-    data.frame(
+    return(data.frame(
       x = newtime,
       y = lm_pred$fit,
-      model_type = best_model_name,
-      is_sig = !is.na(best_pval) && best_pval < 0.05,
+      is_sig = is_significant,
+      is_plotted = is_significant, # <--- Flag tells Geom strictly to draw if p < 0.05
+      is_autocorrelated = sys_autocorrelated,
       norm_aicc = norm_aicc,
       norm_pval = norm_pval,
+      norm_slope = norm_slope,
       ar1_aicc = ar1_aicc,
-      ar1_pval = ar1_pval
-    )
+      ar1_pval = ar1_pval,
+      ar1_slope = ar1_slope
+    ))
   }
 )
-
-get_gls_stats <- function(p) {
-  built_p <- ggplot2::ggplot_build(p)
-  gls_data <- built_p$data[[4]]
-
-  if ("norm_aicc" %in% names(gls_data)) {
-    # Grab the single unique row of stats
-    raw_stats <- unique(gls_data[, c(
-      "model_type",
-      "norm_aicc",
-      "norm_pval",
-      "ar1_aicc",
-      "ar1_pval"
-    )])
-
-    # Restructure into a clean, readable dataframe
-    fit_stats <- data.frame(
-      model = c("linear_norm", "linear_ar1"),
-      aicc = c(raw_stats$norm_aicc, raw_stats$ar1_aicc),
-      pval = c(raw_stats$norm_pval, raw_stats$ar1_pval),
-      is_winning_model = c(
-        raw_stats$model_type == "linear_norm",
-        raw_stats$model_type == "linear_ar1"
-      )
-    )
-  } else {
-    fit_stats <- NULL
-  }
-
-  return(fit_stats)
-}
