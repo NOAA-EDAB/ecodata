@@ -78,7 +78,11 @@ plot_gsi <- function(
 
   if (report == "NewEngland") {
     p <- "This indicator is only present in the `MidAtlantic` report"
+<<<<<<< HEAD
     if (trendStats | plotdata) {
+=======
+    if (trendStats) {
+>>>>>>> 183b117eae937517d6f9ad4d0dffa1718ac81ec6
       return(list(plot = p, stats = NULL, data = NULL))
     }
     return(p)
