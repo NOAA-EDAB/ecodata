@@ -81,7 +81,7 @@ plot_grayseal <- function(shadedRegion = NULL, report = "MidAtlantic") {
       )
     ) +
     #ggplot2::guides(color = "none")+
-    ecodata::theme_ts() +
+    ecodata::theme_facet() +
     ecodata::theme_title()
 
   return(p)
