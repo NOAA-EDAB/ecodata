@@ -50,10 +50,10 @@ fix <- ecodata::gsi |>
   dplyr::group_by(Year) |>
   dplyr::summarise(Value = mean(Value), .groups = "drop") |>
   dplyr::rename(Time = Year) |>
-  prep_plot_data(var = "gulf stream index", epu = "MAB")
+  format_plot_data(var = "gulf stream index", epu = "MAB")
 
 # Multi-source standardization
-combined <- prep_plot_data(
+combined <- format_plot_data(
   list(NEFSC = dplyr::rename(agg_bio, Value = Mean), NEAMAP = neamap),
   epu = "MAB",
   units = "kg tow^-1"
