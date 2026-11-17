@@ -198,12 +198,12 @@ plot_stock_status <- function(shadedRegion = NULL, report = "MidAtlantic") {
     ggplot2::scale_color_manual(
       values = c("c" = "#D95F02", "b" = "#7570B3", "a" = "#1B9E77")
     ) +
-    ggplot2::xlab(expression(~ B / B[msy])) +
     ggplot2::ylab(expression(~ F / F[msy])) +
     ggplot2::guides(color = "none") +
     ggplot2::ggtitle(paste0(report, ": stock status")) +
     ecodata::theme_ts() +
     ecodata::theme_title() +
+    ggplot2::xlab(expression(~ B / B[msy])) +
     ggplot2::theme(
       legend.position = "bottom",
       legend.direction = "vertical",
