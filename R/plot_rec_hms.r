@@ -87,8 +87,6 @@ plot_rec_hms <- function(shadedRegion = NULL, report = "MidAtlantic", n = 0) {
         dplyr::filter(n >= 30)
     ) +
     ecodata::theme_ts() +
-    ecodata::theme_facet() +
-    ecodata::theme_title() +
     ggplot2::theme(
       strip.text = ggplot2::element_blank(),
       strip.background = ggplot2::element_blank()

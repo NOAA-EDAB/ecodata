@@ -119,8 +119,7 @@ plot_advection <- function(
       linewidth = setup$hline.size,
       alpha = setup$hline.alpha,
       linetype = setup$hline.lty
-    ) +
-    ecodata::theme_title()
+    )
 
   return(p)
 }
