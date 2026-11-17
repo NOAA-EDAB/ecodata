@@ -91,7 +91,7 @@ GeomGLS <- ggplot2::ggproto(
 
     # Contextual Linetype Logic: Dashed (2) if autocorrelated, Solid (1) if not
     if (!is.null(first_row$is_autocorrelated)) {
-      first_row$linetype <- ifelse(isTRUE(first_row$is_autocorrelated), 2, 1)
+      first_row$linetype <- 1
     }
 
     # Return just the trendline
