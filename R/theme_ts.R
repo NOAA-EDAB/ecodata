@@ -47,7 +47,7 @@ theme_ts <- function(...) {
       legend.title = ggplot2::element_blank(),
       legend.text = ggplot2::element_text(size = 12),
     ),
-    ggplot2::scale_color_discrete(labels = format_legend_labels)
+    ggplot2::scale_color_discrete(labels = ecodata:::format_legend_labels)
   )
   class(th) <- c("ecodata_theme", class(th))
   th
@@ -102,7 +102,7 @@ format_plot_title <- function(x) {
 ggplot_add.ecodata_theme <- function(object, plot, object_name) {
   # Format the title if one has already been set on the plot
   if (!is.null(plot$labels$title)) {
-    plot$labels$title <- format_plot_title(plot$labels$title)
+    plot$labels$title <- ecodata:::format_plot_title(plot$labels$title)
   }
 
   # Strip the custom class and delegate standard theme addition to ggplot2
