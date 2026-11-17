@@ -119,6 +119,11 @@ StatGLS <- ggplot2::ggproto(
       dplyr::arrange(x) %>%
       tidyr::complete(x = tidyr::full_seq(min(data$x):max(data$x), 1))
 
+    # Minimum Sample Size Gate: Do not evaluate if fewer than 10 valid years
+    if (sum(!is.na(data$y)) < 10) {
+      return(data.frame(x = numeric(0), y = numeric(0)))
+    }
+
     if (warn & nrow(data) < 30) {
       message("N < 30")
     }
