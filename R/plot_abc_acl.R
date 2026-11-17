@@ -154,6 +154,7 @@ plot_abc_acl <- function(
       ggplot2::xlab(ggplot2::element_blank()) +
       ecodata::theme_ts() +
       ggplot2::guides(fill = ggplot2::guide_legend(ncol = 1)) +
+      ecodata::theme_title() +
       ggplot2::scale_fill_manual(values = unname(customPalette[-16]))
 
     return(p)
@@ -180,7 +181,8 @@ plot_abc_acl <- function(
       ggplot2::ylab(expression("Catch / ABC or ACL")) +
       ggplot2::theme(legend.title = ggplot2::element_blank()) +
       ggplot2::xlab(ggplot2::element_blank()) +
-      ecodata::theme_ts()
+      ecodata::theme_ts() +
+      ecodata::theme_title()
 
     return(p)
   }

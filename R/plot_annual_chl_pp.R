@@ -95,7 +95,8 @@ plot_annual_chl_pp <- function(
       linetype = setup$hline.lty
     ) +
     ecodata::geom_lm(n = n) +
-    ecodata::theme_ts()
+    ecodata::theme_facet() +
+    ecodata::theme_title()
 
   if (varName == "chl" & plottype == "total") {
     p <- "Plot type 'total' is not available for the chlorophyll variable. Please use plottype = `mean`."

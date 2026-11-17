@@ -113,7 +113,9 @@ plot_bennet <- function(
       ggplot2::theme(
         legend.position = "bottom",
         legend.title = ggplot2::element_blank()
-      )
+      ) +
+      ecodata::theme_title() +
+      ecodata::theme_facet()
   } else if (varName == "total") {
     indicators <- indicators |>
       dplyr::filter(
@@ -182,7 +184,8 @@ plot_bennet <- function(
       ggplot2::theme(
         legend.position = "bottom",
         legend.title = ggplot2::element_blank()
-      )
+      ) +
+      ecodata::theme_title()
   } else if (varName == "total_guild") {
     indicators$Var <- gsub("Predator", "", indicators$Var)
     indicators$Var <- gsub("Value", "Volume", indicators$Var)
@@ -241,7 +244,8 @@ plot_bennet <- function(
       ggplot2::theme(
         title = ggplot2::element_text(size = 10),
         legend.position = "bottom"
-      )
+      ) +
+      ecodata::theme_title()
   }
 
   # code for generating plot object p

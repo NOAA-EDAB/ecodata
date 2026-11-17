@@ -230,7 +230,7 @@ plot_aggregate_biomass <- function(
     ) +
     ggplot2::coord_cartesian(clip = "on") +
     ggplot2::ylab(ggplot2::element_blank()) +
-    ecodata::theme_ts() +
+    ecodata::theme_facet() +
     ggplot2::theme(
       strip.text = ggplot2::element_text(hjust = 0, size = 12),
       axis.title.x = ggplot2::element_blank(),
@@ -330,7 +330,7 @@ plot_aggregate_biomass <- function(
     ) +
     ggplot2::coord_cartesian(clip = "on") +
     ggplot2::ylab(ggplot2::element_blank()) +
-    ecodata::theme_ts() +
+    ecodata::theme_facet() +
     ggplot2::theme(
       strip.text = ggplot2::element_text(hjust = 0, size = 12),
       axis.title.x = ggplot2::element_blank(),
@@ -434,7 +434,7 @@ plot_aggregate_biomass <- function(
     ) +
     ggplot2::coord_cartesian(clip = "on") +
     ggplot2::ylab(ggplot2::element_blank()) +
-    ecodata::theme_ts() +
+    ecodata::theme_facet() +
     ggplot2::theme(
       strip.text = ggplot2::element_text(hjust = 0, size = 12),
       axis.title.x = ggplot2::element_blank(),
@@ -536,7 +536,7 @@ plot_aggregate_biomass <- function(
     ) +
     ggplot2::coord_cartesian(clip = "on") +
     ggplot2::ylab(ggplot2::element_blank()) +
-    ecodata::theme_ts() +
+    ecodata::theme_facet() +
     ggplot2::theme(
       strip.text = ggplot2::element_text(hjust = 0, size = 12),
       axis.title.x = ggplot2::element_blank(),

@@ -88,7 +88,8 @@ plot_aquaculture <- function(
     ) +
     #ecodata::geom_gls() + n < 30
     ecodata::geom_lm(n = n) +
-    ecodata::theme_ts()
+    ecodata::theme_ts() +
+    ecodata::theme_title()
 
   return(p)
 }
