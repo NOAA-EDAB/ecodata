@@ -17,13 +17,13 @@
 #'
 
 plot_thermal_suitability <- function(
-    shadedRegion = NULL,
-    report = "MidAtlantic",
-    plottype = "scaled"
+  shadedRegion = NULL,
+  report = "MidAtlantic",
+  plottype = "scaled"
 ) {
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
-  
+
   # which report? Data are reported by Council region, not EPU
   if (report == "MidAtlantic") {
     filterEPUs <- "MA"
@@ -34,14 +34,14 @@ plot_thermal_suitability <- function(
   } else {
     stop("report must be either 'MidAtlantic' or 'NewEngland'")
   }
-  
+
   if (!(plottype %in% c("scaled", "raw", "spaghetti"))) {
     stop("plottype must be 'scaled', 'raw', or 'spaghetti'")
   }
-  
+
   # name of the regional mean in Var ("<meanName> - Anomaly")
   meanName <- "Managed species mean"
-  
+
   # Var is "<Species> - <metric>"; split into species and metric
   fix <- ecodata::thermal_suitability |>
     dplyr::filter(EPU == filterEPUs) |>
@@ -49,17 +49,17 @@ plot_thermal_suitability <- function(
       Species = sub(" - [^-]*$", "", Var),
       Metric = sub("^.* - ", "", Var)
     )
-  
+
   speciesData <- fix |>
     dplyr::filter(Species != meanName)
-  
+
   numberOfConditions <- 5
-  
+
   if (plottype %in% c("scaled", "raw")) {
     heat <- speciesData |>
       dplyr::filter(Metric == "Percent suitable") |>
       dplyr::group_by(Species)
-    
+
     if (plottype == "scaled") {
       heat <- heat |>
         dplyr::mutate(
@@ -70,14 +70,14 @@ plot_thermal_suitability <- function(
         dplyr::mutate(scaleVal = Value)
     }
     heat <- dplyr::ungroup(heat)
-    
+
     # finds quantiles
     xs <- quantile(
       heat$scaleVal,
       seq(0, 1, length.out = numberOfConditions + 1),
       na.rm = TRUE
     )
-    
+
     heat <- heat |>
       dplyr::mutate(
         category = cut(
@@ -93,19 +93,19 @@ plot_thermal_suitability <- function(
           include.lowest = TRUE
         )
       )
-    
+
     # order species by mean percent suitable (scaled means are all ~0)
     sortNames <- heat |>
       dplyr::group_by(Species) |>
       dplyr::summarize(total = mean(Value, na.rm = TRUE)) |>
       dplyr::arrange(total) |>
       dplyr::pull(Species)
-    
+
     heat$Species <- factor(heat$Species, levels = sortNames)
-    
+
     # 5 scale colors for viridis
     vir <- viridis::viridis_pal()(numberOfConditions)
-    
+
     if (plottype == "scaled") {
       p <- heat |>
         ggplot2::ggplot(ggplot2::aes(
@@ -128,7 +128,7 @@ plot_thermal_suitability <- function(
         ) +
         ggplot2::labs(fill = "Suitable\nHabitat (%)")
     }
-    
+
     p <- p +
       ggplot2::geom_tile() +
       ggplot2::coord_equal() +
@@ -163,10 +163,10 @@ plot_thermal_suitability <- function(
     # spaghetti: species anomalies (grey) and mean of managed species (bold)
     anom <- speciesData |>
       dplyr::filter(Metric == "Anomaly")
-    
+
     meanLine <- fix |>
       dplyr::filter(Species == meanName)
-    
+
     p <- anom |>
       ggplot2::ggplot(ggplot2::aes(x = Time, y = Value)) +
       ggplot2::annotate(
@@ -199,7 +199,7 @@ plot_thermal_suitability <- function(
       ecodata::theme_ts() +
       ecodata::theme_title()
   }
-  
+
   return(p)
 }
 

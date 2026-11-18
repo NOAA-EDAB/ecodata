@@ -8,7 +8,7 @@ thermal_suitability_Rds <- "thermal_suitability.rds"
 
 get_thermal_suitability <- function(save_clean = F) {
   thermal_suitability <- readRDS(file.path(raw.dir, thermal_suitability_Rds))
-  
+
   if (save_clean) {
     usethis::use_data(thermal_suitability, overwrite = T)
   } else {
