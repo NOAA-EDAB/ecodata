@@ -63,6 +63,7 @@ plot_crew_survey <- function(
       )
     ) |>
     dplyr::filter(!is.na(plot.type))
+  # filter(Var == 'port.state')
 
   #over ride plottype argument if not a suitable combination in the data
   plottype.key <- data |>

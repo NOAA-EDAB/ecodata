@@ -23,7 +23,7 @@ get_crew_survey <- function(save_clean = F) {
   port.region.key <- data.frame(port.state = sort(unique(port.state.names))) |>
     dplyr::mutate(
       EPU = dplyr::case_when(
-        port.state %in% c('MD', 'NJ', 'NY', 'VA') ~ 'MA',
+        port.state %in% c('MD', 'NJ', 'NY', 'VA', 'NC') ~ 'MA',
         port.state %in% c('CT', 'MA', 'ME', 'NH', 'RI') ~ 'NE',
         TRUE ~ 'Other'
       )
@@ -258,8 +258,71 @@ get_crew_survey <- function(save_clean = F) {
       Var.Answer = ifelse(is.na(Var.Answer), "No Response", Var.Answer)
     )
 
-  lvls <- read.csv(factor_levels) |> dplyr::pull(Var.Answer)
-  crew_survey$Var.Answer <- factor(crew_survey$Var.Answer, levels = lvls)
+  # Unify missing/unspecified categories into a single string
+  crew_survey <- crew_survey |>
+    dplyr::mutate(
+      Var.Answer = dplyr::case_when(
+        Var.Answer %in%
+          c("DK/NA", "No Response", "Unspecified") ~ "NA/No Response",
+        is.na(Var.Answer) ~ "NA/No Response",
+        TRUE ~ Var.Answer
+      )
+    )
+
+  # Extract all unique response categories dynamically (now includes the unified "NA/No Response")
+  unique_responses <- unique(crew_survey$Var.Answer)
+
+  # Build a programmatic sorting key
+  response_levels <- data.frame(Var.Answer = unique_responses) |>
+    dplyr::mutate(
+      # Extract the first number in the string to handle ranges ("between $5,000...")
+      num_val = suppressWarnings(
+        as.numeric(gsub(
+          "^[^0-9]*([0-9]+).*$",
+          "\\1",
+          gsub(",", "", Var.Answer)
+        ))
+      ),
+
+      # Map Likert scale strings to numeric weights
+      likert_val = dplyr::case_when(
+        Var.Answer %in%
+          c(
+            '1',
+            'Very Dissatisfied',
+            'Strongly Disagree',
+            'Very Difficult'
+          ) ~ 1,
+        Var.Answer %in% c('2', 'Dissatisfied', 'Disagree', 'Difficult') ~ 2,
+        Var.Answer %in% c('3', 'Neutral', 'Neither easy nor difficult') ~ 3,
+        Var.Answer %in% c('4', 'Satisfied', 'Agree', 'Easy') ~ 4,
+        Var.Answer %in%
+          c('5', 'Very Satisfied', 'Strongly Agree', 'Very Easy') ~ 5,
+        TRUE ~ NA_real_
+      ),
+
+      # Group into sorting tiers
+      sort_tier = dplyr::case_when(
+        Var.Answer == "NA/No Response" ~ 5, # Pinned to the absolute end
+        Var.Answer == "Other" ~ 4, # Pinned just before NA/No Response
+        !is.na(likert_val) ~ 2, # Likert scales second
+        !is.na(num_val) ~ 1, # Pure numeric values/ranges first
+        TRUE ~ 3 # Standard characters third
+      ),
+
+      # Create unified columns for within-tier sorting
+      sort_num = dplyr::coalesce(num_val, likert_val),
+      sort_char = ifelse(sort_tier %in% c(1, 3), Var.Answer, "")
+    ) |>
+    # Sort by tier hierarchy -> numeric value -> alphabetical
+    dplyr::arrange(sort_tier, sort_num, sort_char) |>
+    dplyr::pull(Var.Answer)
+
+  # Apply the programmatically sorted levels
+  crew_survey$Var.Answer <- factor(
+    crew_survey$Var.Answer,
+    levels = response_levels
+  )
 
   if (save_clean) {
     usethis::use_data(crew_survey, overwrite = T)
