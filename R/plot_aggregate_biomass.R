@@ -184,23 +184,24 @@ plot_aggregate_biomass <- function(
       limits = c(0, NA)
     ) +
     ggplot2::coord_cartesian(clip = "on") +
-    ggplot2::ylab(ggplot2::element_blank()) +
     ecodata::theme_facet() +
     ggplot2::theme(
       strip.text = ggplot2::element_text(hjust = 0, size = 12),
       axis.title.x = ggplot2::element_blank(),
-      axis.text = ggplot2::element_text(size = 12),
+      axis.text = ggplot2::element_text(size = 10),
       axis.text.x = ggplot2::element_text(angle = 25),
       axis.title.y = ggplot2::element_text(size = 12),
       legend.position = "bottom",
       # move facets closer together in vertical driection
-      panel.spacing.y = ggplot2::unit(-0.8, "lines"),
+      panel.spacing.y = ggplot2::unit(-0.5, "lines"),
       # place legend close to plot
       legend.margin = ggplot2::margin(t = 0, r = 0, b = 0, l = 0),
       legend.frame = ggplot2::element_blank(),
-      legend.box.spacing = ggplot2::unit(0, "pt")
+      legend.box.spacing = ggplot2::unit(0, "pt"),
+      legend.text = ggplot2::element_text(size = 12)
     ) +
-    ggplot2::ylab("Biomass (kg tow ^-1)")
+    ggplot2::ylab("Biomass (kg tow ^-1)") +
+    ggplot2::ggtitle(paste(report, "Bottom Trawl Survey Biomass"))
 
   if (report == "MidAtlantic") {
     p <- p +
@@ -219,6 +220,6 @@ plot_aggregate_biomass <- function(
   return(p)
 }
 
-# plot_aggregate_biomass()
-# plot_aggregate_biomass(report = "NewEngland", EPU = "GB")
-# plot_aggregate_biomass(report = "NewEngland", EPU = "GOM")
+plot_aggregate_biomass()
+plot_aggregate_biomass(report = "NewEngland", EPU = "GB")
+plot_aggregate_biomass(report = "NewEngland", EPU = "GOM")
