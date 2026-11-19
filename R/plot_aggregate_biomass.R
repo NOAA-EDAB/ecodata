@@ -219,7 +219,3 @@ plot_aggregate_biomass <- function(
   }
   return(p)
 }
-
-plot_aggregate_biomass()
-plot_aggregate_biomass(report = "NewEngland", EPU = "GB")
-plot_aggregate_biomass(report = "NewEngland", EPU = "GOM")
