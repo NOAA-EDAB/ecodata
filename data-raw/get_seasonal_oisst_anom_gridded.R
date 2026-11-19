@@ -17,7 +17,7 @@ ltm.dir <- here::here("data-raw")
 raw.dir <- here::here("data-raw")
 crs <- "+proj=longlat +lat_1=35 +lat_2=45 +lat_0=40+lon_0=-77 +x_0=0 +y_0=0 +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 
-seasonal_oisst_anom_gridded_day_nc <- "sst.day.mean.2025.nc"
+seasonal_oisst_anom_gridded_day_nc <- "sst.day.mean.2026.nc"
 seasonal_oisst_anom_gridded_ltm_nc <- "sst.day.mean.ltm.1991-2020.nc"
 #These data are large files that are not included among ecodata source files. They are accessible
 #here: https://www.esrl.noaa.gov/psd/data/gridded/data.noaa.oisst.v2.highres.html
@@ -36,7 +36,7 @@ fall.ltm <- ltm[[274:365]]
 winter.anom <- sst.2019[[1:90]] - winter.ltm
 spring.anom <- sst.2019[[91:181]] - spring.ltm
 summer.anom <- sst.2019[[182:273]] - summer.ltm
-fall.anom <- sst.2019[[274:342]] - fall.ltm ### switched to cover just dates included in 2022.nc up to Dec 9th.
+fall.anom <- sst.2019[[274:293]] - fall.ltm ### switched to cover just dates included in latest oisst pull
 
 
 rast_process <- function(r, season) {
