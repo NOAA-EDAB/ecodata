@@ -257,26 +257,37 @@ get_crew_survey <- function(save_clean = F) {
     dplyr::mutate(
       Var.Answer = ifelse(is.na(Var.Answer), "No Response", Var.Answer)
     )
-
   # Unify missing/unspecified categories into a single string
   crew_survey <- crew_survey |>
     dplyr::mutate(
       Var.Answer = dplyr::case_when(
         Var.Answer %in%
-          c("DK/NA", "No Response", "Unspecified") ~ "NA/No Response",
+          c("DK/NA", "No Response", "Unspecified", "NA") ~ "NA/No Response",
         is.na(Var.Answer) ~ "NA/No Response",
         TRUE ~ Var.Answer
       )
     )
-
-  # Extract all unique response categories dynamically (now includes the unified "NA/No Response")
+  # Extract all unique response categories dynamically
   unique_responses <- unique(crew_survey$Var.Answer)
 
   # Build a programmatic sorting key
   response_levels <- data.frame(Var.Answer = unique_responses) |>
     dplyr::mutate(
-      # Extract the first number in the string to handle ranges ("between $5,000...")
-      num_val = suppressWarnings(
+      # Intercept text-based numeric/range boundaries to force them into the correct order
+      override_val = dplyr::case_when(
+        grepl("(?i)under 25", Var.Answer) ~ 24.9, # Sorts just before "25 to..."
+        grepl("(?i)55 or older", Var.Answer) ~ 55.1, # Sorts just after "45 to 54"
+        grepl("(?i)less than 5", Var.Answer) ~ 4.9, # Sorts just before "5 to..."
+        grepl("(?i)30 or more", Var.Answer) ~ 30.1, # Sorts just after ranges ending near 30
+        grepl("(?i)one owner", Var.Answer) ~ 1,
+        grepl("(?i)two owners", Var.Answer) ~ 2,
+        grepl("(?i)three owners", Var.Answer) ~ 3,
+        grepl("(?i)four or more", Var.Answer) ~ 4,
+        TRUE ~ NA_real_
+      ),
+
+      # Extract the first number in the string
+      parsed_num = suppressWarnings(
         as.numeric(gsub(
           "^[^0-9]*([0-9]+).*$",
           "\\1",
@@ -284,20 +295,25 @@ get_crew_survey <- function(save_clean = F) {
         ))
       ),
 
-      # Map Likert scale strings to numeric weights
+      # Combine the manual overrides with the automatically parsed numbers
+      num_val = dplyr::coalesce(override_val, parsed_num),
+
+      # Map Likert scale strings to numeric weights (now case-insensitive to catch "Very difficult")
       likert_val = dplyr::case_when(
-        Var.Answer %in%
+        tolower(Var.Answer) %in%
           c(
             '1',
-            'Very Dissatisfied',
-            'Strongly Disagree',
-            'Very Difficult'
+            'very dissatisfied',
+            'strongly disagree',
+            'very difficult'
           ) ~ 1,
-        Var.Answer %in% c('2', 'Dissatisfied', 'Disagree', 'Difficult') ~ 2,
-        Var.Answer %in% c('3', 'Neutral', 'Neither easy nor difficult') ~ 3,
-        Var.Answer %in% c('4', 'Satisfied', 'Agree', 'Easy') ~ 4,
-        Var.Answer %in%
-          c('5', 'Very Satisfied', 'Strongly Agree', 'Very Easy') ~ 5,
+        tolower(Var.Answer) %in%
+          c('2', 'dissatisfied', 'disagree', 'difficult') ~ 2,
+        tolower(Var.Answer) %in%
+          c('3', 'neutral', 'neither easy nor difficult') ~ 3,
+        tolower(Var.Answer) %in% c('4', 'satisfied', 'agree', 'easy') ~ 4,
+        tolower(Var.Answer) %in%
+          c('5', 'very satisfied', 'strongly agree', 'very easy') ~ 5,
         TRUE ~ NA_real_
       ),
 
@@ -306,7 +322,7 @@ get_crew_survey <- function(save_clean = F) {
         Var.Answer == "NA/No Response" ~ 5, # Pinned to the absolute end
         Var.Answer == "Other" ~ 4, # Pinned just before NA/No Response
         !is.na(likert_val) ~ 2, # Likert scales second
-        !is.na(num_val) ~ 1, # Pure numeric values/ranges first
+        !is.na(num_val) ~ 1, # Numeric values/ranges first
         TRUE ~ 3 # Standard characters third
       ),
 
