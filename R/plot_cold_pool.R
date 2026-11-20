@@ -93,7 +93,6 @@ plot_cold_pool <- function(
       size = setup$pcex
     ) + #color = Source
     ggplot2::scale_shape_manual(values = c(16, 1)) +
-    ggplot2::theme(legend.position = "none") +
     # ggplot2::geom_ribbon(aes(x = Time, ymin = Lower, ymax = Upper), fill = "gray")+
     ggplot2::geom_hline(ggplot2::aes(yintercept = 0)) +
     ecodata::geom_gls(ggplot2::aes(x = Time, y = Value)) +
@@ -109,6 +108,7 @@ plot_cold_pool <- function(
     ggplot2::xlab("") +
     ecodata::theme_ts() +
     ecodata::theme_title() +
+    ggplot2::theme(legend.position = "none") +
     ggplot2::annotate(
       "text",
       x = 1990,
@@ -158,7 +158,6 @@ plot_cold_pool <- function(
       size = setup$pcex
     ) + #color = Source
     ggplot2::scale_shape_manual(values = c(16, 1)) +
-    ggplot2::theme(legend.position = "none") +
     ggplot2::geom_hline(ggplot2::aes(yintercept = 0)) +
     ecodata::geom_gls(ggplot2::aes(x = Time, y = Value * 85.5)) +
     ecodata::geom_lm(n = n, ggplot2::aes(x = Time, y = Value * 85.5)) +
@@ -171,6 +170,7 @@ plot_cold_pool <- function(
     )) +
     ggplot2::xlab("") +
     ecodata::theme_ts() +
+    ggplot2::theme(legend.position = "none") +
     ecodata::theme_title() +
     # ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.05, yend = 50,
     #          colour = "blue", size = 0.70, arrow = arrow())+
@@ -221,7 +221,6 @@ plot_cold_pool <- function(
       size = setup$pcex
     ) + #color = Source
     ggplot2::scale_shape_manual(values = c(16, 1)) +
-    ggplot2::theme(legend.position = "none") +
     ggplot2::geom_hline(ggplot2::aes(yintercept = 0)) +
     ecodata::geom_gls(ggplot2::aes(x = Time, y = Value)) +
     ecodata::geom_lm(n = n, ggplot2::aes(x = Time, y = Value)) +
@@ -230,6 +229,7 @@ plot_cold_pool <- function(
     ggplot2::xlab("") +
     ecodata::theme_ts() +
     ecodata::theme_title() +
+    ggplot2::theme(legend.position = "none") +
     # ggplot2::annotate("segment", x = 2025, xend = 2025, y = 0.01, yend = 0.6,
     #          colour = "blue", size = 0.70, arrow = arrow())+
     # ggplot2::annotate("segment", x = 2025, xend = 2025, y = -0.05, yend = -1.6,

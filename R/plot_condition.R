@@ -117,6 +117,7 @@ plot_condition <- function(
     ggplot2::scale_x_continuous(
       breaks = round(seq(min(fix$Time), max(fix$Time), by = numberOfConditions))
     ) +
+    ecodata::theme_ts() +
     ggplot2::theme(
       legend.position = "right",
       legend.box = "vertical",
@@ -134,7 +135,6 @@ plot_condition <- function(
     )) +
     ggplot2::ylab(ggplot2::element_blank()) +
     ggplot2::xlab(ggplot2::element_blank()) +
-    ecodata::theme_ts() +
     ecodata::theme_title()
 
   return(p)
