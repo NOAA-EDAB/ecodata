@@ -1,6 +1,6 @@
 ## Fall thermal habitat suitability
 
-### Documentation [tech-doc URL]
+### Documentation https://noaa-edab.github.io/tech-doc/thermal_suitability.html
 ### Input produced by READ-EDAB-enviroThresholds (R/05_export_soe.R)
 
 raw.dir <- here::here("data-raw")
