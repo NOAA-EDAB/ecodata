@@ -40,42 +40,6 @@ plot_gsi <- function(
     var <- "western gulf stream index"
   }
 
-  fix <- ecodata::gsi |>
-    dplyr::filter(Var == var) |>
-    dplyr::mutate(Year = floor(Time)) |>
-    dplyr::group_by(Year) |>
-    dplyr::summarise(Value = mean(Value)) |>
-    dplyr::mutate(hline = mean(Value)) |>
-    dplyr::rename(Time = Year) |>
-    ecodata:::format_plot_data(var = varName, epu = filterEPUs)
-
-  p <- fix |>
-    ggplot2::ggplot(ggplot2::aes(x = Time, y = Value)) +
-    ggplot2::annotate(
-      "rect",
-      fill = setup$shade.fill,
-      alpha = setup$shade.alpha,
-      xmin = setup$x.shade.min,
-      xmax = setup$x.shade.max,
-      ymin = -Inf,
-      ymax = Inf
-    ) +
-    ggplot2::geom_point() +
-    ggplot2::geom_line() +
-    ggplot2::ggtitle(stringr::str_to_title(var)) +
-    ggplot2::ylab("Anomaly") +
-    ggplot2::xlab(NULL) +
-    ecodata::geom_gls() +
-    ecodata::geom_lm(n = n) +
-    ecodata::theme_ts() +
-    ggplot2::geom_hline(
-      ggplot2::aes(yintercept = hline),
-      linewidth = setup$hline.size,
-      alpha = setup$hline.alpha,
-      linetype = setup$hline.lty
-    ) +
-    ecodata::theme_title()
-
   if (report == "NewEngland") {
     p <- "This indicator is only present in the `MidAtlantic` report"
     if (trendStats | plotdata) {
@@ -83,6 +47,42 @@ plot_gsi <- function(
     }
     return(p)
   } else {
+    fix <- ecodata::gsi |>
+      dplyr::filter(Var == var) |>
+      dplyr::mutate(Year = floor(Time)) |>
+      dplyr::group_by(Year) |>
+      dplyr::summarise(Value = mean(Value)) |>
+      dplyr::mutate(hline = mean(Value)) |>
+      dplyr::rename(Time = Year) |>
+      ecodata:::format_plot_data(var = varName, epu = filterEPUs)
+
+    p <- fix |>
+      ggplot2::ggplot(ggplot2::aes(x = Time, y = Value)) +
+      ggplot2::annotate(
+        "rect",
+        fill = setup$shade.fill,
+        alpha = setup$shade.alpha,
+        xmin = setup$x.shade.min,
+        xmax = setup$x.shade.max,
+        ymin = -Inf,
+        ymax = Inf
+      ) +
+      ggplot2::geom_point() +
+      ggplot2::geom_line() +
+      ggplot2::ggtitle(stringr::str_to_title(var)) +
+      ggplot2::ylab("Anomaly") +
+      ggplot2::xlab(NULL) +
+      ecodata::geom_gls() +
+      ecodata::geom_lm(n = n) +
+      ecodata::theme_ts() +
+      ggplot2::geom_hline(
+        ggplot2::aes(yintercept = hline),
+        linewidth = setup$hline.size,
+        alpha = setup$hline.alpha,
+        linetype = setup$hline.lty
+      ) +
+      ecodata::theme_title()
+
     return(ecodata:::finalize_plot(
       p,
       data = fix,
