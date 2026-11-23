@@ -1,0 +1,487 @@
+---
+title: "comdat exploration"
+format: html
+# format: pdf
+---
+
+## Exploring who manages the things that are caught
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+### Playing with plots
+
+Create the data with the right resolution:
+```{r}
+new_comdat <- ecodata::comdat |>
+  dplyr::mutate(
+    category = dplyr::case_when(
+      stringr::str_detect(Var, "Landings") ~ "Landings",
+      stringr::str_detect(Var, "Revenue") ~ "Revenue",
+      TRUE ~ "Other"
+    ),
+    details = dplyr::case_when(
+      stringr::str_detect(Var, "US only") ~ "US only",
+      stringr::str_detect(Var, "Seafood Landings") ~ "Seafood Landings",
+      stringr::str_detect(Var, "Landings weight$") ~ "Landings weight",
+      stringr::str_detect(Var, "Revenue") ~ "Revenue",
+      TRUE ~ NA_character_
+    ),
+    managed_by = dplyr::case_when(
+      stringr::str_detect(Var, "NEFMC") ~ "NEFMC",
+      stringr::str_detect(Var, "MAFMC") ~ "MAFMC",
+      stringr::str_detect(Var, "JOINT") ~ "JOINT",
+      # "Other managed" is the species not managed by NE or Mid
+      # https://github.com/NEFSC/READ_EDAB_SOE_Workflows/blob/main/R/comdat.R#L206
+      # could be state managed or unmanaged
+      stringr::str_detect(Var, "Other managed") ~ "Not federally managed",
+      TRUE ~ NA_character_
+    ),
+    guild = dplyr::case_when(
+      stringr::str_detect(Var, "Apex Predator") ~ "Apex Predator",
+      stringr::str_detect(Var, "Benthivore") ~ "Benthivore",
+      stringr::str_detect(Var, "Benthos") ~ "Benthos",
+      stringr::str_detect(Var, "Other Other") ~ "Other",
+      stringr::str_detect(Var, "Piscivore") ~ "Piscivore",
+      stringr::str_detect(Var, "Planktivore") ~ "Planktivore",
+      TRUE ~ "All"
+    )
+  ) |>
+  dplyr::filter(
+    !EPU %in% c("SS", "OTHER", "Other"),
+    Time > 1981,
+    !is.na(managed_by),
+    guild != "All"
+  )
+```
+
+#### Landings and revenue by jurisdiction x EPU
+
+Plot by council and EPU:
+```{r}
+## plot landings by council x EPU ----
+
+comdat_council_epu <- new_comdat |>
+  dplyr::filter(
+    !is.na(managed_by),
+    details == "Landings weight" |
+      details == "Revenue"
+  ) |>
+  dplyr::group_by(Time, EPU, managed_by, category) |>
+  dplyr::summarise(total_value = sum(Value, na.rm = TRUE)) |>
+  dplyr::ungroup()
+
+### line plot ----
+comdat_council_epu |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = total_value, color = managed_by)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::facet_grid(
+    cols = ggplot2::vars(EPU),
+    rows = ggplot2::vars(category),
+    scales = "free_y"
+  ) +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma)
+
+### stacked bar plot ----
+comdat_council_epu |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = total_value, fill = managed_by)) +
+  ggplot2::geom_col() +
+  ggplot2::facet_grid(
+    cols = ggplot2::vars(EPU),
+    rows = ggplot2::vars(category),
+    scales = "free_y"
+  ) +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma)
+
+### proportions ----
+
+prop_all_epu <- comdat_council_epu |>
+  dplyr::group_by(Time, EPU, category) |>
+  dplyr::mutate(proportion = total_value / sum(total_value, na.rm = TRUE)) |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = proportion, fill = managed_by)) +
+  ggplot2::geom_col() +
+  ggplot2::facet_grid(
+    cols = ggplot2::vars(EPU),
+    rows = ggplot2::vars(category),
+    scales = "free_y"
+  ) +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma)
+```
+
+#### Seafood and non-seafood landings by jurisdiction x EPU
+
+```{r}
+# find non-seafood landings ----
+non_seafood_landings <- new_comdat |>
+  dplyr::filter(
+    !is.na(managed_by),
+    details == "Landings weight" |
+      details == "Seafood Landings"
+  ) |>
+  dplyr::select(-Var) |>
+  tidyr::pivot_wider(names_from = details, values_from = Value) |>
+  dplyr::mutate(
+    Value = `Landings weight` - `Seafood Landings`,
+    details = "Non-Seafood Landings"
+  ) |>
+  dplyr::select(-`Landings weight`, -`Seafood Landings`)
+
+seafood_dat <- new_comdat |>
+  dplyr::filter(
+    !is.na(managed_by),
+    details == "Seafood Landings"
+  ) |>
+  dplyr::bind_rows(non_seafood_landings) |>
+  dplyr::filter(
+    !is.na(managed_by),
+    details == "Seafood Landings" |
+      details == "Non-Seafood Landings"
+  ) |>
+  dplyr::group_by(Time, EPU, managed_by, details) |>
+  dplyr::summarise(total_value = sum(Value, na.rm = TRUE)) |>
+  dplyr::ungroup()
+
+## plot landings of seafood and non-seafood ----
+
+### line plot ----
+seafood_dat |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = total_value, color = managed_by)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::facet_grid(
+    cols = ggplot2::vars(EPU),
+    rows = ggplot2::vars(details)
+  ) +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma)
+
+
+### stacked bar plot ----
+seafood_dat |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = total_value, fill = managed_by)) +
+  ggplot2::geom_col() +
+  ggplot2::facet_grid(
+    cols = ggplot2::vars(EPU),
+    rows = ggplot2::vars(details),
+    scales = "free_y"
+  ) +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma)
+
+
+### proportions ----
+
+seafood_dat |>
+  dplyr::group_by(Time, EPU, details) |>
+  dplyr::mutate(proportion = total_value / sum(total_value, na.rm = TRUE)) |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = proportion, fill = managed_by)) +
+  ggplot2::geom_col() +
+  ggplot2::facet_grid(
+    cols = ggplot2::vars(EPU),
+    rows = ggplot2::vars(details),
+    scales = "free_y"
+  ) +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma)
+```
+
+#### Total landings and revenue by jurisdiction
+
+```{r}
+new_dat <- comdat_council_epu |>
+  dplyr::bind_rows(seafood_dat |>
+                     dplyr::filter(details == "Seafood Landings") |>
+                     dplyr::mutate(category = "Landings")) |>
+  dplyr::mutate(details = dplyr::case_when(category == "Landings" & is.na(details) ~ "Total Landings",
+                                           category == "Revenue" ~ "Revenue",
+                                           TRUE ~ details))
+
+
+new_dat |>
+  dplyr::group_by(Time, managed_by, category, details) |>
+  dplyr::summarise(total = sum(total_value, na.rm = TRUE))  |>
+  ggplot2::ggplot(ggplot2::aes(x = Time,
+                               y = total,
+                               color = details)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::facet_grid(
+    cols = ggplot2::vars(managed_by),
+    rows = ggplot2::vars(category),
+    scales = "free_y"
+  ) +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma)
+```
+
+#### Total landings and revenue by EPU
+
+```{r}
+new_dat |>
+  dplyr::group_by(Time, EPU, category, details) |>
+  dplyr::summarise(total = sum(total_value, na.rm = TRUE))  |>
+  ggplot2::ggplot(ggplot2::aes(x = Time,
+                               y = total,
+                               color = details)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::facet_grid(
+    cols = ggplot2::vars(EPU),
+    rows = ggplot2::vars(category),
+    scales = "free_y"
+  ) +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma)
+```
+
+
+### Plots for SOE
+
+#### Magnitude of landings and revenue by jurisdiction 
+
+Mid example:
+```{r}
+new_dat |>
+  dplyr::filter(managed_by == "JOINT" | managed_by == "MAFMC",
+                category == "Landings") |>
+  dplyr::group_by(Time, category, details) |>
+  dplyr::summarise(total = sum(total_value, na.rm = TRUE))  |>
+  ggplot2::ggplot(ggplot2::aes(x = Time,
+                               y = total,
+                               color = details)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma) +
+  ggplot2::ggtitle("Landings of MAFMC-managed species")
+```
+
+```{r}
+new_dat |>
+  dplyr::filter(managed_by == "JOINT" | managed_by == "MAFMC",
+                category == "Revenue") |>
+  dplyr::group_by(Time, category, details) |>
+  dplyr::summarise(total = sum(total_value, na.rm = TRUE))  |>
+  ggplot2::ggplot(ggplot2::aes(x = Time,
+                               y = total)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma) +
+  ggplot2::ggtitle("Revenue of MAFMC-managed species")
+```
+
+NE example:
+```{r}
+new_dat |>
+  dplyr::filter(managed_by == "JOINT" | managed_by == "NEFMC",
+                category == "Revenue") |>
+  dplyr::group_by(Time, category, details) |>
+  dplyr::summarise(total = sum(total_value, na.rm = TRUE))  |>
+  ggplot2::ggplot(ggplot2::aes(x = Time,
+                               y = total,
+                               color = details)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma) +
+  ggplot2::ggtitle("Landings and Revenue of NEFMC-managed species")
+```
+
+#### Magnitude of landings and revenue by EPU
+
+Again, just showing Mid as an example:
+
+```{r}
+new_dat |>
+  dplyr::filter(EPU == "MAB",
+                category == "Landings") |>
+  dplyr::group_by(Time, category, details) |>
+  dplyr::summarise(total = sum(total_value, na.rm = TRUE))  |>
+  ggplot2::ggplot(ggplot2::aes(x = Time,
+                               y = total,
+                               color = details)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma) +
+  ggplot2::ggtitle("Landings in the Mid-Atlantic Bight")
+
+new_dat |>
+  dplyr::filter(EPU == "MAB",
+                category == "Revenue") |>
+  dplyr::group_by(Time, category, details) |>
+  dplyr::summarise(total = sum(total_value, na.rm = TRUE))  |>
+  ggplot2::ggplot(ggplot2::aes(x = Time,
+                               y = total)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma) +
+  ggplot2::ggtitle("Revenue in the Mid-Atlantic Bight")
+```
+
+Georges Bank:
+
+```{r}
+new_dat |>
+  dplyr::filter(EPU == "GB") |>
+  dplyr::group_by(Time, category, details) |>
+  dplyr::summarise(total = sum(total_value, na.rm = TRUE))  |>
+  ggplot2::ggplot(ggplot2::aes(x = Time,
+                               y = total,
+                               color = details)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::facet_grid(
+    rows = ggplot2::vars(category),
+    scales = "free_y"
+  ) +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma) +
+  ggplot2::ggtitle("Total landings and revenue in Georges Bank")
+```
+
+Gulf of Maine:
+
+```{r}
+new_dat |>
+  dplyr::filter(EPU == "GOM") |>
+  dplyr::group_by(Time, category, details) |>
+  dplyr::summarise(total = sum(total_value, na.rm = TRUE))  |>
+  ggplot2::ggplot(ggplot2::aes(x = Time,
+                               y = total,
+                               color = details)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::facet_grid(
+    rows = ggplot2::vars(category),
+    scales = "free_y"
+  ) +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma) +
+  ggplot2::ggtitle("Total landings and revenue in the Gulf of Maine")
+```
+
+#### Proportion of landings and revenue by jurisdiction x EPU
+
+```{r}
+comdat_council_epu |>
+  dplyr::filter(category == "Landings") |>
+  dplyr::group_by(Time, EPU, category) |>
+  dplyr::mutate(proportion = total_value / sum(total_value, na.rm = TRUE)) |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = proportion, fill = managed_by)) +
+  ggplot2::geom_col() +
+  ggplot2::facet_grid(
+    cols = ggplot2::vars(EPU),
+    scales = "free_y"
+  ) +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma) +
+  ggplot2::ggtitle("Proportion of landings by council jurisdiction and EPU")
+
+comdat_council_epu |>
+  dplyr::filter(category == "Revenue") |>
+  dplyr::group_by(Time, EPU, category) |>
+  dplyr::mutate(proportion = total_value / sum(total_value, na.rm = TRUE)) |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = proportion, fill = managed_by)) +
+  ggplot2::geom_col() +
+  ggplot2::facet_grid(
+    cols = ggplot2::vars(EPU),
+    scales = "free_y"
+  ) +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma) +
+  ggplot2::ggtitle("Proportion of revenue by council jurisdiction and EPU")
+```
+
+### Guild plots
+
+```{r}
+
+guild_dat <- new_comdat |> 
+  dplyr::filter(
+    !is.na(managed_by),
+    details == "Landings weight" |
+      details == "Revenue"
+  ) |>
+  dplyr::filter(category == "Landings",
+                guild != "All")
+
+
+guild_dat |>
+  dplyr::group_by(Time, EPU, guild, managed_by) |>
+  dplyr::summarise(total_value = sum(Value, na.rm = TRUE)) |>
+  dplyr::ungroup() |>
+  dplyr::group_by(Time, EPU, managed_by) |>
+  dplyr::mutate(proportion = total_value / sum(total_value, na.rm = TRUE)) |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = proportion, fill = guild)) +
+  ggplot2::geom_col() +
+  ggplot2::facet_grid(
+    cols = ggplot2::vars(EPU),
+    rows = ggplot2::vars(managed_by),
+    scales = "free_y"
+  ) +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma)
+```
+
+```{r}
+guild_dat |>
+  dplyr::group_by(Time, EPU, guild, managed_by) |>
+  dplyr::summarise(total_value = sum(Value, na.rm = TRUE)) |>
+  ggplot2::ggplot(ggplot2::aes(x = Time, y = total_value, fill = guild)) +
+  ggplot2::geom_col() +
+  ggplot2::facet_grid(
+    cols = ggplot2::vars(EPU),
+    rows = ggplot2::vars(managed_by),
+    scales = "free_y"
+  ) +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma)
+```
+
+Landings of MAFMC species by guild
+
+```{r}
+guild_dat |>
+  dplyr::filter(managed_by == "JOINT" | managed_by == "MAFMC",
+                category == "Landings") |>
+  dplyr::group_by(Time, category, guild) |>
+  dplyr::summarise(total = sum(Value, na.rm = TRUE))  |>
+  ggplot2::ggplot(ggplot2::aes(x = Time,
+                               y = total,
+                               color = guild)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma) +
+  ggplot2::ggtitle("Landings of MAFMC-managed species by guild")
+```
+
+Landings in MAB by guild
+
+```{r}
+guild_dat |>
+  dplyr::filter(EPU == "MAB",
+                category == "Landings") |>
+  dplyr::group_by(Time, category, guild) |>
+  dplyr::summarise(total = sum(Value, na.rm = TRUE))  |>
+  ggplot2::ggplot(ggplot2::aes(x = Time,
+                               y = total,
+                               color = guild)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::theme_bw() +
+  ggplot2::scale_y_continuous(labels = scales::comma) +
+  ggplot2::ggtitle("Landings in the MAB by guild")
+```
