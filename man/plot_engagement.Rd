@@ -21,7 +21,12 @@ plot_engagement(
 ggplot object
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+\code{plot_engagement()} was deprecated in ecodata 10.1.0. Please use \code{\link[=plot_port_activity]{plot_port_activity()}} instead.
+
 Plot population relative engagement vs engagement by community, recreational or commercial fishery.
 Provide table of social vulnerability indicators for highly engaged communities.
 Indicator definitions https://www.fisheries.noaa.gov/national/socioeconomics/social-indicators-supporting-information
 }
+\keyword{internal}

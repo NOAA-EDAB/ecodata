@@ -1,5 +1,10 @@
 #' Commercial and recreational fishery social-economic indicators
 #'
+#' @description
+#' `r lifecycle::badge('deprecated')`
+#'
+#' `engagement` was deprecated in ecodata 10.1.0. Please use [port_activity] instead.
+#'
 #' Data include commercial and recreational fishery engagement and
 #' relative engagement rankings for coastal communities in the Northeast US.
 #'
