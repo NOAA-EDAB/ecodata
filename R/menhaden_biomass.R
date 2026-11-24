@@ -13,5 +13,5 @@
 #'     \item Units: Biomass units
 #' }
 #'
-#' @details Methods used to calculate data are available at \url{}.
+#' @details Methods used to calculate data are available at .
 "menhaden_biomass"
