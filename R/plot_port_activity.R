@@ -67,7 +67,10 @@ plot_port_activity <- function(
 
   #make plot
 
-  ggplot2::ggplot(data = fix, ggplot2::aes(x = Time, y = Value, color = Var)) +
+  p <- ggplot2::ggplot(
+    data = fix,
+    ggplot2::aes(x = Time, y = Value, color = Var)
+  ) +
     ggplot2::annotate(
       "rect",
       fill = setup$shade.fill,
@@ -88,6 +91,8 @@ plot_port_activity <- function(
     ecodata::geom_lm(n = n) +
     ecodata::theme_ts() +
     ecodata::theme_title()
+
+  return(p)
 }
 
 attr(plot_port_activity, "report") <- c("MidAtlantic", "NewEngland")
