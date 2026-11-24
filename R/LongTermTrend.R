@@ -15,7 +15,18 @@
 #'
 #'@export
 #'
-#'@return Outputs a normal linear trendline (solid if p < 0.05, dashed if 0.05 <= p < 0.20).
+#'@return Outputs a linear trendline if ordinary least squares regression p < 0.05.
+#'
+#' @details
+#' Evaluates long-term trends by fitting a generalized least squares (GLS) model.
+#' The function compares a standard ordinary least squares (OLS) model against an
+#' autoregressive order 1 (AR1) model using AICc.
+#'
+#' Visual outcomes:
+#' * If there are fewer than 10 valid data points, no trend is evaluated or plotted.
+#' * If the OLS model p-value >= 0.05, no trendline is plotted.
+#' * If the OLS model p-value < 0.05, a trendline is plotted.
+#' * If the AR1 has a lower AICCc this can be examined from the model fit statistics using `get_trend_stats` on the resulting ggplot object
 #'
 #'@examples
 #'library(ggplot2)

@@ -19,6 +19,16 @@
 #'
 #'@return Outputs a trendline (solid if p < pValThreshold, dashed if pValThreshold <= p < 0.20).
 #'
+#' @details
+#' Evaluates short-term trends using a parametric bootstrap test under an
+#' autoregressive order 1 (AR1) assumption, alongside an asymptotic Chi-squared
+#' likelihood ratio test.
+#'
+#' Visual outcomes:
+#' * If there are 7 or fewer valid data points, no trend is evaluated or plotted[cite: 12].
+#' * If both the bootstrapped p-value and the Chi-squared p-value are >= `pValThreshold` (default 0.05), no trendline is plotted[cite: 12].
+#' * If the bootstrapped p-value < `pValThreshold`, a solid trendline is plotted[cite: 12].
+#' * If the bootstrapped p-value >= `pValThreshold` but the Chi-squared p-value < `pValThreshold`, a dashed trendline is plotted[cite: 12]. This highlights a descriptive physical trajectory that lacks strict statistical certainty under small-sample AR1 bootstrapping.
 #'
 #'@examples
 #'library(ggplot2)
