@@ -7,9 +7,8 @@ raw.dir <- here::here("data-raw")
 mass_inshore_survey_Rds <- "mass_inshore_survey.rds"
 
 get_mass_survey <- function(save_clean) {
-  mass_inshore_survey <- readRDS(file.path(raw.dir, mass_inshore_survey_Rds))
-
-  mass_inshore_survey <- tibble::as_tibble(mass_inshore_survey)
+  mass_inshore_survey <- readRDS(file.path(raw.dir, mass_inshore_survey_Rds)) |>
+    tibble::as_tibble()
 
   if (save_clean) {
     usethis::use_data(mass_inshore_survey, overwrite = T)
