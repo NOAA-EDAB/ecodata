@@ -6,6 +6,8 @@
 #' @param report Character string. Which SOE report ("MidAtlantic", "NewEngland")
 #' @param varName Character string. Which variable to plot ("gsi","westgsi")
 #' @param n Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)
+#' @param trendStats logical. If TRUE returns a list object of plot and model fit statistics
+#' @param plotdata logical. If TRUE returns a list object of plot and cleaned underlying dataset
 #'
 #' @return ggplot object
 #'
@@ -17,7 +19,9 @@ plot_gsi <- function(
   shadedRegion = NULL,
   report = "MidAtlantic",
   varName = "gsi",
-  n = 0
+  n = 0,
+  trendStats = FALSE,
+  plotdata = FALSE
 ) {
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
@@ -35,64 +39,58 @@ plot_gsi <- function(
   } else {
     var <- "western gulf stream index"
   }
-  # optional code to wrangle ecodata object prior to plotting
-  # e.g., calculate mean, max or other needed values to join below
-
-  fix <- ecodata::gsi |>
-    dplyr::filter(Var == var) |>
-    dplyr::mutate(Year = floor(Time)) |>
-    dplyr::group_by(Year) |>
-    dplyr::summarise(Value = mean(Value)) |>
-    dplyr::mutate(hline = mean(Value)) |>
-    dplyr::rename(Time = Year)
-
-  # code for generating plot object p
-  # ensure that setup list objects are called as setup$...
-  # e.g. fill = setup$shade.fill, alpha = setup$shade.alpha,
-  # xmin = setup$x.shade.min , xmax = setup$x.shade.max
-  #
-  p <- fix |>
-    ggplot2::ggplot(ggplot2::aes(x = Time, y = Value)) +
-    ggplot2::annotate(
-      "rect",
-      fill = setup$shade.fill,
-      alpha = setup$shade.alpha,
-      xmin = setup$x.shade.min,
-      xmax = setup$x.shade.max,
-      ymin = -Inf,
-      ymax = Inf
-    ) +
-    ggplot2::geom_point() +
-    ggplot2::geom_line() +
-    ggplot2::ggtitle(stringr::str_to_title(var)) +
-    ggplot2::ylab("Anomaly") +
-    ggplot2::xlab(ggplot2::element_blank()) +
-    ecodata::geom_gls() +
-    ecodata::geom_lm(n = n) +
-    ecodata::theme_ts() +
-    ggplot2::geom_hline(
-      ggplot2::aes(yintercept = hline),
-      linewidth = setup$hline.size,
-      alpha = setup$hline.alpha,
-      linetype = setup$hline.lty
-    ) +
-    ecodata::theme_title()
-
-  # optional code for New England specific (2 panel) formatting
-  # if (report == "NewEngland") {
-  #   p <- p +
-  #     ggplot2::theme(legend.position = "bottom",
-  #                    legend.title = ggplot2::element_blank())
-  #
-  # }
 
   if (report == "NewEngland") {
     p <- "This indicator is only present in the `MidAtlantic` report"
+    if (trendStats | plotdata) {
+      return(list(plot = p, stats = NULL, data = NULL))
+    }
+    return(p)
+  } else {
+    fix <- ecodata::gsi |>
+      dplyr::filter(Var == var) |>
+      dplyr::mutate(Year = floor(Time)) |>
+      dplyr::group_by(Year) |>
+      dplyr::summarise(Value = mean(Value)) |>
+      dplyr::mutate(hline = mean(Value)) |>
+      dplyr::rename(Time = Year) |>
+      ecodata:::format_plot_data(var = varName, epu = filterEPUs)
+
+    p <- fix |>
+      ggplot2::ggplot(ggplot2::aes(x = Time, y = Value)) +
+      ggplot2::annotate(
+        "rect",
+        fill = setup$shade.fill,
+        alpha = setup$shade.alpha,
+        xmin = setup$x.shade.min,
+        xmax = setup$x.shade.max,
+        ymin = -Inf,
+        ymax = Inf
+      ) +
+      ggplot2::geom_point() +
+      ggplot2::geom_line() +
+      ggplot2::ggtitle(stringr::str_to_title(var)) +
+      ggplot2::ylab("Anomaly") +
+      ggplot2::xlab(NULL) +
+      ecodata::geom_gls() +
+      ecodata::geom_lm(n = n) +
+      ecodata::theme_ts() +
+      ggplot2::geom_hline(
+        ggplot2::aes(yintercept = hline),
+        linewidth = setup$hline.size,
+        alpha = setup$hline.alpha,
+        linetype = setup$hline.lty
+      ) +
+      ecodata::theme_title()
+
+    return(ecodata:::finalize_plot(
+      p,
+      data = fix,
+      plotdata = plotdata,
+      trendStats = trendStats
+    ))
   }
-
-  return(p)
 }
-
 
 attr(plot_gsi, "report") <- c("MidAtlantic", "NewEngland")
 attr(plot_gsi, "varName") <- c("gsi", "westgsi")

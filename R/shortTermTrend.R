@@ -17,9 +17,18 @@
 #'
 #'@export
 #'
-#'@return If slope is significantly different from 0 (p < 0.05), then a line of best fit is returned. Otherwise output
-#'is \code{NULL}.
+#'@return Outputs a trendline (solid if p < pValThreshold, dashed if pValThreshold <= p < 0.20).
 #'
+#' @details
+#' Evaluates short-term trends using a parametric bootstrap test under an
+#' autoregressive order 1 (AR1) assumption, alongside an asymptotic Chi-squared
+#' likelihood ratio test.
+#'
+#' Visual outcomes:
+#' * If there are 7 or fewer valid data points, no trend is evaluated or plotted[cite: 12].
+#' * If both the bootstrapped p-value and the Chi-squared p-value are >= `pValThreshold` (default 0.05), no trendline is plotted[cite: 12].
+#' * If the bootstrapped p-value < `pValThreshold`, a solid trendline is plotted[cite: 12].
+#' * If the bootstrapped p-value >= `pValThreshold` but the Chi-squared p-value < `pValThreshold`, a dashed trendline is plotted[cite: 12]. This highlights a descriptive physical trajectory that lacks strict statistical certainty under small-sample AR1 bootstrapping.
 #'
 #'@examples
 #'library(ggplot2)
@@ -70,11 +79,11 @@ geom_lm <- function(
   )
 }
 
-## GeomLM based on GeomGLS - add dashed linetype
+## GeomLM based on GeomGLS - add dashed linetype logic and visibility gate
 GeomLM <- ggplot2::ggproto(
   "GeomLM",
   ggplot2::Geom,
-  requird_aes = c("x", "y"),
+  required_aes = c("x", "y"),
   extra_params = c("n", "na.rm", "pValThreshold", "nBootSamples"),
 
   default_aes = ggplot2::aes(
@@ -91,11 +100,21 @@ GeomLM <- ggplot2::ggproto(
     coords <- coord$transform(data, panel_params)
     first_row <- coords[1, , drop = FALSE]
 
-    #Select default color based on positive/negative trend
+    # The Visibility Gatekeeper: If p >= 0.20, draw nothing
+    if (!is.null(first_row$is_plotted) && !isTRUE(first_row$is_plotted)) {
+      return(grid::nullGrob())
+    }
+
+    # Select default color based on positive/negative trend
     if (coords$y[1] < coords$y[which.max(coords$x)]) {
       first_row$color <- "orange4"
     } else {
       first_row$color <- "purple4"
+    }
+
+    # Contextual Linetype Logic: Solid (1) if p < 0.05, Dashed (2) if 0.05 <= p < 0.20
+    if (!is.null(first_row$is_sig)) {
+      first_row$linetype <- ifelse(isTRUE(first_row$is_sig), 1, 2)
     }
 
     grid::linesGrob(
@@ -111,7 +130,7 @@ GeomLM <- ggplot2::ggproto(
   }
 )
 
-#' StatLM Stat protto based on ecodata StatGLS
+#' StatLM Stat proto based on ecodata StatGLS
 #' Need to pass arguments
 #'
 #' nBootSamples, pVal significance, number datapoints
@@ -124,87 +143,72 @@ StatLM <- ggplot2::ggproto(
 
   extra_params = c("n", "pValThreshold", "nBootSamples", "na.rm"),
   compute_group = function(data, scales, warn, n, pValThreshold, nBootSamples) {
-    ## Geom removes NAs from data. arfit needs full timeseries with NAs
-    # arfit pads the time series and returns this padded data set.
-    # the returned data set is used in plotting the fitted model
-    nlimit <- 7
-    if (n > nlimit) {
-      # find dimensions of the data and adjust n accordingly.
-      # Otherwise if n > nrow(data) fitted values get overwritten
-
-      if (n > nrow(data)) {
-        # Allows user to overshoot n and fit will be to whole time series
-        n <- nrow(data)
-      }
-
-      dataUse <- data |>
-        dplyr::arrange(x) |>
-        # Select last n years
-        dplyr::filter(x %in% (max(x) - (n - 1)):max(x)) |>
-        dplyr::mutate(x = x - min(x) + 1)
-
-      # print("########RAW##########")
-      # print(data)
-      # print((max(data$x)-(n-1)))
-      # print(max(data$x))
-      # print(data$x-min(data$x)+1)
-      #
-      # print("#######USE##########")
-      # print(dataUse)
-      # print("#######################")
-
-      if (nrow(data) < nlimit) {
-        # too many NAs then exit
-        linear_ar1 <- data.frame(x = NA, y = NA, pValue = 1)
-      } else {
-        xmax <- max(data$x)
-        xmin <- xmax - n + 1
-
-        # Linear model with AR1 error
-        set.seed(1234)
-        linear_ar1 <-
-          try(arfit::fit_real_data(dataUse, nBootSims = nBootSamples))
-        #print(linear_ar1$pValue)
-        if (is.na(linear_ar1$pValue)) {
-          return(
-            best_lm <- data.frame(
-              model = NA,
-              coefs.Intercept = NA,
-              coefs.time = NA,
-              coefs.time2 = NA,
-              pval = NA
-            )
-          )
-        }
-      }
-
-      # pick out model. Either null (no trend) or alternative (trend)
-      if (linear_ar1$pValue <= pValThreshold) {
-        # Trend detected
-        dataNAs <- linear_ar1$data # arfit package returns data after padding for NAs
-        coefs <- linear_ar1$alt$betaEst
-        xMat <- as.matrix(cbind(rep(1, n), dataNAs$x)) # design matrix
-
-        # } else { # no trend
-        #   coefs <- linear_ar1$null$betaEst
-        #   xMat <- as.matrix(cbind(rep(1,n))) # design matrix
-        # }
-
-        # predict
-
-        predy <- xMat %*% coefs
-
-        newtime <- seq(xmin, xmax, length.out = n)
-        fittedData <- data.frame(
-          x = newtime,
-          y = predy,
-          pval = linear_ar1$pValue
-        )
-
-        #print(fittedData)
-
-        return(fittedData)
-      }
+    # Helper to pass NA statistics when the trend cannot be evaluated
+    pass_na_stats <- function() {
+      data.frame(
+        x = if (nrow(data) > 0) data$x[1] else NA,
+        y = if (nrow(data) > 0) data$y[1] else NA,
+        is_sig = FALSE,
+        is_plotted = FALSE,
+        pval = NA,
+        pval_chi2 = NA,
+        slope = NA
+      )
     }
+
+    nlimit <- 7
+    if (n <= nlimit) {
+      return(pass_na_stats())
+    }
+
+    if (n > nrow(data)) {
+      n <- nrow(data)
+    }
+
+    dataUse <- data |>
+      dplyr::arrange(x) |>
+      dplyr::filter(x %in% (max(x) - (n - 1)):max(x)) |>
+      dplyr::mutate(x = x - min(x) + 1)
+
+    if (nrow(dataUse) < nlimit) {
+      return(pass_na_stats())
+    }
+
+    xmax <- max(data$x)
+    xmin <- xmax - n + 1
+
+    set.seed(1234)
+    linear_ar1 <- try(
+      arfit::fit_real_data(dataUse, nBootSims = nBootSamples),
+      silent = TRUE
+    )
+
+    if (inherits(linear_ar1, "try-error") || is.na(linear_ar1$pValue)) {
+      return(pass_na_stats())
+    }
+
+    # ALWAYS calculate coordinates to pass the stats through ggplot_build
+    dataNAs <- linear_ar1$data
+    coefs <- linear_ar1$alt$betaEst
+    xMat <- as.matrix(cbind(rep(1, n), dataNAs$x))
+    predy <- xMat %*% coefs
+    newtime <- seq(xmin, xmax, length.out = n)
+
+    # Significance and plotting gates
+    boot_sig <- linear_ar1$pValue < pValThreshold
+    chi2_sig <- !is.na(linear_ar1$pValChi2) &&
+      linear_ar1$pValChi2 < pValThreshold
+
+    fittedData <- data.frame(
+      x = newtime,
+      y = predy,
+      is_sig = boot_sig, # Solid if bootstrap is significant
+      is_plotted = boot_sig || chi2_sig, # Plot if EITHER bootstrap or chi2 is significant
+      pval = linear_ar1$pValue,
+      pval_chi2 = linear_ar1$pValChi2,
+      slope = linear_ar1$alt$betaEst[2]
+    )
+
+    return(fittedData)
   }
 )

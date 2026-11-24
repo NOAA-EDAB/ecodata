@@ -46,8 +46,7 @@ assigns the top-level plotting \code{aes()} to the GLS geom.}
 \item{...}{Other arguments may be passed to the stat, including fixed aesthetics.}
 }
 \value{
-If slope is significantly different from 0 (p < 0.05), then a line of best fit is returned. Otherwise output
-is \code{NULL}.
+Outputs a trendline (solid if p < pValThreshold, dashed if pValThreshold <= p < 0.20).
 }
 \description{
 A geom to fit a LM model to a short time series
