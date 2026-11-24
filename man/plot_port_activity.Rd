@@ -2,16 +2,30 @@
 % Please edit documentation in R/plot_port_activity.R
 \name{plot_port_activity}
 \alias{plot_port_activity}
-\title{plot fishery port activity}
+\title{plot port activity}
 \usage{
 plot_port_activity(
   shadedRegion = NULL,
   report = "MidAtlantic",
   n = 0,
   topN = 9,
-  varName = c("all", "overall", "permit", "transaction")
+  varName = "all"
 )
 }
+\arguments{
+\item{shadedRegion}{Numeric vector. Years denoting the shaded region of the plot (most recent 10)}
+
+\item{report}{Character string. Which SOE report ("MidAtlantic", "NewEngland")}
+
+\item{n}{Numeric scalar. Number of years used (from most recent year) to estimate short term trend . Default = 0 (No trend calculated)}
+
+\item{topN}{Numeric scalar. Number of top ports to show (default = 9)}
+
+\item{varName}{Character string. Which variable to plot ("all","overall","permit","transaction").}
+}
+\value{
+ggplot object
+}
 \description{
-plot fishery port activity
+plots port activity dataset by EPU
 }
