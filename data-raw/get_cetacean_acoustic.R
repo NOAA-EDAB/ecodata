@@ -7,46 +7,46 @@ library(tidyr)
 raw.dir <- here::here("data-raw")
 
 # Define input files
-cetacean_acoustic_csv <- "VanHoeck_cetacean_acoustic_presence_all_sp_dataframe - Rebecca Vanhoeck - NOAA Federal.csv"
+# cetacean_acoustic_csv <- "VanHoeck_cetacean_acoustic_presence_all_sp_dataframe - Rebecca Vanhoeck - NOAA Federal.csv"
+cetacean_acoustic_csv <- "PAM-cetacean-makara-export-nefsc-archival-20260729 - Rebecca Vanhoeck - NOAA Federal.csv"
 
 get_cetacean_acoustic <- function(save_clean = F) {
-  cetacean_acoustic <- read.csv(file.path(raw.dir, cetacean_acoustic_csv)) |>
-    dplyr::select(
-      -c(
-        PROJECT_DESCRIPTION,
-        DeploymentStart,
-        Site,
-        Full_Day,
-        PROJECT_NAME,
-        SITE_NAME,
-        START_USABLE_DATA_DATETIME_UTC,
-        START_USABLE_DATE_EST,
-        END_USABLE_DATA_DATETIME_UTC,
-        END_USABLE_DATE_EST,
-        ITEM_DESCRIPTION,
-        LATITUDE_DDG_DEPLOYMENT,
-        LONGITUDE_DDG_DEPLOYMENT,
-        DataStart,
-        DataEnd
+  cetacean_acoustic <- read.csv(file.path(raw.dir, cetacean_acoustic_csv))
+
+  cetacean_acoustic <- cetacean_acoustic |>
+    dplyr::filter(recording_usable_start_datetime >= "2020-01-01") |>
+    dplyr::filter(
+      project_code %in%
+        c(
+          "PMEL_SBNMS-NRS",
+          "NEFSC_SBNMS_SANCTSOUND",
+          "NEFSC_SBNMS_ONMS-SOUND",
+          "NEFSC_DE",
+          "NEFSC_VA",
+          "NEFSC_GOM_INSHORE",
+          "NEFSC_GOM_OFFSHORE",
+          "NEFSC_MA-RI_COX-LEDGE",
+          "NEFSC_MA-RI_NANTUCKET-SHOALS",
+          "NEFSC_MA-RI_POWERON"
+        )
+    ) |>
+    # dplyr::mutate(end = end + lubridate::days(1)) |>
+    # dplyr::select(-detectionType) |>
+    dplyr::filter(presence != "NOT_DETECTED") |>
+    dplyr::mutate(
+      region = dplyr::case_when(
+        project_code == "PMEL_SBNMS-NRS" ~ "SBNMS",
+        project_code == "NEFSC_SBNMS_SANCTSOUND" ~ "SBNMS",
+        project_code == "NEFSC_SBNMS_ONMS-SOUND" ~ "SBNMS",
+        project_code == "NEFSC_DE" ~ "Mid-Atlantic",
+        project_code == "NEFSC_VA" ~ "Mid-Atlantic",
+        project_code == "NEFSC_GOM_INSHORE" ~ "Inshore GOM",
+        project_code == "NEFSC_GOM_OFFSHORE" ~ "Offshore GOM",
+        project_code == "NEFSC_MA-RI_COX-LEDGE" ~ "MA-RI",
+        project_code == "NEFSC_MA-RI_NANTUCKET-SHOALS" ~ "MA-RI",
+        project_code == "NEFSC_MA-RI_POWERON" ~ "MA-RI",
       )
-    ) |>
-    dplyr::mutate(NARW_Occur = as.character(NARW_Occur)) |>
-    dplyr::mutate(NARW_True_Tally = as.character(NARW_True_Tally)) |>
-    dplyr::mutate(Fin_Occur = as.character(Fin_Occur)) |>
-    dplyr::mutate(Humpback_Occur = as.character(Humpback_Occur)) |>
-    dplyr::mutate(Minke_Occur = as.character(Minke_Occur)) |>
-    dplyr::mutate(Blue_Occur = as.character(Blue_Occur)) |>
-    dplyr::mutate(Sei_Occur = as.character(Sei_Occur)) |>
-    dplyr::mutate(Sperm_Occur = as.character(Sperm_Occur)) |>
-    dplyr::mutate(Dolphin_Occur = as.character(Dolphin_Occur)) |>
-    dplyr::mutate(Porpoise_Occur = as.character(Porpoise_Occur)) |>
-    tidyr::pivot_longer(
-      cols = c(-StartDate),
-      names_to = "Var",
-      values_to = "Value"
-    ) |>
-    dplyr::rename("Time" = "StartDate") |>
-    dplyr::mutate_all(na_if, "")
+    )
 
   if (save_clean) {
     usethis::use_data(cetacean_acoustic, overwrite = T)
