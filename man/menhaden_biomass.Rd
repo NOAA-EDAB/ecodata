@@ -5,12 +5,14 @@
 \alias{menhaden_biomass}
 \title{Menhaden Biomass}
 \format{
-A time series with 69 rows and 3 columns.
+A time series with 69 rows and 5 columns.
 
 \itemize{
 \item Time: Year
 \item Value: Value of variable
 \item EPU: Shelfwide indicator
+\item Var: Biomass variable
+\item Units: Biomass units
 }
 }
 \usage{

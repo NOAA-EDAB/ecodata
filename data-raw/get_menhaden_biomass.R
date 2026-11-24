@@ -17,7 +17,11 @@ get_menhaden_biomass <- function(save_clean = F) {
       "Time" = Year,
       "Value" = `Age-1+ Biomass (thousands of MT)`
     ) %>%
-    dplyr::mutate(EPU = "All")
+    dplyr::mutate(
+      EPU = "All",
+      Var = "Menhaden biomass",
+      Units = "thousand mt"
+    )
 
   if (save_clean) {
     usethis::use_data(menhaden_biomass, overwrite = TRUE)
