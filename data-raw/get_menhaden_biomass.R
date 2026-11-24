@@ -4,6 +4,7 @@
 
 library(dplyr)
 library(tidyr)
+library(readr)
 
 raw.dir <- here::here("data-raw")
 menhaden_csv <- "menhaden biomass - Abigail Tyrell - NOAA Federal.csv"
@@ -13,6 +14,11 @@ get_menhaden_biomass <- function(save_clean = F) {
     here::here(file.path(raw.dir, menhaden_csv)),
     check.names = FALSE
   ) %>%
+    dplyr::mutate(
+      `Age-1+ Biomass (thousands of MT)` = readr::parse_number(
+        `Age-1+ Biomass (thousands of MT)`
+      )
+    ) %>%
     dplyr::rename(
       "Time" = Year,
       "Value" = `Age-1+ Biomass (thousands of MT)`
