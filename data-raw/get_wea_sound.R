@@ -8,18 +8,16 @@ library(readxl)
 raw.dir <- here::here("data-raw")
 
 # Define input files
-wea_sound_xlsx <- "DecidecadeSPL_annual_SOE202410_JM - Jessica McCordic - NOAA Federal.xlsx"
+wea_sound_csv <- "ambient_noise_for_SOE.csv"
 
 get_wea_sound <- function(save_clean = F) {
-  wea_sound <- readxl::read_excel(file.path(raw.dir, wea_sound_xlsx)) |>
-    tidyr::pivot_longer(
-      cols = -c(Year, Measure, Site),
-      names_to = "Var",
-      values_to = "Value"
+  wea_sound <- read.csv(file.path(raw.dir, wea_sound_csv)) |>
+    dplyr::mutate(
+      Time = lubridate::as_date(Date),
+      Var = paste(location, Category, sep = "_")
     ) |>
-    dplyr::mutate(Var = paste0(Var, "-", Measure, "-", Site)) |>
-    dplyr::select(-Measure, -Site) |>
-    dplyr::rename("Time" = "Year")
+    dplyr::select(-c(Date, X, platform, year, effortS, Category, location)) |>
+    dplyr::rename(Value = med_BB_10_10K)
 
   if (save_clean) {
     usethis::use_data(wea_sound, overwrite = T)
