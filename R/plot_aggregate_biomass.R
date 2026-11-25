@@ -219,3 +219,6 @@ plot_aggregate_biomass <- function(
   }
   return(p)
 }
+
+attr(plot_aggregate_biomass, "report") <- c("MidAtlantic", "NewEngland")
+attr(plot_aggregate_biomass, "EPU") <- c("MAB", "GB", "GOM")
