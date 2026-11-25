@@ -27,7 +27,8 @@ get_menhaden_biomass <- function(save_clean = F) {
       EPU = "All",
       Var = "Menhaden biomass",
       Units = "thousand mt"
-    )
+    ) %>%
+    tibble::as_tibble()
 
   if (save_clean) {
     usethis::use_data(menhaden_biomass, overwrite = TRUE)

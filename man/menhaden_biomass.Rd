@@ -22,6 +22,6 @@ menhaden_biomass
 Data include Age 1+ biomass of Atlantic menhaden on the Northeast Shelf from the 2025 stock assessment
 }
 \details{
-Methods used to calculate data are available at \url{}.
+Methods used to calculate data are available at .
 }
 \keyword{datasets}
