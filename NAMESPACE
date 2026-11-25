@@ -89,6 +89,7 @@ export(plot_thermal_habitat_gridded)
 export(plot_trans_dates)
 export(plot_wcr)
 export(plot_wea_landings_rev)
+export(plot_wea_sound)
 export(plot_wind_dev_speed)
 export(plot_wind_occupancy)
 export(plot_wind_port)
@@ -103,5 +104,41 @@ export(theme_facet)
 export(theme_map)
 export(theme_title)
 export(theme_ts)
-importFrom(ggplot2,ggplot_add)
+importFrom(dplyr,
+  count,
+  group_by,
+  mutate,
+  row_number
+)
+importFrom(ggplot2,
+  aes,
+  coord_cartesian,
+  element_blank,
+  element_text,
+  facet_wrap,
+  geom_col,
+  geom_line,
+  geom_rect,
+  ggplot,
+  ggplot_add,
+  labs,
+  scale_fill_manual,
+  scale_x_continuous,
+  theme,
+  theme_bw,
+  xlab,
+  ylab
+)
+importFrom(lubridate,
+  as_date,
+  year
+)
+importFrom(stats,
+  quantile,
+  setNames
+)
 importFrom(tibble,tibble)
+importFrom(tidyr,
+  pivot_wider,
+  separate_wider_delim
+)
