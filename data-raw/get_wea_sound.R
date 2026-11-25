@@ -14,7 +14,8 @@ get_wea_sound <- function(save_clean = F) {
   wea_sound <- read.csv(file.path(raw.dir, wea_sound_csv)) |>
     dplyr::mutate(
       Time = lubridate::as_date(Date),
-      Var = paste(location, Category, sep = "_")
+      Var = paste(location, Category, sep = "_"),
+      Units = "Broadband SPL 10Hz - 10kHz"
     ) |>
     dplyr::select(-c(Date, X, platform, year, effortS, Category, location)) |>
     dplyr::rename(Value = med_BB_10_10K) |>
