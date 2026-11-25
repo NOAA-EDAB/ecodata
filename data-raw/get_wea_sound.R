@@ -17,7 +17,8 @@ get_wea_sound <- function(save_clean = F) {
       Var = paste(location, Category, sep = "_")
     ) |>
     dplyr::select(-c(Date, X, platform, year, effortS, Category, location)) |>
-    dplyr::rename(Value = med_BB_10_10K)
+    dplyr::rename(Value = med_BB_10_10K) |>
+    tibble::as_tibble()
 
   if (save_clean) {
     usethis::use_data(wea_sound, overwrite = T)
