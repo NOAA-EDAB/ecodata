@@ -7,7 +7,7 @@
 #' \itemize{
 #'     \item Time: Date
 #'     \item Var: Formatted as: Location_Quartile. Locations are COX01 and NS02. Quartiles are Low (bottom quartile), Typical (middle two quartiles), and High (top quartile).
-#'     \item Value: Value of variable \code{Var}. Units are (tbd)
+#'     \item Value: Value of variable \code{Var}. Units are Broadband SPL 10Hz - 10kHz.
 #' }
 #'
 #' @details
