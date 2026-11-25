@@ -1,11 +1,5 @@
 #' plot fishery engagement and community social vulnerability
 #'
-#' @description
-#'  `r lifecycle::badge('deprecated')`
-#'
-#'  `plot_engagement()` was deprecated in ecodata 10.1.0. Please use [plot_port_activity()] instead.
-#'
-#'
 #' Plot population relative engagement vs engagement by community, recreational or commercial fishery.
 #' Provide table of social vulnerability indicators for highly engaged communities.
 #' Indicator definitions https://www.fisheries.noaa.gov/national/socioeconomics/social-indicators-supporting-information
@@ -17,7 +11,6 @@
 #'
 #' @return ggplot object
 #'
-#' @keywords internal
 #'
 #' @export
 #'
@@ -27,11 +20,6 @@ plot_engagement <- function(
   report = "MidAtlantic",
   varName = "Commercial"
 ) {
-  lifecycle::deprecate_warn(
-    when = '10.1.0',
-    what = 'plot_engagement()',
-    with = 'plot_port_activity()'
-  )
   # generate plot setup list (same for all plot functions)
   setup <- ecodata::plot_setup(shadedRegion = shadedRegion, report = report)
 

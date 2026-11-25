@@ -19,10 +19,6 @@
 engagement
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
-
-\code{engagement} was deprecated in ecodata 10.1.0. Please use \link{port_activity} instead.
-
 Data include commercial and recreational fishery engagement and
 relative engagement rankings for coastal communities in the Northeast US.
 }
