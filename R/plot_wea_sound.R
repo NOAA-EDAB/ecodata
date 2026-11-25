@@ -1,6 +1,5 @@
 plot_wea_sound <- function(
-  plottype = c("timeseries", "bar"),
-  varName = c("COX01", "NS02")
+  plottype = c("timeseries", "bar")
 ) {
   ### input data ----
   data <- wea_sound |>
@@ -9,8 +8,7 @@ plot_wea_sound <- function(
       cols = Var,
       delim = "_",
       names = c("location", "Category")
-    ) |>
-    dplyr::filter(location == varName)
+    )
 
   data$Category = factor(
     data$Category,
@@ -46,10 +44,10 @@ plot_wea_sound <- function(
 
   if (plottype == "timeseries") {
     plt <- data |>
-      ggplot(aes(x = Time, y = Value)) +
-      geom_rect(
+      ggplot2::ggplot(ggplot2::aes(x = Time, y = Value)) +
+      ggplot2::geom_rect(
         data = threshold_bands,
-        aes(
+        ggplot2::aes(
           xmin = -Inf,
           xmax = Inf,
           ymin = ymin,
@@ -59,53 +57,57 @@ plot_wea_sound <- function(
         color = "white",
         inherit.aes = FALSE
       ) +
-      scale_fill_manual(
+      ggplot2::scale_fill_manual(
         values = setNames(threshold_bands$fill, threshold_bands$Category)
       ) +
-      geom_line() +
-      theme_bw() +
-      theme(
+      ggplot2::geom_line() +
+      ggplot2::facet_wrap(~location, ncol = 2) +
+      ggplot2::theme_bw() +
+      ggplot2::theme(
         legend.position = "right",
-        axis.title.x = element_blank(),
+        axis.title.x = ggplot2::element_blank(),
         axis.text = ggplot2::element_text(size = 10),
         axis.title.y = ggplot2::element_text(size = 12),
         legend.text = ggplot2::element_text(size = 12),
         legend.title = ggplot2::element_blank()
       ) +
-      coord_cartesian(expand = FALSE) +
-      ylab("Median Broadband SPL (dB re 1 μPa)") +
-      ggplot2::labs(title = paste(varName, "Ambient Noise"))
+      ggplot2::coord_cartesian(expand = FALSE) +
+      ggplot2::ylab("Median Broadband SPL (dB re 1 μPa)") +
+      ggplot2::labs(title = "Ambient Noise") +
+      ecodata::theme_facet()
   }
 
   if (plottype == "bar") {
     plt_data <- data |>
       dplyr::mutate(year = lubridate::year(Time)) |>
-      dplyr::group_by(year) |>
+      dplyr::group_by(year, location) |>
       dplyr::count(Category) |>
       dplyr::mutate(proportion = n / sum(n))
 
     plt <- plt_data |>
-      ggplot(aes(x = year, y = proportion)) +
-      theme_bw() +
-      geom_col(aes(fill = Category)) +
-      scale_fill_manual(
+      ggplot2::ggplot(ggplot2::aes(x = year, y = proportion)) +
+      ggplot2::theme_bw() +
+      ggplot2::geom_col(ggplot2::aes(fill = Category)) +
+      ggplot2::scale_fill_manual(
         values = setNames(threshold_bands$fill, threshold_bands$Category)
       ) +
-      coord_cartesian(expand = FALSE) +
-      scale_x_continuous(
+      ggplot2::coord_cartesian(expand = FALSE) +
+      ggplot2::scale_x_continuous(
         breaks = seq(min(plt_data$year), max(plt_data$year), by = 1)
       ) +
-      xlab("Year") +
-      ylab("Proportion of days in each category") +
-      theme(
+      ggplot2::facet_wrap(~location, ncol = 2) +
+      ggplot2::xlab("Year") +
+      ggplot2::ylab("Proportion of days in each category") +
+      ggplot2::theme(
         legend.position = "right",
-        axis.title.x = element_blank(),
+        axis.title.x = ggplot2::element_blank(),
         axis.text = ggplot2::element_text(size = 10),
         axis.title.y = ggplot2::element_text(size = 12),
         legend.text = ggplot2::element_text(size = 12),
         legend.title = ggplot2::element_blank()
       ) +
-      ggplot2::labs(title = paste(varName, "Ambient Noise Proportions"))
+      ggplot2::labs(title = "Ambient Noise Proportions") +
+      ecodata::theme_facet()
   }
 
   return(plt)
