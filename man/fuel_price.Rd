@@ -5,13 +5,15 @@
 \alias{fuel_price}
 \title{Diesel Fuel Prices}
 \format{
-485 rows and 4 columns.
+485 rows and 5 columns.
 
 \itemize{
-\item Value: Value of variable.
-\item Units: Units of variable in $USD.
 \item Time: Year, month, and day of average diesel price (always 1st day of month).
 \item Var: Average monthly diesel fuel prices based on Legacy No. 2 Diesel
+\item Value: Value of variable.
+\item Units: Units of variable in $USD.
+\item EPU: Shelfwide indicator
+
 }
 }
 \usage{
