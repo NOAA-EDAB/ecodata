@@ -6,13 +6,13 @@
 raw.dir <- here::here("data-raw")
 fuel_prices_input <- "fuel_prices.rds"
 
-get_fuel_prices <- function(save_clean = F) {
-  fuel_prices <- readRDS(file.path(raw.dir, fuel_prices_input))
+get_fuel_price <- function(save_clean = F) {
+  fuel_price <- readRDS(file.path(raw.dir, fuel_prices_input))
 
   if (save_clean) {
-    usethis::use_data(fuel_prices, overwrite = T)
+    usethis::use_data(fuel_price, overwrite = T)
   } else {
-    return(fuel_prices)
+    return(fuel_price)
   }
 }
-get_fuel_prices(save_clean = T)
+get_fuel_price(save_clean = T)
